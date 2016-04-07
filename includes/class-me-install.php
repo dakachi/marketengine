@@ -96,7 +96,20 @@ class ME_Install {
 					PRIMARY KEY  (meta_id),
 					KEY order_item_id (order_item_id),
 					KEY meta_key (meta_key)
-				) $collate;";
+				) $collate;
+		CREATE TABLE {$wpdb->prefix}marketengine_custom_fields (
+					field_id bigint(20) NOT NULL auto_increment,
+					field_name longtext NOT NULL,
+					field_label longtext NOT NULL,
+					field_type longtext NOT NULL,
+					field_input_type long text NOT NULL,
+					field_placeholder varchar(200) NOT NULL DEFAULT '',
+					field_description varchar(200) NOT NULL DEFAULT '',
+					field_constraint varchar(200) NOT NULL DEFAULT '',
+					PRIMARY KEY  (field_id),
+					KEY field_name (field_name)
+				) $collate;"
+		;
 		dbDelta( $schemas );
 	}
 
