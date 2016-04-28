@@ -54,6 +54,8 @@ class MarketEngine {
 		$this->include_files();
 		$this->init_hooks();
 
+		$this->user = ME_User::instance();
+
 		/**
 		 * Fires after the plugin is loaded.
 		 *
@@ -77,6 +79,7 @@ class MarketEngine {
 
 		include_once ME_PLUGIN_PATH . '/includes/abstracts/class-abstract-form.php';
 		include_once ME_PLUGIN_PATH . '/includes/authentication/class-me-auth-form.php';
+		include_once ME_PLUGIN_PATH . '/includes/authentication/class-me-user.php';
 	}
 
 	private function init_hooks() {

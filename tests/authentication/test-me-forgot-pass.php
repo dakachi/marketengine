@@ -8,8 +8,7 @@ class Tests_ME_Forgot_Pass extends WP_UnitTestCase {
         $u1   = self::factory()->user->create(array('user_login' => 'dakachi', 'user_pass' => '123', 'user_email' => 'dakachi@gmail.com'));
         $key = get_password_reset_key( get_userdata( $u1 ) );
 
-		$auth = new ME_Auth_Form();
-    	$mailer = $auth->retrieve_password( array('user_login' => 'dakachi') );
+    	$mailer = ME()->user->retrieve_password( array('user_login' => 'dakachi') );
 
 		// WordPress 3.2 and later correctly split the address into the two parts and send them seperately to PHPMailer
 		// Earlier versions of PHPMailer were not touchy about the formatting of these arguments.
@@ -24,22 +23,20 @@ class Tests_ME_Forgot_Pass extends WP_UnitTestCase {
     // email invalid
     public function test_forgot_pass_invalid_email() {
     	$user = array('user_login' => 'dakachi@gmail.com');
-    	$auth = new ME_Auth_Form();
-    	$error = $auth->retrieve_password( $user );
+    	$error = ME()->user->retrieve_password( $user );
     	$this->assertEquals( new WP_Error('invalid_email', __('<strong>ERROR</strong>: There is no user registered with that email address.')), $error);
     }
     // username invalid
     public function test_forgot_pass_invalid_userlogin() {
     	$user = array('user_login' => 'dakachi');
     	$auth = new ME_Auth_Form();
-    	$error = $auth->retrieve_password( $user );
+    	$error = ME()->user->retrieve_password( $user );
     	$this->assertEquals( new WP_Error('invalidcombo', __('<strong>ERROR</strong>: Invalid username or email.')), $error);
     }
     // empty user login
     public function test_forgot_pass_empty_user_login() {
     	$user = array();
-    	$auth = new ME_Auth_Form();
-    	$error = $auth->retrieve_password( $user );
+    	$error = ME()->user->retrieve_password( $user );
     	$this->assertEquals( new WP_Error('empty_username', __('<strong>ERROR</strong>: Enter a username or email address.')), $error);
     }
 }
