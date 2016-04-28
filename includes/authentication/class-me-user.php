@@ -78,6 +78,7 @@ class ME_User {
             return $errors;
         }
         $user = wp_insert_user( $user_data );
+        // TODO: send confirm email
         return $user;
     }
 
@@ -228,5 +229,42 @@ class ME_User {
             reset_password( $user, $user_data['new_pass'] );
             return $user;
         }
+    }
+
+    public function confirm_email( $user_data ) {
+    	$rules = array(
+    		'user_email' => 'required|email',
+    		'key' => 'required'
+    	);
+    	/**
+         * filter confirm email data validate rules
+         *
+         * @param Array $rules
+         * @param Array $user_data
+         *
+         * @since 1.0
+         */
+        $rules = apply_filters( 'me_confirm_mail_rules', $rules, $user_data );
+        $is_valid = me_validate( $user_data, $rules );
+        if( ! $is_valid ) {
+            $errors = new WP_Error();
+            $invalid_data = me_get_invalid_message( $user_data, $rules );
+            foreach( $invalid_data as $key => $message ) {
+                $errors->add( $key, $message );
+            }
+            return $errors;
+        }
+
+        $user = get_user_by( 'email', $user_data['user_email'] );
+        if( ! $user ) {
+        	return new WP_Error('email_not_exists', __( "The email is not exists." , "enginethemes" ));
+        }
+
+        $confirm_key = get_user_meta( $user->ID, 'confirm_key', true );
+        if( $confirm_key && $confirm_key !== $user_data['key']) {
+        	return new WP_Error('invalid_key', __( "Invalid key." , "enginethemes" ));
+        }
+        delete_user_meta( $user->ID, 'confirm_key' );
+        return $user;
     }
 }

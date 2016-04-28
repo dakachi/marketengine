@@ -167,6 +167,31 @@ class ME_Auth_Form extends ME_Form {
     }
 
     public function process_confirm_email() {
-
+        if ( ! empty( $_GET['confirm_email'] ) && ! empty( $_GET['_wpnonce'] ) && wp_verify_nonce( $_GET['_wpnonce'], 'me-confirm_email' ) ) {
+            $user = ME()->user->confirm_email( $_GET );
+            if( $user ) {
+                 // set the redirect link after login
+                if(isset($_POST['redirect'])) {
+                    $redirect = $_POST['redirect'];
+                } elseif ( wp_get_referer() ) {
+                    $redirect = wp_get_referer();
+                } else {
+                    $redirect = me_get_page_permalink( 'me_reset_password_redirect' );
+                }
+                /**
+                 * action filter redirect link after user login
+                 * @param String $redirect
+                 * @param Object $user User object
+                 * @since 1.0
+                 * @author EngineTeam
+                 */
+                $redirect = apply_filters( 'me_reset_password_redirect', $redirect, $user );
+                wp_redirect( $redirect, 302 );
+                exit;
+            }else {
+                $message = $user->get_error_message();
+                me_add_notice($message, 'error');
+            }
+        }
     }
 }
