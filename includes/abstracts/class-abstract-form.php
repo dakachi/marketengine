@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @author      Dakachi
  * @category    Abstract Class
  */
-abstract class AE_Form {
+abstract class ME_Form {
 	/**
 	 * form name
 	 * @var string
@@ -61,5 +61,4 @@ abstract class AE_Form {
 	public function render(){
 
 	}
-
 }
