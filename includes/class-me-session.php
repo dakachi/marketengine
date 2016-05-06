@@ -1,64 +1,77 @@
 <?php
-global $wp_sessions;
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 class ME_Session {
-
-	protected $_session_id;
-
+	/**
+	 * @var int/string $_session_key
+	 * current user session key
+	 */
+	protected $_session_key;
+	/**
+	 * @var array $_data
+	 * user session data
+	*/
 	protected $_data;
-
+	/**
+	 * @var string $_cookie
+	 * the session cookie name
+	 */
 	protected $_cookie;
+	/**
+	 * @var int $_expired_time
+	 * session expired time
+	 */
 	protected $_expired_time;
-	protected $_exp_variant;
-
+	/**
+	 * @var int $_expirant_time
+	 * session expirant
+	 */
+	protected $_expirant_time;
+	/**
+	 * @var string $_table
+	 * db table sesion name
+	 */
 	protected $_table;
 
 	public function __construct() {
 		global $wpdb;
 		$this->_cookie = 'wp_marketengine_cookie_' . COOKIEHASH;
 		$this->_table  = $wpdb->prefix . 'marketengine_sessions';
+		$cookie = $this->get_session_cookie();
 
-		if( $cookie = $this->get_session_cookie() ) {
+		if( $cookie ) {
 			if( time() > $this->_expired_time ) {
+				$this->_session_key = $this->generate_id();
 				$this->set_expiration();
-				$this->_session_id = $this->generate_id();
 				$this->update_session_expired_time();
-				// update_option("_et_session_expires_{$this->_session_id}", $this->_expired_time);
 			}
 		}else {
-			$this->_session_id = $this->generate_id();
+			$this->_session_key = $this->generate_id();
 			$this->set_expiration();
 			$this->set_cookie();
 		}
 
-		$this->_data = $this->read_session_data();
-
+		$this->_data = $this->get_session_data();
 		//TODO: hook action to clean session
+		// nonce_user_logged_out // wp_logout // shutdown
 	}
 
-	public function update_session_expired_time() {
-
-	}
-
-	public function set_cookie() {
-		// TODO: hash the cookie
-		$hash = md5( wp_hash( $this->_session_id . $this->_exp_variant, $scheme = 'auth' ) );
-		setcookie( $this->_cookie, $this->_session_id . '||' . $this->_expired_time .'||'. $this->_exp_variant .'||'. $hash, $this->_expired_time, '/' );
+	public function has_session(){
+		return isset( $_COOKIE[ $this->_cookie ] ) || is_user_logged_in();
 	}
 	/**
      * set exprire time
      */
     protected function set_expiration() {
-		$this->_exp_variant = time() + (int)apply_filters('et_session_expiration_variant', 24 * 60);
+		$this->_expirant_time = time() + (int)apply_filters('et_session_expiration_variant', 24 * 60);
 		$this->_expired_time = time() + (int)apply_filters('et_session_expiration', 20 * 60);
     }
 
 	public function get_session_data() {
 		global $wpdb;
 		// TODO: process cache
-		$session_key = $this->_session_id;
+		$session_key = $this->_session_key;
 		$sesson_value = $wpdb->get_var( $wpdb->prepare (
 			"SELECT session_value
 				FROM $this->_table
@@ -71,48 +84,68 @@ class ME_Session {
 	public function save_session_data() {
 		global $wpdb;
 		// TODO: process cache
-		$session_key = $this->_session_id;
-		$wpdb->insert(
-			$this->_table,
-			array(
-				'session_id' => '',
-				'session_key' => $this->_session_id,
-				'session_value' => 'value1',
-				'session_expiry' => 123
-			),
-			array(
-				'%d',
-				'%s',
-				'%s',
-				'%s'
-			)
-		);
+		if( $this->has_session() ) {
+			$id = $wpdb->get_var( $wpdb->prepare( "SELECT session_id FROM $this->_table WHERE session_key = %s;", $this->_session_key ) );
+			if( $id ) {
+				$wpdb->insert(
+				$this->_table,
+					array(
+						'session_id' => '',
+						'session_key' => $this->_session_key,
+						'session_value' => serialize( $this->_data ),
+						'session_expiry' => $this->_expirant_time
+					),
+					array(
+						'%d',
+						'%s',
+						'%s',
+						'%s'
+					)
+				);
+			}else {
+				$wpdb->update(
+					$this->_table,
+					array(
+						'session_value' => serialize( $this->_data ),
+						'session_expiry' => $this->_expirant_time
+					),
+					array( 'session_key' => $this->_session_key ),
+					array(
+						'%s',
+						'%s'
+					)
+				);
+			}
+		}
+    }
 
+	public function update_session_expired_time() {
 		$wpdb->update(
 			$this->_table,
 			array(
-				'session_value' => 'value1',
-				'session_expiry' => 123
+				'session_expiry' => $this->_expirant_time
 			),
 			array( 'session_key' => $session_key ),
 			array(
-				'%d',
-				'%s',
-				'%s',
 				'%s'
 			)
 		);
-    }
+	}
 
 	public function destroy_session() {
-		$wpdb->query( 
-			$wpdb->prepare( 
+		$wpdb->query(
+			$wpdb->prepare(
 				"DELETE FROM $this->_table
 				WHERE session_expiry <= %s",
 	        	'gargle'
 			)
 		);
     }
+
+    public function set_cookie() {
+		$hash = wp_hash( $this->_session_key . $this->_expired_time );
+		setcookie( $this->_cookie, $this->_session_key . '||' . $this->_expired_time .'||'. $this->_expirant_time .'||'. $hash, $this->_expired_time, '/' );
+	}
 
 	public function get_session_cookie() {
 		if( ! isset( $_COOKIE[ $this->_cookie ] )) {
@@ -121,9 +154,16 @@ class ME_Session {
 
 		$cookie = stripslashes( $_COOKIE[ $this->_cookie ] );
 		$cookie_data = explode('||', $cookie);
-		//TODO: check hash to secure
-		$this->_session_id = $cookie_data[0];
-		$this->_expired_time = $cookie_data[1];
+
+		$hash = $cookie_data[3];
+		$session_id = $cookie_data[0];
+		$exprired_time = $cookie_data[1];
+		if( $hash !== wp_hash( $session_id . $exprired_time ) ) {
+			return false;
+		}
+
+		$this->_session_key = $session_id;
+		$this->_expired_time = $exprired_time;
 
 		return true;
 	}
