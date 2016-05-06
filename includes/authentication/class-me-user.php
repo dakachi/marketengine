@@ -1,7 +1,17 @@
 <?php
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
-
+/**
+ * ME_User
+ *
+ * User behavior manager
+ *
+ * @class       ME User
+ * @version     1.0
+ * @package     MarketEngine/Includes
+ * @author      EngineThemesTeam
+ * @category    Class
+ */
 class ME_User {
 	/**
      * The single instance of the class.
@@ -25,7 +35,20 @@ class ME_User {
         }
         return self::$_instance;
     }
-
+    /**
+     * Login
+     *
+     * Signon a user into system
+     *
+     * @since 1.0
+     *
+     * @see wp_signon
+     * @param array $user_data
+     *     @type string      $user_pass            The plain-text user password.
+     *     @type string      $user_login           The user's login username.
+     *
+     * @return WP_User|WP_Error True: WP_User finish. WP_Error on error
+     */
 	public function login( $user_data ) {
         $user_login = trim( $user_data['user_login'] );
         $user_pass = $user_data['user_password'];
@@ -50,9 +73,23 @@ class ME_User {
         $user = wp_signon( $creds, $secure );
         return $user;
     }
-
+    /**
+     * Register new user
+     *
+     * Add new user to the blog
+     *
+     * @since 1.0
+     *
+     * @see wp_insert_user
+     * @param Array $user_data The user info
+     *     @type string      $user_pass            The plain-text user password.
+     *     @type string      $user_login           The user's login username.
+     *     @type email       $user_email           The user's email.
+     *
+     * @return WP_User|WP_Error True: WP_User finish. WP_Error on error
+     */
     public function register( $user_data ) {
-        // TODO: these rules will be considered
+        // TODO: these rules will be considered, role?
         $rules = array(
             'user_login' => 'required',
             'user_pass' => 'required',
@@ -230,7 +267,18 @@ class ME_User {
             return $user;
         }
     }
-
+    /**
+     * User Confirm Email
+     *
+     * Check the confirm key and set the user account is confirmed
+     *
+     * @since 1.0
+     *
+     * @param Array $user_data The confirm info
+     *         - Email user_email  : the email need to confirm
+     *         - String key:    the secure key
+     * @return WP_Error| WP_User object
+     */
     public function confirm_email( $user_data ) {
     	$rules = array(
     		'user_email' => 'required|email',
@@ -265,6 +313,14 @@ class ME_User {
         	return new WP_Error('invalid_key', __( "Invalid key." , "enginethemes" ));
         }
         delete_user_meta( $user->ID, 'confirm_key' );
+        /**
+         * Do action after user confirmed email
+         *
+         * @since 1.0
+         *
+         * @param Object $user
+         */
+        do_action( 'me_user_confirm_email', $user );
         return $user;
     }
 }

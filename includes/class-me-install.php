@@ -87,7 +87,21 @@ class ME_Install {
 					order_id bigint(20) NOT NULL,
 					PRIMARY KEY  (order_item_id),
 					KEY order_id (order_id)
-				) $collate; 
+				) $collate;
+
+			CREATE TABLE {$wpdb->prefix}marketengine_custom_fields (
+					field_id bigint(20) NOT NULL auto_increment,
+					field_name varchar(20) NOT NULL,
+					field_label longtext NOT NULL,
+					field_type longtext NOT NULL,
+					field_input_type longtext NOT NULL,
+					field_placeholder varchar(200) NOT NULL DEFAULT '',
+					field_description varchar(200) NOT NULL DEFAULT '',
+					field_constraint varchar(200) NOT NULL DEFAULT '',
+					PRIMARY KEY  (field_id),
+					KEY field_name (field_name)
+				) $collate;
+
 		CREATE TABLE {$wpdb->prefix}marketengine_order_itemmeta (
 					meta_id bigint(20) NOT NULL auto_increment,
 					order_item_id bigint(20) NOT NULL,
@@ -97,19 +111,17 @@ class ME_Install {
 					KEY order_item_id (order_item_id),
 					KEY meta_key (meta_key)
 				) $collate;
-		CREATE TABLE {$wpdb->prefix}marketengine_custom_fields (
-					field_id bigint(20) NOT NULL auto_increment,
-					field_name longtext NOT NULL,
-					field_label longtext NOT NULL,
-					field_type longtext NOT NULL,
-					field_input_type long text NOT NULL,
-					field_placeholder varchar(200) NOT NULL DEFAULT '',
-					field_description varchar(200) NOT NULL DEFAULT '',
-					field_constraint varchar(200) NOT NULL DEFAULT '',
-					PRIMARY KEY  (field_id),
-					KEY field_name (field_name)
-				) $collate;"
-		;
+
+		CREATE TABLE {$wpdb->prefix}marketengine_sessions (
+					session_id bigint(20) NOT NULL AUTO_INCREMENT,
+					session_key char(32) NOT NULL,
+					session_value longtext NOT NULL,
+					session_expiry bigint(20) NOT NULL,
+					UNIQUE KEY session_id (session_id),
+					PRIMARY KEY  (session_key)
+				) $collate;
+		";
+
 		dbDelta( $schemas );
 	}
 

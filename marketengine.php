@@ -72,7 +72,8 @@ class MarketEngine {
 
 	private function include_files() {
 		include_once ME_PLUGIN_PATH . '/includes/class-me-autoloader.php';
-		// include_once ME_PLUGIN_PATH . '/includes/class-me-install.php';
+		include_once ME_PLUGIN_PATH . '/includes/class-me-install.php';
+		include_once ME_PLUGIN_PATH . '/includes/class-me-session.php';
 		include_once ME_PLUGIN_PATH . '/includes/class-me-validator.php';
 		include_once ME_PLUGIN_PATH . '/includes/class-me-post-types.php';
 
