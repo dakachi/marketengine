@@ -3,7 +3,18 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
+/**
+ * The ME Session Class
+ *
+ * Class is used for the purpose of store/retrieve user sessions
+ *
+ * @version     1.0
+ *
+ * @package     Includes
+ * @category    Class
+ *
+ * @author      Dakachi
+ */
 class ME_Session {
     /**
      * @var int/string $_session_key
@@ -153,8 +164,8 @@ class ME_Session {
      * set cookie/session exprire time
      */
     protected function set_expiration() {
-        $this->_expirant_time = time() + (int) apply_filters('et_session_expiration_variant', 24 * 60);
-        $this->_expired_time  = time() + (int) apply_filters('et_session_expiration', 20 * 60);
+        $this->_expirant_time = time() + (int) apply_filters('et_session_expiration_variant', 48 * 60);
+        $this->_expired_time  = time() + (int) apply_filters('et_session_expiration', 44 * 60);
     }
     /**
      * Check session exists or not
@@ -251,6 +262,7 @@ class ME_Session {
      * @return void
      */
 	public function update_session_expired_time() {
+		global $wpdb;
 		$wpdb->update(
 			$this->_table,
 			array(
@@ -261,6 +273,7 @@ class ME_Session {
 				'%d',
 			)
 		);
+		return $this->_session_key;
 	}
 	/**
      * Destroy Session
@@ -272,6 +285,7 @@ class ME_Session {
      * @return void
      */
     public function destroy_session() {
+    	global $wpdb;
         $wpdb->query(
             $wpdb->prepare(
                 "DELETE FROM $this->_table
@@ -342,5 +356,13 @@ class ME_Session {
             $hasher = new PasswordHash(8, false);
             return md5($hasher->get_random_bytes(32));
         }
+    }
+
+    public function get_session_key() {
+    	return $this->_session_key;
+    }
+
+    public function get_expirant_time() {
+    	return $this->_expirant_time;
     }
 }
