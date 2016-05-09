@@ -54,8 +54,6 @@ class MarketEngine {
 		$this->include_files();
 		$this->init_hooks();
 
-		$this->user = ME_User::instance();
-
 		/**
 		 * Fires after the plugin is loaded.
 		 *
@@ -68,7 +66,7 @@ class MarketEngine {
 		if( ! defined( 'ME_PLUGIN_PATH' ) ) {
 			define( 'ME_PLUGIN_PATH' , dirname( __FILE__ ) );
 		}
-	}	
+	}
 
 	private function include_files() {
 		include_once ME_PLUGIN_PATH . '/includes/class-me-autoloader.php';
@@ -77,6 +75,9 @@ class MarketEngine {
 		include_once ME_PLUGIN_PATH . '/includes/class-me-validator.php';
 		include_once ME_PLUGIN_PATH . '/includes/class-me-post-types.php';
 
+		include_once ME_PLUGIN_PATH . '/includes/me-notices-functions.php';
+		include_once ME_PLUGIN_PATH . '/includes/me-template-functions.php';
+
 
 		include_once ME_PLUGIN_PATH . '/includes/abstracts/class-abstract-form.php';
 		include_once ME_PLUGIN_PATH . '/includes/authentication/class-me-auth-form.php';
@@ -84,7 +85,12 @@ class MarketEngine {
 	}
 
 	private function init_hooks() {
+		add_action('init', array($this, 'init'));
+	}
 
+	public function init() {
+		$this->user = ME_User::instance();
+		$this->session = ME_Session::instance();
 	}
 
 	/**

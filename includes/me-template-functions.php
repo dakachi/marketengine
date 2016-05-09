@@ -15,10 +15,8 @@ function me_locate_template($template_names, $load = false, $require_once = true
             break;
         }
     }
- 
     if ( $load && '' != $located )
         load_template( $located, $require_once );
- 
     return $located;
 }
 
@@ -53,9 +51,4 @@ function me_get_page_permalink( $page_name ) {
         return ;
     }
     return get_permalink( $page->ID );
-}
-
-
-function me_add_notice($message, $type = 'success'){
-    
 }

@@ -14,7 +14,7 @@ module.exports = function(grunt) {
         },
         watch: {
             phpunit: {
-                files: ['tests/*/*.php'],
+                files: ['tests/*/*.php','tests/*.php','includes/*.php', 'includes/*/*.php'],
                 tasks: ['phpunit']
             }
         }
