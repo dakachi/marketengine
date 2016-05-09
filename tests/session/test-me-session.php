@@ -45,4 +45,10 @@ class Test_ME_Session extends WP_UnitTestCase {
         $session_data = ME()->session->get_session_data();
         $this->assertEquals(array('me_notices' => array('success' => array('Success 1!', 'Success 2!', 'Success 1!'), 'error' => array('Error!'))), $session_data);
     }
+	public function test_me_session_update_expiry() {
+
+	}
+	public function test_me_session_destroy(){
+
+	}
 }

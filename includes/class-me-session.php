@@ -79,8 +79,9 @@ class ME_Session {
         $this->_data = $this->get_session_data();
 
         add_action('shutdown', array($this, 'save_session_data'));
-        //TODO: hook action to clean session
-        // nonce_user_logged_out // wp_logout // shutdown
+        // schedule hook to garbage session
+        add_action('me_session_garbage_collection', array($this, 'destroy_session'));
+        add_action('wp', array($this, 'session_register_garbage_collection'));
     }
 
     /**
@@ -186,7 +187,14 @@ class ME_Session {
         ));
         return unserialize($session_value);
     }
-
+    /**
+     * Save Session Data
+     *
+     * Store Session Data to database
+     *
+     * @since 1.0
+     * @return void
+     */
     public function save_session_data() {
         global $wpdb;
         // TODO: process cache
@@ -233,28 +241,54 @@ class ME_Session {
         }
     }
 
-    public function update_session_expired_time() {
-        $wpdb->update(
-            $this->_table,
-            array(
-                'session_expiry' => $this->_expirant_time,
-            ),
-            array('session_key' => $session_key),
-            array(
-                '%s',
-            )
-        );
-    }
-
+	/**
+     * Update Session Expire Time
+     *
+     * Update session expired time to keep data
+     *
+     * @since 1.0
+     *
+     * @return void
+     */
+	public function update_session_expired_time() {
+		$wpdb->update(
+			$this->_table,
+			array(
+				'session_expiry' => $this->_expirant_time,
+			),
+			array('session_key' => $this->_session_key),
+			array(
+				'%d',
+			)
+		);
+	}
+	/**
+     * Destroy Session
+     *
+     * Remove session data base on session expiry data
+     *
+     * @since 1.0
+     *
+     * @return void
+     */
     public function destroy_session() {
         $wpdb->query(
             $wpdb->prepare(
                 "DELETE FROM $this->_table
-				WHERE session_expiry <= %s",
+				WHERE session_expiry <= %d",
                 time()
             )
         );
     }
+
+	/**
+	 * Register the garbage collector as a twice daily event.
+	 */
+	public function session_register_garbage_collection() {
+		if (!wp_next_scheduled('me_session_garbage_collection')) {
+			wp_schedule_event(time(), 'twicedaily', 'me_session_garbage_collection');
+		}
+	}
 
     public function set_cookie() {
         $hash = wp_hash($this->_session_key . $this->_expired_time);
