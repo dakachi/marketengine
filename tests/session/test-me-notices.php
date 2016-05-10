@@ -26,7 +26,7 @@ class Test_ME_Notices extends WP_UnitTestCase {
         $this->assertEquals(array('Error!'), $errors);
     }
 
-    public function test_me_get_success_notice() {
+    public function test_me_get_success_notice_type() {
         me_empty_notices();
         me_add_notice('Success 1!', 'success');
         me_add_notice('Success 2!', 'success');

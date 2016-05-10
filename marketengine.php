@@ -84,6 +84,7 @@ class MarketEngine {
         include_once ME_PLUGIN_PATH . '/includes/authentication/class-me-auth-form.php';
         include_once ME_PLUGIN_PATH . '/includes/authentication/class-me-user.php';
 
+        include_once ME_PLUGIN_PATH . '/includes/listing/class-me-post-types.php';
         include_once ME_PLUGIN_PATH . '/includes/listing/class-me-listing.php';
     }
 
@@ -95,8 +96,8 @@ class MarketEngine {
         $this->user    = ME_User::instance();
         $this->session = ME_Session::instance();
 
-        ME_Listing::register_post_type();
-        ME_Listing::register_tanonomies();
+        ME_Post_Types::register_post_type();
+        ME_Post_Types::register_tanonomies();
     }
 
     /**
