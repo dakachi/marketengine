@@ -46,14 +46,13 @@ class Test_ME_Session extends WP_UnitTestCase {
 
 		$token = ME()->session->update_session_expired_time();
 
-		$session_expiry_2 = $wpdb->get_var($wpdb->prepare(
+		$session_expiry = $wpdb->get_var($wpdb->prepare(
             "SELECT session_expiry
 				FROM $table
 				WHERE session_key = %s",
             ME()->session->get_session_key()
         ));
-        $this->assertEquals(ME()->session->get_session_key(), $token);
-        $this->assertEquals(ME()->session->get_expirant_time(), $session_expiry_2);
+        $this->assertEquals(ME()->session->get_expirant_time(), $session_expiry);
 	}
 
 	public function test_me_session_destroy(){

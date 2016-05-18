@@ -2,39 +2,17 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 /**
- * ME_User
+ * ME_Authentication
  *
- * User behavior manager
+ * Handling visitor authentication behavior
  *
- * @class       ME User
+ * @class       ME_Authentication
  * @version     1.0
  * @package     MarketEngine/Includes
  * @author      EngineThemesTeam
  * @category    Class
  */
-class ME_User {
-	/**
-     * The single instance of the class.
-     *
-     * @var ME_Auth_Form
-     * @since 1.0
-     */
-    protected static $_instance = null;
-
-    /**
-     * Main ME_Auth_Form Instance.
-     *
-     * Ensures only one instance of ME_Auth_Form is loaded or can be loaded.
-     *
-     * @since 1.0
-     * @return ME_Auth_Form - Main instance.
-     */
-    public static function instance() {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new self();
-        }
-        return self::$_instance;
-    }
+class ME_Authentication {
     /**
      * Login
      *
@@ -49,7 +27,7 @@ class ME_User {
      *
      * @return WP_User|WP_Error True: WP_User finish. WP_Error on error
      */
-	public function login( $user_data ) {
+	public static function login( $user_data ) {
         $user_login = trim( $user_data['user_login'] );
         $user_pass = $user_data['user_password'];
 
@@ -88,16 +66,17 @@ class ME_User {
      *
      * @return WP_User|WP_Error True: WP_User finish. WP_Error on error
      */
-    public function register( $user_data ) {
+    public static function register( $user_data ) {
         // TODO: these rules will be considered, role?
         $rules = array(
             'user_login' => 'required',
             'user_pass' => 'required',
+            'confirm_pass' => 'required|same:user_pass',
             'user_email' => 'required|email',
             'agree_with_tos' => 'required'
         );
         /**
-         * filter register data validate rules
+         * Filter register data validate rules
          *
          * @param Array $rules
          * @param Array $user_data
@@ -129,7 +108,7 @@ class ME_User {
      *
      * @return bool|WP_Error True: when finish. WP_Error on error
      */
-    public function retrieve_password( $user ) {
+    public static function retrieve_password( $user ) {
         global $wpdb, $wp_hasher;
 
         $errors = new WP_Error();
@@ -233,7 +212,7 @@ class ME_User {
      * @param Array  $user_data The user reset pass data
      * @return WP_User| WP_Error WP_User: when finish. WP_Error on error
      */
-    public function reset_pass( $user_data ) {
+    public static function reset_pass( $user_data ) {
         $rules = array(
             'user_login' => 'required',
             'new_pass' => 'required',
@@ -279,7 +258,7 @@ class ME_User {
      *         - String key:    the secure key
      * @return WP_Error| WP_User object
      */
-    public function confirm_email( $user_data ) {
+    public static function confirm_email( $user_data ) {
     	$rules = array(
     		'user_email' => 'required|email',
     		'key' => 'required'

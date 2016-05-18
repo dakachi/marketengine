@@ -15,44 +15,18 @@ if (!defined('ABSPATH')) {
  * @category    Class
  */
 class ME_Auth_Form extends ME_Form {
-    /**
-     * The single instance of the class.
-     *
-     * @var ME_Auth_Form
-     * @since 1.0
-     */
-    protected static $_instance = null;
 
-    /**
-     * Main ME_Auth_Form Instance.
-     *
-     * Ensures only one instance of ME_Auth_Form is loaded or can be loaded.
-     *
-     * @since 1.0
-     * @return ME_Auth_Form - Main instance.
-     */
-    public static function instance() {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new self();
-        }
-        return self::$_instance;
+    public static function init_hooks() {
+        add_action('wp_loaded', array(__CLASS__, 'process_login'));
+        add_action('wp_loaded', array(__CLASS__, 'process_register'));
+        add_action('wp_loaded', array(__CLASS__, 'process_forgot_pass'));
+        add_action('wp_loaded', array(__CLASS__, 'process_reset_pass'));
+        add_action('wp_loaded', array(__CLASS__, 'process_confirm_email'));
     }
 
-    public function __construct() {
-
-    }
-
-    public function add_action() {
-        add_action('wp_loaded', array(&$this, 'process_login'));
-        add_action('wp_loaded', array(&$this, 'process_register'));
-        add_action('wp_loaded', array(&$this, 'process_forgot_pass'));
-        add_action('wp_loaded', array(&$this, 'process_reset_pass'));
-        add_action('wp_loaded', array(&$this, 'process_activate_email'));
-    }
-
-    public function process_login() {
+    public static function process_login() {
         if (!empty($_POST['login']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-login')) {
-            $user = ME()->user->login($_POST);
+            $user = ME_Authentication::login($_POST);
             if (is_wp_error($user)) {
                 me_wp_error_to_notices($user);
             } else {
@@ -78,9 +52,9 @@ class ME_Auth_Form extends ME_Form {
         }
     }
 
-    public function process_register() {
+    public static function process_register() {
         if (!empty($_POST['register']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-register')) {
-            $user = ME()->user->register($_POST);
+            $user = ME_Authentication::register($_POST);
             if (is_wp_error($user)) {
                 me_wp_error_to_notices($user);
             } else {
@@ -106,9 +80,9 @@ class ME_Auth_Form extends ME_Form {
         }
     }
 
-    public function process_forgot_pass() {
+    public static function process_forgot_pass() {
         if (!empty($_POST['forgot_pass']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-forgot_pass')) {
-            $password_retrieve = ME()->user->retrieve_password($_POST);
+            $password_retrieve = ME_Authentication::retrieve_password($_POST);
             if ($password_retrieve) {
                 // set the redirect link after login
                 if (isset($_POST['redirect'])) {
@@ -134,9 +108,9 @@ class ME_Auth_Form extends ME_Form {
         }
     }
 
-    public function process_reset_pass() {
+    public static function process_reset_pass() {
         if (!empty($_POST['reset_password']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-reset_password')) {
-            $user = ME()->user->reset_pass($_POST);
+            $user = ME_Authentication::reset_pass($_POST);
             if ($user) {
                 // set the redirect link after login
                 if (isset($_POST['redirect'])) {
@@ -162,9 +136,9 @@ class ME_Auth_Form extends ME_Form {
         }
     }
 
-    public function process_confirm_email() {
+    public static function process_confirm_email() {
         if (!empty($_GET['confirm_email']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'me-confirm_email')) {
-            $user = ME()->user->confirm_email($_GET);
+            $user = ME_Authentication::confirm_email($_GET);
             if ($user) {
                 // set the redirect link after login
                 if (isset($_POST['redirect'])) {
@@ -189,4 +163,11 @@ class ME_Auth_Form extends ME_Form {
             }
         }
     }
+    // TODO: add more function support form element
+    // add_settings_section
+    // add_settings_field
+    // do_settings_sections
+    // do_settings_fields
 }
+
+ME_Auth_Form::init_hooks();

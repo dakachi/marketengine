@@ -32,10 +32,9 @@ require_once WP_TESTS_DIR . 'includes/functions.php';
  * loading your plugin, since it won't be installed.
  */
 function _manually_load_plugin() {
- 
+
     // require TEST_PLUGIN_FILE . '/marketengine.php';
  	require 'D:/xampp/htdocs/wp/wp-content/plugins/marketengine/marketengine.php';
-    // Make sure plugin is installed here ...
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 

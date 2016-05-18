@@ -16,59 +16,106 @@ if (!defined('ABSPATH')) {
  * @category    Class
  */
 class ME_Post_Types {
+    /**
+     * The single instance of the class.
+     *
+     * @var ME_Listing
+     * @since 1.0
+     */
+    protected static $_instance = null;
 
-    public static function init() {
-
+    /**
+     * Main ME_Listing Instance.
+     *
+     * Ensures only one instance of ME_Listing is loaded or can be loaded.
+     *
+     * @since 1.0
+     * @return ME_Listing - Main instance.
+     */
+    public static function instance() {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
     }
-
-    public static function register_taxonomies() {
-
-    }
-
-    public static function register_post_types() {
+    /**
+     * Register default taxonomies
+     */
+    public static function register_tanonomies() {
         $labels = array(
-            'name'               => __('Listing', ET_DOMAIN),
-            'singular_name'      => __('Listing', ET_DOMAIN),
-            'add_new'            => __('Add New', ET_DOMAIN),
-            'add_new_item'       => __('Add New Listing', ET_DOMAIN),
-            'edit_item'          => __('Edit Listing', ET_DOMAIN),
-            'new_item'           => __('New Listing', ET_DOMAIN),
-            'all_items'          => __('All Listings', ET_DOMAIN),
-            'view_item'          => __('View Listing', ET_DOMAIN),
-            'search_items'       => __('Search Listings', ET_DOMAIN),
-            'not_found'          => __('No Listings found', ET_DOMAIN),
-            'not_found_in_trash' => __('No Listings found in Trash', ET_DOMAIN),
-            'parent_item_colon'  => '',
-            'menu_name'          => __('Listings', ET_DOMAIN),
+            'name'                  => _x('Category', 'Taxonomy plural name', "enginethemes"),
+            'singular_name'         => _x('Listing category', 'Taxonomy singular name', "enginethemes"),
+            'search_items'          => __('Search Category', "enginethemes"),
+            'popular_items'         => __('Popular Category', "enginethemes"),
+            'all_items'             => __('All Category', "enginethemes"),
+            'parent_item'           => __('Parent listing category', "enginethemes"),
+            'parent_item_colon'     => __('Parent listing category', "enginethemes"),
+            'edit_item'             => __('Edit listing category', "enginethemes"),
+            'update_item'           => __('Update listing category', "enginethemes"),
+            'add_new_item'          => __('Add New listing category', "enginethemes"),
+            'new_item_name'         => __('New listing category Name', "enginethemes"),
+            'add_or_remove_items'   => __('Add or remove Category', "enginethemes"),
+            'choose_from_most_used' => __('Choose from most used enginetheme ', "enginethemes"),
+            'menu_name'             => __('Category', "enginethemes"),
         );
-
+        //TODO: setup listing category permarlink
+        $permalinks = get_option('me_permalinks');
+        $args = array(
+            'labels'            => $labels,
+            'public'            => true,
+            'show_in_nav_menus' => true,
+            'show_admin_column' => false,
+            'hierarchical'      => true,
+            'show_tagcloud'     => true,
+            'show_ui'           => true,
+            'query_var'         => true,
+            'rewrite'           => array(
+                'slug'         => 'category',
+                'hierarchical' => true,
+            ),
+            'capabilities'      => array(
+                'manage_terms',
+                'edit_terms',
+                'delete_terms',
+                'assign_terms',
+            ),
+        );
+        register_taxonomy('listing_category', array(
+            'listing',
+        ), $args);
+    }
+    /**
+     * Register post type listing
+     */
+    public static function register_post_type() {
+        $permalinks = get_option('me_permalinks');
         register_post_type('listing', array(
-            'labels'             => $labels,
+            'labels'             => array(
+                'name'               => __('Listing', "enginethemes"),
+                'singular_name'      => __('Listing', "enginethemes"),
+                'add_new'            => __('Add New', "enginethemes"),
+                'add_new_item'       => __('Add New Listing', "enginethemes"),
+                'edit_item'          => __('Edit Listing', "enginethemes"),
+                'new_item'           => __('New Listing', "enginethemes"),
+                'all_items'          => __('All Listings', "enginethemes"),
+                'view_item'          => __('View Listing', "enginethemes"),
+                'search_items'       => __('Search Listings', "enginethemes"),
+                'not_found'          => __('No Listing found', "enginethemes"),
+                'not_found_in_trash' => __('No Listings found in Trash', "enginethemes"),
+                'parent_item_colon'  => '',
+                'menu_name'          => __('Listings', "enginethemes"),
+            ),
             'public'             => true,
             'publicly_queryable' => true,
             'show_ui'            => true,
             'show_in_menu'       => true,
             'query_var'          => true,
-            'rewrite'            => array(
-                'slug' => 'listing',
-            ),
+            'rewrite'            => $permalinks ? array('slug' => $permalinks, 'with_front' => false, 'feed' => true) : false,
             'capability_type'    => 'post',
             'has_archive'        => 'listings',
             'hierarchical'       => false,
-            'menu_position'      => null,
-            'supports'           => array(
-                'title',
-                'editor',
-                'author',
-                'thumbnail',
-                'excerpt',
-                'comments',
-                'custom-fields',
-            ),
+            'menu_position'      => 25,
+            'supports'           => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'custom-fields'),
         ));
-    }
-
-    public static function register_post_statuses() {
-
     }
 }

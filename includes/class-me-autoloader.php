@@ -31,7 +31,7 @@ class ME_Autoloader {
 
         spl_autoload_register(array($this, 'autoload'));
 
-        $this->include_path = untrailingslashit(plugin_dir_path(__FILE__)) . '/includes/';
+        $this->include_path = untrailingslashit(plugin_dir_path(__FILE__)) . '/';
     }
 
     /**
@@ -68,23 +68,15 @@ class ME_Autoloader {
         $file  = $this->get_file_name_from_class($class);
         $path  = '';
         // cho nay kiem tra ten class de thay doi include path cho phu hop
-        if (strpos($class, 'ae_addons_gateway_') === 0) {
-            $path = $this->include_path . 'gateways/' . substr(str_replace('_', '-', $class), 18) . '/';
-        } elseif (strpos($class, 'ae_gateway_') === 0) {
-            $path = $this->include_path . 'gateways/' . substr(str_replace('_', '-', $class), 11) . '/';
-        } elseif (strpos($class, 'ae_shipping_') === 0) {
-            $path = $this->include_path . 'shipping/' . substr(str_replace('_', '-', $class), 12) . '/';
-        } elseif (strpos($class, 'ae_shortcode_') === 0) {
-            $path = $this->include_path . 'shortcodes/';
-        } elseif (strpos($class, 'ae_meta_box') === 0) {
-            $path = $this->include_path . 'admin/meta-boxes/';
-        } elseif (strpos($class, 'ae_admin') === 0) {
-            $path = $this->include_path . 'admin/';
-        } elseif (strpos($class, 'ae_cli_') === 0) {
-            $path = $this->include_path . 'cli/';
+        if (strpos($class, 'me_listings') === 0) {
+            $path = $this->include_path . 'listings/' . substr(str_replace('_', '-', $class), 18) . '/';
+        } elseif (strpos($class, 'me_user') === 0) {
+            $path = $this->include_path . 'users/' . substr(str_replace('_', '-', $class), 11) . '/';
+        } elseif (strpos($class, 'me_authentication') === 0) {
+            $path = $this->include_path . 'authentication/' . substr(str_replace('_', '-', $class), 12) . '/';
         }
 
-        if (empty($path) || (!$this->load_file($path . $file) && strpos($class, 'ae_') === 0)) {
+        if (empty($path) || (!$this->load_file($path . $file) && strpos($class, 'me_') === 0)) {
             $this->load_file($this->include_path . $file);
         }
     }
