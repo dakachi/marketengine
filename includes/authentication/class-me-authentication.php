@@ -336,9 +336,8 @@ class ME_Authentication {
         do_action('me_user_confirm_email', $user);
         return $user;
     }
-}
 
-function me_send_activation_email() {
+    public static function send_activation_email() {
 
+    }
 }
-add_action('me_user_register', 'me_send_activation_email');
