@@ -69,4 +69,4 @@ function me_lostpassword_url( $default_url = '' ) {
         return $default_url;
     }
 }
-add_filter( 'lostpassword_url',  'me_lostpassword_url', 10, 1 );
+// add_filter( 'lostpassword_url',  'me_lostpassword_url', 10, 1 );

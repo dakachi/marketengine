@@ -4,6 +4,13 @@ class Tests_ME_Register extends WP_UnitTestCase {
         parent::__construct($factory);
     }
 
+    // test register successfull
+    public function test_register_success() {
+        $user = ME_Authentication::register(array('user_login' => 'dakachi', 'user_pass' => '123', 'confirm_pass' => '123', 'user_email' => 'dakachi@gmail.com', 'agree_with_tos' => true));
+        $u1   = self::factory()->user->get_object_by_id($user);
+        $this->assertEquals('dakachi', $u1->user_login);
+    }
+
     // test register with empty user login field
     public function test_register_empty_userlogin() {
         $error = ME_Authentication::register(array('user_login' => '', 'user_pass' => '123', 'confirm_pass' => '123', 'user_email' => 'dakachi@gmail.com', 'agree_with_tos' => true));
@@ -52,12 +59,5 @@ class Tests_ME_Register extends WP_UnitTestCase {
     public function test_register_without_agree_tos() {
         $error = ME_Authentication::register(array('user_login' => 'dakachi', 'user_pass' => '123', 'confirm_pass' => '123', 'user_email' => 'dakachi@1gmail.com'));
         $this->assertEquals($error, new WP_Error('agree_with_tos', 'The agree with tos field is required.'));
-    }
-
-    // test register successfull
-    public function test_register_success() {
-        $user = ME_Authentication::register(array('user_login' => 'dakachi', 'user_pass' => '123', 'confirm_pass' => '123', 'user_email' => 'dakachi@gmail.com', 'agree_with_tos' => true));
-        $u1   = self::factory()->user->get_object_by_id($user);
-        $this->assertEquals('dakachi', $u1->user_login);
     }
 }

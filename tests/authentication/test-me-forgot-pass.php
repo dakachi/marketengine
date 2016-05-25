@@ -33,7 +33,7 @@ class Tests_ME_Forgot_Pass extends WP_UnitTestCase {
     }
 
     // email invalid
-    public function test_forgot_pass_invalid_email() {
+    public function test_forgot_pass_email_not_exist() {
     	$user = array('user_login' => 'dakachi@gmail.com');
     	$error = ME_Authentication::retrieve_password( $user );
     	$this->assertEquals( new WP_Error('invalid_email', __('<strong>ERROR</strong>: There is no user registered with that email address.')), $error);
@@ -41,7 +41,6 @@ class Tests_ME_Forgot_Pass extends WP_UnitTestCase {
     // username invalid
     public function test_forgot_pass_invalid_userlogin() {
     	$user = array('user_login' => 'dakachi');
-    	$auth = new ME_Auth_Form();
     	$error = ME_Authentication::retrieve_password( $user );
     	$this->assertEquals( new WP_Error('invalidcombo', __('<strong>ERROR</strong>: Invalid username or email.')), $error);
     }
@@ -50,5 +49,12 @@ class Tests_ME_Forgot_Pass extends WP_UnitTestCase {
     	$user = array();
     	$error = ME_Authentication::retrieve_password( $user );
     	$this->assertEquals( new WP_Error('empty_username', __('<strong>ERROR</strong>: Enter a username or email address.')), $error);
+    }
+
+    // email invalid
+    public function test_forgot_pass_invalid_email_address() {
+        $user = array('user_login' => 'dakachi@2gmail.2com');
+        $error = ME_Authentication::retrieve_password( $user );
+        $this->assertEquals( new WP_Error('invalid_email', __('<strong>ERROR</strong>: There is no user registered with that email address.')), $error);
     }
 }

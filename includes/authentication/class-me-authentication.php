@@ -42,15 +42,13 @@ class ME_Authentication {
         }
 
         $user = get_user_by('login', $user_login);
-
         if (!$user && strpos($user_login, '@')) {
             $user = get_user_by('email', $user_login);
         }
 
-        if (!$user) {
-            return new WP_Error('invalid_username', __('Invalid username.', 'enginethemes'));
+        if ($user) {
+            $user_login = $user->user_login;
         }
-        $user_login = $user->user_login;
 
         $creds                  = array();
         $creds['user_login']    = $user_login;
@@ -114,6 +112,16 @@ class ME_Authentication {
             return $errors;
         }
         $user = wp_insert_user($user_data);
+        /**
+         * Do action me_user_register
+         *
+         * @param Object $user WP_User
+         * @param Array $user_data
+         *
+         * @since 1.0
+         *
+         */
+        do_action( 'me_user_register', $user, $user_data );
         // TODO: send confirm email
         return $user;
     }
@@ -329,3 +337,8 @@ class ME_Authentication {
         return $user;
     }
 }
+
+function me_send_activation_email() {
+
+}
+add_action('me_user_register', 'me_send_activation_email');
