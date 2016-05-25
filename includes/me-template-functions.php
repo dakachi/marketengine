@@ -52,3 +52,21 @@ function me_get_page_permalink( $page_name ) {
     }
     return get_permalink( $page->ID );
 }
+
+/**
+ * Returns the url to the lost password endpoint url.
+ *
+ * @access public
+ * @param  string $default_url
+ * @return string
+ */
+function me_lostpassword_url( $default_url = '' ) {
+    $password_reset_url = me_get_page_permalink( 'reset-pass' );
+
+    if ( false !== $password_reset_url ) {
+        return $password_reset_url;
+    } else {
+        return $default_url;
+    }
+}
+add_filter( 'lostpassword_url',  'me_lostpassword_url', 10, 1 );

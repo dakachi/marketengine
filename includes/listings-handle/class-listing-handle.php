@@ -28,12 +28,12 @@ class ME_Listing_Handle {
         $listing_data['post_type'] = 'listing';
         if (isset($listing_data['ID'])) {
             if (($listing_data['post_author'] != $user_ID) && !current_user_can('edit_others_posts')) {
-                return new WP_Error('edit_others_posts', __( "You are not allowed to edit posts as this user." , "enginethemes" ));
+                return new WP_Error('edit_others_posts', __("You are not allowed to edit posts as this user.", "enginethemes"));
             }
             $post = wp_update_post($listing_data);
         } else {
             if (!self::current_user_can_create_lisitng()) {
-                return new WP_Error('create_posts', __( "You are not allowed to create posts as this user." , "enginethemes" ));
+                return new WP_Error('create_posts', __("You are not allowed to create posts as this user.", "enginethemes"));
             }
             $post = wp_insert_post($listing_data);
         }
@@ -90,12 +90,11 @@ class ME_Listing_Handle {
      *
      * @see me_validate
      * @param array $data Listing data
-     * @param array $rules validate rules
      *
      * @return True|WP_Error True if success, WP_Error if false
      *
      */
-    public static function validate($data, $rules) {
+    public static function validate($listing_data) {
         $invalid_data = array();
         // validate post data
         $rules = array(
@@ -113,12 +112,13 @@ class ME_Listing_Handle {
         $rules    = apply_filters('me_insert_listing_rules', $rules, $listing_data);
         $is_valid = me_validate($listing_data, $rules);
         if (!$is_valid) {
-            $invalid_data = me_get_invalid_message($user_data, $rules);
+            $invalid_data = me_get_invalid_message($listing_data, $rules);
         }
         /**
          * Filter listing meta data validate rule
          *
          * @param array $listing_meta_data_rules
+         *
          * @since 1.0
          */
         $listing_meta_data_rules = apply_filters('me_insert_listing_meta_rules', array('me_price' => 'number'));
@@ -131,6 +131,7 @@ class ME_Listing_Handle {
          * Filter listing taxonomy data validate rule
          *
          * @param array $listing_tax_rules
+         *
          * @since 1.0
          */
         $listing_tax_rules = apply_filters('me_insert_listing_taxonomy_rules', array('listing_category' => 'required'));
@@ -159,7 +160,6 @@ class ME_Listing_Handle {
                 if (is_taxonomy_hierarchical($taxonomy)) {
                     continue;
                 }
-
                 /*
                  * Assume that a 'tax_input' string is a comma-separated list of term names.
                  * Some languages may use a character other than a comma as a delimiter, so we standardize on

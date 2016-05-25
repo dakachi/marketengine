@@ -54,6 +54,12 @@ class ME_Auth_Form extends ME_Form {
 
     public static function process_register() {
         if (!empty($_POST['register']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-register')) {
+            // Admin disable registration function
+            if (!get_option('users_can_register')) {
+                wp_redirect(site_url('wp-login.php?registration=disabled'));
+                exit();
+            }
+
             $user = ME_Authentication::register($_POST);
             if (is_wp_error($user)) {
                 me_wp_error_to_notices($user);
