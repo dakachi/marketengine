@@ -18,4 +18,11 @@ if (!defined('ABSPATH')) {
 class ME_User {
     public $id;
     public $user_data;
+    public function __construct($user){
+    	$this->id = $user->ID;
+    	$this->user_data = $user->user_data;
+    }
+    public function is_activated() {
+    	return (!get_option('is_required_email_confirmation') || !get_user_meta($this->id, 'user_activate_email_key', true));
+    }
 }

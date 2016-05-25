@@ -112,6 +112,15 @@ class ME_Authentication {
             return $errors;
         }
         $user = wp_insert_user($user_data);
+
+        if(get_option('is_required_email_confirmation')) {
+            // generate the activation key
+            $activate_email_key = md5($user_email. time());
+            // store the activation key to user meta data
+            update_user_meta($user->ID, 'user_activate_email_key', $activate_email_key);
+            // send email
+            self::send_activation_email($user);
+        }
         /**
          * Do action me_user_register
          *
@@ -321,23 +330,52 @@ class ME_Authentication {
             return new WP_Error('email_not_exists', __("The email is not exists.", "enginethemes"));
         }
 
-        $confirm_key = get_user_meta($user->ID, 'confirm_key', true);
-        if ($confirm_key && $confirm_key !== $user_data['key']) {
+        $activate_email_key = get_user_meta($user->ID, 'activate_email_key', true);
+        if ($activate_email_key && $activate_email_key !== $user_data['key']) {
             return new WP_Error('invalid_key', __("Invalid key.", "enginethemes"));
         }
-        delete_user_meta($user->ID, 'confirm_key');
+        delete_user_meta($user->ID, 'activate_email_key');
         /**
          * Do action after user confirmed email
          *
-         * @since 1.0
-         *
          * @param Object $user
+         *
+         * @since 1.0
          */
         do_action('me_user_confirm_email', $user);
         return $user;
     }
 
-    public static function send_activation_email() {
+    public static function send_activation_email($user) {
+        $user_activate_email_key = get_user_meta($user->ID, 'activate_email_key', true);
+        if($user_activate_email_key) {
+            // get activation mail content from template
+            ob_start();
+            me_get_template_part('activation-email');
+            $activation_mail_content = ob_get_clean();
+            /**
+             * Filter user activation email subject
+             *
+             * @param String $mail_subject
+             * @param Object $user
+             *
+             * @since 1.0
+             */
+            $activation_mail_subject = apply_filters('me_activation_mail_subject', __("Activate Email", "enginethemes"), $user);
 
+            $activation_mail_content = str_replace('[activate_email_link]', $activate_email_link, $activation_mail_content);
+            /**
+             * Filter user activation email content
+             *
+             * @param String $mail_content
+             * @param Object $user
+             *
+             * @since 1.0
+             */
+            $activation_mail_content = apply_filters('me_activation_mail_content', $activation_mail_content, $user);
+
+            return wp_email($user->user_email, $activation_mail_subject, $activation_mail_content )
+        }
+        return false;
     }
 }
