@@ -24,13 +24,13 @@ do_action('marketengine_before_user_login_form');
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
 			    <label for="username"><?php _e("Email/Username", "enginethemes");?></label>
-			    <input type="text" name="user_login" id="username" value="<?php if (!empty($_POST['user_login'])) {echo esc_attr($_POST['user_login']);}?>">
+			    <input type="text" name="user_login" class="required" id="username" value="<?php if (!empty($_POST['user_login'])) {echo esc_attr($_POST['user_login']);}?>">
 			</div>
 		</div>
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
 			    <label for="password"><?php _e("Password", "enginethemes");?></label>
-			    <input type="password" name="user_password" id="password">
+			    <input type="password" class="required" name="user_password" id="password">
 			</div>
 		</div>
 

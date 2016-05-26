@@ -25,7 +25,7 @@ if (get_option('users_can_register')):
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
 			    <label for="username"><?php _e("Username", "enginethemes");?></label>
-			    <input type="text" name="username" id="username" value="<?php if (!empty($_POST['user_login'])) {echo esc_attr($_POST['user_login']);}?>">
+			    <input type="text" name="username" class="required" id="username" value="<?php if (!empty($_POST['user_login'])) {echo esc_attr($_POST['user_login']);}?>">
 			</div>
 		</div>
 		<div class="marketengine-group-field">
@@ -47,19 +47,19 @@ if (get_option('users_can_register')):
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
 			    <label for="user_email"><?php _e("Email", "enginethemes");?></label>
-			    <input type="text" name="user_email" id="user_email" value="<?php if (!empty($_POST['user_email'])) {echo esc_attr($_POST['user_email']);}?>" >
+			    <input type="text" name="user_email" class="required email" id="user_email" value="<?php if (!empty($_POST['user_email'])) {echo esc_attr($_POST['user_email']);}?>" >
 			</div>
 		</div>
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
 			    <label for="password"><?php _e("Create password", "enginethemes");?></label>
-			    <input type="password" name="password" id="password">
+			    <input type="password" name="password" class="required" id="password">
 			</div>
 		</div>
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
 			    <label for="confirm-password"><?php _e("Confirm password", "enginethemes");?></label>
-			    <input type="password" name="confirm-password" id="confirm-password">
+			    <input type="password" name="confirm-password" class="required" id="confirm-password">
 			</div>
 		</div>
 
@@ -68,7 +68,7 @@ if (get_option('users_can_register')):
 		<div class="marketengine-group-field terms-signup">
 			<div class="marketengine-checkbox-field">
 				<label for="agree-with-tos">
-					<input id="agree-with-tos" name="agree-with-tos" type="checkbox"><?php printf(__("I agree to the site's <a href=''>Terms of Service</a>", "enginethemes"));?>
+					<input id="agree-with-tos" name="agree-with-tos" class="required" type="checkbox"><?php printf(__("I agree to the site's <a href=''>Terms of Service</a>", "enginethemes"));?>
 				</label>
 			</div>
 		</div>
