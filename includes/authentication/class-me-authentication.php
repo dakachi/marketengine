@@ -32,7 +32,7 @@ class ME_Authentication {
      */
     public static function login($user_data) {
         $user_login = sanitize_user($user_data['user_login']);
-        $user_pass  = $user_data['user_password'];
+        $user_pass = $user_data['user_password'];
 
         if (empty($user_login)) {
             return new WP_Error('username_required', __('Username is required.', 'enginethemes'));
@@ -50,18 +50,18 @@ class ME_Authentication {
             $user_login = $user->user_login;
         }
 
-        $creds                  = array();
-        $creds['user_login']    = $user_login;
+        $creds = array();
+        $creds['user_login'] = $user_login;
         $creds['user_password'] = $user_pass;
-        $creds['remember']      = isset($user_data['rememberme']);
-        $secure                 = is_ssl() ? true : false;
+        $creds['remember'] = isset($user_data['rememberme']);
+        $secure = is_ssl() ? true : false;
         /**
          * filter the login credentials
          * @param Array $creds
          * @since 1.0
          */
         $creds = apply_filters('me_login_credentials', $creds);
-        $user  = wp_signon($creds, $secure);
+        $user = wp_signon($creds, $secure);
         return $user;
     }
     /**
@@ -82,10 +82,10 @@ class ME_Authentication {
     public static function register($user_data) {
         // TODO: these rules will be considered, role?
         $rules = array(
-            'user_login'     => 'required',
-            'user_pass'      => 'required',
-            'confirm_pass'   => 'required|same:user_pass',
-            'user_email'     => 'required|email',
+            'user_login' => 'required',
+            'user_pass' => 'required',
+            'confirm_pass' => 'required|same:user_pass',
+            'user_email' => 'required|email',
             'agree_with_tos' => 'required',
         );
         /**
@@ -96,7 +96,7 @@ class ME_Authentication {
          *
          * @since 1.0
          */
-        $rules    = apply_filters('me_register_rules', $rules, $user_data);
+        $rules = apply_filters('me_register_rules', $rules, $user_data);
         $is_valid = me_validate($user_data, $rules);
 
         $errors = new WP_Error();
@@ -113,9 +113,9 @@ class ME_Authentication {
         }
         $user = wp_insert_user($user_data);
 
-        if(get_option('is_required_email_confirmation')) {
+        if (get_option('is_required_email_confirmation')) {
             // generate the activation key
-            $activate_email_key = md5($user_email. time());
+            $activate_email_key = md5($user_email . time());
             // store the activation key to user meta data
             update_user_meta($user->ID, 'user_activate_email_key', $activate_email_key);
             // send email
@@ -130,7 +130,7 @@ class ME_Authentication {
          * @since 1.0
          *
          */
-        do_action( 'me_user_register', $user, $user_data );
+        do_action('me_user_register', $user, $user_data);
         // TODO: send confirm email
         return $user;
     }
@@ -159,7 +159,7 @@ class ME_Authentication {
             }
 
         } else {
-            $login     = trim($user['user_login']);
+            $login = trim($user['user_login']);
             $user_data = get_user_by('login', $login);
         }
 
@@ -186,7 +186,7 @@ class ME_Authentication {
         // Redefining user_login ensures we return the right case in the email.
         $user_login = $user_data->user_login;
         $user_email = $user_data->user_email;
-        $key        = get_password_reset_key($user_data);
+        $key = get_password_reset_key($user_data);
 
         if (is_wp_error($key)) {
             return $key;
@@ -257,10 +257,10 @@ class ME_Authentication {
      */
     public static function reset_pass($user_data) {
         $rules = array(
-            'user_login'  => 'required',
-            'new_pass'    => 'required',
+            'user_login' => 'required',
+            'new_pass' => 'required',
             'retype_pass' => 'required|same:new_pass',
-            'key'         => 'required',
+            'key' => 'required',
         );
         /**
          * filter reset pass data validate rules
@@ -270,10 +270,10 @@ class ME_Authentication {
          *
          * @since 1.0
          */
-        $rules    = apply_filters('me_reset_pass_rules', $rules, $user_data);
+        $rules = apply_filters('me_reset_pass_rules', $rules, $user_data);
         $is_valid = me_validate($user_data, $rules);
         if (!$is_valid) {
-            $errors       = new WP_Error();
+            $errors = new WP_Error();
             $invalid_data = me_get_invalid_message($user_data, $rules);
             foreach ($invalid_data as $key => $message) {
                 $errors->add($key, $message);
@@ -304,7 +304,7 @@ class ME_Authentication {
     public static function confirm_email($user_data) {
         $rules = array(
             'user_email' => 'required|email',
-            'key'        => 'required',
+            'key' => 'required',
         );
         /**
          * filter confirm email data validate rules
@@ -314,10 +314,10 @@ class ME_Authentication {
          *
          * @since 1.0
          */
-        $rules    = apply_filters('me_confirm_mail_rules', $rules, $user_data);
+        $rules = apply_filters('me_confirm_mail_rules', $rules, $user_data);
         $is_valid = me_validate($user_data, $rules);
         if (!$is_valid) {
-            $errors       = new WP_Error();
+            $errors = new WP_Error();
             $invalid_data = me_get_invalid_message($user_data, $rules);
             foreach ($invalid_data as $key => $message) {
                 $errors->add($key, $message);
@@ -348,7 +348,7 @@ class ME_Authentication {
 
     public static function send_activation_email($user) {
         $user_activate_email_key = get_user_meta($user->ID, 'activate_email_key', true);
-        if($user_activate_email_key) {
+        if ($user_activate_email_key) {
             // get activation mail content from template
             ob_start();
             me_get_template_part('activation-email');
@@ -374,7 +374,7 @@ class ME_Authentication {
              */
             $activation_mail_content = apply_filters('me_activation_mail_content', $activation_mail_content, $user);
 
-            return wp_email($user->user_email, $activation_mail_subject, $activation_mail_content )
+            return wp_email($user->user_email, $activation_mail_subject, $activation_mail_content);
         }
         return false;
     }

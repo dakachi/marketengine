@@ -1,27 +1,31 @@
-<?php 
-function me_locate_template($template_names, $load = false, $require_once = true ) {
+<?php
+function me_locate_template($template_names, $load = false, $require_once = true) {
     $located = '';
-    foreach ( (array) $template_names as $template_name ) {
-        if ( !$template_name )
+    $me_template_path = ME()->template_path();
+    foreach ((array) $template_names as $template_name) {
+        if (!$template_name) {
             continue;
-        if ( file_exists(STYLESHEETPATH . '/' . $template_name)) {
-            $located = STYLESHEETPATH . '/' . $template_name;
+        }
+        if (file_exists(STYLESHEETPATH . '/' . $me_template_path . $template_name)) {
+            $located = STYLESHEETPATH . '/' . $me_template_path . $template_name;
             break;
-        } elseif ( file_exists(TEMPLATEPATH . '/' . $template_name) ) {
-            $located = TEMPLATEPATH . '/' . $template_name;
+        } elseif (file_exists(TEMPLATEPATH . '/' . $me_template_path . $template_name)) {
+            $located = TEMPLATEPATH . '/' . $me_template_path . $template_name;
             break;
-        } elseif ( file_exists( ABSPATH . WPINC . '/theme-compat/' . $template_name ) ) {
-            $located = ABSPATH . WPINC . '/theme-compat/' . $template_name;
+        } elseif (file_exists(ME()->plugin_path() . '/templates/' . $template_name)) {
+            $located = ME()->plugin_path() . '/templates/' . $template_name;
             break;
         }
     }
-    if ( $load && '' != $located )
-        load_template( $located, $require_once );
+    if ($load && '' != $located) {
+        load_template($located, $require_once);
+    }
+
     return $located;
 }
 
-function me_get_template_part() {
-     /**
+function me_get_template_part($slug, $name = null) {
+    /**
      * Fires before the specified template part file is loaded.
      *
      * The dynamic portion of the hook name, `$slug`, refers to the slug name
@@ -32,12 +36,13 @@ function me_get_template_part() {
      * @param string $slug The slug name for the generic template.
      * @param string $name The name of the specialized template.
      */
-    do_action( "me_get_template_part_{$slug}", $slug, $name );
+    do_action("me_get_template_part_{$slug}", $slug, $name);
 
     $templates = array();
     $name = (string) $name;
-    if ( '' !== $name )
+    if ('' !== $name) {
         $templates[] = "{$slug}-{$name}.php";
+    }
 
     $templates[] = "{$slug}.php";
 
@@ -45,12 +50,12 @@ function me_get_template_part() {
 }
 
 // TODO: can dat ham nay cho dung vi tri file
-function me_get_page_permalink( $page_name ) {
-    $page = get_page_by_path( $page_name );
-    if( is_wp_error( $page ) ) {
-        return ;
+function me_get_page_permalink($page_name) {
+    $page = get_page_by_path($page_name);
+    if (is_wp_error($page)) {
+        return;
     }
-    return get_permalink( $page->ID );
+    return get_permalink($page->ID);
 }
 
 /**
@@ -60,10 +65,10 @@ function me_get_page_permalink( $page_name ) {
  * @param  string $default_url
  * @return string
  */
-function me_lostpassword_url( $default_url = '' ) {
-    $password_reset_url = me_get_page_permalink( 'reset-pass' );
+function me_lostpassword_url($default_url = '') {
+    $password_reset_url = me_get_page_permalink('reset-pass');
 
-    if ( false !== $password_reset_url ) {
+    if (false !== $password_reset_url) {
         return $password_reset_url;
     } else {
         return $default_url;

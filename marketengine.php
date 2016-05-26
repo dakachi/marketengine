@@ -76,6 +76,7 @@ if (!class_exists('MarketEngine')):
             include_once ME_PLUGIN_PATH . '/includes/class-me-session.php';
             include_once ME_PLUGIN_PATH . '/includes/class-me-validator.php';
             include_once ME_PLUGIN_PATH . '/includes/class-me-post-types.php';
+            include_once ME_PLUGIN_PATH . '/includes/class-me-query.php';
 
             include_once ME_PLUGIN_PATH . '/includes/me-notices-functions.php';
             include_once ME_PLUGIN_PATH . '/includes/me-template-functions.php';
@@ -85,10 +86,13 @@ if (!class_exists('MarketEngine')):
             include_once ME_PLUGIN_PATH . '/includes/authentication/class-me-authentication.php';
 
             include_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing.php';
+
+            include_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-auth.php';
         }
 
         private function init_hooks() {
             add_action('init', array($this, 'init'));
+            add_action('wp_enqueue_scripts', array($this, 'add_scripts'));
         }
 
         public function init() {
@@ -96,6 +100,10 @@ if (!class_exists('MarketEngine')):
 
             ME_Post_Types::register_post_type();
             ME_Post_Types::register_tanonomies();
+        }
+
+        public function add_scripts() {
+            wp_enqueue_style('me_layout', $this->plugin_url() . '/assets/css/marketengine-layout.css');
         }
 
         /**

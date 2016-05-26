@@ -31,7 +31,7 @@ function me_add_notice($message, $notice_type = 'success') {
      * @param String $message
      * @since 1.0
      */
-    $message                    = apply_filters('me_add_' . $notice_type, $message);
+    $message = apply_filters('me_add_' . $notice_type, $message);
     $me_notices[$notice_type][] = $message;
     ME()->session->set('me_notices', $me_notices);
 }
@@ -92,7 +92,7 @@ function me_wp_error_to_notices($wp_error) {
         return;
     }
     if (is_wp_error($wp_error) && $wp_error->get_error_messages()) {
-        foreach ($wp_error->get_error_messages as $key => $message) {
+        foreach ($wp_error->get_error_messages() as $key => $message) {
             me_add_notice($message, 'error');
         }
     }

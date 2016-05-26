@@ -65,8 +65,8 @@ class ME_Autoloader {
      */
     public function autoload($class) {
         $class = strtolower($class);
-        $file  = $this->get_file_name_from_class($class);
-        $path  = '';
+        $file = $this->get_file_name_from_class($class);
+        $path = '';
         // cho nay kiem tra ten class de thay doi include path cho phu hop
         if (strpos($class, 'me_listings') === 0) {
             $path = $this->include_path . 'listings/' . substr(str_replace('_', '-', $class), 18) . '/';
@@ -74,6 +74,8 @@ class ME_Autoloader {
             $path = $this->include_path . 'users/' . substr(str_replace('_', '-', $class), 11) . '/';
         } elseif (strpos($class, 'me_authentication') === 0) {
             $path = $this->include_path . 'authentication/' . substr(str_replace('_', '-', $class), 12) . '/';
+        } elseif (strpos($class, 'me_shortcodes') === 0) {
+            $path = $this->include_path . 'shortcodes/' . substr(str_replace('_', '-', $class), 12) . '/';
         }
 
         if (empty($path) || (!$this->load_file($path . $file) && strpos($class, 'me_') === 0)) {
