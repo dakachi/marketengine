@@ -2,6 +2,7 @@
 class ME_Shortcodes_Auth {
     public static function init_shortcodes() {
         add_shortcode('me_user_account', array(__CLASS__, 'me_user_account'));
+        add_shortcode('me_user_register', array(__CLASS__, 'me_register_form'));
     }
     public static function me_user_account() {
         global $wp;
@@ -17,6 +18,14 @@ class ME_Shortcodes_Auth {
         $content = ob_get_clean();
         return $content;
     }
+
+    public static function me_register_form() {
+        ob_start();
+        me_get_template_part('account/form-register');
+        $content = ob_get_clean();
+        return $content;
+    }
+
     public static function forgot_password_form() {
         ob_start();
         me_get_template_part('account/forgot-password');

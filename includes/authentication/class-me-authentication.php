@@ -34,11 +34,15 @@ class ME_Authentication {
         $user_login = sanitize_user($user_data['user_login']);
         $user_pass = $user_data['user_password'];
 
+        $error = new WP_Error();
         if (empty($user_login)) {
-            return new WP_Error('username_required', __('Username is required.', 'enginethemes'));
+            $error->add('username_required', __('Username is required.', 'enginethemes'));
         }
         if (empty($user_pass)) {
-            return new WP_Error('password_required', __('Password is required.', 'enginethemes'));
+            $error->add('password_required', __('Password is required.', 'enginethemes'));
+        }
+        if ($error->get_error_messages()) {
+            return $error;
         }
 
         $user = get_user_by('login', $user_login);

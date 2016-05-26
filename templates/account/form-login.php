@@ -14,12 +14,12 @@ echo "<pre>";
 print_r($notices);
 echo "</pre>";
 me_empty_notices();
-do_action('marketengine_before_user_login_form');
-if (get_option('users_can_register')): ?>
 
+do_action('marketengine_before_user_login_form');
+?>
 	<form id="login-form" action="" method="post">
 
-	<?php do_action('marketengine_login_form_start');?>
+	<?php do_action('marketengine_user_login_form_start');?>
 
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
@@ -34,7 +34,7 @@ if (get_option('users_can_register')): ?>
 			</div>
 		</div>
 
-		<?php do_action('marketengine_login_form');?>
+		<?php do_action('marketengine_user_login_form');?>
 
 		<div class="marketengine-group-field submit-sigin">
 			<input type="submit" class="marketengine-btn" name="login" value="login">
@@ -47,9 +47,8 @@ if (get_option('users_can_register')): ?>
 
 		<?php wp_nonce_field('me-login', "_wpnonce");?>
 
-		<?php do_action('marketengine_login_form_end');?>
+		<?php do_action('marketengine_user_login_form_end');?>
 	</form>
 
 <?php
 do_action('marketengine_after_user_login_form');
-endif;
