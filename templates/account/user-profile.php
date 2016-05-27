@@ -15,7 +15,7 @@ $user = new ME_User($current_user);
 <div class="marketengine marketengine-content">
 	<div class="me-container-fluid">
 		<div class="me-row">
-			<div class="me-col-md-2">
+			<div class="me-col-md-3">
 				<div class="marketengine-avatar-user">
 					<a class="avatar-user">
 						<?php echo get_avatar($current_user->ID); ?>
@@ -23,7 +23,7 @@ $user = new ME_User($current_user);
 					<span>Test Administrator</span>
 				</div>
 			</div>
-			<div class="me-col-md-10">
+			<div class="me-col-md-9">
 				<div class="marketengine-profile-info">
 					<div class="me-row">
 

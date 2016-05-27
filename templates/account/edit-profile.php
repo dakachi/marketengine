@@ -15,7 +15,7 @@ global $user_ID;
 	<form id="edit-rpfile-form" action="" method="post">
 		<div class="me-container-fluid">
 			<div class="me-row">
-				<div class="me-col-md-2">
+				<div class="me-col-md-3">
 					<div class="marketengine-avatar-user">
 						<a class="avatar-user">
 							<?php echo get_avatar($user_ID); ?>
@@ -23,7 +23,7 @@ global $user_ID;
 						<span>Test Administrator</span>
 					</div>
 				</div>
-				<div class="me-col-md-10">
+				<div class="me-col-md-9">
 					<div class="marketengine-profile-info">
 						<div class="me-row">
 							<div class="me-col-md-6">
