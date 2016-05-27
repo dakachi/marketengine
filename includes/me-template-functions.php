@@ -75,3 +75,34 @@ function me_lostpassword_url($default_url = '') {
     }
 }
 // add_filter( 'lostpassword_url',  'me_lostpassword_url', 10, 1 );
+
+/**
+ * Get endpoint URL.
+ *
+ * Gets the URL for an endpoint, which varies depending on permalink settings.
+ *
+ * @param  string $endpoint
+ * @param  string $value
+ * @param  string $permalink
+ *
+ * @return string
+ */
+function me_get_endpoint_url($endpoint, $value = '', $permalink = '') {
+    if (!$permalink) {
+        $permalink = get_permalink();
+    }
+
+    if (get_option('permalink_structure')) {
+        if (strstr($permalink, '?')) {
+            $query_string = '?' . parse_url($permalink, PHP_URL_QUERY);
+            $permalink = current(explode('?', $permalink));
+        } else {
+            $query_string = '';
+        }
+        $url = trailingslashit($permalink) . $endpoint . '/' . $value . $query_string;
+    } else {
+        $url = add_query_arg($endpoint, $value, $permalink);
+    }
+
+    return apply_filters('marketengine_get_endpoint_url', $url, $endpoint, $value, $permalink);
+}
