@@ -30,31 +30,31 @@ $user = new ME_User($current_user);
 							<div class="me-row">
 								<div class="me-col-md-6">
 									<div class="marketengine-text-field">
-										<span><?php _e("First name", "enginethemes");?></span>
+										<label class="text"><?php _e("First name", "enginethemes");?></label>
 										<p>Text</p>
 									</div>
 								</div>
 								<div class="me-col-md-6">
 									<div class="marketengine-text-field">
-										<span><?php _e("Last name", "enginethemes");?></span>
+										<label class="text"><?php _e("Last name", "enginethemes");?></label>
 										<p>Admin</p>
 									</div>
 								</div>
 							</div>
 							<div class="marketengine-text-field">
-								<span><?php _e("Display name", "enginethemes");?></span>
+								<label class="text"><?php _e("Display name", "enginethemes");?></label>
 								<p>Text	Admin</p>
 							</div>
 							<div class="marketengine-text-field">
-								<span><?php _e("Username", "enginethemes");?></span>
+								<label class="text"><?php _e("Username", "enginethemes");?></label>
 								<p>admin</p>
 							</div>
 							<div class="marketengine-text-field">
-								<span><?php _e("Email", "enginethemes");?></span>
+								<label class="text"><?php _e("Email", "enginethemes");?></label>
 								<p>admin@enginethemes.com</p>
 							</div>
 							<div class="marketengine-text-field me-no-margin-bottom">
-								<span><?php _e("Location", "enginethemes");?></span>
+								<label class="text"><?php _e("Location", "enginethemes");?></label>
 								<p>Vietnamese</p>
 							</div>
 						</div>

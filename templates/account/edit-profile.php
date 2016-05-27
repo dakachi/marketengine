@@ -9,6 +9,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+global $user_ID;
 ?>
 <div class="marketengine marketengine-content">
 	<form id="edit-rpfile-form" action="" method="post">
@@ -17,7 +18,7 @@ if (!defined('ABSPATH')) {
 				<div class="me-col-md-2">
 					<div class="marketengine-avatar-user">
 						<a class="avatar-user">
-							<img src="assets/img/avatar.png" alt="">
+							<?php echo get_avatar($user_ID); ?>
 						</a>
 						<span>Test Administrator</span>
 					</div>
@@ -30,16 +31,15 @@ if (!defined('ABSPATH')) {
 									<div class="me-col-md-6">
 										<div class="marketengine-group-field">
 											<div class="marketengine-input-field">
-												<span class="text">First name</span>
+												<label class="text">First name</label>
 												<input type="text" value="Text">
-												<!-- <label class="message">This is field required.</label> -->
 											</div>
 										</div>
 									</div>
 									<div class="me-col-md-6">
 										<div class="marketengine-group-field">
 											<div class="marketengine-input-field">
-												<span class="text">Last name</span>
+												<label class="text">Last name</label>
 												<input type="text" value="Admin">
 											</div>
 										</div>
@@ -47,19 +47,19 @@ if (!defined('ABSPATH')) {
 								</div>
 								<div class="marketengine-group-field">
 									<div class="marketengine-input-field">
-										<span class="text">Display name</span>
+										<label class="text">Display name</label>
 										<input type="text" value="Admin">
 									</div>
 								</div>
 								<div class="marketengine-group-field">
 									<div class="marketengine-input-field">
-										<span class="text">Email</span>
+										<label class="text">Email</label>
 										<input type="email" value="admin@enginethemes.com">
 									</div>
 								</div>
 								<div class="marketengine-group-field me-no-margin-bottom">
 									<div class="marketengine-input-field">
-										<span class="text">Location</span>
+										<label class="text">Location</label>
 										<input type="text" value="Vietnamese">
 									</div>
 								</div>
