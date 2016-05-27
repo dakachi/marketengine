@@ -26,46 +26,42 @@ global $user_ID;
 				<div class="me-col-md-10">
 					<div class="marketengine-profile-info">
 						<div class="me-row">
-							<div class="me-col-md-7">
-								<div class="me-row">
-									<div class="me-col-md-6">
-										<div class="marketengine-group-field">
-											<div class="marketengine-input-field">
-												<label class="text">First name</label>
-												<input type="text" value="Text">
-											</div>
-										</div>
-									</div>
-									<div class="me-col-md-6">
-										<div class="marketengine-group-field">
-											<div class="marketengine-input-field">
-												<label class="text">Last name</label>
-												<input type="text" value="Admin">
-											</div>
-										</div>
-									</div>
-								</div>
+							<div class="me-col-md-6">
 								<div class="marketengine-group-field">
 									<div class="marketengine-input-field">
-										<label class="text">Display name</label>
-										<input type="text" value="Admin">
-									</div>
-								</div>
-								<div class="marketengine-group-field">
-									<div class="marketengine-input-field">
-										<label class="text">Email</label>
-										<input type="email" value="admin@enginethemes.com">
-									</div>
-								</div>
-								<div class="marketengine-group-field me-no-margin-bottom">
-									<div class="marketengine-input-field">
-										<label class="text">Location</label>
-										<input type="text" value="Vietnamese">
+										<label class="text">First name</label>
+										<input type="text" value="Text">
 									</div>
 								</div>
 							</div>
-							<div class="me-col-md-5"></div>
+							<div class="me-col-md-6">
+								<div class="marketengine-group-field">
+									<div class="marketengine-input-field">
+										<label class="text">Last name</label>
+										<input type="text" value="Admin">
+									</div>
+								</div>
+							</div>
 						</div>
+						<div class="marketengine-group-field">
+							<div class="marketengine-input-field">
+								<label class="text">Display name</label>
+								<input type="text" value="Admin">
+							</div>
+						</div>
+						<div class="marketengine-group-field">
+							<div class="marketengine-input-field">
+								<label class="text">Email</label>
+								<input type="email" value="admin@enginethemes.com">
+							</div>
+						</div>
+						<div class="marketengine-group-field me-no-margin-bottom">
+							<div class="marketengine-input-field">
+								<label class="text">Location</label>
+								<input type="text" value="Vietnamese">
+							</div>
+						</div>
+
 					</div>
 					<div class="marketengine-text-field edit-profile">
 						<input type="submit" class="marketengine-btn" value="<?php _e("Update Profile", "enginethemes");?>">

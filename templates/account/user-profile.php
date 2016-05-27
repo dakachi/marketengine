@@ -26,8 +26,7 @@ $user = new ME_User($current_user);
 			<div class="me-col-md-10">
 				<div class="marketengine-profile-info">
 					<div class="me-row">
-						<div class="me-col-md-7">
-							<div class="me-row">
+
 								<div class="me-col-md-6">
 									<div class="marketengine-text-field">
 										<label class="text"><?php _e("First name", "enginethemes");?></label>
@@ -57,9 +56,9 @@ $user = new ME_User($current_user);
 								<label class="text"><?php _e("Location", "enginethemes");?></label>
 								<p>Vietnamese</p>
 							</div>
-						</div>
-						<div class="me-col-md-5"></div>
-					</div>
+
+
+
 				</div>
 				<div class="marketengine-text-field edit-profile">
 					<a href="<?php echo me_get_endpoint_url('edit-profile'); ?>" class="marketengine-btn"><?php _e("EditProfile", "enginethemes");?></a>
