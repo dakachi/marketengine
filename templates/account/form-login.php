@@ -9,12 +9,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-$notices = me_get_notices();
-echo "<pre>";
-print_r($notices);
-echo "</pre>";
-me_empty_notices();
-
+me_print_notices();
 do_action('marketengine_before_user_login_form');
 ?>
 	<form id="login-form" action="" method="post">

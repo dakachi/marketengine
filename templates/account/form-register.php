@@ -9,11 +9,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-$notices = me_get_notices();
-echo "<pre>";
-print_r($notices);
-echo "</pre>";
-me_empty_notices();
+me_print_notices();
 
 if (get_option('users_can_register')):
 ?>
