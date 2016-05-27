@@ -36,7 +36,7 @@ class ME_Auth_Form extends ME_Form {
                 } elseif (wp_get_referer()) {
                     $redirect = wp_get_referer();
                 } else {
-                    $redirect = me_get_page_permalink('my_profile');
+                    $redirect = me_get_page_permalink('user-profile');
                 }
                 /**
                  * action filter redirect link after user login
@@ -70,7 +70,7 @@ class ME_Auth_Form extends ME_Form {
                 } elseif (wp_get_referer()) {
                     $redirect = wp_get_referer();
                 } else {
-                    $redirect = me_get_page_permalink('my_profile');
+                    $redirect = me_get_page_permalink('user-profile');
                 }
                 /**
                  * action filter redirect link after user login
