@@ -98,6 +98,16 @@ function me_wp_error_to_notices($wp_error) {
     }
 }
 
+/**
+ * MarketEngine print notices
+ *
+ * Parse the notices to HTML
+ *
+ * @since 1.0
+ *
+ * @param string $notice_type The notice type want to show
+ * @return void
+ */
 function me_print_notices($notice_type = 'all') {
     if (!did_action('init')) {
         _doing_it_wrong(__FUNCTION__, __('This function should not be called before wordpress init.', 'enginethemes'), '1.0');

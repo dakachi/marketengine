@@ -32,7 +32,7 @@ do_action('marketengine_before_user_login_form');
 		<?php do_action('marketengine_user_login_form');?>
 
 		<div class="marketengine-group-field submit-sigin">
-			<input type="submit" class="marketengine-btn" name="login" value="login">
+			<input type="submit" class="marketengine-btn" name="login" value="<?php _e("Login", "enginethemes");?>">
 		</div>
 		<div class="marketengine-group-field forgot-sigin">
 			<a href="#" class="forgot-pass"><?php _e("Forgot password?", "enginethemes");?></a>

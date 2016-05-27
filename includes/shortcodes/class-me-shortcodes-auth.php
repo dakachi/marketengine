@@ -3,14 +3,26 @@ class ME_Shortcodes_Auth {
     public static function init_shortcodes() {
         add_shortcode('me_user_account', array(__CLASS__, 'me_user_account'));
         add_shortcode('me_user_register', array(__CLASS__, 'me_register_form'));
+        add_shortcode('me_user_login', array(__CLASS__, 'me_login_form'));
     }
     public static function me_user_account() {
         global $wp;
-        if (isset($wp->query_vars['forgot-password'])) {
-            return self::forgot_password_form();
+        if (is_user_logged_in()) {
+            return self::me_user_profile();
         } else {
+            if (isset($wp->query_vars['forgot-password'])) {
+                return self::forgot_password_form();
+            } elseif (isset($wp->query_vars['register'])) {
+                return self::me_register_form();
+            }
             return self::me_login_form();
         }
+    }
+    public static function me_user_profile() {
+        ob_start();
+        me_get_template_part('account/user-profile');
+        $content = ob_get_clean();
+        return $content;
     }
     public static function me_login_form() {
         ob_start();

@@ -20,8 +20,8 @@ if (get_option('users_can_register')):
 		<?php do_action('marketengine_user_register_form_start');?>
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
-			    <label for="username"><?php _e("Username", "enginethemes");?></label>
-			    <input type="text" name="username" class="required" id="username" value="<?php if (!empty($_POST['user_login'])) {echo esc_attr($_POST['user_login']);}?>">
+			    <label for="username"><?php _e("User Login", "enginethemes");?></label>
+			    <input type="text" name="user_login" class="required" id="username" value="<?php if (!empty($_POST['user_login'])) {echo esc_attr($_POST['user_login']);}?>">
 			</div>
 		</div>
 		<div class="marketengine-group-field">
@@ -49,13 +49,13 @@ if (get_option('users_can_register')):
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
 			    <label for="password"><?php _e("Create password", "enginethemes");?></label>
-			    <input type="password" name="password" class="required" id="password">
+			    <input type="password" name="user_pass" class="required" id="password">
 			</div>
 		</div>
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
 			    <label for="confirm-password"><?php _e("Confirm password", "enginethemes");?></label>
-			    <input type="password" name="confirm-password" class="required" id="confirm-password">
+			    <input type="password" name="confirm_pass" class="required" id="confirm-password">
 			</div>
 		</div>
 
@@ -64,12 +64,12 @@ if (get_option('users_can_register')):
 		<div class="marketengine-group-field terms-signup">
 			<div class="marketengine-checkbox-field">
 				<label for="agree-with-tos">
-					<input id="agree-with-tos" name="agree-with-tos" class="required" type="checkbox"><?php printf(__("I agree to the site's <a href=''>Terms of Service</a>", "enginethemes"));?>
+					<input id="agree-with-tos" name="agree_with_tos" class="required" type="checkbox"><?php printf(__("I agree to the site's <a href=''>Terms of Service</a>", "enginethemes"));?>
 				</label>
 			</div>
 		</div>
 		<div class="marketengine-group-field submit-signup">
-			<input class="marketengine-btn disable" type="submit" name="register" value="Sign up">
+			<input class="marketengine-btn disable" type="submit" name="register" value="<?php _e("Sign up", "enginethemes")?>">
 		</div>
 		<a href="#" class="back-home-sigin">&lt; <?php _e("Back to Home", "enginethemes");?></a>
 		<?php wp_nonce_field('me-register');?>
