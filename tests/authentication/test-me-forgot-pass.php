@@ -6,7 +6,7 @@ class Tests_ME_Forgot_Pass extends WP_UnitTestCase {
 
     public function test_forgot_pass_success_mail_address() {
         $u1   = self::factory()->user->create(array('user_login' => 'dakachi', 'user_pass' => '123', 'user_email' => 'dakachi@gmail.com'));
-        $key = get_password_reset_key( get_userdata( $u1 ) );
+        //$key = get_password_reset_key( get_userdata( $u1 ) );
 
     	$mailer = ME_Authentication::retrieve_password( array('user_login' => 'dakachi') );
 
