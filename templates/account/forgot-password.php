@@ -1,3 +1,16 @@
+<?php
+/**
+ * This template can be overridden by copying it to yourtheme/marketengine/account/forgot-password.php.
+ * @package     MarketEngine/Templates
+ * @version     1.0
+ */
+
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+?>
 <form id="forgot-password-form" action="" method="post">
 	<h3><?php _e("Forgot Password", "enginethemes"); ?></h3>
 	<div class="marketengine-group-field">

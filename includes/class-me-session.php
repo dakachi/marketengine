@@ -306,7 +306,7 @@ class ME_Session {
 
     public function set_cookie() {
         $hash = wp_hash($this->_session_key . $this->_expired_time);
-        // setcookie($this->_cookie, $this->_session_key . '||' . $this->_expired_time . '||' . $this->_expirant_time . '||' . $hash, $this->_expired_time, '/');
+        setcookie($this->_cookie, $this->_session_key . '||' . $this->_expired_time . '||' . $this->_expirant_time . '||' . $hash, $this->_expired_time, '/');
     }
 
     /**

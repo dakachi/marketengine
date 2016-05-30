@@ -127,12 +127,14 @@ class ME_Authentication {
         }
 
         $user = wp_insert_user($user_data);
-        if(is_wp_error( $user )) return $user;
+        if (is_wp_error($user)) {
+            return $user;
+        }
 
         $user = new WP_User($user);
         if (get_option('is_required_email_confirmation')) {
             // generate the activation key
-            $activate_email_key = md5($user_email . time());
+            $activate_email_key = wp_hash(md5($user_data['user_email'] . time()));
             // store the activation key to user meta data
             update_user_meta($user->ID, 'user_activate_email_key', $activate_email_key);
             // send email
@@ -392,6 +394,11 @@ class ME_Authentication {
              * @since 1.0
              */
             $activation_mail_subject = apply_filters('marketengine_activation_mail_subject', __("Activate Email", "enginethemes"), $user);
+            $profile_link = me_get_page_permalink('user-profile');
+            $activate_email_link = add_query_arg(array(
+                'key' => $activate_email_link,
+                'user_email' => $user->user_email,
+            ), $profile_link);
 
             $activation_mail_content = str_replace('[activate_email_link]', $activate_email_link, $activation_mail_content);
             /**
@@ -405,20 +412,20 @@ class ME_Authentication {
             $activation_mail_content = apply_filters('marketengine_activation_mail_content', $activation_mail_content, $user);
 
             return wp_mail($user->user_email, $activation_mail_subject, $activation_mail_content);
-        }else {
+        } else {
             return new WP_Error('already_confirmed', __("Your email is already confirmed.", "enginethemes"));
         }
     }
 
-    /**
-     * Send Registration Success Email
-     *
-     * @since 1.0
-     *
-     * @param WP_User $user
-     *
-     * @return bool
-     */
+/**
+ * Send Registration Success Email
+ *
+ * @since 1.0
+ *
+ * @param WP_User $user
+ *
+ * @return bool
+ */
     public static function send_registration_success_email($user) {
         // get registration success mail content from template
         ob_start();
