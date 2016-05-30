@@ -24,11 +24,9 @@ class Tests_ME_Register extends WP_UnitTestCase {
     public function test_register_success_send_confirmation_email() {
         update_option( 'is_required_email_confirmation', true);
         $user = ME_Authentication::register(array('user_login' => 'dakachi2', 'user_pass' => '123', 'confirm_pass' => '123', 'user_email' => 'dakachi2@gmail.com', 'agree_with_tos' => true));
-        
         //retrieve the mailer instance
         $mailer = tests_retrieve_phpmailer_instance();
         $this->assertEquals( 'dakachi@gmail.com', $mailer->get_recipient( 'to' )->address );
-        reset_phpmailer_instance();
     }
 
     // test send register successfull email
@@ -38,7 +36,8 @@ class Tests_ME_Register extends WP_UnitTestCase {
 
         //retrieve the mailer instance
         $mailer = tests_retrieve_phpmailer_instance();
-        $this->assertStringStartsWith( "1Someone has requested a password reset for the following account:", $mailer->get_sent()->body );
+        $this->assertStringStartsWith( "<p>Hello [display_name],</p>
+<p>You have successfully registered an account with [blogname].Here is your account information:</p>", $mailer->get_sent()->body );
         reset_phpmailer_instance();
     }
 
