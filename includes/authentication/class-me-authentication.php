@@ -278,7 +278,7 @@ class ME_Authentication {
         $rules = array(
             'user_login' => 'required',
             'new_pass' => 'required',
-            'retype_pass' => 'required|same:new_pass',
+            'confirm_pass' => 'required|same:new_pass',
             'key' => 'required',
         );
         /**

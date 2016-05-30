@@ -19,7 +19,7 @@ do_action('marketengine_before_reset_password_form');
 	<div class="marketengine-group-field">
 		<div class="marketengine-input-field">
 		    <label class="text"><?php _e("Enter new password", "enginethemes"); ?></label>
-		    <input type="password" name="user_pass">
+		    <input type="password" name="new_pass">
 		</div>
 	</div>
 	<div class="marketengine-group-field">
