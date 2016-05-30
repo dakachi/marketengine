@@ -15,7 +15,9 @@ class ME_Shortcodes_Auth {
         } else {
             if (isset($wp->query_vars['forgot-password'])) {
                 return self::forgot_password_form();
-            } elseif (isset($wp->query_vars['register'])) {
+            } elseif(isset($wp->query_vars['reset-password'])) {
+                return self::me_resetpass_form();
+            }elseif (isset($wp->query_vars['register'])) {
                 return self::me_register_form();
             }
             return self::me_login_form();

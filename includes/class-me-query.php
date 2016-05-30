@@ -2,6 +2,7 @@
 add_action('init', 'me_init');
 function me_init() {
     add_rewrite_endpoint('forgot-password', EP_ROOT | EP_PAGES);
+    add_rewrite_endpoint('reset-password', EP_ROOT | EP_PAGES);
     add_rewrite_endpoint('register', EP_ROOT | EP_PAGES);
     add_rewrite_endpoint('edit-profile', EP_ROOT | EP_PAGES);
 }

@@ -25,7 +25,7 @@ class ME_Auth_Form extends ME_Form {
         add_action('wp_loaded', array(__CLASS__, 'process_resend_confirm_email'));
     }
 
-    public static function redirect() {
+    public static function get_redirect_link() {
         if (isset($_POST['redirect'])) {
             $redirect = $_POST['redirect'];
         } elseif (wp_get_referer()) {
@@ -111,7 +111,7 @@ class ME_Auth_Form extends ME_Form {
     public static function process_reset_pass() {
         if (!empty($_POST['reset_password']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-reset_password')) {
             $user = ME_Authentication::reset_pass($_POST);
-            if ($user) {
+            if (!is_wp_error($user)) {
                 // set the redirect link after reset pass
                 $redirect = self::get_redirect_link();
                 /**
