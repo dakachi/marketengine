@@ -16,6 +16,7 @@ class Tests_ME_Forgot_Pass extends WP_UnitTestCase {
 		//retrieve the mailer instance
 		$mailer = tests_retrieve_phpmailer_instance();
 		$this->assertEquals( 'dakachi@gmail.com',      $mailer->get_recipient( 'to' )->address );
+        reset_phpmailer_instance();
     }
 
     public function test_forgot_pass_success_mail_content() {
@@ -29,7 +30,8 @@ class Tests_ME_Forgot_Pass extends WP_UnitTestCase {
 
         //retrieve the mailer instance
         $mailer = tests_retrieve_phpmailer_instance();
-        $this->assertStringStartsWith( "Someone has requested a password reset for the following account:",        $mailer->get_sent()->body );
+        $this->assertStringStartsWith( "Someone has requested a password reset for the following account:", $mailer->get_sent()->body );
+        reset_phpmailer_instance();
     }
 
     // email invalid
