@@ -95,6 +95,7 @@ class ME_Authentication {
             'user_email' => 'required|email',
             'agree_with_tos' => 'required',
         );
+        
         /**
          * Filter register data validate rules
          *
