@@ -125,7 +125,7 @@ class ME_Auth_Form extends ME_Form {
                  * @since 1.0
                  * @author EngineTeam
                  */
-                me_add_notice(__("You have reset your password Now you can login by your new password.", "enginethemes"));
+                me_add_notice(__("You have reset your password. Now you can login by your new password.", "enginethemes"));
                 $redirect = apply_filters('marketengine_reset_password_redirect', $redirect, $user);
                 wp_redirect($redirect, 302);
                 exit;
