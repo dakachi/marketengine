@@ -99,6 +99,7 @@ class ME_Auth_Form extends ME_Form {
                  * @since 1.0
                  * @author EngineTeam
                  */
+                me_add_notice('success', __("The reset password email aldready send to your email account.", "enginethemes"))
                 $redirect = apply_filters('marketengine_retrieve_password_redirect', $redirect, $user);
                 wp_redirect($redirect, 302);
                 exit;
