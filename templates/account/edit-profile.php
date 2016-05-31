@@ -19,6 +19,9 @@ global $user_ID;
 				<a class="avatar-user">
 					<?php echo get_avatar($user_ID); ?>
 				</a>
+				<span class="change-avatar-user">
+					<i class="icon-uploadprofileimage"></i>
+				</span>
 			</div>
 			<div class="me-row">
 				<div class="me-col-md-6">
