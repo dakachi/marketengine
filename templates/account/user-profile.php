@@ -11,6 +11,7 @@ if (!defined('ABSPATH')) {
 }
 global $current_user;
 $user = new ME_User($current_user);
+me_print_notices();
 ?>
 <div class="marketengine marketengine-content">
 	<div class="me-container-fluid">
