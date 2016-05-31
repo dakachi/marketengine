@@ -85,7 +85,6 @@ class ME_Authentication {
      * @return WP_User|WP_Error True: WP_User finish. WP_Error on error
      */
     public static function register($user_data) {
-        print_r($user_data);
         // TODO: these rules will be considered, role?
         $rules = array(
             'user_login' => 'required',
@@ -143,6 +142,8 @@ class ME_Authentication {
         } else {
             self::send_registration_success_email($user);
         }
+        
+        self::login($user_data);
         /**
          * Do action me_user_register
          *
