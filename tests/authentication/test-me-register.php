@@ -10,13 +10,6 @@ class Tests_ME_Register extends WP_UnitTestCase {
         $this->assertEquals('dakachi', $user->user_login);
     }
 
-    // test register successfull
-    public function test_register_login_success() {
-        $user = ME_Authentication::register(array('user_login' => 'dakachi', 'user_pass' => '123', 'confirm_pass' => '123', 'user_email' => 'dakachi@gmail.com', 'agree_with_tos' => true));
-        $current_user_id = get_current_user_id();
-        //$this->assertEquals($current_user_id, $user->ID);
-    }
-
     // test send register successfull email
     public function test_register_success_email() {
         $user = ME_Authentication::register(array('user_login' => 'dakachi2', 'user_pass' => '123', 'confirm_pass' => '123', 'user_email' => 'dakachi2@gmail.com', 'agree_with_tos' => true));

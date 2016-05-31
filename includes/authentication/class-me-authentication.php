@@ -211,9 +211,6 @@ class ME_Authentication {
         } else {
             self::send_registration_success_email($user);
         }
-
-        wp_signon($user_data);
-
         /**
          * Do action me_user_register
          *

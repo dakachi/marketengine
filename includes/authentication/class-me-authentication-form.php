@@ -70,6 +70,9 @@ class ME_Auth_Form extends ME_Form {
             if (is_wp_error($user)) {
                 me_wp_error_to_notices($user);
             } else {
+                // login in 
+                $_POST['user_password'] = $_POST['user_pass'];
+                $user = ME_Authentication::login($_POST);
                 // set the redirect link after register
                 $redirect = self::get_redirect_link();
                 /**
