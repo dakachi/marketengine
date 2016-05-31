@@ -20,7 +20,7 @@ if (get_option('users_can_register')):
 
 		<?php me_print_notices(); ?>
 		<?php do_action('marketengine_user_register_form_start');?>
-		
+
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
 			    <label for="username"><?php _e("User Login", "enginethemes");?></label>
@@ -46,7 +46,7 @@ if (get_option('users_can_register')):
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
 			    <label for="user_email"><?php _e("Email", "enginethemes");?></label>
-			    <input type="text" name="user_email" class="required email" id="user_email" value="<?php if (!empty($_POST['user_email'])) {echo esc_attr($_POST['user_email']);}?>" >
+			    <input type="email" name="user_email" class="required email" id="user_email" value="<?php if (!empty($_POST['user_email'])) {echo esc_attr($_POST['user_email']);}?>" >
 			</div>
 		</div>
 		<div class="marketengine-group-field">
