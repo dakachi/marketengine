@@ -70,7 +70,7 @@ class ME_Auth_Form extends ME_Form {
             if (is_wp_error($user)) {
                 me_wp_error_to_notices($user);
             } else {
-                // login in 
+                // login in
                 $_POST['user_password'] = $_POST['user_pass'];
                 $user = ME_Authentication::login($_POST);
                 // set the redirect link after register
@@ -136,7 +136,7 @@ class ME_Auth_Form extends ME_Form {
     }
 
     public static function process_confirm_email() {
-        if (!empty($_GET['key']) && !empty($_GET['user_email'])) {
+        if (!empty($_GET['action']) && 'confirm-email' === $_GET['action']) {
             $user = ME_Authentication::confirm_email($_GET);
             if (!is_wp_error($user)) {
                 me_add_notice(__("Your account has been confirmed successfully!.", "enginethemes"));

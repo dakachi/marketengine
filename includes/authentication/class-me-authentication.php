@@ -479,6 +479,7 @@ class ME_Authentication {
             $activate_email_link = add_query_arg(array(
                 'key' => $user_activate_email_key,
                 'user_email' => $user->user_email,
+                'action' => 'confirm-email'
             ), $profile_link);
 
             $activation_mail_content = str_replace('[activate_email_link]', $activate_email_link, $activation_mail_content);

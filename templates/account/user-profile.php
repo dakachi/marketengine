@@ -12,7 +12,6 @@ if (!defined('ABSPATH')) {
 global $current_user;
 $user = new ME_User($current_user);
 me_print_notices();
-echo get_user_meta($current_user->ID, 'activate_email_key', true);
 ?>
 <div class="marketengine marketengine-content">
 	<div class="me-container-fluid">
