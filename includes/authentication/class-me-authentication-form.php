@@ -136,7 +136,7 @@ class ME_Auth_Form extends ME_Form {
     }
 
     public static function process_confirm_email() {
-        if (!empty($_GET['confirm_email']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'me-confirm_email')) {
+        if (!empty($_GET['key']) && !empty($_GET['user_email'])) {
             $user = ME_Authentication::confirm_email($_GET);
             if (!is_wp_error($user)) {
                 me_add_notice(__("Your account has been confirmed successfully!.", "enginethemes"));
