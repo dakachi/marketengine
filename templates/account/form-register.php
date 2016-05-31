@@ -15,9 +15,12 @@ if (get_option('users_can_register')):
 	<?php do_action('marketengine_before_user_register_form', $arg = '');?>
 
 	<form id="register-form" action="" method="post">
-		<?php do_action('marketengine_user_register_form_start');?>
+		
 		<h3><?php _e("Register", "enginethemes"); ?></h3>
+
 		<?php me_print_notices(); ?>
+		<?php do_action('marketengine_user_register_form_start');?>
+		
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
 			    <label for="username"><?php _e("User Login", "enginethemes");?></label>

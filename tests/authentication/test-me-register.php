@@ -18,6 +18,7 @@ class Tests_ME_Register extends WP_UnitTestCase {
         //retrieve the mailer instance
         $mailer = tests_retrieve_phpmailer_instance();
         $this->assertEquals( 'dakachi@gmail.com', $mailer->get_recipient( 'to' )->address );
+        reset_phpmailer_instance();
     }
 
     // test send register successfull email
@@ -27,6 +28,7 @@ class Tests_ME_Register extends WP_UnitTestCase {
         //retrieve the mailer instance
         $mailer = tests_retrieve_phpmailer_instance();
         $this->assertEquals( 'dakachi@gmail.com', $mailer->get_recipient( 'to' )->address );
+        reset_phpmailer_instance();
     }
 
     // test send register successfull email
@@ -36,8 +38,7 @@ class Tests_ME_Register extends WP_UnitTestCase {
 
         //retrieve the mailer instance
         $mailer = tests_retrieve_phpmailer_instance();
-        $this->assertStringStartsWith( "<p>Hello [display_name],</p>
-<p>You have successfully registered an account with [blogname].Here is your account information:</p>", $mailer->get_sent()->body );
+        $this->assertStringStartsWith( "<p>Hello [display_name],</p>", $mailer->get_sent()->body );
         reset_phpmailer_instance();
     }
 

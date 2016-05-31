@@ -13,10 +13,10 @@ class Tests_ME_Reset_Pass extends WP_UnitTestCase {
     }
 
     public function test_reset_pass_success_mail_address() {
-        $u1   = self::factory()->user->create(array('user_login' => 'dakachi', 'user_pass' => '123', 'user_email' => 'dakachi@gmail.com'));
+        $u1   = self::factory()->user->create(array('user_login' => 'dakachi1', 'user_pass' => '123', 'user_email' => 'dakachi@gmail.com'));
         $key = get_password_reset_key( get_userdata( $u1 ) );
 
-        $user = ME_Authentication::reset_pass( array('user_login' => 'dakachi', 'new_pass' => '123', 'confirm_pass' => '123', 'key' => $key ) );
+        $user = ME_Authentication::reset_pass( array('user_login' => 'dakachi1', 'new_pass' => '123', 'confirm_pass' => '123', 'key' => $key ) );
 
         //retrieve the mailer instance
         $mailer = tests_retrieve_phpmailer_instance();

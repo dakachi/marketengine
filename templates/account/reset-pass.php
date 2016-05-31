@@ -14,11 +14,10 @@ do_action('marketengine_before_reset_password_form');
 ?>
 <form id="reset-pass-form" action="" method="post">
 
-	<?php do_action('marketengine_reset_password_form_start'); ?>
-
 	<h3><?php _e("RESET PASSWORD", "enginethemes"); ?></h3>
 
 	<?php me_print_notices(); ?>
+	<?php do_action('marketengine_reset_password_form_start'); ?>
 
 	<div class="marketengine-group-field">
 		<div class="marketengine-input-field">

@@ -70,24 +70,25 @@ if (!class_exists('MarketEngine')):
         }
 
         private function include_files() {
-            include_once ME_PLUGIN_PATH . '/includes/class-me-autoloader.php';
+            require_once ME_PLUGIN_PATH . '/includes/class-me-autoloader.php';
 
-            include_once ME_PLUGIN_PATH . '/includes/class-me-install.php';
-            include_once ME_PLUGIN_PATH . '/includes/class-me-session.php';
-            include_once ME_PLUGIN_PATH . '/includes/class-me-validator.php';
-            include_once ME_PLUGIN_PATH . '/includes/class-me-post-types.php';
-            include_once ME_PLUGIN_PATH . '/includes/class-me-query.php';
+            require_once ME_PLUGIN_PATH . '/includes/class-me-install.php';
+            require_once ME_PLUGIN_PATH . '/includes/class-me-session.php';
+            require_once ME_PLUGIN_PATH . '/includes/class-me-validator.php';
+            require_once ME_PLUGIN_PATH . '/includes/class-me-post-types.php';
+            require_once ME_PLUGIN_PATH . '/includes/class-me-query.php';
 
-            include_once ME_PLUGIN_PATH . '/includes/me-notices-functions.php';
-            include_once ME_PLUGIN_PATH . '/includes/me-template-functions.php';
+            require_once ME_PLUGIN_PATH . '/includes/me-notices-functions.php';
+            require_once ME_PLUGIN_PATH . '/includes/me-template-functions.php';
+            require_once ME_PLUGIN_PATH . '/includes/me-email-functions.php';
 
-            include_once ME_PLUGIN_PATH . '/includes/abstracts/class-abstract-form.php';
-            include_once ME_PLUGIN_PATH . '/includes/authentication/class-me-authentication-form.php';
-            include_once ME_PLUGIN_PATH . '/includes/authentication/class-me-authentication.php';
+            require_once ME_PLUGIN_PATH . '/includes/abstracts/class-abstract-form.php';
+            require_once ME_PLUGIN_PATH . '/includes/authentication/class-me-authentication-form.php';
+            require_once ME_PLUGIN_PATH . '/includes/authentication/class-me-authentication.php';
 
-            include_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing.php';
+            require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing.php';
 
-            include_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-auth.php';
+            require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-auth.php';
         }
 
         private function init_hooks() {

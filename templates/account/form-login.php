@@ -12,10 +12,11 @@ if (!defined('ABSPATH')) {
 do_action('marketengine_before_user_login_form');
 ?>
 	<form id="login-form" action="" method="post">
-
-		<?php do_action('marketengine_user_login_form_start');?>
 		<h3><?php _e("Login", "enginethemes"); ?></h3>
+
 		<?php me_print_notices(); ?>
+		<?php do_action('marketengine_user_login_form_start');?>
+		
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
 			    <label for="username"><?php _e("Email/Username", "enginethemes");?></label>
