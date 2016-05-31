@@ -10,8 +10,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-global $current_user;
-$user = new ME_User($current_user);
+$user = ME()->get_current_user();
 ?>
 
 <?php do_action('marketengine_before_user_profile', $user); ?>
@@ -24,7 +23,7 @@ $user = new ME_User($current_user);
 	<?php do_action('marketengine_user_profile_start', $user); ?>
 
 		<div class="marketengine-profile-info">
-		
+
 			<?php do_action('marketengine_before_user_profile_avatar', $user); ?>
 
 			<div class="marketengine-avatar-user">
