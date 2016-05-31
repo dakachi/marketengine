@@ -131,6 +131,11 @@ if (!class_exists('MarketEngine')):
             return apply_filters('marketengine_template_path', 'marketengine/');
         }
 
+        public function get_current_user(){
+            global $current_user;
+            return new ME_User($current_user);
+        }
+
     }
 endif;
 /**

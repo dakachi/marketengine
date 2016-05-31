@@ -9,7 +9,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-global $user_ID;
+$me_user = ME()->get_current_user();
 ?>
 
 <form id="edit-rpfile-form" action="" method="post">
@@ -18,9 +18,9 @@ global $user_ID;
 			<div class="me-col-md-3">
 				<div class="marketengine-avatar-user">
 					<a class="avatar-user">
-						<?php echo get_avatar($user_ID); ?>
+						<?php echo $me_user->get_avatar(); ?>
 					</a>
-					<span>Test Administrator</span>
+					<span><?php echo $me_user->display_name; ?></span>
 				</div>
 			</div>
 			<div class="me-col-md-9">
@@ -30,7 +30,7 @@ global $user_ID;
 							<div class="marketengine-group-field">
 								<div class="marketengine-input-field">
 									<label class="text"><?php _e("First name", "enginethemes"); ?></label>
-									<input type="text" value="Text">
+									<input type="text" value="<?php echo $me_user->first_name; ?>">
 								</div>
 							</div>
 						</div>
@@ -38,7 +38,7 @@ global $user_ID;
 							<div class="marketengine-group-field">
 								<div class="marketengine-input-field">
 									<label class="text"><?php _e("Last name", "enginethemes"); ?></label>
-									<input type="text" value="Admin">
+									<input type="text" value="<?php echo $me_user->last_name; ?>">
 								</div>
 							</div>
 						</div>
@@ -46,19 +46,13 @@ global $user_ID;
 					<div class="marketengine-group-field">
 						<div class="marketengine-input-field">
 							<label class="text"><?php _e("Display name", "enginethemes"); ?></label>
-							<input type="text" value="Admin">
-						</div>
-					</div>
-					<div class="marketengine-group-field">
-						<div class="marketengine-input-field">
-							<label class="text"><?php _e("Email", "enginethemes"); ?></label>
-							<input type="email" value="admin@enginethemes.com">
+							<input type="text" value="<?php echo $me_user->display_name; ?>">
 						</div>
 					</div>
 					<div class="marketengine-group-field me-no-margin-bottom">
 						<div class="marketengine-input-field">
 							<label class="text"><?php _e("Location", "enginethemes"); ?></label>
-							<input type="text" value="Vietnamese">
+							<input type="text" value="<?php echo $me_user->location; ?>">
 						</div>
 					</div>
 
