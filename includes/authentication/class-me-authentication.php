@@ -112,6 +112,75 @@ class ME_Authentication {
             }
             return $errors;
         }
+
+        extract($user_data);
+        $sanitized_user_login = sanitize_user($user_login);
+        /**
+         * Filter the email address of a user being registered.
+         *
+         * @since 1.0
+         *
+         * @param string $user_email The email address of the new user.
+         */
+        $user_email = apply_filters('user_registration_email', $user_email);
+
+        // Check the username
+        if ($sanitized_user_login == '') {
+            $errors->add('empty_username', __("<strong>ERROR</strong>: Please enter a username.", "enginethemes"));
+        } elseif (!validate_username($user_login)) {
+            $errors->add('invalid_username', __("<strong>ERROR</strong>: This username is invalid because it uses illegal characters. Please enter a valid username.", "enginethemes"));
+            $sanitized_user_login = '';
+        } else {
+            /** This filter is documented in wp-includes/user.php */
+            $illegal_user_logins = array_map('strtolower', (array) apply_filters('illegal_user_logins', array()));
+            if (in_array(strtolower($sanitized_user_login), $illegal_user_logins)) {
+                $errors->add('invalid_username', __("<strong>ERROR</strong>: Sorry, that username is not allowed.", "enginethemes"));
+            }
+        }
+
+        // Check the email address
+        if ($user_email == '') {
+            $errors->add('empty_email', __("<strong>ERROR</strong>: Please type your email address.", "enginethemes"));
+        } elseif (!is_email($user_email)) {
+            $errors->add('invalid_email', __("<strong>ERROR</strong>: The email address isn&#8217;t correct.", "enginethemes"));
+            $user_email = '';
+        }
+
+        /**
+         * Fires when submitting registration form data, before the user is created.
+         *
+         * @since 1.0
+         *
+         * @param string   $sanitized_user_login The submitted username after being sanitized.
+         * @param string   $user_email           The submitted email.
+         * @param WP_Error $errors               Contains any errors with submitted username and email,
+         *                                       e.g., an empty field, an invalid username or email,
+         *                                       or an existing username or email.
+         */
+        do_action('register_post', $sanitized_user_login, $user_email, $errors);
+
+        /**
+         * Filter the errors encountered when a new user is being registered.
+         *
+         * The filtered WP_Error object may, for example, contain errors for an invalid
+         * or existing username or email address. A WP_Error object should always returned,
+         * but may or may not contain errors.
+         *
+         * If any errors are present in $errors, this will abort the user's registration.
+         *
+         * @since 1.0
+         *
+         * @param WP_Error $errors               A WP_Error object containing any errors encountered
+         *                                       during registration.
+         * @param string   $sanitized_user_login User's username after it has been sanitized.
+         * @param string   $user_email           User's email.
+         */
+        $errors = apply_filters('registration_errors', $errors, $sanitized_user_login, $user_email);
+
+        if ($errors->get_error_code()) {
+            return $errors;
+        }
+
         /**
          * do action before add new user
          *
@@ -126,24 +195,25 @@ class ME_Authentication {
             return $errors;
         }
 
-        $user = wp_insert_user($user_data);
-        if (is_wp_error($user)) {
-            return $user;
+        $user_id = wp_insert_user($user_data);
+        if (is_wp_error($user_id)) {
+            return $user_id;
         }
 
-        $user = new WP_User($user);
+        $user = new WP_User($user_id);
         if (get_option('is_required_email_confirmation')) {
             // generate the activation key
             $activate_email_key = wp_hash(md5($user_data['user_email'] . time()));
             // store the activation key to user meta data
-            update_user_meta($user->ID, 'user_activate_email_key', $activate_email_key);
+            update_user_meta($user->ID, 'activate_email_key', $activate_email_key);
             // send email
             self::send_activation_email($user);
         } else {
             self::send_registration_success_email($user);
         }
-        
-        self::login($user_data);
+
+        wp_signon($user_data);
+
         /**
          * Do action me_user_register
          *
@@ -308,7 +378,8 @@ class ME_Authentication {
         if (is_wp_error($user)) {
             return $user;
         } else {
-            reset_password($user, $user_data['new_pass']);
+            do_action('password_reset', $user, $user_data['new_pass']);
+            wp_set_password($user_data['new_pass'], $user->ID);
             return $user;
         }
     }
@@ -398,7 +469,7 @@ class ME_Authentication {
             $activation_mail_subject = apply_filters('marketengine_activation_mail_subject', __("Activate Email", "enginethemes"), $user);
             $profile_link = me_get_page_permalink('user-profile');
             $activate_email_link = add_query_arg(array(
-                'key' => $activate_email_link,
+                'key' => $user_activate_email_key,
                 'user_email' => $user->user_email,
             ), $profile_link);
 
@@ -419,15 +490,15 @@ class ME_Authentication {
         }
     }
 
-/**
- * Send Registration Success Email
- *
- * @since 1.0
- *
- * @param WP_User $user
- *
- * @return bool
- */
+    /**
+     * Send Registration Success Email
+     *
+     * @since 1.0
+     *
+     * @param WP_User $user
+     *
+     * @return bool
+     */
     public static function send_registration_success_email($user) {
         // get registration success mail content from template
         ob_start();

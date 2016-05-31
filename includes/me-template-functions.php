@@ -52,7 +52,7 @@ function me_get_template_part($slug, $name = null) {
 // TODO: can dat ham nay cho dung vi tri file
 function me_get_page_permalink($page_name) {
     $page = get_page_by_path($page_name);
-    if (is_wp_error($page)) {
+    if (!$page) {
         return;
     }
     return get_permalink($page->ID);

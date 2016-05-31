@@ -10,35 +10,42 @@ class Tests_ME_Register extends WP_UnitTestCase {
         $this->assertEquals('dakachi', $user->user_login);
     }
 
+    // test register successfull
+    public function test_register_login_success() {
+        $user = ME_Authentication::register(array('user_login' => 'dakachi', 'user_pass' => '123', 'confirm_pass' => '123', 'user_email' => 'dakachi@gmail.com', 'agree_with_tos' => true));
+        $current_user_id = get_current_user_id();
+        //$this->assertEquals($current_user_id, $user->ID);
+    }
+
     // test send register successfull email
     public function test_register_success_email() {
         $user = ME_Authentication::register(array('user_login' => 'dakachi2', 'user_pass' => '123', 'confirm_pass' => '123', 'user_email' => 'dakachi2@gmail.com', 'agree_with_tos' => true));
-        $u1   = self::factory()->user->get_object_by_id($user);
+        $u1 = self::factory()->user->get_object_by_id($user);
 
         //retrieve the mailer instance
         $mailer = tests_retrieve_phpmailer_instance();
-        $this->assertEquals( 'dakachi@gmail.com', $mailer->get_recipient( 'to' )->address );
+        $this->assertEquals('dakachi@gmail.com', $mailer->get_recipient('to')->address);
         reset_phpmailer_instance();
     }
 
     // test send register successfull email
     public function test_register_success_send_confirmation_email() {
-        update_option( 'is_required_email_confirmation', true);
+        update_option('is_required_email_confirmation', true);
         $user = ME_Authentication::register(array('user_login' => 'dakachi2', 'user_pass' => '123', 'confirm_pass' => '123', 'user_email' => 'dakachi2@gmail.com', 'agree_with_tos' => true));
         //retrieve the mailer instance
         $mailer = tests_retrieve_phpmailer_instance();
-        $this->assertEquals( 'dakachi@gmail.com', $mailer->get_recipient( 'to' )->address );
+        $this->assertEquals('dakachi2@gmail.com', $mailer->get_recipient('to')->address);
         reset_phpmailer_instance();
     }
 
     // test send register successfull email
     public function test_register_success_confirmation_email_content() {
-        update_option( 'is_required_email_confirmation', true);
+        update_option('is_required_email_confirmation', true);
         $user = ME_Authentication::register(array('user_login' => 'dakachi2', 'user_pass' => '123', 'confirm_pass' => '123', 'user_email' => 'dakachi2@gmail.com', 'agree_with_tos' => true));
 
         //retrieve the mailer instance
         $mailer = tests_retrieve_phpmailer_instance();
-        $this->assertStringStartsWith( "<p>Hello [display_name],</p>", $mailer->get_sent()->body );
+        $this->assertStringStartsWith("<p>Hello [display_name],</p>", $mailer->get_sent()->body);
         reset_phpmailer_instance();
     }
 
@@ -62,14 +69,14 @@ class Tests_ME_Register extends WP_UnitTestCase {
 
     // test user name existed
     public function test_register_username_existed() {
-        $u1    = self::factory()->user->create(array('user_login' => 'dakachi', 'user_pass' => '123', 'user_email' => 'dakachi1@gmail.com'));
+        $u1 = self::factory()->user->create(array('user_login' => 'dakachi', 'user_pass' => '123', 'user_email' => 'dakachi1@gmail.com'));
         $error = ME_Authentication::register(array('user_login' => 'dakachi', 'user_pass' => '123', 'confirm_pass' => '123', 'user_email' => 'dakachi@gmail.com', 'agree_with_tos' => true));
         $this->assertEquals($error, new WP_Error('existing_user_login', 'Sorry, that username already exists!'));
     }
 
     // test email existed
     public function test_register_user_email_existed() {
-        $u1    = self::factory()->user->create(array('user_login' => 'dakachi2', 'user_pass' => '123', 'user_email' => 'dakachi@gmail.com'));
+        $u1 = self::factory()->user->create(array('user_login' => 'dakachi2', 'user_pass' => '123', 'user_email' => 'dakachi@gmail.com'));
         $error = ME_Authentication::register(array('user_login' => 'dakachi', 'user_pass' => '123', 'confirm_pass' => '123', 'user_email' => 'dakachi@gmail.com', 'agree_with_tos' => true));
         $this->assertEquals($error, new WP_Error('existing_user_email', 'Sorry, that email address is already used!'));
     }
@@ -83,7 +90,7 @@ class Tests_ME_Register extends WP_UnitTestCase {
     // test invalid user name format
     public function test_register_invalid_user_name_format() {
         $error = ME_Authentication::register(array('user_login' => 'dakachi-*&', 'user_pass' => '123', 'confirm_pass' => '123', 'user_email' => 'dakachi22@gmail.com', 'agree_with_tos' => true));
-        $this->assertEquals($error, new WP_Error('user_login', 'Usernames can only contain lowercase letters (a-z) and numbers.'));
+        $this->assertEquals($error, new WP_Error('invalid_username', '<strong>ERROR</strong>: This username is invalid because it uses illegal characters. Please enter a valid username.'));
     }
 
     // test tos agreemen not checked
