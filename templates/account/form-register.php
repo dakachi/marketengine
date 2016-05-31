@@ -74,7 +74,7 @@ if (get_option('users_can_register')):
 		<div class="marketengine-group-field submit-signup">
 			<input class="marketengine-btn disable" type="submit" name="register" value="<?php _e("Sign up", "enginethemes")?>">
 		</div>
-		<a href="#" class="back-home-sigin">&lt; <?php _e("Back to Home", "enginethemes");?></a>
+		<a href="<?php echo home_url(); ?>" class="back-home-sigin">&lt; <?php _e("Back to Home", "enginethemes");?></a>
 		<?php wp_nonce_field('me-register');?>
 		<?php do_action('marketengine_user_register_form_end');?>
 	</form>

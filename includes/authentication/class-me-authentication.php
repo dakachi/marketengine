@@ -190,10 +190,10 @@ class ME_Authentication {
          */
         do_action('marketengine_before_user_register', $user_data);
 
-        if (preg_match('/[^a-z0-9]/', $user_data['user_login'])) {
-            $errors->add('user_login', __("Usernames can only contain lowercase letters (a-z) and numbers.", "enginethemes"));
-            return $errors;
-        }
+        // if (preg_match('/[^a-z0-9]/', $user_data['user_login'])) {
+        //     $errors->add('user_login', __("Usernames can only contain lowercase letters (a-z) and numbers.", "enginethemes"));
+        //     return $errors;
+        // }
 
         $user_id = wp_insert_user($user_data);
         if (is_wp_error($user_id)) {
@@ -281,13 +281,20 @@ class ME_Authentication {
         if (is_wp_error($key)) {
             return $key;
         }
+
+        $reset_pass_link = add_query_arg(array(
+            'key' => $key,
+            'login' => rawurlencode($user_login),
+        ), me_get_endpoint_url('forgot-password', '', $profile_link));
+
+        $reset_pass_link = apply_filters('marketengine_resert_password_link', $reset_pass_link, $user, $key);
         // TODO: update message
         $message = __("Someone has requested a password reset for the following account:", "enginethemes") . "\r\n\r\n";
         $message .= network_home_url('/') . "\r\n\r\n";
         $message .= sprintf(__("Username: %s", "enginethemes"), $user_login) . "\r\n\r\n";
         $message .= __("If this was a mistake, just ignore this email and nothing will happen.", "enginethemes") . "\r\n\r\n";
         $message .= __("To reset your password, visit the following address:", "enginethemes") . "\r\n\r\n";
-        $message .= '<' . network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user_login), 'login') . ">\r\n";
+        $message .= '<' . $reset_pass_link . ">\r\n";
 
         if (is_multisite()) {
             $blogname = $GLOBALS['current_site']->site_name;
