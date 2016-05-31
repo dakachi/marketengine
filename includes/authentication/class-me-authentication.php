@@ -282,10 +282,11 @@ class ME_Authentication {
             return $key;
         }
 
+        $profile_link = me_get_page_permalink('user-profile');
         $reset_pass_link = add_query_arg(array(
             'key' => $key,
             'login' => rawurlencode($user_login),
-        ), me_get_endpoint_url('forgot-password', '', $profile_link));
+        ), me_get_endpoint_url('reset-password', '', $profile_link));
 
         $reset_pass_link = apply_filters('marketengine_resert_password_link', $reset_pass_link, $user, $key);
         // TODO: update message

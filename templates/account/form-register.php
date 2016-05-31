@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 if (get_option('users_can_register')):
 ?>
 
-	<?php do_action('marketengine_before_user_register_form', $arg = '');?>
+	<?php do_action('marketengine_before_user_register_form');?>
 
 	<form id="register-form" action="" method="post">
 		
@@ -80,4 +80,4 @@ if (get_option('users_can_register')):
 	</form>
 <?php
 endif;
-	do_action('marketengine_before_user_register_form', $arg = '');
+	do_action('marketengine_before_user_register_form');
