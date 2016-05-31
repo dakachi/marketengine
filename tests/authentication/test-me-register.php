@@ -13,8 +13,8 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'confirm_pass' => '123',
                 'user_email' => 'dakachi@gmail.com',
                 'agree_with_tos' => true,
-                'firstname' => 'dakachi',
-                'lastname' => 'dang'
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
             )
         );
         $this->assertEquals('dakachi2', $user->user_login);
@@ -29,8 +29,8 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'confirm_pass' => '123',
                 'user_email' => 'dakachi@gmail.com',
                 'agree_with_tos' => true,
-                'firstname' => 'dakachi',
-                'lastname' => 'dang'
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
             )
         );
         $u1 = self::factory()->user->get_object_by_id($user);
@@ -51,8 +51,8 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'confirm_pass' => '123',
                 'user_email' => 'dakachi2@gmail.com',
                 'agree_with_tos' => true,
-                'firstname' => 'dakachi',
-                'lastname' => 'dang'
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
             )
         );
         //retrieve the mailer instance
@@ -71,8 +71,8 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'confirm_pass' => '123',
                 'user_email' => 'dakachi@gmail.com',
                 'agree_with_tos' => true,
-                'firstname' => 'dakachi',
-                'lastname' => 'dang'
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
             )
         );
 
@@ -91,8 +91,8 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'confirm_pass' => '123',
                 'user_email' => 'dakachi@gmail.com',
                 'agree_with_tos' => true,
-                'firstname' => 'dakachi',
-                'lastname' => 'dang'
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
             )
         );
         $this->assertEquals($error, new WP_Error('user_login', 'The user login field is required.'));
@@ -107,8 +107,8 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'confirm_pass' => '',
                 'user_email' => 'dakachi@gmail.com',
                 'agree_with_tos' => true,
-                'firstname' => 'dakachi',
-                'lastname' => 'dang'
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
             )
         );
         $this->assertEquals($error, new WP_Error('confirm_pass', 'The confirm pass field is required.'));
@@ -123,8 +123,8 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'confirm_pass' => '1234',
                 'user_email' => 'dakachi@gmail.com',
                 'agree_with_tos' => true,
-                'firstname' => 'dakachi',
-                'lastname' => 'dang'
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
             )
         );
         $this->assertEquals($error, new WP_Error('confirm_pass', 'The confirm pass and user pass must match.'));
@@ -140,8 +140,8 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'confirm_pass' => '123',
                 'user_email' => 'dakachi@gmail.com',
                 'agree_with_tos' => true,
-                'firstname' => 'dakachi',
-                'lastname' => 'dang'
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
             )
         );
         $this->assertEquals($error, new WP_Error('existing_user_login', 'Sorry, that username already exists!'));
@@ -157,8 +157,8 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'confirm_pass' => '123',
                 'user_email' => 'dakachi@gmail.com',
                 'agree_with_tos' => true,
-                'firstname' => 'dakachi',
-                'lastname' => 'dang'
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
             )
         );
         $this->assertEquals($error, new WP_Error('existing_user_email', 'Sorry, that email address is already used!'));
@@ -171,10 +171,10 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'user_login' => 'dakachi',
                 'user_pass' => '123',
                 'confirm_pass' => '123',
-                'user_email' => 'dakachi222@gmail2.com2',
+                'user_email' => 'dakachi222@#!@#@gmail2.com2',
                 'agree_with_tos' => true,
-                'firstname' => 'dakachi',
-                'lastname' => 'dang'
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
             )
         );
         $this->assertEquals($error, new WP_Error('user_email', 'The user email must be a valid email address.'));
@@ -189,8 +189,8 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'confirm_pass' => '123',
                 'user_email' => 'dakachi222@gmail.com',
                 'agree_with_tos' => true,
-                'firstname' => 'dakachi',
-                'lastname' => 'dang'
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
             )
         );
         $this->assertEquals($error, new WP_Error('invalid_username', '<strong>ERROR</strong>: This username is invalid because it uses illegal characters. Please enter a valid username.'));
@@ -205,8 +205,8 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'confirm_pass' => '123',
                 'user_email' => 'dakachi222@2gmail.com',
                 // 'agree_with_tos' => true,
-                'firstname' => 'dakachi',
-                'lastname' => 'dang'
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
             )
         );
         $this->assertEquals($error, new WP_Error('agree_with_tos', 'The agree with tos field is required.'));

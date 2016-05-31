@@ -32,16 +32,16 @@ if (get_option('users_can_register')):
 				<div class="me-col-md-6">
 					<div class="marketengine-input-field">
 					    <label for="firstname"><?php _e("First name", "enginethemes");?></label>
-					    <input type="text" name="firstname" id="firstname" value="<?php if (!empty($_POST['firstname'])) {echo esc_attr($_POST['firstname']);}?>">
+					    <input type="text" name="first_name" id="firstname" value="<?php if (!empty($_POST['first_name'])) {echo esc_attr($_POST['first_name']);}?>">
 					</div>
 				</div>
 				<div class="me-col-md-6">
 					<div class="marketengine-input-field">
 					    <label for="lastname"><?php _e("Last name", "enginethemes");?></label>
-					    <input type="text" name="lastname" id="lastname" value="<?php if (!empty($_POST['lastname'])) {echo esc_attr($_POST['lastname']);}?>">
+					    <input type="text" name="last_name" id="lastname" value="<?php if (!empty($_POST['last_name'])) {echo esc_attr($_POST['last_name']);}?>">
 					</div>
 				</div>
-			</div>
+			</div> 
 		</div>
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">

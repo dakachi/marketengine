@@ -89,8 +89,8 @@ class ME_Authentication {
         $rules = array(
             'user_login' => 'required',
             'user_pass' => 'required',
-            'firstname' => 'required',
-            'lastname' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'confirm_pass' => 'required|same:user_pass',
             'user_email' => 'required|email',
             'agree_with_tos' => 'required',
