@@ -18,10 +18,10 @@ global $user_ID;
 			<div class="marketengine-avatar-user">
 				<a class="avatar-user">
 					<?php echo get_avatar($user_ID); ?>
+					<span class="change-avatar-user">
+						<i class="icon-uploadprofileimage"></i>
+					</span>
 				</a>
-				<span class="change-avatar-user">
-					<i class="icon-uploadprofileimage"></i>
-				</span>
 			</div>
 			<div class="me-row">
 				<div class="me-col-md-6">
