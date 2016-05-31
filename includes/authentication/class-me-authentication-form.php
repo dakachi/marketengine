@@ -93,6 +93,7 @@ class ME_Auth_Form extends ME_Form {
         if (!empty($_POST['forgot_pass']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-forgot_pass')) {
             $password_retrieve = ME_Authentication::retrieve_password($_POST);
             if (!is_wp_error($password_retrieve)) {
+                me_add_notice(__("The reset password email aldready send to your email account.", "enginethemes"));
                 // set the redirect link after forgot pass
                 $redirect = self::get_redirect_link();
                 /**
@@ -102,7 +103,6 @@ class ME_Auth_Form extends ME_Form {
                  * @since 1.0
                  * @author EngineTeam
                  */
-                me_add_notice(__("The reset password email aldready send to your email account.", "enginethemes"));
                 $redirect = apply_filters('marketengine_retrieve_password_redirect', $redirect, $user);
                 wp_redirect($redirect, 302);
                 exit;
@@ -116,6 +116,7 @@ class ME_Auth_Form extends ME_Form {
         if (!empty($_POST['reset_password']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-reset_password')) {
             $user = ME_Authentication::reset_pass($_POST);
             if (!is_wp_error($user)) {
+                me_add_notice(__("You have reset your password. Now you can login by your new password.", "enginethemes"));
                 // set the redirect link after reset pass
                 $redirect = self::get_redirect_link();
                 /**
@@ -125,7 +126,6 @@ class ME_Auth_Form extends ME_Form {
                  * @since 1.0
                  * @author EngineTeam
                  */
-                me_add_notice(__("You have reset your password. Now you can login by your new password.", "enginethemes"));
                 $redirect = apply_filters('marketengine_reset_password_redirect', $redirect, $user);
                 wp_redirect($redirect, 302);
                 exit;
@@ -138,7 +138,8 @@ class ME_Auth_Form extends ME_Form {
     public static function process_confirm_email() {
         if (!empty($_GET['confirm_email']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'me-confirm_email')) {
             $user = ME_Authentication::confirm_email($_GET);
-            if ($user) {
+            if (!is_wp_error($user)) {
+                me_add_notice(__("Your account has been confirmed successfully!.", "enginethemes"));
                 // set the redirect link after confirm email
                 $redirect = self::get_redirect_link();
                 /**

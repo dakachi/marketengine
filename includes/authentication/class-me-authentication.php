@@ -95,7 +95,7 @@ class ME_Authentication {
             'user_email' => 'required|email',
             'agree_with_tos' => 'required',
         );
-        
+
         /**
          * Filter register data validate rules
          *
@@ -204,7 +204,7 @@ class ME_Authentication {
         }
 
         $user = new WP_User($user_id);
-        if (get_option('is_required_email_confirmation')) {
+        if (get_option('is_required_email_confirmation') || true) {
             // generate the activation key
             $activate_email_key = wp_hash(md5($user_data['user_email'] . time()));
             // store the activation key to user meta data
