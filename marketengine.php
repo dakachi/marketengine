@@ -104,6 +104,7 @@ if (!class_exists('MarketEngine')):
         }
 
         public function add_scripts() {
+            wp_enqueue_style('me_font_icon', $this->plugin_url() . '/assets/css/marketengine-font-icon.css');
             wp_enqueue_style('me_layout', $this->plugin_url() . '/assets/css/marketengine-layout.css');
         }
 
