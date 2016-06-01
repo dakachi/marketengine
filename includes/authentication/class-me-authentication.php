@@ -535,19 +535,40 @@ class ME_Authentication {
         return wp_mail($user->user_email, $registration_success_mail_subject, $registration_success_mail_content);
     }
 
+    /**
+     * Update user profile info
+     *
+     * @since 1.0
+     *
+     * @see wp_insert_user() More complete way to create a new user
+     *
+     * @param Array $user_data
+     *
+     * @return Int | WP_Error
+     */
     public static function update_profile($user_data) {
         global $user_ID;
         $user_id = $user_ID;
 
         if (current_user_can('edit_users') && isset($user_data['ID'])) {
             $user_id = $user_data['ID'];
-        }       
+        }   
 
-        $editable_fields = apply_filters('marketengine_profile_editable_fields', array('first_name', 'last_name', 'display_name', 'location'));
-        foreach ($editable_fields as $key => $field) {
-            if (isset($user_data[$field])) {
-                update_user_meta($user_id, $field, $user_data[$field]);
-            }
-        }
+        $user_data['ID'] = $user_id;
+
+        /**
+         * Filter list fields user can not change
+         *
+         * @param Array
+         *
+         * @since 1.0
+         */
+        $non_editable_fields = apply_filters('marketengine_profile_non_editable_fields', array(
+                'user_login' => __("User Login", "enginethemes"), 
+                'user_email' => __("User email", "enginethemes")
+            )
+        );
+        $user_data = array_diff_key($user_data, $non_editable_fields);
+        return wp_update_user($user_data);
     }
 }

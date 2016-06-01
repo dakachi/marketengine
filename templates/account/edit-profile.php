@@ -105,7 +105,7 @@ $user = ME()->get_current_user();
 		</div>
 		<div class="marketengine-text-field edit-profile">
 			<input type="submit" class="marketengine-btn" name="update_profile" value="<?php _e("Update Profile", "enginethemes");?>" />
-			<a href="<?php echo me_get_page_permalink('user-profile'); ?>" class="marketengine-btn"><?php _e("Cancle", "enginethemes");?></a>
+			<a href="<?php echo me_get_page_permalink('user-profile'); ?>" class="marketengine-btn"><?php _e("Cancel", "enginethemes");?></a>
 		</div>
 	</div>
 
