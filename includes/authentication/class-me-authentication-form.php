@@ -23,6 +23,8 @@ class ME_Auth_Form extends ME_Form {
         add_action('wp_loaded', array(__CLASS__, 'process_reset_pass'));
         add_action('wp_loaded', array(__CLASS__, 'process_confirm_email'));
         add_action('wp_loaded', array(__CLASS__, 'process_resend_confirm_email'));
+
+        add_action('wp_loaded', array(__CLASS__, 'update_user_profile'));
     }
 
     public static function get_redirect_link() {
@@ -162,22 +164,28 @@ class ME_Auth_Form extends ME_Form {
         if (!empty($_GET['resend-confirmation-email']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'me-resend_confirmation_email')) {
             global $current_user;
             $is_send_success = ME_Authentication::send_activation_email($current_user);
-            if ($is_send_success) {
+            if (!is_wp_error($is_send_success)) {
                 // set the redirect link after ask confirm email
                 $redirect = self::get_redirect_link();
-                $redirect = apply_filters('marketengine_resend_confirm_email_redirect', $redirect, $user);
+                $redirect = apply_filters('marketengine_resend_confirm_email_redirect', $redirect, $current_user);
                 wp_redirect($redirect, 302);
                 exit;
             } else {
-                me_wp_error_to_notices($user);
+                me_wp_error_to_notices($is_send_success);
             }
         }
     }
-    // TODO: add more function support form element
-    // add_settings_section
-    // add_settings_field
-    // do_settings_sections
-    // do_settings_fields
+
+    public static function update_user_profile() {
+        if (!empty($_POST['update_profile']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-update_profile')) {
+            $user = ME_Authentication::update_profile($_POST);
+            // set the redirect link after ask confirm email
+            $redirect = self::get_redirect_link();
+            $redirect = apply_filters('marketengine_update_profile_redirect', $redirect, $user);
+            wp_redirect($redirect, 302);
+            exit;
+        }
+    }
 }
 
 ME_Auth_Form::init_hooks();

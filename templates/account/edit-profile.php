@@ -11,9 +11,16 @@ if (!defined('ABSPATH')) {
 }
 $user = ME()->get_current_user();
 ?>
+
+<?php do_action('marketengine_before_edit_user_profile_form', $user); ?>
+
 <form id="edit-profile-form" action="" method="post" >
+
+	<?php do_action('marketengine_edit_user_profile_form_start', $user); ?>
+
 	<div class="marketengine-content">
 		<div class="marketengine-profile-info">
+			<?php do_action('marketengine_before_edit_user_avatar', $user); ?>
 			<div class="marketengine-avatar-user">
 				<a class="avatar-user">
 					<?php echo $user->get_avatar(); ?>
@@ -22,12 +29,17 @@ $user = ME()->get_current_user();
 					</span>
 				</a>
 			</div>
+
+			<?php do_action('marketengine_after_edit_user_avatar', $user); ?>
+
+			<?php do_action('marketengine_before_edit_user_profile', $user); ?>
+
 			<div class="me-row">
 				<div class="me-col-md-6">
 					<div class="marketengine-group-field">
 						<div class="marketengine-input-field">
 							<label class="text"><?php _e("First name", "enginethemes");?></label>
-							<input type="text" value="<?php echo $user->first_name; ?>" name="first_name" id="first_name"
+							<input type="text" value="<?php echo $user->first_name; ?>" name="first_name" id="first_name" />
 						</div>
 					</div>
 				</div>
@@ -79,21 +91,25 @@ $user = ME()->get_current_user();
 					</select>
 				</div>
 			</div>
-			<div class="marketengine-group-field">
-				<div class="marketengine-input-field">
-					<label class="text"><?php _e("Email", "enginethemes");?></label>
-					<input type="email" value="<?php echo $user->user_email; ?>" name="user_email" id="user_email">
-				</div>
-			</div>
+
+			<?php do_action('marketengine_edit_user_profile', $user); ?>
+
 			<div class="marketengine-group-field me-no-margin-bottom">
 				<div class="marketengine-input-field">
 					<label class="text"><?php _e("Location", "enginethemes");?></label>
 					<input type="text" value="<?php echo $user->location; ?>" name="location" id="location">
 				</div>
 			</div>
+			<?php wp_nonce_field('me-update_profile'); ?>
+			<?php do_action('marketengine_after_edit_user_profile', $user); ?>
 		</div>
 		<div class="marketengine-text-field edit-profile">
-			<input type="submit" class="marketengine-btn" value="<?php _e("Update Profile", "enginethemes");?>">
+			<input type="submit" class="marketengine-btn" name="update_profile" value="<?php _e("Update Profile", "enginethemes");?>" />
+			<a href="<?php echo me_get_page_permalink('user-profile'); ?>" class="marketengine-btn"><?php _e("Cancle", "enginethemes");?></a>
 		</div>
 	</div>
+
+	<?php do_action('marketengine_edit_user_profile_form_end', $user); ?>
+
 </form>
+<?php do_action('marketengine_after_edit_user_profile_form', $user); ?>

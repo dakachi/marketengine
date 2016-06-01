@@ -106,6 +106,8 @@ if (!class_exists('MarketEngine')):
         public function add_scripts() {
             wp_enqueue_style('me_font_icon', $this->plugin_url() . '/assets/css/marketengine-font-icon.css');
             wp_enqueue_style('me_layout', $this->plugin_url() . '/assets/css/marketengine-layout.css');
+
+            wp_enqueue_script('user-profile', $this->plugin_url() . '/assets/js/user-profile.js', array('jquery'));
         }
 
         /**
@@ -132,7 +134,7 @@ if (!class_exists('MarketEngine')):
             return apply_filters('marketengine_template_path', 'marketengine/');
         }
 
-        public function get_current_user(){
+        public function get_current_user() {
             global $current_user;
             return new ME_User($current_user);
         }

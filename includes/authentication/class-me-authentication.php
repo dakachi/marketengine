@@ -534,4 +534,20 @@ class ME_Authentication {
 
         return wp_mail($user->user_email, $registration_success_mail_subject, $registration_success_mail_content);
     }
+
+    public static function update_profile($user_data) {
+        global $user_ID;
+        $user_id = $user_ID;
+
+        if (current_user_can('edit_users') && isset($user_data['ID'])) {
+            $user_id = $user_data['ID'];
+        }       
+
+        $editable_fields = apply_filters('marketengine_profile_editable_fields', array('first_name', 'last_name', 'display_name', 'location'));
+        foreach ($editable_fields as $key => $field) {
+            if (isset($user_data[$field])) {
+                update_user_meta($user_id, $field, $user_data[$field]);
+            }
+        }
+    }
 }
