@@ -130,7 +130,7 @@ class ME_Authentication {
         // Check the username
         if ($sanitized_user_login == '') {
             $errors->add('empty_username', __("<strong>ERROR</strong>: Please enter a username.", "enginethemes"));
-        } elseif (!validate_username($user_login)) {
+        } elseif (!validate_username($user_login) || preg_match('/[^a-z0-9]/', $user_data['user_login'])) {
             $errors->add('invalid_username', __("<strong>ERROR</strong>: This username is invalid because it uses illegal characters. Please enter a valid username.", "enginethemes"));
             $sanitized_user_login = '';
         } else {
@@ -192,11 +192,6 @@ class ME_Authentication {
          * @since 1.0
          */
         do_action('marketengine_before_user_register', $user_data);
-
-        // if (preg_match('/[^a-z0-9]/', $user_data['user_login'])) {
-        //     $errors->add('user_login', __("Usernames can only contain lowercase letters (a-z) and numbers.", "enginethemes"));
-        //     return $errors;
-        // }
 
         $user_id = wp_insert_user($user_data);
         if (is_wp_error($user_id)) {

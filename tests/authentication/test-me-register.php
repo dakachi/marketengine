@@ -181,10 +181,10 @@ class Tests_ME_Register extends WP_UnitTestCase {
     }
 
     // test invalid user name format
-    public function test_register_invalid_user_name_format() {
+    public function test_register_invalid_user_name_format_1() {
         $error = ME_Authentication::register(
             array(
-                'user_login' => 'dakachi*(@',
+                'user_login' => 'dakachi@',
                 'user_pass' => '123',
                 'confirm_pass' => '123',
                 'user_email' => 'dakachi222@gmail.com',
@@ -195,6 +195,39 @@ class Tests_ME_Register extends WP_UnitTestCase {
         );
         $this->assertEquals($error, new WP_Error('invalid_username', '<strong>ERROR</strong>: This username is invalid because it uses illegal characters. Please enter a valid username.'));
     }
+
+    // test invalid user name format
+    public function test_register_invalid_user_name_format_2() {
+        $error = ME_Authentication::register(
+            array(
+                'user_login' => 'dakachi-',
+                'user_pass' => '123',
+                'confirm_pass' => '123',
+                'user_email' => 'dakachi222@gmail.com',
+                'agree_with_tos' => true,
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
+            )
+        );
+        $this->assertEquals($error, new WP_Error('invalid_username', '<strong>ERROR</strong>: This username is invalid because it uses illegal characters. Please enter a valid username.'));
+    }
+
+    // test invalid user name format
+    public function test_register_invalid_user_name_format_3() {
+        $error = ME_Authentication::register(
+            array(
+                'user_login' => 'dakachi$%',
+                'user_pass' => '123',
+                'confirm_pass' => '123',
+                'user_email' => 'dakachi222@gmail.com',
+                'agree_with_tos' => true,
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
+            )
+        );
+        $this->assertEquals($error, new WP_Error('invalid_username', '<strong>ERROR</strong>: This username is invalid because it uses illegal characters. Please enter a valid username.'));
+    }
+
 
     // test tos agreemen not checked
     public function test_register_without_agree_tos() {

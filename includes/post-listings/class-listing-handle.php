@@ -197,5 +197,6 @@ class ME_Listing_Handle {
                 $post_data['tax_input'][$taxonomy] = $clean_terms;
             }
         }
+        return $post_data;
     }
 }
