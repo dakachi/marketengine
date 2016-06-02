@@ -171,7 +171,67 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'user_login' => 'dakachi',
                 'user_pass' => '123',
                 'confirm_pass' => '123',
-                'user_email' => 'dakachi222@#!@#@gmail2.com2',
+                'user_email' => 'dakachi222@#!@gmail2.com2',
+                'agree_with_tos' => true,
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
+            )
+        );
+        $this->assertEquals($error, new WP_Error('user_email', 'The user email must be a valid email address.'));
+    }
+
+    public function test_register_invalid_email_format_with_two_at_sign() {
+        $error = ME_Authentication::register(
+            array(
+                'user_login' => 'dakachi',
+                'user_pass' => '123',
+                'confirm_pass' => '123',
+                'user_email' => 'john@box@host.net',
+                'agree_with_tos' => true,
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
+            )
+        );
+        $this->assertEquals($error, new WP_Error('user_email', 'The user email must be a valid email address.'));
+    }
+
+    public function test_register_invalid_email_format_with_leading_dot() {
+        $error = ME_Authentication::register(
+            array(
+                'user_login' => 'dakachi',
+                'user_pass' => '123',
+                'confirm_pass' => '123',
+                'user_email' => '.john@host.net',
+                'agree_with_tos' => true,
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
+            )
+        );
+        $this->assertEquals($error, new WP_Error('user_email', 'The user email must be a valid email address.'));
+    }
+
+    public function test_register_invalid_email_format_with_leading_dash_in_domain_name() {
+        $error = ME_Authentication::register(
+            array(
+                'user_login' => 'dakachi',
+                'user_pass' => '123',
+                'confirm_pass' => '123',
+                'user_email' => 'john@-host.net',
+                'agree_with_tos' => true,
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
+            )
+        );
+        $this->assertEquals($error, new WP_Error('user_email', 'The user email must be a valid email address.'));
+    }
+
+    public function test_register_invalid_email_format_with_multiple_dots() {
+        $error = ME_Authentication::register(
+            array(
+                'user_login' => 'dakachi',
+                'user_pass' => '123',
+                'confirm_pass' => '123',
+                'user_email' => 'john..a@kachi.host.net',
                 'agree_with_tos' => true,
                 'first_name' => 'dakachi',
                 'last_name' => 'dang'
@@ -181,7 +241,7 @@ class Tests_ME_Register extends WP_UnitTestCase {
     }
 
     // test invalid user name format
-    public function test_register_invalid_user_name_format_1() {
+    public function test_register_invalid_user_name_format_with_at_sign() {
         $error = ME_Authentication::register(
             array(
                 'user_login' => 'dakachi@',
@@ -197,7 +257,7 @@ class Tests_ME_Register extends WP_UnitTestCase {
     }
 
     // test invalid user name format
-    public function test_register_invalid_user_name_format_2() {
+    public function test_register_invalid_user_name_format_with_hyphen_sign() {
         $error = ME_Authentication::register(
             array(
                 'user_login' => 'dakachi-',
@@ -213,7 +273,7 @@ class Tests_ME_Register extends WP_UnitTestCase {
     }
 
     // test invalid user name format
-    public function test_register_invalid_user_name_format_3() {
+    public function test_register_invalid_user_name_format_with_special_char() {
         $error = ME_Authentication::register(
             array(
                 'user_login' => 'dakachi$%',
