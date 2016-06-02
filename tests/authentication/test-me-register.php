@@ -42,6 +42,26 @@ class Tests_ME_Register extends WP_UnitTestCase {
     }
 
     // test send register successfull email
+    public function test_register_success_email_content() {
+        $user = ME_Authentication::register(
+            array(
+                'user_login' => 'dakachi',
+                'user_pass' => '123',
+                'confirm_pass' => '123',
+                'user_email' => 'dakachi@gmail.com',
+                'agree_with_tos' => true,
+                'first_name' => 'dakachi',
+                'last_name' => 'dang'
+            )
+        );
+
+        //retrieve the mailer instance
+        $mailer = tests_retrieve_phpmailer_instance();
+        $this->assertStringStartsWith("<p>Hello Dakachi dang,", $mailer->get_sent()->body);
+        reset_phpmailer_instance();
+    }
+
+    // test send register successfull email
     public function test_register_success_send_confirmation_email() {
         update_option('is_required_email_confirmation', true);
         $user = ME_Authentication::register(
@@ -78,7 +98,7 @@ class Tests_ME_Register extends WP_UnitTestCase {
 
         //retrieve the mailer instance
         $mailer = tests_retrieve_phpmailer_instance();
-        $this->assertStringStartsWith("<p>Hello [display_name],</p>", $mailer->get_sent()->body);
+        $this->assertStringStartsWith("<p>Hello Dakachi dang,</p>", $mailer->get_sent()->body);
         reset_phpmailer_instance();
     }
 

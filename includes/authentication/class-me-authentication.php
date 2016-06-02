@@ -525,7 +525,7 @@ class ME_Authentication {
          *
          * @since 1.0
          */
-        $registration_success_mail_content = apply_filters('marketengine_activation_mail_content', $registration_success_mail_content, $user);
+        $registration_success_mail_content = apply_filters('marketengine_registration_success_mail_content', $registration_success_mail_content, $user);
 
         return wp_mail($user->user_email, $registration_success_mail_subject, $registration_success_mail_content);
     }
