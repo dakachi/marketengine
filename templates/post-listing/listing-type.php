@@ -17,7 +17,7 @@ $listing_types = me_get_listing_types();
 			<div class="me-col-md-6">
 				<div class="marketengine-input-field">
 				    <label class="text"><?php _e("Price", "enginethemes"); ?></label>
-				    <input type="text" name="listing_price" placeholder="$">
+				    <input type="text" name="listing_price" placeholder="$" class="required">
 				</div>
 			</div>
 			<div class="me-col-md-6">
