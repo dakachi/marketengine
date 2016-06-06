@@ -1,5 +1,5 @@
 <div id="marketengine-post-step-2" class="marketengine-post-step">
-	<div class="marketengine-group-field">
+	<div class="marketengine-group-field" id="listing-type-container">
 		<div class="marketengine-select-field">
 		    <label class="text"><?php _e("Listing", "enginethemes"); ?></label>
 		    <select class="" name="listing-type">

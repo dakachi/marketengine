@@ -1,0 +1,14 @@
+<?php
+function me_get_listing_types() {
+    $listing_types = array(
+        'contact'    => __("Offering", "enginethemes"),
+        'purchasion' => __("Selling", "enginethemes")
+    );
+    return apply_filters('me_get_listing_types', $listing_types);
+}
+
+function get_listing_type_by_cat($cat_id) {
+	$default_listing_types = me_get_listing_types();
+	$type = array_rand($default_listing_types);
+	return array($type => $default_listing_types[$type]);
+}

@@ -30,11 +30,3 @@ class ME_Listing {
     }
 
 }
-
-function me_get_listing_types() {
-    $listing_types = array(
-        'contact'    => __("Offering", "enginethemes"),
-        'purchasion' => __("Selling", "enginethemes"),
-    );
-    return apply_filters('me_get_listing_types', $listing_types);
-}

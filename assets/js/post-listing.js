@@ -17,7 +17,20 @@
             if (0 === r || 'success' != stat) {
                 return;
             }
-            $('#me_child_cat_containcer').html(r.data);
+            $('#me-sub-cat-container').html(r.data);
+        });
+    });
+
+    $('.select-category').on('change', function() {
+        var cat = $(this).val();
+        $.get(me_globals.ajaxurl, {
+            'action': 'me-load-listing-type',
+            'parent-cat': cat
+        }, function(r, stat) {
+            if (0 === r || 'success' != stat) {
+                return;
+            }
+            $('#listing-type-container').html(r.data);
         });
     });
     // process tag input

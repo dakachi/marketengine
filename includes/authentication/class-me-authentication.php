@@ -131,7 +131,7 @@ class ME_Authentication {
         if ($sanitized_user_login == '') {
             $errors->add('empty_username', __("<strong>ERROR</strong>: Please enter a username.", "enginethemes"));
         } elseif (!validate_username($user_login) || preg_match('/[^a-z0-9]/', $user_data['user_login'])) {
-            $errors->add('invalid_username', __("<strong>ERROR</strong>: This username is invalid because it uses illegal characters. Please enter a valid username.", "enginethemes"));
+            $errors->add('invalid_username', __("Usernames can only contain letters (a-z), numbers (0-9), and underscores (_)", "enginethemes"));
             $sanitized_user_login = '';
         } else {
             /** This filter is documented in wp-includes/user.php */
