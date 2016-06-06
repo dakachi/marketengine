@@ -83,6 +83,48 @@ class ME_Post_Types {
         register_taxonomy('listing_category', array(
             'listing',
         ), $args);
+
+        $labels = array(
+            'name'                  => _x('Listing Tag', 'Taxonomy plural name', "enginethemes"),
+            'singular_name'         => _x('Listing Tags', 'Taxonomy singular name', "enginethemes"),
+            'search_items'          => __('Search Tags', "enginethemes"),
+            'popular_items'         => __('Popular Tags', "enginethemes"),
+            'all_items'             => __('All listing tags', "enginethemes"),
+            'parent_item'           => __('Parent listing tags', "enginethemes"),
+            'parent_item_colon'     => __('Parent listing tags', "enginethemes"),
+            'edit_item'             => __('Edit listing tags', "enginethemes"),
+            'update_item'           => __('Update listing tag', "enginethemes"),
+            'add_new_item'          => __('Add New listing tag', "enginethemes"),
+            'new_item_name'         => __('New listing tag Name', "enginethemes"),
+            'add_or_remove_items'   => __('Add or remove tag', "enginethemes"),
+            'choose_from_most_used' => __('Choose from most used enginetheme ', "enginethemes"),
+            'menu_name'             => __('Listing Tag', "enginethemes"),
+        );
+        //TODO: setup listing category permarlink
+        $permalinks = get_option('me_permalinks');
+        $args = array(
+            'labels'            => $labels,
+            'public'            => true,
+            'show_in_nav_menus' => true,
+            'show_admin_column' => false,
+            'hierarchical'      => false,
+            'show_tagcloud'     => true,
+            'show_ui'           => true,
+            'query_var'         => true,
+            'rewrite'           => array(
+                'slug'         => 'listing_tag'
+            ),
+            'capabilities'      => array(
+                'manage_terms',
+                'edit_terms',
+                'delete_terms',
+                'assign_terms',
+            ),
+        );
+        register_taxonomy('listing_tag', array(
+            'listing',
+        ), $args);
+
     }
     /**
      * Register post type listing

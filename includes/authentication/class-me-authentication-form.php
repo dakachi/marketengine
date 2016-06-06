@@ -71,23 +71,29 @@ class ME_Auth_Form extends ME_Form {
             $user = ME_Authentication::register($_POST);
             if (is_wp_error($user)) {
                 me_wp_error_to_notices($user);
-            } else {
-                // login in
-                $_POST['user_password'] = $_POST['user_pass'];
-                $user = ME_Authentication::login($_POST);
-                // set the redirect link after register
-                $redirect = self::get_redirect_link();
-                /**
-                 * action filter redirect link after user login
-                 * @param String $redirect
-                 * @param Object $user User object
-                 * @since 1.0
-                 * @author EngineTeam
-                 */
-                $redirect = apply_filters('marketengine_register_redirect', $redirect, $user);
-                wp_redirect($redirect, 302);
-                exit;
+                return false;
             }
+
+            if (get_option('is_required_email_confirmation')) {
+                me_add_notice(__("You have registered successfully. Please check your mailbox to activate your account", "enginethemes"));
+            }else {
+                me_add_notice(__("You have registered successfully.", "enginethemes"));
+            }
+            // login in
+            $_POST['user_password'] = $_POST['user_pass'];
+            $user = ME_Authentication::login($_POST);
+            // set the redirect link after register
+            $redirect = self::get_redirect_link();
+            /**
+             * action filter redirect link after user login
+             * @param String $redirect
+             * @param Object $user User object
+             * @since 1.0
+             * @author EngineTeam
+             */
+            $redirect = apply_filters('marketengine_register_redirect', $redirect, $user);
+            wp_redirect($redirect, 302);
+            exit;
         }
     }
 

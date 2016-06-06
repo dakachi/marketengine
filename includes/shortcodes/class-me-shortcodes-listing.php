@@ -5,7 +5,7 @@ class ME_Shortcodes_Listing {
     }
     public static function post_listing_form() {
     	ob_start();
-        me_get_template_part('listing/post-listing');
+        me_get_template_part('post-listing/post-listing');
         $content = ob_get_clean();
         return $content;
     }
