@@ -1,8 +1,8 @@
 <?php
 function me_get_listing_types() {
     $listing_types = array(
-        'contact'    => __("Offering", "enginethemes"),
-        'purchasion' => __("Selling", "enginethemes")
+    	'purchasion' => __("Selling", "enginethemes"),
+        'contact'    => __("Offering", "enginethemes")
     );
     return apply_filters('me_get_listing_types', $listing_types);
 }

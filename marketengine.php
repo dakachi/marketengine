@@ -81,6 +81,7 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/me-notices-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-template-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-email-functions.php';
+            require_once ME_PLUGIN_PATH . '/includes/me-listing-functions.php';
 
             require_once ME_PLUGIN_PATH . '/includes/abstracts/class-abstract-form.php';
             require_once ME_PLUGIN_PATH . '/includes/authentication/class-me-authentication-form.php';

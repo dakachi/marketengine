@@ -129,7 +129,7 @@ class ME_Authentication {
 
         // Check the username
         if ($sanitized_user_login == '') {
-            $errors->add('empty_username', __("<strong>ERROR</strong>: Please enter a username.", "enginethemes"));
+            $errors->add('empty_username', __("Please enter a username.", "enginethemes"));
         } elseif (!validate_username($user_login) || preg_match('/[^a-z0-9]/', $user_data['user_login'])) {
             $errors->add('invalid_username', __("Usernames can only contain letters (a-z), numbers (0-9), and underscores (_)", "enginethemes"));
             $sanitized_user_login = '';
@@ -137,15 +137,15 @@ class ME_Authentication {
             /** This filter is documented in wp-includes/user.php */
             $illegal_user_logins = array_map('strtolower', (array) apply_filters('illegal_user_logins', array()));
             if (in_array(strtolower($sanitized_user_login), $illegal_user_logins)) {
-                $errors->add('invalid_username', __("<strong>ERROR</strong>: Sorry, that username is not allowed.", "enginethemes"));
+                $errors->add('invalid_username', __("Sorry, that username is not allowed.", "enginethemes"));
             }
         }
 
         // Check the email address
         if ($user_email == '') {
-            $errors->add('empty_email', __("<strong>ERROR</strong>: Please type your email address.", "enginethemes"));
+            $errors->add('empty_email', __("Please type your email address.", "enginethemes"));
         } elseif (!is_email($user_email)) {
-            $errors->add('invalid_email', __("<strong>ERROR</strong>: The email address isn&#8217;t correct.", "enginethemes"));
+            $errors->add('invalid_email', __("The email address isn&#8217;t correct.", "enginethemes"));
             $user_email = '';
         }
 
