@@ -1,6 +1,8 @@
 <div class="marketengine-group-field">
 	<div class="marketengine-upload-field">
-		<label class="text"><?php _e("Upload images", "enginethemes"); ?>&nbsp;<small><?php _e("(optional)", "enginethemes"); ?></small></label>
+		<label class="text"><?php _e("Gallery", "enginethemes"); ?>&nbsp;<small><?php _e("(optional)", "enginethemes"); ?></small></label>
+		<input type="file" name='listing_gallery' />
+		<?php /*
 		<!-- layout no image -->
 		<div class="marketengine-gallery-large">
 			<div class="me-gallery-large">
@@ -58,6 +60,7 @@
 			</li>
 		</ul>
 		<!-- layout no image -->
+		<?php */ ?>
 
 	</div>
 </div>
