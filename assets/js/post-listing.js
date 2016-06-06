@@ -13,5 +13,10 @@
     });
     var ImageItemView = Backbone.View.extend({});
     var ImageGalleryView = Backbone.View.extend({});
+
+    
+    $('.parent-category').change(function(e) {
+        $('.sub-category').find('option').remove();
+    })
     // process tag input
 })(jQuery);

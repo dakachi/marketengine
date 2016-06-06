@@ -1,13 +1,16 @@
-
+<?php 
+$parent_categories = get_terms( array('taxonomy' => 'listing_category', 'hide_empty' => false, 'parent' => 0) );
+?>
+<script type="data/json"><?php echo json_encode($parent_categories) ?></script>
 <div id="marketengine-post-step-1" class="marketengine-post-step active select-category">
 	<div class="marketengine-group-field">
 		<div class="marketengine-select-field">
 		    <label class="text"><?php _e("Category", "enginethemes"); ?></label>
 		    <select class="parent-category" name="parent_cat">
-		    	<option value="">Catgory listing 1</option>
-		    	<option value="">Catgory listing 2</option>
-		    	<option value="">Catgory listing 3</option>
-		    	<option value="">Catgory listing 4</option>
+		    	<option value=""><?php _e("Select your category", "enginethemes"); ?></option>
+		    	<?php foreach ($parent_categories as $key => $parent_cat) : ?>
+		    	<option value="<?php echo $parent_cat->term_id; ?>"><?php echo $parent_cat->name; ?></option>
+		    	<?php endforeach; ?>
 		    </select>
 		</div>
 	</div>
@@ -15,10 +18,10 @@
 		<div class="marketengine-select-field">
 		    <label class="text"><?php _e("Sub-category", "enginethemes"); ?></label>
 		    <select class="sub-category" name="sub_cat">
-		    	<option value="">Sub catgory listing 1</option>
-		    	<option value="">Sub catgory listing 2</option>
-		    	<option value="">Sub catgory listing 3</option>
-		    	<option value="">Sub catgory listing 4</option>
+		    	<option value=""><?php _e("Select sub category", "enginethemes"); ?></option>
+		    	<?php foreach ($parent_categories as $key => $parent_cat) : ?>
+		    	<option value="<?php echo $parent_cat->term_id; ?>"><?php echo $parent_cat->name; ?></option>
+		    	<?php endforeach; ?>
 		    </select>
 		</div>
 	</div>

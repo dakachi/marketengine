@@ -567,3 +567,9 @@ class ME_Authentication {
         return wp_update_user($user_data);
     }
 }
+
+add_filter('insert_user_meta', 'me_add_user_meta');
+function me_add_user_meta($meta) {
+    $meta['location'] = $_POST['location'];
+    return $meta;
+}
