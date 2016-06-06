@@ -86,6 +86,9 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/authentication/class-me-authentication-form.php';
             require_once ME_PLUGIN_PATH . '/includes/authentication/class-me-authentication.php';
 
+            require_once ME_PLUGIN_PATH . '/includes/post-listings/class-me-listing-handle.php';
+            require_once ME_PLUGIN_PATH . '/includes/post-listings/class-me-listing-handle-form.php';
+
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing.php';
 
             require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-auth.php';
@@ -110,6 +113,14 @@ if (!class_exists('MarketEngine')):
 
             wp_enqueue_script('user_profile', $this->plugin_url() . '/assets/js/user-profile.js', array('jquery'), $this->version, true);
             wp_enqueue_script('post_listing', $this->plugin_url() . '/assets/js/post-listing.js', array('jquery', 'underscore', 'backbone'), $this->version, true);
+
+            wp_localize_script(
+                'post_listing',
+                'me_globals',
+                array(
+                    'ajaxurl' => admin_url('admin-ajax.php'),
+                )
+            );
         }
 
         /**

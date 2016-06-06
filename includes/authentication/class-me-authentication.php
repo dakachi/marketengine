@@ -568,8 +568,8 @@ class ME_Authentication {
     }
 }
 
-add_filter('insert_user_meta', 'me_add_user_meta');
 function me_add_user_meta($meta) {
     $meta['location'] = $_POST['location'];
     return $meta;
 }
+add_filter('insert_user_meta', 'me_add_user_meta');
