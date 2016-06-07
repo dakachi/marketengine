@@ -16,6 +16,8 @@ $user = ME()->get_current_user();
 
 <form id="edit-profile-form" action="" method="post" >
 
+	<?php me_print_notices(); ?>
+
 	<?php do_action('marketengine_edit_user_profile_form_start', $user); ?>
 
 	<div class="marketengine-content">

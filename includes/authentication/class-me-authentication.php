@@ -303,7 +303,6 @@ class ME_Authentication {
 
         $reset_pass_link = apply_filters('marketengine_resert_password_link', $reset_pass_link, $user_data, $key);
 
-
         ob_start();
         me_get_template_part('emails/reset-password');
         $message = ob_get_clean();
@@ -559,7 +558,17 @@ class ME_Authentication {
         }
 
         $user_data['ID'] = $user_id;
+        $errors = new WP_Error();
+        if (isset($_POST['first_name']) && $_POST['first_name'] == '') {
+            $errors->add('first_name', __("You first name can not be empty.", "enginethemes"));
+        }
+        if (isset($_POST['last_name']) && $_POST['last_name'] == '') {
+            $errors->add('first_name', __("You last name can not be empty.", "enginethemes"));
+        }
 
+        if($errors->get_error_code()) {
+            return $errors;
+        }
         /**
          * Filter list fields user can not change
          *
