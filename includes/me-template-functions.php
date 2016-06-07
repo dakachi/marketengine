@@ -66,15 +66,15 @@ function me_get_page_permalink($page_name) {
  * @return string
  */
 function me_lostpassword_url($default_url = '') {
-    $password_reset_url = me_get_page_permalink('reset-pass');
-
+    $profile_link = me_get_page_permalink('user-profile');
+    $password_reset_url = me_get_endpoint_url('forgot-password', '', $profile_link);
     if (false !== $password_reset_url) {
         return $password_reset_url;
     } else {
         return $default_url;
     }
 }
-// add_filter( 'lostpassword_url',  'me_lostpassword_url', 10, 1 );
+add_filter( 'lostpassword_url',  'me_lostpassword_url', 10, 1 );
 
 /**
  * Get endpoint URL.
