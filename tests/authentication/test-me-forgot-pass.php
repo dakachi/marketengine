@@ -41,7 +41,7 @@ class Tests_ME_Forgot_Pass extends WP_UnitTestCase {
     public function test_forgot_pass_email_not_exist() {
     	$user = array('user_email' => 'dakachi@gmail.com');
     	$error = ME_Authentication::retrieve_password( $user );
-    	$this->assertEquals( new WP_Error('user_email', __('<strong>ERROR</strong>: There is no user registered with that email address.')), $error);
+    	$this->assertEquals( new WP_Error('invalid_email', __('<strong>ERROR</strong>: There is no user registered with that email address.')), $error);
     }
     // username invalid
     public function test_forgot_pass_invalid_userlogin() {

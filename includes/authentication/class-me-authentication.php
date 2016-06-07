@@ -261,7 +261,7 @@ class ME_Authentication {
             return $errors;
         }
 
-        $user_data = get_user_by('email', trim($user['user_login']));
+        $user_data = get_user_by('email', trim($user['user_email']));
         if (empty($user_data)) {
             $errors->add('invalid_email', __("<strong>ERROR</strong>: There is no user registered with that email address.", "enginethemes"));
         }
