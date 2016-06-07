@@ -198,7 +198,6 @@ class ME_Auth_Form extends ME_Form {
                 wp_redirect($redirect, 302);
                 exit;
             }else {
-                var_dump($user);
                 me_wp_error_to_notices($user);
             }
         }
