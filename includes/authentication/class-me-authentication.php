@@ -238,17 +238,13 @@ class ME_Authentication {
 
         $errors = new WP_Error();
 
-        if (empty($user['user_login'])) {
-            $errors->add('empty_username', __("<strong>ERROR</strong>: Enter a username or email address.", "enginethemes"));
-        } elseif (strpos($user['user_login'], '@')) {
+        if (!isset($user['user_login']) || !is_email($user['user_login'])) {
+            $errors->add('invalid_email', __("<strong>ERROR</strong>: The email address isn&#8217;t correct.", "enginethemes"));
+        }else {
             $user_data = get_user_by('email', trim($user['user_login']));
             if (empty($user_data)) {
                 $errors->add('invalid_email', __("<strong>ERROR</strong>: There is no user registered with that email address.", "enginethemes"));
             }
-
-        } else {
-            $login = trim($user['user_login']);
-            $user_data = get_user_by('login', $login);
         }
 
         /**
@@ -267,7 +263,7 @@ class ME_Authentication {
         }
 
         if (!$user_data) {
-            $errors->add('invalidcombo', __("<strong>ERROR</strong>: Invalid username or email.", "enginethemes"));
+            $errors->add('invalidcombo', __("<strong>ERROR</strong>: Invalid email.", "enginethemes"));
             return $errors;
         }
 
@@ -286,14 +282,12 @@ class ME_Authentication {
             'login' => rawurlencode($user_login),
         ), me_get_endpoint_url('reset-password', '', $profile_link));
 
-        $reset_pass_link = apply_filters('marketengine_resert_password_link', $reset_pass_link, $user, $key);
-        // TODO: update message
-        $message = __("Someone has requested a password reset for the following account:", "enginethemes") . "\r\n\r\n";
-        $message .= network_home_url('/') . "\r\n\r\n";
-        $message .= sprintf(__("Username: %s", "enginethemes"), $user_login) . "\r\n\r\n";
-        $message .= __("If this was a mistake, just ignore this email and nothing will happen.", "enginethemes") . "\r\n\r\n";
-        $message .= __("To reset your password, visit the following address:", "enginethemes") . "\r\n\r\n";
-        $message .= '<' . $reset_pass_link . ">\r\n";
+        $reset_pass_link = apply_filters('marketengine_resert_password_link', $reset_pass_link, $user_data, $key);
+
+
+        ob_start();
+        me_get_template_part('emails/reset-password');
+        $message = ob_get_clean();
 
         if (is_multisite()) {
             $blogname = $GLOBALS['current_site']->site_name;
@@ -309,29 +303,25 @@ class ME_Authentication {
         $title = sprintf(__("[%s] Password Reset", "enginethemes"), $blogname);
 
         /**
-         * Filter the subject of the password reset email.
+         * Filter user reset password email subject
          *
-         * @since 2.8.0
-         * @since 4.4.0 Added the `$user_login` and `$user_data` parameters.
+         * @param String $mail_subject
+         * @param Object $user_data
          *
-         * @param string  $title      Default email title.
-         * @param string  $user_login The username for the user.
-         * @param WP_User $user_data  WP_User object.
+         * @since 1.0
          */
-        $title = apply_filters('retrieve_password_title', $title, $user_login, $user_data);
+        $title = apply_filters('marketengine_reset_password_mail_subject', $title, $user_data);
 
+        $message = str_replace('[recover_url]', $reset_pass_link, $message);
         /**
-         * Filter the message body of the password reset mail.
+         * Filter user reset password email content
          *
-         * @since 2.8.0
-         * @since 4.1.0 Added `$user_login` and `$user_data` parameters.
+         * @param String $mail_content
+         * @param Object $user_data
          *
-         * @param string  $message    Default mail message.
-         * @param string  $key        The activation key.
-         * @param string  $user_login The username for the user.
-         * @param WP_User $user_data  WP_User object.
+         * @since 1.0
          */
-        $message = apply_filters('retrieve_password_message', $message, $key, $user_login, $user_data);
+        $message = apply_filters('marketengine_reset_password_mail_content', $message, $user_data);
 
         if ($message && !wp_mail($user_email, wp_specialchars_decode($title), $message)) {
             return new WP_Error('system_error', __('The email could not be sent.') . "<br />\n" . __('Possible reason: your host may have disabled the mail() function.', "enginethemes"));
@@ -547,7 +537,7 @@ class ME_Authentication {
 
         if (current_user_can('edit_users') && isset($user_data['ID'])) {
             $user_id = $user_data['ID'];
-        }   
+        }
 
         $user_data['ID'] = $user_id;
 
@@ -559,9 +549,9 @@ class ME_Authentication {
          * @since 1.0
          */
         $non_editable_fields = apply_filters('marketengine_profile_non_editable_fields', array(
-                'user_login' => __("User Login", "enginethemes"), 
-                'user_email' => __("User email", "enginethemes")
-            )
+            'user_login' => __("User Login", "enginethemes"),
+            'user_email' => __("User email", "enginethemes"),
+        )
         );
         $user_data = array_diff_key($user_data, $non_editable_fields);
         return wp_update_user($user_data);
@@ -569,9 +559,9 @@ class ME_Authentication {
 }
 
 function me_add_user_meta($meta) {
-    if(isset($_POST['location'])) {
-        $meta['location'] = $_POST['location'];    
-    }    
+    if (isset($_POST['location'])) {
+        $meta['location'] = $_POST['location'];
+    }
     return $meta;
 }
 add_filter('insert_user_meta', 'me_add_user_meta');

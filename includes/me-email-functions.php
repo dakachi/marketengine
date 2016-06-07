@@ -56,6 +56,7 @@ function me_filter_authentication_placeholder($content, $user = null) {
 
 add_filter('marketengine_activation_mail_content', 'me_filter_authentication_placeholder', 10, 2);
 add_filter('marketengine_registration_success_mail_content', 'me_filter_authentication_placeholder', 10, 2);
+add_filter('marketengine_reset_password_mail_content', 'me_filter_authentication_placeholder', 10, 2 );
 
 /**
  * Marketengine Filter post placeholder tag

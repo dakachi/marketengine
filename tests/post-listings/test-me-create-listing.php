@@ -6,11 +6,11 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
 
     public function test_create_listing_with_empty_post_title() {
         $listing_data = array(
-            // 'post_title' => '',
+            'post_title' => 'as',
             'post_content' => 'abc',
             'listing_type' => 'contact',
             'meta_input' => array(
-                // 'price' => '',
+                'price' => '',
             ),
             'tax_input' => array(
                 'listing_category' => '',
@@ -19,4 +19,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         $p1 = ME_Listing_Handle::insert($listing_data);
         $this->assertWPError($p1, 'The 22 field listing title is required.');
     }
+
+
+    // TODO: view test_media_handle_upload_sets_post_excerpt in tests/media.php
 }
