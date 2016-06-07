@@ -104,7 +104,7 @@ class ME_Authentication {
          *
          * @since 1.0
          */
-        $rules = apply_filters('marketengine_register_rules', $rules, $user_data);
+        $rules = apply_filters('marketengine_register_form_rules', $rules, $user_data);
         $is_valid = me_validate($user_data, $rules);
 
         $errors = new WP_Error();
@@ -238,13 +238,32 @@ class ME_Authentication {
 
         $errors = new WP_Error();
 
-        if (!isset($user['user_login']) || !is_email($user['user_login'])) {
-            $errors->add('invalid_email', __("<strong>ERROR</strong>: The email address isn&#8217;t correct.", "enginethemes"));
-        }else {
-            $user_data = get_user_by('email', trim($user['user_login']));
-            if (empty($user_data)) {
-                $errors->add('invalid_email', __("<strong>ERROR</strong>: There is no user registered with that email address.", "enginethemes"));
+        $rules = array(
+            'user_email' => 'required|email',
+        );
+
+        /**
+         * Filter register data validate rules
+         *
+         * @param Array $rules
+         * @param Array $user
+         *
+         * @since 1.0
+         */
+        $rules = apply_filters('marketengine_forgot_password_form_rules', $rules, $user);
+        $is_valid = me_validate($user, $rules);
+
+        if (!$is_valid) {
+            $invalid_data = me_get_invalid_message($user, $rules);
+            foreach ($invalid_data as $key => $message) {
+                $errors->add($key, $message);
             }
+            return $errors;
+        }
+
+        $user_data = get_user_by('email', trim($user['user_login']));
+        if (empty($user_data)) {
+            $errors->add('invalid_email', __("<strong>ERROR</strong>: There is no user registered with that email address.", "enginethemes"));
         }
 
         /**
@@ -356,7 +375,7 @@ class ME_Authentication {
          *
          * @since 1.0
          */
-        $rules = apply_filters('marketengine_reset_pass_rules', $rules, $user_data);
+        $rules = apply_filters('marketengine_reset_password_form_rules', $rules, $user_data);
         $is_valid = me_validate($user_data, $rules);
         if (!$is_valid) {
             $errors = new WP_Error();

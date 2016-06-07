@@ -8,7 +8,7 @@ class Tests_ME_Forgot_Pass extends WP_UnitTestCase {
         $u1   = self::factory()->user->create(array('user_login' => 'dakachi', 'user_pass' => '123', 'user_email' => 'dakachi@gmail.com'));
         //$key = get_password_reset_key( get_userdata( $u1 ) );
 
-    	$mailer = ME_Authentication::retrieve_password( array('user_login' => 'dakachi@gmail.com') );
+    	$mailer = ME_Authentication::retrieve_password( array('user_email' => 'dakachi@gmail.com') );
 
 		// WordPress 3.2 and later correctly split the address into the two parts and send them seperately to PHPMailer
 		// Earlier versions of PHPMailer were not touchy about the formatting of these arguments.
@@ -23,7 +23,7 @@ class Tests_ME_Forgot_Pass extends WP_UnitTestCase {
         $u1   = self::factory()->user->create(array('user_login' => 'dakachi', 'user_pass' => '123', 'user_email' => 'dakachi@gmail.com'));
         $key = get_password_reset_key( get_userdata( $u1 ) );
 
-        $mailer = ME_Authentication::retrieve_password( array('user_login' => 'dakachi@gmail.com') );
+        $mailer = ME_Authentication::retrieve_password( array('user_email' => 'dakachi@gmail.com') );
 
         // WordPress 3.2 and later correctly split the address into the two parts and send them seperately to PHPMailer
         // Earlier versions of PHPMailer were not touchy about the formatting of these arguments.
@@ -39,27 +39,27 @@ class Tests_ME_Forgot_Pass extends WP_UnitTestCase {
 
     // email invalid
     public function test_forgot_pass_email_not_exist() {
-    	$user = array('user_login' => 'dakachi@gmail.com');
+    	$user = array('user_email' => 'dakachi@gmail.com');
     	$error = ME_Authentication::retrieve_password( $user );
-    	$this->assertEquals( new WP_Error('invalid_email', __('<strong>ERROR</strong>: There is no user registered with that email address.')), $error);
+    	$this->assertEquals( new WP_Error('user_email', __('<strong>ERROR</strong>: There is no user registered with that email address.')), $error);
     }
     // username invalid
     public function test_forgot_pass_invalid_userlogin() {
-    	$user = array('user_login' => 'dakachi');
+    	$user = array('user_email' => 'dakachi');
     	$error = ME_Authentication::retrieve_password( $user );
-    	$this->assertEquals( new WP_Error('invalid_email', __('<strong>ERROR</strong>: The email address isn&#8217;t correct.')), $error);
+    	$this->assertEquals( new WP_Error('user_email', __('The user email must be a valid email address.')), $error);
     }
     // empty user login
     public function test_forgot_pass_empty_user_login() {
     	$user = array();
     	$error = ME_Authentication::retrieve_password( $user );
-    	$this->assertEquals( new WP_Error('invalid_email', __('<strong>ERROR</strong>: The email address isn&#8217;t correct.')), $error);
+    	$this->assertEquals( new WP_Error('user_email', __('The user email field is required.')), $error);
     }
 
     // email invalid
     public function test_forgot_pass_invalid_email_address() {
-        $user = array('user_login' => 'dakachi@2gmail.2com');
+        $user = array('user_email' => 'dakachi@2gmail.2com');
         $error = ME_Authentication::retrieve_password( $user );
-        $this->assertEquals( new WP_Error('invalid_email', __('<strong>ERROR</strong>: There is no user registered with that email address.')), $error);
+        $this->assertEquals( new WP_Error('user_email', __('The user email must be a valid email address.')), $error);
     }
 }
