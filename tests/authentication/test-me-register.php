@@ -273,7 +273,7 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'last_name' => 'dang'
             )
         );
-        $this->assertEquals($error, new WP_Error('invalid_username', '<strong>ERROR</strong>: This username is invalid because it uses illegal characters. Please enter a valid username.'));
+        $this->assertEquals($error, new WP_Error('invalid_username', 'Usernames can only contain letters (a-z), numbers (0-9), and underscores (_).'));
     }
 
     // test invalid user name format
@@ -289,7 +289,7 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'last_name' => 'dang'
             )
         );
-        $this->assertEquals($error, new WP_Error('invalid_username', '<strong>ERROR</strong>: This username is invalid because it uses illegal characters. Please enter a valid username.'));
+        $this->assertEquals($error, new WP_Error('invalid_username', 'Usernames can only contain letters (a-z), numbers (0-9), and underscores (_).'));
     }
 
     // test invalid user name format
@@ -305,7 +305,7 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'last_name' => 'dang'
             )
         );
-        $this->assertEquals($error, new WP_Error('invalid_username', '<strong>ERROR</strong>: This username is invalid because it uses illegal characters. Please enter a valid username.'));
+        $this->assertEquals($error, new WP_Error('invalid_username', 'Usernames can only contain letters (a-z), numbers (0-9), and underscores (_).'));
     }
 
 

@@ -21,7 +21,7 @@ class ME_Listing_Handle {
         global $user_ID;
         // validate data
         $is_valid = self::validate($listing_data);
-        if ($is_valid !== true) {
+        if (is_wp_error($is_valid)) {
             return $is_valid;
         }
 
@@ -98,7 +98,7 @@ class ME_Listing_Handle {
         $invalid_data = array();
         // validate post data
         $rules = array(
-            'post_title'   => 'required',
+            'post_title' => 'required',
             'post_content' => 'required',
             'listing_type' => 'required|in:contact,purchasion,rental',
         );
@@ -109,7 +109,7 @@ class ME_Listing_Handle {
          * @param array $listing_data
          * @since 1.0
          */
-        $rules    = apply_filters('marketengine_insert_listing_rules', $rules, $listing_data);
+        $rules = apply_filters('marketengine_insert_listing_rules', $rules, $listing_data);
         $is_valid = me_validate($listing_data, $rules);
         if (!$is_valid) {
             $invalid_data = me_get_invalid_message($listing_data, $rules);
@@ -123,7 +123,7 @@ class ME_Listing_Handle {
          */
         $listing_meta_data_rules = apply_filters('marketengine_insert_listing_meta_rules', array('me_price' => 'number'));
         // validate post meta data
-        $is_valid = self::validate($listing_data['meta_input'], $listing_meta_data_rules);
+        $is_valid = me_validate($listing_data['meta_input'], $listing_meta_data_rules);
         if (!$is_valid) {
             $invalid_data = array_merge($invalid_data, me_get_invalid_message($listing_data['meta_input'], $listing_meta_data_rules));
         }
@@ -135,7 +135,7 @@ class ME_Listing_Handle {
          * @since 1.0
          */
         $listing_tax_rules = apply_filters('marketengine_insert_listing_taxonomy_rules', array('listing_category' => 'required'));
-        $is_valid          = self::validate($listing_data['tax_input'], $listing_tax_rules);
+        $is_valid = me_validate($listing_data['tax_input'], $listing_tax_rules);
         if (!$is_valid) {
             $invalid_data = array_merge($invalid_data, me_get_invalid_message($listing_data['tax_input'], $listing_tax_rules));
         }
@@ -181,8 +181,8 @@ class ME_Listing_Handle {
                     }
 
                     $_term = get_terms($taxonomy, array(
-                        'name'       => $term,
-                        'fields'     => 'ids',
+                        'name' => $term,
+                        'fields' => 'ids',
                         'hide_empty' => false,
                     ));
 

@@ -36,10 +36,10 @@ class ME_Authentication {
 
         $error = new WP_Error();
         if (empty($user_login)) {
-            $error->add('username_required', __('Username is required.', 'enginethemes'));
+            $error->add('username_required', __('The field username is required.', 'enginethemes'));
         }
         if (empty($user_pass)) {
-            $error->add('password_required', __('Password is required.', 'enginethemes'));
+            $error->add('password_required', __('The field password is required.', 'enginethemes'));
         }
         if ($error->get_error_messages()) {
             return $error;
@@ -131,7 +131,7 @@ class ME_Authentication {
         if ($sanitized_user_login == '') {
             $errors->add('empty_username', __("Please enter a username.", "enginethemes"));
         } elseif (!validate_username($user_login) || preg_match('/[^a-z0-9]/', $user_data['user_login'])) {
-            $errors->add('invalid_username', __("Usernames can only contain letters (a-z), numbers (0-9), and underscores (_)", "enginethemes"));
+            $errors->add('invalid_username', __("Usernames can only contain letters (a-z), numbers (0-9), and underscores (_).", "enginethemes"));
             $sanitized_user_login = '';
         } else {
             /** This filter is documented in wp-includes/user.php */
@@ -569,7 +569,9 @@ class ME_Authentication {
 }
 
 function me_add_user_meta($meta) {
-    $meta['location'] = $_POST['location'];
+    if(isset($_POST['location'])) {
+        $meta['location'] = $_POST['location'];    
+    }    
     return $meta;
 }
 add_filter('insert_user_meta', 'me_add_user_meta');
