@@ -45,7 +45,13 @@ class ME_Auth_Form extends ME_Form {
                 me_wp_error_to_notices($user);
             } else {
                 // set the redirect link after login
-                $redirect = self::get_redirect_link();
+                if (isset($_POST['redirect'])) {
+                    $redirect = $_POST['redirect'];
+                } elseif (wp_get_referer()) {
+                    $redirect = wp_get_referer();
+                } else {
+                    $redirect = home_url();
+                }
                 /**
                  * action filter redirect link after user login
                  * @param String $redirect
@@ -76,7 +82,7 @@ class ME_Auth_Form extends ME_Form {
 
             if (get_option('is_required_email_confirmation')) {
                 me_add_notice(__("You have registered successfully. Please check your mailbox to activate your account", "enginethemes"));
-            }else {
+            } else {
                 me_add_notice(__("You have registered successfully.", "enginethemes"));
             }
             // login in

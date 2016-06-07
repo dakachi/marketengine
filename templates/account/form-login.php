@@ -42,7 +42,6 @@ do_action('marketengine_before_user_login_form');
 		<a href="<?php echo home_url(); ?>" class="back-home-sigin"><?php _e("&lt;  Back to Home", "enginethemes");?></a>
 
 		<?php wp_nonce_field('me-login', "_wpnonce");?>
-
 		<?php do_action('marketengine_user_login_form_end');?>
 	</form>
 
