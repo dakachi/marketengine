@@ -42,6 +42,11 @@ do_action('marketengine_before_user_login_form');
 		<a href="<?php echo home_url(); ?>" class="back-home-sigin"><?php _e("&lt;  Back to Home", "enginethemes");?></a>
 
 		<?php wp_nonce_field('me-login', "_wpnonce");?>
+
+		<?php if(wp_get_referer()) : ?>
+			<input type="hidden" name="redirect" value="<?php echo wp_get_referer(); ?>" />
+		<?php endif; ?>
+		
 		<?php do_action('marketengine_user_login_form_end');?>
 	</form>
 
