@@ -7,20 +7,19 @@ class ME_Shortcodes_Auth {
     }
     public static function me_user_account() {
         global $wp;
-        if (isset($wp->query_vars['reset-password'])) {
-            return self::me_resetpass_form();
-        }
         if (is_user_logged_in()) {
             if (isset($wp->query_vars['edit-profile'])) {
                 return self::me_user_edit_profile();
-            } elseif (isset($wp->query_vars['listings'])) {
+            }elseif(isset($wp->query_vars['listings'])) {
                 return self::me_user_listings();
             }
             return self::me_user_profile();
         } else {
             if (isset($wp->query_vars['forgot-password'])) {
                 return self::forgot_password_form();
-            } elseif (isset($wp->query_vars['register'])) {
+            } elseif(isset($wp->query_vars['reset-password'])) {
+                return self::me_resetpass_form();
+            }elseif (isset($wp->query_vars['register'])) {
                 return self::me_register_form();
             }
             return self::me_login_form();

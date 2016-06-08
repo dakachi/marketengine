@@ -43,8 +43,8 @@ do_action('marketengine_before_user_login_form');
 
 		<?php wp_nonce_field('me-login', "_wpnonce");?>
 
-		<?php if(wp_get_referer()) : ?>
-			<input type="hidden" name="redirect" value="<?php echo wp_get_referer(); ?>" />
+		<?php if(wp_get_referer() || !empty($_POST['redirect'])) : ?>
+			<input type="hidden" name="redirect" value="<?php echo !empty($_POST['redirect']) ? $_POST['redirect'] : wp_get_referer(); ?>" />
 		<?php endif; ?>
 		
 		<?php do_action('marketengine_user_login_form_end');?>
