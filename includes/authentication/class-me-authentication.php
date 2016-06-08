@@ -391,6 +391,32 @@ class ME_Authentication {
         } else {
             do_action('password_reset', $user, $user_data['new_pass']);
             wp_set_password($user_data['new_pass'], $user->ID);
+
+            $mail_title = __("You have reset password successfull.", "enginethemes");
+            /**
+             * Filter user reset password email subject
+             *
+             * @param String $mail_content
+             * @param Object $user_data
+             *
+             * @since 1.0
+             */
+            $mail_title = apply_filters('marketengine_reset_password_success_mail_subject', $mail_title, $user);
+            // get mail content
+            ob_start();
+            me_get_template_part('emails/reset-password-success');
+            $mail_content = ob_get_clean();
+            /**
+             * Filter user reset password success email content
+             *
+             * @param String $mail_content
+             * @param Object $user_data
+             *
+             * @since 1.0
+             */
+            $mail_content = apply_filters('marketengine_reset_password_success_mail_content', $mail_content, $user);
+            wp_mail($user->user_email, wp_specialchars_decode($mail_title), $mail_content);
+
             return $user;
         }
     }
@@ -566,7 +592,7 @@ class ME_Authentication {
             $errors->add('first_name', __("You last name can not be empty.", "enginethemes"));
         }
 
-        if($errors->get_error_code()) {
+        if ($errors->get_error_code()) {
             return $errors;
         }
         /**
