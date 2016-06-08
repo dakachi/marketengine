@@ -121,7 +121,7 @@ class ME_Listing_Handle {
          *
          * @since 1.0
          */
-        $listing_meta_data_rules = apply_filters('marketengine_insert_listing_meta_rules', array('me_price' => 'number'));
+        $listing_meta_data_rules = apply_filters('marketengine_insert_listing_meta_rules', array('listing_price' => 'numeric'));
         // validate post meta data
         $is_valid = me_validate($listing_data['meta_input'], $listing_meta_data_rules);
         if (!$is_valid) {

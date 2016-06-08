@@ -610,6 +610,32 @@ class ME_Authentication {
         $user_data = array_diff_key($user_data, $non_editable_fields);
         return wp_update_user($user_data);
     }
+
+    public static function change_password($user_data){
+        $rules = array(
+            'old_password' => 'required',
+            'new_password' => 'required',
+            'confirm_password' => 'required',
+        );
+        $errors = new WP_Error();
+        /**
+         * filter change password data validate rules
+         *
+         * @param Array $rules
+         * @param Array $user_data
+         *
+         * @since 1.0
+         */
+        $rules = apply_filters('marketengine_change_password_rules', $rules, $user_data);
+        $is_valid = me_validate($user_data, $rules);
+        if (!$is_valid) {
+            $invalid_data = me_get_invalid_message($user_data, $rules);
+            foreach ($invalid_data as $key => $message) {
+                $errors->add($key, $message);
+            }
+            return $errors;
+        }
+    }
 }
 
 function me_add_user_meta($meta) {

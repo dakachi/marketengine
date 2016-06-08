@@ -42,7 +42,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'post_content' => 'Sample content',
             'listing_type' => 'contacts',
             'meta_input' => array(
-                'price' => '22',
+                'price' => 22,
             ),
             'tax_input' => array(
                 'listing_category' => '1',
@@ -56,16 +56,16 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         $listing_data = array(
             'post_title' => 'Listing A',
             'post_content' => 'Sample content',
-            'listing_type' => 'contacts',
+            'listing_type' => 'contact',
             'meta_input' => array(
-                'me_price' => '222a',
+                'listing_price' => '222a',
             ),
             'tax_input' => array(
                 'listing_category' => '1',
             )
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
-        $this->assertEquals(new WP_Error('listing_type', 'The selected listing type is invalid.'), $p1);
+        $this->assertEquals(new WP_Error('listing_price', 'The listing price must be a number.'), $p1);
     }
 
 

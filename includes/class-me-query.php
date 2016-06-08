@@ -5,6 +5,7 @@ function me_init() {
     add_rewrite_endpoint('reset-password', EP_ROOT | EP_PAGES);
     add_rewrite_endpoint('register', EP_ROOT | EP_PAGES);
     add_rewrite_endpoint('edit-profile', EP_ROOT | EP_PAGES);
+    add_rewrite_endpoint('change-password', EP_ROOT | EP_PAGES);
     add_rewrite_endpoint('listings', EP_ROOT | EP_PAGES);
 }
 

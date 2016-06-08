@@ -10,6 +10,8 @@ class ME_Shortcodes_Auth {
         if (is_user_logged_in()) {
             if (isset($wp->query_vars['edit-profile'])) {
                 return self::me_user_edit_profile();
+            }elseif (isset($wp->query_vars['change-password'])) {
+                return self::me_change_password();
             }elseif(isset($wp->query_vars['listings'])) {
                 return self::me_user_listings();
             }
@@ -35,6 +37,13 @@ class ME_Shortcodes_Auth {
     public static function me_user_edit_profile() {
         ob_start();
         me_get_template_part('account/edit-profile');
+        $content = ob_get_clean();
+        return $content;
+    }
+
+    public static function me_change_password() {
+        ob_start();
+        me_get_template_part('account/change-password');
         $content = ob_get_clean();
         return $content;
     }
