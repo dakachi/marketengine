@@ -24,6 +24,7 @@ class ME_Auth_Form extends ME_Form {
         add_action('wp_loaded', array(__CLASS__, 'process_confirm_email'));
         add_action('wp_loaded', array(__CLASS__, 'process_resend_confirm_email'));
 
+        add_action('wp_loaded', array(__CLASS__, 'process_change_password'));
         add_action('wp_loaded', array(__CLASS__, 'update_user_profile'));
     }
 
@@ -191,6 +192,21 @@ class ME_Auth_Form extends ME_Form {
     public static function update_user_profile() {
         if (!empty($_POST['update_profile']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-update_profile')) {
             $user = ME_Authentication::update_profile($_POST);
+            if (!is_wp_error($user)) {
+                // set the redirect link after ask confirm email
+                $redirect = self::get_redirect_link();
+                $redirect = apply_filters('marketengine_update_profile_redirect', $redirect, $user);
+                wp_redirect($redirect, 302);
+                exit;
+            }else {
+                me_wp_error_to_notices($user);
+            }
+        }
+    }
+
+    public static function process_change_password(){
+        if (!empty($_POST['change_password']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me_change-password')) {
+            $user = ME_Authentication::change_password($_POST);
             if (!is_wp_error($user)) {
                 // set the redirect link after ask confirm email
                 $redirect = self::get_redirect_link();

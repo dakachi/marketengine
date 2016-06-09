@@ -611,11 +611,11 @@ class ME_Authentication {
         return wp_update_user($user_data);
     }
 
-    public static function change_password($user_data){
+    public static function change_password($user_data) {
         $rules = array(
             'old_password' => 'required',
             'new_password' => 'required',
-            'confirm_password' => 'required',
+            'confirm_password' => 'required|same:new_password',
         );
         $errors = new WP_Error();
         /**
@@ -635,6 +635,28 @@ class ME_Authentication {
             }
             return $errors;
         }
+
+        $user = ME()->get_current_user();
+        if (!$user->id || !wp_check_password($user_data['old_password'], $user->data->user_pass, $user->ID)) {
+            $errors->add('old_password_invalid', __("The old password you enter is not correct.", "enginethemes"));
+            return $errors;
+        }
+        // user have to activate email first
+        if(get_option('is_required_email_confirmation') && get_user_meta($user->ID,'confirm_key', true )) {
+            $errors->add('inactive_account', __("Please confirm your email first.", "enginethemes"));
+            return $errors;
+        }
+
+        wp_update_user( array('ID' => $user->ID, 'user_pass' => $user_data['new_password']) );
+        /**
+         * do action change password
+         *
+         * @param Array $user
+         *
+         * @since 1.0
+         */
+        do_action('marketengine_user_change_password', $user);
+        return $user->ID;
     }
 }
 

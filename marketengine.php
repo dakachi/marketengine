@@ -28,11 +28,17 @@ if (!class_exists('MarketEngine')):
         /**
          * The string of plugin version.
          *
-         * @var MarketEngine
+         * @var version
          * @since 1.0
          */
         public $version = '1.0';
-
+        /**
+         * The object of current user data
+         *
+         * @var current_user
+         * @since 1.0
+         */
+        public $current_user;
         /**
          * Main MarketEngine Instance.
          *
@@ -42,7 +48,7 @@ if (!class_exists('MarketEngine')):
          * @static
          * @see ME()
          * @return MarketEngine - Main instance.
-         */
+         */        
         public static function instance() {
             if (is_null(self::$_instance)) {
                 self::$_instance = new self();
@@ -150,7 +156,10 @@ if (!class_exists('MarketEngine')):
 
         public function get_current_user() {
             global $current_user;
-            return new ME_User($current_user);
+            if(null === $this->current_user && $current_user) {
+                $this->current_user = new ME_User($current_user);    
+            }
+            return $this->current_user;
         }
 
     }

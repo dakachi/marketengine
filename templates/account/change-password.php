@@ -25,7 +25,7 @@ $user = ME()->get_current_user();
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
 					<label class="text"><?php _e("Your current password", "enginethemes");?></label>
-					<input type="password" value="" name="old_password" id="old_password">
+					<input class="required" type="password" value="" name="old_password" id="old_password">
 				</div>
 			</div>
 		</div>
@@ -33,25 +33,25 @@ $user = ME()->get_current_user();
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
 					<label class="text"><?php _e("New password", "enginethemes");?></label>
-					<input type="text" value="" name="new_password" id="new_password">
+					<input class="required" type="password" value="" name="new_password" id="new_password">
 				</div>
 			</div>
-		</div>
+		</div>	
 		<div class="marketengine-profile-info">
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
 					<label class="text"><?php _e("Confirm password", "enginethemes");?></label>
-					<input type="text" value="" name="confirm_password" id="confirm_password">
+					<input class="required" type="password" value="" name="confirm_password" id="confirm_password">
 				</div>
 			</div>
 		</div>
 
 		<?php do_action('marketengine_change_password_form'); ?>
 
-		<?php wp_nonce_field('change-password'); ?>
+		<?php wp_nonce_field('me_change-password'); ?>
 
 		<div class="marketengine-text-field edit-profile">
-			<input type="submit" class="marketengine-btn" name="update_profile" value="<?php _e("Change password", "enginethemes");?>" />
+			<input type="submit" class="marketengine-btn" name="change_password" value="<?php _e("Change password", "enginethemes");?>" />
 			<a href="<?php echo me_get_page_permalink('user-profile'); ?>" class="marketengine-btn"><?php _e("Cancel", "enginethemes");?></a>
 		</div>
 	</div>
