@@ -1,7 +1,6 @@
 <?php 
 $listing_types = me_get_listing_types();
 ?>
-<div class="marketengine-post-step">
 	<div class="marketengine-group-field" id="listing-type-container">
 		<div class="marketengine-select-field">
 		    <label class="text"><?php _e("Listing Type", "enginethemes"); ?></label>
@@ -17,7 +16,7 @@ $listing_types = me_get_listing_types();
 			<div class="me-col-md-6">
 				<div class="marketengine-input-field">
 				    <label class="text"><?php _e("Price", "enginethemes"); ?></label>
-				    <input type="text" name="listing_price" placeholder="$" class="required">
+				    <input type="text" name="meta_input[listing_price]" placeholder="$" class="required">
 				</div>
 			</div>
 			<div class="me-col-md-6">
@@ -32,4 +31,3 @@ $listing_types = me_get_listing_types();
 			</div>
 		</div>
 	</div>
-</div>
