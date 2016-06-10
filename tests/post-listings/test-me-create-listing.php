@@ -17,7 +17,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             )
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
-        $this->assertEquals(new WP_Error('listing_title', 'The post title field is required.'), $p1);
+        $this->assertEquals(new WP_Error('listing_title', 'The listing title field is required.'), $p1);
     }
 
     public function test_create_listing_with_empty_listing_content() {
@@ -33,7 +33,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             )
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
-        $this->assertEquals(new WP_Error('listing_content', 'The post content field is required.'), $p1);
+        $this->assertEquals(new WP_Error('listing_content', 'The listing content field is required.'), $p1);
     }
 
     public function test_create_listing_with_empty_listing_type() {
