@@ -98,8 +98,8 @@ class ME_Listing_Handle {
         $invalid_data = array();
         // validate post data
         $rules = array(
-            'post_title' => 'required',
-            'post_content' => 'required',
+            'listing_title' => 'required',
+            'listing_content' => 'required',
             'listing_type' => 'required|in:contact,purchasion,rental',
         );
         /**
@@ -114,6 +114,9 @@ class ME_Listing_Handle {
         if (!$is_valid) {
             $invalid_data = me_get_invalid_message($listing_data, $rules);
         }
+        
+        $listing_data['post_title'] = $listing_data['listing_title'];
+        $listing_data['post_content'] = $listing_data['listing_content'];
         /**
          * Filter listing meta data validate rule
          *

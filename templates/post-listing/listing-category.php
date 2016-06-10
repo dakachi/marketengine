@@ -2,7 +2,7 @@
 $parent_categories = get_terms( array('taxonomy' => 'listing_category', 'hide_empty' => false, 'parent' => 0) );
 ?>
 <script type="data/json"><?php echo json_encode($parent_categories) ?></script>
-<div id="marketengine-post-step-1" class="marketengine-post-step active select-category">
+<div class="marketengine-post-step active select-category">
 	<div class="marketengine-group-field" id="me-parent-cat-container">
 		<div class="marketengine-select-field">
 		    <label class="text"><?php _e("Category", "enginethemes"); ?></label>

@@ -15,15 +15,15 @@ if (!defined('ABSPATH')) {
 	<div class="marketengine-post-listing-wrap">
 		<form  id="post-listing-form" class="post-listing-form" method="post" accept-charset="utf-8">
 
-			<?php do_action('marketengine_post_listing_form_start'); ?>
-
 			<?php me_print_notices(); ?>
+
+			<?php do_action('marketengine_post_listing_form_start'); ?>
 
 			<?php me_get_template_part('post-listing/listing-category'); ?>
 
 			<?php me_get_template_part('post-listing/listing-type'); ?>
 			
-			<div id="marketengine-post-step-3" class="marketengine-post-step">
+			<div>
 			
 				<?php me_get_template_part('post-listing/listing-information'); ?>
 			

@@ -1,7 +1,7 @@
 <?php 
 $listing_types = me_get_listing_types();
 ?>
-<div id="marketengine-post-step-2" class="marketengine-post-step">
+<div class="marketengine-post-step">
 	<div class="marketengine-group-field" id="listing-type-container">
 		<div class="marketengine-select-field">
 		    <label class="text"><?php _e("Listing Type", "enginethemes"); ?></label>

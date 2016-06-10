@@ -23,8 +23,28 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+
+.icon-cancel:before {
+    content: "\e90f";
+}
+.icon-reviews:before {
+    content: "\e90c";
+}
+.icon-shopcategories:before {
+    content: "\e90d";
+}
+.icon-cart:before {
+    content: "\e90e";
+}
+.icon-addimage:before {
+    content: "\e90b";
+}
 .icon-uploadprofileimage:before {
     content: "\e90a";
+}
+.icon-emptystar:before {
+    content: "\e909";
 }
 .icon-research:before {
     content: "\e906";
@@ -53,4 +73,3 @@
 .icon-redo:before {
     content: "\e905";
 }
-
