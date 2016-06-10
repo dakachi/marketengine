@@ -611,6 +611,20 @@ class ME_Authentication {
         return wp_update_user($user_data);
     }
 
+    /**
+     * User change password
+     *
+     * @since 1.0
+     *
+     * @see wp_update_user()
+     *
+     * @param Array $user_data 
+     *          - old_password
+     *          - new_password
+     *          - confirm_password
+     *
+     * @return Int | WP_Error
+     */
     public static function change_password($user_data) {
         $rules = array(
             'old_password' => 'required',

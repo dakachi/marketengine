@@ -15,7 +15,7 @@ class ME_Listing_Handle_Form extends ME_Form {
      * Handling listing data to create new listing
      */
     public static function process_insert($data) {
-        if (!empty($_POST['insert_lisiting']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert-listing')) {
+        if (!empty($_POST['insert_lisiting']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert_listing')) {
             $new_listing = ME_Listing_Handle::insert($_POST);
             if (is_wp_error($new_listing)) {
                 me_wp_error_to_notices($new_listing);
@@ -43,7 +43,7 @@ class ME_Listing_Handle_Form extends ME_Form {
      * Handling listing data to update
      */
     public static function process_update($data) {
-        if (!empty($_POST['update_lisiting']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-update-listing')) {
+        if (!empty($_POST['update_lisiting']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-update_listing')) {
             $listing = ME_Listing_Handle::update($_POST);
             if (is_wp_error($new_listing)) {
                 me_wp_error_to_notices($listing);

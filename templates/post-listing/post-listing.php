@@ -32,8 +32,11 @@ if (!defined('ABSPATH')) {
 				<?php me_get_template_part('post-listing/listing-tags'); ?>
 			
 			</div>
+
+			<?php wp_nonce_field('me-insert_listing'); ?>
+
 			<div class="marketengine-group-field me-text-center submit-post">
-				<input class="marketengine-post-submit-btn" type="submit" value="<?php _e("SUBMIT", "enginethemes"); ?>">
+				<input class="marketengine-post-submit-btn" type="submit" name="insert_lisiting" value="<?php _e("SUBMIT", "enginethemes"); ?>">
 			</div>
 			<a href="#" class="back-link-page me-forward-section" data-active="2"><?php _e("&lt; Back to home", "enginethemes"); ?></a>
 

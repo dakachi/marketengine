@@ -46,7 +46,9 @@ class Tests_ME_Change_Password extends WP_UnitTestCase {
         $error = ME_Authentication::change_password($user_data);
         $this->assertEquals(new WP_Error('old_password_invalid', 'The old password you enter is not correct.'), $error);
     }
-
+    /**
+     * @covers ME_Authentication::change_password
+     */
     public function test_change_password_fail_confirm_pass_miss_match() {
         $user_data = array(
             'old_password' => '123',
