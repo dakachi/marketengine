@@ -3,7 +3,9 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
     public function __construct($factory = null) {
         parent::__construct($factory);
     }
-
+    /**
+     * @covers ME_Listing_Handle::insert
+     */
     public function test_create_listing_with_empty_listing_title() {
         $listing_data = array(
             'listing_title' => '',
