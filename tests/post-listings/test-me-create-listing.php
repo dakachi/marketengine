@@ -13,6 +13,13 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
                 'name' => 'Cat 1'
             )
         );
+
+        $this->parent_cat_2 = $this->listing_category->create_object(
+            array(
+                'taxonomy' => 'listing_category',
+                'name' => 'Cat 2'
+            )
+        );
         
         $this->sub_cat = $this->listing_category->create_object(
             array(
@@ -114,7 +121,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'sub_cat' => $this->sub_cat,
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
-        $this->assertEquals(new WP_Error('listing_category', 'The listing category field is required.'), $p1);
+        $this->assertEquals(new WP_Error('invalid_listing_category', 'The selected listing category is invalid.'), $p1);
     }
 
     public function test_create_listing_with_invalid_price() {
