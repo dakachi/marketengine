@@ -15,7 +15,7 @@ class Tests_ME_Change_Password extends WP_UnitTestCase {
      */
     public function test_change_password_success() {
         $user_data = array(
-            'old_password' => '123',
+            'current_password' => '123',
             'new_password' => '12345',
             'confirm_password' => '12345'
         );
@@ -26,12 +26,12 @@ class Tests_ME_Change_Password extends WP_UnitTestCase {
 
     public function test_change_password_fail_with_empty_fields() {
         $user_data = array(
-            'old_password' => '',
+            'current_password' => '',
             'new_password' => '12345',
             'confirm_password' => '12345'
         );
         $error = ME_Authentication::change_password($user_data);
-        $this->assertEquals(new WP_Error('old_password', 'The old password field is required.'), $error);
+        $this->assertEquals(new WP_Error('current_password', 'The current password field is required.'), $error);
     }
 
     /**
@@ -39,19 +39,19 @@ class Tests_ME_Change_Password extends WP_UnitTestCase {
      */
     public function test_change_pwd_fail_with_incorrect_current_pwd() {
         $user_data = array(
-            'old_password' => '12342',
+            'current_password' => '12342',
             'new_password' => '12345',
             'confirm_password' => '12345'
         );
         $error = ME_Authentication::change_password($user_data);
-        $this->assertEquals(new WP_Error('old_password_invalid', 'The old password you enter is not correct.'), $error);
+        $this->assertEquals(new WP_Error('current_password_invalid', 'The current password you enter is not correct.'), $error);
     }
     /**
      * @covers ME_Authentication::change_password
      */
     public function test_change_password_fail_confirm_pass_miss_match() {
         $user_data = array(
-            'old_password' => '123',
+            'current_password' => '123',
             'new_password' => '12345',
             'confirm_password' => '123456'
         );
@@ -67,7 +67,7 @@ class Tests_ME_Change_Password extends WP_UnitTestCase {
         update_user_meta($this->author_id, 'confirm_key', $key);
 
         $user_data = array(
-            'old_password' => '123',
+            'current_password' => '123',
             'new_password' => '12345',
             'confirm_password' => '12345'
         );

@@ -25,7 +25,7 @@ $user = ME()->get_current_user();
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
 					<label class="text"><?php _e("Your current password", "enginethemes");?></label>
-					<input class="required" type="password" value="" name="old_password" id="old_password">
+					<input class="required" type="password" value="" name="current_password" id="current_password">
 				</div>
 			</div>
 		</div>

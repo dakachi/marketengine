@@ -627,7 +627,7 @@ class ME_Authentication {
      */
     public static function change_password($user_data) {
         $rules = array(
-            'old_password' => 'required',
+            'current_password' => 'required',
             'new_password' => 'required',
             'confirm_password' => 'required|same:new_password',
         );
@@ -651,8 +651,8 @@ class ME_Authentication {
         }
 
         $user = ME()->get_current_user();
-        if (!$user->id || !wp_check_password($user_data['old_password'], $user->data->user_pass, $user->ID)) {
-            $errors->add('old_password_invalid', __("The old password you enter is not correct.", "enginethemes"));
+        if (!$user->id || !wp_check_password($user_data['current_password'], $user->data->user_pass, $user->ID)) {
+            $errors->add('current_password_invalid', __("The current password you enter is not correct.", "enginethemes"));
             return $errors;
         }
         // user have to activate email first
