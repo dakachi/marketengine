@@ -10,8 +10,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 $user = ME()->get_current_user();
-$first_name = !empty($_POST['first_name']) ? $_POST['first_name'] : $user->first_name;
-$last_name = !empty($_POST['last_name']) ? $_POST['last_name'] : $user->first_name;
+$first_name = isset($_POST['first_name']) ? $_POST['first_name'] : $user->first_name;
+$last_name = isset($_POST['last_name']) ? $_POST['last_name'] : $user->first_name;
 ?>
 
 <?php do_action('marketengine_before_edit_user_profile_form', $user); ?>
