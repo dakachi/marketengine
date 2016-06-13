@@ -134,7 +134,7 @@ class ME_Listing_Handle {
 
         // validate listing category
         if (empty($listing_data['parent_cat'])) {
-            $invalid_data['listing_category'] = ("The listing category field is required.", "enginethemes");
+            $invalid_data['listing_category'] = __("The listing category field is required.", "enginethemes");
         } elseif (!term_exists($listing_data['parent_cat'], 'listing_category')) {
             $invalid_data['invalid_listing_category'] = __("The selected listing category is invalid.", "enginethemes");
         } else {
