@@ -25,6 +25,8 @@ class ME_Listing_Handle {
             return $is_valid;
         }
 
+
+
         $listing_data['post_type'] = 'listing';
         if (isset($listing_data['ID'])) {
             if (($listing_data['post_author'] != $user_ID) && !current_user_can('edit_others_posts')) {
@@ -115,7 +117,7 @@ class ME_Listing_Handle {
         if (!$is_valid) {
             $invalid_data = me_get_invalid_message($listing_data, $rules);
         }
-        
+
         $listing_data['post_title'] = $listing_data['listing_title'];
         $listing_data['post_content'] = $listing_data['listing_content'];
         /**
@@ -139,36 +141,38 @@ class ME_Listing_Handle {
             }
             return $errors;
         }
+
+        $is_valid = self::handle_listing_category($listing_data);
         /**
          * Filter validate listing data result
          *
-         * @param bool TRUE 
-         * @param array $listing_data 
+         * @param bool TRUE
+         * @param array $listing_data
          *
          * @since 1.0
          */
-        return apply_filters('marketengine_validate_listing_data', true, $listing_data);
+        return apply_filters('marketengine_validate_listing_data', $is_valid, $listing_data);
     }
 
-    public static function handle_listing_category($listing_data){
+    public static function handle_listing_category($listing_data) {
         $errors = new WP_Error();
-        if(empty($listing_data['parent_cat'])) {
+        if (empty($listing_data['parent_cat'])) {
             $errors->add('listing_category', __("The listing category field is required.", "enginethemes"));
             return $errors;
         }
 
-        if(!term_exists($listing_data['parent_cat'], 'listing_category')) {
+        if (!term_exists($listing_data['parent_cat'], 'listing_category')) {
             $errors->add('invalid_listing_category', __("The selected listing category is invalid.", "enginethemes"));
             return $errors;
         }
 
         $child_cats = get_terms('listing_category', array('hide_empty' => false, 'parent' => $listing_data['parent_cat']));
-        if(!empty($child_cats) && empty($listing_data['sub_cat'])) {
-            $errors->add('sub_listing_category', __("The sub listing category field is required.", "enginethemes"));   
+        if (!empty($child_cats) && empty($listing_data['sub_cat'])) {
+            $errors->add('sub_listing_category', __("The sub listing category field is required.", "enginethemes"));
             return $errors;
         }
 
-        if(!term_exists($listing_data['sub_cat'])) {
+        if (!term_exists($listing_data['sub_cat'])) {
             $errors->add('invalid_sub_listing_category', __("The selected sub listing category is invalid.", "enginethemes"));
             return $errors;
         }
@@ -176,7 +180,7 @@ class ME_Listing_Handle {
         return true;
     }
 
-    public static function handle_listing_tag($listing_data){
-        
+    public static function handle_listing_tag($listing_data) {
+
     }
 }

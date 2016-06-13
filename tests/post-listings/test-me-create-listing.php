@@ -2,6 +2,25 @@
 class Tests_ME_Create_Listing extends WP_UnitTestCase {
     public function __construct($factory = null) {
         parent::__construct($factory);
+        $this->listing_category = new WP_UnitTest_Factory_For_Term($this, 'listing_category');
+    }
+
+    public function setUp() {
+        parent::setUp();
+        $this->parent_cat = $this->listing_category->create_object(
+            array(
+                'taxonomy' => 'listing_category',
+                'name' => 'Cat 1'
+            )
+        );
+        
+        $this->sub_cat = $this->listing_category->create_object(
+            array(
+                'taxonomy' => 'listing_category',
+                'name' => 'Sub Cat 1',
+                'parent' => $this->parent_cat
+            )
+        );
     }
     /**
      * @covers ME_Listing_Handle::insert
@@ -14,9 +33,8 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'meta_input' => array(
                 'price' => '1',
             ),
-            'tax_input' => array(
-                'listing_category' => '1',
-            )
+            'parent_cat' => $this->parent_cat,
+            'sub_cat' => $this->sub_cat,
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
         $this->assertEquals(new WP_Error('listing_title', 'The listing title field is required.'), $p1);
@@ -30,9 +48,8 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'meta_input' => array(
                 'price' => '22',
             ),
-            'tax_input' => array(
-                'listing_category' => '1',
-            )
+            'parent_cat' => $this->parent_cat,
+            'sub_cat' => $this->sub_cat,
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
         $this->assertEquals(new WP_Error('listing_content', 'The listing content field is required.'), $p1);
@@ -46,9 +63,8 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'meta_input' => array(
                 'price' => 22,
             ),
-            'tax_input' => array(
-                'listing_category' => '1',
-            )
+            'parent_cat' => $this->parent_cat,
+            'sub_cat' => $this->sub_cat,
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
         $this->assertEquals(new WP_Error('listing_type', 'The listing type field is required.'), $p1);
@@ -64,9 +80,8 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'meta_input' => array(
                 'price' => 22,
             ),
-            'tax_input' => array(
-                'listing_category' => '1',
-            )
+            'parent_cat' => $this->parent_cat,
+            'sub_cat' => $this->sub_cat,
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
         $this->assertEquals(new WP_Error('listing_type', 'The selected listing type is invalid.'), $p1);
@@ -80,9 +95,8 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'meta_input' => array(
                 'price' => 22,
             ),
-            'tax_input' => array(
-                'listing_category' => '',
-            )
+            'parent_cat' => '',
+            'sub_cat' => $this->sub_cat,
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
         $this->assertEquals(new WP_Error('listing_category', 'The listing category field is required.'), $p1);
@@ -96,9 +110,8 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'meta_input' => array(
                 'price' => 22,
             ),
-            'tax_input' => array(
-                'listing_category' => '2',
-            )
+            'parent_cat' => 213,
+            'sub_cat' => $this->sub_cat,
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
         $this->assertEquals(new WP_Error('listing_category', 'The listing category field is required.'), $p1);
@@ -112,14 +125,12 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'meta_input' => array(
                 'listing_price' => '222a',
             ),
-            'tax_input' => array(
-                'listing_category' => '1',
-            )
+            'parent_cat' => $this->parent_cat,
+            'sub_cat' => $this->sub_cat,
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
         $this->assertEquals(new WP_Error('listing_price', 'The listing price must be a number.'), $p1);
     }
-
 
     // TODO: view test_media_handle_upload_sets_post_excerpt in tests/media.php
 }
