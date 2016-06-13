@@ -10,7 +10,7 @@ $selected_cat = empty($_POST['parent_cat']) ? '' : $_POST['parent_cat'];
 		    <select class="select-category  parent-category" name="parent_cat">
 		    	<option value=""><?php _e("Select your category", "enginethemes"); ?></option>
 		    	<?php foreach ($parent_categories as $key => $parent_cat) : ?>
-		    	<option value="<?php echo $parent_cat->term_id; ?>" <?php selected( $selected_cat, $parent_cat->term_id); ?>>
+		    	<option value="<?php echo $parent_cat->term_id; ?>" <?php selected( $selected_cat, $parent_cat->term_id); ?> >
 		    		<?php echo $parent_cat->name; ?>
 		    	</option>
 		    	<?php endforeach; ?>
@@ -26,4 +26,3 @@ $selected_cat = empty($_POST['parent_cat']) ? '' : $_POST['parent_cat'];
 		</div>
 	</div>
 </div>
-<?php
