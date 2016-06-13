@@ -208,6 +208,7 @@ class ME_Auth_Form extends ME_Form {
         if (!empty($_POST['change_password']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me_change-password')) {
             $user = ME_Authentication::change_password($_POST);
             if (!is_wp_error($user)) {
+                me_add_notice(__("Your password has been changed successfully.", "enginethemes"));
                 // set the redirect link after ask confirm email
                 $redirect = self::get_redirect_link();
                 $redirect = apply_filters('marketengine_update_profile_redirect', $redirect, $user);

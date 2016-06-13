@@ -76,10 +76,11 @@ class ME_Listing_Handle {
      * @return bool
      */
     public static function current_user_can_create_taxonomy($taxonomy) {
+        global $user_ID;
         if (is_taxonomy_hierarchical($taxonomy)) {
-            return false;
+            return apply_filters('marketengine_user_can_create_$taxonomy', false, $taxonomy, $user_ID);
         }
-        return apply_filters('marketengine_user_can_create_$taxonomy', true, $user_ID);
+        return apply_filters('marketengine_user_can_create_$taxonomy', true, $taxonomy, $user_ID);
     }
     /**
      * Validate listing data
@@ -130,18 +131,6 @@ class ME_Listing_Handle {
         if (!$is_valid) {
             $invalid_data = array_merge($invalid_data, me_get_invalid_message($listing_data['meta_input'], $listing_meta_data_rules));
         }
-        /**
-         * Filter listing taxonomy data validate rule
-         *
-         * @param array $listing_tax_rules
-         *
-         * @since 1.0
-         */
-        $listing_tax_rules = apply_filters('marketengine_insert_listing_taxonomy_rules', array('listing_category' => 'required'));
-        $is_valid = me_validate($listing_data['tax_input'], $listing_tax_rules);
-        if (!$is_valid) {
-            $invalid_data = array_merge($invalid_data, me_get_invalid_message($listing_data['tax_input'], $listing_tax_rules));
-        }
 
         if (!empty($invalid_data)) {
             $errors = new WP_Error();
@@ -150,56 +139,44 @@ class ME_Listing_Handle {
             }
             return $errors;
         }
+        /**
+         * Filter validate listing data result
+         *
+         * @param bool TRUE 
+         * @param array $listing_data 
+         *
+         * @since 1.0
+         */
+        return apply_filters('marketengine_validate_listing_data', true, $listing_data);
+    }
+
+    public static function handle_listing_category($listing_data){
+        $errors = new WP_Error();
+        if(empty($listing_data['parent_cat'])) {
+            $errors->add('listing_category', __("The listing category field is required.", "enginethemes"));
+            return $errors;
+        }
+
+        if(!term_exists($listing_data['parent_cat'], 'listing_category')) {
+            $errors->add('invalid_listing_category', __("The selected listing category is invalid.", "enginethemes"));
+            return $errors;
+        }
+
+        $child_cats = get_terms('listing_category', array('hide_empty' => false, 'parent' => $listing_data['parent_cat']));
+        if(!empty($child_cats) && empty($listing_data['sub_cat'])) {
+            $errors->add('sub_listing_category', __("The sub listing category field is required.", "enginethemes"));   
+            return $errors;
+        }
+
+        if(!term_exists($listing_data['sub_cat'])) {
+            $errors->add('invalid_sub_listing_category', __("The selected sub listing category is invalid.", "enginethemes"));
+            return $errors;
+        }
+
         return true;
     }
 
-    //TODO: insert gallery
-
-    public static function handle_taxonomy($post_data) {
-        // Convert taxonomy input to term IDs, to avoid ambiguity.
-        if (isset($post_data['tax_input'])) {
-            foreach ((array) $post_data['tax_input'] as $taxonomy => $terms) {
-                // Hierarchical taxonomy data is already sent as term IDs, so no conversion is necessary.
-                if (is_taxonomy_hierarchical($taxonomy)) {
-                    continue;
-                }
-                /*
-                 * Assume that a 'tax_input' string is a comma-separated list of term names.
-                 * Some languages may use a character other than a comma as a delimiter, so we standardize on
-                 * commas before parsing the list.
-                 */
-                if (!is_array($terms)) {
-                    $comma = _x(',', 'tag delimiter');
-                    if (',' !== $comma) {
-                        $terms = str_replace($comma, ',', $terms);
-                    }
-                    $terms = explode(',', trim($terms, " \n\t\r\0\x0B,"));
-                }
-
-                $clean_terms = array();
-                foreach ($terms as $term) {
-                    // Empty terms are invalid input.
-                    if (empty($term)) {
-                        continue;
-                    }
-
-                    $_term = get_terms($taxonomy, array(
-                        'name' => $term,
-                        'fields' => 'ids',
-                        'hide_empty' => false,
-                    ));
-
-                    if (!empty($_term)) {
-                        $clean_terms[] = intval($_term[0]);
-                    } else {
-                        // No existing term was found, so pass the string. A new term will be created.
-                        $clean_terms[] = $term;
-                    }
-                }
-
-                $post_data['tax_input'][$taxonomy] = $clean_terms;
-            }
-        }
-        return $post_data;
+    public static function handle_listing_tag($listing_data){
+        
     }
 }
