@@ -10,6 +10,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 $user = ME()->get_current_user();
+$first_name = !empty($_POST['first_name']) ? $_POST['first_name'] : $user->first_name;
+$last_name = !empty($_POST['last_name']) ? $_POST['last_name'] : $user->first_name;
 ?>
 
 <?php do_action('marketengine_before_edit_user_profile_form', $user); ?>
@@ -41,7 +43,7 @@ $user = ME()->get_current_user();
 					<div class="marketengine-group-field">
 						<div class="marketengine-input-field">
 							<label class="text"><?php _e("First name", "enginethemes");?></label>
-							<input type="text" value="<?php echo $user->first_name; ?>" name="first_name" id="first_name" />
+							<input type="text" value="<?php echo $first_name; ?>" name="first_name" id="first_name" />
 						</div>
 					</div>
 				</div>
@@ -49,7 +51,7 @@ $user = ME()->get_current_user();
 					<div class="marketengine-group-field">
 						<div class="marketengine-input-field">
 							<label class="text"><?php _e("Last name", "enginethemes");?></label>
-							<input type="text" value="<?php echo $user->last_name; ?>" name="last_name" id="last_name">
+							<input type="text" value="<?php echo $last_name; ?>" name="last_name" id="last_name">
 						</div>
 					</div>
 				</div>
