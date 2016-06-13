@@ -135,7 +135,7 @@ class ME_Listing_Handle {
         // validate listing category
         if (empty($listing_data['parent_cat'])) {
             $invalid_data['listing_category'] = __("The listing category field is required.", "enginethemes");
-        } elseif (!term_exists($listing_data['parent_cat'], 'listing_category')) {
+        } elseif (!term_exists(intval($listing_data['parent_cat']), 'listing_category')) {
             $invalid_data['invalid_listing_category'] = __("The selected listing category is invalid.", "enginethemes");
         } else {
             // check the parent cat sub is empty or not
@@ -144,7 +144,7 @@ class ME_Listing_Handle {
             // validate sub cat
             if (!$is_child_cats_empty && empty($listing_data['sub_cat'])) {
                 $invalid_data['sub_listing_category'] = __("The sub listing category field is required.", "enginethemes");
-            }elseif(!$is_child_cats_empty && !term_exists($listing_data['sub_cat'])) {
+            } elseif (!$is_child_cats_empty && !term_exists(intval($listing_data['sub_cat']))) {
                 $invalid_data['invalid_sub_listing_category'] = __("The selected sub listing category is invalid.", "enginethemes");
             }
         } // end validate listing category
