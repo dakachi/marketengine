@@ -586,10 +586,10 @@ class ME_Authentication {
         $user_data['ID'] = $user_id;
         $errors = new WP_Error();
         if (isset($_POST['first_name']) && $_POST['first_name'] == '') {
-            $errors->add('first_name', __("You first name can not be empty.", "enginethemes"));
+            $errors->add('first_name', __("The first name cannot be empty .", "enginethemes"));
         }
         if (isset($_POST['last_name']) && $_POST['last_name'] == '') {
-            $errors->add('first_name', __("You last name can not be empty.", "enginethemes"));
+            $errors->add('first_name', __("The last name cannot be empty.", "enginethemes"));
         }
 
         if ($errors->get_error_code()) {
