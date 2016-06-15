@@ -24,7 +24,7 @@ class ME_Listing_Handle_Form extends ME_Form {
                 if (isset($_POST['redirect'])) {
                     $redirect = $_POST['redirect'];
                 } else {
-                    $redirect = get_permalink($new_listing->ID);
+                    $redirect = get_permalink($new_listing);
                 }
                 /**
                  * action filter redirect link after user submit a new listing

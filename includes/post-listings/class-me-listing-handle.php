@@ -25,14 +25,15 @@ class ME_Listing_Handle {
             return $is_valid;
         }
 
-        $listing_data['post_type'] = 'listing';
+        $listing_data = self::filter($listing_data);
+
         if (isset($listing_data['ID'])) {
             if (($listing_data['post_author'] != $user_ID) && !current_user_can('edit_others_posts')) {
                 return new WP_Error('edit_others_posts', __("You are not allowed to edit posts as this user.", "enginethemes"));
             }
             $post = wp_update_post($listing_data);
         } else {
-            if (!self::current_user_can_create_lisitng()) {
+            if (!self::current_user_can_create_listing()) {
                 return new WP_Error('create_posts', __("You are not allowed to create posts as this user.", "enginethemes"));
             }
             $post = wp_insert_post($listing_data);
@@ -57,15 +58,60 @@ class ME_Listing_Handle {
     }
 
     /**
+     * Filter Listing Data
+     *
+     * Convert the listing data to compatible with wordpress post data
+     *
+     * @since 1.0
+     *
+     * @param array $listing_data
+     *
+     * @return array The listing data filtered
+     */
+    public static function filter($listing_data) {
+        $listing_data['post_type'] = 'listing';
+        
+        $listing_data['post_title'] = $listing_data['listing_title'];
+        $listing_data['post_content'] = $listing_data['listing_content'];
+        // filter taxonomy
+        $listing_data['tax_input']['listing_category'] = array($listing_data['parent_cat'], $listing_data['sub_cat']);
+        $listing_data['tax_input']['listing_tag'] = $listing_data['listing_tag'];
+
+        $listing_data['post_status'] = 'pending';
+        if(self::current_user_can_publish_listing()) {
+            $listing_data['post_status'] = 'publish';
+        }
+        /**
+         * Filter listing data 
+         *
+         * @param array $listing_data
+         * @since 1.0
+         */
+        return apply_filters('marketengine_filter_listing_data', $listing_data);
+    }
+
+    /**
      * Check current user create post capability
      *
      * @since 1.0
      *
      * @return bool
      */
-    public static function current_user_can_create_lisitng() {
+    public static function current_user_can_create_listing() {
         global $user_ID;
         return apply_filters('marketengine_user_can_create_listing', true, $user_ID);
+    }
+
+    /**
+     * Check current user create publish post capability
+     *
+     * @since 1.0
+     *
+     * @return bool
+     */
+    public static function current_user_can_publish_listing() {
+        global $user_ID;
+        return apply_filters('marketengine_user_can_publish_listing', true, $user_ID);
     }
 
     /**
@@ -115,9 +161,6 @@ class ME_Listing_Handle {
         if (!$is_valid) {
             $invalid_data = me_get_invalid_message($listing_data, $rules);
         }
-
-        $listing_data['post_title'] = $listing_data['listing_title'];
-        $listing_data['post_content'] = $listing_data['listing_content'];
         /**
          * Filter listing meta data validate rule
          *
