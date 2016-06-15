@@ -13,7 +13,7 @@
 			    $listing_content,
 			    'listing_content',
 			    array(
-			        'quicktags' => true,
+			        'quicktags' => false,
 			        'media_buttons' => false,
 			        'wpautop' => true,
 			        'teeny' => true,

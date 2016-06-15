@@ -106,3 +106,47 @@ function me_get_endpoint_url($endpoint, $value = '', $permalink = '') {
 
     return apply_filters('marketengine_get_endpoint_url', $url, $endpoint, $value, $permalink);
 }
+
+/**
+ * Display listing tags form fields.
+ *
+ * @since 1.0
+ *
+ * @todo Create taxonomy-agnostic wrapper for this.
+ *
+ * @param WP_Post $post Post object.
+ * @param array   $taxonomy {
+ *     Tags meta box arguments.
+ * }
+ */
+function me_post_tags_meta_box( $post, $taxonomy ) {
+    $tax_name = esc_attr( $taxonomy );
+    $taxonomy = get_taxonomy( $taxonomy );
+    $user_can_assign_terms = current_user_can( $taxonomy->cap->assign_terms );
+    $comma = _x( ',', 'tag delimiter' );
+    $terms_to_edit  = '';
+    if($post) {
+       $terms_to_edit = get_terms_to_edit( $post->ID, $tax_name );    
+    }
+?>
+<div class="tagsdiv" id="<?php echo $tax_name; ?>">
+    <div class="jaxtag">
+    <div class="nojs-tags hide-if-js">
+        <label for="tax-input-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_or_remove_items; ?></label>
+        <p><textarea style="display:none;" name="<?php echo "tax_input[$tax_name]"; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled( ! $user_can_assign_terms ); ?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace( ',', $comma . ' ', $terms_to_edit ); // textarea_escaped by esc_attr() ?></textarea></p>
+    </div>
+    <?php if ( $user_can_assign_terms ) : ?>
+    <div class="ajaxtag hide-if-no-js">
+        <label class="screen-reader-text" for="new-tag-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_new_item; ?></label>
+        <p><input type="text" id="new-tag-<?php echo $tax_name; ?>" name="newtag[<?php echo $tax_name; ?>]" class="newtag form-input-tip" size="16" autocomplete="off" aria-describedby="new-tag-<?php echo $tax_name; ?>-desc" value="" />
+    </div>
+    <p class="howto" id="new-tag-<?php echo $tax_name; ?>-desc"><?php echo $taxonomy->labels->separate_items_with_commas; ?></p>
+    <?php endif; ?>
+    </div>
+    <div class="tagchecklist"></div>
+</div>
+<?php if ( $user_can_assign_terms ) : ?>
+<p class="hide-if-no-js"><a href="#titlediv" class="tagcloud-link" id="link-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->choose_from_most_used; ?></a></p>
+<?php endif; ?>
+<?php
+}

@@ -46,5 +46,7 @@
             $('#listing-type-container').html(r.data);
         });
     })
+    
+    window.tagBox.init();
     // process tag input
 })(jQuery);

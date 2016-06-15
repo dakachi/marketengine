@@ -48,7 +48,7 @@ if (!class_exists('MarketEngine')):
          * @static
          * @see ME()
          * @return MarketEngine - Main instance.
-         */        
+         */
         public static function instance() {
             if (is_null(self::$_instance)) {
                 self::$_instance = new self();
@@ -115,11 +115,21 @@ if (!class_exists('MarketEngine')):
         }
 
         public function add_scripts() {
+            $develop_src = true;
+
+            if (!defined('ME_SCRIPT_DEBUG')) {
+                define('ME_SCRIPT_DEBUG', $develop_src);
+            }
+
+            $suffix = ME_SCRIPT_DEBUG ? '' : '.min';
+            $dev_suffix = $develop_src ? '' : '.min';
+
             wp_enqueue_style('me_font_icon', $this->plugin_url() . '/assets/css/marketengine-font-icon.css');
             wp_enqueue_style('me_layout', $this->plugin_url() . '/assets/css/marketengine-layout.css');
 
-            wp_enqueue_script('user_profile', $this->plugin_url() . '/assets/js/user-profile.js', array('jquery'), $this->version, true);
-            wp_enqueue_script('post_listing', $this->plugin_url() . '/assets/js/post-listing.js', array('jquery', 'underscore', 'backbone'), $this->version, true);
+            wp_enqueue_script('user_profile', $this->plugin_url() . "/assets/js/user-profile$suffix.js", array('jquery'), $this->version, true);
+            wp_enqueue_script('tag_box', $this->plugin_url() . "/assets/js/tag-box$suffix.js", array('jquery', 'suggest'), $this->version, true);
+            wp_enqueue_script('post_listing', $this->plugin_url() . "/assets/js/post-listing$suffix.js", array('jquery', 'underscore', 'backbone'), $this->version, true);
 
             wp_localize_script(
                 'post_listing',
@@ -156,8 +166,8 @@ if (!class_exists('MarketEngine')):
 
         public function get_current_user() {
             global $current_user;
-            if(null === $this->current_user && $current_user) {
-                $this->current_user = new ME_User($current_user);    
+            if (null === $this->current_user && $current_user) {
+                $this->current_user = new ME_User($current_user);
             }
             return $this->current_user;
         }
