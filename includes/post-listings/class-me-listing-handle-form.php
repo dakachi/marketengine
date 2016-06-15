@@ -10,6 +10,9 @@ class ME_Listing_Handle_Form extends ME_Form {
         add_action('wp_loaded', array(__CLASS__, 'process_update'));
         add_action('wp_ajax_me-load-sub-category', array(__CLASS__, 'load_sub_category'));
         add_action('wp_ajax_nopriv_me-load-sub-category', array(__CLASS__, 'load_sub_category'));
+
+        
+
     }
     /**
      * Handling listing data to create new listing

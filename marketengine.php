@@ -127,15 +127,36 @@ if (!class_exists('MarketEngine')):
             wp_enqueue_style('me_font_icon', $this->plugin_url() . '/assets/css/marketengine-font-icon.css');
             wp_enqueue_style('me_layout', $this->plugin_url() . '/assets/css/marketengine-layout.css');
 
+            wp_enqueue_script('plupload-all');
             wp_enqueue_script('user_profile', $this->plugin_url() . "/assets/js/user-profile$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('tag_box', $this->plugin_url() . "/assets/js/tag-box$suffix.js", array('jquery', 'suggest'), $this->version, true);
-            wp_enqueue_script('post_listing', $this->plugin_url() . "/assets/js/post-listing$suffix.js", array('jquery', 'underscore', 'backbone'), $this->version, true);
+            wp_enqueue_script('post_listing', $this->plugin_url() . "/assets/js/post-listing$suffix.js", array('jquery', 'underscore', 'backbone', 'plupload-all'), $this->version, true);
 
             wp_localize_script(
                 'post_listing',
                 'me_globals',
                 array(
                     'ajaxurl' => admin_url('admin-ajax.php'),
+                )
+            );
+            wp_localize_script(
+                'plupload',
+                'plupload_opt',
+                array(
+                    'max_file_size' => (wp_max_upload_size() / (1024 * 1024)) . 'mb',
+                    'url' => admin_url('admin-ajax.php'),
+                    'flash_swf_url' => includes_url('js/plupload/plupload.flash.swf'),
+                    'silverlight_xap_url' => includes_url('js/plupload/plupload.silverlight.xap'),
+                    // 'filters' => array(
+                    //     array(
+                    //         'title' => __('Image Files', "enginethemes"),
+                    //         'extensions' => 'jpg,jpeg,gif,png',
+                    //     ),
+                    //     array(
+                    //         'title' => __("Zip files", "enginethemes"),
+                    //         'extensions' => "zip,avi"
+                    //     )
+                    // ),
                 )
             );
         }
