@@ -26,7 +26,19 @@ class ME_Listing_Handle {
         }
 
         $listing_data = self::filter($listing_data);
+        if (isset($_FILES['listing_image'])) {
+            // process upload featured image
+        }
 
+        if (isset($_FILES['listing_gallery'])) {
+            $maximum_files_allowed = apply_filters('marketengine_plupload_maximum_files_allowed', 2);
+            $number_of_files = count($_FILES['listing_gallery']['name']);
+            if ($number_of_files > $maximum_files_allowed) {
+                return new WP_Error('over_maximum_files_allowed', sprintf(__("You can only add %d image(s) to listing gallery.", "enginethemes"), $maximum_files_allowed));
+            }
+            //process upload image gallery
+        }
+        
         if (isset($listing_data['ID'])) {
             if (($listing_data['post_author'] != $user_ID) && !current_user_can('edit_others_posts')) {
                 return new WP_Error('edit_others_posts', __("You are not allowed to edit posts as this user.", "enginethemes"));
@@ -70,7 +82,7 @@ class ME_Listing_Handle {
      */
     public static function filter($listing_data) {
         $listing_data['post_type'] = 'listing';
-        
+
         $listing_data['post_title'] = $listing_data['listing_title'];
         $listing_data['post_content'] = $listing_data['listing_content'];
         // filter taxonomy
@@ -78,11 +90,11 @@ class ME_Listing_Handle {
         $listing_data['tax_input']['listing_tag'] = $listing_data['listing_tag'];
 
         // set listing status
-        if(self::current_user_can_publish_listing()) {
+        if (self::current_user_can_publish_listing()) {
             $listing_data['post_status'] = 'publish';
         }
         /**
-         * Filter listing data 
+         * Filter listing data
          *
          * @param array $listing_data
          * @since 1.0

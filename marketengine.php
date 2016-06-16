@@ -139,6 +139,13 @@ if (!class_exists('MarketEngine')):
                     'ajaxurl' => admin_url('admin-ajax.php'),
                 )
             );
+
+            $max_files = apply_filters('marketengine_plupload_max_files', 2);
+            $post_params = array(
+                "_wpnonce" => wp_create_nonce('media-form'),
+                "short" => "1",
+                "action" => 'me-upload-file'
+            );
             wp_localize_script(
                 'plupload',
                 'plupload_opt',
@@ -147,16 +154,18 @@ if (!class_exists('MarketEngine')):
                     'url' => admin_url('admin-ajax.php'),
                     'flash_swf_url' => includes_url('js/plupload/plupload.flash.swf'),
                     'silverlight_xap_url' => includes_url('js/plupload/plupload.silverlight.xap'),
-                    // 'filters' => array(
-                    //     array(
-                    //         'title' => __('Image Files', "enginethemes"),
-                    //         'extensions' => 'jpg,jpeg,gif,png',
-                    //     ),
-                    //     array(
-                    //         'title' => __("Zip files", "enginethemes"),
-                    //         'extensions' => "zip,avi"
-                    //     )
-                    // ),
+                    'max_files' => $max_files,
+                    'filters' => array(
+                        array(
+                            'title' => __('Image Files', "enginethemes"),
+                            'extensions' => 'jpg,jpeg,gif,png',
+                        ),
+                    ),
+                    'runtimes' => 'html5,gears,flash,silverlight,browserplus,html4',
+                    'multipart_params'   => $post_params,
+                    'error' => array (
+                        'max_files' => sprintf(__("'no more than %d file(s)'", "enginethemes"), $max_files)
+                    )
                 )
             );
         }

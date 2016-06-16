@@ -8,11 +8,9 @@ class ME_Listing_Handle_Form extends ME_Form {
     public static function init_hook() {
         add_action('wp_loaded', array(__CLASS__, 'process_insert'));
         add_action('wp_loaded', array(__CLASS__, 'process_update'));
+        // ajax action
         add_action('wp_ajax_me-load-sub-category', array(__CLASS__, 'load_sub_category'));
-        add_action('wp_ajax_nopriv_me-load-sub-category', array(__CLASS__, 'load_sub_category'));
-
-        
-
+        add_action('wp_ajax_nopriv_me-load-sub-category', array(__CLASS__, 'load_sub_category'));        
     }
     /**
      * Handling listing data to create new listing
@@ -69,10 +67,6 @@ class ME_Listing_Handle_Form extends ME_Form {
                 exit;
             }
         }
-    }
-
-    public static function process_upload_gallery() {
-        // TODO: photo upload, featured image
     }
 
     public static function load_sub_category() {

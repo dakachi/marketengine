@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 <?php do_action('marketengine_before_post_listing_form'); ?>
 <div id="marketengine-wrapper" class="marketengine">
 	<div class="marketengine-post-listing-wrap">
-		<form  id="post-listing-form" class="post-listing-form" method="post" accept-charset="utf-8">
+		<form  id="post-listing-form" class="post-listing-form" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 
 			<?php me_print_notices(); ?>
 
