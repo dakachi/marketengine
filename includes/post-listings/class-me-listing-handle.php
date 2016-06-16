@@ -114,11 +114,38 @@ class ME_Listing_Handle {
         return apply_filters('marketengine_filter_listing_data', $listing_data);
     }
 
+    /**
+     * Process upload listing featured image
+     *
+     * @param array $files The submit file from client
+     *      - string name 
+     *      - int  size 
+     *      - string type
+     *      - string  tmp_name
+     *
+     * @since 1.0
+     *
+     * @return int The attachment id
+     */
     public static function process_feature_image($files) {
         return self::process_file_upload($files);
     }
 
-    public static function process_gallery($files, $parent) {
+    /**
+     * Process upload listing gallery
+     *
+     * @param array $files The submit file from client
+     *      - string name 
+     *      - int  size 
+     *      - string type
+     *      - string  tmp_name
+     * @param int $parent The attachment parent post
+     *
+     * @since 1.0
+     *
+     * @return array The array of attachment id
+     */
+    public static function process_gallery($files, $parent = 0) {
         $gallery = array();
         foreach ($files['name'] as $key => $value) {
             $file = array(
@@ -135,7 +162,22 @@ class ME_Listing_Handle {
         return $gallery;
     }
 
-    public static function process_file_upload($file,  $parent = 0, $author = 0, $mimes = array()) {
+    /**
+     * Process upload file
+     *
+     * @param array $files The submit file from client
+     *      - string name 
+     *      - int  size 
+     *      - string type
+     *      - string  tmp_name
+     * @param int $parent The attachment parent post
+     * @param int $author The post author
+     *
+     * @since 1.0
+     *
+     * @return array The array of attachment id
+     */
+    public static function process_file_upload($file,  $parent = 0, $author = 0) {
 
         global $user_ID;
         $author = (0 == $author || !is_numeric($author)) ? $user_ID : $author;
@@ -144,9 +186,6 @@ class ME_Listing_Handle {
 
             // setup the overrides
             $overrides['test_form'] = false;
-            if (!empty($mimes) && is_array($mimes)) {
-                $overrides['mimes'] = $mimes;
-            }
 
             // this function also check the filetype & return errors if having any
             if (!function_exists('wp_handle_upload')) {
@@ -176,7 +215,6 @@ class ME_Listing_Handle {
                     'post_status' => 'inherit',
                     'post_author' => $author,
                 );
-
                 /**
                  * Run the wp_insert_attachment function.This adds the file to the media library and generates the thumbnails.
                  * If you wanted to attch this image to a post, you could pass the post id as a third param and it'd magically happen.
@@ -190,9 +228,6 @@ class ME_Listing_Handle {
                 // wp_handle_upload returned some kind of error. the return does contain error details, so you can use it here if you want.
                 return new WP_Error('upload_error', __('There was a problem with your upload.', "enginethemes"));
             }
-        } else {
-            // No file was passed
-            return new WP_Error('upload_error', __('Where is the file?', "enginethemes"));
         }
     }
 
