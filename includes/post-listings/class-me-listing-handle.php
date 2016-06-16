@@ -99,8 +99,9 @@ class ME_Listing_Handle {
         $listing_data['post_content'] = $listing_data['listing_content'];
         // filter taxonomy
         $listing_data['tax_input']['listing_category'] = array($listing_data['parent_cat'], $listing_data['sub_cat']);
-        $listing_data['tax_input']['listing_tag'] = $listing_data['listing_tag'];
-
+        if(!empty($listing_data['listing_tag'])) {
+            $listing_data['tax_input']['listing_tag'] = $listing_data['listing_tag'];
+        }
         // set listing status
         if (self::current_user_can_publish_listing()) {
             $listing_data['post_status'] = 'publish';
