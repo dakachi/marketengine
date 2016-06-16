@@ -193,6 +193,7 @@ class ME_Authentication {
          */
         do_action('marketengine_before_user_register', $user_data);
 
+        $user_data['role'] = apply_filters('marketengine_user_register_role', 'author');
         $user_id = wp_insert_user($user_data);
         if (is_wp_error($user_id)) {
             return $user_id;
