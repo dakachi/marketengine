@@ -59,7 +59,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'sub_cat' => $this->sub_cat,
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
-        $this->assertEquals(new WP_Error('listing_title', array('The listing title may not be greater than 150 characters.')), $p1);
+        $this->assertEquals(new WP_Error('listing_title', 'The listing title may not be greater than 150 characters.'), $p1);
     }
 
     public function test_create_listing_with_empty_listing_content() {
