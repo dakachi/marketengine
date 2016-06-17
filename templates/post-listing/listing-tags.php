@@ -18,6 +18,9 @@
 	    	<span class="me-label-tags">Jambo<i class="icon-cancel"></i></span>
 	    	<span class="me-label-tags">Movies<i class="icon-cancel"></i></span>
 	    </div> -->
-	    <?php me_post_tags_meta_box('', 'listing_tag') ?>
+	    <?php
+	    	$listing_tag = !empty($_POST['listing_tag']) ? $_POST['listing_tag'] : '';
+	    	me_post_tags_meta_box($listing_tag, 'listing_tag'); 
+	    ?>
 	</div>
 </div>

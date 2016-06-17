@@ -114,20 +114,20 @@ function me_get_endpoint_url($endpoint, $value = '', $permalink = '') {
  *
  * @todo Create taxonomy-agnostic wrapper for this.
  *
- * @param WP_Post $post Post object.
+ * @param string $default The tax default value
  * @param array   $taxonomy {
  *     Tags meta box arguments.
  * }
  */
-function me_post_tags_meta_box( $post, $taxonomy ) {
+function me_post_tags_meta_box( $default, $taxonomy ) {
     $tax_name = esc_attr( $taxonomy );
     $taxonomy = get_taxonomy( $taxonomy );
     $user_can_assign_terms = current_user_can( $taxonomy->cap->assign_terms );
     $comma = _x( ',', 'tag delimiter' );
     $terms_to_edit  = '';
-    if($post) {
-       $terms_to_edit = get_terms_to_edit( $post->ID, $tax_name );    
-    }
+    
+    $terms_to_edit = $default;    
+    
 ?>
 <div class="tagsdiv" id="<?php echo $tax_name; ?>">
     <div class="jaxtag">
