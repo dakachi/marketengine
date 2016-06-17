@@ -474,6 +474,10 @@ class ME_Validator {
 	protected function addError( $attribute, $rule, $parameters ) {
 		$message                      = $this->getMessage( $attribute, $rule );
 		$message                      = $this->doReplacements( $message, $attribute, $rule, $parameters );
+		if(is_array($message)) {
+			$type = $this->getAttributeType($attribute);
+			$message = $message[$type];
+		}
 		$this->messages[ $attribute ] = $message;
 	}
 

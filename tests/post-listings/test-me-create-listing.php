@@ -10,22 +10,22 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         $this->parent_cat = $this->listing_category->create_object(
             array(
                 'taxonomy' => 'listing_category',
-                'name' => 'Cat 1'
+                'name' => 'Cat 1',
             )
         );
 
         $this->parent_cat_2 = $this->listing_category->create_object(
             array(
                 'taxonomy' => 'listing_category',
-                'name' => 'Cat 2'
+                'name' => 'Cat 2',
             )
         );
-        
+
         $this->sub_cat = $this->listing_category->create_object(
             array(
                 'taxonomy' => 'listing_category',
                 'name' => 'Sub Cat 1',
-                'parent' => $this->parent_cat
+                'parent' => $this->parent_cat,
             )
         );
     }
@@ -45,6 +45,21 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
         $this->assertEquals(new WP_Error('listing_title', 'The listing title field is required.'), $p1);
+    }
+
+    public function test_create_listing_with_listing_title_over_150_character() {
+        $listing_data = array(
+            'listing_title' => 'Note: When using the regex pattern, it may be necessary to specify rules in an array instead of using pipe delimiters, especially if the regular expression contains a pipe character.',
+            'listing_content' => 'abc',
+            'listing_type' => 'contact',
+            'meta_input' => array(
+                'price' => '1',
+            ),
+            'parent_cat' => $this->parent_cat,
+            'sub_cat' => $this->sub_cat,
+        );
+        $p1 = ME_Listing_Handle::insert($listing_data);
+        $this->assertEquals(new WP_Error('listing_title', array('The listing title may not be greater than 150 characters.')), $p1);
     }
 
     public function test_create_listing_with_empty_listing_content() {

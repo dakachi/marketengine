@@ -297,7 +297,7 @@ class ME_Listing_Handle {
         $invalid_data = array();
         // validate post data
         $rules = array(
-            'listing_title' => 'required',
+            'listing_title' => 'required|string|max:150',
             'listing_content' => 'required',
             'listing_type' => 'required|in:contact,purchasion,rental',
         );
