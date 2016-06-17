@@ -3,7 +3,17 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
+/**
+ * ME_Listing_Handle
+ *
+ * Handling user post listing behavior
+ *
+ * @class       ME_Listing_Handle
+ * @version     1.0
+ * @package     Includes/Post-Listings
+ * @author      EngineThemesTeam
+ * @category    Class
+ */
 class ME_Listing_Handle {
     /**
      * Insert Listing

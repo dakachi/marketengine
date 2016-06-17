@@ -3,7 +3,16 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
+/**
+ * ME Listing Handle Form
+ *
+ * Class control listing data submit by user fromt post listing form
+ *
+ * @version     1.0
+ * @package     Includes/Post-Listings
+ * @author      Dakachi
+ * @category    Class
+ */
 class ME_Listing_Handle_Form extends ME_Form {
     public static function init_hook() {
         add_action('wp_loaded', array(__CLASS__, 'process_insert'));
@@ -14,6 +23,7 @@ class ME_Listing_Handle_Form extends ME_Form {
     }
     /**
      * Handling listing data to create new listing
+     * @since 1.0
      */
     public static function process_insert($data) {
         if (!empty($_POST['insert_lisiting']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert_listing')) {
@@ -42,6 +52,7 @@ class ME_Listing_Handle_Form extends ME_Form {
     }
     /**
      * Handling listing data to update
+     * @since 1.0
      */
     public static function process_update($data) {
         if (!empty($_POST['update_lisiting']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-update_listing')) {
@@ -68,7 +79,10 @@ class ME_Listing_Handle_Form extends ME_Form {
             }
         }
     }
-
+    /**
+     * Retrieve sub category select template
+     * @since 1.0
+     */
     public static function load_sub_category() {
         if (isset($_REQUEST['parent-cat'])) {
             ob_start();

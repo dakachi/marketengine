@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
  *
  * @class       ME_Authentication
  * @version     1.0
- * @package     MarketEngine/Includes
+ * @package     Includes/Authentication
  * @author      EngineThemesTeam
  * @category    Class
  */
