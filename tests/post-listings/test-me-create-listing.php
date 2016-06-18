@@ -155,7 +155,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
     }
 
     public function test_create_listing_with_gallery_over_maximum_files() {
-        $maximum_files_allowed = get_option('marketengine_plupload_maximum_files_allowed', 5);
+        $maximum_files_allowed = get_option('marketengine_listing_maximum_images_allowed', 5);
         $listing_data = array(
             'listing_title' => 'Listing A',
             'listing_content' => 'Sample content',

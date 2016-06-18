@@ -37,7 +37,7 @@ class ME_Listing_Handle {
 
         $listing_data = self::filter($listing_data);
         if (isset($_FILES['listing_gallery'])) {
-            $maximum_files_allowed = get_option('marketengine_plupload_maximum_files_allowed', 5);
+            $maximum_files_allowed = get_option('marketengine_listing_maximum_images_allowed', 5);
             $number_of_files = count($_FILES['listing_gallery']['name']);
             if ($number_of_files > $maximum_files_allowed) {
                 return new WP_Error('over_maximum_files_allowed', sprintf(__("You can only add %d image(s) to listing gallery.", "enginethemes"), $maximum_files_allowed));
