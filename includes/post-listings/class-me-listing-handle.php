@@ -37,7 +37,7 @@ class ME_Listing_Handle {
 
         $listing_data = self::filter($listing_data);
         if (isset($_FILES['listing_gallery'])) {
-            $maximum_files_allowed = apply_filters('marketengine_plupload_maximum_files_allowed', 2);
+            $maximum_files_allowed = get_option('marketengine_plupload_maximum_files_allowed', 5);
             $number_of_files = count($_FILES['listing_gallery']['name']);
             if ($number_of_files > $maximum_files_allowed) {
                 return new WP_Error('over_maximum_files_allowed', sprintf(__("You can only add %d image(s) to listing gallery.", "enginethemes"), $maximum_files_allowed));
@@ -94,7 +94,7 @@ class ME_Listing_Handle {
     /**
      * Filter Listing Data
      *
-     * Convert the listing data to compatible with wordpress post data
+     * Convert the listing data to compatible with WordPress post data
      *
      * @since 1.0
      *
@@ -198,7 +198,7 @@ class ME_Listing_Handle {
             // setup the overrides
             $overrides['test_form'] = false;
 
-            // this function also check the filetype & return errors if having any
+            // this function also check the file type & return errors if having any
             if (!function_exists('wp_handle_upload')) {
                 require_once ABSPATH . 'wp-admin/includes/file.php';
             }
@@ -228,7 +228,7 @@ class ME_Listing_Handle {
                 );
                 /**
                  * Run the wp_insert_attachment function.This adds the file to the media library and generates the thumbnails.
-                 * If you wanted to attch this image to a post, you could pass the post id as a third param and it'd magically happen.
+                 * If you wanted to attach this image to a post, you could pass the post id as a third parameter and it'd magically happen.
                  */
                 $attach_id = wp_insert_attachment($attachment, $file_name_and_location, $parent);
                 require_once ABSPATH . "wp-admin" . '/includes/image.php';

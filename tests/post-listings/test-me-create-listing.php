@@ -154,5 +154,37 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         $this->assertEquals(new WP_Error('listing_price', 'The listing price must be a number.'), $p1);
     }
 
+    public function test_create_listing_with_gallery_over_maximum_files() {
+        $maximum_files_allowed = get_option('marketengine_plupload_maximum_files_allowed', 5);
+        $listing_data = array(
+            'listing_title' => 'Listing A',
+            'listing_content' => 'Sample content',
+            'listing_type' => 'contact',
+            'meta_input' => array(
+                'listing_price' => '222',
+            ),
+            'parent_cat' => $this->parent_cat,
+            'sub_cat' => $this->sub_cat,
+        );
+
+        $iptc_file = DIR_TESTDATA . '/images/test-image-iptc.jpg';
+
+        // Make a copy of this file as it gets moved during the file upload
+        $tmp_name = wp_tempnam( $iptc_file );
+
+        copy( $iptc_file, $tmp_name );
+        $_FILES['listing_gallery'] = array();
+        for ($i=0; $i < ($maximum_files_allowed+1); $i++) { 
+            $_FILES['listing_gallery']['name'][$i] = 'test-image-iptc.jpg';
+            $_FILES['listing_gallery']['type'][$i] = 'image/jpeg';
+            $_FILES['listing_gallery']['tmp_name'][$i] = $tmp_name;
+            $_FILES['listing_gallery']['size'][$i] = filesize( $iptc_file );
+        }
+
+        $p1 = ME_Listing_Handle::insert($listing_data);
+        $expected_msg = sprintf(__("You can only add %d image(s) to listing gallery.", "enginethemes"), $maximum_files_allowed);
+        $this->assertEquals(new WP_Error('over_maximum_files_allowed', $expected_msg), $p1);
+    }
+
     // TODO: view test_media_handle_upload_sets_post_excerpt in tests/media.php
-}
+}   
