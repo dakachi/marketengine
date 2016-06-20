@@ -153,7 +153,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         $p1 = ME_Listing_Handle::insert($listing_data);
         $this->assertEquals(new WP_Error('listing_price', 'The listing price must be a number.'), $p1);
     }
-
+    
     public function test_create_listing_with_gallery_over_maximum_files() {
         $maximum_files_allowed = get_option('marketengine_listing_maximum_images_allowed', 5);
         $listing_data = array(
@@ -181,7 +181,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             $_FILES['listing_gallery']['size'][$i] = filesize( $iptc_file );
         }
 
-        $p1 = ME_Listing_Handle::insert($listing_data);
+        $p1 = ME_Listing_Handle::insert($listing_data, $_FILES);
         $expected_msg = sprintf(__("You can only add %d image(s) to listing gallery.", "enginethemes"), $maximum_files_allowed);
         $this->assertEquals(new WP_Error('over_maximum_files_allowed', $expected_msg), $p1);
     }

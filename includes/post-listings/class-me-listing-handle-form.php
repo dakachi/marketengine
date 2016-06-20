@@ -27,7 +27,7 @@ class ME_Listing_Handle_Form extends ME_Form {
      */
     public static function process_insert($data) {
         if (!empty($_POST['insert_lisiting']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert_listing')) {
-            $new_listing = ME_Listing_Handle::insert($_POST);
+            $new_listing = ME_Listing_Handle::insert($_POST, $_FILES);
             if (is_wp_error($new_listing)) {
                 me_wp_error_to_notices($new_listing);
             } else {
