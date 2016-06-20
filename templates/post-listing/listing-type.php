@@ -21,7 +21,7 @@ $selected_listing_type = empty($_POST['listing_type']) ? 'purchasion' : $_POST['
 	<?php do_action('marketengine_post_listing_type_form_end'); ?>
 
 </div>
-<div class="marketengine-group-field">
+<div class="marketengine-group-field marketengine-<?php echo $selected_listing_type; ?>">
 
 	<?php do_action('marketengine_post_listing_type_form_fields_start'); ?>
 

@@ -9,10 +9,10 @@
 	<div class="marketengine-textarea-field">
 		<label class="text"><?php _e("Description", "enginethemes");?></label>
 		<?php 
-			$listing_content = !empty($_POST['listing_content']) ? $_POST['listing_content'] : '';
+			$listing_content = !empty($_POST['listing_description']) ? $_POST['listing_description'] : '';
 			wp_editor(
 			    $listing_content,
-			    'listing_content',
+			    'listing_description',
 			    array(
 			        'quicktags' => false,
 			        'media_buttons' => false,

@@ -106,7 +106,7 @@ class ME_Listing_Handle {
         $listing_data['post_type'] = 'listing';
 
         $listing_data['post_title'] = $listing_data['listing_title'];
-        $listing_data['post_content'] = $listing_data['listing_content'];
+        $listing_data['post_content'] = $listing_data['listing_description'];
         // filter taxonomy
         $listing_data['tax_input']['listing_category'] = array($listing_data['parent_cat'], $listing_data['sub_cat']);
         if (!empty($listing_data['listing_tag'])) {
@@ -319,7 +319,7 @@ class ME_Listing_Handle {
         // validate post data
         $rules = array(
             'listing_title' => 'required|string|max:150',
-            'listing_content' => 'required',
+            'listing_description' => 'required',
             'listing_type' => 'required|in:contact,purchasion,rental',
         );
         /**

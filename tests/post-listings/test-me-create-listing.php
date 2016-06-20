@@ -38,7 +38,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'listing_content' => 'abc',
             'listing_type' => 'purchasion',
             'meta_input' => array(
-                'price' => '1',
+                'listing_price' => '1',
             ),
             'parent_cat' => $this->parent_cat,
             'sub_cat' => $this->sub_cat,
@@ -53,7 +53,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'listing_content' => 'abc',
             'listing_type' => 'purchasion',
             'meta_input' => array(
-                'price' => '1',
+                'listing_price' => '1',
             ),
             'parent_cat' => $this->parent_cat,
             'sub_cat' => $this->sub_cat,
@@ -68,7 +68,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'listing_content' => '',
             'listing_type' => 'purchasion',
             'meta_input' => array(
-                'price' => '22',
+                'listing_price' => '22',
             ),
             'parent_cat' => $this->parent_cat,
             'sub_cat' => $this->sub_cat,
@@ -83,7 +83,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'listing_content' => 'Sample content',
             'listing_type' => '',
             'meta_input' => array(
-                'price' => 22,
+                'listing_price' => 22,
             ),
             'parent_cat' => $this->parent_cat,
             'sub_cat' => $this->sub_cat,
@@ -100,7 +100,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'listing_content' => 'Sample content',
             'listing_type' => 'invalid_listing_type',
             'meta_input' => array(
-                'price' => 22,
+                'listing_price' => 22,
             ),
             'parent_cat' => $this->parent_cat,
             'sub_cat' => $this->sub_cat,
@@ -115,7 +115,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'listing_content' => 'Sample content',
             'listing_type' => 'purchasion',
             'meta_input' => array(
-                'price' => 22,
+                'listing_price' => 22,
             ),
             'parent_cat' => '',
             'sub_cat' => $this->sub_cat,
@@ -130,7 +130,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'listing_content' => 'Sample content',
             'listing_type' => 'purchasion',
             'meta_input' => array(
-                'price' => 22,
+                'listing_price' => 22,
             ),
             'parent_cat' => 213,
             'sub_cat' => $this->sub_cat,
@@ -166,7 +166,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'sub_cat' => $this->sub_cat,
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
-        $this->assertEquals(new WP_Error('contact_email', 'The contact email field must be a valid email address.'), $p1);
+        $this->assertEquals(new WP_Error('contact_email', 'The contact email must be a valid email address.'), $p1);
     }
 
     public function test_create_listing_with_gallery_over_maximum_files() {

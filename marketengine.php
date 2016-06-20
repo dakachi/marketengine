@@ -83,6 +83,7 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/class-me-validator.php';
             require_once ME_PLUGIN_PATH . '/includes/class-me-post-types.php';
             require_once ME_PLUGIN_PATH . '/includes/class-me-query.php';
+            require_once ME_PLUGIN_PATH . '/includes/class-me-template-loader.php';
 
             require_once ME_PLUGIN_PATH . '/includes/me-notices-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-template-functions.php';
