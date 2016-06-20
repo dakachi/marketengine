@@ -27,7 +27,7 @@ class ME_Listing_Handle {
      *
      * @return WP_Error| WP_Post
      */
-    public static function insert($listing_data) {
+    public static function insert($listing_data, $attachment = array()) {
         global $user_ID;
         // validate data
         $is_valid = self::validate($listing_data);
@@ -36,20 +36,20 @@ class ME_Listing_Handle {
         }
 
         $listing_data = self::filter($listing_data);
-        if (isset($_FILES['listing_gallery'])) {
+        if (isset($attachment['listing_gallery'])) {
             $maximum_files_allowed = get_option('marketengine_listing_maximum_images_allowed', 5);
-            $number_of_files = count($_FILES['listing_gallery']['name']);
+            $number_of_files = count($attachment['listing_gallery']['name']);
             if ($number_of_files > $maximum_files_allowed) {
                 return new WP_Error('over_maximum_files_allowed', sprintf(__("You can only add %d image(s) to listing gallery.", "enginethemes"), $maximum_files_allowed));
             }
         }
 
-        if (isset($_FILES['listing_image'])) {
+        if (isset($attachment['listing_image'])) {
             // process upload featured image
-            $featured_image = self::process_feature_image($_FILES['listing_image']);
+            $featured_image = self::process_feature_image($attachment['listing_image']);
             if (!is_wp_error($featured_image)) {
                 $listing_data['meta_input']['_thumbnail_id'] = $featured_image;
-            }else {
+            } else {
                 return $featured_image;
             }
         }
@@ -66,10 +66,10 @@ class ME_Listing_Handle {
             $post = wp_insert_post($listing_data);
         }
 
-        if (isset($_FILES['listing_gallery'])) {
+        if (isset($attachment['listing_gallery'])) {
             //process upload image gallery
-            $galleries = self::process_gallery($_FILES['listing_gallery'], $post);
-            update_post_meta( $post, '_me_listing_gallery', $galleries);
+            $galleries = self::process_gallery($attachment['listing_gallery'], $post);
+            update_post_meta($post, '_me_listing_gallery', $galleries);
         }
 
         return $post;
@@ -87,8 +87,8 @@ class ME_Listing_Handle {
      *
      * @return WP_Error| WP_Post
      */
-    public static function update($listing_data) {
-        return self::insert($listing_data);
+    public static function update($listing_data, $attachment = array()) {
+        return self::insert($listing_data, $attachment);
     }
 
     /**
@@ -109,7 +109,7 @@ class ME_Listing_Handle {
         $listing_data['post_content'] = $listing_data['listing_content'];
         // filter taxonomy
         $listing_data['tax_input']['listing_category'] = array($listing_data['parent_cat'], $listing_data['sub_cat']);
-        if(!empty($listing_data['listing_tag'])) {
+        if (!empty($listing_data['listing_tag'])) {
             $listing_data['tax_input']['listing_tag'] = $listing_data['listing_tag'];
         }
         // set listing status
@@ -129,8 +129,8 @@ class ME_Listing_Handle {
      * Process upload listing featured image
      *
      * @param array $files The submit file from client
-     *      - string name 
-     *      - int  size 
+     *      - string name
+     *      - int  size
      *      - string type
      *      - string  tmp_name
      *
@@ -139,15 +139,23 @@ class ME_Listing_Handle {
      * @return int The attachment id
      */
     public static function process_feature_image($files) {
-        return self::process_file_upload($files);
+        $mimes = array(
+            'jpg|jpeg|jpe' => 'image/jpeg',
+            'gif' => 'image/gif',
+            'png' => 'image/png',
+            'bmp' => 'image/bmp',
+            'tif|tiff' => 'image/tiff',
+            'ico' => 'image/x-icon',
+        );
+        return self::process_file_upload($file, 0, $user_ID, $mimes);
     }
 
     /**
      * Process upload listing gallery
      *
      * @param array $files The submit file from client
-     *      - string name 
-     *      - int  size 
+     *      - string name
+     *      - int  size
      *      - string type
      *      - string  tmp_name
      * @param int $parent The attachment parent post
@@ -157,6 +165,16 @@ class ME_Listing_Handle {
      * @return array The array of attachment id
      */
     public static function process_gallery($files, $parent = 0) {
+        global $user_ID;
+        $mimes = array(
+            'jpg|jpeg|jpe' => 'image/jpeg',
+            'gif' => 'image/gif',
+            'png' => 'image/png',
+            'bmp' => 'image/bmp',
+            'tif|tiff' => 'image/tiff',
+            'ico' => 'image/x-icon',
+        );
+
         $gallery = array();
         foreach ($files['name'] as $key => $value) {
             $file = array(
@@ -165,7 +183,7 @@ class ME_Listing_Handle {
                 'type' => $files['type'][$key],
                 'tmp_name' => $files['tmp_name'][$key],
             );
-            $attach_id = self::process_file_upload($file, $parent);
+            $attach_id = self::process_file_upload($file, $parent, $user_ID, $mimes);
             if (!is_wp_error($attach_id)) {
                 array_push($gallery, $attach_id);
             }
@@ -177,8 +195,8 @@ class ME_Listing_Handle {
      * Process upload file
      *
      * @param array $files The submit file from client
-     *      - string name 
-     *      - int  size 
+     *      - string name
+     *      - int  size
      *      - string type
      *      - string  tmp_name
      * @param int $parent The attachment parent post
@@ -188,7 +206,7 @@ class ME_Listing_Handle {
      *
      * @return array The array of attachment id
      */
-    public static function process_file_upload($file,  $parent = 0, $author = 0) {
+    public static function process_file_upload($file, $parent = 0, $author = 0, $mimes = array()) {
 
         global $user_ID;
         $author = (0 == $author || !is_numeric($author)) ? $user_ID : $author;
@@ -197,6 +215,9 @@ class ME_Listing_Handle {
 
             // setup the overrides
             $overrides['test_form'] = false;
+            if (!empty($mimes) && is_array($mimes)) {
+                $overrides['mimes'] = $mimes;
+            }
 
             // this function also check the file type & return errors if having any
             if (!function_exists('wp_handle_upload')) {
