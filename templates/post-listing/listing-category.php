@@ -6,7 +6,7 @@ if ($selected_cat) {
 }
 $selected_sub_cat = empty($_POST['sub_cat']) ? '' : $_POST['sub_cat'];
 ?>
-<script type="data/json"><?php echo json_encode($parent_categories) ?></script>
+<?php do_action('marketengine_before_post_listing_category_form');?>
 <div class="marketengine-post-step active select-category">
 	<div class="marketengine-group-field" id="me-parent-cat-container">
 		<div class="marketengine-select-field">
@@ -35,3 +35,4 @@ $selected_sub_cat = empty($_POST['sub_cat']) ? '' : $_POST['sub_cat'];
 		</div>
 	</div>
 </div>
+<?php do_action('marketengine_after_post_listing_category_form');?>
