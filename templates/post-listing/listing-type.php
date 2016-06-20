@@ -1,5 +1,6 @@
 <?php 
 $listing_types = me_get_listing_types();
+$selected_listing_type = empty($_POST['listing_type']) ? 'purchasion' : $_POST['listing_type'];
 ?>
 
 <?php do_action('marketengine_before_post_listing_type_form'); ?>
@@ -12,7 +13,7 @@ $listing_types = me_get_listing_types();
 	    <label class="text"><?php _e("Listing Type", "enginethemes"); ?></label>
 	    <select class="listing-type" name="listing_type" id="listing-type-select">
 	    	<?php foreach ($listing_types as $key => $name) : ?>
-	    		<option value="<?php echo $key ?>"><?php echo $name; ?></option>
+	    		<option value="<?php echo $key ?>" <?php selected( $selected_listing_type, $key) ?>><?php echo $name; ?></option>
 	    	<?php endforeach; ?>
 	    </select>
 	</div>
@@ -24,7 +25,7 @@ $listing_types = me_get_listing_types();
 
 	<?php do_action('marketengine_post_listing_type_form_fields_start'); ?>
 
-	<div class="me-row me-pricing-container listing-type-info" id="purchasion-type-field">
+	<div class="me-row me-pricing-container listing-type-info" id="purchasion-type-field" <?php if($selected_listing_type !='purchasion') echo 'style="display:none";'; ?> >
 
 		<?php do_action('marketengine_post_listing_price_form_start'); ?>
 
@@ -51,7 +52,7 @@ $listing_types = me_get_listing_types();
 	
 	<?php do_action('marketengine_post_listing_type_form_fields'); ?>
 
-	<div class="marketengine-input-field listing-type-info" id="contact-type-field" style="display:none;">
+	<div class="marketengine-input-field listing-type-info" id="contact-type-field" <?php if($selected_listing_type !='contact') echo 'style="display:none";'; ?>>
 
 		<?php do_action('marketengine_post_listing_offering_email_form_start'); ?>
 

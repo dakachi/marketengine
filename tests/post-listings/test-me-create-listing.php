@@ -36,7 +36,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         $listing_data = array(
             'listing_title' => '',
             'listing_content' => 'abc',
-            'listing_type' => 'contact',
+            'listing_type' => 'purchasion',
             'meta_input' => array(
                 'price' => '1',
             ),
@@ -51,7 +51,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         $listing_data = array(
             'listing_title' => 'Note: When using the regex pattern, it may be necessary to specify rules in an array instead of using pipe delimiters, especially if the regular expression contains a pipe character.',
             'listing_content' => 'abc',
-            'listing_type' => 'contact',
+            'listing_type' => 'purchasion',
             'meta_input' => array(
                 'price' => '1',
             ),
@@ -66,7 +66,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         $listing_data = array(
             'listing_title' => 'Listing A',
             'listing_content' => '',
-            'listing_type' => 'contact',
+            'listing_type' => 'purchasion',
             'meta_input' => array(
                 'price' => '22',
             ),
@@ -92,7 +92,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         $this->assertEquals(new WP_Error('listing_type', 'The listing type field is required.'), $p1);
     }
     /**
-     * Me support three listing type: contact, purchasion, rental
+     * Me support three listing type: purchasion, purchasion, rental
      */
     public function test_create_listing_with_invalid_listing_type() {
         $listing_data = array(
@@ -113,7 +113,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         $listing_data = array(
             'listing_title' => 'Listing A',
             'listing_content' => 'Sample content',
-            'listing_type' => 'contact',
+            'listing_type' => 'purchasion',
             'meta_input' => array(
                 'price' => 22,
             ),
@@ -128,7 +128,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         $listing_data = array(
             'listing_title' => 'Listing A',
             'listing_content' => 'Sample content',
-            'listing_type' => 'contact',
+            'listing_type' => 'purchasion',
             'meta_input' => array(
                 'price' => 22,
             ),
@@ -143,7 +143,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         $listing_data = array(
             'listing_title' => 'Listing A',
             'listing_content' => 'Sample content',
-            'listing_type' => 'contact',
+            'listing_type' => 'purchasion',
             'meta_input' => array(
                 'listing_price' => '222a',
             ),
@@ -153,13 +153,28 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         $p1 = ME_Listing_Handle::insert($listing_data);
         $this->assertEquals(new WP_Error('listing_price', 'The listing price must be a number.'), $p1);
     }
-    
+
+    public function test_create_listing_with_invalid_contact_info() {
+        $listing_data = array(
+            'listing_title' => 'Listing A',
+            'listing_content' => 'Sample content',
+            'listing_type' => 'contact',
+            'meta_input' => array(
+                'contact_email' => '222a',
+            ),
+            'parent_cat' => $this->parent_cat,
+            'sub_cat' => $this->sub_cat,
+        );
+        $p1 = ME_Listing_Handle::insert($listing_data);
+        $this->assertEquals(new WP_Error('contact_email', 'The contact email field must be a valid email address.'), $p1);
+    }
+
     public function test_create_listing_with_gallery_over_maximum_files() {
         $maximum_files_allowed = get_option('marketengine_listing_maximum_images_allowed', 5);
         $listing_data = array(
             'listing_title' => 'Listing A',
             'listing_content' => 'Sample content',
-            'listing_type' => 'contact',
+            'listing_type' => 'purchasion',
             'meta_input' => array(
                 'listing_price' => '222',
             ),
