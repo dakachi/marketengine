@@ -35,7 +35,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
     public function test_create_listing_with_empty_listing_title() {
         $listing_data = array(
             'listing_title' => '',
-            'listing_content' => 'abc',
+            'list_description' => 'abc',
             'listing_type' => 'purchasion',
             'meta_input' => array(
                 'listing_price' => '1',
@@ -50,7 +50,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
     public function test_create_listing_with_listing_title_over_150_character() {
         $listing_data = array(
             'listing_title' => 'Note: When using the regex pattern, it may be necessary to specify rules in an array instead of using pipe delimiters, especially if the regular expression contains a pipe character.',
-            'listing_content' => 'abc',
+            'list_description' => 'abc',
             'listing_type' => 'purchasion',
             'meta_input' => array(
                 'listing_price' => '1',
@@ -62,10 +62,10 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         $this->assertEquals(new WP_Error('listing_title', 'The listing title may not be greater than 150 characters.'), $p1);
     }
 
-    public function test_create_listing_with_empty_listing_content() {
+    public function test_create_listing_with_empty_list_description() {
         $listing_data = array(
             'listing_title' => 'Listing A',
-            'listing_content' => '',
+            'listing_description' => '',
             'listing_type' => 'purchasion',
             'meta_input' => array(
                 'listing_price' => '22',
@@ -74,13 +74,13 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'sub_cat' => $this->sub_cat,
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
-        $this->assertEquals(new WP_Error('listing_content', 'The listing content field is required.'), $p1);
+        $this->assertEquals(new WP_Error('listing_description', 'The listing description field is required.'), $p1);
     }
 
     public function test_create_listing_with_empty_listing_type() {
         $listing_data = array(
             'listing_title' => 'Listing A',
-            'listing_content' => 'Sample content',
+            'list_description' => 'Sample content',
             'listing_type' => '',
             'meta_input' => array(
                 'listing_price' => 22,
@@ -97,7 +97,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
     public function test_create_listing_with_invalid_listing_type() {
         $listing_data = array(
             'listing_title' => 'Listing A',
-            'listing_content' => 'Sample content',
+            'list_description' => 'Sample content',
             'listing_type' => 'invalid_listing_type',
             'meta_input' => array(
                 'listing_price' => 22,
@@ -112,7 +112,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
     public function test_create_listing_with_empty_listing_category() {
         $listing_data = array(
             'listing_title' => 'Listing A',
-            'listing_content' => 'Sample content',
+            'list_description' => 'Sample content',
             'listing_type' => 'purchasion',
             'meta_input' => array(
                 'listing_price' => 22,
@@ -127,7 +127,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
     public function test_create_listing_with_invalid_listing_category() {
         $listing_data = array(
             'listing_title' => 'Listing A',
-            'listing_content' => 'Sample content',
+            'list_description' => 'Sample content',
             'listing_type' => 'purchasion',
             'meta_input' => array(
                 'listing_price' => 22,
@@ -142,7 +142,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
     public function test_create_listing_with_invalid_price() {
         $listing_data = array(
             'listing_title' => 'Listing A',
-            'listing_content' => 'Sample content',
+            'list_description' => 'Sample content',
             'listing_type' => 'purchasion',
             'meta_input' => array(
                 'listing_price' => '222a',
@@ -157,7 +157,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
     public function test_create_listing_with_invalid_contact_info() {
         $listing_data = array(
             'listing_title' => 'Listing A',
-            'listing_content' => 'Sample content',
+            'list_description' => 'Sample content',
             'listing_type' => 'contact',
             'meta_input' => array(
                 'contact_email' => '222a',
@@ -173,7 +173,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         $maximum_files_allowed = get_option('marketengine_listing_maximum_images_allowed', 5);
         $listing_data = array(
             'listing_title' => 'Listing A',
-            'listing_content' => 'Sample content',
+            'list_description' => 'Sample content',
             'listing_type' => 'purchasion',
             'meta_input' => array(
                 'listing_price' => '222',
