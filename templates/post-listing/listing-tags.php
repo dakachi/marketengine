@@ -1,15 +1,3 @@
-<style type="text/css">
-	.ac_results {
-	    display: none;
-	    margin: -1px 0 0;
-	    padding: 0;
-	    list-style: none;
-	    position: absolute;
-	    z-index: 10000;
-	    border: 1px solid #5b9dd9;
-	    background-color: #fff;
-	}
-</style>
 <div class="marketengine-group-field">
 	<div class="marketengine-input-field">
 	    <!-- <label class="text"><?php _e("Tags", "enginethemes");?>&nbsp;<small><?php _e("(optional)", "enginethemes");?></small></label>
