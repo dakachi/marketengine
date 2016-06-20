@@ -65,10 +65,7 @@ class Tests_ME_Validator extends WP_UnitTestCase {
         );
 
         $invalid_data = me_get_invalid_message($data, $rules);
-		$this->assertEquals( array('min' => array('numeric' => __('The min must be at least 6.',"enginethemes" ),
-		        'file'    => __('The min must be at least 6 kilobytes.',"enginethemes" ),
-		        'string'  => __('The min must be at least 6 characters.',"enginethemes" ),
-		        'array'   => __('The min must have at least 6 items.',"enginethemes" ))), $invalid_data );
+		$this->assertEquals( array('min' => __('The min must be at least 6.',"enginethemes" )), $invalid_data );
 	}
 
 	// test data is url

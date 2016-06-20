@@ -96,6 +96,15 @@ class ME_Authentication {
             'agree_with_tos' => 'required',
         );
 
+        $custom_attributes = array(
+            'user_login' => __("user login", "enginethemes"),
+            'user_pass' => __("user password", "enginethemes"),
+            'first_name' => __("first name", "enginethemes"),
+            'last_name' => __("last name", "enginethemes"),
+            'confirm_pass' => __("confirm password", "enginethemes"),
+            'user_email' => __("user email", "enginethemes"),
+            'agree_with_tos' => __("agree with term of use", "enginethemes"),
+        );
         /**
          * Filter register data validate rules
          *
@@ -105,11 +114,11 @@ class ME_Authentication {
          * @since 1.0
          */
         $rules = apply_filters('marketengine_register_form_rules', $rules, $user_data);
-        $is_valid = me_validate($user_data, $rules);
+        $is_valid = me_validate($user_data, $rules, $custom_attributes);
 
         $errors = new WP_Error();
         if (!$is_valid) {
-            $invalid_data = me_get_invalid_message($user_data, $rules);
+            $invalid_data = me_get_invalid_message($user_data, $rules, $custom_attributes);
             foreach ($invalid_data as $key => $message) {
                 $errors->add($key, $message);
             }
@@ -243,6 +252,9 @@ class ME_Authentication {
             'user_email' => 'required|email',
         );
 
+        $custom_attributes = array(
+            'user_email' => __("user email", "enginethemes")
+        );
         /**
          * Filter register data validate rules
          *
@@ -252,10 +264,10 @@ class ME_Authentication {
          * @since 1.0
          */
         $rules = apply_filters('marketengine_forgot_password_form_rules', $rules, $user);
-        $is_valid = me_validate($user, $rules);
+        $is_valid = me_validate($user, $rules, $custom_attributes);
 
         if (!$is_valid) {
-            $invalid_data = me_get_invalid_message($user, $rules);
+            $invalid_data = me_get_invalid_message($user, $rules, $custom_attributes);
             foreach ($invalid_data as $key => $message) {
                 $errors->add($key, $message);
             }
@@ -367,6 +379,13 @@ class ME_Authentication {
             'confirm_pass' => 'required|same:new_pass',
             'key' => 'required',
         );
+
+        $custom_attributes = array(
+            'user_login' => __("user login", "enginethemes"),
+            'new_pass' => __("new password", "enginethemes"),
+            'confirm_pass' => __("confirm password", "enginethemes"),
+            'key' => __("reset password key", "enginethemes")
+        );
         /**
          * filter reset pass data validate rules
          *
@@ -376,10 +395,10 @@ class ME_Authentication {
          * @since 1.0
          */
         $rules = apply_filters('marketengine_reset_password_form_rules', $rules, $user_data);
-        $is_valid = me_validate($user_data, $rules);
+        $is_valid = me_validate($user_data, $rules, $custom_attributes);
         if (!$is_valid) {
             $errors = new WP_Error();
-            $invalid_data = me_get_invalid_message($user_data, $rules);
+            $invalid_data = me_get_invalid_message($user_data, $rules, $custom_attributes);
             foreach ($invalid_data as $key => $message) {
                 $errors->add($key, $message);
             }
@@ -438,6 +457,11 @@ class ME_Authentication {
             'user_email' => 'required|email',
             'key' => 'required',
         );
+
+        $custom_attributes = array(
+            'user_email' => __("user email", "enginethemes"),
+            'key' => __("reset password key", "enginethemes")
+        );
         /**
          * filter confirm email data validate rules
          *
@@ -447,10 +471,10 @@ class ME_Authentication {
          * @since 1.0
          */
         $rules = apply_filters('marketengine_confirm_mail_rules', $rules, $user_data);
-        $is_valid = me_validate($user_data, $rules);
+        $is_valid = me_validate($user_data, $rules, $custom_attributes);
         if (!$is_valid) {
             $errors = new WP_Error();
-            $invalid_data = me_get_invalid_message($user_data, $rules);
+            $invalid_data = me_get_invalid_message($user_data, $rules, $custom_attributes);
             foreach ($invalid_data as $key => $message) {
                 $errors->add($key, $message);
             }
@@ -633,6 +657,14 @@ class ME_Authentication {
             'confirm_password' => 'required|same:new_password',
         );
         $errors = new WP_Error();
+
+
+        $custom_attributes = array(
+            'current_password' => __("current password", "enginethemes"),
+            'new_password' => __("new password", "enginethemes"),
+            'confirm_password' => __("confirm password", "enginethemes")
+        );
+
         /**
          * filter change password data validate rules
          *
@@ -642,9 +674,9 @@ class ME_Authentication {
          * @since 1.0
          */
         $rules = apply_filters('marketengine_change_password_rules', $rules, $user_data);
-        $is_valid = me_validate($user_data, $rules);
+        $is_valid = me_validate($user_data, $rules, $custom_attributes);
         if (!$is_valid) {
-            $invalid_data = me_get_invalid_message($user_data, $rules);
+            $invalid_data = me_get_invalid_message($user_data, $rules, $custom_attributes);
             foreach ($invalid_data as $key => $message) {
                 $errors->add($key, $message);
             }

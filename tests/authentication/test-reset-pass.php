@@ -167,6 +167,6 @@ class Tests_ME_Reset_Pass extends WP_UnitTestCase {
                 'key' => 'zadq13412',
             )
         );
-        $this->assertEquals(new WP_Error('confirm_pass', 'The confirm pass and new pass must match.'), $error);
+        $this->assertEquals(new WP_Error('confirm_pass', 'The confirm password and new password must match.'), $error);
     }
 }

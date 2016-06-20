@@ -131,7 +131,7 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'last_name' => 'dang'
             )
         );
-        $this->assertEquals($error, new WP_Error('confirm_pass', 'The confirm pass field is required.'));
+        $this->assertEquals($error, new WP_Error('confirm_pass', 'The confirm password field is required.'));
     }
 
     // test confirm pass and user pass miss match
@@ -147,7 +147,7 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'last_name' => 'dang'
             )
         );
-        $this->assertEquals($error, new WP_Error('confirm_pass', 'The confirm pass and user pass must match.'));
+        $this->assertEquals($error, new WP_Error('confirm_pass', 'The confirm password and user password must match.'));
     }
 
     // test user name existed
@@ -322,6 +322,6 @@ class Tests_ME_Register extends WP_UnitTestCase {
                 'last_name' => 'dang'
             )
         );
-        $this->assertEquals($error, new WP_Error('agree_with_tos', 'The agree with tos field is required.'));
+        $this->assertEquals($error, new WP_Error('agree_with_tos', 'The agree with term of use field is required.'));
     }
 }
