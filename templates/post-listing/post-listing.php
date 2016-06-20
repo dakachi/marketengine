@@ -24,10 +24,14 @@ if (!defined('ABSPATH')) {
 			<?php me_get_template_part('post-listing/listing-type'); ?>
 			
 			<?php me_get_template_part('post-listing/listing-information'); ?>
+
+			<?php do_action('marketengine_post_listing_information_form_fields'); ?>
 		
 			<?php me_get_template_part('post-listing/listing-gallery'); ?>
 		
 			<?php me_get_template_part('post-listing/listing-tags'); ?>
+
+			<?php do_action('marketengine_post_listing_form_fields'); ?>
 			
 			<?php wp_nonce_field('me-insert_listing'); ?>
 

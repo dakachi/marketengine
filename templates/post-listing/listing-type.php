@@ -16,8 +16,14 @@ $listing_types = me_get_listing_types();
 	    	<?php endforeach; ?>
 	    </select>
 	</div>
+
+	<?php do_action('marketengine_post_listing_type_form_end'); ?>
+
 </div>
 <div class="marketengine-group-field">
+
+	<?php do_action('marketengine_post_listing_type_form_fields_start'); ?>
+
 	<div class="me-row me-pricing-container listing-type-info" id="purchasion-type-field">
 
 		<?php do_action('marketengine_post_listing_price_form_start'); ?>
@@ -42,6 +48,9 @@ $listing_types = me_get_listing_types();
 		<?php do_action('marketengine_post_listing_price_form_end'); ?>
 
 	</div>
+	
+	<?php do_action('marketengine_post_listing_type_form_fields'); ?>
+
 	<div class="marketengine-input-field listing-type-info" id="contact-type-field" style="display:none;">
 
 		<?php do_action('marketengine_post_listing_offering_email_form_start'); ?>
@@ -53,7 +62,7 @@ $listing_types = me_get_listing_types();
 
 	</div>
 
-	<?php do_action('marketengine_post_listing_type_form_end'); ?>
+	<?php do_action('marketengine_post_listing_type_form_fields_end'); ?>
 
 </div>
 <?php do_action('marketengine_after_post_listing_type_form'); ?>
