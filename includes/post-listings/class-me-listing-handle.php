@@ -341,7 +341,7 @@ class ME_Listing_Handle {
          *
          * @since 1.0
          */
-        $listing_meta_data_rules = apply_filters('marketengine_insert_listing_meta_rules', array('listing_price' => 'numeric'));
+        $listing_meta_data_rules = self::get_listing_type_fields_rule($listing_data['listing_type']);
         // validate post meta data
         $is_valid = me_validate($listing_data['meta_input'], $listing_meta_data_rules);
         if (!$is_valid) {
@@ -382,5 +382,29 @@ class ME_Listing_Handle {
          * @since 1.0
          */
         return apply_filters('marketengine_validate_listing_data', true, $listing_data);
+    }
+    /**
+     * Get Listing Type Fields Rules
+     * 
+     * Return the data rules base on listing type
+     * 
+     * @param string $listing_type The listing type
+     *
+     * @return array
+     *
+     * @since 1.0
+     */
+    public static function get_listing_type_fields_rule($listing_type) {
+        switch ($listing_type) {
+            case 'contact':
+                $rules = array('contact_email' => 'required|email');
+                break;
+            case 'rental' :
+            default:
+                $rules = array('listing_price' => 'required|numeric');
+                break;
+        }
+
+        return apply_filters('marketengine_insert_listing_meta_rules', $rules, $listing_type );
     }
 }

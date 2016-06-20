@@ -56,7 +56,7 @@ $listing_types = me_get_listing_types();
 		<?php do_action('marketengine_post_listing_offering_email_form_start'); ?>
 
 	    <label class="text"><?php _e("Contact Email", "enginethemes");?></label>
-	    <input type="email" name="meta_input[offering_email]" value="<?php if (!empty($_POST['meta_input']['offering_email'])) {echo esc_attr($_POST['meta_input']['offering_email']);}?>" >
+	    <input type="email" name="meta_input[contact_email]" value="<?php if (!empty($_POST['meta_input']['contact_email'])) {echo esc_attr($_POST['meta_input']['contact_email']);}?>" >
 	    
 	    <?php do_action('marketengine_post_listing_offering_email_form_end'); ?>
 
