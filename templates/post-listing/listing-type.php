@@ -32,7 +32,7 @@ $selected_listing_type = empty($_POST['listing_type']) ? 'purchasion' : $_POST['
 		<div class="me-col-md-6">
 			<div class="marketengine-input-field">
 			    <label class="text"><?php _e("Price", "enginethemes"); ?></label>
-			    <input type="number" name="meta_input[listing_price]" placeholder="$" class="required" value="<?php if (!empty($_POST['meta_input']['listing_price'])) {echo esc_attr($_POST['meta_input']['listing_price']);}?>">
+			    <input type="text" name="meta_input[listing_price]" placeholder="$" class="required me-input-price" value="<?php if (!empty($_POST['meta_input']['listing_price'])) {echo esc_attr($_POST['meta_input']['listing_price']);}?>">
 			</div>
 		</div>
 		<div class="me-col-md-6">
