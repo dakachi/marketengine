@@ -154,6 +154,21 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         $this->assertEquals(new WP_Error('listing_price', 'The listing price must be a number.'), $p1);
     }
 
+    public function test_create_listing_with_price_less_than_zero() {
+        $listing_data = array(
+            'listing_title' => 'Listing A',
+            'listing_description' => 'Sample content',
+            'listing_type' => 'purchasion',
+            'meta_input' => array(
+                'listing_price' => -10,
+            ),
+            'parent_cat' => $this->parent_cat,
+            'sub_cat' => $this->sub_cat,
+        );
+        $p1 = ME_Listing_Handle::insert($listing_data);
+        $this->assertEquals(new WP_Error('listing_price', 'The listing price must be at least 0.'), $p1);
+    }
+
     public function test_create_listing_with_invalid_contact_info() {
         $listing_data = array(
             'listing_title' => 'Listing A',

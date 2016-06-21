@@ -15,11 +15,25 @@ if (!defined('ABSPATH')) {
  */
 class ME_Listing_Handle_Form extends ME_Form {
     public static function init_hook() {
+
+        add_action( 'template_redirect', array(__CLASS__, 'redirect_to_login') );
+
         add_action('wp_loaded', array(__CLASS__, 'process_insert'));
         add_action('wp_loaded', array(__CLASS__, 'process_update'));
         // ajax action
         add_action('wp_ajax_me-load-sub-category', array(__CLASS__, 'load_sub_category'));
         add_action('wp_ajax_nopriv_me-load-sub-category', array(__CLASS__, 'load_sub_category'));        
+    }
+    /** 
+     * Handle redirect user to page login when not logged in
+     */
+    public static function redirect_to_login() {
+        if(!is_user_logged_in() && is_page('post-listing')) {
+            $link = me_get_page_permalink('user-profile');
+            $link = add_query_arg(array('redirect' => get_permalink()), $link);
+            wp_redirect( $link );
+            exit;
+        }
     }
     /**
      * Handling listing data to create new listing

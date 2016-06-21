@@ -10,13 +10,18 @@ if (!defined('ABSPATH')) {
     exit;
 }
 do_action('marketengine_before_user_login_form');
+
+$register_link = me_get_endpoint_url('register');
+if (!empty($_REQUEST['redirect'])) {
+    $register_link = add_query_arg(array('redirect' => $_REQUEST['redirect']), $register_link);
+}
 ?>
 	<form id="login-form" action="" method="post">
-		<h3><?php _e("Login", "enginethemes"); ?></h3>
+		<h3><?php _e("Login", "enginethemes");?></h3>
 
-		<?php me_print_notices(); ?>
+		<?php me_print_notices();?>
 		<?php do_action('marketengine_user_login_form_start');?>
-		
+
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
 			    <label for="username"><?php _e("Email/Username", "enginethemes");?></label>
@@ -37,16 +42,16 @@ do_action('marketengine_before_user_login_form');
 		</div>
 		<div class="marketengine-group-field forgot-sigin">
 			<a href="<?php echo me_get_endpoint_url('forgot-password'); ?>" class="forgot-pass"><?php _e("Forgot password? &nbsp;", "enginethemes");?></a>
-			<span class="account-register"><?php _e("Need an account?", "enginethemes");?><a href="<?php echo me_get_endpoint_url('register'); ?>"><?php _e("Register", "enginethemes");?></a></span>
+			<span class="account-register"><?php _e("Need an account?", "enginethemes");?><a href="<?php echo $register_link; ?>"><?php _e("Register", "enginethemes");?></a></span>
 		</div>
 		<a href="<?php echo home_url(); ?>" class="back-home-sigin"><?php _e("&lt;  Back to Home", "enginethemes");?></a>
 
 		<?php wp_nonce_field('me-login', "_wpnonce");?>
 
-		<?php if(wp_get_referer() || !empty($_POST['redirect'])) : ?>
-			<input type="hidden" name="redirect" value="<?php echo !empty($_POST['redirect']) ? $_POST['redirect'] : wp_get_referer(); ?>" />
-		<?php endif; ?>
-		
+		<?php if (wp_get_referer() || !empty($_REQUEST['redirect'])): ?>
+			<input type="hidden" name="redirect" value="<?php echo !empty($_REQUEST['redirect']) ? $_REQUEST['redirect'] : wp_get_referer(); ?>" />
+		<?php endif;?>
+
 		<?php do_action('marketengine_user_login_form_end');?>
 	</form>
 

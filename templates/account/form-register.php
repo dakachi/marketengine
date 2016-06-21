@@ -64,6 +64,10 @@ if (get_option('users_can_register')):
 
 		<?php do_action('marketengine_user_register_form');?>
 
+		<?php if (!empty($_REQUEST['redirect'])): ?>
+			<input type="hidden" name="redirect" value="<?php echo $_REQUEST['redirect']; ?>" />
+		<?php endif;?>
+
 		<div class="marketengine-group-field terms-signup">
 			<div class="marketengine-checkbox-field">
 				<label for="agree-with-tos">

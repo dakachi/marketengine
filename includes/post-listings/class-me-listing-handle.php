@@ -412,7 +412,7 @@ class ME_Listing_Handle {
         case 'rental':
 
         default:
-            $rules = array('listing_price' => 'required|numeric');
+            $rules = array('listing_price' => 'required|numeric|min:0');
             $attributes = array('listing_price' => __("listing price", "enginethemes"));
             break;
         }
