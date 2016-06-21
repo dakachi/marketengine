@@ -84,7 +84,7 @@ class ME_Validator {
      *
      * @var array
      */
-    protected $numericRules = array('Numeric', 'Integer');
+    protected $numericRules = array('Numeric', 'Integer', 'numeric', 'integer', 'int');
     /**
      * The validation rules that imply the field is required.
      *

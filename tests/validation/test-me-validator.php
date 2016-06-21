@@ -55,18 +55,33 @@ class Tests_ME_Validator extends WP_UnitTestCase {
 		$this->assertEquals(array('site' => "The site format is invalid.") , $invalid_data );
 	}
 	// test number min
-	function test_me_get_invalid_message_min() {
-		$data = array('user_login' => 'dakachi', 'user_pass' => '123', 'user_email' => 'dakachi@gmail.com', 'min' => '5');
+	function test_me_get_invalid_message_min_numeric() {
+		$data = array('user_login' => 'dakachi', 'user_pass' => '123', 'user_email' => 'dakachi@gmail.com', 'min' => 5);
 		$rules = array(
             'user_login' => 'required',
             'user_pass' => 'required',
-            'min' => 'min:6|numeric',
+            'min' => 'numeric|min:6',
             'user_email' => 'required|email'
         );
 
         $invalid_data = me_get_invalid_message($data, $rules);
 		$this->assertEquals( array('min' => __('The min must be at least 6.',"enginethemes" )), $invalid_data );
 	}
+
+	// test string min
+	function test_me_get_invalid_message_min_string() {
+		$data = array('user_login' => 'dakachi', 'user_pass' => '123', 'user_email' => 'dakachi@gmail.com', 'min' => 5);
+		$rules = array(
+            'user_login' => 'required',
+            'user_pass' => 'required',
+            'min' => 'string|min:6',
+            'user_email' => 'required|email'
+        );
+
+        $invalid_data = me_get_invalid_message($data, $rules);
+		$this->assertEquals( array('min' => __('The min must be at least 6 characters.',"enginethemes" )), $invalid_data );
+	}
+
 
 	// test data is url
 	function test_me_get_invalid_message_same() {

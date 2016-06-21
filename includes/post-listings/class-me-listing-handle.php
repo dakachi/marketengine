@@ -272,7 +272,10 @@ class ME_Listing_Handle {
      */
     public static function current_user_can_create_listing() {
         global $user_ID;
-        return apply_filters('marketengine_user_can_create_listing', true, $user_ID);
+        if($user_ID) {
+            return apply_filters('marketengine_user_can_create_listing', true, $user_ID);    
+        }
+        return false;
     }
 
     /**
@@ -407,6 +410,7 @@ class ME_Listing_Handle {
             $attributes = array('contact_email' => __("contact email", "enginethemes"));
             break;
         case 'rental':
+
         default:
             $rules = array('listing_price' => 'required|numeric');
             $attributes = array('listing_price' => __("listing price", "enginethemes"));
