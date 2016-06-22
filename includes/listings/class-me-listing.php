@@ -20,13 +20,25 @@ class ME_Listing {
      */
     public $listing_type;
 
-    public function __construct($post, $args) {
+    public function __construct($post, $args = array()) {
         $this->post = $post;
-        $this->id   = $post->ID;
+        $this->id = $post->ID;
     }
 
     public function get_listing_type() {
         return get_post_meta($this->id, 'listing_type', true);
     }
 
+    public function get_review_count() {
+        return get_post_meta($this->id, '_me_review_count', true);
+    }
+
+    public function get_order_count() {
+        return get_post_meta($this->id, '_me_order_count', true);   
+    }
+
+    public function get_galleries() {
+
+    }
+    public function get_action_template() {}
 }

@@ -28,11 +28,15 @@ class ME_Listing_Purchase extends ME_Listing{
 		//woocommerce_product_supports
     }
 
-    public function is_downloadable {
+    public function get_price() {
+        return get_post_meta($this->id, 'me_price', true);
+    }
+
+    public function is_downloadable() {
         return get_post_meta($this->id, 'me_is_downloadable', true);
     }
 
-    public function is_in_stock {
+    public function is_in_stock() {
         return get_post_meta($this->id, 'me_is_in_stock', true);
     }
 }
