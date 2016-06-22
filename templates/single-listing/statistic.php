@@ -11,10 +11,10 @@ $review_count = $listing->get_review_count();
 
 ?>
 <div class="me-rating">
-	<i class="icon-font star-on-png"></i>
-	<i class="icon-font star-on-png"></i>
-	<i class="icon-font star-on-png"></i>
-	<i class="icon-font star-half-png"></i>
+	<i class="icon-font star-off-png"></i>
+	<i class="icon-font star-off-png"></i>
+	<i class="icon-font star-off-png"></i>
+	<i class="icon-font star-off-png"></i>
 	<i class="icon-font star-off-png"></i>
 </div>
 <div class="me-purchase">
