@@ -94,8 +94,8 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/authentication/class-me-authentication-form.php';
             require_once ME_PLUGIN_PATH . '/includes/authentication/class-me-authentication.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/post-listings/class-me-listing-handle.php';
-            require_once ME_PLUGIN_PATH . '/includes/post-listings/class-me-listing-handle-form.php';
+            require_once ME_PLUGIN_PATH . '/includes/listings-handle/class-me-listing-handle.php';
+            require_once ME_PLUGIN_PATH . '/includes/listings-handle/class-me-listing-handle-form.php';
 
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing.php';
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-purchase.php';
