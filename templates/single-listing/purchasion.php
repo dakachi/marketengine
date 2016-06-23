@@ -14,5 +14,10 @@ $pricing_unit = $listing->get_pricing_unit();
 		<b itemprop="priceCurrency" content="USD">$</b>
 		<?php printf(__('<b itemprop="price" content="10">%d</b>%s', 'enginethemes'), $price, $pricing_unit) ?>
 	</span>
-	<button><?php _e("Buy", "enginethemes"); ?></button>
+</div>
+<div class="me-addtocart">
+	<div class="me-quantily">
+		<input type="number">
+	</div>
+	<button class="me-buy-now-btn">BUY NOW</button>
 </div>

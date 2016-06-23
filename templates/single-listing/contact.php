@@ -1,3 +1,3 @@
-<div class="me-contact">
-	<button><?php _e("Contact", "enginethemes"); ?></button>
+<div class="me-price">
+	<button class="me-contact-btn"><?php _e("CONTACT", "enginethemes"); ?></button>
 </div>
