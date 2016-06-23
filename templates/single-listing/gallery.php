@@ -1,55 +1,30 @@
+<?php
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+global $post;
+$listing = new ME_Listing_Purchase($post);
+$galleries = $listing->get_galleries();
+?>
 <div class="me-images">
 	<div class="me-image-large">
 		<a class="me-large-fancybox">
-			<img src="assets/img/1.jpg" alt="">
+			<img src="<?php echo wp_get_attachment_image_url( $galleries[0], 'large' ); ?>" alt="<?php the_title(); ?>">
 		</a>
 	</div>
 	<div class="me-image-thumbs">
 		<div class="me-thumbs-slider">
 			<ul class="me-list-thumbs">
-				<li class="me-first">
-					<a href="assets/img/1.jpg" medium-img="assets/img/1.jpg" rel="gallery" class="me-fancybox">
-						<img src="assets/img/1.jpg" alt="">
-					</a>
-				</li>
+			<?php foreach ($galleries as $key => $value) : ?>
 				<li>
-					<a href="assets/img/2.jpg" medium-img="assets/img/2.jpg" rel="gallery" class="me-fancybox">
-						<img src="assets/img/2.jpg" alt="">
+					<a href="<?php echo wp_get_attachment_image_url( $value, 'large' ); ?>" medium-img="<?php echo wp_get_attachment_image_url( $value, 'large' ); ?>" rel="gallery" class="me-fancybox">
+						<img src="<?php echo wp_get_attachment_image_url( $value, 'thumbnail' ); ?>" alt="<?php the_title('', '-'. $key); ?>">
 					</a>
 				</li>
-				<li>
-					<a href="assets/img/3.jpg" medium-img="assets/img/3.jpg" rel="gallery" class="me-fancybox">
-						<img src="assets/img/3.jpg" alt="">
-					</a>
-				</li>
-				<li>
-					<a href="assets/img/4.jpg" medium-img="assets/img/4.jpg" rel="gallery" class="me-fancybox">
-						<img src="assets/img/4.jpg" alt="">
-					</a>
-				</li>
-				<li class="me-last">
-					<a href="assets/img/5.jpg" medium-img="assets/img/5.jpg" rel="gallery" class="me-fancybox">
-						<img src="assets/img/5.jpg" alt="">
-					</a>
-				</li>
-				<li>
-					<a href="assets/img/6.jpg" medium-img="assets/img/6.jpg" rel="gallery" class="me-fancybox">
-						<img src="assets/img/6.jpg" alt="">
-					</a>
-				</li>
-				<li>
-					<a href="assets/img/7.jpg" medium-img="assets/img/7.jpg" rel="gallery" class="me-fancybox">
-						<img src="assets/img/7.jpg" alt="">
-					</a>
-				</li>
-				<li>
-					<a href="assets/img/7.jpg" medium-img="assets/img/7.jpg" rel="gallery" class="me-fancybox">
-						<img src="assets/img/7.jpg" alt="">
-					</a>
-				</li>
-			</ul>
+			<?php endforeach; ?>
 			<a class="me-next"></a><a class="me-prev me-deactive"></a>
 		</div>
-		
 	</div>
 </div>
