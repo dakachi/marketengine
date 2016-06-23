@@ -166,7 +166,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'sub_cat' => $this->sub_cat,
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
-        $this->assertEquals(new WP_Error('listing_price', 'The listing price must be at least 0.'), $p1);
+        $this->assertEquals(new WP_Error('listing_price', 'The listing price must be greater than 0.'), $p1);
     }
 
     public function test_create_listing_with_invalid_contact_info() {

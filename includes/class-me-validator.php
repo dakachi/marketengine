@@ -78,7 +78,7 @@ class ME_Validator {
      *
      * @var array
      */
-    protected $sizeRules = array('Size', 'Between', 'Min', 'Max');
+    protected $sizeRules = array('Size', 'Between', 'Min', 'Max', 'GreaterThan', 'LessThan');
     /**
      * The numeric related validation rules.
      *
@@ -172,9 +172,10 @@ class ME_Validator {
                 'string' => __('The :attribute must be :size characters.', "enginethemes"),
                 'array' => __('The :attribute must contain :size items.', "enginethemes"),
             ),
+            'greater_than' => __("The :attribute must be greater than :greater_than.", "enginethemes"),
             'timezone' => __('The :attribute must be a valid zone.', "enginethemes"),
             'unique' => __('The :attribute has already been taken.', "enginethemes"),
-            'url' => __('The :attribute format is invalid.', "enginethemes"),
+            'url' => __('The :attribute format is invalid.', "enginethemes")
         );
 
         $this->customMessages = apply_filters('me_validator_messages', $messages);
@@ -861,6 +862,13 @@ class ME_Validator {
 
         return $this->getSize($attribute, $value) >= $parameters[0];
     }
+
+    protected function validateGreaterThan($attribute, $value, $parameters) {
+        $this->requireParameterCount(1, $parameters, 'greater_than');
+
+        return $this->getSize($attribute, $value) > $parameters[0];
+    }
+
 
     /**
      * Validate the size of an attribute is less than a maximum value.
@@ -1618,6 +1626,20 @@ class ME_Validator {
     }
 
     /**
+     * Replace all place-holders for the greater than rule.
+     *
+     * @param  string $message
+     * @param  string $attribute
+     * @param  string $rule
+     * @param  array  $parameters
+     *
+     * @return string
+     */
+    protected function replaceGreaterThan($message, $attribute, $rule, $parameters) {
+        return str_replace(':greater_than', $parameters[0], $message);
+    }
+
+    /**
      * Replace all place-holders for the max rule.
      *
      * @param  string $message
@@ -1939,7 +1961,7 @@ class ME_Validator {
      */
     public function addExtensions(array $extensions) {
         if ($extensions) {
-            $keys = array_map('WE_Validator::snake_case', array_keys($extensions));
+            $keys = array_map('ME_Validator::snake_case', array_keys($extensions));
             $extensions = array_combine($keys, array_values($extensions));
         }
         $this->extensions = array_merge($this->extensions, $extensions);
@@ -2002,7 +2024,7 @@ class ME_Validator {
      */
     public function addReplacers(array $replacers) {
         if ($replacers) {
-            $keys = array_map('WE_Validator::snake_case', array_keys($replacers));
+            $keys = array_map('ME_Validator::snake_case', array_keys($replacers));
             $replacers = array_combine($keys, array_values($replacers));
         }
         $this->replacers = array_merge($this->replacers, $replacers);
