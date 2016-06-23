@@ -98,6 +98,8 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/post-listings/class-me-listing-handle-form.php';
 
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing.php';
+            require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-purchase.php';
+            require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-contact.php';
 
             require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-auth.php';
             require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-listing.php';

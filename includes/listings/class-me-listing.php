@@ -26,7 +26,7 @@ class ME_Listing {
     }
 
     public function get_listing_type() {
-        return get_post_meta($this->id, 'listing_type', true);
+        return get_post_meta($this->id, '_me_listing_type', true);
     }
 
     public function get_review_count() {

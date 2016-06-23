@@ -24,12 +24,18 @@ class ME_Listing_Purchase extends ME_Listing{
      * @since 1.0
      */
 
-	public function __construct() {
-		//woocommerce_product_supports
+    public function get_price() {
+        return get_post_meta($this->id, 'listing_price', true);
     }
 
-    public function get_price() {
-        return get_post_meta($this->id, 'me_price', true);
+    public function get_pricing_unit() {
+        $pricing_text = array(
+            '0' => '',
+            'none' => '',
+            'per_unit' => __("/Unit", "enginethemes"),
+            'per_hour' => __("/Hour", "enginethemes")
+        );
+        return $pricing_text[get_post_meta($this->id, 'pricing_unit', true)];   
     }
 
     public function is_downloadable() {

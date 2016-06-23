@@ -36,6 +36,7 @@ class ME_Listing_Handle {
         }
 
         $listing_data = self::filter($listing_data);
+        
         if (isset($attachment['listing_gallery'])) {
             $maximum_files_allowed = get_option('marketengine_listing_maximum_images_allowed', 5);
             $number_of_files = count($attachment['listing_gallery']['name']);
@@ -115,7 +116,12 @@ class ME_Listing_Handle {
         // set listing status
         if (self::current_user_can_publish_listing()) {
             $listing_data['post_status'] = 'publish';
+        }else {
+            $listing_data['post_status'] = 'draft';
         }
+
+        $listing_data['meta_input']['_me_listing_type'] = $listing_data['listing_type'];
+
         /**
          * Filter listing data
          *
