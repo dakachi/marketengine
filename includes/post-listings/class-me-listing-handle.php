@@ -36,7 +36,7 @@ class ME_Listing_Handle {
         }
 
         $listing_data = self::filter($listing_data);
-
+        
         if (isset($attachment['listing_gallery'])) {
             $maximum_files_allowed = get_option('marketengine_listing_maximum_images_allowed', 5);
             $number_of_files = count($attachment['listing_gallery']['name']);
@@ -418,7 +418,7 @@ class ME_Listing_Handle {
         case 'rental':
 
         default:
-            $rules = array('listing_price' => 'required|numeric|min:1');
+            $rules = array('listing_price' => 'required|numeric|min:0');
             $attributes = array('listing_price' => __("listing price", "enginethemes"));
             break;
         }
