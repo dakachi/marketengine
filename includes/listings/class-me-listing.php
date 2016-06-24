@@ -43,6 +43,6 @@ class ME_Listing {
         if($thumbnail_id) {
             array_unshift($gallery, $thumbnail_id);    
         }        
-        return $gallery;
+        return (array)$gallery;
     }
 }

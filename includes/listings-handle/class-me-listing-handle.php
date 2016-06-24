@@ -60,11 +60,27 @@ class ME_Listing_Handle {
                 return new WP_Error('edit_others_posts', __("You are not allowed to edit posts as this user.", "enginethemes"));
             }
             $post = wp_update_post($listing_data);
+            /**
+             * Do action after update listing
+             *
+             * @param object|WP_Error $post
+             * @param array $listing_data
+             * @since 1.0
+             */
+            do_action('marketengine_after_update_listing', $post, $listing_data);
         } else {
             if (!self::current_user_can_create_listing()) {
                 return new WP_Error('create_posts', __("You are not allowed to create posts as this user.", "enginethemes"));
             }
             $post = wp_insert_post($listing_data);
+            /**
+             * Do action after insert listing
+             *
+             * @param object|WP_Error $post
+             * @param array $listing_data
+             * @since 1.0
+             */
+            do_action('marketengine_after_insert_listing', $post, $listing_data);
         }
 
         if (isset($attachment['listing_gallery'])) {
@@ -116,7 +132,7 @@ class ME_Listing_Handle {
         // set listing status
         if (self::current_user_can_publish_listing()) {
             $listing_data['post_status'] = 'publish';
-        }else {
+        } else {
             $listing_data['post_status'] = 'draft';
         }
 
@@ -144,7 +160,7 @@ class ME_Listing_Handle {
      *
      * @return int The attachment id
      */
-    public static function process_feature_image($files) {
+    public static function process_feature_image($file) {
         global $user_ID;
         $mimes = array(
             'jpg|jpeg|jpe' => 'image/jpeg',
@@ -154,7 +170,7 @@ class ME_Listing_Handle {
             'tif|tiff' => 'image/tiff',
             'ico' => 'image/x-icon',
         );
-        return self::process_file_upload($files, 0, $user_ID, $mimes);
+        return self::process_file_upload($file, 0, $user_ID, $mimes);
     }
 
     /**
@@ -219,7 +235,7 @@ class ME_Listing_Handle {
         $author = (0 == $author || !is_numeric($author)) ? $user_ID : $author;
 
         if (isset($file['name']) && $file['size'] > 0) {
-
+            //exit;
             // setup the overrides
             $overrides['test_form'] = false;
             if (!empty($mimes) && is_array($mimes)) {
@@ -230,6 +246,7 @@ class ME_Listing_Handle {
             if (!function_exists('wp_handle_upload')) {
                 require_once ABSPATH . 'wp-admin/includes/file.php';
             }
+            $overrides = apply_filters('marketengine_file_upload_overrides', $overrides, $file);
             $uploaded_file = wp_handle_upload($file, $overrides);
 
             //if there was an error quit early
@@ -279,8 +296,8 @@ class ME_Listing_Handle {
      */
     public static function current_user_can_create_listing() {
         global $user_ID;
-        if($user_ID) {
-            return apply_filters('marketengine_user_can_create_listing', true, $user_ID);    
+        if ($user_ID) {
+            return apply_filters('marketengine_user_can_create_listing', true, $user_ID);
         }
         return false;
     }
