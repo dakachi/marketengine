@@ -85,15 +85,15 @@ class Tests_ME_Listing extends WP_UnitTestCase {
         $this->assertEquals('purchasion', $listing_type);
     }
 
-    public function test_get_review_count(){
-        $review_count = $this->listing_1->get_review_count();
-        $this->assertEquals(2, $review_count);
-    }
+    // public function test_get_review_count(){
+    //     $review_count = $this->listing_1->get_review_count();
+    //     $this->assertEquals(2, $review_count);
+    // }
 
-    public function test_get_order_count() {
-        $order_count = $this->listing_1->get_order_count();
-        $this->assertEquals(2, $order_count);
-    }
+    // public function test_get_order_count() {
+    //     $order_count = $this->listing_1->get_order_count();
+    //     $this->assertEquals(2, $order_count);
+    // }
 
     public function test_get_contact_email(){
         $contact_email = $this->listing_4->get_contact_info();
