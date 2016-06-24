@@ -64,6 +64,8 @@ class ME_Listing_Handle {
             if (!self::current_user_can_create_listing()) {
                 return new WP_Error('create_posts', __("You are not allowed to create posts as this user.", "enginethemes"));
             }
+
+            print_r($listing_data);
             $post = wp_insert_post($listing_data);
         }
 
@@ -145,6 +147,7 @@ class ME_Listing_Handle {
      * @return int The attachment id
      */
     public static function process_feature_image($files) {
+        global $user_ID;
         $mimes = array(
             'jpg|jpeg|jpe' => 'image/jpeg',
             'gif' => 'image/gif',
@@ -153,7 +156,7 @@ class ME_Listing_Handle {
             'tif|tiff' => 'image/tiff',
             'ico' => 'image/x-icon',
         );
-        return self::process_file_upload($file, 0, $user_ID, $mimes);
+        return self::process_file_upload($files, 0, $user_ID, $mimes);
     }
 
     /**
