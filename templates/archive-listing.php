@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 get_header();
-
+if(have_posts()) :
 while (have_posts()) : the_post();
 ?>
 <div itemscope itemtype="http://schema.org/Product">
@@ -12,5 +12,7 @@ while (have_posts()) : the_post();
 </div>
 <?php
 endwhile;
-
+else :
+	me_get_template_part( 'listing', 'none' );
+endif;
 get_footer();
