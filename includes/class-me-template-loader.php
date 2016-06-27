@@ -65,7 +65,7 @@ class ME_Template_Loader {
         }
         return $template;
     }
-    
+
     public static function comments_template_loader($template) {
         if (get_post_type() !== 'product') {
             return $template;
