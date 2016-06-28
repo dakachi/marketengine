@@ -7,8 +7,10 @@ if (!defined('ABSPATH')) {
 global $post;
 $listing = new ME_Listing($post);
 $review_count = $listing->get_review_count();
-
 ?>
+
+<?php do_action('marketengine_before_single_listing_rating'); ?>
+
 <div class="me-comments">
 	<div class="marketengine-comments">
 		<h3 class="me-title-comment"><?php printf(_n("Review (%d)", "Reviews (%d)", $review_count,"enginethemes"),$review_count ); ?></h3>
@@ -115,3 +117,5 @@ $review_count = $listing->get_review_count();
 	</div>
 	
 </div>
+
+<?php do_action('marketengine_after_single_listing_rating'); ?>

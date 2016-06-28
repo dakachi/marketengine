@@ -8,8 +8,10 @@ global $post;
 $listing = new ME_Listing($post);
 $order_count = $listing->get_order_count();
 $review_count = $listing->get_review_count();
-
 ?>
+
+<?php do_action('marketengine_before_single_listing_statistic'); ?>
+
 <div class="me-rating">
 	<i class="icon-font star-off-png"></i>
 	<i class="icon-font star-off-png"></i>
@@ -23,3 +25,5 @@ $review_count = $listing->get_review_count();
 <div class="me-reviews">
 	<span><i class="icon-reviews"></i><?php printf(_n("<b>%d</b>Review", "<b>%d</b>Reviews", $review_count,"enginethemes"),$review_count ); ?></span>
 </div>
+
+<?php do_action('marketengine_after_single_listing_statistic'); ?>

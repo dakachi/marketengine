@@ -77,7 +77,7 @@ if (!class_exists('MarketEngine')):
 
         private function include_files() {
             require_once ME_PLUGIN_PATH . '/includes/class-me-autoloader.php';
-
+            
             require_once ME_PLUGIN_PATH . '/includes/class-me-install.php';
             require_once ME_PLUGIN_PATH . '/includes/class-me-session.php';
             require_once ME_PLUGIN_PATH . '/includes/class-me-validator.php';
@@ -89,6 +89,8 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/me-template-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-email-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-listing-functions.php';
+            require_once ME_PLUGIN_PATH . '/includes/me-order-functions.php';
+            require_once ME_PLUGIN_PATH . '/includes/me-conversation-functions.php';
 
             require_once ME_PLUGIN_PATH . '/includes/abstracts/class-abstract-form.php';
             require_once ME_PLUGIN_PATH . '/includes/authentication/class-me-authentication-form.php';
@@ -100,6 +102,9 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing.php';
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-purchase.php';
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-contact.php';
+
+            require_once ME_PLUGIN_PATH . '/includes/orders/class-me-order-handle.php';
+            require_once ME_PLUGIN_PATH . '/includes/orders/class-me-order-form.php';
 
             require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-auth.php';
             require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-listing.php';

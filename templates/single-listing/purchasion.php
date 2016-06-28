@@ -9,6 +9,9 @@ $listing = new ME_Listing_Purchase($post);
 $price = $listing->get_price();
 $pricing_unit = $listing->get_pricing_unit();
 ?>
+
+<?php do_action('marketengine_before_single_listing_price'); ?>
+
 <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="me-price">
 	<span class="me-amount">
 		<b itemprop="priceCurrency" content="USD">$</b>
@@ -16,8 +19,26 @@ $pricing_unit = $listing->get_pricing_unit();
 	</span>
 </div>
 <div class="me-addtocart">
-	<div class="me-quantily">
-		<input type="number">
-	</div>
-	<button class="me-buy-now-btn">BUY NOW</button>
+	<form method="post">
+
+		<?php do_action('marketengine_single_listing_add_to_cart_form_start'); ?>
+
+		<?php if('' !== $pricing_unit) : ?>
+			<div class="me-quantily">
+				<input type="number" required min="1" />
+			</div>
+		<?php endif; ?>
+		
+		<?php wp_nonce_field('me-create_order'); ?>
+
+		<?php do_action('marketengine_single_listing_add_to_cart_form_field'); ?>
+
+		<input type="hidden" name="add_to_cart" value="<?php echo $post->ID; ?>" />
+		<input type="submit" class="me-buy-now-btn" value="<?php _e("BUY NOW", "enginethemes"); ?>">
+
+		<?php do_action('marketengine_single_listing_add_to_cart_form_end'); ?>
+
+	</form>
 </div>
+
+<?php do_action('marketengine_after_single_listing_price'); ?>

@@ -8,6 +8,9 @@ global $post;
 $listing = new ME_Listing_Purchase($post);
 $galleries = $listing->get_galleries();
 ?>
+
+<?php do_action('marketengine_before_single_listing_gallery'); ?>
+
 <div class="me-images">
 	<div class="me-image-large">
 		<a class="me-large-fancybox">
@@ -28,3 +31,5 @@ $galleries = $listing->get_galleries();
 		</div>
 	</div>
 </div>
+
+<?php do_action('marketengine_after_single_listing_gallery'); ?>
