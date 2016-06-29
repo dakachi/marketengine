@@ -706,11 +706,3 @@ class ME_Authentication {
         return $user->ID;
     }
 }
-
-function me_add_user_meta($meta) {
-    if (isset($_POST['location'])) {
-        $meta['location'] = $_POST['location'];
-    }
-    return $meta;
-}
-add_filter('insert_user_meta', 'me_add_user_meta');

@@ -57,7 +57,7 @@ class ME_Listing_Handle {
 
         if (isset($listing_data['ID'])) {
             if (($listing_data['post_author'] != $user_ID) && !current_user_can('edit_others_posts')) {
-                return new WP_Error('edit_others_posts', __("You are not allowed to edit posts as this user.", "enginethemes"));
+                return new WP_Error('edit_others_posts', __("You are not allowed to edit listing as this user.", "enginethemes"));
             }
             $post = wp_update_post($listing_data);
             /**

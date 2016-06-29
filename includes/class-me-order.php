@@ -16,6 +16,10 @@ class ME_Order {
 
     }
 
+    public function add_item(){
+    	
+    }
+
     public function get_order_details() {
 
     }

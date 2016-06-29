@@ -18,6 +18,7 @@ class ME_Order_Form {
                 wp_redirect($link);
             } else {
             	//TODO: process insert order
+                ME_Order_Handle::insert($_POST);
             }
         }
     }
