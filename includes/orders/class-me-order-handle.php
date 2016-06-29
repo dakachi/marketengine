@@ -87,9 +87,9 @@ class ME_Order_Handle {
      *  - fee
      *  - ID
      *
-     * return WP_Error | WP_Post
+     * return WP_Error | WP_Order
      */
-    public static function update_order($order_data) {
+    public static function update($order_data) {
 
     }
 }

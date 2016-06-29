@@ -7,6 +7,7 @@ if (!defined('ABSPATH')) {
 class ME_Order {
     public $id;
     public $order;
+    public $total;
     public $shipping_info = array();
     
     /**
@@ -16,8 +17,17 @@ class ME_Order {
 
     }
 
-    public function add_item(){
+    public function add_item($item){
+    	$price = $item->get_price();
+    	$quantity = 1;
+    }
+
+    public function add_note(){
     	
+    }
+
+    public function caculate_total() {
+
     }
 
     public function get_order_details() {
