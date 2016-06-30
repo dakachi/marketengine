@@ -5,8 +5,8 @@ if (!defined('ABSPATH')) {
 }
 
 function me_insert_order($order_data) {
-	$order_data['post_type'] = 'me_order';
-	return wp_insert_post($order_data);
+    $order_data['post_type'] = 'me_order';
+    return wp_insert_post($order_data);
 }
 
 function me_add_order_item() {

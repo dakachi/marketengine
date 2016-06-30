@@ -9,16 +9,16 @@ class ME_Order {
     public $order;
     public $total;
     public $shipping_info = array();
-    public $items;    
+    public $items;
     /**
-     * 
+     *
      */
     public function __construct($order = 0) {
 
     }
 
-    public function add_listing($listing, $qty = 1, $args){
-    	$price = $listing->get_price();
+    public function add_listing($listing, $qty = 1, $args) {
+        $price = $listing->get_price();
     }
 
     public function update_listing($listing_id, $args) {
@@ -35,16 +35,16 @@ class ME_Order {
     public function set_shipping_address($address) {
 
     }
-    public function set_payment_note($note){
-    	
+    public function set_payment_note($note) {
+
     }
 
-    public function set_payment_method($payment){
-        
+    public function set_payment_method($payment) {
+
     }
 
     public function get_transaction_url() {
-        
+
     }
 
     public static function add_shipping($shipping_rate) {
@@ -69,7 +69,7 @@ class ME_Order {
         // order fee
     }
 
-    public function get_transaction_id(){
+    public function get_transaction_id() {
         return get_post_meta($this->id, '_me_transation_id', true);
     }
 
