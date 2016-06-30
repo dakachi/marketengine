@@ -39,6 +39,14 @@ class ME_Order {
     	
     }
 
+    public function set_payment_method($payment){
+        
+    }
+
+    public function get_transaction_url() {
+        
+    }
+
     public static function add_shipping($shipping_rate) {
 
     }
