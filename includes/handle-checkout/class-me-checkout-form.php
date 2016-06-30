@@ -6,39 +6,12 @@ if (!defined('ABSPATH')) {
 
 class ME_Checkout_Form {
     public static function init_hook() {
-        add_action('wp_loaded', array(__CLASS__, 'process_insert'));
-        add_action('wp_loaded', array(__CLASS__, 'process_update'));
+        add_action('wp_loaded', array(__CLASS__, 'process_checkout'));
     }
 
-    public static function process_insert() {
-        if (!empty($_POST['add_to_cart']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-create_order')) {
-            if (!is_user_logged_in()) {
-            	me_add_notice(__("You must login to order listing.", "enginethemes"), 'error');
-                $link = me_get_page_permalink('user-profile');
-                $link = add_query_arg(array('redirect' => get_permalink()), $link);
-                wp_redirect($link);
-            } else {
-            	//TODO: process insert order
-                ME_Order_Handle::insert($_POST);
-                // redirect to checkout
-            }
-        }
-    }
-
-    public static function process_update() {
-        if (!empty($_POST['update_order']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-update_order')) {
-            if (!is_user_logged_in()) {
-                me_add_notice(__("You must login to order listing.", "enginethemes"), 'error');
-                $link = me_get_page_permalink('user-profile');
-                $link = add_query_arg(array('redirect' => get_permalink()), $link);
-                wp_redirect($link);
-            } else {
-                //TODO: process insert order
-                ME_Order_Handle::update($_POST);
-                // redirect to order details
-            }
-        }
-    }
+    public static function process_checkout() {
+        ME_Checkout_Handle::checkout();
+    }    
 }
 
-ME_Order_Form::init_hook();
+ME_Checkout_Form::init_hook();

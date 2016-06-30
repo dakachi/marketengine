@@ -94,18 +94,18 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/me-user-functions.php';
 
             require_once ME_PLUGIN_PATH . '/includes/abstracts/class-abstract-form.php';
-            require_once ME_PLUGIN_PATH . '/includes/authentication/class-me-authentication-form.php';
-            require_once ME_PLUGIN_PATH . '/includes/authentication/class-me-authentication.php';
+            require_once ME_PLUGIN_PATH . '/includes/handle-authentication/class-me-authentication-form.php';
+            require_once ME_PLUGIN_PATH . '/includes/handle-authentication/class-me-authentication.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/listings-handle/class-me-listing-handle.php';
-            require_once ME_PLUGIN_PATH . '/includes/listings-handle/class-me-listing-handle-form.php';
+            require_once ME_PLUGIN_PATH . '/includes/handle-listings/class-me-listing-handle.php';
+            require_once ME_PLUGIN_PATH . '/includes/handle-listings/class-me-listing-handle-form.php';
 
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing.php';
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-purchase.php';
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-contact.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/orders/class-me-order-handle.php';
-            require_once ME_PLUGIN_PATH . '/includes/orders/class-me-order-form.php';
+            require_once ME_PLUGIN_PATH . '/includes/handle-checkout/class-me-checkout-handle.php';
+            require_once ME_PLUGIN_PATH . '/includes/handle-checkout/class-me-checkout-form.php';
 
             require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-auth.php';
             require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-listing.php';
