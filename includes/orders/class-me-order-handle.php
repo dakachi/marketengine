@@ -92,4 +92,8 @@ class ME_Order_Handle {
     public static function update($order_data) {
 
     }
+
+    public static function current_user_can_create_order() {
+        
+    }
 }

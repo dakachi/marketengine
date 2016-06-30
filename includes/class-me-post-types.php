@@ -159,5 +159,34 @@ class ME_Post_Types {
             'menu_position'      => 25,
             'supports'           => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'custom-fields'),
         ));
+
+        // TODO: tam thoi de day
+        register_post_type('order', array(
+            'labels'             => array(
+                'name'               => __('Order', "enginethemes"),
+                'singular_name'      => __('Order', "enginethemes"),
+                'add_new'            => __('Add New', "enginethemes"),
+                'add_new_item'       => __('Add New Order', "enginethemes"),
+                'edit_item'          => __('Edit Order', "enginethemes"),
+                'new_item'           => __('New Order', "enginethemes"),
+                'all_items'          => __('All Order', "enginethemes"),
+                'view_item'          => __('View Order', "enginethemes"),
+                'search_items'       => __('Search Order', "enginethemes"),
+                'not_found'          => __('No Order found', "enginethemes"),
+                'not_found_in_trash' => __('No Order found in Trash', "enginethemes"),
+                'parent_item_colon'  => '',
+                'menu_name'          => __('Order', "enginethemes"),
+            ),
+            'public'             => false,
+            'publicly_queryable' => true,
+            'show_ui'            => true,
+            'show_in_menu'       => true,
+            'query_var'          => true,
+            'capability_type'    => 'post',
+            'hierarchical'       => false,
+            'menu_position'      => 25,
+            'supports'           => array('title', 'editor', 'author', 'excerpt','custom-fields'),
+        ));
+
     }
 }
