@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
  * @author      EngineThemesTeam
  * @category    Class
  */
-class ME_Order_Handle {
+class ME_Checkout_Handle {
     /**
      * Insert Order
      *
@@ -25,15 +25,34 @@ class ME_Order_Handle {
      * @see wp_insert_post()
      * @param array $order_data
      *              - items array the array of item id
-     *              - note String 
+     *              - note String
      *              - payment String The payment gateway name buyer choose to process order
      *
      * @return WP_Error| ME_Order
      */
     public static function insert($order_data) {
-        if(!is_user_logged_in()) {
+        if (!is_user_logged_in()) {
             return new WP_Error('login_required', __("You must login to order order.", "enginethemes"));
         }
+
+        $rules = array(
+            'items' => 'required|array',
+            'payment' => 'required|string',
+            'note' => 'string',
+            'billing_first_name' => 'required',
+            'billing_last_name' => 'required',
+            'billing_address' => 'required',
+            'billing_country' => 'required',
+            'billing_postcode' => 'string',
+            'billing_email' =>'required',            
+            'shipping_address' => 'string'
+        );
+
+        $order_data['post_status'] = 'pending';
+        $order_data['post_type'] = 'me_order';
+        $order_data['items'] =  $_POST['items'];
+        $order_data['payment'] = $_POST['payment'];
+        $order_data['meta_input']['_me_order_note'] = $_POST['order_note'];
 
         if (isset($order_data['ID'])) {
             if (($order_data['post_author'] != $user_ID) && !current_user_can('edit_others_posts')) {
@@ -63,10 +82,12 @@ class ME_Order_Handle {
             do_action('marketengine_after_insert_order', $post, $order_data);
         }
 
-        if(is_wp_error( $post )) return $post;
+        if (is_wp_error($post)) {
+            return $post;
+        }
 
         $order = new ME_Order($post);
-        foreach ($items as  $listing) {
+        foreach ($items as $listing) {
             $order->add_listing($listing);
         }
 
@@ -78,9 +99,9 @@ class ME_Order_Handle {
 
     /**
      * Update order data
-     * 
+     *
      * @since 1.0
-     *    
+     *
      * @param array $order_data
      *  - shipping
      *  - gateway
@@ -94,6 +115,6 @@ class ME_Order_Handle {
     }
 
     public static function current_user_can_create_order() {
-        
+        return true;
     }
 }

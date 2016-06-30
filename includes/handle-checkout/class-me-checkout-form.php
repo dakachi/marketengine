@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class ME_Order_Form {
+class ME_Checkout_Form {
     public static function init_hook() {
         add_action('wp_loaded', array(__CLASS__, 'process_insert'));
         add_action('wp_loaded', array(__CLASS__, 'process_update'));

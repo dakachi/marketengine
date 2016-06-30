@@ -161,7 +161,7 @@ class ME_Post_Types {
         ));
 
         // TODO: tam thoi de day
-        register_post_type('order', array(
+        register_post_type('me_order', array(
             'labels'             => array(
                 'name'               => __('Order', "enginethemes"),
                 'singular_name'      => __('Order', "enginethemes"),
@@ -169,11 +169,11 @@ class ME_Post_Types {
                 'add_new_item'       => __('Add New Order', "enginethemes"),
                 'edit_item'          => __('Edit Order', "enginethemes"),
                 'new_item'           => __('New Order', "enginethemes"),
-                'all_items'          => __('All Order', "enginethemes"),
+                'all_items'          => __('All Orders', "enginethemes"),
                 'view_item'          => __('View Order', "enginethemes"),
                 'search_items'       => __('Search Order', "enginethemes"),
-                'not_found'          => __('No Order found', "enginethemes"),
-                'not_found_in_trash' => __('No Order found in Trash', "enginethemes"),
+                'not_found'          => __('No Orders found', "enginethemes"),
+                'not_found_in_trash' => __('No Orders found in Trash', "enginethemes"),
                 'parent_item_colon'  => '',
                 'menu_name'          => __('Order', "enginethemes"),
             ),
