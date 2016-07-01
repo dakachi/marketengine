@@ -18,7 +18,6 @@ class ME_Order {
     }
 
     public function add_listing($listing, $qty = 1, $args) {
-        $price = $listing->get_price();
     }
 
     public function update_listing($listing_id, $args) {
@@ -36,10 +35,6 @@ class ME_Order {
 
     }
     public function set_payment_note($note) {
-
-    }
-
-    public function set_payment_method($payment) {
 
     }
 
