@@ -18,7 +18,10 @@ function me_insert_order($order_data) {
     $order_data['post_type'] = 'me_order';
     $order_data['post_title'] = 'ME-Order';
     $order_data['post_content'] = 'ME-Order';
-    $order_data['post_excerpt'] = $order_data['note'];
+    if(!empty($order_data['customer_note'])) {
+    	$order_data['post_excerpt'] = $order_data['customer_note'];	
+    }    
+    $order_data = apply_filters('marketengine_insert_order_data', $order_data);
     return wp_insert_post($order_data);
 }
 
