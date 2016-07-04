@@ -16,11 +16,27 @@ if (!defined('ABSPATH')) {
  */
 class ME_Checkout_Handle {
     public static function checkout($data) {
-        // item list
-        // billing details
-        // shipping details
-        // update user billing details
-        // payment gateway
+        $rules = array(
+            'listing_id' => 'required|numeric',
+            'payment_method' => 'required|string',
+            'billing_info' => 'required|array'
+        );
+
+        $billing_rules = array(
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone' => 'required|numeric',
+            'email' => 'required|email',
+            'postcode' => 'string', 
+            'address' => 'required|string',
+            'city' => 'required',
+            'country' => 'required'
+        );
+
+        if(!$data['is_ship_to_billing_address']) {
+            $shipping_add_rules = $billing_rules;
+        }
+
         // create order
         $order = self::create_order($data);
         // need payment process payment
@@ -31,6 +47,8 @@ class ME_Checkout_Handle {
     }
 
     public static function create_order($data) {
+        global $user_ID;
+        $data['post_author'] = $user_ID;
         $order = me_insert_order($data);
         if (is_wp_error($order)) {
             return $order;
@@ -38,9 +56,11 @@ class ME_Checkout_Handle {
 
         $order = new ME_Order($order);
         $order->add_listing($data['listing_id']);
-        $order->set_billing_address($data['address']);
+        $order->set_address($data['billing_info']);
+        if(!empty($data['shipping_address'])) {
+            $order->set_address($data['shipping_address'], 'shipping');
+        }
         $order->add_shipping('flat_rate');
-        $order->set_shipping_address($data['shipping_address']);
         $order->set_payment_note($data['note']);
         $order->set_payment_method($data['payment_method']);
 

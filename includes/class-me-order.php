@@ -23,18 +23,48 @@ class ME_Order {
     public function update_listing($listing_id, $args) {
 
     }
+    /**
+     * Get order address
+     * 
+     * @param string $type The address type
+     * 
+     * @since 1.0
+     *
+     * @return array Array of address details
+     */
+    public function get_address($type = 'billing') {
+        $address_field = array('first_name', 'last_name', 'phone', 'email', 'postcode', 'address', 'city', 'country');
+        $address = array();
+        foreach ($address_fields as $field) {
+            $address[$field] = get_post_meta($this->id, '_me_'.$type.'_'.$field, true);
+        }
+        return $address;
+    }
+
+    /**
+     * Set order address
+     * 
+     * @param array $address The address details
+     * @param string $type The address type
+     * 
+     * @since 1.0
+     *
+     * @return array Array of address details
+     */
+    public function set_address($address, $type = 'billing') {
+        $address_field = array('first_name', 'last_name', 'phone', 'email', 'postcode', 'address', 'city', 'country');
+        foreach ($address_fields as $field) {
+            if(isset($address[$field])) {
+                update_post_meta( $this->id, '_me_'.$type.'_'.$field, $address[$field] );
+            }
+        }
+    }
+
+    public function set_payment_note($note) {
+        update_post_meta($this->id, '_me_payment_note', $note);
+    }
 
     public function set_payment_method($payment) {
-
-    }
-
-    public function set_billing_address($address) {
-
-    }
-    public function set_shipping_address($address) {
-
-    }
-    public function set_payment_note($note) {
 
     }
 
