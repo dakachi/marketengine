@@ -34,14 +34,29 @@ function me_update_order($order) {
     return wp_update_post($order);
 }
 
-function me_dispute_order() {
+function me_dispute_order($order_id) {
 
 }
 
-function me_complete_order() {
+function me_complete_order($order_id) {
 
 }
 
+/**
+ * MarketEngine Get Order Status
+ *
+ * Retrieve marketengine order status list
+ *
+ * @since 1.0
+ * @return array 
+ */
+function me_get_order_status(){
+	$order_status = array(
+		'publish' => __("Active", "enginethemes"),
+		'complete' => __("Finished", "enginethemes")
+	);
+	return apply_filters('marketengine_get_order_status', $order_status);
+}
 /**
  * Marketengine Add order item
  *
