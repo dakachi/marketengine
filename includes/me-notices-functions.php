@@ -9,8 +9,6 @@ if (!defined('ABSPATH')) {
  *
  * Add notice to session manager
  *
- * @since 1.0
- *
  * @see Class ME_Session
  * @param string $message
  * @param string $notice_type successs|error|warning
