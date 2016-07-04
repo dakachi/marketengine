@@ -16,6 +16,9 @@ if (!defined('ABSPATH')) {
  */
 function me_insert_order($order_data) {
     $order_data['post_type'] = 'me_order';
+    $order_data['post_title'] = 'ME-Order';
+    $order_data['post_content'] = 'ME-Order';
+    $order_data['post_excerpt'] = $order_data['note'];
     return wp_insert_post($order_data);
 }
 
