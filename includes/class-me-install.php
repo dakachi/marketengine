@@ -89,6 +89,16 @@ class ME_Install {
 					KEY order_id (order_id)
 				) $collate;
 
+			CREATE TABLE {$wpdb->prefix}marketengine_order_itemmeta (
+					meta_id bigint(20) NOT NULL auto_increment,
+					order_item_id bigint(20) NOT NULL,
+					meta_key varchar(255) NULL,
+					meta_value longtext NULL,
+					PRIMARY KEY  (meta_id),
+					KEY order_item_id (order_item_id),
+					KEY meta_key (meta_key)
+				) $collate;
+
 			CREATE TABLE {$wpdb->prefix}marketengine_custom_fields (
 					field_id bigint(20) NOT NULL auto_increment,
 					field_name varchar(20) NOT NULL,
@@ -100,16 +110,6 @@ class ME_Install {
 					field_constraint varchar(200) NOT NULL DEFAULT '',
 					PRIMARY KEY  (field_id),
 					KEY field_name (field_name)
-				) $collate;
-
-		CREATE TABLE {$wpdb->prefix}marketengine_order_itemmeta (
-					meta_id bigint(20) NOT NULL auto_increment,
-					order_item_id bigint(20) NOT NULL,
-					meta_key varchar(255) NULL,
-					meta_value longtext NULL,
-					PRIMARY KEY  (meta_id),
-					KEY order_item_id (order_item_id),
-					KEY meta_key (meta_key)
 				) $collate;
 
 		CREATE TABLE {$wpdb->prefix}marketengine_sessions (
