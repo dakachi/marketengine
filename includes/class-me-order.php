@@ -21,6 +21,10 @@ class ME_Order {
      *
      */
     public function add_listing($listing, $qty = 1, $args) {
+        // qty
+        // currency
+        // name
+        // id
     }
 
     public function update_listing($listing_id, $args) {

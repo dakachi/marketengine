@@ -24,6 +24,7 @@ function me_insert_order($order_data) {
     // control order create date
     // currency
     // agent, ip
+    $order_data['post_status'] = 'me-' . apply_filters('marketengine_create_order_status', 'pending');
     if (!empty($order_data['customer_note'])) {
         $order_data['post_excerpt'] = $order_data['customer_note'];
     }
