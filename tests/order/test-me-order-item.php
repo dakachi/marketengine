@@ -13,7 +13,7 @@ class Tests_ME_Order_Item extends WP_UnitTestCase {
     public function test_me_add_order_item() {
         $result = me_add_order_item_meta(1, 'order_meta_data', 'Order meta data');
         // $this->assertTrue($result);
-        $meta_value = me_get_order_item_meta(1, 'order_meta_data', true);
+        $meta_value = me_add_order_item(1, 'order_meta_data', true);
         $this->assertEquals('Order meta data', $meta_value);    
     }
 
