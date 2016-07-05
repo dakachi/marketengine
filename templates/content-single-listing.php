@@ -9,20 +9,26 @@ $listing_type = $listing->get_listing_type();
 ?>
 <div class="marketengine me-container">
 	<div itemscope itemtype="http://schema.org/Product" class="marketengine-listing-detail">
+		<?php do_action('marketengine_before_single_listing_details'); ?>
+		<div class="me-row">
+			<div class="me-col-md-12">
+				<?php me_get_template_part('single-listing/title');?>
+				<div class="me-rating-contact">
+					<div class="me-rating"><i class="icon-font star-on-png"></i><i class="icon-font star-on-png"></i><i class="icon-font star-on-png"></i><i class="icon-font star-half-png"></i><i class="icon-font star-off-png"></i></div>
+					<span class="me-count-contact">8 Contacts</span>|<span class="me-count-review">8 reviews</span>
+				</div>
+			</div>
+		</div>
 		<div class="me-row">
 			<div class="me-col-md-9">
-
-				<?php do_action('marketengine_before_single_listing_details'); ?>
-
 				<div class="marketengine-content-detail">
 
-					<?php me_get_template_part('single-listing/title');?>
 					<?php me_get_template_part('single-listing/gallery');?>
 					<?php me_get_template_part('single-listing/description');?>
 					<?php me_get_template_part('single-listing/rating');?>
 
 				</div>
-				<?php do_action('marketengine_after_single_listing_details'); ?>
+		<?php do_action('marketengine_after_single_listing_details'); ?>
 			</div>
 			<div class="me-col-md-3">
 
