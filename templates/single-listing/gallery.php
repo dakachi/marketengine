@@ -27,7 +27,6 @@ $galleries = $listing->get_galleries();
 					</a>
 				</li>
 			<?php endforeach; ?>
-			<a class="me-next"></a><a class="me-prev me-deactive"></a>
 		</div>
 	</div>
 </div>
