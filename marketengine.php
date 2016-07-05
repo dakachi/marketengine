@@ -77,7 +77,7 @@ if (!class_exists('MarketEngine')):
 
         private function include_files() {
             require_once ME_PLUGIN_PATH . '/includes/class-me-autoloader.php';
-            
+
             require_once ME_PLUGIN_PATH . '/includes/class-me-install.php';
             require_once ME_PLUGIN_PATH . '/includes/class-me-session.php';
             require_once ME_PLUGIN_PATH . '/includes/class-me-validator.php';
@@ -114,6 +114,8 @@ if (!class_exists('MarketEngine')):
         private function init_hooks() {
             add_action('init', array($this, 'init'));
             add_action('wp_enqueue_scripts', array($this, 'add_scripts'));
+
+            add_action('init', array($this, 'wpdb_table_fix'), 0);
         }
 
         public function init() {
@@ -121,6 +123,12 @@ if (!class_exists('MarketEngine')):
 
             ME_Post_Types::register_post_type();
             ME_Post_Types::register_tanonomies();
+        }
+
+        public function wpdb_table_fix() {
+            global $wpdb;
+            $wpdb->marketengine_order_itemmeta = $wpdb->prefix . 'marketengine_order_itemmeta';
+            $wpdb->tables[]             = 'marketengine_order_itemmeta';
         }
 
         public function add_scripts() {
@@ -156,7 +164,7 @@ if (!class_exists('MarketEngine')):
             $post_params = array(
                 "_wpnonce" => wp_create_nonce('media-form'),
                 "short" => "1",
-                "action" => 'me-upload-file'
+                "action" => 'me-upload-file',
             );
             wp_localize_script(
                 'plupload',
@@ -174,12 +182,14 @@ if (!class_exists('MarketEngine')):
                         ),
                     ),
                     'runtimes' => 'html5,gears,flash,silverlight,browserplus,html4',
-                    'multipart_params'   => $post_params,
-                    'error' => array (
-                        'max_files' => sprintf(__("'no more than %d file(s)'", "enginethemes"), $max_files)
-                    )
+                    'multipart_params' => $post_params,
+                    'error' => array(
+                        'max_files' => sprintf(__("'no more than %d file(s)'", "enginethemes"), $max_files),
+                    ),
                 )
             );
+
+            me_add_order_item_meta(1, 'order_meta_data', 'Order meta data');
         }
 
         /**

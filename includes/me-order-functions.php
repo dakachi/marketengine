@@ -18,9 +18,15 @@ function me_insert_order($order_data) {
     $order_data['post_type'] = 'me_order';
     $order_data['post_title'] = 'ME-Order';
     $order_data['post_content'] = 'ME-Order';
-    if(!empty($order_data['customer_note'])) {
-    	$order_data['post_excerpt'] = $order_data['customer_note'];	
-    }    
+
+    // controll order status
+    // control order number
+    // control order create date
+    // currency
+    // agent, ip
+    if (!empty($order_data['customer_note'])) {
+        $order_data['post_excerpt'] = $order_data['customer_note'];
+    }
     $order_data = apply_filters('marketengine_insert_order_data', $order_data);
     return wp_insert_post($order_data);
 }
@@ -40,13 +46,9 @@ function me_update_order($order) {
     return wp_update_post($order);
 }
 
-function me_dispute_order($order_id) {
+function me_dispute_order($order_id) {}
 
-}
-
-function me_complete_order($order_id) {
-
-}
+function me_complete_order($order_id) {}
 
 /**
  * MarketEngine Get Order Status
@@ -54,14 +56,14 @@ function me_complete_order($order_id) {
  * Retrieve marketengine order status list
  *
  * @since 1.0
- * @return array 
+ * @return array
  */
-function me_get_order_status(){
-	$order_status = array(
-		'publish' => __("Active", "enginethemes"),
-		'complete' => __("Finished", "enginethemes")
-	);
-	return apply_filters('marketengine_get_order_status', $order_status);
+function me_get_order_status() {
+    $order_status = array(
+        'publish' => __("Active", "enginethemes"),
+        'complete' => __("Finished", "enginethemes"),
+    );
+    return apply_filters('marketengine_get_order_status', $order_status);
 }
 /**
  * Marketengine Add order item
@@ -149,7 +151,7 @@ function me_delete_order_item($item_id) {
 
     do_action('marketengine_before_delete_order_item', $item_id);
 
-    $update = $wpdb->delete('table', array('order_item_id' => $item_id));
+    $update = $wpdb->delete($wpdb->prefix . 'marketengine_order_items', array('order_item_id' => $item_id));
     if (false === $update) {
         return false;
     }
@@ -171,7 +173,7 @@ function me_delete_order_item($item_id) {
  * @return mixed Will be an array if $single is false. Will be value of meta data field if $single is true.
  */
 function me_get_order_item_meta($order_item_id, $key = '', $single = false) {
-    return get_metadata('post', $order_item_id, $key, $single);
+    return get_metadata('marketengine_order_item', $order_item_id, $key, $single);
 }
 
 /**
@@ -186,8 +188,8 @@ function me_get_order_item_meta($order_item_id, $key = '', $single = false) {
  *                           Default false.
  * @return int|false Meta ID on success, false on failure.
  */
-function me_add_order_item_meta($order_item_id, $meta_key, $meta_value, $unique) {
-    return add_metadata('order_item', $order_item_id, $meta_key, $meta_value, $unique);
+function me_add_order_item_meta($order_item_id, $meta_key, $meta_value, $unique = true) {
+    return add_metadata('marketengine_order_item', $order_item_id, $meta_key, $meta_value, $unique);
 }
 
 /**
@@ -204,7 +206,7 @@ function me_add_order_item_meta($order_item_id, $meta_key, $meta_value, $unique)
  */
 
 function me_update_order_item_meta($order_item_id, $meta_key, $meta_value, $prev_value = '') {
-    return update_metadata('order_item', $order_item_id, $meta_key, $meta_value, $prev_value);
+    return update_metadata('marketengine_order_item', $order_item_id, $meta_key, $meta_value, $prev_value);
 }
 
 /**
@@ -219,5 +221,5 @@ function me_update_order_item_meta($order_item_id, $meta_key, $meta_value, $prev
  * @return bool True on success, false on failure.
  */
 function me_delete_order_item_meta($order_item_id, $meta_key, $meta_value = '') {
-    return delete_metadata('order_item', $order_item_id, $meta_key, $meta_value);
+    return delete_metadata('marketengine_order_item', $order_item_id, $meta_key, $meta_value);
 }

@@ -12,7 +12,7 @@ class Tests_ME_Create_Order extends WP_UnitTestCase {
 
     public function test_create_order() {
         $order_data = array(
-            'post_author' => 10,
+            //'post_author' => 10,
             'note' => 'Order note'
         );
         $order_id = me_insert_order($order_data);
