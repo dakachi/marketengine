@@ -11,7 +11,7 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="item-by-author">
-				<a href="#">by Username</a>
+				<?php printf(__("by %s", "enginethemes"), get_the_author_posts_link()); ?>
 			</div>
 		</div>
 	</div>
