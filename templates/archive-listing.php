@@ -3,16 +3,28 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-get_header();
-if(have_posts()) :
-while (have_posts()) : the_post();
 ?>
-<div itemscope itemtype="http://schema.org/Product">
-	<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title( '<h3 itemprop="name">', '<h3>'); ?></a>
-</div>
-<?php
+<?php  get_header(); ?>
+
+<div class="marketengine">
+
+<?php if(have_posts()) : ?>
+
+<ul class="me-listing-post me-row">
+
+<?php 
+while (have_posts()) : the_post();
+	me_get_template_part('content','listing');
 endwhile;
+?>
+
+</ul>
+
+<?php
 else :
 	me_get_template_part( 'listing', 'none' );
 endif;
-get_footer();
+?>
+
+</div>
+<?php get_footer(); ?>
