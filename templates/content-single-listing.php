@@ -38,11 +38,9 @@ $listing_type = $listing->get_listing_type();
 
 					<?php me_get_template_part('single-listing/status');?>
 					<?php me_get_template_part('single-listing/'. $listing_type );?>
-					<?php me_get_template_part('single-listing/control-action');?>
-					<?php me_get_template_part('single-listing/statistic');?>
-					<?php me_get_template_part('single-listing/category');?>
-					<?php me_get_template_part('single-listing/tags');?>
-					
+					<?php me_get_template_part('single-listing/category');?>		
+					<?php me_get_template_part('single-listing/author');?>			
+					<?php me_get_template_part('single-listing/report');?>
 				</div>
 
 				<?php do_action('marketengine_after_single_listing_sidebar'); ?>

@@ -3,6 +3,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+global $wp_query;
 ?>
 <?php  get_header(); ?>
 
@@ -10,12 +11,13 @@ if (!defined('ABSPATH')) {
 	<div class="me-container marketengine">
 		<div class="marketengine-content-wrap">
 			<div class="marketengine-page-title">
-				<p>SHOP</p>
+				<p><?php _e("SHOP", "enginethemes"); ?></p>
 			</div>
 			<!-- marketengine-content -->
 			<div class="marketengine-content">
 				<div class="me-row">
 					<div class="me-col-md-3">
+						<?php do_action('marketengine_listing_sidebar'); ?>
 						<div class="me-content-sidebar">
 							<form id="me-filter-form" action="">
 								<div class="me-sidebar-shop me-sidebar-categories">
@@ -73,8 +75,11 @@ if (!defined('ABSPATH')) {
 						<div class="me-content-shop">
 							<div class="me-bar-shop">
 								<div class="me-title-shop pull-left">
-									<h2>Advertive</h2>
-									<span>122 item in totals</span>
+									<?php
+										the_archive_title( '<h2 class="page-title">', '</h2>' );
+										the_archive_description( '<div class="taxonomy-description">', '</div>' );
+									?>
+									<span><?php printf(_n( 'One item in total', "%d items in totals", $wp_query->found_posts, "enginethemes" ), $wp_query->found_posts) ?></span>
 								</div>
 								<div class="me-sort-listing pull-right">
 									<select name="" id="">
@@ -87,28 +92,24 @@ if (!defined('ABSPATH')) {
 							</div>
 							<div class="clearfix"></div>
 							
-								<?php if(have_posts()) : ?>
+							<?php if(have_posts()) : ?>
 
-								<ul class="me-listing-post me-row">
-									<?php 
-									while (have_posts()) : the_post();
-										me_get_template_part('content','listing');
-									endwhile;
-									?>
-								</ul>
-
-								<?php
-								else :
-									me_get_template_part( 'listing', 'none' );
-								endif;
+							<ul class="me-listing-post me-row">
+								<?php 
+								while (have_posts()) : the_post();
+									me_get_template_part('content','listing');
+								endwhile;
 								?>
-						</div>
-						<div class="marketengine-paginations">
-							<a class="prev page-numbers" href="#">&lt;</a>
-							<a class="page-numbers" href="#">1</a>
-							<span class="page-numbers current">2</span>
-							<a class="page-numbers" href="#">3</a>
-							<a class="next page-numbers" href="">&gt;</a>
+							</ul>
+
+							<?php
+							else :
+								me_get_template_part( 'listing', 'none' );
+							endif;
+							?>
+							<div class="marketengine-paginations">
+								<?php me_paginate_link (); ?>
+							</div>
 						</div>
 					</div>
 				</div>

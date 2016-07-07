@@ -17,28 +17,29 @@ $pricing_unit = $listing->get_pricing_unit();
 		<b itemprop="priceCurrency" content="USD">$</b>
 		<?php printf(__('<b itemprop="price" content="10">%d</b>%s', 'enginethemes'), $price, $pricing_unit) ?>
 	</span>
-</div>
-<div class="me-addtocart">
-	<form method="post">
 
-		<?php do_action('marketengine_single_listing_add_to_cart_form_start'); ?>
+	<div class="me-addtocart">
+		<form method="post">
 
-		<?php if('' !== $pricing_unit) : ?>
-			<div class="me-quantily">
-				<input type="number" required min="1" />
-			</div>
-		<?php endif; ?>
-		
-		<?php wp_nonce_field('me-create_order'); ?>
+			<?php do_action('marketengine_single_listing_add_to_cart_form_start'); ?>
 
-		<?php do_action('marketengine_single_listing_add_to_cart_form_field'); ?>
+			<?php if('' !== $pricing_unit) : ?>
+				<div class="me-quantily">
+					<input type="number" required min="1" />
+				</div>
+			<?php endif; ?>
+			
+			<?php wp_nonce_field('me-create_order'); ?>
 
-		<input type="hidden" name="add_to_cart" value="<?php echo $post->ID; ?>" />
-		<input type="submit" class="me-buy-now-btn" value="<?php _e("BUY NOW", "enginethemes"); ?>">
+			<?php do_action('marketengine_single_listing_add_to_cart_form_field'); ?>
 
-		<?php do_action('marketengine_single_listing_add_to_cart_form_end'); ?>
+			<input type="hidden" name="add_to_cart" value="<?php echo $post->ID; ?>" />
+			<input type="submit" class="me-buy-now-btn" value="<?php _e("BUY NOW", "enginethemes"); ?>">
 
-	</form>
+			<?php do_action('marketengine_single_listing_add_to_cart_form_end'); ?>
+
+		</form>
+	</div>
 </div>
 
 <?php do_action('marketengine_after_single_listing_price'); ?>
