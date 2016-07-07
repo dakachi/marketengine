@@ -20,7 +20,12 @@ $review_count = $listing->get_review_count();
 		<i class="icon-font star-half-png"></i>
 		<i class="icon-font star-off-png"></i>
 	</div>
-	<span class="me-count-contact"><?php printf(_n("%d Contact", "%d Contacts", $review_count,"enginethemes"),$review_count ); ?></span>|<span class="me-count-review"><?php printf(_n("%d Review", "%d Reviews", $review_count,"enginethemes"),$review_count ); ?></span>
+	<span class="me-count-contact">
+		<?php printf(_n("%d Contact", "%d Contacts", $review_count,"enginethemes"),$review_count ); ?>
+	</span>|
+	<span class="me-count-review">
+		<?php printf(_n("%d Review", "%d Reviews", $review_count,"enginethemes"),$review_count ); ?>
+	</span>
 </div>
 
 <?php do_action('marketengine_after_single_listing_statistic'); ?>
