@@ -12,18 +12,15 @@ $review_count = $listing->get_review_count();
 
 <?php do_action('marketengine_before_single_listing_statistic'); ?>
 
-<div class="me-rating">
-	<i class="icon-font star-off-png"></i>
-	<i class="icon-font star-off-png"></i>
-	<i class="icon-font star-off-png"></i>
-	<i class="icon-font star-off-png"></i>
-	<i class="icon-font star-off-png"></i>
-</div>
-<div class="me-purchase">
-	<span><i class="icon-cart"></i><?php printf(_n("<b>%d</b>Purchase", "<b>%d</b>Purchases", $order_count,"enginethemes"),$order_count ); ?></span>
-</div>
-<div class="me-reviews">
-	<span><i class="icon-reviews"></i><?php printf(_n("<b>%d</b>Review", "<b>%d</b>Reviews", $review_count,"enginethemes"),$review_count ); ?></span>
+<div class="me-rating-contact">
+	<div class="me-rating">
+		<i class="icon-font star-on-png"></i>
+		<i class="icon-font star-on-png"></i>
+		<i class="icon-font star-on-png"></i>
+		<i class="icon-font star-half-png"></i>
+		<i class="icon-font star-off-png"></i>
+	</div>
+	<span class="me-count-contact"><?php printf(_n("%d Contact", "%d Contacts", $review_count,"enginethemes"),$review_count ); ?></span>|<span class="me-count-review"><?php printf(_n("%d Review", "%d Reviews", $review_count,"enginethemes"),$review_count ); ?></span>
 </div>
 
 <?php do_action('marketengine_after_single_listing_statistic'); ?>
