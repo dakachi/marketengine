@@ -130,7 +130,7 @@ class ME_Post_Types {
      * Register post type listing
      */
     public static function register_post_type() {
-        $permalinks = get_option('me_permalinks');
+        $permalinks = get_option('me_permalinks', 'listing');
         register_post_type('listing', array(
             'labels'             => array(
                 'name'               => __('Listing', "enginethemes"),
