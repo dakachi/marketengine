@@ -6,6 +6,7 @@ if (!defined('ABSPATH')) {
 global $post;
 $listing = new ME_Listing($post);
 $listing_type = $listing->get_listing_type();
+// TODO: update schema type, price and unit
 $price = 100;
 $pricing_unit = '/Unit';
 ?>
