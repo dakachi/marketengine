@@ -12,8 +12,8 @@ $pricing_unit = $listing->get_pricing_unit();
 
 <?php do_action('marketengine_before_single_listing_price'); ?>
 
-<div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="me-price">
-	<span class="me-amount">
+<div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="me-amount">
+	<span class="me-price">
 		<b itemprop="priceCurrency" content="USD">$</b>
 		<?php printf(__('<b itemprop="price" content="10">%d</b>%s', 'enginethemes'), $price, $pricing_unit) ?>
 	</span>
