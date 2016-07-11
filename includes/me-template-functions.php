@@ -177,8 +177,6 @@ function me_post_tags_meta_box($default, $taxonomy) {
 /**
  * MarketEngine Paginate Link
  *
- *
- *
  * @since 1.0
  */
 function me_paginate_link() {
@@ -202,3 +200,8 @@ function me_paginate_link() {
     );
     echo paginate_links($args);
 }
+
+function marketengine_sidebar() {
+    me_get_template_part('sidebar');
+}
+add_action( 'marketengine_sidebar', 'marketengine_sidebar' );
