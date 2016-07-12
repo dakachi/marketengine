@@ -10,7 +10,7 @@ $listing_type = $listing->get_listing_type();
 $price = 100;
 $pricing_unit = '/Unit';
 ?>
-<li class="item-post me-col-md-3" itemscope itemtype="http://schema.org/Product">
+<li class="me-item-post me-col-md-3" itemscope itemtype="http://schema.org/Product">
 	<div class="item-post-wrap">
 		<a href="#" class="item-post-img">
 			<?php the_post_thumbnail(); ?>

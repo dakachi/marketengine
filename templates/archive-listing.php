@@ -25,7 +25,7 @@ global $wp_query;
 							<div class="me-bar-shop">
 								<div class="me-title-shop pull-left">
 									<?php
-										the_archive_title( '<h2 class="page-title">', '</h2>' );
+										the_archive_title( '<h2>', '</h2>' );
 										the_archive_description( '<div class="taxonomy-description">', '</div>' );
 									?>
 									<span><?php printf(_n( 'One item in total', "%d items in totals", $wp_query->found_posts, "enginethemes" ), $wp_query->found_posts) ?></span>
@@ -41,22 +41,22 @@ global $wp_query;
 								</div>
 							</div>
 
-							<div class="clearfix"></div>
+							<div class="marketengine-listing-post">
 							
-							<?php if(have_posts()) : ?>
+								<?php if(have_posts()) : ?>
 
-								<ul class="me-listing-post me-row">
-									<?php 
-									while (have_posts()) : the_post();
-										me_get_template_part('content','listing');
-									endwhile;
-									?>
-								</ul>
+									<ul class="me-listing-post me-row">
+										<?php 
+										while (have_posts()) : the_post();
+											me_get_template_part('content','listing');
+										endwhile;
+										?>
+									</ul>
 
-							<?php else :
-								me_get_template_part( 'listing', 'none' );
-							endif; ?>
-
+								<?php else :
+									me_get_template_part( 'listing', 'none' );
+								endif; ?>
+							</div>
 							<div class="marketengine-paginations">
 								<?php me_paginate_link (); ?>
 							</div>
