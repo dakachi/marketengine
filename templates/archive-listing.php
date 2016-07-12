@@ -63,9 +63,9 @@ global $wp_query;
 
 						</div>
 					</div>
-					<div class="me-col-md-3">
-						<?php do_action('marketengine_sidebar'); ?>
-					</div>
+					
+					<?php do_action('marketengine_sidebar'); ?>
+					
 				</div>
 			</div>
 		</div>

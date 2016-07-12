@@ -79,7 +79,7 @@ function me_get_order_status() {
  *
  * @return int
  */
-function me_add_order_item($order_id, $item_name, $item_type = 'listing') {
+function me_add_order_item($order_id, $item_name, $item_type = 'listing_item') {
     global $wpdb;
 
     $order_id = absint($order_id);
@@ -92,7 +92,7 @@ function me_add_order_item($order_id, $item_name, $item_type = 'listing') {
             'order_id' => $order_id,
         ),
         array(
-            '%d', // value1
+            // '%d', // value1
             '%s', // value2
             '%s',
             '%d',
@@ -163,7 +163,7 @@ function me_delete_order_item($item_id) {
 }
 
 /**
- * Retrieve post meta field for a order item.
+ * Retrieve order item meta field for a order item.
  *
  * @since 1.0
  *

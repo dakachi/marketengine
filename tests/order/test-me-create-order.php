@@ -15,7 +15,9 @@ class Tests_ME_Create_Order extends WP_UnitTestCase {
             //'post_author' => 10,
             'note' => 'Order note'
         );
+        
         $order_id = me_insert_order($order_data);
+
         $post = get_post($order_id);
         $this->assertEquals('me_order', $post->post_type);
         $this->assertEquals($this->user_1, $post->post_author);

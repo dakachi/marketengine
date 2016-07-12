@@ -18,10 +18,10 @@ class Tests_ME_Order_Item_Meta extends WP_UnitTestCase {
     }
 
     public function test_me_update_order_item_meta() {
-        $result = me_update_order_item_meta(1, 'order_meta_data', 'Order meta data');
+        $result = me_update_order_item_meta(1, 'order_meta_data', 'Order meta data updated');
 
         $meta_value = me_get_order_item_meta(1, 'order_meta_data', true);
-        $this->assertEquals('Order meta data', $meta_value); 
+        $this->assertEquals('Order meta data updated', $meta_value); 
     }
 
     public function test_me_delete_order_item_meta() {
