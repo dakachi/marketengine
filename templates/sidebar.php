@@ -1,4 +1,6 @@
-<?php get_sidebar('listing');?>
+<?php get_sidebar('listing');
+return;
+?>
 <div class="me-col-md-3">
 	<div class="me-content-sidebar">
 		<form id="me-filter-form" action="">

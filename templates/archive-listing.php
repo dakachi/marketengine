@@ -18,11 +18,13 @@ global $wp_query;
 				<p><?php _e("SHOP", "enginethemes"); ?></p>
 			</div>
 			<!-- marketengine-content -->
-			<div class="marketengine-content">
+			<div class="marketengine-content"> 
 				<div class="me-row">
 					<div class="me-col-md-9 marketengine-snap-column">
 						<div class="me-content-shop">
+
 							<?php me_get_template_part('archive', 'heading') ?>
+
 							<div class="marketengine-listing-post">
 							
 								<?php if(have_posts()) : ?>
