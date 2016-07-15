@@ -9,7 +9,9 @@ module.exports = function(grunt) {
             options: {
                 bin: './vendor/bin/phpunit',
                 bootstrap: './tests/bootstrap.php',
-                colors: true
+                colors: true,
+                coverageClover : true,
+                coverage : true
             }
         },
         watch: {
