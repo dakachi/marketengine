@@ -205,3 +205,8 @@ function marketengine_sidebar() {
     me_get_template_part('sidebar');
 }
 add_action( 'marketengine_sidebar', 'marketengine_sidebar' );
+
+
+function ae_get_option($option, $default) {
+    return get_option( $option, $default );
+}
