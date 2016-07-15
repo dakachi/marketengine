@@ -18,13 +18,12 @@ function me_insert_order($order_data) {
     $order_data['post_type'] = 'me_order';
     $order_data['post_title'] = 'ME-Order';
     $order_data['post_content'] = 'ME-Order';
-
-    // controll order status
     // control order number
     // control order create date
     // currency
+    $order_data['currency_code'] = ae_get_option('me-currency', 'USD');
     // agent, ip
-    $order_data['post_status'] = 'me-' . apply_filters('marketengine_create_order_status', 'pending');
+    $order_data['post_status'] = 'me-' . apply_filters('marketengine_create_order_status', 'me-pending');
     if (!empty($order_data['customer_note'])) {
         $order_data['post_excerpt'] = $order_data['customer_note'];
     }
