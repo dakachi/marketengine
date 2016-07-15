@@ -21,7 +21,7 @@ class ME_Widget_Price_Filter extends WP_Widget {
      * @return void
      **/
     public function ME_Widget_Price_Filter() {
-        $widget_ops = array('classname' => 'marketengine-price-filter', 'description' => __("MarketEngine Price Filter", "enginethemes"));
+        $widget_ops = array('classname' => 'me-price-filter', 'description' => __("MarketEngine Price Filter", "enginethemes"));
         parent::__construct('marketengine-price-filter', __("MarketEngine Price Filter", "enginethemes"), $widget_ops);
     }
 
@@ -57,7 +57,7 @@ class ME_Widget_Price_Filter extends WP_Widget {
                 <div class="me-col-xs-2 "><span class="me-range-dash">-</span></div>
                 <div class="me-col-xs-5"><input class="me-range-price me-range-max" type="number" name="price-max" value=""></div>
             </div>
-            <div class="me-sidebar-button">
+            <div class="me-filter-button">
                 <input class="me-filter-btn" type="submit" value="Filter">
                 
             </div>
