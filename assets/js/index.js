@@ -24,4 +24,17 @@
 		magnificInstance = false;
 	});
 
+	var range_price = $('#me-range-price').slider({
+		range: true,
+		min: 0,
+		max: 500,
+		values: [ 75, 300 ],
+		slide: function( event, ui ) {
+			$('input.me-range-min').val(ui.values[0]);
+			$('input.me-range-max').val(ui.values[1]);
+		}
+	});
+	$('input.me-range-min').val(range_price.slider('values', 0));
+	$('input.me-range-max').val(range_price.slider('values', 1));
+
 })(jQuery);
