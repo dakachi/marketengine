@@ -22,7 +22,7 @@ class ME_Widget_Price_Filter extends WP_Widget {
      **/
     public function ME_Widget_Price_Filter() {
         $widget_ops = array('classname' => 'me-price-filter', 'description' => __("MarketEngine Price Filter", "enginethemes"));
-        parent::__construct('marketengine-price-filter', __("MarketEngine Price Filter", "enginethemes"), $widget_ops);
+        parent::__construct('me-price-filter', __("MarketEngine Price Filter", "enginethemes"), $widget_ops);
     }
 
     /**
