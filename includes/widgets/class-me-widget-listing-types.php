@@ -13,16 +13,16 @@ if (!defined('ABSPATH')) {
  * @author EngineTeam
  * @since 1.0
  */
-class ME_Widget_Price_Filter extends WP_Widget {
+class ME_Widget_Listing_Types extends WP_Widget {
 
     /**
      * Constructor
      *
      * @return void
      **/
-    public function ME_Widget_Price_Filter() {
-        $widget_ops = array('classname' => 'marketengine-price-filter', 'description' => __("MarketEngine Price Filter", "enginethemes"));
-        parent::__construct('marketengine-price-filter', __("MarketEngine Price Filter", "enginethemes"), $widget_ops);
+    public function ME_Widget_Listing_Types() {
+        $widget_ops = array('classname' => 'me-listing-types', 'description' => __("Listing Types", "enginethemes"));
+        parent::__construct('me-listing-types', __("Listing Types", "enginethemes"), $widget_ops);
     }
 
     /**
@@ -36,29 +36,20 @@ class ME_Widget_Price_Filter extends WP_Widget {
      * @param array $instance Settings for the current Categories widget instance.
      */
     public function widget($args, $instance) {
-
         /** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
-        $title = apply_filters('widget_title', empty($instance['title']) ? __('Price filter', 'enginethemes') : $instance['title'], $instance, $this->id_base);
+        $title = apply_filters('widget_title', empty($instance['title']) ? __('Listing Types', 'enginethemes') : $instance['title'], $instance, $this->id_base);
 
         echo $args['before_widget'];
         
         ?>
-        <form method="get">
-
             <h2 class="widget-title"><?php echo $title; ?></h2>
-            
-            <div id="me-range-price" min="1" max="500" step="1"></div>
-            <div class="me-row">
-                <div class="me-col-xs-5"><input class="me-range-price me-range-min" type="number" name="price-min" value=""></div>
-                <div class="me-col-xs-2 "><span class="me-range-dash">-</span></div>
-                <div class="me-col-xs-5"><input class="me-range-price me-range-max" type="number" name="price-max" value=""></div>
+
+            <div class="me-listingtype-filter">
+                <label><input type="checkbox" name="">Offering</label>
             </div>
-            <div class="me-sidebar-button">
-                <input class="me-filter-btn" type="submit" value="Filter">
-                
+            <div class="me-listingtype-filter">
+                <label><input type="checkbox" name="">Selling</label>
             </div>
-            
-        </form>
         <?php
 
         echo $args['after_widget'];
@@ -99,6 +90,15 @@ class ME_Widget_Price_Filter extends WP_Widget {
         ?>
         <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e( 'Title:' ); ?></label>
         <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" /></p>
+
+        <p><input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('dropdown'); ?>" name="<?php echo $this->get_field_name('dropdown'); ?>"<?php checked( $dropdown ); ?> />
+        <label for="<?php echo $this->get_field_id('dropdown'); ?>"><?php _e( 'Display as dropdown' ); ?></label><br />
+
+        <input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>"<?php checked( $count ); ?> />
+        <label for="<?php echo $this->get_field_id('count'); ?>"><?php _e( 'Show post counts' ); ?></label><br />
+
+        <input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('hierarchical'); ?>" name="<?php echo $this->get_field_name('hierarchical'); ?>"<?php checked( $hierarchical ); ?> />
+        <label for="<?php echo $this->get_field_id('hierarchical'); ?>"><?php _e( 'Show hierarchy' ); ?></label></p>
     <?php
     }
 }
