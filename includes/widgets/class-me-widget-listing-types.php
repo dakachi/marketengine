@@ -21,8 +21,8 @@ class ME_Widget_Listing_Types extends WP_Widget {
      * @return void
      **/
     public function ME_Widget_Listing_Types() {
-        $widget_ops = array('classname' => 'me-listing-types', 'description' => __("Listing Types", "enginethemes"));
-        parent::__construct('me-listing-types', __("Listing Types", "enginethemes"), $widget_ops);
+        $widget_ops = array('classname' => 'me-listing-types', 'description' => __("A list listing types", "enginethemes"));
+        parent::__construct('me-listing-types', __("MarketEnngine Listing Types", "enginethemes"), $widget_ops);
     }
 
     /**

@@ -21,7 +21,7 @@ class ME_Widget_Listing_Categories extends WP_Widget {
      * @return void
      **/
     public function ME_Widget_Listing_Categories() {
-        $widget_ops = array('classname' => 'me-listing-categories', 'description' => __("MarketEngine Categories", "enginethemes"));
+        $widget_ops = array('classname' => 'me-listing-categories', 'description' => __("A list or dropdown of listing categories.", "enginethemes"));
         parent::__construct('me-listing-categories', __("MarketEngine Categories", "enginethemes"), $widget_ops);
     }
 

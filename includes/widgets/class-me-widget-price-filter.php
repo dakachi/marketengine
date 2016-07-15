@@ -21,7 +21,7 @@ class ME_Widget_Price_Filter extends WP_Widget {
      * @return void
      **/
     public function ME_Widget_Price_Filter() {
-        $widget_ops = array('classname' => 'me-price-filter', 'description' => __("MarketEngine Price Filter", "enginethemes"));
+        $widget_ops = array('classname' => 'me-price-filter', 'description' => __("A price filter for listing archive", "enginethemes"));
         parent::__construct('me-price-filter', __("MarketEngine Price Filter", "enginethemes"), $widget_ops);
     }
 

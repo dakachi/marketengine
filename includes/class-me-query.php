@@ -14,3 +14,7 @@ function me_init() {
 //     $vars[] = 'forgot-pass';
 //     return $vars;
 // }
+
+// todo: query listing order by date, rating, price
+// todo: filter listing by price
+// todo: filter listing by listing type
