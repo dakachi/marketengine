@@ -49,13 +49,11 @@ class ME_Widget_Price_Filter extends WP_Widget {
             
             <div id="me-range-price" min="1" max="500" step="1"></div>
             <div class="me-row">
-                <div class="me-col-xs-5"><input class="me-range-price me-range-min" type="number" name="price-min" value=""></div>
-                <div class="me-col-xs-2 "><span class="me-range-dash">-</span></div>
-                <div class="me-col-xs-5"><input class="me-range-price me-range-max" type="number" name="price-max" value=""></div>
-            </div>
-            <div class="me-filter-button">
-                <input class="me-filter-btn" type="submit" value="Filter">
-                
+                <div class="me-col-xs-4"><input class="me-range-price me-range-min" type="number" name="price-min" value=""><span class="me-range-dash">-</span></div>
+                <div class="me-col-xs-4 "><input class="me-range-price me-range-max" type="number" name="price-max" value=""></div>
+                <div class="me-col-xs-4">
+                    <input class="me-filter-btn" type="submit" value="Filter">
+                </div>
             </div>
             
         </form>
