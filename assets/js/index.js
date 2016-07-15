@@ -37,4 +37,8 @@
 	$('input.me-range-min').val(range_price.slider('values', 0));
 	$('input.me-range-max').val(range_price.slider('values', 1));
 
+	$('#listing-orderby').on('change', function(){
+		$( this ).closest( 'form' ).submit();
+	});
+
 })(jQuery);
