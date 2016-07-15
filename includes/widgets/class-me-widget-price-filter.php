@@ -54,10 +54,13 @@ class ME_Widget_Price_Filter extends WP_Widget {
                 <div class="me-col-xs-5"><input class="me-range-price me-range-max" type="number" name="price-max" value=""></div>
             </div>
             <div class="me-filter-button">
-                <input class="me-filter-btn" type="submit" value="Filter">
+                <input class="me-filter-btn" type="submit" value="<?php _e("Filter", "enginethemes"); ?>">
                 
             </div>
             
+            <?php if(!empty($_GET['orderby'])) : ?>
+                <input type="hidden" name="orderby" value="<?php echo $_GET['orderby'];  ?>" ?>
+            <?php  endif; ?>
         </form>
         <?php
 

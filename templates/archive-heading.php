@@ -1,3 +1,11 @@
+<?php 
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+$selected = !empty($_GET['orderby']) ? $_GET['orderby'] : ''; 
+
+?>
 <div class="me-bar-shop">
 	<div class="me-title-shop pull-left">
 		<?php
@@ -7,12 +15,20 @@
 		<span><?php printf(_n( 'One item in total', "%d items in totals", $wp_query->found_posts, "enginethemes" ), $wp_query->found_posts) ?></span>
 	</div>
 	<div class="me-sort-listing pull-right">
-		<select name="" id="">
-			<option value="">Default Sort</option>
-			<option value="">Sort by price: low to high</option>
-			<option value="">Sort by price: high to low</option>
-			<option value="">Sort by average rating</option>
-			<option value="">Sort by newness</option>
-		</select>
+		<form method="get">
+			<select name="orderby" id="listing-orderby">
+				<option <?php selected( $selected, '') ?> value=""><?php _e("Default Sort", "enginethemes"); ?></option>
+				<option <?php selected( $selected, 'rating') ?> value="rating"><?php _e("Sort by average rating", "enginethemes"); ?></option>
+				<option <?php selected( $selected, 'date') ?> value="date"><?php _e("Sort by newness", "enginethemes"); ?></option>
+				<option <?php selected( $selected, 'price') ?> value="price"><?php _e("Sort by price: low to high", "enginethemes"); ?></option>
+				<option <?php selected( $selected, 'price-desc') ?> value="price-desc"><?php _e("Sort by price: high to low", "enginethemes"); ?></option>
+			</select>
+			<?php  if(!empty($_GET['price-min'])) : ?>
+				<input type="hidden" name="price-min" value="<?php echo $_GET['price-min'];  ?>" ?>
+			<?php endif; ?>
+			<?php if(!empty($_GET['price-max'])) : ?>
+				<input type="hidden" name="price-min" value="<?php echo $_GET['price-max'];  ?>" ?>
+			<?php  endif; ?>
+		</form>
 	</div>
 </div>
