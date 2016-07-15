@@ -70,7 +70,7 @@ class ME_Post_Types {
             'show_ui'           => true,
             'query_var'         => true,
             'rewrite'           => array(
-                'slug'         => 'category',
+                'slug'         => 'listing_category',
                 'hierarchical' => true,
             ),
             'capabilities'      => array(
