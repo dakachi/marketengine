@@ -193,8 +193,6 @@ if (!class_exists('MarketEngine')):
                     ),
                 )
             );
-
-            me_add_order_item_meta(1, 'order_meta_data', 'Order meta data');
         }
 
         /**

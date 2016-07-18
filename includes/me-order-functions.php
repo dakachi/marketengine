@@ -15,20 +15,45 @@ if (!defined('ABSPATH')) {
  * @return int|WP_Error The post ID on success. The value 0 or WP_Error on failure.
  */
 function me_insert_order($order_data) {
-    $order_data['post_type'] = 'me_order';
-    $order_data['post_title'] = 'ME-Order';
-    $order_data['post_content'] = 'ME-Order';
-    // control order number
-    // control order create date
-    // currency
-    $order_data['currency_code'] = ae_get_option('me-currency', 'USD');
-    // agent, ip
-    $order_data['post_status'] = 'me-' . apply_filters('marketengine_create_order_status', 'me-pending');
+    $order_data['post_type']   = 'me_order';
+    $order_data['post_title']  = 'Order-' . date(get_option('links_updated_date_format'), current_time('timestamp'));
+    $order_data['post_status'] = apply_filters('marketengine_create_order_status', 'me-pending');
+
     if (!empty($order_data['customer_note'])) {
         $order_data['post_excerpt'] = $order_data['customer_note'];
     }
+    /**
+     * Filter insert order data
+     * @param array $order_data
+     * @since 1.0
+     */
     $order_data = apply_filters('marketengine_insert_order_data', $order_data);
-    return wp_insert_post($order_data);
+    $order_id   = wp_insert_post($order_data);
+    if (!is_wp_error($order_id)) {
+        /**
+         * filter to get order currency code
+         * @param string 
+         * @since 1.0
+         */
+        $currency_code = apply_filters('marketengine_currency_code', 'USD');
+        update_post_meta($order_id, '_order_currency_code', $currency_code);
+        // hash password
+        update_post_meta($order_id, '_me_order_key', 'marketengine-' . wp_hash_password(time()));
+        // store client ip, agent
+        update_post_meta($order_id, '_me_customer_ip', me_get_client_ip());
+        update_post_meta($order_id, '_me_customer_agent', me_get_client_agent());
+        /**
+         * marketengine_after_create_order
+         * add action after create order successful
+         *
+         * @param int $order_id
+         * @param array $order_data
+         *
+         * @since 1.0
+         */
+        do_action('marketengine_after_create_order', $order_id, $order_data);
+    }
+    return $order_id;
 }
 
 /**
@@ -41,8 +66,9 @@ function me_insert_order($order_data) {
  *
  * @return int|WP_Error The post ID on success. The value 0 or WP_Error on failure.
  */
-function me_update_order($order) {
+function me_update_order($order_data) {
     $order_data['post_type'] = 'me_order';
+    $order_data              = apply_filters('marketengine_update_order_data', $order_data);
     return wp_update_post($order);
 }
 
@@ -60,12 +86,12 @@ function me_complete_order($order_id) {}
  */
 function me_get_order_status_list() {
     $order_status = array(
-        'me-pending' => __("Pending", "enginethemes"), // mainly intended for technical case, when an error occurs payment, or payment by bank transfer confirmation to admin
-        'publish' => __("Active", "enginethemes"), // Status of payment order was not yet eligible to transfer money to the account Seller.
+        'me-pending'  => __("Pending", "enginethemes"), // mainly intended for technical case, when an error occurs payment, or payment by bank transfer confirmation to admin
+        'publish'     => __("Active", "enginethemes"), // Status of payment order was not yet eligible to transfer money to the account Seller.
         'me-complete' => __("Finished", "enginethemes"), // State order has been completed and is paid to the target account Seller & Admin.
         'me-disputed' => __("Disputed", "enginethemes"), // Order status are taken into account when processing complaints occur
-        'me-closed' => __("Closed", "enginethemes"), // The end of the first order, while moving through this state can not be anymore Dispute
-        'me-resolved' => __("Resolved", "enginethemes") // Similar "closed", the end point of the first order, after the complaint was handled.
+        'me-closed'   => __("Closed", "enginethemes"), // The end of the first order, while moving through this state can not be anymore Dispute
+        'me-resolved' => __("Resolved", "enginethemes"), // Similar "closed", the end point of the first order, after the complaint was handled.
     );
     return apply_filters('marketengine_get_order_status_list', $order_status);
 }
@@ -92,7 +118,7 @@ function me_add_order_item($order_id, $item_name, $item_type = 'listing_item') {
         array(
             'order_item_name' => $item_name,
             'order_item_type' => $item_type,
-            'order_id' => $order_id,
+            'order_id'        => $order_id,
         ),
         array(
             // '%d', // value1
@@ -125,7 +151,7 @@ function me_update_order_item($item_id, $args) {
     global $wpdb;
 
     $item_id = absint($item_id);
-    $update = $wpdb->update(
+    $update  = $wpdb->update(
         $wpdb->prefix . 'marketengine_order_items',
         $args,
         array('order_item_id' => $item_id)
