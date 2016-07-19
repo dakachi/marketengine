@@ -44,8 +44,6 @@ class Tests_ME_Create_Order extends WP_UnitTestCase {
     public function test_create_order_currency_code() {
         add_filter('marketengine_currency_code', array($this, 'get_currency_code'), 9999);
         $order_id = me_insert_order($this->order_data);
-
-        // $post = get_post($order_id);
         $this->assertEquals('GBP', get_post_meta($order_id, '_order_currency_code', true));
         remove_filter('marketengine_currency_code', array($this, 'get_currency_code'), 9999);
     }
