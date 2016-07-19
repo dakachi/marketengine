@@ -45,7 +45,15 @@ class ME_Order {
 
         return $order_item_id;
     }
-
+    /**
+     * Update listing item
+     * 
+     * @param int $item_id The order item id
+     * @param ME_Listing $listing The listing object
+     * @param array $args
+     * 
+     * @since 1.0
+     */
     public function update_listing($item_id, $listing, $args) {
         $item_id = absint( $item_id );
 
@@ -58,7 +66,7 @@ class ME_Order {
         }
 
         $this->caculate_total();
-        
+
         return $item_id;
     }
 
