@@ -32,7 +32,7 @@ function me_insert_order($order_data) {
     if (!is_wp_error($order_id)) {
         /**
          * filter to get order currency code
-         * @param string 
+         * @param string
          * @since 1.0
          */
         $currency_code = apply_filters('marketengine_currency_code', 'USD');
