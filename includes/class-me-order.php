@@ -20,23 +20,48 @@ class ME_Order {
     }
 
     /**
+     * Add listing item to order details
      *
+     * @param ME_Listing $listing The listing object
+     * @param int $qty
+     *
+     * @since 1.0
+     * @return int|bool Return order item id if sucess, if not success return false
      */
-    public function add_listing($listing, $qty = 1, $args) {
-        $item_id = me_add_order_item($this->id, $listing->get_title());
-        if($item_id) {
-            me_add_order_item_meta($item_id, '_listing_id', $listing);
-            me_add_order_item_meta($item_id, '_listing_description', $listing->get_description());
-
-            me_add_order_item_meta($item_id, '_qty', $qty);
-            me_add_order_item_meta($item_id, '_me_price', $listing->get_price());
+    public function add_listing($listing, $qty = 1) {
+        if (!is_object($listing)) {
+            return false;
         }
+        $order_item_id = me_add_order_item($this->id, $listing->get_title());
+        if ($order_item_id) {
+            me_add_order_item_meta($order_item_id, '_listing_id', $listing);
+            me_add_order_item_meta($order_item_id, '_listing_description', $listing->get_description());
+
+            me_add_order_item_meta($order_item_id, '_qty', $qty);
+            me_add_order_item_meta($order_item_id, '_listing_price', $listing->get_price());
+        }
+        
+        $this->caculate_total();
+
+        return $order_item_id;
+    }
+
+    public function update_listing($item_id, $listing, $args) {
+        $item_id = absint( $item_id );
+
+        if(!$item_id) {
+            return false;
+        }
+
+        if (isset($args['qty'])) {
+            me_update_order_item_meta($item_id, '_qty', $args['qty']);
+        }
+
+        $this->caculate_total();
+        
         return $item_id;
     }
 
-    public function update_listing($listing_id, $args) {
-
-    }
     /**
      * Get order address
      *
@@ -74,18 +99,6 @@ class ME_Order {
         }
     }
 
-    public function set_payment_note($note) {
-        update_post_meta($this->id, '_me_payment_note', $note);
-    }
-
-    public function set_payment_method($payment) {
-
-    }
-
-    public function get_transaction_url() {
-
-    }
-
     public static function add_shipping($shipping_rate) {
 
     }
@@ -121,6 +134,15 @@ class ME_Order {
     }
 
     public function get_payment_info() {
+
+    }
+
+    public function set_payment_method($payment) {
+        update_post_meta($this->id, '_me_payment_gateway', $payment->name);
+        update_post_meta($this->id, '_me_gateway_title', $payment->title);
+    }
+
+    public function get_transaction_url() {
 
     }
 }

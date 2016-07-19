@@ -180,8 +180,10 @@ function me_delete_order_item($item_id) {
     $item_id = absint($item_id);
 
     do_action('marketengine_before_delete_order_item', $item_id);
-
+    
     $update = $wpdb->delete($wpdb->prefix . 'marketengine_order_items', array('order_item_id' => $item_id));
+    $update = $wpdb->delete($wpdb->prefix . 'marketengine_order_itemmeta', array('order_item_id' => $item_id));
+
     if (false === $update) {
         return false;
     }
