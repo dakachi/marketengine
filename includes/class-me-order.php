@@ -40,24 +40,24 @@ class ME_Order {
             me_add_order_item_meta($order_item_id, '_qty', $qty);
             me_add_order_item_meta($order_item_id, '_listing_price', $listing->get_price());
         }
-        
-        $this->caculate_total();
+
+        $thi  tal();
 
         return $order_item_id;
     }
     /**
      * Update listing item
-     * 
+     *
      * @param int $item_id The order item id
      * @param ME_Listing $listing The listing object
      * @param array $args
-     * 
+     *
      * @since 1.0
      */
     public function update_listing($item_id, $listing, $args) {
-        $item_id = absint( $item_id );
+        $item_id = absint($item_id);
 
-        if(!$item_id) {
+        if (!$item_id) {
             return false;
         }
 
@@ -108,7 +108,7 @@ class ME_Order {
     }
 
     public static function add_shipping($shipping_rate) {
-
+        $this->caculate_total();
     }
 
     public function update_shipping($item_id, $args) {
