@@ -34,14 +34,14 @@ class ME_Order {
         }
         $order_item_id = me_add_order_item($this->id, $listing->get_title());
         if ($order_item_id) {
-            me_add_order_item_meta($order_item_id, '_listing_id', $listing);
+            me_add_order_item_meta($order_item_id, '_listing_id', $listing->id);
             me_add_order_item_meta($order_item_id, '_listing_description', $listing->get_description());
 
             me_add_order_item_meta($order_item_id, '_qty', $qty);
             me_add_order_item_meta($order_item_id, '_listing_price', $listing->get_price());
         }
 
-        $thi  tal();
+        $this->caculate_total();
 
         return $order_item_id;
     }

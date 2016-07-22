@@ -16,7 +16,7 @@ class Tests_ME_Create_Order extends WP_UnitTestCase {
     /**
      * @cover me_insert_order()
      */
-    public function test_create_order() {
+    public function test_create_order_author() {
 
         $order_id = me_insert_order($this->order_data);
 
@@ -28,16 +28,12 @@ class Tests_ME_Create_Order extends WP_UnitTestCase {
 
     public function test_create_order_customer_note() {
         $order_id = me_insert_order($this->order_data);
-
         $post = get_post($order_id);
         $this->assertEquals('Order note', $post->post_excerpt);
-        
     }
 
     public function test_create_order_key() {
         $order_id = me_insert_order($this->order_data);
-
-        // $post = get_post($order_id);
         $this->assertStringStartsWith('marketengine', get_post_meta($order_id, '_me_order_key', true));
     }
 

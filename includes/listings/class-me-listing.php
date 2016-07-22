@@ -21,8 +21,21 @@ class ME_Listing {
     public $listing_type;
 
     public function __construct($post, $args = array()) {
+        if(is_numeric($post)) {
+            $post = get_post($post);
+        }
         $this->post = $post;
         $this->id = $post->ID;
+    }
+    public function get_id(){
+        return $this->id;
+    }
+    public function get_title() {
+        return get_the_title($this->id);
+    }
+
+    public function get_description() {
+        return $this->post->post_content;
     }
 
     public function get_listing_type() {

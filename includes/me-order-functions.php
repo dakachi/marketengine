@@ -17,6 +17,7 @@ if (!defined('ABSPATH')) {
 function me_insert_order($order_data) {
     $order_data['post_type']   = 'me_order';
     $order_data['post_title']  = 'Order-' . date(get_option('links_updated_date_format'), current_time('timestamp'));
+
     $order_data['post_status'] = apply_filters('marketengine_create_order_status', 'me-pending');
 
     if (!empty($order_data['customer_note'])) {
@@ -182,7 +183,7 @@ function me_delete_order_item($item_id) {
     do_action('marketengine_before_delete_order_item', $item_id);
     
     $update = $wpdb->delete($wpdb->prefix . 'marketengine_order_items', array('order_item_id' => $item_id));
-    $update = $wpdb->delete($wpdb->prefix . 'marketengine_order_itemmeta', array('order_item_id' => $item_id));
+    $update = $wpdb->delete($wpdb->prefix . 'marketengine_order_itemmeta', array('marketengine_order_item_id' => $item_id));
 
     if (false === $update) {
         return false;
