@@ -9,7 +9,7 @@ class ME_Order {
     public $order;
     public $total;
     public $shipping_info = array();
-    public $items;
+    public $items = array();
     /**
      *
      */
@@ -32,7 +32,7 @@ class ME_Order {
         if (!is_object($listing)) {
             return false;
         }
-        $order_item_id = me_add_order_item($this->id, $listing->get_title());
+        $order_item_id = me_add_order_item($this->id, $listing->get_title(), 'listing_item');
         if ($order_item_id) {
             me_add_order_item_meta($order_item_id, '_listing_id', $listing->id);
             me_add_order_item_meta($order_item_id, '_listing_description', $listing->get_description());
@@ -41,7 +41,7 @@ class ME_Order {
             me_add_order_item_meta($order_item_id, '_listing_price', $listing->get_price());
         }
 
-        $this->caculate_total();
+        $this->caculate_subtotal();
 
         return $order_item_id;
     }
@@ -65,7 +65,7 @@ class ME_Order {
             me_update_order_item_meta($item_id, '_qty', $args['qty']);
         }
 
-        $this->caculate_total();
+        $this->caculate_subtotal();
 
         return $item_id;
     }
@@ -121,6 +121,10 @@ class ME_Order {
 
     public function update_fee($item_id, $args) {
 
+    }
+
+    public function caculate_subtotal(){
+        $listing = me_get_order_items($this->id, 'listing_item');
     }
 
     public function caculate_total() {
