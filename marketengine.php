@@ -129,7 +129,9 @@ if (!class_exists('MarketEngine')):
         public function wpdb_table_fix() {
             global $wpdb;
             $wpdb->marketengine_order_itemmeta = $wpdb->prefix . 'marketengine_order_itemmeta';
+            $wpdb->marketengine_order_items = $wpdb->prefix . 'marketengine_order_items';
             $wpdb->tables[]             = 'marketengine_order_itemmeta';
+            $wpdb->tables[]             = 'marketengine_order_items';
         }
 
         public function add_scripts() {

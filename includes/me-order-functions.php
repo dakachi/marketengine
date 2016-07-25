@@ -99,11 +99,10 @@ function me_get_order_status_list() {
 
 function me_get_order_items($order_id, $type = '') {
     global $wpdb;
-    $query  = ' SELECT * 
-                FROM $wpdb->marketengine_order_items as order_items LEFT JOIN $wpdb->marketengine_order_itemmeta as meta
-                ON order_items.order_id = meta.marketengine_order_item_id
-                WHERE order_items.order_item_type = $type
-            ';
+    $query  = "SELECT * 
+                FROM $wpdb->marketengine_order_items as order_items 
+                WHERE order_items.order_item_type = '{$type}'
+                    AND order_items.order_id = '{$order_id}'";
 
     $results = $wpdb->get_results($query);
     return $results;
