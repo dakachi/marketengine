@@ -109,7 +109,7 @@ class ME_Order {
         }
     }
 
-    public static function add_shipping($shipping_rate) {
+    public function add_shipping($shipping_rate) {
         $this->caculate_total();
     }
 
@@ -118,11 +118,22 @@ class ME_Order {
     }
 
     public function add_fee($fee) {
-
+        $item_id = me_add_order_item($this->id, $fee['name'], '_order_fee');
+        if($item_id) {
+            me_add_order_item_meta($item_id, '_fee_amount', $fee['amount']);
+        }
+        $this->caculate_total();
     }
 
     public function update_fee($item_id, $args) {
+        if(!empty($args['name'])) {
+            me_update_order_item($item_id, array('order_item_name' => $args['name']));
+        }
 
+        if(!empty($args['amount'])) {
+            me_update_order_item_meta($item_id, '_fee_amount', $args['amount']);
+            $this->caculate_total();
+        }        
     }
 
     public function caculate_subtotal(){
@@ -140,13 +151,17 @@ class ME_Order {
         return $this->subtotal;
     }
 
+    public function caculate_fee() {
+        return 0;
+    }
+
     public function caculate_shipping() {
         return 0;
     }
 
     public function caculate_total() {
         $this->shipping_fee = $this->caculate_shipping();
-        $this->payment_fee = 0;
+        $this->payment_fee = $this->caculate_fee();
         $this->total  = $this->subtotal + $this->shipping_fee + $this->payment_fee;
         update_post_meta( $this->id, '_order_total', $this->total);
         return $this->total;
