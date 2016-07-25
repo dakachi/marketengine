@@ -16,8 +16,11 @@ class Tests_ME_Order_Item extends WP_UnitTestCase {
 
     public static function wpTearDownAfterClass() {
         global $wpdb;
-        $table = $wpdb->prefix . 'marketengine_order_items';
-        $wpdb->query("DELETE FROM $table");
+        $order_item_table = $wpdb->prefix . 'marketengine_order_items';
+        $order_item_meta_table = $wpdb->prefix . 'marketengine_order_itemmeta';
+        
+        $wpdb->query("DELETE FROM $order_item_table");
+        $wpdb->query("DELETE FROM $order_item_meta_table");
     }
 
     public function test_me_add_order_item() {

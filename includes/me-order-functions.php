@@ -15,8 +15,8 @@ if (!defined('ABSPATH')) {
  * @return int|WP_Error The post ID on success. The value 0 or WP_Error on failure.
  */
 function me_insert_order($order_data) {
-    $order_data['post_type']   = 'me_order';
-    $order_data['post_title']  = 'Order-' . date(get_option('links_updated_date_format'), current_time('timestamp'));
+    $order_data['post_type']  = 'me_order';
+    $order_data['post_title'] = 'Order-' . date(get_option('links_updated_date_format'), current_time('timestamp'));
 
     $order_data['post_status'] = apply_filters('marketengine_create_order_status', 'me-pending');
 
@@ -97,16 +97,33 @@ function me_get_order_status_list() {
     return apply_filters('marketengine_get_order_status_list', $order_status);
 }
 
+/**
+ * Retrieve order items
+ *
+ * @param int $order_id The order id
+ * @param string $type The item type
+ *
+ * @since 1.0
+ *
+ * @return array Array of order item object
+ */
 function me_get_order_items($order_id, $type = '') {
     global $wpdb;
-    $query  = "SELECT * 
-                FROM $wpdb->marketengine_order_items as order_items 
-                WHERE order_items.order_item_type = '{$type}'
-                    AND order_items.order_id = '{$order_id}'";
+    if ($type) {
+        $query = "SELECT *
+                FROM $wpdb->marketengine_order_items as order_items
+                WHERE order_items.order_id = '{$order_id}'
+                    AND order_items.order_item_type = '{$type}'";
+    } else {
+        $query = "SELECT *
+                FROM $wpdb->marketengine_order_items as order_items
+                WHERE order_items.order_id = '{$order_id}'";
+    }
 
     $results = $wpdb->get_results($query);
     return $results;
 }
+
 /**
  * Marketengine Add order item
  *
@@ -192,7 +209,7 @@ function me_delete_order_item($item_id) {
     $item_id = absint($item_id);
 
     do_action('marketengine_before_delete_order_item', $item_id);
-    
+
     $update = $wpdb->delete($wpdb->prefix . 'marketengine_order_items', array('order_item_id' => $item_id));
     $update = $wpdb->delete($wpdb->prefix . 'marketengine_order_itemmeta', array('marketengine_order_item_id' => $item_id));
 

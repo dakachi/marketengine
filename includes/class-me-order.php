@@ -7,6 +7,7 @@ if (!defined('ABSPATH')) {
 class ME_Order {
     public $id;
     public $order;
+    public $subtotal;
     public $total;
     public $shipping_info = array();
     public $items = array();
@@ -66,6 +67,7 @@ class ME_Order {
         }
 
         $this->caculate_subtotal();
+        $this->caculate_total();
 
         return $item_id;
     }
@@ -124,13 +126,30 @@ class ME_Order {
     }
 
     public function caculate_subtotal(){
-        $listing = me_get_order_items($this->id, 'listing_item');
+        $listing_items = me_get_order_items($this->id, 'listing_item');
+        $subtotal = 0;
+
+        foreach ($listing_items as $key => $item) {
+            $price = me_get_order_item_meta($item->order_item_id, '_listing_price', true);
+            $qty = me_get_order_item_meta($item->order_item_id, '_qty', true);
+            $subtotal += $price * $qty;
+        }
+
+        $this->subtotal = $subtotal;
+        update_post_meta($this->id, '_order_subtotal', $subtotal);
+        return $this->subtotal;
+    }
+
+    public function caculate_shipping() {
+        return 0;
     }
 
     public function caculate_total() {
-        // listing item total
-        // shipping fee
-        // order fee
+        $this->shipping_fee = $this->caculate_shipping();
+        $this->payment_fee = 0;
+        $this->total  = $this->subtotal + $this->shipping_fee + $this->payment_fee;
+        update_post_meta( $this->id, '_order_total', $this->total);
+        return $this->total;
     }
 
     public function get_transaction_id() {
