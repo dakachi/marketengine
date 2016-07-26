@@ -21,13 +21,13 @@ class ME_Listing {
     public $listing_type;
 
     public function __construct($post, $args = array()) {
-        if(is_numeric($post)) {
+        if (is_numeric($post)) {
             $post = get_post($post);
         }
         $this->post = $post;
-        $this->id = $post->ID;
+        $this->id   = $post->ID;
     }
-    public function get_id(){
+    public function get_id() {
         return $this->id;
     }
     public function get_title() {
@@ -47,15 +47,19 @@ class ME_Listing {
     }
 
     public function get_order_count() {
-        return get_post_meta($this->id, '_me_order_count', true);   
+        return get_post_meta($this->id, '_me_order_count', true);
     }
 
     public function get_galleries() {
-        $gallery = get_post_meta($this->id, '_me_listing_gallery', true);
-        $thumbnail_id = get_post_meta( $this->id, '_thumbnail_id', true );
-        if($thumbnail_id) {
-            array_unshift($gallery, $thumbnail_id);    
-        }        
-        return (array)$gallery;
+        $gallery      = get_post_meta($this->id, '_me_listing_gallery', true);
+        $thumbnail_id = get_post_meta($this->id, '_thumbnail_id', true);
+        if ($thumbnail_id) {
+            array_unshift($gallery, $thumbnail_id);
+        }
+        return (array) $gallery;
+    }
+
+    public function is_available() {
+        return 'listing' === $this->post->post_type;
     }
 }

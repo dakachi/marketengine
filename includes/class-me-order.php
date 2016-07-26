@@ -109,8 +109,9 @@ class ME_Order {
         }
     }
 
-    public function add_shipping($shipping_rate) {
-        update_post_meta( $this->id, '_shipping_method', $shipping_rate );
+    public function add_shipping($shipping_name) {
+        update_post_meta( $this->id, '_shipping_method', $shipping_name );
+        $this->shipping_info['name'] = $shipping_name;
         $this->caculate_total();
     }
 
@@ -157,6 +158,10 @@ class ME_Order {
     }
 
     public function caculate_shipping() {
+        if(!empty($this->shipping_info['name'])) {
+            $shipping_class = me_get_shipping_class($this->shipping_info['name'], $this);    
+            return $shipping_class->caculate_fee();
+        }
         return 0;
     }
 
