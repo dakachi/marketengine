@@ -14,7 +14,7 @@ abstract class ME_Shipping {
 	abstract function caculate_fee();	
 }
 
-class ME_Simple_Shipping extend ME_Shipping {
+class ME_Simple_Shipping extends ME_Shipping {
 	public function __construct($order) {
 		$this->name = "simple";
 		$this->order = $order;

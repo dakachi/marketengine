@@ -110,6 +110,7 @@ class ME_Order {
     }
 
     public function add_shipping($shipping_rate) {
+        update_post_meta( $this->id, '_shipping_method', $shipping_rate );
         $this->caculate_total();
     }
 
