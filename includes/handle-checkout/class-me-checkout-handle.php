@@ -39,7 +39,7 @@ class ME_Checkout_Handle {
 
         // create order
         $order = self::create_order($data);
-        // need payment process payment
+        //TODO: need payment process payment
         $payments       = me_get_available_payments_gateways();
         $payment_method = $data['payment_method'];
         $result         = $payment[$payment_method]->process_payment($order);
@@ -56,16 +56,15 @@ class ME_Checkout_Handle {
 
         $listing = get_post($data['listing_id']);
         if (is_wp_error($listing)) {
-            return $listing;
+            return new WP_Error("invalid_listing", __("The selected listing is invalid.", "enginethemes"));
         }
 
         $listing = new ME_Listing_Purchase($listing);
-        // TODO: Listing is not available for sale
         if (!$listing->is_available()) {
-            return new WP_Error("listing_unavailable", __("The Listing is not available for sale.", "enginethemes"));
+            return new WP_Error("unavailable_listing", __("The listing is not available for sale.", "enginethemes"));
         }
 
-        $order               = me_insert_order($data);
+        $order = me_insert_order($data);
         if (is_wp_error($order)) {
             return $order;
         }
