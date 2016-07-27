@@ -42,14 +42,32 @@ class ME_Listing {
         return get_post_meta($this->id, '_me_listing_type', true);
     }
 
+    /**
+     * Retrieve the number of product's reviews
+     * 
+     * @since 1.0
+     * @return int
+     */
     public function get_review_count() {
-        return get_post_meta($this->id, '_me_review_count', true);
+        return absint(get_post_meta($this->id, '_me_review_count', true));
     }
 
+    /**
+     * Retrieve the number of product's orders
+     *
+     * @since 1.0
+     * @return int
+     */
     public function get_order_count() {
-        return get_post_meta($this->id, '_me_order_count', true);
+        return absint(get_post_meta($this->id, '_me_order_count', true));
     }
 
+    /**
+     * Retrieve listing galleries
+     *
+     * @since 1.0
+     * @return array
+     */
     public function get_galleries() {
         $gallery      = get_post_meta($this->id, '_me_listing_gallery', true);
         $thumbnail_id = get_post_meta($this->id, '_thumbnail_id', true);
@@ -59,6 +77,12 @@ class ME_Listing {
         return (array) $gallery;
     }
 
+    /**
+     * Make sure the listing is available for sale
+     *
+     * @since 1.0
+     * @return bool
+     */
     public function is_available() {
         return 'listing' === $this->post->post_type;
     }

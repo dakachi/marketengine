@@ -34,7 +34,7 @@ class ME_Checkout_Handle {
         );
 
         if (!$data['is_ship_to_billing_address']) {
-            $shipping_add_rules = $billing_rules;
+            $shipping_rules = $billing_rules;
         }
 
         // create order
@@ -49,10 +49,6 @@ class ME_Checkout_Handle {
     public static function create_order($data) {
         global $user_ID;
         $data['post_author'] = $user_ID;
-        $order               = me_insert_order($data);
-        if (is_wp_error($order)) {
-            return $order;
-        }
 
         if (!me_is_available_payment_gateway($data['payment_method'])) {
             return new WP_Error("invalid_payment_method", __("The selected payment method is not available now.", "enginethemes"));
@@ -62,10 +58,16 @@ class ME_Checkout_Handle {
         if (is_wp_error($listing)) {
             return $listing;
         }
-        
-        $listing = new ME_Listing($listing);
-        if(!$listing->is_available()) { // TODO: Listing is not available for sale
-            return new WP_Error("listing_unavailable", __("The Listing is not available for sale.", "enginethemes"));   
+
+        $listing = new ME_Listing_Purchase($listing);
+        // TODO: Listing is not available for sale
+        if (!$listing->is_available()) {
+            return new WP_Error("listing_unavailable", __("The Listing is not available for sale.", "enginethemes"));
+        }
+
+        $order               = me_insert_order($data);
+        if (is_wp_error($order)) {
+            return $order;
         }
 
         $order = new ME_Order($order);
