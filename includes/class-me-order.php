@@ -10,7 +10,7 @@ class ME_Order {
     public $subtotal;
     public $total;
     public $shipping_info = array();
-    public $items = array();
+    public $items         = array();
     /**
      *
      */
@@ -110,7 +110,7 @@ class ME_Order {
     }
 
     public function add_shipping($shipping_name) {
-        update_post_meta( $this->id, '_shipping_method', $shipping_name );
+        update_post_meta($this->id, '_shipping_method', $shipping_name);
         $this->shipping_info['name'] = $shipping_name;
         $this->caculate_total();
     }
@@ -119,32 +119,67 @@ class ME_Order {
 
     }
 
+    /**
+     * Add order fee
+     * @param array $fee
+     *  - name The fee name
+     *  - title The fee title
+     *  - amount The amount of fee
+     *
+     * @since 1.0
+     * @return int
+     */
     public function add_fee($fee) {
         $item_id = me_add_order_item($this->id, $fee['name'], '_order_fee');
-        if($item_id) {
+        if ($item_id) {
             me_add_order_item_meta($item_id, '_fee_amount', $fee['amount']);
+            me_add_order_item_meta($item_id, '_fee_title', $fee['title']);
         }
         $this->caculate_total();
+        return $item_id;
     }
 
+    /**
+     * Add order fee
+     * 
+     * @param int $item_id The fee item id want to update
+     * @param array $fee
+     *  - name The fee name
+     *  - title The fee title
+     *  - amount The amount of fee
+     *
+     * @since 1.0
+     * @return int
+     */
     public function update_fee($item_id, $args) {
-        if(!empty($args['name'])) {
+        if (!empty($args['name'])) {
             me_update_order_item($item_id, array('order_item_name' => $args['name']));
         }
 
-        if(!empty($args['amount'])) {
-            me_update_order_item_meta($item_id, '_fee_amount', $args['amount']);
-            $this->caculate_total();
-        }        
+        $fee_attrs = array('title', 'amount');
+        foreach ($fee_attrs as $fee_attr) {
+            if (!empty($args[$fee_attr])) {
+                me_update_order_item_meta($item_id, '_fee_' . $fee_attr, $args[$fee_attr]);
+            }
+        }
+
+        $this->caculate_total();
+        return $item_id;
     }
 
-    public function caculate_subtotal(){
+    /**
+     * Calculate the total amount of product in the order
+     *
+     * @since 1.0
+     * @return int
+     */
+    public function caculate_subtotal() {
         $listing_items = me_get_order_items($this->id, 'listing_item');
-        $subtotal = 0;
+        $subtotal      = 0;
 
         foreach ($listing_items as $key => $item) {
             $price = me_get_order_item_meta($item->order_item_id, '_listing_price', true);
-            $qty = me_get_order_item_meta($item->order_item_id, '_qty', true);
+            $qty   = me_get_order_item_meta($item->order_item_id, '_qty', true);
             $subtotal += $price * $qty;
         }
 
@@ -157,24 +192,50 @@ class ME_Order {
         return 0;
     }
 
+    /**
+     * Calculate the total shipping cost of order
+     *
+     * @since 1.0
+     * @return double
+     */
     public function caculate_shipping() {
-        if(!empty($this->shipping_info['name'])) {
-            $shipping_class = me_get_shipping_class($this->shipping_info['name'], $this);    
+        if (!empty($this->shipping_info['name'])) {
+            $shipping_class = me_get_shipping_class($this->shipping_info['name'], $this);
             return $shipping_class->caculate_fee();
         }
         return 0;
     }
 
+    /**
+     * Caculate order total: subtotal, shipping fee, order fee
+     * @since 1.0
+     * @return double
+     */
     public function caculate_total() {
         $this->shipping_fee = $this->caculate_shipping();
-        $this->payment_fee = $this->caculate_fee();
-        $this->total  = $this->subtotal + $this->shipping_fee + $this->payment_fee;
-        update_post_meta( $this->id, '_order_total', $this->total);
+        $this->payment_fee  = $this->caculate_fee();
+        $this->total        = $this->subtotal + $this->shipping_fee + $this->payment_fee;
+
+        update_post_meta($this->id, '_order_total', $this->total);
         return $this->total;
     }
 
+    /**
+     * Retrieve the order transaction id
+     * @since 1.0
+     * @return string
+     */
     public function get_transaction_id() {
         return get_post_meta($this->id, '_me_transation_id', true);
+    }
+
+    /**
+     * Retrieve the payment key associated with the payment in payment gateway
+     * @since 1.0
+     * @return string
+     */
+    public function get_payment_key() {
+        return get_post_meta($this->id, '_me_payment_key', true);
     }
 
     public function get_order_details() {
@@ -190,15 +251,17 @@ class ME_Order {
     }
 
     public function set_payment_method($payment) {
-        update_post_meta($this->id, '_me_payment_gateway', $payment->name);
-        update_post_meta($this->id, '_me_gateway_title', $payment->title);
+        if (is_object($payment)) {
+            update_post_meta($this->id, '_me_payment_gateway', $payment->name);
+            update_post_meta($this->id, '_me_gateway_title', $payment->title);
+        } else {
+            update_post_meta($this->id, '_me_payment_gateway', '');
+            update_post_meta($this->id, '_me_gateway_title', '');
+        }
+
     }
 
     public function get_transaction_url() {
 
-    }
-
-    public function get_payment_key() {
-        return get_post_meta($this->id, '_me_payment_key', true);
     }
 }
