@@ -39,13 +39,25 @@ class ME_Checkout_Handle {
 
         // create order
         $order = self::create_order($data);
-        //TODO: need payment process payment
+        if(is_wp_error( $order )) {
+            return $order;
+        }
+
         $payments       = me_get_available_payments_gateways();
         $payment_method = $data['payment_method'];
         $result         = $payment[$payment_method]->process_payment($order);
-        return $order;
+        
+        return $result;
     }
 
+    /**
+     * Handle order data and store to database
+     * 
+     * @param array $data
+     *
+     * @since 1.0
+     * @return WP_Error | ME_Order
+     */
     public static function create_order($data) {
         global $user_ID;
         $data['post_author'] = $user_ID;

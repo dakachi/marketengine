@@ -3,7 +3,7 @@
 /**
  * Paypal Adaptive class
  */
-class AE_PPAdaptive
+class ME_PPAdaptive extends ME_Payment
 {
     static $instance;
     public $appID;
@@ -315,12 +315,13 @@ class AE_PPAdaptive
 
     /**
      * Use the Refund API operation to refund all or part of a payment.
-     * @param $payKey
+     * @param ME_Order $order
      * @since 1.3
      * https://developer.paypal.com/docs/classic/api/adaptive-payments/Refund_API_Operation/
      * @author Dakachi
      */
-    function Refund($paykey) {
+    function refund($order) {
+        $payKey = $order->get_payment_key();
         $endpoint = $this->endpoint . 'Refund';
         $headers = $this->BuildHeaders();
 

@@ -197,4 +197,8 @@ class ME_Order {
     public function get_transaction_url() {
 
     }
+
+    public function get_payment_key() {
+        return get_post_meta($this->id, '_me_payment_key', true);
+    }
 }
