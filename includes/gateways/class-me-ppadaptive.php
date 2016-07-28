@@ -3,8 +3,7 @@
 /**
  * Paypal Adaptive class
  */
-class ME_PPAdaptive extends ME_Payment
-{
+class ME_PPAdaptive extends ME_Payment {
     static $instance;
     public $appID;
     public $api_username;
@@ -32,37 +31,37 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.2
      * @author Dakachi
      */
-    function __construct($data = array()) {
+    public function __construct($data = array()) {
         // if (isset($DataArray['Sandbox'])) $this->Sandbox = $DataArray['Sandbox'];
         // elseif (isset($DataArray['BetaSandbox'])) $this->Sandbox = $DataArray['BetaSandbox'];
         // else $this->Sandbox = true;
 
         $api = ae_get_option('escrow_paypal_api');
 
-        $this->api_username = isset($api['username']) ? $api['username'] : 'dinhle1987-biz_api1.yahoo.com';
-        $this->api_password = isset($api['password']) ? $api['password'] : '1362804968';
+        $this->api_username  = isset($api['username']) ? $api['username'] : 'dinhle1987-biz_api1.yahoo.com';
+        $this->api_password  = isset($api['password']) ? $api['password'] : '1362804968';
         $this->api_signature = isset($api['signature']) ? $api['signature'] : 'A6LFoneN6dpKOQkj2auJBwoVZBiLAE-QivfFWXkjxrvJZ6McADtMu8Pe';
-        $this->appID = isset($api['appID']) ? $api['appID'] : 'APP-80W284485P519543T';
+        $this->appID         = isset($api['appID']) ? $api['appID'] : 'APP-80W284485P519543T';
 
         $testmode = ae_get_option('test_mode');
         // test mod is on
-        $this->endpoint = 'https://svcs.sandbox.paypal.com/AdaptivePayments/';
+        $this->endpoint   = 'https://svcs.sandbox.paypal.com/AdaptivePayments/';
         $this->paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey=';
         // live mod is on
         if (!$testmode) {
-            $this->endpoint = 'https://svcs.paypal.com/AdaptivePayments/';
+            $this->endpoint   = 'https://svcs.paypal.com/AdaptivePayments/';
             $this->paypal_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey=';
         }
     }
 
     public function get_pending_message($pendingReason) {
         $reason = array(
-            'ECHECK' => __('The payment is pending because it was made by an eCheck that has not yet cleared.', 'enginethemes') ,
-            'MULTI_CURRENCY' => __('The receiver does not have a balance in the currency sent, and does not have the Payment Receiving Preferences set to automatically convert and accept this payment. Receiver must manually accept or deny this payment from the Account Overview.', 'enginethemes') ,
-            'UPGRADE' => __('The payment is pending because it was made via credit card and the receiver must upgrade the account to a Business account or Premier status to receive the funds. It can also mean that receiver has reached the monthly limit for transactions on the account', 'enginethemes') ,
-            'VERIFY' => __('The payment is pending because the receiver is not yet verified.', 'enginethemes') ,
-            'RISK' => __('The payment is pending while it is being reviewed by PayPal for risk.', 'enginethemes') ,
-            'OTHER' => __(' The payment is pending for review. For more information, contact PayPal Customer Service.', 'enginethemes') ,
+            'ECHECK'         => __('The payment is pending because it was made by an eCheck that has not yet cleared.', 'enginethemes'),
+            'MULTI_CURRENCY' => __('The receiver does not have a balance in the currency sent, and does not have the Payment Receiving Preferences set to automatically convert and accept this payment. Receiver must manually accept or deny this payment from the Account Overview.', 'enginethemes'),
+            'UPGRADE'        => __('The payment is pending because it was made via credit card and the receiver must upgrade the account to a Business account or Premier status to receive the funds. It can also mean that receiver has reached the monthly limit for transactions on the account', 'enginethemes'),
+            'VERIFY'         => __('The payment is pending because the receiver is not yet verified.', 'enginethemes'),
+            'RISK'           => __('The payment is pending while it is being reviewed by PayPal for risk.', 'enginethemes'),
+            'OTHER'          => __(' The payment is pending for review. For more information, contact PayPal Customer Service.', 'enginethemes'),
         );
         if (isset($reason[$pendingReason])) {
             return $reason[$pendingReason];
@@ -72,7 +71,7 @@ class ME_PPAdaptive extends ME_Payment
     /**
      * The GetVerifiedStatus API operation lets you determine whether the specified PayPal account's status is verified or unverified.
      */
-    function getVerifiedAccount($info) {
+    public function getVerifiedAccount($info) {
 
         $testmode = ae_get_option('test_mode');
         // test mod is on
@@ -83,29 +82,29 @@ class ME_PPAdaptive extends ME_Payment
         }
 
         $endpoint = $endpoint . 'GetVerifiedStatus';
-        $headers = $this->BuildHeaders();
-        $a = wp_remote_post($endpoint, array(
-            'headers' => $headers,
-            'body' => $info,
-            'httpversion' => '1.1'
+        $headers  = $this->BuildHeaders();
+        $a        = wp_remote_post($endpoint, array(
+            'headers'     => $headers,
+            'body'        => $info,
+            'httpversion' => '1.1',
         ));
 
-        if(!is_wp_error( $a )) {
+        if (!is_wp_error($a)) {
             return json_decode($a['body']);
         }
         return array('success' => false, 'msg' => $a->get_error_message());
     }
 
-    function BuildHeaders() {
+    public function BuildHeaders() {
         $headers = array(
-            'X-PAYPAL-APPLICATION-ID' => $this->appID,
-            'X-PAYPAL-SECURITY-USERID' => $this->api_username,
-            'X-PAYPAL-SECURITY-PASSWORD' => $this->api_password,
-            'X-PAYPAL-SECURITY-SIGNATURE' => $this->api_signature,
+            'X-PAYPAL-APPLICATION-ID'       => $this->appID,
+            'X-PAYPAL-SECURITY-USERID'      => $this->api_username,
+            'X-PAYPAL-SECURITY-PASSWORD'    => $this->api_password,
+            'X-PAYPAL-SECURITY-SIGNATURE'   => $this->api_signature,
             // 'X-PAYPAL-SECURITY-SUBJECT: ' . $this->APISubject,
             // 'X-PAYPAL-SECURITY-VERSION: ' . $this->APIVersion,
-            'X-PAYPAL-REQUEST-DATA-FORMAT' => 'NV',
-            'X-PAYPAL-RESPONSE-DATA-FORMAT' => 'JSON'
+            'X-PAYPAL-REQUEST-DATA-FORMAT'  => 'NV',
+            'X-PAYPAL-RESPONSE-DATA-FORMAT' => 'JSON',
             // 'X-PAYPAL-DEVICE-ID: ' . $this->DeviceID,
             // 'X-PAYPAL-DEVICE-IPADDRESS: ' . $this->IPAddress
         );
@@ -129,18 +128,18 @@ class ME_PPAdaptive extends ME_Payment
      * @since snippet.
      * @author Dakachi
      */
-    function executePayment($paykey) {
+    public function executePayment($paykey) {
         $endpoint = $this->endpoint . 'ExecutePayment';
-        $headers = $this->BuildHeaders();
-        $a = wp_remote_post($endpoint, array(
-            'headers' => $headers,
-            'body' => array(
-                'payKey' => $paykey,
-                'requestEnvelope.errorLanguage' => 'vi_VN'
+        $headers  = $this->BuildHeaders();
+        $a        = wp_remote_post($endpoint, array(
+            'headers'     => $headers,
+            'body'        => array(
+                'payKey'                        => $paykey,
+                'requestEnvelope.errorLanguage' => 'vi_VN',
             ),
-            'httpversion' => '1.1'
+            'httpversion' => '1.1',
         ));
-        if(!is_wp_error( $a )) {
+        if (!is_wp_error($a)) {
             return json_decode($a['body']);
         }
         return array('success' => false, 'msg' => $a->get_error_message());
@@ -153,7 +152,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.3
      * @author Dakachi
      */
-    function cancelApproval() {
+    public function cancelApproval() {
     }
 
     /**
@@ -162,7 +161,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.3
      * @author Dakachi
      */
-    function ConvertCurrency() {
+    public function ConvertCurrency() {
     }
 
     /**
@@ -173,7 +172,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.3
      * @author Dakachi
      */
-    function GetFundingPlans($payKey) {
+    public function GetFundingPlans($payKey) {
     }
 
     /**
@@ -182,7 +181,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.3
      * @author Dakachi
      */
-    function GetPaymentOptions($payKey) {
+    public function GetPaymentOptions($payKey) {
     }
 
     /**
@@ -193,10 +192,10 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.3
      * @author Dakachi
      */
-    function GetPrePaymentDisclosure() {
+    public function GetPrePaymentDisclosure() {
     }
 
-    function GetShippingAddresses() {
+    public function GetShippingAddresses() {
     }
 
     /**
@@ -212,16 +211,16 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.3
      * @author Dakachi
      */
-    function Pay($order) {
+    public function Pay($order) {
         $endpoint = $this->endpoint . 'Pay';
-        $headers = $this->BuildHeaders();
-        $a = wp_remote_post($endpoint, array(
-            'headers' => $headers,
-            'body' => $order,
-            'httpversion' => '1.1'
+        $headers  = $this->BuildHeaders();
+        $a        = wp_remote_post($endpoint, array(
+            'headers'     => $headers,
+            'body'        => $order,
+            'httpversion' => '1.1',
         ));
 
-        if(!is_wp_error( $a )) {
+        if (!is_wp_error($a)) {
             return json_decode($a['body']);
         }
         return array('success' => false, 'msg' => $a->get_error_message());
@@ -238,19 +237,19 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.3
      * @author Dakachi
      */
-    function PaymentDetails($paykey) {
+    public function PaymentDetails($paykey) {
         $endpoint = $this->endpoint . 'PaymentDetails';
-        $headers = $this->BuildHeaders();
-        $a = wp_remote_post($endpoint, array(
-            'headers' => $headers,
-            'body' => array(
-                'payKey' => $paykey,
+        $headers  = $this->BuildHeaders();
+        $a        = wp_remote_post($endpoint, array(
+            'headers'     => $headers,
+            'body'        => array(
+                'payKey'                        => $paykey,
                 'requestEnvelope.errorLanguage' => 'vi_VN',
             ),
-            'httpversion' => '1.1'
+            'httpversion' => '1.1',
         ));
 
-        if(!is_wp_error( $a )) {
+        if (!is_wp_error($a)) {
             return json_decode($a['body']);
         }
         return array('success' => false, 'msg' => $a->get_error_message());
@@ -270,47 +269,13 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.2
      * @author Dakachi
      */
-    function preApproval() {
-        $endpoint = $this->endpoint . 'Preapproval';
-        $headers = $this->BuildHeaders();
-
-        $post_fields = array(
-            'returnUrl' => 'http://localhost/wp/fre/process-payment',
-            'cancelUrl' => 'http://localhost/wp/fre/process-payment',
-            'startingDate' => '2014-11-14T10:45:52Z',
-            'endingDate' => '2014-11-14T10:45:52Z',
-            'maxAmountPerPayment' => '35.00',
-            'currencyCode' => 'USD',
-            'feesPayer' => 'SENDER',
-            'receiverList' => array(
-                array(
-                    'amount' => '5',
-                    'email' => 'dinhle1987-biz_api1.yahoo.com',
-                    'primary' => 'false'
-                ) ,
-                array(
-                    'amount' => '25',
-                    'email' => 'dinhle1987-pers2@yahoo.com',
-                    'primary' => 'false'
-                )
-            ) ,
-            'requestEnvelope' => array(
-                'errorLanguage' => 'en_US'
-            ) ,
-            'memo' => 'pay for a freelancer',
-        );
-
-        $s = curl_init();
-        curl_setopt($s, CURLOPT_URL, $endpoint);
-        curl_setopt($s, CURLOPT_HEADER, $headers);
-        curl_setopt($s, CURLOPT_POST, true);
-        curl_setopt($s, CURLOPT_POSTFIELDS, $this->_postFields);
+    public function preApproval() {
     }
 
-    function PreapprovalDetails() {
+    public function PreapprovalDetails() {
     }
 
-    function SetPaymentOptions() {
+    public function SetPaymentOptions() {
     }
 
     /**
@@ -320,37 +285,36 @@ class ME_PPAdaptive extends ME_Payment
      * https://developer.paypal.com/docs/classic/api/adaptive-payments/Refund_API_Operation/
      * @author Dakachi
      */
-    function refund($order) {
-        $payKey = $order->get_payment_key();
+    public function refund($order) {
+        $payKey   = $order->get_payment_key();
         $endpoint = $this->endpoint . 'Refund';
-        $headers = $this->BuildHeaders();
+        $headers  = $this->BuildHeaders();
 
         // refund all hay sao???
         $a = wp_remote_post($endpoint, array(
-            'headers' => $headers,
-            'body' => array(
-                'payKey' => $paykey,
-                'requestEnvelope.errorLanguage' => 'vi_VN',
+            'headers'     => $headers,
+            'body'        => array(
+                'payKey'                        => $paykey,
+                'requestEnvelope.errorLanguage' => get_bloginfo('language'),
             ),
-            'httpversion' => '1.1'
+            'httpversion' => '1.1',
         ));
-        if(!is_wp_error( $a )) {
+        if (!is_wp_error($a)) {
             return json_decode($a['body']);
         }
         return array('success' => false, 'msg' => $a->get_error_message());
     }
 }
 
-
 function fre_process_escrow($payment_type, $data) {
     $payment_return = array(
-        'ACK' => false
+        'ACK' => false,
     );
 
     if ($payment_type == 'paypaladaptive') {
         $ppadaptive = AE_PPAdaptive::get_instance();
 
-        $response = $ppadaptive->PaymentDetails($data['payKey']);
+        $response                         = $ppadaptive->PaymentDetails($data['payKey']);
         $payment_return['payment_status'] = $response->responseEnvelope->ack;
 
         // email confirm
@@ -360,8 +324,8 @@ function fre_process_escrow($payment_type, $data) {
             $paymentInfo = $response->paymentInfoList->paymentInfo;
             if ($paymentInfo[0]->transactionStatus == 'COMPLETED') {
                 wp_update_post(array(
-                    'ID' => $data['order_id'],
-                    'post_status' => 'publish'
+                    'ID'          => $data['order_id'],
+                    'post_status' => 'publish',
                 ));
                 // assign project
                 $bid_action = Fre_BidAction::get_instance();
@@ -371,7 +335,7 @@ function fre_process_escrow($payment_type, $data) {
             if ($paymentInfo[0]->transactionStatus == 'PENDING') {
                 //pendingReason
                 $payment_return['pending_msg'] = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
-                $payment_return['msg'] = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
+                $payment_return['msg']         = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
             }
         }
 
@@ -379,5 +343,5 @@ function fre_process_escrow($payment_type, $data) {
             $payment_return['msg'] = $response->error[0]->message;
         }
     }
-    return apply_filters( 'fre_process_escrow', $payment_return, $payment_type, $data);
+    return apply_filters('fre_process_escrow', $payment_return, $payment_type, $data);
 }
