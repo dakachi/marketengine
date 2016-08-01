@@ -69,10 +69,12 @@ class ME_PPAdaptive extends ME_Payment {
         // test mod is on
         $this->endpoint   = 'https://svcs.sandbox.paypal.com/AdaptivePayments/';
         $this->paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey=';
+        $this->preapproval_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-preapproval&preapprovalkey=';
         // live mod is on
         if (!$testmode) {
             $this->endpoint   = 'https://svcs.paypal.com/AdaptivePayments/';
             $this->paypal_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey=';
+            $this->preapproval_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_ap-preapproval&preapprovalkey=';
         }
     }
 
