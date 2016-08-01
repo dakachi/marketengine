@@ -56,14 +56,14 @@ class ME_PPAdaptive extends ME_Payment {
      */
     public function __construct() {
 
-        $api       = ae_get_option('escrow_paypal_api', array());
+        // $api       = ae_get_option('escrow_paypal_api', array());
         $this->api = ae_get_option('escrow_paypal_api', array());
 
         // $this->api_username  = isset($api['username']) ? $api['username'] : 'dinhle1987-biz_api1.yahoo.com';
         // $this->api_password  = isset($api['password']) ? $api['password'] : '1362804968';
         // $this->api_signature = isset($api['signature']) ? $api['signature'] : 'A6LFoneN6dpKOQkj2auJBwoVZBiLAE-QivfFWXkjxrvJZ6McADtMu8Pe';
 
-        $this->appID = isset($api['appID']) ? $api['appID'] : 'APP-80W284485P519543T';
+        $this->appID = isset($this->api['appID']) ? $this->api['appID'] : 'APP-80W284485P519543T';
 
         $testmode = ae_get_option('test_mode');
         // test mod is on
@@ -103,9 +103,9 @@ class ME_PPAdaptive extends ME_Payment {
     public function build_headers() {
         $headers = array(
             'X-PAYPAL-APPLICATION-ID'       => $this->appID,
-            'X-PAYPAL-SECURITY-USERID'      => $this->api_username,
-            'X-PAYPAL-SECURITY-PASSWORD'    => $this->api_password,
-            'X-PAYPAL-SECURITY-SIGNATURE'   => $this->api_signature,
+            'X-PAYPAL-SECURITY-USERID'      => $this->api['api_username'],
+            'X-PAYPAL-SECURITY-PASSWORD'    => $this->api['api_password'],
+            'X-PAYPAL-SECURITY-SIGNATURE'   => $this->api['api_signature'],
             // 'X-PAYPAL-SECURITY-SUBJECT: ' . $this->APISubject,
             // 'X-PAYPAL-SECURITY-VERSION: ' . $this->APIVersion,
             'X-PAYPAL-REQUEST-DATA-FORMAT'  => 'NV',
