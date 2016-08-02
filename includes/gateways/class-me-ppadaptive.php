@@ -57,23 +57,18 @@ class ME_PPAdaptive extends ME_Payment {
     public function __construct() {
 
         // $api       = ae_get_option('escrow_paypal_api', array());
-        $this->api = ae_get_option('escrow_paypal_api', array());
-
-        // $this->api_username  = isset($api['username']) ? $api['username'] : 'dinhle1987-biz_api1.yahoo.com';
-        // $this->api_password  = isset($api['password']) ? $api['password'] : '1362804968';
-        // $this->api_signature = isset($api['signature']) ? $api['signature'] : 'A6LFoneN6dpKOQkj2auJBwoVZBiLAE-QivfFWXkjxrvJZ6McADtMu8Pe';
-
+        $this->api   = ae_get_option('escrow_paypal_api', array());
         $this->appID = isset($this->api['appID']) ? $this->api['appID'] : 'APP-80W284485P519543T';
 
         $testmode = ae_get_option('test_mode');
         // test mod is on
-        $this->endpoint   = 'https://svcs.sandbox.paypal.com/AdaptivePayments/';
-        $this->paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey=';
+        $this->endpoint        = 'https://svcs.sandbox.paypal.com/AdaptivePayments/';
+        $this->paypal_url      = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey=';
         $this->preapproval_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-preapproval&preapprovalkey=';
         // live mod is on
         if (!$testmode) {
-            $this->endpoint   = 'https://svcs.paypal.com/AdaptivePayments/';
-            $this->paypal_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey=';
+            $this->endpoint        = 'https://svcs.paypal.com/AdaptivePayments/';
+            $this->paypal_url      = 'https://www.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey=';
             $this->preapproval_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_ap-preapproval&preapprovalkey=';
         }
     }
@@ -102,12 +97,18 @@ class ME_PPAdaptive extends ME_Payment {
         return $reason['OTHER'];
     }
 
+    /**
+     * Build HTTP headers specifying authentication, the application ID, the device ID or IP address for each request
+     *
+     * @since 1.0
+     * @return array
+     */
     public function build_headers() {
         $headers = array(
             'X-PAYPAL-APPLICATION-ID'       => $this->appID,
-            'X-PAYPAL-SECURITY-USERID'      => $this->api['api_username'],
-            'X-PAYPAL-SECURITY-PASSWORD'    => $this->api['api_password'],
-            'X-PAYPAL-SECURITY-SIGNATURE'   => $this->api['api_signature'],
+            'X-PAYPAL-SECURITY-USERID'      => $this->api['username'],
+            'X-PAYPAL-SECURITY-PASSWORD'    => $this->api['password'],
+            'X-PAYPAL-SECURITY-SIGNATURE'   => $this->api['signature'],
             // 'X-PAYPAL-SECURITY-SUBJECT: ' . $this->APISubject,
             // 'X-PAYPAL-SECURITY-VERSION: ' . $this->APIVersion,
             'X-PAYPAL-REQUEST-DATA-FORMAT'  => 'NV',
@@ -146,6 +147,15 @@ class ME_PPAdaptive extends ME_Payment {
         return $response;
     }
 
+    /**
+     * Send request to paypal adaptive endpoint
+     *
+     * @param string $endpoint The API endpoint
+     * @param array $data The request data send to Paypal Adaptive API
+     * 
+     * @since 1.0
+     * @return Object | WP_Error 
+     */
     protected function send_request($endpoint, $data = array()) {
         $endpoint = $this->endpoint . $endpoint;
         $headers  = $this->build_headers();
@@ -230,14 +240,13 @@ class ME_PPAdaptive extends ME_Payment {
      * @author Dakachi
      */
     public function pre_approval($order) {
-        $endpoint = $this->endpoint . 'Preapproval';
-        return $this->send_request('Refund', $order);
+        return $this->send_request('Preapproval', $order);
     }
 
     /**
      * Retrieve the pre-approval payment details
      * @param string $preapproval_key
-     * 
+     *
      * @since 1.0
      * @return object | WP_Error
      */
@@ -247,9 +256,9 @@ class ME_PPAdaptive extends ME_Payment {
     }
 
     /**
-     * Use the CancelPreapproval API operation to handle the canceling of preapprovals. 
+     * Use the CancelPreapproval API operation to handle the canceling of preapprovals.
      * Preapprovals can be canceled regardless of the state they are in, such as active, expired, deactivated, and previously canceled.
-     * 
+     *
      * @param string $paykey The payment pre-approval key
      *
      * @since 1.0
@@ -265,7 +274,7 @@ class ME_PPAdaptive extends ME_Payment {
      * You can identify the payment by the tracking ID, the PayPal transaction ID in an IPN message, or the pay key associated with the payment.
      *
      * @param $payKey
-     * 
+     *
      * @since 1.0
      * @return object | WP_Error
      */
@@ -291,13 +300,13 @@ class ME_PPAdaptive extends ME_Payment {
     }
 
     /**
-     * Specifies the settings for a payment. 
-     * If you start a payment by specifying an actionType of CREATE in a Pay API call, you can use the SetPaymentOptions API to specify settings 
+     * Specifies the settings for a payment.
+     * If you start a payment by specifying an actionType of CREATE in a Pay API call, you can use the SetPaymentOptions API to specify settings
      * for the payment.
-     * 
+     *
      * @param string $paykey
      * @param array $options
-     * 
+     *
      * @since 1.0
      * @return Object | WP_Error
      */
@@ -308,7 +317,7 @@ class ME_PPAdaptive extends ME_Payment {
 
     /**
      * Use the GetPaymentOptions API to retrieve the options previously specified in the SetPaymentOptions API.
-     * 
+     *
      * @param $payKey
      * @since 1.0
      * @return Object | WP_Error
