@@ -52,4 +52,6 @@ if (!defined('ABSPATH')) {
 
 <?php do_action('marketengine_after_post_listing_form'); ?>
 
+<?php else: ?>
+	<?php _e("You don't have permission to post listing.", "enginethemes"); ?>
 <?php endif; ?>
