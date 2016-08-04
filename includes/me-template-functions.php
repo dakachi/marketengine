@@ -244,3 +244,8 @@ add_action( 'marketengine_sidebar', 'marketengine_sidebar' );
 function ae_get_option($option, $default) {
     return get_option( $option, $default );
 }
+
+function get_greater($number_1,$number_2) {
+    if($number_2 > $number_1) return $number_2;
+    return $number_1;
+}

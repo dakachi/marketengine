@@ -5,6 +5,7 @@ class Tests_ME_Register extends WP_UnitTestCase {
     }
 
     // test register successfull
+    // @cover ME_Authentication::register()
     public function test_register_success() {
         $user = ME_Authentication::register(
             array(
