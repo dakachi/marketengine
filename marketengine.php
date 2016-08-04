@@ -84,6 +84,8 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/class-me-post-types.php';
             require_once ME_PLUGIN_PATH . '/includes/class-me-query.php';
             require_once ME_PLUGIN_PATH . '/includes/class-me-template-loader.php';
+            require_once ME_PLUGIN_PATH . '/includes/class-me-order.php';
+            require_once ME_PLUGIN_PATH . '/includes/class-me-shipping.php';
 
             require_once ME_PLUGIN_PATH . '/includes/me-notices-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-template-functions.php';
@@ -129,7 +131,9 @@ if (!class_exists('MarketEngine')):
         public function wpdb_table_fix() {
             global $wpdb;
             $wpdb->marketengine_order_itemmeta = $wpdb->prefix . 'marketengine_order_itemmeta';
+            $wpdb->marketengine_order_items = $wpdb->prefix . 'marketengine_order_items';
             $wpdb->tables[]             = 'marketengine_order_itemmeta';
+            $wpdb->tables[]             = 'marketengine_order_items';
         }
 
         public function add_scripts() {
@@ -193,8 +197,6 @@ if (!class_exists('MarketEngine')):
                     ),
                 )
             );
-
-            me_add_order_item_meta(1, 'order_meta_data', 'Order meta data');
         }
 
         /**

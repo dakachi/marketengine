@@ -1,4 +1,9 @@
 <?php
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 function me_get_listing_types() {
     $listing_types = array(
     	'purchasion' => __("Selling", "enginethemes"),

@@ -8,7 +8,7 @@
     >
     <testsuites>
         <testsuite>
-            <directory prefix="test-" suffix=".php">./authentication/</directory>
+            <directory prefix="test-" suffix=".php">./tests/order/</directory>
         </testsuite>
     </testsuites>
 </phpunit>
