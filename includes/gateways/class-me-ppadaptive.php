@@ -74,6 +74,8 @@ class ME_PPAdaptive extends ME_Payment {
             $this->paypal_url      = 'https://www.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey=';
             $this->preapproval_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_ap-preapproval&preapprovalkey=';
         }
+
+        $this->feesPayer = "EACHRECEIVER";
     }
 
     /**
@@ -155,9 +157,9 @@ class ME_PPAdaptive extends ME_Payment {
      *
      * @param string $endpoint The API endpoint
      * @param array $data The request data send to Paypal Adaptive API
-     * 
+     *
      * @since 1.0
-     * @return Object | WP_Error 
+     * @return Object | WP_Error
      */
     protected function send_request($endpoint, $data = array()) {
         $endpoint = $this->endpoint . $endpoint;
@@ -196,19 +198,36 @@ class ME_PPAdaptive extends ME_Payment {
 
     /**
      * Use the Pay API operation to transfer funds from a sender's PayPal account to one or more receivers' PayPal accounts.
-     * You can use the Pay API for simple payments, chained payments, and parallel payments.
-     * Payments can be explicitly approved, preapproved, or implicitly approved.
-     * @param $action
-     * @param receiverList.receiver(0).email
-     * @param receiverList.receiver(0).amount
-     * @param currencyCode
-     * @param cancelUrl
-     * @param returnUrl
-     * @since 1.3
+     * You can use the Pay API for simple payments and parallel payments.
+     *
+     * @param ME_Order $order
+     *          - receiverList.receiver(0).email
+     *          - receiverList.receiver(0).amount
+     *          - currencyCode
+     * @since 1.0
      * @author Dakachi
      */
     public function pay($order) {
-        $data = $order;
+        $data               = $order;
+        $data['actionType'] = 'PAY';
+        // Pay, PAY_PRIMARY
+        return $this->send_request('Pay', $data);
+    }
+
+    /**
+     * Use the Pay API operation to transfer funds from a sender's PayPal account to one or more receivers' PayPal accounts.
+     * You can use the Pay API for delayed chained payments.
+     *
+     * @param ME_Order $order
+     *          - receiverList.receiver(0).email
+     *          - receiverList.receiver(0).amount
+     *          - currencyCode
+     * @since 1.0
+     * @author Dakachi
+     */
+    public function pay_primary($order) {
+        $data               = $order;
+        $data['actionType'] = 'PAY_PRIMARY';
         return $this->send_request('Pay', $data);
     }
 

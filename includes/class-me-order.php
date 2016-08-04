@@ -73,6 +73,51 @@ class ME_Order {
     }
 
     /**
+     * Add receiver to order details
+     *
+     * @param ME_User $receiver The ME user object
+     *
+     * @since 1.0
+     * @return int|bool Return order item id if sucess, if not success return false
+     */
+    public function add_receiver($receiver) {
+        if (!is_object($receiver)) {
+            return false;
+        }
+
+        $order_item_id = me_add_order_item($this->id, $receiver->get_user_name(), 'receiver_item');
+        if ($order_item_id) {
+            me_add_order_item_meta($order_item_id, '_receive_email', $receiver->get_receiver_email());
+            me_add_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary());
+            me_add_order_item_meta($order_item_id, '_amount', $receiver->get_amount());
+        }
+        return $order_item_id;
+    }
+
+    /**
+     * Update receiver item
+     *
+     * @param int $item_id The order item id
+     * @param ME_User $receiver The ME user object
+     *
+     * @since 1.0
+     * @return int|bool Return order item id if sucess, if not success return false
+     */
+    public function update_receiver($item_id, $receiver) {
+        $order_item_id = absint($item_id);
+
+        if (!$order_item_id) {
+            return false;
+        }
+
+        me_update_order_item_meta($order_item_id, '_receive_email', $receiver->get_receiver_email());
+        me_update_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary());
+        me_update_order_item_meta($order_item_id, '_amount', $receiver->get_amount());
+
+        return $order_item_id;
+    }
+
+    /**
      * Get order address
      *
      * @param string $type The address type
@@ -141,7 +186,7 @@ class ME_Order {
 
     /**
      * Add order fee
-     * 
+     *
      * @param int $item_id The fee item id want to update
      * @param array $fee
      *  - name The fee name
