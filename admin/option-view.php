@@ -21,7 +21,7 @@
 								</ul>
 								<div class="me-content-tabs">
 									<div class="me-content-subgeneral-1" style="display: none;">
-										<div class="me-group-field">
+									<!-- 	<div class="me-group-field">
 											<h3 class="me-title">Marketplace Language</h3>
 											<label class="me-subtitle">Initialize packages of language for your site. The chosen option is your current site’s language.</label>
 											<select class="select-field" name="" id="">
@@ -74,7 +74,7 @@
 													<input type="text" class="input-field">
 												</div>
 											</div>
-										</div>
+										</div> -->
 
 										<div class="me-group-field">
 											<h3 class="me-title">Marketplace Name</h3>
