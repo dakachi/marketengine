@@ -73,10 +73,16 @@ if (!class_exists('MarketEngine')):
             if (!defined('ME_PLUGIN_PATH')) {
                 define('ME_PLUGIN_PATH', dirname(__FILE__));
             }
+
+            if (!defined('ME_PLUGIN_URL')) {
+                define('ME_PLUGIN_URL', plugin_dir_url(__FILE__) );
+            }
         }
 
         private function include_files() {
-            require_once ME_PLUGIN_PATH . '/includes/class-me-autoloader.php';
+            require_once '/includes/class-me-autoloader.php';
+
+            require_once '/admin/index.php';
 
             require_once ME_PLUGIN_PATH . '/includes/class-me-install.php';
             require_once ME_PLUGIN_PATH . '/includes/class-me-session.php';
@@ -131,9 +137,9 @@ if (!class_exists('MarketEngine')):
         public function wpdb_table_fix() {
             global $wpdb;
             $wpdb->marketengine_order_itemmeta = $wpdb->prefix . 'marketengine_order_itemmeta';
-            $wpdb->marketengine_order_items = $wpdb->prefix . 'marketengine_order_items';
-            $wpdb->tables[]             = 'marketengine_order_itemmeta';
-            $wpdb->tables[]             = 'marketengine_order_items';
+            $wpdb->marketengine_order_items    = $wpdb->prefix . 'marketengine_order_items';
+            $wpdb->tables[]                    = 'marketengine_order_itemmeta';
+            $wpdb->tables[]                    = 'marketengine_order_items';
         }
 
         public function add_scripts() {
@@ -143,7 +149,7 @@ if (!class_exists('MarketEngine')):
                 define('ME_SCRIPT_DEBUG', $develop_src);
             }
 
-            $suffix = ME_SCRIPT_DEBUG ? '' : '.min';
+            $suffix     = ME_SCRIPT_DEBUG ? '' : '.min';
             $dev_suffix = $develop_src ? '' : '.min';
 
             wp_enqueue_style('me_font_icon', $this->plugin_url() . '/assets/css/marketengine-font-icon.css');
@@ -169,30 +175,30 @@ if (!class_exists('MarketEngine')):
                 )
             );
 
-            $max_files = apply_filters('marketengine_plupload_max_files', 2);
+            $max_files   = apply_filters('marketengine_plupload_max_files', 2);
             $post_params = array(
                 "_wpnonce" => wp_create_nonce('media-form'),
-                "short" => "1",
-                "action" => 'me-upload-file',
+                "short"    => "1",
+                "action"   => 'me-upload-file',
             );
             wp_localize_script(
                 'plupload',
                 'plupload_opt',
                 array(
-                    'max_file_size' => (wp_max_upload_size() / (1024 * 1024)) . 'mb',
-                    'url' => admin_url('admin-ajax.php'),
-                    'flash_swf_url' => includes_url('js/plupload/plupload.flash.swf'),
+                    'max_file_size'       => (wp_max_upload_size() / (1024 * 1024)) . 'mb',
+                    'url'                 => admin_url('admin-ajax.php'),
+                    'flash_swf_url'       => includes_url('js/plupload/plupload.flash.swf'),
                     'silverlight_xap_url' => includes_url('js/plupload/plupload.silverlight.xap'),
-                    'max_files' => $max_files,
-                    'filters' => array(
+                    'max_files'           => $max_files,
+                    'filters'             => array(
                         array(
-                            'title' => __('Image Files', "enginethemes"),
+                            'title'      => __('Image Files', "enginethemes"),
                             'extensions' => 'jpg,jpeg,gif,png',
                         ),
                     ),
-                    'runtimes' => 'html5,gears,flash,silverlight,browserplus,html4',
-                    'multipart_params' => $post_params,
-                    'error' => array(
+                    'runtimes'            => 'html5,gears,flash,silverlight,browserplus,html4',
+                    'multipart_params'    => $post_params,
+                    'error'               => array(
                         'max_files' => sprintf(__("'no more than %d file(s)'", "enginethemes"), $max_files),
                     ),
                 )
