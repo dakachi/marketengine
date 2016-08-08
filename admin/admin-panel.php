@@ -4,7 +4,7 @@ function marketengine_option_view () {
 }
 
 /** 
- * 
+ * Add marketengine admin menu
  */
 function marketengine_option_menu() {
     add_menu_page(
