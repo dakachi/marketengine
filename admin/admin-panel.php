@@ -18,11 +18,12 @@ function marketengine_option_view() {
     echo '<div class="marketengine-tabs me-tabs-general">';
 
     echo '<ul class="me-tabs ">';
-    foreach ($tabs as $tab) {
+    foreach ($tabs as $tab) { // check is current tab
         echo '<li class="active"><a href="?page=marketengine&tab='.$tab['slug'].'">'.$tab['title'].'</a></li>';
     }
     echo '</ul>';
 
+  	// check is current
     foreach ($tabs as $tab) {
         $tab = new AE_Tab($tab);
         $tab->render();
