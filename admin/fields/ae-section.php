@@ -6,13 +6,15 @@ if (!defined('ABSPATH')) {
 
 class AE_Tab {
     protected $_controls;
-    public function __construct() {
-
+    public function __construct($args) {
+    	$this->_name = $args['slug'];
+    	$this->_controls = array();
     }
 
     public function render() {
+    	//if(!$this->_controls) return;
         echo '<div class="me-tab">';
-        if(!$this->_controls) return;
+        echo $this->_name;
         foreach ($this->_controls as $key => $control) {
             $control->render();
         }

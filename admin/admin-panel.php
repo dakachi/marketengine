@@ -19,7 +19,7 @@ function marketengine_option_view() {
 
     echo '<ul class="me-tabs ">';
     foreach ($tabs as $tab) {
-        echo '<li class="active"><span>'.$tab['title'].'</span></li>';
+        echo '<li class="active"><a href="?page=marketengine&tab='.$tab['slug'].'">'.$tab['title'].'</a></li>';
     }
     echo '</ul>';
 
