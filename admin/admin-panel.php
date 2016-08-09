@@ -29,3 +29,31 @@ function marketengine_load_admin_option_script_css() {
 	
 }
 add_action('admin_enqueue_scripts', 'marketengine_load_admin_option_script_css');
+
+/**
+ * Render marketengine admin option header
+ * @since 1.0
+ */
+function marketengine_option_header(){
+?>
+
+<div class="marketengine-admin">
+	<div class="me-header">
+		<span class="pull-left"><?php _e("MARKETENGINE", "enginethemes"); ?></span>
+		<span class="pull-right"><?php _e("Power by", "enginethemes"); ?> <a href="https://www.enginethemes.com/">EngineThemes</a></span>
+	</div>
+	<div class="me-body">
+<?php
+}
+
+/**
+ * Render marketengine admin option footer
+ * @since 1.0
+ */
+function marketengine_option_footer(){
+?>
+	</div>
+</div>
+	
+<?php
+}

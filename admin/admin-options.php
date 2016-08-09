@@ -1,7 +1,11 @@
 <?php
-
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+// section
 return array(
-    'title' => esc_html(__('General Setting', 'jobplanet-plugin')),
+    'title' => esc_html(__('General', 'jobplanet-plugin')),
     'name'  => 'general_option',
     'icon'  => 'font-awesome:fa-dot-circle-o',
     'menus' => array(
@@ -41,7 +45,7 @@ return array(
                 ),
 
             ),
-        ),
+        )
 
     )
 );
