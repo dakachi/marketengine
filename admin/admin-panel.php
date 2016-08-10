@@ -5,29 +5,52 @@ function marketengine_option_view() {
     //include 'option-view.php';
     $tabs = array(
         'general-settings'      => array(
-            'title' => __("General", "enginethemes"),
-            'slug'  => 'general-settings',
-            'menus' => array(),
+            'title'    => __("General", "enginethemes"),
+            'slug'     => 'general-settings',
+            'template' => array(
+            	'general' => array(
+                    'title'    => __("General", "enginethemes"),
+                    'slug'     => 'general',
+                    'type'     => 'section',
+                    'template' => array(),
+                ),
+                'authenticate' => array(
+                    'title'    => __("Authentication", "enginethemes"),
+                    'slug'     => 'authenticate',
+                    'type'     => 'section',
+                    'template' => array(),
+                )
+            ),
         ),
         'authenticate-settings' => array(
-            'title' => __("Authentication", "enginethemes"),
-            'slug'  => 'authenticate-settings',
-            'menus' => array(),
+            'title'    => __("Authentication", "enginethemes"),
+            'slug'     => 'authenticate-settings',
+            'template' => array(
+                'authenticate' => array(
+                    'title'    => __("Authentication", "enginethemes"),
+                    'slug'     => 'authenticate',
+                    'type'     => 'section',
+                    'template' => array(),
+                ),
+            ),
         ),
     );
-    echo '<div class="marketengine-tabs me-tabs-general">';
+    echo '<div class="marketengine-tabs">';
 
-    echo '<ul class="me-tabs ">';
-    foreach ($tabs as $tab) { // check is current tab
-        echo '<li class="active"><a href="?page=marketengine&tab='.$tab['slug'].'">'.$tab['title'].'</a></li>';
+    echo '<ul class="me-nav me-tabs-nav">';
+    foreach ($tabs as $tab) {
+        // check is current tab
+        echo '<li class="active"><a href="?page=marketengine&tab=' . $tab['slug'] . '">' . $tab['title'] . '</a></li>';
     }
     echo '</ul>';
-
-  	// check is current
+    echo '<div class="me-tabs-container">';
+    // check is current
     foreach ($tabs as $tab) {
-        $tab = new AE_Tab($tab);
+        $tab = new ME_Tab($tab);
         $tab->render();
     }
+
+    echo '</div>';
 
     echo '</div>';
     marketengine_option_footer();
