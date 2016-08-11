@@ -11,12 +11,7 @@ abstract class ME_Container {
     abstract public function end();
 
     public function menus() {
-        echo '<ul class="me-nav me-section-nav">';
-        foreach ($this->_template as $key => $control) {
-            $class = 'ME_'.ucfirst($control['type']);
-            $control = new $class($control, $this);
-        }
-        echo '</ul>';
+
     }
 
     public function render() {
@@ -29,8 +24,8 @@ abstract class ME_Container {
             $this->menus();
 
             foreach ($template as $key => $control) {
-            	$class = 'ME_'.ucfirst($control['type']);
-            	$control = new $class($control, $this);
+                $class   = 'ME_' . ucfirst($control['type']);
+                $control = new $class($control, $this);
                 $control->render();
             }
         }
@@ -44,6 +39,18 @@ class ME_Tab extends ME_Container {
     public function __construct($args) {
         $this->_name     = $args['slug'];
         $this->_template = $args['template'];
+    }
+
+    public function menus() {
+        echo '<ul class="me-nav me-section-nav">';
+        $class = 'class="active"';
+        foreach ($this->_template as $key => $tab) {
+            if ($tab['type'] == 'section') {
+                echo '<li ' . $class . '><span>' . $tab['title'] . '</span></li>';
+            }
+            $class = '';
+        }
+        echo '</ul>';
     }
 
     public function start() {
@@ -63,10 +70,12 @@ class ME_Section extends ME_Container {
     }
 
     public function start() {
-        echo '<div class="me-section">';
+        echo '<div class="me-section-container">';
+        echo '<div class="me-section-content">';
     }
 
     public function end() {
+        echo '</div>';
         echo '</div>';
     }
 }
@@ -119,23 +128,23 @@ abstract class ME_Input {
         if (!$this->_container || !$this->_options) {
             return '';
         }
-        $parent      = $this->_container;
+        $parent      = $this->_options;
         $options     = $this->_options;
         $option_name = $this->_name;
 
-        return $options->$parent->$option_name;
+        //return $options->$parent->$option_name;
     }
 }
 
 class ME_Textbox extends ME_Input {
-    public function __construct($args, $options, $parent) {
+    public function __construct($args, $options) {
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));
 
         $this->_type        = 'textbox';
         $this->_name        = $args['name'];
         $this->_label       = $args['label'];
         $this->_description = $args['description'];
-        $this->_container   = $parent;
+        $this->_container   = $options;
 
         $this->_options = $options;
     }

@@ -8,18 +8,25 @@ function marketengine_option_view() {
             'title'    => __("General", "enginethemes"),
             'slug'     => 'general-settings',
             'template' => array(
-            	'general' => array(
+                'general'      => array(
                     'title'    => __("General", "enginethemes"),
                     'slug'     => 'general',
                     'type'     => 'section',
-                    'template' => array(),
+                    'template' => array(
+                        'haha' => array(
+                            'title'    => __("Authentication", "enginethemes"),
+                            'slug'     => 'authenticate',
+                            'type'     => 'textbox',
+                            'template' => array(),
+                        ),
+                    ),
                 ),
                 'authenticate' => array(
                     'title'    => __("Authentication", "enginethemes"),
                     'slug'     => 'authenticate',
                     'type'     => 'section',
                     'template' => array(),
-                )
+                ),
             ),
         ),
         'authenticate-settings' => array(
@@ -38,15 +45,26 @@ function marketengine_option_view() {
     echo '<div class="marketengine-tabs">';
 
     echo '<ul class="me-nav me-tabs-nav">';
-    foreach ($tabs as $tab) {
+
+    if (empty($_REQUEST['tab'])) {
+        $requested_tab = 'general-settings';
+    } else {
+        $requested_tab = $_REQUEST['tab'];
+    }
+
+    foreach ($tabs as $key => $tab) {
+        $class = '';
         // check is current tab
-        echo '<li class="active"><a href="?page=marketengine&tab=' . $tab['slug'] . '">' . $tab['title'] . '</a></li>';
+        if ($requested_tab == $key) {
+            $class = 'class="active"';
+        }
+        echo '<li ' . $class . '><a href="?page=marketengine&tab=' . $tab['slug'] . '">' . $tab['title'] . '</a></li>';
     }
     echo '</ul>';
     echo '<div class="me-tabs-container">';
-    // check is current
-    foreach ($tabs as $tab) {
-        $tab = new ME_Tab($tab);
+
+    if (!empty($_REQUEST['tab'])) {
+        $tab = new ME_Tab($tabs[$_REQUEST['tab']]);
         $tab->render();
     }
 
