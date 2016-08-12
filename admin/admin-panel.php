@@ -14,7 +14,8 @@ function marketengine_option_view() {
                     'type'     => 'section',
                     'template' => array(
                         'haha' => array(
-                            'title'    => __("Authentication", "enginethemes"),
+                            'label'    => __("Authentication", "enginethemes"),
+                            'description' => __("The facebook authentication public api key", "enginethemes"),
                             'slug'     => 'authenticate',
                             'type'     => 'textbox',
                             'template' => array(),

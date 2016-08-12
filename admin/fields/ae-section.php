@@ -22,16 +22,23 @@ abstract class ME_Container {
             include $template;
         } else {
             $this->menus();
+            $this->wrapper_start();
 
             foreach ($template as $key => $control) {
                 $class   = 'ME_' . ucfirst($control['type']);
                 $control = new $class($control, $this);
                 $control->render();
             }
+
+            $this->wrapper_end();
         }
 
         $this->end();
     }
+
+    public function wrapper_start() {}
+
+    public function wrapper_end() {}
 }
 
 class ME_Tab extends ME_Container {
@@ -60,6 +67,14 @@ class ME_Tab extends ME_Container {
     public function end() {
         echo '</div>';
     }
+
+    public function wrapper_start() {
+        echo '<div class="me-section-container">';
+    }
+
+    public function wrapper_end() {
+        echo '</div>';
+    }
 }
 
 class ME_Section extends ME_Container {
@@ -70,12 +85,10 @@ class ME_Section extends ME_Container {
     }
 
     public function start() {
-        echo '<div class="me-section-container">';
         echo '<div class="me-section-content">';
     }
 
     public function end() {
-        echo '</div>';
         echo '</div>';
     }
 }
