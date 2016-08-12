@@ -64,10 +64,9 @@ function marketengine_option_view() {
     echo '</ul>';
     echo '<div class="me-tabs-container">';
 
-    if (!empty($_REQUEST['tab'])) {
-        $tab = new ME_Tab($tabs[$_REQUEST['tab']]);
-        $tab->render();
-    }
+    
+    $tab = new ME_Tab($tabs[$requested_tab]);
+    $tab->render();
 
     echo '</div>';
 

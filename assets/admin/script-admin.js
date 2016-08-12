@@ -1,11 +1,11 @@
 (function($){
 $(document).ready(function() {
-	$('.me-tabs > li').on('click', function(ev) {
+	$('.me-nav > li').on('click', function(ev) {
 		var target = ev.currentTarget;
-		$(target).parent('.me-tabs').children('li').removeClass('active');
+		$(target).parent('.me-nav').children('li').removeClass('active');
 		$(target).addClass('active');
 		var pos = $(target).index();
-		var parent = $(target).parent('.me-tabs');
+		var parent = $(target).parent('.me-nav');
 		$(parent).next().children('div').hide()
 		$(parent).next().children('div').eq(pos).show();
 	});

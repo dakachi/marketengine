@@ -163,9 +163,10 @@ class ME_Textbox extends ME_Input {
     }
 
     public function render() {
+    	echo '<div class="me-group-field">';
         $this->label();
         $this->description();
-        echo '<input type="text" class="input-field" value="' . $this->get_value() . '" />';
-
+        echo '<input type="text" class="me-input-field" value="' . $this->get_value() . '" />';
+        echo '</div>';
     }
 }
