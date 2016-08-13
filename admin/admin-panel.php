@@ -16,17 +16,39 @@ function marketengine_option_view() {
                         'haha' => array(
                             'label'    => __("Authentication", "enginethemes"),
                             'description' => __("The facebook authentication public api key", "enginethemes"),
-                            'slug'     => 'authenticate',
+                            'slug'     => 'haha',
                             'type'     => 'textbox',
                             'template' => array(),
                         ),
+                        'hihi' => array(
+                            'label'    => __("Authentication", "enginethemes"),
+                            'description' => __("The facebook authentication public api key", "enginethemes"),
+                            'slug'     => 'hihi',
+                            'type'     => 'textbox',
+                            'template' => array(),
+                        )
                     ),
                 ),
                 'authenticate' => array(
                     'title'    => __("Authentication", "enginethemes"),
                     'slug'     => 'authenticate',
                     'type'     => 'section',
-                    'template' => array(),
+                    'template' => array(
+                    	'haha' => array(
+                            'label'    => __("Authentication", "enginethemes"),
+                            'description' => __("The facebook authentication public api key", "enginethemes"),
+                            'slug'     => 'haha',
+                            'type'     => 'textbox',
+                            'template' => array(),
+                        ),
+                        'hihi' => array(
+                            'label'    => __("Authentication", "enginethemes"),
+                            'description' => __("The facebook authentication public api key", "enginethemes"),
+                            'slug'     => 'hihi',
+                            'type'     => 'textbox',
+                            'template' => array(),
+                        )
+                    ),
                 ),
             ),
         ),
@@ -34,12 +56,20 @@ function marketengine_option_view() {
             'title'    => __("Authentication", "enginethemes"),
             'slug'     => 'authenticate-settings',
             'template' => array(
-                'authenticate' => array(
-                    'title'    => __("Authentication", "enginethemes"),
-                    'slug'     => 'authenticate',
-                    'type'     => 'section',
+                'haha' => array(
+                    'label'    => __("Authentication", "enginethemes"),
+                    'description' => __("The facebook authentication public api key", "enginethemes"),
+                    'slug'     => 'haha',
+                    'type'     => 'textbox',
                     'template' => array(),
                 ),
+                'hihi' => array(
+                    'label'    => __("Authentication", "enginethemes"),
+                    'description' => __("The facebook authentication public api key", "enginethemes"),
+                    'slug'     => 'hihi',
+                    'type'     => 'textbox',
+                    'template' => array(),
+                )
             ),
         ),
     );
