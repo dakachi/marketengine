@@ -14,7 +14,7 @@
  * @return string The template filename if one is located.
  */
 function me_locate_template($template_names, $load = false, $require_once = true) {
-    $located = '';
+    $located          = '';
     $me_template_path = ME()->template_path();
     foreach ((array) $template_names as $template_name) {
         if (!$template_name) {
@@ -35,7 +35,7 @@ function me_locate_template($template_names, $load = false, $require_once = true
         load_template($located, $require_once);
     }
 
-    return $located; 
+    return $located;
 }
 /**
  * Load a template part into a template
@@ -73,7 +73,7 @@ function me_get_template_part($slug, $name = null) {
     do_action("me_get_template_part_{$slug}", $slug, $name);
 
     $templates = array();
-    $name = (string) $name;
+    $name      = (string) $name;
     if ('' !== $name) {
         $templates[] = "{$slug}-{$name}.php";
     }
@@ -95,16 +95,17 @@ function me_get_sidebar() {
      *
      * @param string $name Name of the specific sidebar file to use.
      */
-    do_action( 'me_get_sidebar', $name );
- 
+    do_action('me_get_sidebar', $name);
+
     $templates = array();
-    $name = (string) $name;
-    if ( '' !== $name )
+    $name      = (string) $name;
+    if ('' !== $name) {
         $templates[] = "sidebar-{$name}.php";
- 
+    }
+
     $templates[] = 'sidebar.php';
- 
-    me_locate_template( $templates, true );
+
+    me_locate_template($templates, true);
 }
 
 // TODO: can dat ham nay cho dung vi tri file
@@ -124,7 +125,7 @@ function me_get_page_permalink($page_name) {
  * @return string
  */
 function me_lostpassword_url($default_url = '') {
-    $profile_link = me_get_page_permalink('user-profile');
+    $profile_link       = me_get_page_permalink('user-profile');
     $password_reset_url = me_get_endpoint_url('forgot-password', '', $profile_link);
     if (false !== $password_reset_url) {
         return $password_reset_url;
@@ -153,7 +154,7 @@ function me_get_endpoint_url($endpoint, $value = '', $permalink = '') {
     if (get_option('permalink_structure')) {
         if (strstr($permalink, '?')) {
             $query_string = '?' . parse_url($permalink, PHP_URL_QUERY);
-            $permalink = current(explode('?', $permalink));
+            $permalink    = current(explode('?', $permalink));
         } else {
             $query_string = '';
         }
@@ -178,33 +179,34 @@ function me_get_endpoint_url($endpoint, $value = '', $permalink = '') {
  * }
  */
 function me_post_tags_meta_box($default, $taxonomy) {
-    $tax_name = esc_attr($taxonomy);
-    $taxonomy = get_taxonomy($taxonomy);
+    $tax_name              = esc_attr($taxonomy);
+    $taxonomy              = get_taxonomy($taxonomy);
     $user_can_assign_terms = current_user_can($taxonomy->cap->assign_terms);
-    $comma = _x(',', 'tag delimiter');
-    $terms_to_edit = '';
+    $comma                 = _x(',', 'tag delimiter');
+    $terms_to_edit         = '';
 
     $terms_to_edit = $default;
-?>
-    <div class="tagsdiv" id="<?php echo $tax_name; ?>">
-        <div class="jaxtag">
-        <div class="nojs-tags hide-if-js">
-            <label class="text" for="tax-input-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_or_remove_items; ?></label>
-            <p><textarea style="display:none;" name="<?php echo $tax_name; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled(!$user_can_assign_terms);?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace(',', $comma . ' ', $terms_to_edit); // textarea_escaped by esc_attr()  ?></textarea></p>
-        </div>
-        <?php if ($user_can_assign_terms): ?>
-        <div class="ajaxtag hide-if-no-js">
-            <label class="screen-reader-text" for="new-tag-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_new_item; ?></label>
-            <p><input type="text" id="new-tag-<?php echo $tax_name; ?>" name="newtag[<?php echo $tax_name; ?>]" class="newtag form-input-tip" size="16" autocomplete="off" aria-describedby="new-tag-<?php echo $tax_name; ?>-desc" value="" />
-        </div>
-        <p class="howto" id="new-tag-<?php echo $tax_name; ?>-desc"><?php echo $taxonomy->labels->separate_items_with_commas; ?></p>
-        <?php endif;?>
-        </div>
-        <div class="tagchecklist"></div>
-    </div>
+    ?>
     <?php if ($user_can_assign_terms): ?>
-    <p class="hide-if-no-js"><a href="#titlediv" class="tagcloud-link" id="link-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->choose_from_most_used; ?></a></p>
-<?php endif;?>
+        <div class="tagsdiv" id="<?php echo $tax_name; ?>">
+            <div class="jaxtag">
+            <div class="nojs-tags hide-if-js">
+                <label class="text" for="tax-input-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_or_remove_items; ?></label>
+                <p><textarea style="display:none;" name="<?php echo $tax_name; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled(!$user_can_assign_terms);?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace(',', $comma . ' ', $terms_to_edit); // textarea_escaped by esc_attr()    ?></textarea></p>
+            </div>
+            
+            <div class="ajaxtag hide-if-no-js">
+                <label class="screen-reader-text" for="new-tag-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_new_item; ?></label>
+                <p><input type="text" id="new-tag-<?php echo $tax_name; ?>" name="newtag[<?php echo $tax_name; ?>]" class="newtag form-input-tip" size="16" autocomplete="off" aria-describedby="new-tag-<?php echo $tax_name; ?>-desc" value="" />
+            </div>
+            <p class="howto" id="new-tag-<?php echo $tax_name; ?>-desc"><?php echo $taxonomy->labels->separate_items_with_commas; ?></p>
+            
+            </div>
+            <div class="tagchecklist"></div>
+        </div>
+        
+        <p class="hide-if-no-js"><a href="#titlediv" class="tagcloud-link" id="link-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->choose_from_most_used; ?></a></p>
+    <?php endif;?>
 <?php
 }
 
@@ -219,18 +221,18 @@ function me_paginate_link() {
     $big = 999999999; // need an unlikely integer
 
     $args = array(
-        'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
-        'format' => '?paged=%#%',
-        'total' => $wp_query->max_num_pages,
-        'current' => max( 1, get_query_var('paged') ),
-        'show_all' => false,
-        'end_size' => 1,
-        'mid_size' => 2,
+        'base'      => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+        'format'    => '?paged=%#%',
+        'total'     => $wp_query->max_num_pages,
+        'current'   => max(1, get_query_var('paged')),
+        'show_all'  => false,
+        'end_size'  => 1,
+        'mid_size'  => 2,
         'prev_next' => true,
         'prev_text' => __("&lt;", "enginethemes"),
         'next_text' => __('&gt;', "enginethemes"),
-        'type' => 'plain',
-        'add_args' => false
+        'type'      => 'plain',
+        'add_args'  => false,
     );
     echo paginate_links($args);
 }
@@ -238,9 +240,25 @@ function me_paginate_link() {
 function marketengine_sidebar() {
     me_get_template_part('sidebar');
 }
-add_action( 'marketengine_sidebar', 'marketengine_sidebar' );
+add_action('marketengine_sidebar', 'marketengine_sidebar');
 
-// TODO: tam thoi de day 
+// TODO: tam thoi de day
 function ae_get_option($option, $default) {
     return get_option( $option, $default );
+}
+
+// TODO: noi bo ham nay
+function me_get_client_ip() {
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    return $ip;
+}
+
+function me_get_client_agent() {
+    return !empty($_SERVER['HTTP_USER_AGENT'])? strtolower($_SERVER['HTTP_USER_AGENT']) : '';
 }

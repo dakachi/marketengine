@@ -16,9 +16,13 @@ class ME_Checkout_Form {
                 me_wp_error_to_notices($result);
             } else {
                 // redirect to payment gateway or confirm payment
-                wp_redirect($result->url);
+                wp_redirect($result->transaction_url);
             }
         }
+    }
+
+    public static function process_contact() {
+
     }
 }
 

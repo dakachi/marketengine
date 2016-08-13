@@ -4,14 +4,14 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         phpunit: {
             marketenginetest: {
-                configuration : './tests/phpunit.xml'
+                configuration : './phpunit.xml'
             },
             options: {
                 bin: './vendor/bin/phpunit',
-                bootstrap: './tests/bootstrap.php',
+                bootstrap: './bootstrap.php',
                 colors: true,
-                coverageClover : true,
-                coverage : true
+                // coverageClover : true,
+                // coverage : true
             }
         },
         watch: {
