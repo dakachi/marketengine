@@ -48,30 +48,24 @@ function me_filter_price_query($query) {
 }
 
 function me_sort_listing_query($query) {
-    if (empty($_GET['orderby'])) {
-        return $query;
-    }
-
-    switch ($_GET['orderby']) {
-    case 'date':
-        $query->set('orderby', 'date');
-        break;
-
-    case 'price':
-        $query->set('orderby', 'meta_value_num');
-        $query->set('order', 'asc');
-        break;
-
-    case 'price-desc':
-        $query->set('orderby', 'meta_value_num');
-        $query->set('order', 'desc');
-        break;
-    case 'rating':
-        $query->set('meta_key', '_me_rating');
-        $query->set('orderby', 'meta_value_num');
-        $query->set('order', 'desc');
-    default:
-        break;
+    if (!empty($_GET['orderby'])) {
+        switch ($_GET['orderby']) {
+        case 'date':
+            $query->set('orderby', 'date');
+            break;
+        case 'price':
+            $query->set('orderby', 'meta_value_num');
+            $query->set('order', 'asc');
+            break;
+        case 'price-desc':
+            $query->set('orderby', 'meta_value_num');
+            $query->set('order', 'desc');
+            break;
+        case 'rating':
+            $query->set('meta_key', '_me_rating');
+            $query->set('orderby', 'meta_value_num');
+            $query->set('order', 'desc');
+        }
     }
     return $query;
 }
