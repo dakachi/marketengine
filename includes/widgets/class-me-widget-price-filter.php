@@ -36,14 +36,21 @@ class ME_Widget_Price_Filter extends WP_Widget {
      * @param array $instance Settings for the current Categories widget instance.
      */
     public function widget($args, $instance) {
+        global $wp;
 
         /** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
         $title = apply_filters('widget_title', empty($instance['title']) ? __('Price filter', 'enginethemes') : $instance['title'], $instance, $this->id_base);
 
         echo $args['before_widget'];
         
+        if ( '' === get_option( 'permalink_structure' ) ) {
+            $form_action = remove_query_arg( array( 'page', 'paged' ), add_query_arg( $wp->query_string, '', home_url( $wp->request ) ) );
+        } else {
+            $form_action = preg_replace( '%\/page/[0-9]+%', '', home_url( trailingslashit( $wp->request ) ) );
+        }
+
         ?>
-        <form method="get">
+        <form method="get" action="<?php echo $form_action; ?>">
 
             <h2 class="widget-title"><?php echo $title; ?></h2>
             

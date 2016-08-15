@@ -9,12 +9,6 @@ function me_init() {
     add_rewrite_endpoint('listings', EP_ROOT | EP_PAGES);
 }
 
-// add_filter('query_vars', 'me_add_query_vars');
-// function me_add_query_vars($vars) {
-//     $vars[] = 'forgot-pass';
-//     return $vars;
-// }
-
 // todo: query listing order by date, rating, price
 // todo: filter listing by price
 // todo: filter listing by listing type
@@ -53,5 +47,7 @@ function me_filter_price_query($query) {
 }
 
 function me_sort_listing_query($query) {
+	$query->set('orderby', 'meta_value_num');
+	$query->set('order', 'asc');
 	return $query;
 }

@@ -27,7 +27,7 @@ $selected = !empty($_GET['orderby']) ? $_GET['orderby'] : '';
 				<input type="hidden" name="price-min" value="<?php echo $_GET['price-min'];  ?>" ?>
 			<?php endif; ?>
 			<?php if(!empty($_GET['price-max'])) : ?>
-				<input type="hidden" name="price-min" value="<?php echo $_GET['price-max'];  ?>" ?>
+				<input type="hidden" name="price-max" value="<?php echo $_GET['price-max'];  ?>" ?>
 			<?php  endif; ?>
 		</form>
 	</div>
