@@ -19,10 +19,13 @@ abstract class ME_Container {
             $this->menus();
             $this->wrapper_start();
 
+            $first = true;
             foreach ($template as $key => $control) {
                 $class   = 'ME_' . ucfirst($control['type']);
+                $control['first'] = $first;
                 $control = new $class($control, $this);
                 $control->render();
+                $first = false;
             }
 
             $this->wrapper_end();
