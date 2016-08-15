@@ -11,14 +11,14 @@ return array(
         'type'     => 'section',
         'template' => array(
             'haha' => array(
-                'label'       => __("Authentication", "enginethemes"),
+                'label'       => __("General 1", "enginethemes"),
                 'description' => __("The facebook authentication public api key", "enginethemes"),
                 'slug'        => 'haha',
                 'type'        => 'textbox',
                 'template'    => array(),
             ),
             'hihi' => array(
-                'label'       => __("Authentication", "enginethemes"),
+                'label'       => __("General 2", "enginethemes"),
                 'description' => __("The facebook authentication public api key", "enginethemes"),
                 'slug'        => 'hihi',
                 'type'        => 'textbox',
@@ -32,14 +32,14 @@ return array(
         'type'     => 'section',
         'template' => array(
             'haha' => array(
-                'label'       => __("Authentication", "enginethemes"),
+                'label'       => __("Authentication 1", "enginethemes"),
                 'description' => __("The facebook authentication public api key", "enginethemes"),
                 'slug'        => 'haha',
                 'type'        => 'textbox',
                 'template'    => array(),
             ),
             'hihi' => array(
-                'label'       => __("Authentication", "enginethemes"),
+                'label'       => __("Authentication 2", "enginethemes"),
                 'description' => __("The facebook authentication public api key", "enginethemes"),
                 'slug'        => 'hihi',
                 'type'        => 'textbox',

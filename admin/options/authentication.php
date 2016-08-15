@@ -6,8 +6,8 @@ if (!defined('ABSPATH')) {
 
 return array(
     'general' => array(
-        'title'    => __("General", "enginethemes"),
-        'slug'     => 'general',
+        'title'    => __("Authentication", "enginethemes"),
+        'slug'     => 'authentication',
         'type'     => 'section',
         'template' => array(
             'haha' => array(
