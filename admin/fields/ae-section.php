@@ -49,6 +49,10 @@ class ME_Tab extends ME_Container {
     }
 
     public function menus() {
+        if (count($this->_template) == 1) {
+            return;
+        }
+
         echo '<ul class="me-nav me-section-nav">';
         $class = 'class="active"';
         foreach ($this->_template as $key => $tab) {
@@ -163,7 +167,7 @@ class ME_Textbox extends ME_Input {
     }
 
     public function render() {
-    	echo '<div class="me-group-field">';
+        echo '<div class="me-group-field">';
         $this->label();
         $this->description();
         echo '<input type="text" class="me-input-field" value="' . $this->get_value() . '" />';

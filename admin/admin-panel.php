@@ -14,19 +14,19 @@ function marketengine_option_view() {
                     'type'     => 'section',
                     'template' => array(
                         'haha' => array(
-                            'label'    => __("Authentication", "enginethemes"),
+                            'label'       => __("Authentication", "enginethemes"),
                             'description' => __("The facebook authentication public api key", "enginethemes"),
-                            'slug'     => 'haha',
-                            'type'     => 'textbox',
-                            'template' => array(),
+                            'slug'        => 'haha',
+                            'type'        => 'textbox',
+                            'template'    => array(),
                         ),
                         'hihi' => array(
-                            'label'    => __("Authentication", "enginethemes"),
+                            'label'       => __("Authentication", "enginethemes"),
                             'description' => __("The facebook authentication public api key", "enginethemes"),
-                            'slug'     => 'hihi',
-                            'type'     => 'textbox',
-                            'template' => array(),
-                        )
+                            'slug'        => 'hihi',
+                            'type'        => 'textbox',
+                            'template'    => array(),
+                        ),
                     ),
                 ),
                 'authenticate' => array(
@@ -34,20 +34,20 @@ function marketengine_option_view() {
                     'slug'     => 'authenticate',
                     'type'     => 'section',
                     'template' => array(
-                    	'haha' => array(
-                            'label'    => __("Authentication", "enginethemes"),
+                        'haha' => array(
+                            'label'       => __("Authentication", "enginethemes"),
                             'description' => __("The facebook authentication public api key", "enginethemes"),
-                            'slug'     => 'haha',
-                            'type'     => 'textbox',
-                            'template' => array(),
+                            'slug'        => 'haha',
+                            'type'        => 'textbox',
+                            'template'    => array(),
                         ),
                         'hihi' => array(
-                            'label'    => __("Authentication", "enginethemes"),
+                            'label'       => __("Authentication", "enginethemes"),
                             'description' => __("The facebook authentication public api key", "enginethemes"),
-                            'slug'     => 'hihi',
-                            'type'     => 'textbox',
-                            'template' => array(),
-                        )
+                            'slug'        => 'hihi',
+                            'type'        => 'textbox',
+                            'template'    => array(),
+                        ),
                     ),
                 ),
             ),
@@ -56,20 +56,27 @@ function marketengine_option_view() {
             'title'    => __("Authentication", "enginethemes"),
             'slug'     => 'authenticate-settings',
             'template' => array(
-                'haha' => array(
-                    'label'    => __("Authentication", "enginethemes"),
-                    'description' => __("The facebook authentication public api key", "enginethemes"),
-                    'slug'     => 'haha',
-                    'type'     => 'textbox',
-                    'template' => array(),
+                'general' => array(
+                    'title'    => __("General", "enginethemes"),
+                    'slug'     => 'general',
+                    'type'     => 'section',
+                    'template' => array(
+                        'haha' => array(
+                            'label'       => __("Authentication", "enginethemes"),
+                            'description' => __("The facebook authentication public api key", "enginethemes"),
+                            'slug'        => 'haha',
+                            'type'        => 'textbox',
+                            'template'    => array(),
+                        ),
+                        'hihi' => array(
+                            'label'       => __("Authentication", "enginethemes"),
+                            'description' => __("The facebook authentication public api key", "enginethemes"),
+                            'slug'        => 'hihi',
+                            'type'        => 'textbox',
+                            'template'    => array(),
+                        ),
+                    ),
                 ),
-                'hihi' => array(
-                    'label'    => __("Authentication", "enginethemes"),
-                    'description' => __("The facebook authentication public api key", "enginethemes"),
-                    'slug'     => 'hihi',
-                    'type'     => 'textbox',
-                    'template' => array(),
-                )
             ),
         ),
     );
@@ -94,7 +101,6 @@ function marketengine_option_view() {
     echo '</ul>';
     echo '<div class="me-tabs-container">';
 
-    
     $tab = new ME_Tab($tabs[$requested_tab]);
     $tab->render();
 
@@ -138,11 +144,11 @@ function marketengine_option_header() {
     ?>
 
 <div class="marketengine-admin">
-	<div class="me-header">
-		<span class="pull-left"><?php _e("MARKETENGINE", "enginethemes");?></span>
-		<span class="pull-right"><?php _e("Power by", "enginethemes");?> <a href="https://www.enginethemes.com/">EngineThemes</a></span>
-	</div>
-	<div class="me-body">
+    <div class="me-header">
+        <span class="pull-left"><?php _e("MARKETENGINE", "enginethemes");?></span>
+        <span class="pull-right"><?php _e("Power by", "enginethemes");?> <a href="https://www.enginethemes.com/">EngineThemes</a></span>
+    </div>
+    <div class="me-body">
 <?php
 }
 
@@ -152,7 +158,7 @@ function marketengine_option_header() {
  */
 function marketengine_option_footer() {
     ?>
-	</div>
+    </div>
 </div>
 
 <?php
