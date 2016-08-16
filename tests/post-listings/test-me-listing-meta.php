@@ -47,15 +47,15 @@ class Tests_ME_Listing extends WP_UnitTestCase {
 
         
         $p1 = ME_Listing_Handle::insert($this->listing_data);
-        $this->listing_1 = new ME_Listing_Purchase(get_post($p1));
+        $this->listing_1 = new ME_Listing_Purchasion(get_post($p1));
 
         $this->listing_data['meta_input']['pricing_unit'] = 'per_unit';
         $p1 = ME_Listing_Handle::insert($this->listing_data);
-        $this->listing_2 = new ME_Listing_Purchase(get_post($p1));
+        $this->listing_2 = new ME_Listing_Purchasion(get_post($p1));
 
         $this->listing_data['meta_input']['pricing_unit'] = 'per_hour';
         $p1 = ME_Listing_Handle::insert($this->listing_data);
-        $this->listing_3 = new ME_Listing_Purchase(get_post($p1));
+        $this->listing_3 = new ME_Listing_Purchasion(get_post($p1));
 
         $this->listing_data['listing_type'] = 'contact';
         $this->listing_data['meta_input']['contact_email'] = 'david87dang@gmail.com';
