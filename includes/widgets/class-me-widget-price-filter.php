@@ -44,8 +44,6 @@ class ME_Widget_Price_Filter extends WP_Widget {
         /** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
         $title = apply_filters('widget_title', empty($instance['title']) ? __('Price filter', 'enginethemes') : $instance['title'], $instance, $this->id_base);
 
-        echo $args['before_widget'];
-
         if ('' === get_option('permalink_structure')) {
             $form_action = remove_query_arg(array('page', 'paged'), add_query_arg($wp->query_string, '', home_url($wp->request)));
         } else {
@@ -61,6 +59,8 @@ class ME_Widget_Price_Filter extends WP_Widget {
             return;
         }
 
+        echo $args['before_widget'];
+
         ?>
         <form method="get" action="<?php echo $form_action; ?>">
 
@@ -69,10 +69,10 @@ class ME_Widget_Price_Filter extends WP_Widget {
             <div id="me-range-price" min="<?php echo $min; ?>" max="<?php echo $max; ?>" step="1"></div>
             <div class="me-row">
                 <div class="me-col-xs-4 me-range-dash">
-                    <input class="me-range-price me-range-min" type="number" name="price-min" value="<?php echo $min; ?>"><span>-</span>
+                    <input class="me-range-price me-range-min" type="number" name="price-min" value="<?php echo !empty($_GET['price-min']) ? $_GET['price-min'] : $min; ?>"><span>-</span>
                 </div>
                 <div class="me-col-xs-4 ">
-                    <input class="me-range-price me-range-max" type="number" name="price-max" value="<?php echo $max; ?>">
+                    <input class="me-range-price me-range-max" type="number" name="price-max" value="<?php echo !empty($_GET['price-max']) ? $_GET['price-max'] : $max; ?>">
                 </div>
                 <div class="me-col-xs-4">
                     <input class="me-filter-btn" type="submit" value="<?php _e("Filter", "enginethemes");?>">

@@ -30,7 +30,7 @@
 		range: true,
 		min: min,
 		max: max,
-		values: [ min, max ],
+		values: [ $('input.me-range-min').val(), $('input.me-range-max').val() ],
 		slide: function( event, ui ) {
 			$('input.me-range-min').val(ui.values[0]);
 			$('input.me-range-max').val(ui.values[1]);
