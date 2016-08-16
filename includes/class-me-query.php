@@ -1,6 +1,9 @@
 <?php
-add_action('init', 'me_init');
-function me_init() {
+
+/**
+ * add account endpoint
+ */
+function me_init_endpoint() {
     add_rewrite_endpoint('forgot-password', EP_ROOT | EP_PAGES);
     add_rewrite_endpoint('reset-password', EP_ROOT | EP_PAGES);
     add_rewrite_endpoint('register', EP_ROOT | EP_PAGES);
@@ -8,15 +11,16 @@ function me_init() {
     add_rewrite_endpoint('change-password', EP_ROOT | EP_PAGES);
     add_rewrite_endpoint('listings', EP_ROOT | EP_PAGES);
 }
+add_action('init', 'me_init_endpoint');
 
-// todo: query listing order by date, rating, price
-// todo: filter listing by price
-// todo: filter listing by listing type
-
+/**
+ * Filter listing query
+ * @since 1.0
+ */
 function me_filter_listing_query($query) {
     // We only want to affect the main query
     if (!$query->is_main_query()) {
-        return;
+        return $query;
     }
 
     if (!$query->is_post_type_archive('listing') && !$query->is_tax(get_object_taxonomies('listing'))) {
@@ -31,6 +35,11 @@ function me_filter_listing_query($query) {
 }
 add_filter('pre_get_posts', 'me_filter_listing_query');
 
+/**
+ * Filter query listing by price
+ * @param object $query The WP_Query Object
+ * @since 1.0
+ */
 function me_filter_price_query($query) {
     if (!empty($_GET['price-min']) && !empty($_GET['price-max'])) {
         $min_price                                       = $_GET['price-min'];
@@ -45,6 +54,11 @@ function me_filter_price_query($query) {
     return $query;
 }
 
+/**
+ * Filter query listing by listing type
+ * @param object $query The WP_Query Object
+ * @since 1.0
+ */
 function me_filter_listing_type_query($query) {
     if (!empty($_GET['type'])) {
         $query->query_vars['meta_query']['filter_type'] = array(
@@ -56,6 +70,12 @@ function me_filter_listing_type_query($query) {
     return $query;
 }
 
+
+/**
+ * Sort the listing
+ * @param object $query The WP_Query Object
+ * @since 1.0
+ */
 function me_sort_listing_query($query) {
     if (!empty($_GET['orderby'])) {
         switch ($_GET['orderby']) {
