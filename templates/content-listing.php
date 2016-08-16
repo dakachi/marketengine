@@ -4,13 +4,13 @@ if (!defined('ABSPATH')) {
     exit;
 }
 global $post;
-$listing = new ME_Listing($post);
+$listing = ME()->listing_factory->get_listing($post);
 $listing_type = $listing->get_listing_type();
 // TODO: update schema type, price and unit
-$price = 100;
-$pricing_unit = '/Unit';
 ?>
+<?php do_action('marketengine_before_listing_item', $listing); ?>
 <li class="me-item-post me-col-md-3" itemscope itemtype="http://schema.org/Product">
+	<?php do_action('marketengine_listing_item_start', $listing); ?>
 	<div class="item-post-wrap">
 		<a href="<?php the_permalink(); ?>" title="<?php printf(__("View %s", "enginethemes"), get_the_title()); ?>" class="item-post-img">
 			<?php the_post_thumbnail(); ?>
@@ -20,10 +20,14 @@ $pricing_unit = '/Unit';
 				<a href="<?php the_permalink(); ?>" title="<?php printf(__("View %s", "enginethemes"), get_the_title()); ?>"><?php the_title(); ?></a>
 			</h2>
 			<div class="item-post-price">
-				
+				<?php do_action('marketengine_after_listing_item_price'); ?>
 				<?php if('contact' === $listing_type) : ?>
 					<span class="post-price pull-right">Contact</span>
-				<?php else : ?>
+				<?php endif; ?>
+				<?php if('purchasion' == $listing_type) :
+					$price = $listing->get_price();
+					$pricing_unit = $listing->get_pricing_unit();
+				?>
 					<div class="me-rating pull-left">
 						<i class="icon-font star-on-png"></i>
 						<i class="icon-font star-on-png"></i>
@@ -38,7 +42,7 @@ $pricing_unit = '/Unit';
 						</span>
 					</div>
 				<?php endif; ?>
-				
+				<?php do_action('marketengine_after_listing_item_price'); ?>
 				<div class="clearfix"></div>
 			</div>
 			<div class="item-by-author">
@@ -46,4 +50,6 @@ $pricing_unit = '/Unit';
 			</div>
 		</div>
 	</div>
+	<?php do_action('marketengine_listing_item_end', $listing); ?>
 </li>
+<?php do_action('marketengine_after_listing_item', $listing); ?>

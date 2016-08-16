@@ -2,7 +2,7 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class ME_Listing_Purchase extends ME_Listing{
+class ME_Listing_Purchasion extends ME_Listing{
     /**
      * @var int $stock
      * the number of good regularly available for sale.

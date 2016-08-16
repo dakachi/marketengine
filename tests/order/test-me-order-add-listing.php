@@ -42,7 +42,7 @@ class Tests_ME_Order_Add_Listing extends WP_UnitTestCase {
             'sub_cat' => $this->sub_cat,
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
-        $this->listing = new ME_Listing_Purchase($p1);
+        $this->listing = new ME_Listing_Purchasion($p1);
     }
 
     /**

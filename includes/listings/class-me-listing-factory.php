@@ -40,7 +40,7 @@ class ME_Listing_Factory {
      * @return ME_Listing| false
      */
     public function get_listing($the_listing = false, $listing_type = '') {
-        if (!($obj instanceof WP_Post)) {
+        if (!($the_listing instanceof WP_Post)) {
             return false;
         }
         $listing_class = $this->get_listing_class($the_listing);
@@ -60,13 +60,18 @@ class ME_Listing_Factory {
      * @return string Class Name
      */
     public function get_listing_class_name_from_type($type) {
-        return 'ME_Listing_' . $type;
+        return 'ME_Listing_' . ucfirst($type);
     }
-	public function get_listing_class($the_listing, $type) {
-		get_listing_type($the_listing);
-		return get_listing_class_name_from_type($args['type']);
+	
+    public function get_listing_class($the_listing, $type = '') {
+        if(empty($type)) {
+            $type = $this->get_listing_type($the_listing);
+        }
+        return $this->get_listing_class_name_from_type($type);	
     }
-    public function get_listing_type($the_listing){
 
+    public function get_listing_type($the_listing){
+        $type = get_post_meta( $the_listing->ID, '_me_listing_type', true );
+        return apply_filters('marketengine_get_listing_type', $type, $the_listing);
     }
 }

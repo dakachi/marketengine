@@ -39,6 +39,13 @@ if (!class_exists('MarketEngine')):
          * @since 1.0
          */
         public $current_user;
+
+        /**
+         * The listing factory object 
+         * @var listing_factory
+         * @since 1.0
+         */
+        public $listing_factory;
         /**
          * Main MarketEngine Instance.
          *
@@ -66,6 +73,9 @@ if (!class_exists('MarketEngine')):
              *
              * @since 1.0.0
              */
+
+            $this->listing_factory = ME_Listing_Factory::instance();
+
             do_action('marketengine_loaded');
         }
 
@@ -109,8 +119,9 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/handle-listings/class-me-listing-handle.php';
             require_once ME_PLUGIN_PATH . '/includes/handle-listings/class-me-listing-handle-form.php';
 
+            require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-factory.php';
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing.php';
-            require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-purchase.php';
+            require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-purchasion.php';
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-contact.php';
 
             require_once ME_PLUGIN_PATH . '/includes/handle-checkout/class-me-checkout-handle.php';
