@@ -41,15 +41,26 @@ class ME_Widget_Listing_Types extends WP_Widget {
 
         echo $args['before_widget'];
         
+        $types = me_get_listing_types();
+
+        $current = !empty($_GET['type']) ? $_GET['type'] : '';
+
         ?>
             <h2 class="widget-title"><?php echo $title; ?></h2>
-
             <div class="me-listingtype-filter">
-                <label><input type="checkbox" name="">Offering</label>
-            </div>
-            <div class="me-listingtype-filter">
-                <label><input type="checkbox" name="">Selling</label>
-            </div>
+                <label>
+                    <input type="radio" name="type" value="" <?php checked( '', $current); ?>>
+                    <a href="<?php echo remove_query_arg('type'); ?>" ><?php _e("All", "enginethemes"); ?></a>
+                </label>
+            </div>    
+            <?php foreach ($types as $key => $type) : ?>
+                <div class="me-listingtype-filter">
+                    <label>
+                        <input type="radio" name="type" value="<?php echo $key; ?>" <?php checked( $key, $current); ?>>
+                        <a href="<?php echo add_query_arg('type', $key); ?>"><?php echo $type; ?></a>
+                    </label>
+                </div>    
+            <?php endforeach; ?>
         <?php
 
         echo $args['after_widget'];

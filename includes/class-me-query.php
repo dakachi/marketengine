@@ -24,6 +24,7 @@ function me_filter_listing_query($query) {
     }
 
     $query = me_filter_price_query($query);
+    $query = me_filter_listing_type_query($query);
     $query = me_sort_listing_query($query);
 
     return $query;
@@ -32,16 +33,25 @@ add_filter('pre_get_posts', 'me_filter_listing_query');
 
 function me_filter_price_query($query) {
     if (!empty($_GET['price-min']) && !empty($_GET['price-max'])) {
-        $min_price = $_GET['price-min'];
-        $max_price = $_GET['price-max'];
-        $query->set('meta_query', array(
-            'filter_price' => array(
-                'key'     => 'listing_price',
-                'value'   => array($min_price, $max_price),
-                'type'    => 'numeric',
-                'compare' => 'BETWEEN',
-            )
-        ));
+        $min_price                                       = $_GET['price-min'];
+        $max_price                                       = $_GET['price-max'];
+        $query->query_vars['meta_query']['filter_price'] = array(
+            'key'     => 'listing_price',
+            'value'   => array($min_price, $max_price),
+            'type'    => 'numeric',
+            'compare' => 'BETWEEN',
+        );
+    }
+    return $query;
+}
+
+function me_filter_listing_type_query($query) {
+    if (!empty($_GET['type'])) {
+        $query->query_vars['meta_query']['filter_type'] = array(
+            'key'     => '_me_listing_type',
+            'value'   => $_GET['type'],
+            'compare' => '=',
+        );
     }
     return $query;
 }
