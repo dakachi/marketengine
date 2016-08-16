@@ -24,16 +24,19 @@
 		magnificInstance = false;
 	});
 
+	var min = parseInt($('#me-range-price').attr('min'));
+	var max = parseInt($('#me-range-price').attr('max'));
 	var range_price = $('#me-range-price').slider({
 		range: true,
-		min: 0,
-		max: 500,
-		values: [ 75, 300 ],
+		min: min,
+		max: max,
+		values: [ min, max ],
 		slide: function( event, ui ) {
 			$('input.me-range-min').val(ui.values[0]);
 			$('input.me-range-max').val(ui.values[1]);
 		}
 	});
+
 	$('input.me-range-min').val(range_price.slider('values', 0));
 	$('input.me-range-max').val(range_price.slider('values', 1));
 

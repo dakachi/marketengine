@@ -35,14 +35,13 @@ function me_filter_price_query($query) {
         $min_price = $_GET['price-min'];
         $max_price = $_GET['price-max'];
         $query->set('meta_query', array(
-            array(
+            'filter_price' => array(
                 'key'     => 'listing_price',
                 'value'   => array($min_price, $max_price),
                 'type'    => 'numeric',
                 'compare' => 'BETWEEN',
-            ),
+            )
         ));
-        $query->set('meta_key', 'listing_price');
     }
     return $query;
 }
@@ -54,6 +53,7 @@ function me_sort_listing_query($query) {
             $query->set('orderby', 'date');
             break;
         case 'price':
+            $query->set('meta_key', 'listing_price');
             $query->set('orderby', 'meta_value_num');
             $query->set('order', 'asc');
             break;
