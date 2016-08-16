@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 global $post;
-$listing = new ME_Listing_Purchase($post);
+$listing = new ME_Listing_Purchasion($post);
 $galleries = $listing->get_galleries();
 ?>
 

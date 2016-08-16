@@ -71,7 +71,7 @@ class ME_Checkout_Handle {
             return new WP_Error("invalid_listing", __("The selected listing is invalid.", "enginethemes"));
         }
 
-        $listing = new ME_Listing_Purchase($listing);
+        $listing = new ME_Listing_Purchasion($listing);
         if (!$listing->is_available()) {
             return new WP_Error("unavailable_listing", __("The listing is not available for sale.", "enginethemes"));
         }

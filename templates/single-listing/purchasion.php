@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 global $post;
-$listing = new ME_Listing_Purchase($post);
+$listing = new ME_Listing_Purchasion($post);
 $price = $listing->get_price();
 $pricing_unit = $listing->get_pricing_unit();
 ?>
