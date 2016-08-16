@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 ?>
-<div class="me-author">
+<div class="me-authors">
 	<span class="me-avatar">
 		<img src="http://0.gravatar.com/avatar/c655f931959fd28e3594563edd348833?s=60&amp;d=mm&amp;r=G" alt="">
 		<b>author listing</b>
