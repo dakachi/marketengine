@@ -35,7 +35,11 @@ class ME_Widget_Price_Filter extends WP_Widget {
      * @param array $instance Settings for the current Categories widget instance.
      */
     public function widget($args, $instance) {
-        global $wp;
+        global $wp, $wp_query;
+
+        if (!$wp_query->is_post_type_archive('listing') && !$wp_query->is_tax(get_object_taxonomies('listing'))) {
+            return $query;
+        }
 
         /** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
         $title = apply_filters('widget_title', empty($instance['title']) ? __('Price filter', 'enginethemes') : $instance['title'], $instance, $this->id_base);
