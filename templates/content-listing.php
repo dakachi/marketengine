@@ -8,7 +8,9 @@ $listing = ME()->listing_factory->get_listing($post);
 $listing_type = $listing->get_listing_type();
 // TODO: update schema type, price and unit
 ?>
+
 <?php do_action('marketengine_before_listing_item', $listing); ?>
+
 <li class="me-item-post me-col-md-3" itemscope itemtype="http://schema.org/Product">
 	<?php do_action('marketengine_listing_item_start', $listing); ?>
 	<div class="item-post-wrap">
@@ -50,6 +52,9 @@ $listing_type = $listing->get_listing_type();
 			</div>
 		</div>
 	</div>
+
 	<?php do_action('marketengine_listing_item_end', $listing); ?>
+	
 </li>
+
 <?php do_action('marketengine_after_listing_item', $listing); ?>
