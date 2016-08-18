@@ -41,5 +41,4 @@ $pricing_unit = $listing->get_pricing_unit();
 		</form>
 	</div>
 </div>
-
 <?php do_action('marketengine_after_single_listing_price'); ?>
