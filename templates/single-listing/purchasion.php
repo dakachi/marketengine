@@ -29,7 +29,7 @@ $pricing_unit = $listing->get_pricing_unit();
 				</div>
 			<?php endif; ?>
 			
-			<?php wp_nonce_field('me-create_order'); ?>
+			<?php wp_nonce_field('me-add-to-cart'); ?>
 
 			<?php do_action('marketengine_single_listing_add_to_cart_form_field'); ?>
 

@@ -6,12 +6,18 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
-// listing details
-me_get_template_part('checkout/listing-details');
-// seller information
-me_get_template_part('checkout/seller-info');
+?>
+<div class="marketengine">
+<?php
+me_get_template_part('checkout/billing');
 // note
 me_get_template_part('checkout/note');
+// listing details
+me_get_template_part('checkout/order-details');
+// seller information
+me_get_template_part('checkout/seller-info');
 // payment gateways
 me_get_template_part('checkout/payment-gateways');
+
+?>
+</div>

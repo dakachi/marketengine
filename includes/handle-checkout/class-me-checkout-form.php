@@ -6,7 +6,18 @@ if (!defined('ABSPATH')) {
 
 class ME_Checkout_Form {
     public static function init_hook() {
+        add_action('wp_loaded', array(__CLASS__, 'add_to_cart'));
         add_action('wp_loaded', array(__CLASS__, 'process_checkout'));
+    }
+
+    public static function add_to_cart() {
+        if (isset($_POST['add_to_cart']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-add-to-cart')) {
+            // kiem tra san pham co con duoc ban ko
+            $listing_id = $_POST['add_to_cart'];
+            $listing = get_post($listing_id);
+            // kiem tra san pham co ton tai hay ko
+            // neu co the mua thi dieu huong nguoi dung den trang thanh toan
+        }
     }
 
     public static function process_checkout() {
@@ -25,5 +36,4 @@ class ME_Checkout_Form {
 
     }
 }
-
 ME_Checkout_Form::init_hook();
