@@ -1,9 +1,12 @@
+<?php
+// get cart item tu session
+?>
 <div class="me-shopping-cart">
-	<h3>Your order</h3>
+	<h3><?php _e("Your order", "enginethemes"); ?></h3>
 	<div class="me-table me-cart-table">
 		<div class="me-table-row me-cart-item">
 			<div class="me-table-col me-cart-name">
-				<span>Listing</span>
+				<span><?php _e("Item", "enginethemes"); ?></span>
 				<span>
 					<div class="me-cart-listing">
 						<a href="">
@@ -41,6 +44,6 @@
 	</div>
 
 	<div class="me-checkout-submit">
-		<input class="me-checkout-submit-btn" type="submit" value="MAKE PAYMENT">
+		<input class="me-checkout-submit-btn" type="submit" value="<?php _e("MAKE PAYMENT", "enginethemes"); ?>">
 	</div>
 </div>

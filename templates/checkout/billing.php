@@ -78,6 +78,7 @@ $shipping_fields = apply_filters('marketengine_shipping_fields', $address_fields
 					</div>
 				</div>
 			</div>
+			
 			<input id="me-shipping-address-input" type="checkbox" name="me-billing" checked="">
 			<label class="me-use-ship-label" for="me-shipping-address-input">
 				<?php _e("Use the same address as the billing address", "enginethemes"); ?>
