@@ -13,23 +13,22 @@ setup_postdata( $post );
 					<div class="me-cart-listing">
 						<a href="">
 							<?php the_post_thumbnail(); ?>
-							<!-- <img src="assets/img/2.jpg" alt=""> -->
-							<span><?php echo get_the_title($post->ID); ?></span>
+							<span><?php the_title(); ?></span>
 						</a>
 					</div>
 				</span>
 			</div>
 			<div class="me-table-col me-cart-price">
-				<span>Price</span>
+				<span><?php _e("Price", "enginethemes"); ?></span>
 				<span>$20</span>
 			</div>
 			<div class="me-table-col me-cart-units-total">
 				<div class="me-cart-units">
-					<span>Units</span>
+					<span><?php _e("Units", "enginethemes"); ?></span>
 					<span><input type="number" value="20"></span>
 				</div>
 				<div class="me-cart-total">
-					<span>Total price</span>
+					<span><?php _e("Total price", "enginethemes"); ?></span>
 					<span>$180</span>
 				</div>
 			</div>
