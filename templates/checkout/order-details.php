@@ -1,5 +1,7 @@
 <?php
 // get cart item tu session
+$post = get_post(156);
+// the_post();
 ?>
 <div class="me-shopping-cart">
 	<h3><?php _e("Your order", "enginethemes"); ?></h3>
@@ -11,7 +13,7 @@
 					<div class="me-cart-listing">
 						<a href="">
 							<img src="assets/img/2.jpg" alt="">
-							<span>Lorem Ipsum is simply dummy text Lorem Ipsum is simply</span>
+							<span><?php echo get_the_title($post->ID); ?></span>
 						</a>
 					</div>
 				</span>
