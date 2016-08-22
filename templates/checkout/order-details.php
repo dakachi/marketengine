@@ -1,11 +1,23 @@
 <?php
 // get cart item tu session
-$post = get_post(156);
+$post = get_post(3830);
 setup_postdata( $post );
+$listing =  me_get_listing();
+$unit = 1;
+
+
+$total = $listing->get_price() + $listing->get_shipping_fee();
+
 ?>
+
+<?php do_action( 'marketengine_before_checkout_form', $post ); ?>
+
 <div class="me-shopping-cart">
 	<h3><?php _e("Your order", "enginethemes"); ?></h3>
 	<div class="me-table me-cart-table">
+
+		<?php do_action( 'marketengine_before_cart_item_list' ); ?>
+
 		<div class="me-table-row me-cart-item">
 			<div class="me-table-col me-cart-name">
 				<span><?php _e("Item", "enginethemes"); ?></span>
@@ -20,28 +32,40 @@ setup_postdata( $post );
 			</div>
 			<div class="me-table-col me-cart-price">
 				<span><?php _e("Price", "enginethemes"); ?></span>
-				<span>$20</span>
+				<span>$<?php echo $listing->get_price(); ?></span>
 			</div>
 			<div class="me-table-col me-cart-units-total">
 				<div class="me-cart-units">
 					<span><?php _e("Units", "enginethemes"); ?></span>
-					<span><input type="number" value="20"></span>
+					<span><?php echo $unit ?></span>
 				</div>
 				<div class="me-cart-total">
 					<span><?php _e("Total price", "enginethemes"); ?></span>
-					<span>$180</span>
+					<span>$<?php echo ($listing->get_price()) * $unit; ?></span>
 				</div>
 			</div>
 		</div>
+
+		<?php do_action( 'marketengine_after_cart_item_list' ); ?>
+
+		<?php if($listing->get_shipping_fee()): ?>
+			<div class="me-table-row">
+				<div class="me-table-col me-table-empty"></div>
+				<div class="me-table-col me-table-empty"></div>
+				<div class="me-table-col me-cart-shippingfee">
+					<span><?php _e("Shipping fee:", "enginethemes"); ?></span>
+					<span>$<?php echo $listing->get_shipping_fee(); ?></span>
+				</div>
+			</div>
+		<?php endif; ?>
+
 		<div class="me-table-row">
 			<div class="me-table-col me-table-empty"></div>
 			<div class="me-table-col me-table-empty"></div>
-			<div class="me-table-col me-cart-shippingfee"><span><?php _e("Shipping fee:", "enginethemes"); ?></span><span>$10</span></div>
-		</div>
-		<div class="me-table-row">
-			<div class="me-table-col me-table-empty"></div>
-			<div class="me-table-col me-table-empty"></div>
-			<div class="me-table-col me-cart-totals"><span><?php _e("Total amount:", "enginethemes"); ?></span><span>$1010</span></div>
+			<div class="me-table-col me-cart-totals">
+				<span><?php _e("Total amount:", "enginethemes"); ?></span>
+				<span>$<?php echo $total  ?></span>
+			</div>
 		</div>
 	</div>
 
@@ -49,4 +73,7 @@ setup_postdata( $post );
 		<input class="me-checkout-submit-btn" type="submit" value="<?php _e("MAKE PAYMENT", "enginethemes"); ?>">
 	</div>
 </div>
+
+<?php do_action( 'marketengine_after_checkout_form', $post ); ?>
+
 <?php wp_reset_postdata(); ?>

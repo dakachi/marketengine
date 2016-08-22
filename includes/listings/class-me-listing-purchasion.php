@@ -45,4 +45,8 @@ class ME_Listing_Purchasion extends ME_Listing{
     public function is_in_stock() {
         return get_post_meta($this->id, 'me_is_in_stock', true);
     }
+
+    public function get_shipping_fee() {
+        return 10;
+    }
 }
