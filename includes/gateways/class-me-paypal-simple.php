@@ -81,4 +81,8 @@ class ME_Paypal_Simple extends ME_Payment {
     public function build_query($order_data) {
         return http_build_query($order_data);
     }
+
+    public function setup_payment($order) {}
+    public function process_payment($order){}
+    public function refund($order){}
 }

@@ -108,6 +108,7 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/me-email-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-listing-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-order-functions.php';
+            require_once ME_PLUGIN_PATH . '/includes/me-payment-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-conversation-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-user-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-widgets.php';
@@ -123,6 +124,10 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing.php';
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-purchasion.php';
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-contact.php';
+
+            require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-payment.php';
+            require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-paypal-simple.php';
+            require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-ppadaptive.php';
 
             require_once ME_PLUGIN_PATH . '/includes/handle-checkout/class-me-checkout-handle.php';
             require_once ME_PLUGIN_PATH . '/includes/handle-checkout/class-me-checkout-form.php';

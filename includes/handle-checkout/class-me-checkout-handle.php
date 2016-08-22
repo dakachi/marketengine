@@ -33,7 +33,7 @@ class ME_Checkout_Handle {
             'country'    => 'required',
         );
 
-        if (!$data['is_ship_to_billing_address']) {
+        if (!empty($data['is_ship_to_billing_address'])) {
             $shipping_rules = $billing_rules;
         }
 

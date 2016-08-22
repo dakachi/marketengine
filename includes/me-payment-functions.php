@@ -12,9 +12,9 @@ if (!defined('ABSPATH')) {
  */
 function me_get_available_payment_gateways() {
 	$available_gateways =  array(
-		'cash' => new ME_Cash(),
-		'ppsimple' => new ME_PPSimple(),
-		'ppadaptive' => new ME_PPAdaptive::get_instance()
+		// 'cash' => new ME_Cash(),
+		'ppsimple' => new ME_Paypal_Simple(),
+		'ppadaptive' => ME_PPAdaptive::instance()
 	);
 	return apply_filters('marketengine_available_payment_gateways', $available_gateways);
 }

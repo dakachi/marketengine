@@ -87,7 +87,7 @@ class ME_PPAdaptive extends ME_Payment {
      * @return string
      */
     public function get_pending_message($pending_reason) {
-        $pending_reason = strtoupper($pending_reason)
+        $pending_reason = strtoupper($pending_reason);
         $reason         = array(
             'ECHECK'         => __('The payment is pending because it was made by an eCheck that has not yet cleared.', 'enginethemes'),
             'MULTI_CURRENCY' => __('The receiver does not have a balance in the currency sent, and does not have the Payment Receiving Preferences set to automatically convert and accept this payment. Receiver must manually accept or deny this payment from the Account Overview.', 'enginethemes'),
@@ -124,6 +124,10 @@ class ME_PPAdaptive extends ME_Payment {
 
         return $headers;
     }
+
+
+    public function setup_payment($order) {}
+    public function process_payment($order){}
 
     /**
      * The GetVerifiedStatus API operation lets you determine whether the specified PayPal account's status is verified or unverified.
