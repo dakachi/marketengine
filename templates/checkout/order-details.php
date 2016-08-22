@@ -69,8 +69,11 @@ $total = $listing->get_price() + $listing->get_shipping_fee();
 		</div>
 	</div>
 
+	<?php wp_nonce_field('me-checkout'); ?>
+	<input type="hidden" name="item" value="<?php echo $listing->id; ?>" />
+
 	<div class="me-checkout-submit">
-		<input class="me-checkout-submit-btn" type="submit" value="<?php _e("MAKE PAYMENT", "enginethemes"); ?>">
+		<input class="me-checkout-submit-btn" type="submit" name="checkout" value="<?php _e("MAKE PAYMENT", "enginethemes"); ?>">
 	</div>
 </div>
 
