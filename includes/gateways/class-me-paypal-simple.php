@@ -50,13 +50,13 @@ class ME_Paypal_Simple extends ME_Payment {
     }
 
     public function __construct() {
-        $api = ae_get_option('simple_paypal_api', array());
+        $api = ae_get_option('simple_paypal_api', array('receiver_email' => 'david87dang@gmail.com'));
 
         $this->receiver_email = trim($api['receiver_email']);
         $this->_api_endpoint  = 'https://api-3t.sandbox.paypal.com/nvp';
 
         $this->_proxy    = false;
-        $this->_test_mod = ae_get_option('is_test_mod');
+        $this->_test_mod = ae_get_option('is_test_mod', true);
 
         $this->_paypal_url = 'https://www.paypal.com/cgi-bin/webscr?';
         if ($this->_test_mod) {
@@ -82,7 +82,9 @@ class ME_Paypal_Simple extends ME_Payment {
         return http_build_query($order_data);
     }
 
-    public function setup_payment($order) {}
+    public function setup_payment($order) {
+        return (object)array('transaction_url' => home_url());
+    }
     public function process_payment($order){}
     public function refund($order){}
 }

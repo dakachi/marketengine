@@ -36,17 +36,16 @@ class ME_Checkout_Handle {
         if (!empty($data['is_ship_to_billing_address'])) {
             $shipping_rules = $billing_rules;
         }
-
         // create order
         $order = self::create_order($data);
         if(is_wp_error( $order )) {
             return $order;
         }
 
-        $payments       = me_get_available_payments_gateways();
+        $payments       = me_get_available_payment_gateways();
         $payment_method = $data['payment_method'];
-        $result         = $payment[$payment_method]->process_payment($order);
-        
+        $result         = $payments[$payment_method]->setup_payment($order);
+
         return $result;
     }
 
@@ -62,7 +61,7 @@ class ME_Checkout_Handle {
         global $user_ID;
         $data['post_author'] = $user_ID;
 
-        if (!me_is_available_payment_gateway($data['payment_method'])) {
+        if (empty($data['payment_method']) || !me_is_available_payment_gateway($data['payment_method'])) {
             return new WP_Error("invalid_payment_method", __("The selected payment method is not available now.", "enginethemes"));
         }
 
@@ -87,8 +86,6 @@ class ME_Checkout_Handle {
         if (!empty($data['shipping_address'])) {
             $order->set_address($data['shipping_address'], 'shipping');
         }
-
-        $order->set_payment_note($data['note']);
         $order->set_payment_method($data['payment_method']);
 
         return $order;

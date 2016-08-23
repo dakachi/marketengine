@@ -8,6 +8,7 @@ if (!defined('ABSPATH')) {
 }
 ?>
 <div class="marketengine">
+	<?php me_print_notices(); ?>
 	<form method="post">
 		<?php
 		me_get_template_part('checkout/billing');

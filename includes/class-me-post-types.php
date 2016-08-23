@@ -60,7 +60,7 @@ class ME_Post_Types {
         );
         //TODO: setup listing category permarlink
         $permalinks = get_option('me_permalinks');
-        $args = array(
+        $args       = array(
             'labels'            => $labels,
             'public'            => true,
             'show_in_nav_menus' => true,
@@ -102,7 +102,7 @@ class ME_Post_Types {
         );
         //TODO: setup listing category permarlink
         $permalinks = get_option('me_permalinks');
-        $args = array(
+        $args       = array(
             'labels'            => $labels,
             'public'            => true,
             'show_in_nav_menus' => true,
@@ -112,7 +112,7 @@ class ME_Post_Types {
             'show_ui'           => true,
             'query_var'         => true,
             'rewrite'           => array(
-                'slug'         => 'listing_tag'
+                'slug' => 'listing_tag',
             ),
             'capabilities'      => array(
                 'manage_terms',
@@ -185,8 +185,16 @@ class ME_Post_Types {
             'capability_type'    => 'post',
             'hierarchical'       => false,
             'menu_position'      => 25,
-            'supports'           => array('title', 'editor', 'author', 'excerpt','custom-fields'),
+            'supports'           => array('title', 'editor', 'author', 'excerpt', 'custom-fields'),
         ));
 
+        register_post_status('me-pending', array(
+            'label'                     => _x('Pending', 'me-order'),
+            'public'                    => true,
+            'exclude_from_search'       => false,
+            'show_in_admin_all_list'    => true,
+            'show_in_admin_status_list' => true,
+            'label_count'               => _n_noop('Pending <span class="count">(%s)</span>', 'Pending <span class="count">(%s)</span>'),
+        ));
     }
 }

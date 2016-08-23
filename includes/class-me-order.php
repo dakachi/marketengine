@@ -147,7 +147,7 @@ class ME_Order {
      */
     public function set_address($address, $type = 'billing') {
         $address_field = array('first_name', 'last_name', 'phone', 'email', 'postcode', 'address', 'city', 'country');
-        foreach ($address_fields as $field) {
+        foreach ($address_field as $field) {
             if (isset($address[$field])) {
                 update_post_meta($this->id, '_me_' . $type . '_' . $field, $address[$field]);
             }
@@ -309,4 +309,5 @@ class ME_Order {
     public function get_transaction_url() {
 
     }
+
 }
