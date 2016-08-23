@@ -36,6 +36,10 @@ class ME_Widget_Listing_Types extends WP_Widget {
      * @param array $instance Settings for the current Categories widget instance.
      */
     public function widget($args, $instance) {
+        global $wp_query;
+        if (!$wp_query->is_post_type_archive('listing') && !$wp_query->is_tax(get_object_taxonomies('listing'))) {
+            return ;
+        }
         /** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
         $title = apply_filters('widget_title', empty($instance['title']) ? __('Listing Types', 'enginethemes') : $instance['title'], $instance, $this->id_base);
 
