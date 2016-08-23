@@ -1,12 +1,7 @@
 <?php
 // get cart item tu session
-$post = get_post(132);
-setup_postdata( $post );
-$listing =  me_get_listing();
-$unit = 1;
-
-
-$total = $listing->get_price() + $listing->get_shipping_fee();
+$cart_items = me_get_cart_items();
+$total = 0;
 
 ?>
 
@@ -17,6 +12,15 @@ $total = $listing->get_price() + $listing->get_shipping_fee();
 	<div class="me-table me-cart-table">
 
 		<?php do_action( 'marketengine_before_cart_item_list' ); ?>
+
+		<?php foreach ($cart_items as $key => $item) :
+			$post = get_post($item);
+			setup_postdata( $post );
+			$listing =  me_get_listing();
+
+			$total += $listing->get_price();
+			$unit = 1;
+		?>
 
 		<div class="me-table-row me-cart-item">
 			<div class="me-table-col me-cart-name">
@@ -45,6 +49,8 @@ $total = $listing->get_price() + $listing->get_shipping_fee();
 				</div>
 			</div>
 		</div>
+
+		<?php endforeach; ?>
 
 		<?php do_action( 'marketengine_after_cart_item_list' ); ?>
 

@@ -15,6 +15,7 @@ class ME_Checkout_Form {
             // kiem tra san pham co con duoc ban ko
             $listing_id = $_POST['add_to_cart'];
             $listing = get_post($listing_id);
+            me_add_to_cart($listing_id);
             // kiem tra san pham co ton tai hay ko
             // neu co the mua thi dieu huong nguoi dung den trang thanh toan
         }

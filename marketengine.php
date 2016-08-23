@@ -109,6 +109,7 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/me-listing-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-order-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-payment-functions.php';
+            require_once ME_PLUGIN_PATH . '/includes/me-cart-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-conversation-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-user-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-widgets.php';

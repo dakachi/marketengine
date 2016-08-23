@@ -52,7 +52,12 @@ class ME_Paypal_Simple extends ME_Payment {
     public function __construct() {
         $api = ae_get_option('simple_paypal_api', array('receiver_email' => 'david87dang@gmail.com'));
 
-        $this->receiver_email = trim($api['receiver_email']);
+        $this->receiver_email = 'dinhle1987-biz@yahoo.com';
+        
+        // username : dinhle1987-biz_api1.yahoo.com
+        // password: 1362804968
+        // Signature: A6LFoneN6dpKOQkj2auJBwoVZBiLAE-QivfFWXkjxrvJZ6McADtMu8Pe
+
         $this->_api_endpoint  = 'https://api-3t.sandbox.paypal.com/nvp';
 
         $this->_proxy    = false;
