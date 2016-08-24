@@ -28,3 +28,11 @@ function me_is_available_payment_gateway($gateway) {
 	$available_gateways = me_get_available_payment_gateways();
 	return isset($available_gateways[$gateway]);
 }
+
+function me_setup_payment($order) {
+	
+}
+
+function me_process_payment($order) {
+	
+}
