@@ -190,8 +190,9 @@ class ME_Post_Types {
 
         register_post_status('me-pending', array(
             'label'                     => _x('Pending', 'me-order'),
-            'public'                    => true,
+            'public'                    => false,
             'exclude_from_search'       => false,
+            'private'                   => true,
             'show_in_admin_all_list'    => true,
             'show_in_admin_status_list' => true,
             'label_count'               => _n_noop('Pending <span class="count">(%s)</span>', 'Pending <span class="count">(%s)</span>'),

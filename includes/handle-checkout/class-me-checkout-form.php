@@ -18,6 +18,8 @@ class ME_Checkout_Form {
             me_add_to_cart($listing_id);
             // kiem tra san pham co ton tai hay ko
             // neu co the mua thi dieu huong nguoi dung den trang thanh toan
+            wp_redirect( home_url('/me-checkout') );
+            exit;
         }
     }
 

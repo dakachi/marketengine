@@ -20,6 +20,29 @@ class ME_Order {
         $this->order = get_post($order);
     }
 
+    public function __get($name) {
+        if(strrpos($name, 'billing') !== false ) {
+            $billing_address = $this->get_address('billing');
+            $name = str_replace('billing_', '', $name);
+            if(isset($billing_address[$name])) {
+                return $billing_address[$name];
+            }else {
+                return '';
+            }
+        }
+
+        if(strrpos($name, 'shipping') !== false ) {
+            $shipping = $this->get_address('shipping');
+            $name = str_replace('shipping_', '', $name);
+            if(isset($shipping[$name])) {
+                return $shipping[$name];
+            }else {
+                return '';
+            }
+        }
+
+        return '';
+    }
     /**
      * Add listing item to order details
      *
@@ -127,7 +150,7 @@ class ME_Order {
      * @return array Array of address details
      */
     public function get_address($type = 'billing') {
-        $address_field = array('first_name', 'last_name', 'phone', 'email', 'postcode', 'address', 'city', 'country');
+        $address_fields = array('first_name', 'last_name', 'phone', 'email', 'postcode', 'address', 'city', 'country');
         $address       = array();
         foreach ($address_fields as $field) {
             $address[$field] = get_post_meta($this->id, '_me_' . $type . '_' . $field, true);
@@ -146,8 +169,8 @@ class ME_Order {
      * @return array Array of address details
      */
     public function set_address($address, $type = 'billing') {
-        $address_field = array('first_name', 'last_name', 'phone', 'email', 'postcode', 'address', 'city', 'country');
-        foreach ($address_field as $field) {
+        $address_fields = array('first_name', 'last_name', 'phone', 'email', 'postcode', 'address', 'city', 'country');
+        foreach ($address_fields as $field) {
             if (isset($address[$field])) {
                 update_post_meta($this->id, '_me_' . $type . '_' . $field, $address[$field]);
             }

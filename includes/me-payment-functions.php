@@ -29,6 +29,10 @@ function me_is_available_payment_gateway($gateway) {
 	return isset($available_gateways[$gateway]);
 }
 
+function get_marketengine_currency() {
+	return 'USD';
+}
+
 function me_setup_payment($order) {
 	
 }

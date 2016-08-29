@@ -35,6 +35,8 @@ class ME_Checkout_Handle {
 
         if (!empty($data['is_ship_to_billing_address'])) {
             $shipping_rules = $billing_rules;
+        }else {
+            $data['shipping_address'] =  $data['billing_info'];
         }
         // create order
         $order = self::create_order($data);
