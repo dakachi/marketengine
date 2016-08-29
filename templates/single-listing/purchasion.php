@@ -25,7 +25,7 @@ $pricing_unit = $listing->get_pricing_unit();
 
 			<?php if('' !== $pricing_unit) : ?>
 				<div class="me-quantily">
-					<input type="number" required min="1" value="1" />
+					<input type="number" required min="1" value="1" name="qty" />
 				</div>
 			<?php endif; ?>
 			

@@ -67,14 +67,18 @@ class ME_Checkout_Handle {
             return new WP_Error("invalid_payment_method", __("The selected payment method is not available now.", "enginethemes"));
         }
 
-        $listing = get_post($data['listing_id']);
-        if (is_wp_error($listing)) {
-            return new WP_Error("invalid_listing", __("The selected listing is invalid.", "enginethemes"));
-        }
+        $items = array();
+        foreach ($data['listing'] as $key => $value) {
+            $listing = get_post($value['id']);
+            if (is_wp_error($listing)) {
+                return new WP_Error("invalid_listing", __("The selected listing is invalid.", "enginethemes"));
+            }
 
-        $listing = new ME_Listing_Purchasion($listing);
-        if (!$listing->is_available()) {
-            return new WP_Error("unavailable_listing", __("The listing is not available for sale.", "enginethemes"));
+            $listing = new ME_Listing_Purchasion($listing);
+            if (!$listing->is_available()) {
+                return new WP_Error("unavailable_listing", __("The listing is not available for sale.", "enginethemes"));
+            }
+            $items[] = array('id' =>  $listing, 'qty' => $value['qty']);
         }
 
         $order = me_insert_order($data);
@@ -83,7 +87,10 @@ class ME_Checkout_Handle {
         }
 
         $order = new ME_Order($order);
-        $order->add_listing($listing);
+        foreach ($items as $item) {
+            $order->add_listing($item['id'], $item['qty']);
+        }
+        
         $order->set_address($data['billing_info']);
         if (!empty($data['shipping_address'])) {
             $order->set_address($data['shipping_address'], 'shipping');

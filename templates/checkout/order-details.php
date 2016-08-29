@@ -14,12 +14,12 @@ $total = 0;
 		<?php do_action( 'marketengine_before_cart_item_list' ); ?>
 
 		<?php foreach ($cart_items as $key => $item) :
-			$post = get_post($item);
+			$post = get_post($item['id']);
 			setup_postdata( $post );
 			$listing =  me_get_listing();
 
 			$total += $listing->get_price();
-			$unit = 1;
+			$unit = $item['qty'];
 		?>
 
 		<div class="me-table-row me-cart-item">
@@ -49,7 +49,8 @@ $total = 0;
 				</div>
 			</div>
 		</div>
-
+		<input type="hidden" name="listing[<?php echo $key; ?>][id]" value="<?php echo $item['id']; ?>" />
+		<input type="hidden" name="listing[<?php echo $key; ?>][qty]" value="<?php echo $item['qty']; ?>" />
 		<?php endforeach; ?>
 
 		<?php do_action( 'marketengine_after_cart_item_list' ); ?>
@@ -76,7 +77,6 @@ $total = 0;
 	</div>
 
 	<?php wp_nonce_field('me-checkout'); ?>
-	<input type="hidden" name="listing_id" value="<?php echo $listing->id; ?>" />
 
 	<div class="me-checkout-submit">
 		<input type="hidden" name="payment_method" value="ppsimple" />

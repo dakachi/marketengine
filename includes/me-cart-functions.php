@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function me_add_to_cart($item) {
-	if (!did_action('init')) {
+function me_add_to_cart($item, $qty) {
+    if (!did_action('init')) {
         _doing_it_wrong(__FUNCTION__, __('This function should not be called before wordpress init.', 'enginethemes'), '1.0');
         return;
     }
@@ -16,13 +16,13 @@ function me_add_to_cart($item) {
      * @param String $message
      * @since 1.0
      */
-    $message = apply_filters('me_add_to_cart', $item);
-    $me_cart['item'] = array($item => $item);
+    $message         = apply_filters('me_add_to_cart', $item);
+    $me_cart['item'] = array($item => array('id' => $item, 'qty' => $qty));
     ME()->session->set('me_carts', $me_cart);
 }
 
 function me_get_cart_items() {
-	if (!did_action('init')) {
+    if (!did_action('init')) {
         _doing_it_wrong(__FUNCTION__, __('This function should not be called before wordpress init.', 'enginethemes'), '1.0');
         return;
     }

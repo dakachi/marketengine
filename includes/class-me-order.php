@@ -56,6 +56,7 @@ class ME_Order {
         if (!is_object($listing)) {
             return false;
         }
+        
         $order_item_id = me_add_order_item($this->id, $listing->get_title(), 'listing_item');
         if ($order_item_id) {
             me_add_order_item_meta($order_item_id, '_listing_id', $listing->id);
