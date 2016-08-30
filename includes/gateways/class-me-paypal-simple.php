@@ -181,7 +181,14 @@ class ME_Paypal_Simple extends ME_Payment {
             $order = new ME_Order($order);
             $mc_gross = $response['mc_gross'];
             $receiver_email = $response['receiver_email'];
+            $currency = $response['mc_currency'];
+            $payment_status = $response['payment_status'];
+            // validate paypal response
 
+
+            // $response['payer_id']
+            // $response['txn_id']
+            // $response['payer_email']
         }catch (Exception $e) {
             return new WP_Error ('payment_response_error', $e->getMessage() );
         }
