@@ -92,7 +92,7 @@ class ME_Paypal_Simple extends ME_Payment {
                 'no_note'       => 1,
                 'currency_code' => get_marketengine_currency(),
                 'charset'       => 'utf-8',
-                'rm'            => is_ssl() ? 2 : 1,
+                'rm'            => 2,//is_ssl() ? 2 : 1,
                 'upload' => 1,
                 'return'        => 'http://localhost/wp/process-payment',//esc_url_raw(add_query_arg('utm_nooverride', '1', $this->gateway->get_return_url($order))),
                 'cancel_return' => 'http://localhost/wp/cancel-payment', //esc_url_raw($order->get_cancel_order_url_raw()),
@@ -101,7 +101,7 @@ class ME_Paypal_Simple extends ME_Payment {
                 'bn'            => 'ShoppingCart',
                 // 'invoice'       => $this->gateway->get_option('invoice_prefix') . $order->get_order_number(),
                 'custom'        => json_encode(array('order_id' => $order->id)),
-                // 'notify_url'    => $this->notify_url,
+                'notify_url'    => 'http://localhost/wp/process-payment',
                 'first_name'    => $order->billing_first_name,
                 'last_name'     => $order->billing_last_name,
                 'address1'      => $order->billing_address_1,
@@ -168,10 +168,8 @@ class ME_Paypal_Simple extends ME_Payment {
         $paypal = $this->_paypal_url . $this->build_query($order);
         return (object) array('transaction_url' => $paypal);
     }
-    public function process_payment($order) {}
-    public function refund($order) {}
+    public function process_payment($response) {
 
-    public function ipn_check() {
-        
     }
+    public function refund($order) {}
 }

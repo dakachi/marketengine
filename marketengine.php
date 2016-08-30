@@ -8,7 +8,6 @@ Author: EngineThemes team
 Author URI: https://enginethemes.com
 Domain Path: enginethemes
  */
-
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;

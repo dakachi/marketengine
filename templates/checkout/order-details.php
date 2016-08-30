@@ -6,7 +6,6 @@ $total = 0;
 ?>
 
 <?php do_action( 'marketengine_before_checkout_form', $post ); ?>
-
 <div class="me-shopping-cart">
 	<h3><?php _e("Your order", "enginethemes"); ?></h3>
 	<div class="me-table me-cart-table">
