@@ -168,7 +168,24 @@ class ME_Paypal_Simple extends ME_Payment {
         $paypal = $this->_paypal_url . $this->build_query($order);
         return (object) array('transaction_url' => $paypal);
     }
+
+
     public function process_payment($response) {
+        try {
+            $order = json_decode($response['custom']);
+            $order = get_post($order['order_id']);
+            if(!$order || is_wp_error( $order )) {
+                throw new Exception(__("The order not existed.", "enginethemes"));
+            }
+
+            $order = new ME_Order($order);
+            $mc_gross = $response['mc_gross'];
+            $receiver_email = $response['receiver_email'];
+
+        }catch (Exception $e) {
+            return new WP_Error ('payment_response_error', $e->getMessage() );
+        }
+        
 
     }
     public function refund($order) {}
