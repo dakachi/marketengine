@@ -9,6 +9,12 @@ $total = 0;
 <div class="me-shopping-cart">
 	<h3><?php _e("Your order", "enginethemes"); ?></h3>
 	<div class="me-table me-cart-table">
+		<div class="me-table-rhead">
+			<div class="me-table-col me-cart-name"><?php _e("Item", "enginethemes"); ?></div>
+			<div class="me-table-col me-cart-price"><?php _e("Price", "enginethemes"); ?></div>
+			<div class="me-table-col me-cart-units"><?php _e("Units", "enginethemes"); ?></div>
+			<div class="me-table-col me-cart-units-total"><?php _e("Total price", "enginethemes"); ?></div>
+		</div>
 
 		<?php do_action( 'marketengine_before_cart_item_list' ); ?>
 
@@ -23,28 +29,24 @@ $total = 0;
 
 		<div class="me-table-row me-cart-item">
 			<div class="me-table-col me-cart-name">
-				<span><?php _e("Item", "enginethemes"); ?></span>
-				<span>
-					<div class="me-cart-listing">
-						<a href="">
-							<?php the_post_thumbnail(); ?>
-							<span><?php the_title(); ?></span>
-						</a>
-					</div>
-				</span>
+				<div class="me-cart-listing">
+					<a href="">
+						<?php the_post_thumbnail(); ?>
+						<span><?php the_title(); ?></span>
+					</a>
+				</div>
 			</div>
 			<div class="me-table-col me-cart-price">
 				<span><?php _e("Price", "enginethemes"); ?></span>
-				<span>$<?php echo $listing->get_price(); ?></span>
+				$<?php echo $listing->get_price(); ?>
 			</div>
-			<div class="me-table-col me-cart-units-total">
+			<div class="me-table-col me-cart-units">
 				<div class="me-cart-units">
 					<span><?php _e("Units", "enginethemes"); ?></span>
-					<span><?php echo $unit ?></span>
+					<?php echo $unit ?>
 				</div>
-				<div class="me-cart-total">
-					<span><?php _e("Total price", "enginethemes"); ?></span>
-					<span>$<?php echo ($listing->get_price()) * $unit; ?></span>
+				<div class="me-table-col me-cart-units-total">
+					$<?php echo ($listing->get_price()) * $unit; ?>
 				</div>
 			</div>
 		</div>
@@ -55,23 +57,19 @@ $total = 0;
 		<?php do_action( 'marketengine_after_cart_item_list' ); ?>
 
 		<?php if($listing->get_shipping_fee()): ?>
-			<div class="me-table-row">
+			<div class="me-table-row me-cart-rshippingfee">
 				<div class="me-table-col me-table-empty"></div>
 				<div class="me-table-col me-table-empty"></div>
-				<div class="me-table-col me-cart-shippingfee">
-					<span><?php _e("Shipping fee:", "enginethemes"); ?></span>
-					<span>$<?php echo $listing->get_shipping_fee(); ?></span>
-				</div>
+				<div class="me-table-col me-cart-shippingfee"><?php _e("Shipping fee:", "enginethemes"); ?></div>
+				<div class="me-table-col me-cart-shippingfee-price">$<?php echo $listing->get_shipping_fee(); ?></div>
 			</div>
 		<?php endif; ?>
 
-		<div class="me-table-row">
+		<div class="me-table-row me-cart-rtotals">
 			<div class="me-table-col me-table-empty"></div>
 			<div class="me-table-col me-table-empty"></div>
-			<div class="me-table-col me-cart-totals">
-				<span><?php _e("Total amount:", "enginethemes"); ?></span>
-				<span>$<?php echo $total  ?></span>
-			</div>
+			<div class="me-table-col me-cart-amount"><?php _e("Total amount:", "enginethemes"); ?></div>
+			<div class="me-table-col me-cart-totals">$<?php echo $total  ?></div>
 		</div>
 	</div>
 
