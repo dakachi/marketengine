@@ -41,13 +41,11 @@ $total = 0;
 				$<?php echo $listing->get_price(); ?>
 			</div>
 			<div class="me-table-col me-cart-units">
-				<div class="me-cart-units">
-					<span><?php _e("Units", "enginethemes"); ?></span>
-					<?php echo $unit ?>
-				</div>
-				<div class="me-table-col me-cart-units-total">
-					$<?php echo ($listing->get_price()) * $unit; ?>
-				</div>
+				<span><?php _e("Units", "enginethemes"); ?></span>
+				<?php echo $unit ?>
+			</div>
+			<div class="me-table-col me-cart-units-total">
+				$<?php echo ($listing->get_price()) * $unit; ?>
 			</div>
 		</div>
 		<input type="hidden" name="listing[<?php echo $key; ?>][id]" value="<?php echo $item['id']; ?>" />
