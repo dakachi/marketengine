@@ -185,15 +185,14 @@ class ME_Paypal_Simple extends ME_Payment {
             $payment_status = $response['payment_status'];
             // validate paypal response
 
-
+            $id = wp_update_post(array('ID' => $order->id, 'post_status' => 'publish'));
+            var_dump($id);
             // $response['payer_id']
             // $response['txn_id']
             // $response['payer_email']
         }catch (Exception $e) {
             return new WP_Error ('payment_response_error', $e->getMessage() );
         }
-        
-
     }
     public function refund($order) {}
 }
