@@ -1,8 +1,10 @@
 <?php
 echo "<pre>";
 print_r($_POST);
-print_r($_REQUEST);
 echo "</pre>";
+
+do_action( 'marketengine_process_order_', $arg = '' );
+do_action( 'marketengine_process_order', $arg = '' );
 ?>
 <html>
     <head>
