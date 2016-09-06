@@ -311,6 +311,10 @@ class ME_Order {
 
     }
 
+    public function get_order_number() {
+        return $this->id;
+    }
+
     public function get_buyer() {
 
     }
@@ -327,9 +331,12 @@ class ME_Order {
             update_post_meta($this->id, '_me_payment_gateway', '');
             update_post_meta($this->id, '_me_gateway_title', '');
         }
-
     }
 
+    public function get_payment_method() {
+        return get_post_meta($this->id, '_me_payment_gateway', true);
+    }
+ 
     public function get_transaction_url() {
 
     }

@@ -99,7 +99,7 @@ class ME_Paypal_Simple extends ME_Payment {
                 // 'page_style'    => $this->gateway->get_option('page_style'),
                 // 'paymentaction' => $this->gateway->get_option('paymentaction'),
                 'bn'            => 'ShoppingCart',
-                // 'invoice'       => $this->gateway->get_option('invoice_prefix') . $order->get_order_number(),
+                'invoice'       => 'ME-' . $order->get_order_number(),
                 'custom'        => json_encode(array('order_id' => $order->id)),
                 'notify_url'    => 'http://localhost/wp/process-payment',
                 'first_name'    => $order->billing_first_name,
@@ -185,7 +185,7 @@ class ME_Paypal_Simple extends ME_Payment {
             // validate paypal response
 
             $id = wp_update_post(array('ID' => $order->id, 'post_status' => 'publish'));
-            var_dump($id);
+            //var_dump($id);
             // $response['payer_id']
             // $response['txn_id']
             // $response['payer_email']
