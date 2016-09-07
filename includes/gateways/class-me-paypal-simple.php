@@ -101,7 +101,7 @@ class ME_Paypal_Simple extends ME_Payment {
                 'bn'            => 'ShoppingCart',
                 'invoice'       => 'ME-' . $order->get_order_number(),
                 'custom'        => json_encode(array('order_id' => $order->id)),
-                'notify_url'    => 'http://localhost/wp/process-payment',
+                'notify_url'    => home_url( '?me-payment=ME_Paypal_Simple' ),
                 'first_name'    => $order->billing_first_name,
                 'last_name'     => $order->billing_last_name,
                 'address1'      => $order->billing_address_1,
@@ -169,29 +169,36 @@ class ME_Paypal_Simple extends ME_Payment {
         return (object) array('transaction_url' => $paypal);
     }
 
-    public function process_payment($response) {
+    public function complete_payment($response) {
         try {
-            $order = json_decode($response['custom']);
-            $order = get_post($order['order_id']);
+            $order = json_decode(stripslashes($response['custom'] ));
+            $order = get_post($order->order_id);
             if (!$order || is_wp_error($order)) {
                 throw new Exception(__("The order not existed.", "enginethemes"));
             }
 
             $order          = new ME_Order($order);
-            $mc_gross       = $response['mc_gross'];
-            $receiver_email = $response['receiver_email'];
-            $currency       = $response['mc_currency'];
-            $payment_status = $response['payment_status'];
-            // validate paypal response
-
-            $id = wp_update_post(array('ID' => $order->id, 'post_status' => 'publish'));
-            //var_dump($id);
-            // $response['payer_id']
-            // $response['txn_id']
-            // $response['payer_email']
+            if($this->validate_order($response, $order)) {
+                $id = wp_update_post(array('ID' => $order->id, 'post_status' => 'publish'));
+                // $response['payer_id']
+                // $response['txn_id']
+                // $response['payer_email']
+            }else {
+                throw new Exception(__("Fraud.", "enginethemes"));
+            }
+            
         } catch (Exception $e) {
             return new WP_Error('payment_response_error', $e->getMessage());
         }
     }
+
+    public function validate_order($response, $order){
+        $mc_gross       = $response['mc_gross'];
+        $receiver_email = $response['receiver_email'];
+        $currency       = $response['mc_currency'];
+        $payment_status = $response['payment_status'];
+        return true;
+    }
+
     public function refund($order) {}
 }

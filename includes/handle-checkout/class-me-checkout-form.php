@@ -8,6 +8,8 @@ class ME_Checkout_Form {
     public static function init_hook() {
         add_action('wp_loaded', array(__CLASS__, 'add_to_cart'));
         add_action('wp_loaded', array(__CLASS__, 'process_checkout'));
+
+        add_action('wp_loaded', array(__CLASS__, 'confirm_payment'));
     }
 
     public static function add_to_cart() {
@@ -34,6 +36,14 @@ class ME_Checkout_Form {
                 wp_redirect($result->transaction_url);
                 exit;
             }
+        }
+    }
+
+    public static function confirm_payment() {
+        if(!empty($_GET['me-payment'])) {
+            do_action( 'marketegine_' . $_REQUEST['me-payment'], $_REQUEST );
+            $paypal = ME_Paypal_Simple::instance();
+            $paypal->complete_payment($_REQUEST);
         }
     }
 

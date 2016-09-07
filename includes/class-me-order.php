@@ -15,9 +15,15 @@ class ME_Order {
      *
      */
     public function __construct($order = 0) {
-        $order       = absint($order);
-        $this->id    = $order;
-        $this->order = get_post($order);
+        if(is_numeric($order)) {
+            $order       = absint($order);
+            $this->id    = $order;
+            $this->order = get_post($order);    
+        }else {
+            $this->order = $order;
+            $this->id = $order->ID;
+        }
+        
     }
 
     public function __get($name) {
@@ -67,6 +73,7 @@ class ME_Order {
         }
 
         $this->caculate_subtotal();
+        $this->caculate_total();
 
         return $order_item_id;
     }
@@ -287,6 +294,10 @@ class ME_Order {
 
         update_post_meta($this->id, '_order_total', $this->total);
         return $this->total;
+    }
+
+    public function get_total() {
+        return get_post_meta($this->id, '_order_total', true);
     }
 
     /**
