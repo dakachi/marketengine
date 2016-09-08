@@ -179,10 +179,14 @@ class ME_Paypal_Simple extends ME_Payment {
 
             $order = new ME_Order($order);
             if ($this->validate_order($response, $order)) {
+
+                $payment_status = $response['payment_status'];
+
                 $id = wp_update_post(array('ID' => $order->id, 'post_status' => 'publish'));
-                update_post_meta( $id, '_payer_id', $response['payer_id'] );
-                update_post_meta( $id, '_txn_id', $response['txn_id'] );
-                update_post_meta( $id, '_payer_email', $response['payer_email'] );                
+                update_post_meta($id, '_payer_id', $response['payer_id']);
+                update_post_meta($id, '_txn_id', $response['txn_id']);
+                update_post_meta($id, '_payer_email', $response['payer_email']);
+
             } else {
                 throw new Exception(__("Fraud.", "enginethemes"));
             }
@@ -193,18 +197,19 @@ class ME_Paypal_Simple extends ME_Payment {
     }
 
     public function validate_order($response, $order) {
-        
+
         $txn_id         = $response['txn_id'];
         $mc_gross       = $response['mc_gross'];
         $currency       = $response['mc_currency'];
         $receiver_email = $response['receiver_email'];
 
-        if(!$this->validate_mcgross($mc_gross, $order) || !$this->validate_receiver($receiver_email, $order) || !$this->validate_currency($currency, $order) ) {
+        if (!$this->validate_mcgross($mc_gross, $order) || !$this->validate_receiver($receiver_email, $order) || !$this->validate_currency($currency, $order)) {
             return false;
         }
 
-        $payment_status = $response['payment_status'];
-
+        if (!$this->check_txn_id($txn_id)) {
+            return false;
+        }
 
         return true;
     }
@@ -221,6 +226,17 @@ class ME_Paypal_Simple extends ME_Payment {
         return $currency === $order->get_currency();
     }
 
+    private function check_txn_id($id) {
+        global $wpdb;
+        $query = "SELECT * FROM $wpdb->postsmeta WHERE meta_value = {$id}";
+
+        $results = $wpdb->query($query);
+        if (!empty($results)) {
+            return false;
+        }
+
+        return true;
+    }
 
     public function refund($order) {}
 }
