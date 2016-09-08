@@ -7,7 +7,7 @@ $paypal->complete_payment($_REQUEST);
 <div class="marketengine">
 	<div class="me-payment-complete">
 		<h3><?php _e("Thank for your payment", "enginethemes"); ?></h3>
-		<p>Your payment of $<?php echo $order->get_total(); ?> has been received for your Lorem Ipsum is simply dummy text for printing on Tue, Jun, 28, 2016.</p>
+		<p>Your payment of $<?php echo $order->get_total(); ?> has been received for your Lorem Ipsum is simply dummy text for printing on <?php echo date_i18n( get_option( 'date_format' ), strtotime( $order->post_date ) ); ?></p>
 		<p>Your transaction number is <span id="me-orderid">#<?php echo $order->get_order_number(); ?></span></p>
 		<p><?php _e("A detailed summary of your transaction is sent to your mail.", "enginethemes"); ?></p>
 
