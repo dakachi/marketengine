@@ -10,9 +10,21 @@ function me_init_endpoint() {
     add_rewrite_endpoint('edit-profile', EP_ROOT | EP_PAGES);
     add_rewrite_endpoint('change-password', EP_ROOT | EP_PAGES);
     add_rewrite_endpoint('listings', EP_ROOT | EP_PAGES);
+    add_rewrite_endpoint('order', EP_ROOT | EP_PAGES);
+
+    add_rewrite_rule( '^process-payment/order/([^/]*)/?','index.php?page_id=392&order-id=$matches[1]','top');
+
 }
 add_action('init', 'me_init_endpoint');
 
+
+function me_products_plugin_query_vars($vars)
+{
+    $vars[] = 'order-id';
+
+    return $vars;
+}
+add_filter('query_vars', 'me_products_plugin_query_vars');
 /**
  * Filter listing query
  * @since 1.0

@@ -317,7 +317,7 @@ class ME_Authentication {
         $reset_pass_link = apply_filters('marketengine_resert_password_link', $reset_pass_link, $user_data, $key);
 
         ob_start();
-        me_get_template_part('emails/reset-password');
+        me_get_template('emails/reset-password');
         $message = ob_get_clean();
 
         if (is_multisite()) {
@@ -424,7 +424,7 @@ class ME_Authentication {
             $mail_title = apply_filters('marketengine_reset_password_success_mail_subject', $mail_title, $user);
             // get mail content
             ob_start();
-            me_get_template_part('emails/reset-password-success');
+            me_get_template('emails/reset-password-success');
             $mail_content = ob_get_clean();
             /**
              * Filter user reset password success email content
@@ -518,7 +518,7 @@ class ME_Authentication {
         if ($user_activate_email_key) {
             // get activation mail content from template
             ob_start();
-            me_get_template_part('emails/activation');
+            me_get_template('emails/activation');
             $activation_mail_content = ob_get_clean();
             /**
              * Filter user activation email subject
@@ -565,7 +565,7 @@ class ME_Authentication {
     public static function send_registration_success_email($user) {
         // get registration success mail content from template
         ob_start();
-        me_get_template_part('emails/registration-success');
+        me_get_template('emails/registration-success');
         $registration_success_mail_content = ob_get_clean();
         /**
          * Filter user registration success email subject

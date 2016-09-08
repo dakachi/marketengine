@@ -100,7 +100,7 @@ class ME_Listing_Handle_Form extends ME_Form {
     public static function load_sub_category() {
         if (isset($_REQUEST['parent-cat'])) {
             ob_start();
-            me_get_template_part('post-listing/sub-cat');
+            me_get_template('post-listing/sub-cat');
             $content = ob_get_clean();
             wp_send_json_success($content);
         }

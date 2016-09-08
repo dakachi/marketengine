@@ -1,6 +1,6 @@
 <?php
-$order_id = get_query_var( 'order' );
-$order = new ME_Order(418);
+$order_id = get_query_var( 'order-id' );
+$order = new ME_Order($order_id);
 $paypal = ME_Paypal_Simple::instance();
 $paypal->complete_payment($_REQUEST);
 

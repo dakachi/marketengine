@@ -12,7 +12,7 @@ get_header(); ?>
 
 	<?php do_action('marketengine_before_single_listing_content'); ?>
 
-	<?php me_get_template_part( 'content', 'single-listing' ); ?>
+	<?php me_get_template( 'content-single-listing' ); ?>
 
 	<?php do_action('marketengine_after_single_listing_content'); ?>
 

@@ -11,8 +11,8 @@ $listing_type = $listing->get_listing_type();
 	<div itemscope itemtype="http://schema.org/Product" class="marketengine-listing-detail">
 		<div class="me-row">
 			<div class="me-col-md-12">
-				<?php me_get_template_part('single-listing/title');?>
-				<?php me_get_template_part('single-listing/statistic');?>
+				<?php me_get_template('single-listing/title');?>
+				<?php me_get_template('single-listing/statistic');?>
 			</div>
 		</div>
 		<div class="me-row">
@@ -21,9 +21,9 @@ $listing_type = $listing->get_listing_type();
 				<?php do_action('marketengine_before_single_listing_details'); ?>
 
 				<div class="marketengine-content-detail">
-					<?php me_get_template_part('single-listing/gallery');?>
-					<?php me_get_template_part('single-listing/description');?>
-					<?php me_get_template_part('single-listing/rating');?>
+					<?php me_get_template('single-listing/gallery');?>
+					<?php me_get_template('single-listing/description');?>
+					<?php me_get_template('single-listing/rating');?>
 				</div>
 
 				<?php do_action('marketengine_after_single_listing_details'); ?>
@@ -35,11 +35,11 @@ $listing_type = $listing->get_listing_type();
 
 				<div class="marketengine-sidebar-detail">
 
-					<?php //me_get_template_part('single-listing/status');?>
-					<?php me_get_template_part('single-listing/'. $listing_type );?>
-					<?php me_get_template_part('single-listing/category');?>		
-					<?php me_get_template_part('single-listing/author');?>			
-					<?php me_get_template_part('single-listing/report');?>
+					<?php //me_get_template('single-listing/status');?>
+					<?php me_get_template('single-listing/'. $listing_type );?>
+					<?php me_get_template('single-listing/category');?>		
+					<?php me_get_template('single-listing/author');?>			
+					<?php me_get_template('single-listing/report');?>
 				</div>
 
 				<?php do_action('marketengine_after_single_listing_sidebar'); ?>

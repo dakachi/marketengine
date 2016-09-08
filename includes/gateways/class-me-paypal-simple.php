@@ -94,8 +94,8 @@ class ME_Paypal_Simple extends ME_Payment {
                 'charset'       => 'utf-8',
                 'rm'            => 2, //is_ssl() ? 2 : 1,
                 'upload'        => 1,
-                'return'        => 'http://localhost/wp/process-payment', //esc_url_raw(add_query_arg('utm_nooverride', '1', $this->gateway->get_return_url($order))),
-                'cancel_return' => 'http://localhost/wp/cancel-payment', //esc_url_raw($order->get_cancel_order_url_raw()),
+                'return'        => 'http://localhost/wp/process-payment/order/' . $order->id, //esc_url_raw(add_query_arg('utm_nooverride', '1', $this->gateway->get_return_url($order))),
+                'cancel_return' => 'http://localhost/wp/cancel-payment/order/' . $order->id, //esc_url_raw($order->get_cancel_order_url_raw()),
                 // 'page_style'    => $this->gateway->get_option('page_style'),
                 // 'paymentaction' => $this->gateway->get_option('paymentaction'),
                 'bn'            => 'ShoppingCart',
@@ -197,7 +197,6 @@ class ME_Paypal_Simple extends ME_Payment {
     }
 
     public function validate_order($response, $order) {
-
         $txn_id         = $response['txn_id'];
         $mc_gross       = $response['mc_gross'];
         $currency       = $response['mc_currency'];

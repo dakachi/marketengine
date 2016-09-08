@@ -23,7 +23,7 @@ global $wp_query;
 
 						<div class="me-content-shop">
 
-							<?php me_get_template_part('archive', 'heading') ?>
+							<?php me_get_template('archive', 'heading') ?>
 
 							<div class="marketengine-listing-post">
 							
@@ -32,13 +32,13 @@ global $wp_query;
 									<ul class="me-listing-post me-row">
 										<?php 
 										while (have_posts()) : the_post();
-											me_get_template_part('content','listing');
+											me_get_template('content','listing');
 										endwhile;
 										?>
 									</ul>
 
 								<?php else :
-									me_get_template_part( 'listing', 'none' );
+									me_get_template( 'listing', 'none' );
 								endif; ?>
 							</div>
 							<div class="marketengine-paginations">

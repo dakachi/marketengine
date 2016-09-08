@@ -23,17 +23,17 @@ if (!defined('ABSPATH')) {
 
 			<?php do_action('marketengine_post_listing_form_start'); ?>
 
-			<?php me_get_template_part('post-listing/listing-category'); ?>
+			<?php me_get_template('post-listing/listing-category'); ?>
 
-			<?php me_get_template_part('post-listing/listing-type'); ?>
+			<?php me_get_template('post-listing/listing-type'); ?>
 			
-			<?php me_get_template_part('post-listing/listing-information'); ?>
+			<?php me_get_template('post-listing/listing-information'); ?>
 
 			<?php do_action('marketengine_post_listing_information_form_fields'); ?>
 		
-			<?php me_get_template_part('post-listing/listing-gallery'); ?>
+			<?php me_get_template('post-listing/listing-gallery'); ?>
 		
-			<?php me_get_template_part('post-listing/listing-tags'); ?>
+			<?php me_get_template('post-listing/listing-tags'); ?>
 
 			<?php do_action('marketengine_post_listing_form_fields'); ?>
 			

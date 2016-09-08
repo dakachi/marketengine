@@ -69,7 +69,7 @@ function me_get_template($template_name, $args = array()) {
      * @param string $slug The slug name for the generic template.
      * @param string $args The array of the varaible.
      */
-    do_action("me_get_template_part_$template_name", $template_name, $args);
+    do_action("me_get_template_$template_name", $template_name, $args);
 
     $templates = array();
 
@@ -237,7 +237,7 @@ function me_paginate_link() {
 }
 
 function marketengine_sidebar() {
-    me_get_template_part('sidebar');
+    me_get_template('sidebar');
 }
 add_action('marketengine_sidebar', 'marketengine_sidebar');
 
