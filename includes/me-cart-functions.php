@@ -27,6 +27,8 @@ function me_get_cart_items() {
         return;
     }
     $me_cart = ME()->session->get('me_carts', array());
+
+    if(empty($me_cart)) return false;
     /**
      * me_add_$notice_type
      * filter notice message

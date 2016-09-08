@@ -13,7 +13,7 @@
  *
  * @return string The template filename if one is located.
  */
-function me_locate_template($template_names, $load = false, $require_once = true) {
+function me_locate_template($template_names) {
     $located          = '';
     $me_template_path = ME()->template_path();
     foreach ((array) $template_names as $template_name) {
@@ -31,10 +31,6 @@ function me_locate_template($template_names, $load = false, $require_once = true
             break;
         }
     }
-    if ($load && '' != $located) {
-        load_template($located, $require_once);
-    }
-
     return $located;
 }
 /**
@@ -56,9 +52,12 @@ function me_locate_template($template_names, $load = false, $require_once = true
  * @since 1.0
  *
  * @param string $slug The slug name for the generic template.
- * @param string $name The name of the specialised template.
+ * @param string $args The array of the varaible.
  */
-function me_get_template_part($slug, $name = null) {
+function me_get_template($template_name, $args = array()) {
+    if ( ! empty( $args ) && is_array( $args ) ) {
+        extract( $args );
+    }
     /**
      * Fires before the specified template part file is loaded.
      *
@@ -68,19 +67,19 @@ function me_get_template_part($slug, $name = null) {
      * @since 1.0.0
      *
      * @param string $slug The slug name for the generic template.
-     * @param string $name The name of the specialized template.
+     * @param string $args The array of the varaible.
      */
-    do_action("me_get_template_part_{$slug}", $slug, $name);
+    do_action("me_get_template_part_$template_name", $template_name, $args);
 
     $templates = array();
-    $name      = (string) $name;
-    if ('' !== $name) {
-        $templates[] = "{$slug}-{$name}.php";
+
+    if ('' !== $template_name) {
+        $templates[] = "$template_name.php";
     }
 
-    $templates[] = "{$slug}.php";
+    $located = me_locate_template($templates);
 
-    me_locate_template($templates, true, false);
+    include( $located );
 }
 
 function me_get_sidebar() {

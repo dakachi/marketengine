@@ -50,6 +50,7 @@ class ME_Listing_Factory
         if (!class_exists($listing_class)) {
             $listing_class = 'ME_Listing';
         }
+
         return new $listing_class($the_listing);
     }
     /**

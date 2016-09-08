@@ -8,7 +8,7 @@ class ME_Shortcodes_Listing {
     }
     public static function post_listing_form() {
     	ob_start();
-        me_get_template_part('post-listing/post-listing');
+        me_get_template('post-listing/post-listing');
         $content = ob_get_clean();
         return $content;
     }
@@ -19,14 +19,14 @@ class ME_Shortcodes_Listing {
 
     public static function checkout_form() {
         ob_start();
-        me_get_template_part('checkout/checkout');
+        me_get_template('checkout/checkout');
         $content = ob_get_clean();
         return $content;
     }
 
     public static function confirm_order() {
         ob_start();
-        me_get_template_part('checkout/confirm');
+        me_get_template('checkout/confirm');
         $content = ob_get_clean();
         return $content;
     }

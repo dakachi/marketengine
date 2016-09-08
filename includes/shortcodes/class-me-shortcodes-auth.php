@@ -36,60 +36,60 @@ class ME_Shortcodes_Auth {
     }
     public static function me_user_profile() {
         ob_start();
-        me_get_template_part('account/user-profile');
+        me_get_template('account/user-profile');
         $content = ob_get_clean();
         return $content;
     }
 
     public static function me_user_edit_profile() {
         ob_start();
-        me_get_template_part('account/edit-profile');
+        me_get_template('account/edit-profile');
         $content = ob_get_clean();
         return $content;
     }
 
     public static function me_change_password() {
         ob_start();
-        me_get_template_part('account/change-password');
+        me_get_template('account/change-password');
         $content = ob_get_clean();
         return $content;
     }
 
     public static function me_user_listings() {
         ob_start();
-        me_get_template_part('account/my-listings');
+        me_get_template('account/my-listings');
         $content = ob_get_clean();
         return $content;
     }
 
     public static function me_login_form() {
         ob_start();
-        me_get_template_part('account/form-login');
+        me_get_template('account/form-login');
         $content = ob_get_clean();
         return $content;
     }
     public static function me_register_form() {
         ob_start();
-        me_get_template_part('account/form-register');
+        me_get_template('account/form-register');
         $content = ob_get_clean();
         return $content;
     }
 
     public static function forgot_password_form() {
         ob_start();
-        me_get_template_part('account/forgot-password');
+        me_get_template('account/forgot-password');
         $content = ob_get_clean();
         return $content;
     }
     public static function me_resetpass_form() {
         ob_start();
-        me_get_template_part('account/reset-pass');
+        me_get_template('account/reset-pass');
         $content = ob_get_clean();
         return $content;
     }
     public static function me_confirm_email() {
         ob_start();
-        me_get_template_part('account/confirm-email');
+        me_get_template('account/confirm-email');
         $content = ob_get_clean();
         return $content;
     }

@@ -101,7 +101,7 @@ class ME_Paypal_Simple extends ME_Payment {
                 'bn'            => 'ShoppingCart',
                 'invoice'       => 'ME-' . $order->get_order_number(),
                 'custom'        => json_encode(array('order_id' => $order->id)),
-                'notify_url'    => home_url( '?me-payment=ME_Paypal_Simple' ),
+                'notify_url'    => home_url('?me-payment=ME_Paypal_Simple'),
                 'first_name'    => $order->billing_first_name,
                 'last_name'     => $order->billing_last_name,
                 'address1'      => $order->billing_address_1,
@@ -171,34 +171,56 @@ class ME_Paypal_Simple extends ME_Payment {
 
     public function complete_payment($response) {
         try {
-            $order = json_decode(stripslashes($response['custom'] ));
+            $order = json_decode(stripslashes($response['custom']));
             $order = get_post($order->order_id);
             if (!$order || is_wp_error($order)) {
                 throw new Exception(__("The order not existed.", "enginethemes"));
             }
 
-            $order          = new ME_Order($order);
-            if($this->validate_order($response, $order)) {
+            $order = new ME_Order($order);
+            if ($this->validate_order($response, $order)) {
                 $id = wp_update_post(array('ID' => $order->id, 'post_status' => 'publish'));
-                // $response['payer_id']
-                // $response['txn_id']
-                // $response['payer_email']
-            }else {
+                update_post_meta( $id, '_payer_id', $response['payer_id'] );
+                update_post_meta( $id, '_txn_id', $response['txn_id'] );
+                update_post_meta( $id, '_payer_email', $response['payer_email'] );                
+            } else {
                 throw new Exception(__("Fraud.", "enginethemes"));
             }
-            
+
         } catch (Exception $e) {
             return new WP_Error('payment_response_error', $e->getMessage());
         }
     }
 
-    public function validate_order($response, $order){
+    public function validate_order($response, $order) {
+        
+        $txn_id         = $response['txn_id'];
         $mc_gross       = $response['mc_gross'];
-        $receiver_email = $response['receiver_email'];
         $currency       = $response['mc_currency'];
+        $receiver_email = $response['receiver_email'];
+
+        if(!$this->validate_mcgross($mc_gross, $order) || !$this->validate_receiver($receiver_email, $order) || !$this->validate_currency($currency, $order) ) {
+            return false;
+        }
+
         $payment_status = $response['payment_status'];
+
+
         return true;
     }
+
+    private function validate_mcgross($mc_gross, $order) {
+        return $mc_gross === $order->get_total();
+    }
+
+    private function validate_receiver($receiver_email, $order) {
+        return $receiver_email === $order->get_receiver_email();
+    }
+
+    private function validate_currency($currency, $order) {
+        return $currency === $order->get_currency();
+    }
+
 
     public function refund($order) {}
 }

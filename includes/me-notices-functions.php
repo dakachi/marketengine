@@ -111,6 +111,6 @@ function me_print_notices($notice_type = 'all') {
         _doing_it_wrong(__FUNCTION__, __('This function should not be called before wordpress init.', 'enginethemes'), '1.0');
         return;
     }
-    me_get_template_part('notices/' . $notice_type);
+    me_get_template('notices/' . $notice_type);
     me_empty_notices();
 }

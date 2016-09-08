@@ -6,20 +6,27 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+
+$cart_items = me_get_cart_items();
+if(empty($cart_items)) {
+	print_r(__("There is no item selected.", "enginethemes"));
+	return;
+}
 ?>
 <div class="marketengine">
 	<?php me_print_notices(); ?>
 	<form method="post">
 		<?php
-		me_get_template_part('checkout/billing');
+		me_get_template('checkout/billing');
 		// note
-		me_get_template_part('checkout/note');
+		me_get_template('checkout/note');
 		// listing details
-		me_get_template_part('checkout/order-details');
+		me_get_template('checkout/order-details', array('cart_items' => $cart_items));
+		// include ME()->plugin_path() . '/templates/checkout/order-details.php';
 		// seller information
-		me_get_template_part('checkout/seller-info');
+		me_get_template('checkout/seller-info');
 		// payment gateways
-		me_get_template_part('checkout/payment-gateways');
+		me_get_template('checkout/payment-gateways');
 		?>
 	</form>
 </div>
