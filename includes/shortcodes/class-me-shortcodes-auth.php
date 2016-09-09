@@ -28,6 +28,7 @@ class ME_Shortcodes_Auth {
     }
 
     public static function authentication_template() {
+        global $wp;
         if (isset($wp->query_vars['forgot-password'])) {
             return self::forgot_password_form();
         } elseif (isset($wp->query_vars['reset-password'])) {
