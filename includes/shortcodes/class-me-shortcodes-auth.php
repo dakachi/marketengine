@@ -14,12 +14,15 @@ class ME_Shortcodes_Auth {
         }
     }
     public static function logged_in_template() {
+        global $wp;
         if (isset($wp->query_vars['edit-profile'])) {
             return self::me_user_edit_profile();
         } elseif (isset($wp->query_vars['change-password'])) {
             return self::me_change_password();
         } elseif (isset($wp->query_vars['listings'])) {
             return self::me_user_listings();
+        }elseif (isset($wp->query_vars['orders'])) {
+            return self::me_user_orders();
         }
         return self::me_user_profile();
     }
@@ -49,8 +52,9 @@ class ME_Shortcodes_Auth {
     }
 
     public static function me_change_password() {
+        $user = ME()->get_current_user();
         ob_start();
-        me_get_template('account/change-password');
+        me_get_template('account/change-password', array('user' => $user));
         $content = ob_get_clean();
         return $content;
     }
@@ -58,6 +62,13 @@ class ME_Shortcodes_Auth {
     public static function me_user_listings() {
         ob_start();
         me_get_template('account/my-listings');
+        $content = ob_get_clean();
+        return $content;
+    }
+
+    public static function me_user_orders() {
+        ob_start();
+        me_get_template('account/my-orders');
         $content = ob_get_clean();
         return $content;
     }

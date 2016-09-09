@@ -1,15 +1,18 @@
 <?php
-$order_id = get_query_var( 'order-id' );
-$order = new ME_Order($order_id);
 $paypal = ME_Paypal_Simple::instance();
 $paypal->complete_payment($_REQUEST);
+
+$total = '$' . $order->get_total();
+$payment_date = date_i18n( get_option( 'date_format' ), strtotime( $order->post_date ) );
+$order_number = '#' . $order->get_order_number();
+
 ?>
 <div class="marketengine">
 	<div class="me-payment-complete">
-		<h3><?php _e("Thank for your payment", "enginethemes"); ?></h3>
-		<p>Your payment of $<?php echo $order->get_total(); ?> has been received for your Lorem Ipsum is simply dummy text for printing on <?php echo date_i18n( get_option( 'date_format' ), strtotime( $order->post_date ) ); ?></p>
-		<p>Your transaction number is <span id="me-orderid">#<?php echo $order->get_order_number(); ?></span></p>
-		<p><?php _e("A detailed summary of your transaction is sent to your mail.", "enginethemes"); ?></p>
+		<h3><?php _e('Thank for your payment', 'enginethemes'); ?></h3>
+		<p><?php printf(__('Your payment of %s has been received on %s', 'enginethemes'), $total, $payment_date) ?></p>
+		<p><?php printf(__('Your transaction number is <span id="me-orderid">%s</span>', 'enginethemes'), $order_number); ?></p>
+		<p><?php _e('A detailed summary of your transaction is sent to your mail.', 'enginethemes'); ?></p>
 
 		<div class="me-row">
 			<div class="me-col-md-4 me-pc-redirect-1">

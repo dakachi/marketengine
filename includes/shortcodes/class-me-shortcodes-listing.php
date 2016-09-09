@@ -25,8 +25,11 @@ class ME_Shortcodes_Listing {
     }
 
     public static function confirm_order() {
+        $order_id = get_query_var( 'order-id' );
+        $order = new ME_Order($order_id);
+
         ob_start();
-        me_get_template('checkout/confirm');
+        me_get_template('checkout/confirm', array('order' => $order));
         $content = ob_get_clean();
         return $content;
     }

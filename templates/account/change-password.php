@@ -9,7 +9,6 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-$user = ME()->get_current_user();
 ?>
 
 <?php do_action('marketengine_before_change_password_form', $user); ?>

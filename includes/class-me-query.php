@@ -10,6 +10,7 @@ function me_init_endpoint() {
     add_rewrite_endpoint('edit-profile', EP_ROOT | EP_PAGES);
     add_rewrite_endpoint('change-password', EP_ROOT | EP_PAGES);
     add_rewrite_endpoint('listings', EP_ROOT | EP_PAGES);
+    add_rewrite_endpoint('orders', EP_ROOT | EP_PAGES);
     add_rewrite_endpoint('order', EP_ROOT | EP_PAGES);
 
     add_rewrite_rule( '^process-payment/order/([^/]*)/?','index.php?page_id=392&order-id=$matches[1]','top');
