@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 $selected = !empty($_GET['orderby']) ? $_GET['orderby'] : ''; 
-
+global $wp_query;
 ?>
 <div class="me-bar-shop">
 	<div class="me-title-shop pull-left">
