@@ -1,5 +1,7 @@
-
-
+<?php
+$user_id = get_current_user_id();
+$orders = new WP_Query(array('post_type' => 'me_order', 'post_author' => $user_id));
+?>
 <div class="me-orderlist-filter">
 	<div class="me-row">
 		<div class="me-col-sm-6 me-col-sm-pull-6">
@@ -18,24 +20,36 @@
 </div>
 <div class="me-table me-orderlist-table">
 	<div class="me-table-rhead">
-		<div class="me-table-col me-order-id">ORDER ID</div>
-		<div class="me-table-col me-order-status">STATUS</div>
-		<div class="me-table-col me-order-amount">AMOUNT</div>
-		<div class="me-table-col me-order-date">DATE OF ORDER</div>
-		<div class="me-table-col me-order-listing">LISTING</div>
+		<div class="me-table-col me-order-id"><?php _e("ORDER ID", "enginethemes"); ?></div>
+		<div class="me-table-col me-order-status"><?php _e("STATUS", "enginethemes"); ?></div>
+		<div class="me-table-col me-order-amount"><?php _e("AMOUNT", "enginethemes"); ?></div>
+		<div class="me-table-col me-order-date"><?php _e("DATE OF ORDER", "enginethemes"); ?></div>
+		<div class="me-table-col me-order-listing"><?php _e("LISTING", "enginethemes"); ?></div>
 	</div>
-	<div class="me-table-row">
-		<div class="me-table-col me-order-id"><a href="">#ME123456</a></div>
-		<div class="me-table-col me-order-status"><span class="me-order-complete">Complete</span></div>
-		<div class="me-table-col me-order-amount">$630001200.00</div>
-		<div class="me-table-col me-order-date">7 july, 2016</div>
-		<div class="me-table-col me-order-listing">
-			<div class="me-order-listing-info">
-				<p>Extra Slim Innovator Wool Blend Navy Suit Jacket Extra Slim Innovator Wool Blend Navy Suit Jacket</p>
+	<?php while($orders->have_posts()) : $orders->the_post(); ?>
+
+	<?php 
+		$listing_item = me_get_order_items(get_the_ID(), 'listing_item');
+		$item_id = me_get_order_item_meta($listing_item[0]->order_item_id, '_listing_id', true);
+	?>
+		<div class="me-table-row">
+			<div class="me-table-col me-order-id"><a href="">#ME123456</a></div>
+			<div class="me-table-col me-order-status">
+				<span class="me-order-<?php echo get_post_status(); ?>">
+					<?php echo get_post_status_object(get_post_status())->label; ?>
+				</span>
+			</div>
+			<div class="me-table-col me-order-amount">$630001200.00</div>
+			<div class="me-table-col me-order-date"><?php echo get_the_date(); ?></div>
+			<div class="me-table-col me-order-listing">
+				<div class="me-order-listing-info">
+					<p><?php echo esc_html( get_the_title($item_id) ); ?></p>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="me-table-row">
+
+	<?php endwhile; ?>
+	<!-- <div class="me-table-row">
 		<div class="me-table-col me-order-id"><a href="">#ME123456</a></div>
 		<div class="me-table-col me-order-status"><span class="me-order-pending">Pending</span></div>
 		<div class="me-table-col me-order-amount">$1200.00</div>
@@ -67,7 +81,7 @@
 				<p>Extra Slim Innovator Wool Blend Navy Suit Jacket</p>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </div>
 
 <div class="marketengine-paginations">
