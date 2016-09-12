@@ -15,6 +15,9 @@ function me_init_endpoint() {
 
     add_rewrite_rule( '^process-payment/order/([^/]*)/?','index.php?page_id=392&order-id=$matches[1]','top');
 
+    $endpoint = 'orders';
+    add_rewrite_rule('^(.?.+?)/' . $endpoint . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
+
 }
 add_action('init', 'me_init_endpoint');
 

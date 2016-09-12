@@ -1,6 +1,11 @@
 <?php
 $user_id = get_current_user_id();
-$orders = new WP_Query(array('post_type' => 'me_order', 'post_author' => $user_id));
+$args = array(
+		'post_type' => 'me_order', 
+		'post_author' => $user_id, 
+		'paged' => get_query_var('paged')
+	);
+query_posts($args);
 ?>
 <div class="me-orderlist-filter">
 	<div class="me-row">
@@ -26,7 +31,7 @@ $orders = new WP_Query(array('post_type' => 'me_order', 'post_author' => $user_i
 		<div class="me-table-col me-order-date"><?php _e("DATE OF ORDER", "enginethemes"); ?></div>
 		<div class="me-table-col me-order-listing"><?php _e("LISTING", "enginethemes"); ?></div>
 	</div>
-	<?php while($orders->have_posts()) : $orders->the_post(); ?>
+	<?php while(have_posts()) : the_post(); ?>
 
 	<?php 
 		$listing_item = me_get_order_items(get_the_ID(), 'listing_item');
@@ -85,12 +90,14 @@ $orders = new WP_Query(array('post_type' => 'me_order', 'post_author' => $user_i
 </div>
 
 <div class="marketengine-paginations">
-	<a class="prev page-numbers" href="#">&lt;</a>
+	<?php me_paginate_link(); ?>
+	<!-- <a class="prev page-numbers" href="#">&lt;</a>
 	<a class="page-numbers" href="#">1</a>
 	<span class="page-numbers current">2</span>
 	<a class="page-numbers" href="#">3</a>
-	<a class="next page-numbers" href="">&gt;</a>
+	<a class="next page-numbers" href="">&gt;</a> -->
 </div>
 <div class="marketengine-loadmore">
 	<a href="" class="me-loadmore me-loadmore-order">Load more</a>
 </div>
+<?php wp_reset_query(); ?>
