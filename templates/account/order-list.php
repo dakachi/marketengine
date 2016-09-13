@@ -38,7 +38,7 @@ query_posts($args);
 		$item_id = me_get_order_item_meta($listing_item[0]->order_item_id, '_listing_id', true);
 	?>
 		<div class="me-table-row">
-			<div class="me-table-col me-order-id"><a href="">#ME123456</a></div>
+			<div class="me-table-col me-order-id"><a href="<?php the_permalink(); ?>">#ME123456</a></div>
 			<div class="me-table-col me-order-status">
 				<span class="me-order-<?php echo get_post_status(); ?>">
 					<?php echo get_post_status_object(get_post_status())->label; ?>

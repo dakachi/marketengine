@@ -17,7 +17,6 @@ $total = 0;
 
 		<?php foreach ($cart_items as $key => $item) :
 			$post = get_post($item['id']);
-			setup_postdata( $post );
 			$listing =  me_get_listing($post);
 
 			$total += $listing->get_price();
@@ -27,9 +26,9 @@ $total = 0;
 		<div class="me-table-row me-cart-item">
 			<div class="me-table-col me-cart-name">
 				<div class="me-cart-listing">
-					<a href="">
-						<?php the_post_thumbnail(); ?>
-						<span><?php the_title(); ?></span>
+					<a href="<?php echo get_permalink( $post->ID ); ?>">
+						<?php echo get_the_post_thumbnail($post->ID); ?>
+						<span><?php echo esc_html(get_the_title($post->ID)); ?></span>
 					</a>
 				</div>
 			</div>

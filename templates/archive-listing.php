@@ -38,7 +38,7 @@ global $wp_query;
 									</ul>
 
 								<?php else :
-									me_get_template( 'listing', 'none' );
+									me_get_template( 'content-listing-none' );
 								endif; ?>
 							</div>
 							<div class="marketengine-paginations">

@@ -173,6 +173,7 @@ class ME_Paypal_Simple extends ME_Payment {
         try {
             $order = json_decode(stripslashes($response['custom']));
             $order = get_post($order->order_id);
+
             if (!$order || is_wp_error($order)) {
                 throw new Exception(__("The order not existed.", "enginethemes"));
             }
@@ -205,8 +206,8 @@ class ME_Paypal_Simple extends ME_Payment {
         if (!$this->validate_mcgross($mc_gross, $order) || !$this->validate_receiver($receiver_email, $order) || !$this->validate_currency($currency, $order)) {
             return false;
         }
-
-        if (!$this->check_txn_id($txn_id)) {
+        
+        if ($this->check_txn_id($txn_id)) {
             return false;
         }
 
@@ -214,7 +215,7 @@ class ME_Paypal_Simple extends ME_Payment {
     }
 
     private function validate_mcgross($mc_gross, $order) {
-        return $mc_gross === $order->get_total();
+        return $mc_gross == $order->get_total();
     }
 
     private function validate_receiver($receiver_email, $order) {
@@ -227,13 +228,12 @@ class ME_Paypal_Simple extends ME_Payment {
 
     private function check_txn_id($id) {
         global $wpdb;
-        $query = "SELECT * FROM $wpdb->postsmeta WHERE meta_value = {$id}";
+        $query = "SELECT * FROM $wpdb->postmeta WHERE meta_value='{$id}'";
 
         $results = $wpdb->query($query);
-        if (!empty($results)) {
+        if (!$results) {
             return false;
         }
-
         return true;
     }
 

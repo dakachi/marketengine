@@ -25,6 +25,10 @@ class ME_Shortcodes_Listing {
     }
 
     public static function confirm_order() {
+
+        $paypal = ME_Paypal_Simple::instance();
+        $paypal->complete_payment($_REQUEST);
+
         $order_id = get_query_var( 'order-id' );
         $order = new ME_Order($order_id);
 

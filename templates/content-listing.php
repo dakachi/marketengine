@@ -16,7 +16,7 @@ $listing_type = $listing->get_listing_type();
 	<div class="me-item-wrap">
 		<a href="<?php the_permalink(); ?>" title="<?php printf(__("View %s", "enginethemes"), get_the_title()); ?>" class="me-item-img">
 			<?php the_post_thumbnail(); ?>
-			<span>VIEW DETAILS</span>
+			<span><?php _e("VIEW DETAILS", "enginethemes"); ?></span>
 		</a>
 		<div class="me-item-content">
 			<h2  itemprop="name">
@@ -25,10 +25,10 @@ $listing_type = $listing->get_listing_type();
 			<?php do_action('marketengine_after_listing_item_price'); ?>
 			<?php if('contact' === $listing_type) : ?>
 				<div class="me-item-contact">
-					<span class="post-price">Contact</span>
+					<span class="post-price"><?php _e("Contact", "enginethemes"); ?></span>
 				</div>
 				<div class="me-contact-now">
-					<a href="#" class="me-contactnow-btn">CONTACT NOW</a>
+					<a href="#" class="me-contactnow-btn"><?php _e("CONTACT NOW", "enginethemes"); ?></a>
 				</div>
 			<?php endif; ?>
 			<?php if('purchasion' == $listing_type) :
@@ -49,7 +49,19 @@ $listing_type = $listing->get_listing_type();
 					</div>
 				</div>
 				<div class="me-buy-now">
-					<a href="#" class="me-buynow-btn">BUY NOW</a>
+					<form method="post">
+						<?php if('' !== $pricing_unit) : ?>
+							<input type="hidden" required min="1" value="1" name="qty" />
+						<?php endif; ?>
+						
+						<?php wp_nonce_field('me-add-to-cart'); ?>
+
+						<?php do_action('marketengine_single_listing_add_to_cart_form_field'); ?>
+
+						<input type="hidden" name="add_to_cart" value="<?php echo $post->ID; ?>" />
+						<input type="submit" class="me-buy-now-btn" value="<?php _e("BUY NOW", "enginethemes"); ?>">
+					</form>
+					<!-- <a href="#" class="me-buynow-btn"><?php _e("BUY NOW", "enginethemes"); ?></a> -->
 				</div>
 			<?php endif; ?>
 			<?php do_action('marketengine_after_listing_item_price'); ?>

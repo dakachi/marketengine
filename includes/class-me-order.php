@@ -49,6 +49,18 @@ class ME_Order {
 
         return '';
     }
+
+    public function has_status($status) {
+        return $this->order->post_status === $status;
+    }
+
+    public function get_currency() {
+        return 'USD';
+    }
+
+    public function get_receiver_email() {
+        return 'dinhle1987-biz@yahoo.com';
+    }
     /**
      * Add listing item to order details
      *
