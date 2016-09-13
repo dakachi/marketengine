@@ -182,11 +182,12 @@ class ME_Paypal_Simple extends ME_Payment {
             if ($this->validate_order($response, $order)) {
 
                 $payment_status = $response['payment_status'];
-
-                $id = wp_update_post(array('ID' => $order->id, 'post_status' => 'publish'));
-                update_post_meta($id, '_payer_id', $response['payer_id']);
-                update_post_meta($id, '_txn_id', $response['txn_id']);
-                update_post_meta($id, '_payer_email', $response['payer_email']);
+                if($payment_status == 'Completed') {
+                    $id = wp_update_post(array('ID' => $order->id, 'post_status' => 'publish'));    
+                    update_post_meta($id, '_payer_id', $response['payer_id']);
+                    update_post_meta($id, '_txn_id', $response['txn_id']);
+                    update_post_meta($id, '_payer_email', $response['payer_email']);
+                }                
 
             } else {
                 throw new Exception(__("Fraud.", "enginethemes"));
