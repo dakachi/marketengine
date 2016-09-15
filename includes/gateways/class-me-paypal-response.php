@@ -27,7 +27,7 @@ class ME_Paypal_IPN {
         }
         return self::$_instance;
     }
-    
+
     /**
      * Check if paypal request on pay success
      * @author Duocnv
@@ -77,7 +77,6 @@ class ME_Paypal_IPN {
     }
 }
 
-// https://developer.paypal.com/docs/classic/ipn/integration-guide/IPNandPDTVariables/#id092BE0U605Z
 class ME_Paypal_PDT {
 	/**
      * The single instance of the class.
