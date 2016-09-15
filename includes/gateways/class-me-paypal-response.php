@@ -6,15 +6,28 @@ if (!defined('ABSPATH')) {
 
 // https://developer.paypal.com/docs/classic/ipn/integration-guide/IPNPDTAnAlternativetoIPN/
 class ME_Paypal_IPN {
-	private $_paypal_url;
-	public function __construct() {
-		$this->_test_mod = ae_get_option('is_test_mod', true);
-        $this->_paypal_url = 'https://www.paypal.com/cgi-bin/webscr?';
-        if ($this->_test_mod) {
-            $this->_paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr?';
+	/**
+     * The single instance of the class.
+     *
+     * @var ME_Paypal_IPN
+     * @since 1.0
+     */
+    static $_instance;
+    /**
+     * Main ME_Paypal_IPN Instance.
+     *
+     * Ensures only one instance of ME_Paypal_IPN is loaded or can be loaded.
+     *
+     * @since 1.0
+     * @return ME_Paypal_IPN - Main instance.
+     */
+    public static function instance() {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new self();
         }
-	}
-    // https://www.paypal.com/us/cgi-bin/webscr?cmd=p/acc/ipn-info-outside
+        return self::$_instance;
+    }
+    
     /**
      * Check if paypal request on pay success
      * @author Duocnv
@@ -59,31 +72,50 @@ class ME_Paypal_IPN {
     }
 
     private function request_response($response) {
-    	$paypal = ME_Paypal_Simple::instance();
+        $paypal = ME_Paypal_Simple::instance();
         $paypal->complete_payment($response);
     }
 }
 
 // https://developer.paypal.com/docs/classic/ipn/integration-guide/IPNandPDTVariables/#id092BE0U605Z
 class ME_Paypal_PDT {
+	/**
+     * The single instance of the class.
+     *
+     * @var ME_Paypal_PDT
+     * @since 1.0
+     */
+    static $_instance;
+    /**
+     * Main ME_Paypal_PDT Instance.
+     *
+     * Ensures only one instance of ME_Paypal_PDT is loaded or can be loaded.
+     *
+     * @since 1.0
+     * @return ME_Paypal_PDT - Main instance.
+     */
+    public static function instance() {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    }
+	 
+    public function handle_response() {
 
-    //cm : custom message
-    //sig :
+        $response['txn_id']      = $response['tx'];
+        $response['custom']      = $response['cm'];
+        $response['mc_gross']    = $response['amt'];
+        $response['mc_currency'] = $response['cc'];
 
+        $response['receiver_meail'] = $response['sig'];
+        $response['payment_status'] = $response['st'];
 
-	public function handle_response() {
-		$response['payment_status'] = $response['st'];
-		$response['txn_id'] = $response['tx'];
-		$response['receiver_meail'] = $response['sig'];
-		$response['custom'] = $response['cm'];
-		$response['mc_gross'] = $response['amt'];
-		$response['mc_currency'] = $response['cc'];
-		
-		$this->request_response($response);
-	}
+        $this->request_response($response);
+    }
 
-	private function request_response($response) {
-    	$paypal = ME_Paypal_Simple::instance();
+    private function request_response($response) {
+        $paypal = ME_Paypal_Simple::instance();
         $paypal->complete_payment($response);
     }
 
