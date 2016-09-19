@@ -426,6 +426,7 @@ class ME_PPAdaptive_Request
     }
     public function setup_payment($order)
     {
+        // TODO: setup order payment
         $order_data = array(
             'returnUrl'                        => 'http://localhost/wp/process-payment/order/' . $order->id, //esc_url_raw(add_query_arg('utm_nooverride', '1', $this->gateway->get_return_url($order))),
             'cancelUrl'                        => 'http://localhost/wp/cancel-payment/order/' . $order->id, //esc_url_raw($order->get_cancel_order_url_raw()),
@@ -443,7 +444,9 @@ class ME_PPAdaptive_Request
             'requestEnvelope.errorLanguage'    => 'en_US',
         );
 
-        return $this->gateway->pay($order_data);
+        $response = $this->gateway->pay($order_data);
+        // TODO: update order payKey
+        return $response;
     }
 
     public function process_payment($order)
