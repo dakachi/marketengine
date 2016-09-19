@@ -449,9 +449,11 @@ class ME_PPAdaptive_Request
         return $response;
     }
 
-    public function process_payment($order)
-    {
-
+    public function complete_payment($data)
+    {   
+        echo "<pre>";
+        print_r($data);
+        echo "</pre>";
         $response                         = $this->gateway->payment_details($data['payKey']);
         $payment_return['payment_status'] = $response->responseEnvelope->ack;
 
@@ -501,3 +503,4 @@ class ME_PPAdaptive_Request
 }
 
 // TODO: Paypal adaptive IPN class
+// https://developer.paypal.com/docs/classic/adaptive-payments/integration-guide/APIPN/
