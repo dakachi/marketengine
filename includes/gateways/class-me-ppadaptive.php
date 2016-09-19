@@ -444,7 +444,7 @@ class ME_PPAdaptive_Request
             'requestEnvelope.errorLanguage'    => 'en_US',
         );
 
-        $response = $this->gateway->pay($order_data);
+        $response = $this->gateway->pay_primary($order_data);
         // TODO: update order payKey
         return $response;
     }
