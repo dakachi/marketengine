@@ -6,7 +6,8 @@ if (!defined('ABSPATH')) {
 /**
  * Paypal Adaptive class
  */
-class ME_PPAdaptive extends ME_Payment {
+class ME_PPAdaptive extends ME_Payment
+{
     /**
      * The single instance of the class.
      *
@@ -46,7 +47,8 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.0
      * @return ME_PPAdaptive - Main instance.
      */
-    public static function instance() {
+    public static function instance()
+    {
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
         }
@@ -57,7 +59,8 @@ class ME_PPAdaptive extends ME_Payment {
      * Constuctor
      * @since 1.0
      */
-    public function __construct() {
+    public function __construct()
+    {
 
         // $api       = ae_get_option('escrow_paypal_api', array());
         $this->api   = ae_get_option('escrow_paypal_api', array());
@@ -86,7 +89,8 @@ class ME_PPAdaptive extends ME_Payment {
      *
      * @return string
      */
-    public function get_pending_message($pending_reason) {
+    public function get_pending_message($pending_reason)
+    {
         $pending_reason = strtoupper($pending_reason);
         $reason         = array(
             'ECHECK'         => __('The payment is pending because it was made by an eCheck that has not yet cleared.', 'enginethemes'),
@@ -108,7 +112,8 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.0
      * @return array
      */
-    public function build_headers() {
+    public function build_headers()
+    {
         $headers = array(
             'X-PAYPAL-APPLICATION-ID'       => $this->appID,
             'X-PAYPAL-SECURITY-USERID'      => $this->api['username'],
@@ -125,14 +130,36 @@ class ME_PPAdaptive extends ME_Payment {
         return $headers;
     }
 
+    public function setup_payment($order)
+    {
+        $order_data = array(
+            'returnUrl'                        => 'process-payment',
+            'cancelUrl'                        => 'process-payment',
 
-    public function setup_payment($order) {}
-    public function process_payment($order){}
+            'currencyCode'                     => $currency,
+            'feesPayer'                        => $feesPayer,
+            'receiverList.receiver(0).amount'  => $total,
+            'receiverList.receiver(0).email'   => $primary,
+            'receiverList.receiver(0).primary' => true,
+
+            // freelancer receiver
+            'receiverList.receiver(1).amount'  => $bid_budget,
+            'receiverList.receiver(1).email'   => $receiver,
+            'receiverList.receiver(1).primary' => false,
+            'requestEnvelope.errorLanguage'    => 'en_US',
+        );
+
+        return $this->pay($order_data);
+    }
+
+    public function process_payment($order)
+    {}
 
     /**
      * The GetVerifiedStatus API operation lets you determine whether the specified PayPal account's status is verified or unverified.
      */
-    public function get_verified_account($info) {
+    public function get_verified_account($info)
+    {
 
         $testmode = ae_get_option('test_mode');
         // test mod is on
@@ -165,7 +192,8 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.0
      * @return Object | WP_Error
      */
-    protected function send_request($endpoint, $data = array()) {
+    protected function send_request($endpoint, $data = array())
+    {
         $endpoint = $this->endpoint . $endpoint;
         $headers  = $this->build_headers();
 
@@ -195,7 +223,8 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.0
      * @return object | WP_Error
      */
-    public function execute_payment($paykey) {
+    public function execute_payment($paykey)
+    {
         $data = array('payKey' => $paykey);
         return $this->send_request('ExecutePayment', $data);
     }
@@ -211,7 +240,8 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.0
      * @author Dakachi
      */
-    public function pay($order) {
+    public function pay($order)
+    {
         $data               = $order;
         $data['actionType'] = 'PAY';
         // Pay, PAY_PRIMARY
@@ -229,7 +259,8 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.0
      * @author Dakachi
      */
-    public function pay_primary($order) {
+    public function pay_primary($order)
+    {
         $data               = $order;
         $data['actionType'] = 'PAY_PRIMARY';
         return $this->send_request('Pay', $data);
@@ -244,7 +275,8 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.0
      * @return object | WP_Error
      */
-    public function refund($order) {
+    public function refund($order)
+    {
         $payKey = $order->get_payment_key();
         $data   = array('payKey' => $paykey);
         return $this->send_request('Refund', $data);
@@ -265,7 +297,8 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.2
      * @author Dakachi
      */
-    public function pre_approval($order) {
+    public function pre_approval($order)
+    {
         return $this->send_request('Preapproval', $order);
     }
 
@@ -276,7 +309,8 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.0
      * @return object | WP_Error
      */
-    public function pre_approval_details($preapproval_key) {
+    public function pre_approval_details($preapproval_key)
+    {
         $data = array('preapprovalKey' => $paykey);
         return $this->send_request('PreapprovalDetails', $data);
     }
@@ -290,7 +324,8 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.0
      * @return object | WP_Error
      */
-    public function cancel_approval($preapproval_key) {
+    public function cancel_approval($preapproval_key)
+    {
         $data = array('preapprovalKey' => $preapproval_key);
         return $this->send_request('CancelPreapproval', $data);
     }
@@ -304,7 +339,8 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.0
      * @return object | WP_Error
      */
-    public function payment_details($paykey) {
+    public function payment_details($paykey)
+    {
         $data = array('payKey' => $paykey);
         return $this->send_request('PaymentDetails', $data);
     }
@@ -320,7 +356,8 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.0
      * @return object | WP_Error
      */
-    public function get_funding_plans($payKey) {
+    public function get_funding_plans($payKey)
+    {
         $data = array('payKey' => $paykey);
         return $this->send_request('GetFundingPlans', $data);
     }
@@ -336,7 +373,8 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.0
      * @return Object | WP_Error
      */
-    public function set_payment_options($paykey, $options) {
+    public function set_payment_options($paykey, $options)
+    {
         $options['payKey'] = $paykey;
         return $this->send_request('GetPaymentOptions', $options);
     }
@@ -348,7 +386,8 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.0
      * @return Object | WP_Error
      */
-    public function get_payment_options($payKey) {
+    public function get_payment_options($payKey)
+    {
         $data = array('payKey' => $payKey);
         return $this->send_request('GetPaymentOptions', $data);
     }
@@ -361,10 +400,12 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.3
      * @author Dakachi
      */
-    public function GetPrePaymentDisclosure() {
+    public function GetPrePaymentDisclosure()
+    {
     }
 
-    public function GetShippingAddresses() {
+    public function GetShippingAddresses()
+    {
     }
 
 }

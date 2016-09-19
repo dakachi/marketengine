@@ -47,7 +47,7 @@ $total = 0;
 			<input type="hidden" name="listing[<?php echo $key; ?>][id]" value="<?php echo $item['id']; ?>" />
 			<input type="hidden" name="listing[<?php echo $key; ?>][qty]" value="<?php echo $item['qty']; ?>" />
 		</div>
-		
+
 		<?php endforeach; ?>
 
 		<?php do_action( 'marketengine_after_cart_item_list' ); ?>
@@ -70,9 +70,12 @@ $total = 0;
 	</div>
 
 	<?php wp_nonce_field('me-checkout'); ?>
-
+	<div>
+	<label><input type="radio" name="payment_method" value="ppsimple" />Paypal Simple</label>
+	<label><input type="radio" name="payment_method" value="ppadaptive" />Paypal Adaptive</label>
+	</div>
 	<div class="me-checkout-submit">
-		<input type="hidden" name="payment_method" value="ppsimple" />
+		<!-- <input type="hidden" name="payment_method" value="ppsimple" /> -->
 		<input class="me-checkout-submit-btn" type="submit" name="checkout" value="<?php _e("MAKE PAYMENT", "enginethemes"); ?>">
 	</div>
 </div>

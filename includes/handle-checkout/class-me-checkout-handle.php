@@ -14,8 +14,10 @@ if (!defined('ABSPATH')) {
  * @author      EngineThemesTeam
  * @category    Class
  */
-class ME_Checkout_Handle {
-    public static function checkout($data) {
+class ME_Checkout_Handle
+{
+    public static function checkout($data)
+    {
         $rules = array(
             'listing_id'     => 'required|numeric',
             'payment_method' => 'required|string',
@@ -35,12 +37,12 @@ class ME_Checkout_Handle {
 
         if (!empty($data['is_ship_to_billing_address'])) {
             $shipping_rules = $billing_rules;
-        }else {
-            $data['shipping_address'] =  $data['billing_info'];
+        } else {
+            $data['shipping_address'] = $data['billing_info'];
         }
         // create order
         $order = self::create_order($data);
-        if(is_wp_error( $order )) {
+        if (is_wp_error($order)) {
             return $order;
         }
 
@@ -53,13 +55,14 @@ class ME_Checkout_Handle {
 
     /**
      * Handle order data and store to database
-     * 
+     *
      * @param array $data
      *
      * @since 1.0
      * @return WP_Error | ME_Order
      */
-    public static function create_order($data) {
+    public static function create_order($data)
+    {
         global $user_ID;
         $data['post_author'] = $user_ID;
 
@@ -78,7 +81,7 @@ class ME_Checkout_Handle {
             if (!$listing->is_available()) {
                 return new WP_Error("unavailable_listing", __("The listing is not available for sale.", "enginethemes"));
             }
-            $items[] = array('id' =>  $listing, 'qty' => $value['qty']);
+            $items[] = array('id' => $listing, 'qty' => $value['qty']);
         }
 
         $order = me_insert_order($data);
@@ -90,7 +93,7 @@ class ME_Checkout_Handle {
         foreach ($items as $item) {
             $order->add_listing($item['id'], $item['qty']);
         }
-        
+
         $order->set_address($data['billing_info']);
         if (!empty($data['shipping_address'])) {
             $order->set_address($data['shipping_address'], 'shipping');

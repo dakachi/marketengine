@@ -30,12 +30,13 @@ class ME_Shortcodes_Listing {
         $paypal->complete_payment($_REQUEST);
 
         $order_id = get_query_var( 'order-id' );
-        $order = new ME_Order($order_id);
-
-        ob_start();
-        me_get_template('checkout/confirm', array('order' => $order));
-        $content = ob_get_clean();
-        return $content;
+        if($order_id) {
+            $order = new ME_Order($order_id);
+            ob_start();
+            me_get_template('checkout/confirm', array('order' => $order));
+            $content = ob_get_clean();
+            return $content;
+        }
     }
 }
 ME_Shortcodes_Listing::init_shortcodes();

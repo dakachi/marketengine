@@ -171,6 +171,11 @@ class ME_Paypal_Simple extends ME_Payment {
 
     public function complete_payment($response) {
         try {
+
+            if(empty($response['custom'])) {
+                throw new Exception(__("Invalid post back.", "enginethemes"));
+            }
+
             $order = json_decode(stripslashes($response['custom']));
             $order = get_post($order->order_id);
 
@@ -187,7 +192,7 @@ class ME_Paypal_Simple extends ME_Payment {
                     update_post_meta($id, '_payer_id', $response['payer_id']);
                     update_post_meta($id, '_txn_id', $response['txn_id']);
                     update_post_meta($id, '_payer_email', $response['payer_email']);
-                }                
+                }
 
             } else {
                 throw new Exception(__("Fraud.", "enginethemes"));
@@ -207,7 +212,6 @@ class ME_Paypal_Simple extends ME_Payment {
         if (!$this->validate_mcgross($mc_gross, $order) || !$this->validate_receiver($receiver_email, $order) || !$this->validate_currency($currency, $order)) {
             return false;
         }
-        
         if ($this->check_txn_id($txn_id)) {
             return false;
         }
