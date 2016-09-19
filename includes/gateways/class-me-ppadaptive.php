@@ -186,7 +186,7 @@ class ME_PPAdaptive extends ME_Payment
         ));
 
         if (!is_wp_error($response)) {
-            $response =  json_decode($response['body']);
+            $response                  = json_decode($response['body']);
             $response->transaction_url = $this->paypal_url . $response->payKey;
         }
 
@@ -450,11 +450,44 @@ class ME_PPAdaptive_Request
     }
 
     public function process_payment($order)
-    {}
+    {
+
+        $response                         = $this->gateway->payment_details($data['payKey']);
+        $payment_return['payment_status'] = $response->responseEnvelope->ack;
+
+        // email confirm
+        if (strtoupper($response->responseEnvelope->ack) == 'SUCCESS') {
+            $payment_return['ACK'] = true;
+
+            // UPDATE order
+            $paymentInfo = $response->paymentInfoList->paymentInfo;
+            if ($paymentInfo[0]->transactionStatus == 'COMPLETED') {
+
+                wp_update_post(array(
+                    'ID'          => $data['order_id'],
+                    'post_status' => 'publish',
+                ));
+            }
+
+            if ($paymentInfo[0]->transactionStatus == 'PENDING') {
+                //pendingReason
+                $payment_return['pending_msg'] = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
+                $payment_return['msg']         = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
+            }
+        }
+
+        if (strtoupper($response->responseEnvelope->ack) == 'FAILURE') {
+            $payment_return['msg'] = $response->error[0]->message;
+        }
+
+        return $response;
+    }
+
     private function build_query($order)
     {
 
     }
+
     private function api_fee()
     {
         return array(
@@ -466,3 +499,5 @@ class ME_PPAdaptive_Request
     }
 
 }
+
+// TODO: Paypal adaptive IPN class
