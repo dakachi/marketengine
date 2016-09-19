@@ -63,10 +63,17 @@ class ME_PPAdaptive extends ME_Payment
     {
 
         // $api       = ae_get_option('escrow_paypal_api', array());
-        $this->api   = ae_get_option('escrow_paypal_api', array());
+        $this->api = ae_get_option('escrow_paypal_api',
+            array(
+                'username'  => 'dinhle1987-biz_api1.yahoo.com',
+                'password'  => '1362804968',
+                'signature' => 'A6LFoneN6dpKOQkj2auJBwoVZBiLAE-QivfFWXkjxrvJZ6McADtMu8Pe',
+            )
+        );
+
         $this->appID = isset($this->api['appID']) ? $this->api['appID'] : 'APP-80W284485P519543T';
 
-        $testmode = ae_get_option('test_mode');
+        $testmode = ae_get_option('test_mode', true);
         // test mod is on
         $this->endpoint        = 'https://svcs.sandbox.paypal.com/AdaptivePayments/';
         $this->paypal_url      = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey=';
@@ -129,32 +136,6 @@ class ME_PPAdaptive extends ME_Payment
 
         return $headers;
     }
-
-    public function setup_payment($order)
-    {
-        $order_data = array(
-            'returnUrl'                        => 'process-payment',
-            'cancelUrl'                        => 'process-payment',
-
-            'currencyCode'                     => $currency,
-            'feesPayer'                        => $feesPayer,
-            'receiverList.receiver(0).amount'  => $total,
-            'receiverList.receiver(0).email'   => $primary,
-            'receiverList.receiver(0).primary' => true,
-
-            // freelancer receiver
-            'receiverList.receiver(1).amount'  => $bid_budget,
-            'receiverList.receiver(1).email'   => $receiver,
-            'receiverList.receiver(1).primary' => false,
-            'requestEnvelope.errorLanguage'    => 'en_US',
-        );
-
-        return $this->pay($order_data);
-    }
-
-    public function process_payment($order)
-    {}
-
     /**
      * The GetVerifiedStatus API operation lets you determine whether the specified PayPal account's status is verified or unverified.
      */
@@ -198,15 +179,17 @@ class ME_PPAdaptive extends ME_Payment
         $headers  = $this->build_headers();
 
         $data['requestEnvelope.errorLanguage'] = get_bloginfo('language');
-
-        $response = wp_remote_post($endpoint, array(
+        $response                              = wp_remote_post($endpoint, array(
             'headers'     => $headers,
             'body'        => $data,
             'httpversion' => '1.1',
         ));
+
         if (!is_wp_error($response)) {
-            return json_decode($response['body']);
+            $response =  json_decode($response['body']);
+            $response->transaction_url = $this->paypal_url . $response->payKey;
         }
+
         return $response;
     }
 
@@ -406,6 +389,77 @@ class ME_PPAdaptive extends ME_Payment
 
     public function GetShippingAddresses()
     {
+    }
+
+}
+
+class ME_PPAdaptive_Request
+{
+    private $gateway;
+    /**
+     * The single instance of the class.
+     *
+     * @var ME_PPAdaptive
+     * @since 1.0
+     */
+    static $_instance;
+
+    /**
+     * Main ME_PPAdaptive Instance.
+     *
+     * Ensures only one instance of ME_PPAdaptive is loaded or can be loaded.
+     *
+     * @since 1.0
+     * @return ME_PPAdaptive - Main instance.
+     */
+    public static function instance()
+    {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    }
+
+    public function __construct()
+    {
+        $this->gateway = ME_PPAdaptive::instance();
+    }
+    public function setup_payment($order)
+    {
+        $order_data = array(
+            'returnUrl'                        => 'http://localhost/wp/process-payment/order/' . $order->id, //esc_url_raw(add_query_arg('utm_nooverride', '1', $this->gateway->get_return_url($order))),
+            'cancelUrl'                        => 'http://localhost/wp/cancel-payment/order/' . $order->id, //esc_url_raw($order->get_cancel_order_url_raw()),
+
+            'currencyCode'                     => get_marketengine_currency(),
+            'feesPayer'                        => 'PRIMARYRECEIVER',
+            'receiverList.receiver(0).amount'  => 19,
+            'receiverList.receiver(0).email'   => 'dinhle1987-biz@yahoo.com',
+            'receiverList.receiver(0).primary' => true,
+
+            // freelancer receiver
+            'receiverList.receiver(1).amount'  => 4,
+            'receiverList.receiver(1).email'   => 'dinhle1987-pers@yahoo.com',
+            'receiverList.receiver(1).primary' => false,
+            'requestEnvelope.errorLanguage'    => 'en_US',
+        );
+
+        return $this->gateway->pay($order_data);
+    }
+
+    public function process_payment($order)
+    {}
+    private function build_query($order)
+    {
+
+    }
+    private function api_fee()
+    {
+        return array(
+            // 'SENDER' => __("Sender pays all fees", ET_DOMAIN) ,
+            'PRIMARYRECEIVER' => __("Primary receiver pays all fees", ET_DOMAIN),
+            'EACHRECEIVER'    => __("Each receiver pays their own fee", ET_DOMAIN),
+            'SECONDARYONLY'   => __("Secondary receivers pay all fees", ET_DOMAIN),
+        );
     }
 
 }

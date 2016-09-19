@@ -48,6 +48,7 @@ class ME_Checkout_Handle
 
         $payments       = me_get_available_payment_gateways();
         $payment_method = $data['payment_method'];
+        
         $result         = $payments[$payment_method]->setup_payment($order);
 
         return $result;

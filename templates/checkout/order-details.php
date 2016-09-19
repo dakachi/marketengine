@@ -75,7 +75,6 @@ $total = 0;
 	<label><input type="radio" name="payment_method" value="ppadaptive" />Paypal Adaptive</label>
 	</div>
 	<div class="me-checkout-submit">
-		<!-- <input type="hidden" name="payment_method" value="ppsimple" /> -->
 		<input class="me-checkout-submit-btn" type="submit" name="checkout" value="<?php _e("MAKE PAYMENT", "enginethemes"); ?>">
 	</div>
 </div>
