@@ -446,7 +446,7 @@ class ME_PPAdaptive_Request
      */
     private function is_pay_primary()
     {
-        return apply_filter('marketengine_ppadaptive_is_pay_primary', false);
+        return apply_filters('marketengine_ppadaptive_is_pay_primary', false);
     }
 
     /**
@@ -478,14 +478,14 @@ class ME_PPAdaptive_Request
         $receiver_list = array(
             'receiverList.receiver(0).amount' => $order->get_total(),
             'receiverList.receiver(0).email'  => $order->get_receiver_email(),
-            // 'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
+            'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
 
             // freelancer receiver
             'receiverList.receiver(1).amount' => $this->get_commission_fee(),
             'receiverList.receiver(1).email'  => $this->get_commission_email(),
-            // 'receiverList.receiver(1).primary' => $this->is_pay_primary(),
+            'receiverList.receiver(1).primary' => $this->is_pay_primary(),
         );
-
+        // TODO: add order item commission_fee
         return apply_filters( 'marketegnine_ppadaptive_receiver_list', $receiver_list, $order);
     }
 
@@ -535,6 +535,23 @@ class ME_PPAdaptive_Request
 
         $payKey   = get_post_meta($order_id, '_me_ppadaptive_paykey', true);
         $response = $this->gateway->payment_details($payKey);
+
+        if(is_wp_error( $response )) return;
+
+        switch ($response->status) {
+            case 'COMPLETED':
+                $this->order_finish($response, $order_id);
+                break;
+            case 'INCOMPLETE' :
+                $this->order_incomplete($response, $order_id);
+            case 'PROCESSING' :
+            case 'PENDING' :
+            case 'REVERSALERROR' :
+            default:
+                $this->order_error($response, $order_id);
+                break;
+        }
+
         // email confirm
         if (strtoupper($response->responseEnvelope->ack) == 'SUCCESS') {
 
@@ -560,6 +577,19 @@ class ME_PPAdaptive_Request
             // order failure message
             $payment_return['msg'] = $response->error[0]->message;
         }
+
+    }
+
+
+    private function order_finish($response, $order_id) {
+        // update order receiver item, commission fee item
+    }
+
+    private function order_incomplete($response, $order_id) {
+        // update order receiver item, commission fee item
+    }
+
+    private function order_error($response, $order_id) {
 
     }
 
