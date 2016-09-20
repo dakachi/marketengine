@@ -50,10 +50,7 @@ $listing_type = $listing->get_listing_type();
 				</div>
 				<div class="me-buy-now">
 					<form method="post">
-						<?php if('' !== $pricing_unit) : ?>
-							<input type="hidden" required min="1" value="1" name="qty" />
-						<?php endif; ?>
-						
+						<input type="hidden" required min="1" value="1" name="qty" />
 						<?php wp_nonce_field('me-add-to-cart'); ?>
 
 						<?php do_action('marketengine_single_listing_add_to_cart_form_field'); ?>

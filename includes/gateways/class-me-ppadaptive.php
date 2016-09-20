@@ -186,11 +186,17 @@ class ME_PPAdaptive extends ME_Payment
         ));
 
         if (!is_wp_error($response)) {
-            $response                  = json_decode($response['body']);
-            $response->transaction_url = $this->paypal_url . $response->payKey;
+            $response = json_decode($response['body']);
+            if (empty($response->error)) {
+                $response->transaction_url = $this->paypal_url . $response->payKey;
+            } else {
+                $error    = $response->error;
+                $response = new WP_Error('payment_fail', $error[0]->message);
+            }
         }
 
         return $response;
+
     }
 
     /**
@@ -436,28 +442,65 @@ class ME_PPAdaptive_Request
     public function setup_payment($order)
     {
         // TODO: setup order payment
-        $order_data = array(
-            'returnUrl'                        => 'http://localhost/wp/process-payment/order/' . $order->id, //esc_url_raw(add_query_arg('utm_nooverride', '1', $this->gateway->get_return_url($order))),
-            'cancelUrl'                        => 'http://localhost/wp/cancel-payment/order/' . $order->id, //esc_url_raw($order->get_cancel_order_url_raw()),
 
-            'currencyCode'                     => get_marketengine_currency(),
-            'feesPayer'                        => 'PRIMARYRECEIVER',
-            'receiverList.receiver(0).amount'  => 19,
-            'receiverList.receiver(0).email'   => 'dinhle1987-biz@yahoo.com',
-            'receiverList.receiver(0).primary' => true,
+        $order_data = array_merge(array(
+            'returnUrl'                     => 'http://localhost/wp/process-payment/order/' . $order->id, //esc_url_raw(add_query_arg('utm_nooverride', '1', $this->gateway->get_return_url($order))),
+            'cancelUrl'                     => 'http://localhost/wp/cancel-payment/order/' . $order->id, //esc_url_raw($order->get_cancel_order_url_raw()),
 
-            // freelancer receiver
-            'receiverList.receiver(1).amount'  => 4, // TODO: get commision option
-            'receiverList.receiver(1).email'   => 'dinhle1987-pers@yahoo.com',
-            'receiverList.receiver(1).primary' => false,
-            'requestEnvelope.errorLanguage'    => 'en_US',
+            'currencyCode'                  => get_marketengine_currency(),
+            'feesPayer'                     => 'PRIMARYRECEIVER',
+            'requestEnvelope.errorLanguage' => 'en_US',
+        ),
+            $this->get_listing_item_args($order)
         );
 
         $response = $this->gateway->pay($order_data);
-        if(!empty($response->payKey)) {
-            update_post_meta( $order->id, '_me_ppadaptive_paykey', $response->payKey);
+        if (!empty($response->payKey)) {
+            update_post_meta($order->id, '_me_ppadaptive_paykey', $response->payKey);
         }
+
         return $response;
+    }
+
+    private function is_pay_primary() {
+        return false;
+    }
+
+    private function get_commission_fee()
+    {
+        return ae_get_option('commission_fee', 5);
+    }
+
+    private function get_commission_email()
+    {
+        return ae_get_option('commission_email', 'dinhle1987-pers@yahoo.com');
+    }
+
+    private function get_listing_item_args($order)
+    {
+        $index   = 0;
+        $total   = 0;
+        $listing = array();
+
+        $listing_item = me_get_order_items($order->id, 'listing_item');
+        foreach ($listing_item as $key => $item) {
+            $listing['quantity_' . $index] = me_get_order_item_meta($item->order_item_id, '_qty', true);
+            $listing['amount_' . $index]   = me_get_order_item_meta($item->order_item_id, '_listing_price', true);
+
+            $total += ($listing['amount_' . $index] * $listing['quantity_' . $index]);
+            $index++;
+        }
+
+        return array(
+            'receiverList.receiver(0).amount'  => $total,
+            'receiverList.receiver(0).email'   => 'dinhle1987-biz@yahoo.com',
+            'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
+
+            // freelancer receiver
+            'receiverList.receiver(1).amount'  => $this->get_commission_fee(),
+            'receiverList.receiver(1).email'   => $this->get_commission_email(),
+            'receiverList.receiver(1).primary' => $this->is_pay_primary(),
+        );
     }
 
     /**
@@ -469,36 +512,37 @@ class ME_PPAdaptive_Request
      */
     public function complete_payment()
     {
-        $order_id = get_query_var( 'order-id' );
-        if($order_id) {
-            $payKey = get_post_meta( $order_id, '_me_ppadaptive_paykey', true);
-            $response                         = $this->gateway->payment_details($payKey);
-            $payment_return['payment_status'] = $response->responseEnvelope->ack;
+        $order_id = get_query_var('order-id');
+        if (!$order_id) {
+            return;
+        }
 
-            // email confirm
-            if (strtoupper($response->responseEnvelope->ack) == 'SUCCESS') {
-                $payment_return['ACK'] = true;
+        $payKey   = get_post_meta($order_id, '_me_ppadaptive_paykey', true);
+        $response = $this->gateway->payment_details($payKey);
+        // email confirm
+        if (strtoupper($response->responseEnvelope->ack) == 'SUCCESS') {
 
-                // UPDATE order
-                $paymentInfo = $response->paymentInfoList->paymentInfo;
-                if ($paymentInfo[0]->transactionStatus == 'COMPLETED') {
+            // UPDATE order
+            $paymentInfo = $response->paymentInfoList->paymentInfo;
+            if ($paymentInfo[0]->transactionStatus == 'COMPLETED') {
 
-                    wp_update_post(array(
-                        'ID'          => $order_id,
-                        'post_status' => 'publish',
-                    ));
-                }
-
-                if ($paymentInfo[0]->transactionStatus == 'PENDING') {
-                    //pendingReason
-                    $payment_return['pending_msg'] = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
-                    $payment_return['msg']         = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
-                }
+                wp_update_post(array(
+                    'ID'          => $order_id,
+                    'post_status' => 'publish',
+                ));
             }
 
-            if (strtoupper($response->responseEnvelope->ack) == 'FAILURE') {
-                $payment_return['msg'] = $response->error[0]->message;
+            if ($paymentInfo[0]->transactionStatus == 'PENDING') {
+                // TODO: update order pending reason
+                //pendingReason
+                $payment_return['pending_msg'] = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
+                $payment_return['msg']         = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
             }
+        }
+
+        if (strtoupper($response->responseEnvelope->ack) == 'FAILURE') {
+            // order failure message
+            $payment_return['msg'] = $response->error[0]->message;
         }
 
     }
@@ -511,7 +555,6 @@ class ME_PPAdaptive_Request
     private function api_fee()
     {
         return array(
-            // 'SENDER' => __("Sender pays all fees", ET_DOMAIN) ,
             'PRIMARYRECEIVER' => __("Primary receiver pays all fees", ET_DOMAIN),
             'EACHRECEIVER'    => __("Each receiver pays their own fee", ET_DOMAIN),
             'SECONDARYONLY'   => __("Secondary receivers pay all fees", ET_DOMAIN),

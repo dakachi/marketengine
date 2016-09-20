@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
@@ -27,8 +27,10 @@ $pricing_unit = $listing->get_pricing_unit();
 				<div class="me-quantily">
 					<input type="number" required min="1" value="1" name="qty" />
 				</div>
+			<?php else : ?>
+				<input type="hidden" required min="1" value="1" name="qty" />
 			<?php endif; ?>
-			
+
 			<?php wp_nonce_field('me-add-to-cart'); ?>
 
 			<?php do_action('marketengine_single_listing_add_to_cart_form_field'); ?>

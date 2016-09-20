@@ -123,7 +123,7 @@ class ME_Paypal_Simple extends ME_Payment {
     public function get_listing_item_args($order) {
         $listing_item = me_get_order_items($order->id, 'listing_item');
         $listing      = array();
-        $index        = 1;
+        $index        = 0;
         foreach ($listing_item as $key => $item) {
             $listing['item_name_' . $index]   = $item->order_item_name;
             $listing['quantity_' . $index]    = me_get_order_item_meta($item->order_item_id, '_qty', true);

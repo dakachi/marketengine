@@ -20,7 +20,7 @@ $total = 0;
 			$listing =  me_get_listing($post);
 
 			$total += $listing->get_price();
-			$unit = $item['qty'];
+			$unit = ($item['qty']) ? $item['qty'] : 1;
 		?>
 
 		<div class="me-table-row me-cart-item">
@@ -44,8 +44,8 @@ $total = 0;
 				$<?php echo ($listing->get_price()) * $unit; ?>
 			</div>
 
-			<input type="hidden" name="listing[<?php echo $key; ?>][id]" value="<?php echo $item['id']; ?>" />
-			<input type="hidden" name="listing[<?php echo $key; ?>][qty]" value="<?php echo $item['qty']; ?>" />
+			<input type="hidden" name="listing_item[<?php echo $key; ?>][id]" value="<?php echo $item['id']; ?>" />
+			<input type="hidden" name="listing_item[<?php echo $key; ?>][qty]" value="<?php echo $unit; ?>" />
 		</div>
 
 		<?php endforeach; ?>
@@ -71,8 +71,7 @@ $total = 0;
 
 	<?php wp_nonce_field('me-checkout'); ?>
 	<div>
-	<label><input type="radio" name="payment_method" value="ppsimple" />Paypal Simple</label>
-	<label><input type="radio" name="payment_method" value="ppadaptive" />Paypal Adaptive</label>
+		<input type="hidden" name="payment_method" value="ppadaptive" />
 	</div>
 	<div class="me-checkout-submit">
 		<input class="me-checkout-submit-btn" type="submit" name="checkout" value="<?php _e("MAKE PAYMENT", "enginethemes"); ?>">

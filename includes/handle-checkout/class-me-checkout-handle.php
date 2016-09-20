@@ -48,8 +48,8 @@ class ME_Checkout_Handle
 
         $payments       = me_get_available_payment_gateways();
         $payment_method = $data['payment_method'];
-        
-        $result         = $payments[$payment_method]->setup_payment($order);
+
+        $result = $payments[$payment_method]->setup_payment($order);
 
         return $result;
     }
@@ -72,7 +72,7 @@ class ME_Checkout_Handle
         }
 
         $items = array();
-        foreach ($data['listing'] as $key => $value) {
+        foreach ($data['listing_item'] as $key => $value) {
             $listing = get_post($value['id']);
             if (is_wp_error($listing)) {
                 return new WP_Error("invalid_listing", __("The selected listing is invalid.", "enginethemes"));
@@ -82,6 +82,11 @@ class ME_Checkout_Handle
             if (!$listing->is_available()) {
                 return new WP_Error("unavailable_listing", __("The listing is not available for sale.", "enginethemes"));
             }
+
+            if (!$value['qty']) {
+                return new WP_Error("unavailable_listing", __("The listing quantity must be greater than 1.", "enginethemes"));
+            }
+
             $items[] = array('id' => $listing, 'qty' => $value['qty']);
         }
 
