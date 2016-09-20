@@ -399,6 +399,16 @@ class ME_PPAdaptive extends ME_Payment
 
 }
 
+/**
+ * ME Paypal Adaptive Request
+ * The class handle setup and receive post back from paypal
+ *
+ * @version     1.0
+ * @package     Payment
+ * @category    Includes/Gateways
+ *
+ * @author      Dakachi
+ */
 class ME_PPAdaptive_Request
 {
     private $gateway;
@@ -432,6 +442,54 @@ class ME_PPAdaptive_Request
     }
 
     /**
+     * Check the option pay primary or note
+     */
+    private function is_pay_primary()
+    {
+        return apply_filter('marketengine_ppadaptive_is_pay_primary', false);
+    }
+
+    /**
+     * Get the site's commission fee
+     */
+    private function get_commission_fee()
+    {
+        return ae_get_option('commission_fee', 5);
+    }
+
+    /**
+     * Get the site's receive commission email
+     */
+    private function get_commission_email()
+    {
+        return ae_get_option('commission_email', 'dinhle1987-pers@yahoo.com');
+    }
+
+    /**
+     * Retrieve order receiver list item
+     *
+     * @param Object $order ME_Order object
+     *
+     * @since 1.0
+     * @return array
+     */
+    private function get_receiver_list_args($order)
+    {
+        $receiver_list = array(
+            'receiverList.receiver(0).amount' => $order->get_total(),
+            'receiverList.receiver(0).email'  => $order->get_receiver_email(),
+            // 'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
+
+            // freelancer receiver
+            'receiverList.receiver(1).amount' => $this->get_commission_fee(),
+            'receiverList.receiver(1).email'  => $this->get_commission_email(),
+            // 'receiverList.receiver(1).primary' => $this->is_pay_primary(),
+        );
+
+        return apply_filters( 'marketegnine_ppadaptive_receiver_list', $receiver_list, $order);
+    }
+
+    /**
      * Setup the request data send to ppadaptive
      *
      * @param object $order The me_order object
@@ -448,8 +506,8 @@ class ME_PPAdaptive_Request
             'cancelUrl'                     => 'http://localhost/wp/cancel-payment/order/' . $order->id, //esc_url_raw($order->get_cancel_order_url_raw()),
 
             'currencyCode'                  => get_marketengine_currency(),
-            'feesPayer'                     => 'PRIMARYRECEIVER',
-            'requestEnvelope.errorLanguage' => 'en_US',
+            'feesPayer'                     => 'EACHRECEIVER',
+            'requestEnvelope.errorLanguage' => get_bloginfo('language'),
         ),
             $this->get_receiver_list_args($order)
         );
@@ -460,34 +518,6 @@ class ME_PPAdaptive_Request
         }
 
         return $response;
-    }
-
-    private function is_pay_primary() {
-        return false;
-    }
-
-    private function get_commission_fee()
-    {
-        return ae_get_option('commission_fee', 5);
-    }
-
-    private function get_commission_email()
-    {
-        return ae_get_option('commission_email', 'dinhle1987-pers@yahoo.com');
-    }
-
-    private function get_receiver_list_args($order)
-    {
-        return array(
-            'receiverList.receiver(0).amount'  => $order->get_total(),
-            'receiverList.receiver(0).email'   => $order->get_receiver_email(),
-            'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
-
-            // freelancer receiver
-            'receiverList.receiver(1).amount'  => $this->get_commission_fee(),
-            'receiverList.receiver(1).email'   => $this->get_commission_email(),
-            'receiverList.receiver(1).primary' => $this->is_pay_primary(),
-        );
     }
 
     /**
@@ -533,17 +563,12 @@ class ME_PPAdaptive_Request
 
     }
 
-    private function build_query($order)
-    {
-
-    }
-
     private function api_fee()
     {
         return array(
-            'PRIMARYRECEIVER' => __("Primary receiver pays all fees", ET_DOMAIN),
-            'EACHRECEIVER'    => __("Each receiver pays their own fee", ET_DOMAIN),
-            'SECONDARYONLY'   => __("Secondary receivers pay all fees", ET_DOMAIN),
+            'PRIMARYRECEIVER' => __("Primary receiver pays all fees", 'enginethemes'),
+            'EACHRECEIVER'    => __("Each receiver pays their own fee", 'enginethemes'),
+            'SECONDARYONLY'   => __("Secondary receivers pay all fees", 'enginethemes'),
         );
     }
 
@@ -551,3 +576,6 @@ class ME_PPAdaptive_Request
 
 // TODO: Paypal adaptive IPN class
 // https://developer.paypal.com/docs/classic/adaptive-payments/integration-guide/APIPN/
+function me_get_ppadaptive_support_currency(){
+
+}
