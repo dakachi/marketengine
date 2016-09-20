@@ -424,6 +424,15 @@ class ME_PPAdaptive_Request
     {
         $this->gateway = ME_PPAdaptive::instance();
     }
+
+    /**
+     * Setup the request data send to ppadaptive
+     *
+     * @param object $order The me_order object
+     *
+     * @since 1.0
+     * @return object
+     */
     public function setup_payment($order)
     {
         // TODO: setup order payment
@@ -438,51 +447,60 @@ class ME_PPAdaptive_Request
             'receiverList.receiver(0).primary' => true,
 
             // freelancer receiver
-            'receiverList.receiver(1).amount'  => 4,
+            'receiverList.receiver(1).amount'  => 4, // TODO: get commision option
             'receiverList.receiver(1).email'   => 'dinhle1987-pers@yahoo.com',
             'receiverList.receiver(1).primary' => false,
             'requestEnvelope.errorLanguage'    => 'en_US',
         );
 
-        $response = $this->gateway->pay_primary($order_data);
-        // TODO: update order payKey
+        $response = $this->gateway->pay($order_data);
+        if(!empty($response->payKey)) {
+            update_post_meta( $order->id, '_me_ppadaptive_paykey', $response->payKey);
+        }
         return $response;
     }
 
-    public function complete_payment($data)
-    {   
-        echo "<pre>";
-        print_r($data);
-        echo "</pre>";
-        $response                         = $this->gateway->payment_details($data['payKey']);
-        $payment_return['payment_status'] = $response->responseEnvelope->ack;
+    /**
+     * Catch the post back from paypal adaptive to update order
+     *
+     *
+     * @since 1.0
+     * @return void
+     */
+    public function complete_payment()
+    {
+        $order_id = get_query_var( 'order-id' );
+        if($order_id) {
+            $payKey = get_post_meta( $order_id, '_me_ppadaptive_paykey', true);
+            $response                         = $this->gateway->payment_details($payKey);
+            $payment_return['payment_status'] = $response->responseEnvelope->ack;
 
-        // email confirm
-        if (strtoupper($response->responseEnvelope->ack) == 'SUCCESS') {
-            $payment_return['ACK'] = true;
+            // email confirm
+            if (strtoupper($response->responseEnvelope->ack) == 'SUCCESS') {
+                $payment_return['ACK'] = true;
 
-            // UPDATE order
-            $paymentInfo = $response->paymentInfoList->paymentInfo;
-            if ($paymentInfo[0]->transactionStatus == 'COMPLETED') {
+                // UPDATE order
+                $paymentInfo = $response->paymentInfoList->paymentInfo;
+                if ($paymentInfo[0]->transactionStatus == 'COMPLETED') {
 
-                wp_update_post(array(
-                    'ID'          => $data['order_id'],
-                    'post_status' => 'publish',
-                ));
+                    wp_update_post(array(
+                        'ID'          => $order_id,
+                        'post_status' => 'publish',
+                    ));
+                }
+
+                if ($paymentInfo[0]->transactionStatus == 'PENDING') {
+                    //pendingReason
+                    $payment_return['pending_msg'] = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
+                    $payment_return['msg']         = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
+                }
             }
 
-            if ($paymentInfo[0]->transactionStatus == 'PENDING') {
-                //pendingReason
-                $payment_return['pending_msg'] = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
-                $payment_return['msg']         = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
+            if (strtoupper($response->responseEnvelope->ack) == 'FAILURE') {
+                $payment_return['msg'] = $response->error[0]->message;
             }
         }
 
-        if (strtoupper($response->responseEnvelope->ack) == 'FAILURE') {
-            $payment_return['msg'] = $response->error[0]->message;
-        }
-
-        return $response;
     }
 
     private function build_query($order)
