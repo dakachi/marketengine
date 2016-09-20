@@ -451,7 +451,7 @@ class ME_PPAdaptive_Request
             'feesPayer'                     => 'PRIMARYRECEIVER',
             'requestEnvelope.errorLanguage' => 'en_US',
         ),
-            $this->get_listing_item_args($order)
+            $this->get_receiver_list_args($order)
         );
 
         $response = $this->gateway->pay($order_data);
@@ -476,24 +476,11 @@ class ME_PPAdaptive_Request
         return ae_get_option('commission_email', 'dinhle1987-pers@yahoo.com');
     }
 
-    private function get_listing_item_args($order)
+    private function get_receiver_list_args($order)
     {
-        $index   = 0;
-        $total   = 0;
-        $listing = array();
-
-        $listing_item = me_get_order_items($order->id, 'listing_item');
-        foreach ($listing_item as $key => $item) {
-            $listing['quantity_' . $index] = me_get_order_item_meta($item->order_item_id, '_qty', true);
-            $listing['amount_' . $index]   = me_get_order_item_meta($item->order_item_id, '_listing_price', true);
-
-            $total += ($listing['amount_' . $index] * $listing['quantity_' . $index]);
-            $index++;
-        }
-
         return array(
-            'receiverList.receiver(0).amount'  => $total,
-            'receiverList.receiver(0).email'   => 'dinhle1987-biz@yahoo.com',
+            'receiverList.receiver(0).amount'  => $order->get_total(),
+            'receiverList.receiver(0).email'   => $order->get_receiver_email(),
             'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
 
             // freelancer receiver
@@ -505,7 +492,6 @@ class ME_PPAdaptive_Request
 
     /**
      * Catch the post back from paypal adaptive to update order
-     *
      *
      * @since 1.0
      * @return void
