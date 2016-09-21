@@ -451,12 +451,12 @@ class ME_PPAdaptive_Request {
         $receiver_list = array(
             'receiverList.receiver(0).amount' => $order->get_total(),
             'receiverList.receiver(0).email'  => $order->get_receiver_email(),
-            'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
+            //'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
 
             // freelancer receiver
             'receiverList.receiver(1).amount' => $this->get_commission_fee(),
             'receiverList.receiver(1).email'  => $this->get_commission_email(),
-            'receiverList.receiver(1).primary' => $this->is_pay_primary(),
+            //'receiverList.receiver(1).primary' => $this->is_pay_primary(),
         );
 
         $receiver_0 = (object) array(
@@ -501,7 +501,7 @@ class ME_PPAdaptive_Request {
             $this->get_receiver_list_args($order)
         );
 
-        $response = $this->gateway->pay_primary($order_data);
+        $response = $this->gateway->pay($order_data);
         if (!empty($response->payKey)) {
             update_post_meta($order->id, '_me_ppadaptive_paykey', $response->payKey);
         }
@@ -544,29 +544,12 @@ class ME_PPAdaptive_Request {
             break;
         }
 
-
         update_post_meta($order_id, '_sender_email', $response->senderEmail);
         update_post_meta($order_id, '_sender_account_id', $response->sender->accountId);
         update_post_meta($order_id, '_action_type', $response->actionType);
         update_post_meta($order_id, '_fees_payer', $response->feesPayer);
 
-        // email confirm
-        // if (strtoupper($response->responseEnvelope->ack) == 'SUCCESS') {
-
-            
-
-        //     if ($paymentInfo[0]->transactionStatus == 'PENDING') {
-        //         // TODO: update order pending reason
-        //         //pendingReason
-        //         $payment_return['pending_msg'] = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
-        //         $payment_return['msg']         = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
-        //     }
-        // }
-
-        // if (strtoupper($response->responseEnvelope->ack) == 'FAILURE') {
-        //     // order failure message
-        //     $payment_return['msg'] = $response->error[0]->message;
-        // }
+        // TODO: email confirm
 
     }
 
@@ -584,16 +567,15 @@ class ME_PPAdaptive_Request {
     }
 
     private function order_finish($response, $order_id) {
-        $this->update_receiver();
+        $this->update_receiver($response, $order_id);
         wp_update_post(array(
             'ID'          => $order_id,
             'post_status' => 'me-complete',
         ));
-
     }
 
     private function order_incomplete($response, $order_id) {
-        $this->update_receiver();
+        $this->update_receiver($response, $order_id);
         // update order receiver item, commission fee item
         wp_update_post(array(
             'ID'          => $order_id,
@@ -603,11 +585,21 @@ class ME_PPAdaptive_Request {
 
 
     private function order_pending($response, $order_id) {
-
+        //     if ($paymentInfo[0]->transactionStatus == 'PENDING') {
+        //         // TODO: update order pending reason
+        //         //pendingReason
+        //         $payment_return['pending_msg'] = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
+        //         $payment_return['msg']         = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
+        //     }
+        // }
+        // update_post_meta($order_id, '_sender_email', $response->senderEmail);
     }
 
     private function order_error($response, $order_id) {
-
+        // if (strtoupper($response->responseEnvelope->ack) == 'FAILURE') {
+        //     // order failure message
+        //     $payment_return['msg'] = $response->error[0]->message;
+        // }
     }
 
     private function api_fee() {
