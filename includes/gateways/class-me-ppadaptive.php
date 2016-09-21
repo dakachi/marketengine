@@ -6,8 +6,7 @@ if (!defined('ABSPATH')) {
 /**
  * Paypal Adaptive class
  */
-class ME_PPAdaptive extends ME_Payment
-{
+class ME_PPAdaptive extends ME_Payment {
     /**
      * The single instance of the class.
      *
@@ -47,8 +46,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.0
      * @return ME_PPAdaptive - Main instance.
      */
-    public static function instance()
-    {
+    public static function instance() {
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
         }
@@ -59,8 +57,7 @@ class ME_PPAdaptive extends ME_Payment
      * Constuctor
      * @since 1.0
      */
-    public function __construct()
-    {
+    public function __construct() {
 
         // $api       = ae_get_option('escrow_paypal_api', array());
         $this->api = ae_get_option('escrow_paypal_api',
@@ -96,8 +93,7 @@ class ME_PPAdaptive extends ME_Payment
      *
      * @return string
      */
-    public function get_pending_message($pending_reason)
-    {
+    public function get_pending_message($pending_reason) {
         $pending_reason = strtoupper($pending_reason);
         $reason         = array(
             'ECHECK'         => __('The payment is pending because it was made by an eCheck that has not yet cleared.', 'enginethemes'),
@@ -119,8 +115,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.0
      * @return array
      */
-    public function build_headers()
-    {
+    public function build_headers() {
         $headers = array(
             'X-PAYPAL-APPLICATION-ID'       => $this->appID,
             'X-PAYPAL-SECURITY-USERID'      => $this->api['username'],
@@ -139,8 +134,7 @@ class ME_PPAdaptive extends ME_Payment
     /**
      * The GetVerifiedStatus API operation lets you determine whether the specified PayPal account's status is verified or unverified.
      */
-    public function get_verified_account($info)
-    {
+    public function get_verified_account($info) {
 
         $testmode = ae_get_option('test_mode');
         // test mod is on
@@ -173,8 +167,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.0
      * @return Object | WP_Error
      */
-    protected function send_request($endpoint, $data = array())
-    {
+    protected function send_request($endpoint, $data = array()) {
         $endpoint = $this->endpoint . $endpoint;
         $headers  = $this->build_headers();
 
@@ -212,8 +205,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.0
      * @return object | WP_Error
      */
-    public function execute_payment($paykey)
-    {
+    public function execute_payment($paykey) {
         $data = array('payKey' => $paykey);
         return $this->send_request('ExecutePayment', $data);
     }
@@ -229,8 +221,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.0
      * @author Dakachi
      */
-    public function pay($order)
-    {
+    public function pay($order) {
         $data               = $order;
         $data['actionType'] = 'PAY';
         // Pay, PAY_PRIMARY
@@ -248,8 +239,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.0
      * @author Dakachi
      */
-    public function pay_primary($order)
-    {
+    public function pay_primary($order) {
         $data               = $order;
         $data['actionType'] = 'PAY_PRIMARY';
         return $this->send_request('Pay', $data);
@@ -264,8 +254,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.0
      * @return object | WP_Error
      */
-    public function refund($order)
-    {
+    public function refund($order) {
         $payKey = $order->get_payment_key();
         $data   = array('payKey' => $paykey);
         return $this->send_request('Refund', $data);
@@ -286,8 +275,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.2
      * @author Dakachi
      */
-    public function pre_approval($order)
-    {
+    public function pre_approval($order) {
         return $this->send_request('Preapproval', $order);
     }
 
@@ -298,8 +286,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.0
      * @return object | WP_Error
      */
-    public function pre_approval_details($preapproval_key)
-    {
+    public function pre_approval_details($preapproval_key) {
         $data = array('preapprovalKey' => $paykey);
         return $this->send_request('PreapprovalDetails', $data);
     }
@@ -313,8 +300,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.0
      * @return object | WP_Error
      */
-    public function cancel_approval($preapproval_key)
-    {
+    public function cancel_approval($preapproval_key) {
         $data = array('preapprovalKey' => $preapproval_key);
         return $this->send_request('CancelPreapproval', $data);
     }
@@ -328,8 +314,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.0
      * @return object | WP_Error
      */
-    public function payment_details($paykey)
-    {
+    public function payment_details($paykey) {
         $data = array('payKey' => $paykey);
         return $this->send_request('PaymentDetails', $data);
     }
@@ -345,8 +330,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.0
      * @return object | WP_Error
      */
-    public function get_funding_plans($payKey)
-    {
+    public function get_funding_plans($payKey) {
         $data = array('payKey' => $paykey);
         return $this->send_request('GetFundingPlans', $data);
     }
@@ -362,8 +346,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.0
      * @return Object | WP_Error
      */
-    public function set_payment_options($paykey, $options)
-    {
+    public function set_payment_options($paykey, $options) {
         $options['payKey'] = $paykey;
         return $this->send_request('GetPaymentOptions', $options);
     }
@@ -375,8 +358,7 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.0
      * @return Object | WP_Error
      */
-    public function get_payment_options($payKey)
-    {
+    public function get_payment_options($payKey) {
         $data = array('payKey' => $payKey);
         return $this->send_request('GetPaymentOptions', $data);
     }
@@ -389,12 +371,10 @@ class ME_PPAdaptive extends ME_Payment
      * @since 1.3
      * @author Dakachi
      */
-    public function GetPrePaymentDisclosure()
-    {
+    public function GetPrePaymentDisclosure() {
     }
 
-    public function GetShippingAddresses()
-    {
+    public function GetShippingAddresses() {
     }
 
 }
@@ -409,8 +389,7 @@ class ME_PPAdaptive extends ME_Payment
  *
  * @author      Dakachi
  */
-class ME_PPAdaptive_Request
-{
+class ME_PPAdaptive_Request {
     private $gateway;
     /**
      * The single instance of the class.
@@ -428,40 +407,35 @@ class ME_PPAdaptive_Request
      * @since 1.0
      * @return ME_PPAdaptive - Main instance.
      */
-    public static function instance()
-    {
+    public static function instance() {
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
         }
         return self::$_instance;
     }
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->gateway = ME_PPAdaptive::instance();
     }
 
     /**
      * Check the option pay primary or note
      */
-    private function is_pay_primary()
-    {
+    private function is_pay_primary() {
         return apply_filters('marketengine_ppadaptive_is_pay_primary', false);
     }
 
     /**
      * Get the site's commission fee
      */
-    private function get_commission_fee()
-    {
+    private function get_commission_fee() {
         return ae_get_option('commission_fee', 5);
     }
 
     /**
      * Get the site's receive commission email
      */
-    private function get_commission_email()
-    {
+    private function get_commission_email() {
         return ae_get_option('commission_email', 'dinhle1987-pers@yahoo.com');
     }
 
@@ -473,8 +447,7 @@ class ME_PPAdaptive_Request
      * @since 1.0
      * @return array
      */
-    private function get_receiver_list_args($order)
-    {
+    private function get_receiver_list_args($order) {
         $receiver_list = array(
             'receiverList.receiver(0).amount' => $order->get_total(),
             'receiverList.receiver(0).email'  => $order->get_receiver_email(),
@@ -485,8 +458,25 @@ class ME_PPAdaptive_Request
             'receiverList.receiver(1).email'  => $this->get_commission_email(),
             'receiverList.receiver(1).primary' => $this->is_pay_primary(),
         );
-        // TODO: add order item commission_fee
-        return apply_filters( 'marketegnine_ppadaptive_receiver_list', $receiver_list, $order);
+
+        $receiver_0 = (object) array(
+            'user_name'  => 'dinhle',
+            'email'      => $order->get_receiver_email(),
+            'amount'     => $order->get_total(),
+            'is_primary' => true,
+        );
+
+        $receiver_1 = (object) array(
+            'user_name'  => 'admin',
+            'email'      => $this->get_commission_email(),
+            'amount'     => $this->get_commission_fee(),
+            'is_primary' => false,
+        );
+
+        $order->add_receiver($receiver_0);
+        $order->add_receiver($receiver_1);
+
+        return apply_filters('marketegnine_ppadaptive_receiver_list', $receiver_list, $order);
     }
 
     /**
@@ -497,8 +487,7 @@ class ME_PPAdaptive_Request
      * @since 1.0
      * @return object
      */
-    public function setup_payment($order)
-    {
+    public function setup_payment($order) {
         // TODO: setup order payment
 
         $order_data = array_merge(array(
@@ -512,7 +501,7 @@ class ME_PPAdaptive_Request
             $this->get_receiver_list_args($order)
         );
 
-        $response = $this->gateway->pay($order_data);
+        $response = $this->gateway->pay_primary($order_data);
         if (!empty($response->payKey)) {
             update_post_meta($order->id, '_me_ppadaptive_paykey', $response->payKey);
         }
@@ -526,8 +515,7 @@ class ME_PPAdaptive_Request
      * @since 1.0
      * @return void
      */
-    public function complete_payment()
-    {
+    public function complete_payment() {
         $order_id = get_query_var('order-id');
         if (!$order_id) {
             return;
@@ -536,65 +524,95 @@ class ME_PPAdaptive_Request
         $payKey   = get_post_meta($order_id, '_me_ppadaptive_paykey', true);
         $response = $this->gateway->payment_details($payKey);
 
-        if(is_wp_error( $response )) return;
+        if (is_wp_error($response)) {
+            return;
+        }
 
         switch ($response->status) {
-            case 'COMPLETED':
-                $this->order_finish($response, $order_id);
-                break;
-            case 'INCOMPLETE' :
-                $this->order_incomplete($response, $order_id);
-            case 'PROCESSING' :
-            case 'PENDING' :
-            case 'REVERSALERROR' :
-            default:
-                $this->order_error($response, $order_id);
-                break;
+
+        case 'COMPLETED':
+            $this->order_finish($response, $order_id);
+            break;
+        case 'INCOMPLETE':
+            $this->order_incomplete($response, $order_id);
+        case 'PROCESSING':
+        case 'PENDING':
+            $this->order_pending($response, $order_id);
+        case 'REVERSALERROR':
+        default:
+            $this->order_error($response, $order_id);
+            break;
         }
+
+
+        update_post_meta($order_id, '_sender_email', $response->senderEmail);
+        update_post_meta($order_id, '_sender_account_id', $response->sender->accountId);
+        update_post_meta($order_id, '_action_type', $response->actionType);
+        update_post_meta($order_id, '_fees_payer', $response->feesPayer);
 
         // email confirm
-        if (strtoupper($response->responseEnvelope->ack) == 'SUCCESS') {
+        // if (strtoupper($response->responseEnvelope->ack) == 'SUCCESS') {
 
-            // UPDATE order
-            $paymentInfo = $response->paymentInfoList->paymentInfo;
-            if ($paymentInfo[0]->transactionStatus == 'COMPLETED') {
+            
 
-                wp_update_post(array(
-                    'ID'          => $order_id,
-                    'post_status' => 'publish',
-                ));
-            }
+        //     if ($paymentInfo[0]->transactionStatus == 'PENDING') {
+        //         // TODO: update order pending reason
+        //         //pendingReason
+        //         $payment_return['pending_msg'] = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
+        //         $payment_return['msg']         = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
+        //     }
+        // }
 
-            if ($paymentInfo[0]->transactionStatus == 'PENDING') {
-                // TODO: update order pending reason
-                //pendingReason
-                $payment_return['pending_msg'] = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
-                $payment_return['msg']         = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
-            }
-        }
-
-        if (strtoupper($response->responseEnvelope->ack) == 'FAILURE') {
-            // order failure message
-            $payment_return['msg'] = $response->error[0]->message;
-        }
+        // if (strtoupper($response->responseEnvelope->ack) == 'FAILURE') {
+        //     // order failure message
+        //     $payment_return['msg'] = $response->error[0]->message;
+        // }
 
     }
 
-
     private function order_finish($response, $order_id) {
-        // update order receiver item, commission fee item
+        $payment_info   = $response->paymentInfoList->paymentInfo;
+        $receiver_items = me_get_order_items($order_id, 'receiver_item');
+        foreach ($receiver_items as $key => $receiver) {
+            me_add_order_item_meta($receiver->order_item_id, '_transaction_id', $payment_info[$key]->transactionId);
+            me_add_order_item_meta($receiver->order_item_id, '_transaction_status', $payment_info[$key]->transactionStatus);
+        }
+        
+        wp_update_post(array(
+            'ID'          => $order_id,
+            'post_status' => 'me-complete',
+        ));
+
     }
 
     private function order_incomplete($response, $order_id) {
+        $payment_info   = $response->paymentInfoList->paymentInfo;
+        $receiver_items = me_get_order_items($order_id, 'receiver_item');
+        
+        foreach ($receiver_items as $key => $receiver) {
+            if(!empty($payment_info[$key]->transactionId)) {
+                me_add_order_item_meta($receiver->order_item_id, '_transaction_id', $payment_info[$key]->transactionId);
+                me_add_order_item_meta($receiver->order_item_id, '_transaction_status', $payment_info[$key]->transactionStatus);    
+            }
+        }
+
         // update order receiver item, commission fee item
+        wp_update_post(array(
+            'ID'          => $order_id,
+            'post_status' => 'me-active',
+        ));
+    }
+
+
+    private function order_pending($response, $order_id) {
+
     }
 
     private function order_error($response, $order_id) {
 
     }
 
-    private function api_fee()
-    {
+    private function api_fee() {
         return array(
             'PRIMARYRECEIVER' => __("Primary receiver pays all fees", 'enginethemes'),
             'EACHRECEIVER'    => __("Each receiver pays their own fee", 'enginethemes'),
@@ -606,6 +624,6 @@ class ME_PPAdaptive_Request
 
 // TODO: Paypal adaptive IPN class
 // https://developer.paypal.com/docs/classic/adaptive-payments/integration-guide/APIPN/
-function me_get_ppadaptive_support_currency(){
+function me_get_ppadaptive_support_currency() {
 
 }

@@ -54,6 +54,11 @@ class ME_Order {
         return $this->order->post_status === $status;
     }
 
+    /**
+     * Retrieve Order Currency
+     * @return String
+     * @since 1.0
+     */
     public function get_currency() {
         return 'USD';
     }
@@ -128,11 +133,11 @@ class ME_Order {
             return false;
         }
 
-        $order_item_id = me_add_order_item($this->id, $receiver->get_user_name(), 'receiver_item');
+        $order_item_id = me_add_order_item($this->id, $receiver->user_name, 'receiver_item');
         if ($order_item_id) {
-            me_add_order_item_meta($order_item_id, '_receive_email', $receiver->get_receiver_email());
-            me_add_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary());
-            me_add_order_item_meta($order_item_id, '_amount', $receiver->get_amount());
+            me_add_order_item_meta($order_item_id, '_receive_email', $receiver->email);
+            me_add_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary);
+            me_add_order_item_meta($order_item_id, '_amount', $receiver->amount);
         }
         return $order_item_id;
     }

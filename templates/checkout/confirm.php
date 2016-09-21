@@ -3,7 +3,7 @@ $total = '$' . $order->get_total();
 $payment_date = date_i18n( get_option( 'date_format' ), strtotime( $order->post_date ) );
 $order_number = '#' . $order->get_order_number();
 
-if($order->has_status('publish')) :
+if(!$order->has_status('pending')) :
 ?>
 <div class="marketengine">
 	<div class="me-payment-complete">		

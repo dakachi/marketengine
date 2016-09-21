@@ -13,7 +13,7 @@ function me_init_endpoint() {
     add_rewrite_endpoint('orders', EP_ROOT | EP_PAGES);
     add_rewrite_endpoint('order', EP_ROOT | EP_PAGES);
 
-    add_rewrite_rule( '^process-payment/order/([^/]*)/?','index.php?page_id=3838&order-id=$matches[1]','top');
+    add_rewrite_rule( '^process-payment/order/([^/]*)/?','index.php?page_id=392&order-id=$matches[1]','top');
 
     $endpoint = 'orders';
     add_rewrite_rule('^(.?.+?)/' . $endpoint . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
