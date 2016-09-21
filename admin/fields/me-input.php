@@ -22,6 +22,14 @@ abstract class ME_Input {
         }
     }
 
+    protected function open_form(){
+        echo '<form novalidate="novalidate">';
+    }
+
+    protected function close_form(){
+        echo '</form>';
+    }
+
     protected function get_value() {
         if (!$this->_container || !$this->_options) {
             return '';
@@ -30,6 +38,7 @@ abstract class ME_Input {
         $options     = $this->_options;
         $option_name = $this->_name;
 
+        return ME_Options::get_instance()->get_option( $option_name);
         //return $options->$parent->$option_name;
     }
 }

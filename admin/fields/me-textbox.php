@@ -12,17 +12,21 @@ class ME_Textbox extends ME_Input {
         $this->_name        = $args['name'];
         $this->_label       = $args['label'];
         $this->_description = $args['description'];
+        $this->_slug        = $args['slug'];
         $this->_container   = $options;
 
         $this->_options = $options;
     }
 
     public function render() {
-        echo '<div class="me-group-field">';
+        $id = $this->_slug ? 'id="'.$this->_slug.'"' : '';
+        $this->open_form();
+        echo '<div class="me-group-field" '.$id.'>';
         $this->label();
         $this->description();
-        echo '<input type="text" class="me-input-field" value="' . $this->get_value() . '" />';
+        echo '<input type="text" name="'.$this->_name.'" class="me-input-field" value="' . $this->get_value() . '" />';
         echo '</div>';
+        $this->close_form();
     }
 }
 

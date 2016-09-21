@@ -4,32 +4,31 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class ME_Select extends ME_Input{
+class ME_Multi_Field extends ME_Input{
     function __construct( $args, $options ) {
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));
 
-        $this->_type        = 'select';
+        $this->_type        = 'multi-field';
+        $this->_id          = $args['id'];
         $this->_name        = $args['name'];
         $this->_label       = $args['label'];
         $this->_description = $args['description'];
-        $this->_slug        = $args['slug'];
-        $this->_data        = $args['data'];
+        $this->_template 	= $args['template'];
         $this->_container   = $options;
 
         $this->_options = $options;
     }
 
     function render() {
-        $id = $this->_slug ? 'id="'. $this->_slug . '"' : '';
-
-        echo '<div class="me-group-field" '.$id.'>';
+        echo '<div class="me-group-field">';
         $this->label();
         $this->description();
-        echo '<select class="select-field" name="'. $this->_name .'">';
-        foreach ($this->_data as $key => $value) {
-            echo '<option value="'. $key .'">' . $value . '</option>';
+        foreach( $this->_template as $template ){
+        	$class = 'ME_' . ucfirst($template['type']);
+        	$textbox = new $class($template, $this->_options);
+        	$textbox->render();
         }
-        echo '</select>';
+        echo '</div>';
     }
 
 }

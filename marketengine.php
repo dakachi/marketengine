@@ -40,7 +40,7 @@ if (!class_exists('MarketEngine')):
         public $current_user;
 
         /**
-         * The listing factory object 
+         * The listing factory object
          * @var listing_factory
          * @since 1.0
          */
@@ -67,6 +67,7 @@ if (!class_exists('MarketEngine')):
             $this->define();
             $this->include_files();
             $this->init_hooks();
+            $this->add_ajax();
             /**
              * Fires after the plugin is loaded.
              *
@@ -101,6 +102,7 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/class-me-template-loader.php';
             require_once ME_PLUGIN_PATH . '/includes/class-me-order.php';
             require_once ME_PLUGIN_PATH . '/includes/class-me-shipping.php';
+            require_once ME_PLUGIN_PATH . '/includes/class-me-options.php';
 
             require_once ME_PLUGIN_PATH . '/includes/me-notices-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-template-functions.php';
@@ -114,6 +116,9 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/me-widgets.php';
 
             require_once ME_PLUGIN_PATH . '/includes/abstracts/class-abstract-form.php';
+
+            require_once ME_PLUGIN_PATH . '/includes/handle-options/class-me-options-handle.php';
+
             require_once ME_PLUGIN_PATH . '/includes/handle-authentication/class-me-authentication-form.php';
             require_once ME_PLUGIN_PATH . '/includes/handle-authentication/class-me-authentication.php';
 
@@ -219,6 +224,10 @@ if (!class_exists('MarketEngine')):
                     ),
                 )
             );
+        }
+
+        public function add_ajax(){
+            add_action('wp_ajax_me-option-sync', array('ME_Options_Handle', 'action_sync'));
         }
 
         /**
