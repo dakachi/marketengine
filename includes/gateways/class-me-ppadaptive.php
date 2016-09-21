@@ -570,14 +570,21 @@ class ME_PPAdaptive_Request {
 
     }
 
-    private function order_finish($response, $order_id) {
+    private function update_receiver($response, $order_id) {
         $payment_info   = $response->paymentInfoList->paymentInfo;
         $receiver_items = me_get_order_items($order_id, 'receiver_item');
         foreach ($receiver_items as $key => $receiver) {
-            me_add_order_item_meta($receiver->order_item_id, '_transaction_id', $payment_info[$key]->transactionId);
-            me_add_order_item_meta($receiver->order_item_id, '_transaction_status', $payment_info[$key]->transactionStatus);
+            if(!empty($payment_info[$key]->transactionId)) {
+                me_add_order_item_meta($receiver->order_item_id, '_transaction_id', $payment_info[$key]->transactionId);
+                me_add_order_item_meta($receiver->order_item_id, '_transaction_status', $payment_info[$key]->transactionStatus);    
+            }
+            me_add_order_item_meta($receiver->order_item_id, 'refunded_amount', $payment_info[$key]->refundedAmount);
+            me_add_order_item_meta($receiver->order_item_id, '_pending_refund', $payment_info[$key]->pendingRefund);
         }
-        
+    }
+
+    private function order_finish($response, $order_id) {
+        $this->update_receiver();
         wp_update_post(array(
             'ID'          => $order_id,
             'post_status' => 'me-complete',
@@ -586,16 +593,7 @@ class ME_PPAdaptive_Request {
     }
 
     private function order_incomplete($response, $order_id) {
-        $payment_info   = $response->paymentInfoList->paymentInfo;
-        $receiver_items = me_get_order_items($order_id, 'receiver_item');
-        
-        foreach ($receiver_items as $key => $receiver) {
-            if(!empty($payment_info[$key]->transactionId)) {
-                me_add_order_item_meta($receiver->order_item_id, '_transaction_id', $payment_info[$key]->transactionId);
-                me_add_order_item_meta($receiver->order_item_id, '_transaction_status', $payment_info[$key]->transactionStatus);    
-            }
-        }
-
+        $this->update_receiver();
         // update order receiver item, commission fee item
         wp_update_post(array(
             'ID'          => $order_id,
