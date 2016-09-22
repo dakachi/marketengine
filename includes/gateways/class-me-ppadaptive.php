@@ -678,6 +678,8 @@ class ME_Adaptive_IPN {
 
     private function handle_ipn() {
         // update_option( 'paypal_ipn',$_POST );
+        update_option( 'paypal_ipn', 'runned');
+        
         $response = $_POST;
         if($response['transaction_type'] == 'Adaptive Payment PAY') {
             $paykey = $response['pay_key'];
@@ -686,7 +688,7 @@ class ME_Adaptive_IPN {
                 ME_PPAdaptive_Request::instance()->process_order($order_id, $paykey);    
             }          
         }
-        update_option( 'paypal_ipn', 'runned');
+
     }
 
     private function get_order_id($paykey) {
