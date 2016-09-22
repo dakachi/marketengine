@@ -9,6 +9,7 @@ class ME_Checkout_Form
     public static function init_hook()
     {
         add_action('wp_loaded', array(__CLASS__, 'add_to_cart'));
+        add_action('wp_loaded', array(__CLASS__, 'process_contact'));
         add_action('wp_loaded', array(__CLASS__, 'process_checkout'));
         // parse_request
         add_action('wp_loaded', array(__CLASS__, 'confirm_payment'));
@@ -54,7 +55,11 @@ class ME_Checkout_Form
 
     public static function process_contact()
     {
-
+        if (isset($_POST['send_inquiry']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-send-inquiry')) {
+            
+            wp_redirect(home_url('/me-conversation'));
+            exit;
+        }
     }
 }
 ME_Checkout_Form::init_hook();
