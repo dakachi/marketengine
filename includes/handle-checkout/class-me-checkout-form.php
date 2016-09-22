@@ -11,7 +11,7 @@ class ME_Checkout_Form
         add_action('wp_loaded', array(__CLASS__, 'add_to_cart'));
         add_action('wp_loaded', array(__CLASS__, 'process_checkout'));
         // parse_request
-        add_action('wp_loaded', array(__CLASS__, 'confirm_payment'));
+        add_action('parse_request', array(__CLASS__, 'confirm_payment'));
     }
 
     public static function add_to_cart()
