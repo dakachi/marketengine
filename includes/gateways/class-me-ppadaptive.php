@@ -528,13 +528,13 @@ class ME_PPAdaptive_Request {
         if (!$order_id) {
             return;
         }
-        $payKey   = get_post_meta($order_id, '_me_ppadaptive_paykey', true);
+        $payKey = get_post_meta($order_id, '_me_ppadaptive_paykey', true);
         $this->process_order($order_id, $payKey);
     }
 
     /**
      * Process the order
-     * 
+     *
      * @param Int $order_id The order id
      * @param String $paykey The paypal adaptive pay key
      * @since 1.0
@@ -543,7 +543,7 @@ class ME_PPAdaptive_Request {
 
         $response = $this->gateway->payment_details($payKey);
         if (is_wp_error($response)) {
-            return ;
+            return;
         }
 
         switch ($response->status) {
@@ -673,27 +673,27 @@ class ME_Adaptive_IPN {
     }
 
     public function init_hook() {
-        add_action( 'marketegine_ME_PPAdaptive_Request', array($this, 'handle_ipn'));
+        add_action('marketegine_me_ppadaptive_request', array($this, 'handle_ipn'));
     }
 
     private function handle_ipn($response) {
         // update_option( 'paypal_ipn',$_POST );
-        update_option( 'paypal_ipn', 'runned');
-        if($response['transaction_type'] == 'Adaptive Payment PAY') {
-            $paykey = $response['pay_key'];
+        update_option('paypal_ipn', 'runned');
+        if ($response['transaction_type'] == 'Adaptive Payment PAY') {
+            $paykey   = $response['pay_key'];
             $order_id = $this->get_order_id($paykey);
-            if($order_id) {
-                ME_PPAdaptive_Request::instance()->process_order($order_id, $paykey);    
-            }          
+            if ($order_id) {
+                ME_PPAdaptive_Request::instance()->process_order($order_id, $paykey);
+            }
         }
 
     }
 
     private function get_order_id($paykey) {
         global $wpdb;
-        $sql = "select post_id, meta_key from $wpdb->postmeta where meta_value = '{$paykey}'";
-        $result = $wpdb->get_row( $sql, ARRAY_A );
-        if($result) {
+        $sql    = "select post_id, meta_key from $wpdb->postmeta where meta_value = '{$paykey}'";
+        $result = $wpdb->get_row($sql, ARRAY_A);
+        if ($result) {
             return $result['post_id'];
         }
         return false;

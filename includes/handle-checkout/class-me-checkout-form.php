@@ -10,6 +10,7 @@ class ME_Checkout_Form
     {
         add_action('wp_loaded', array(__CLASS__, 'add_to_cart'));
         add_action('wp_loaded', array(__CLASS__, 'process_checkout'));
+        // parse_request
         add_action('wp_loaded', array(__CLASS__, 'confirm_payment'));
     }
 
@@ -45,7 +46,8 @@ class ME_Checkout_Form
     public static function confirm_payment()
     {
         if (!empty($_GET['me-payment'])) {
-            do_action('marketegine_' . $_GET['me-payment'], $_REQUEST);
+            $request = sanitize_text_field( strtolower($_GET['me-payment']) );
+            do_action('marketegine_' . $request , $_REQUEST);
             update_option( 'handle', 'marketegine_' . $_GET['me-payment'] );
             // $paypal = ME_PPAdaptive_Request::instance();
             // $paypal->complete_payment($_REQUEST);            
