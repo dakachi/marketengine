@@ -58,8 +58,6 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.0
      */
     public function __construct() {
-
-        // $api       = ae_get_option('escrow_paypal_api', array());
         $this->api = ae_get_option('escrow_paypal_api',
             array(
                 'username'  => 'dinhle1987-biz_api1.yahoo.com',
@@ -494,10 +492,7 @@ class ME_PPAdaptive_Request {
      * @return object
      */
     public function setup_payment($order) {
-        // TODO: setup order payment
-
         $order_data = array_merge(array(
-            //esc_url_raw(add_query_arg('utm_nooverride', '1', $this->gateway->get_return_url($order))),
             'returnUrl'                     => $order->get_confirm_url(),
             'cancelUrl'                     => $order->get_cancel_url(),
             'ipnNotificationUrl'            => home_url('?me-payment=ME_PPAdaptive_Request'),
