@@ -390,7 +390,13 @@ class ME_PPAdaptive extends ME_Payment {
  * @author      Dakachi
  */
 class ME_PPAdaptive_Request {
+
+    /**
+     * The ME_PPAdaptive instance
+     * @var ME_PPAdaptive
+     */
     private $gateway;
+
     /**
      * The single instance of the class.
      *
@@ -491,8 +497,11 @@ class ME_PPAdaptive_Request {
         // TODO: setup order payment
 
         $order_data = array_merge(array(
-            'returnUrl'                     => 'http://localhost/wp/process-payment/order/' . $order->id, //esc_url_raw(add_query_arg('utm_nooverride', '1', $this->gateway->get_return_url($order))),
-            'cancelUrl'                     => 'http://localhost/wp/cancel-payment/order/' . $order->id, //esc_url_raw($order->get_cancel_order_url_raw()),
+            //esc_url_raw(add_query_arg('utm_nooverride', '1', $this->gateway->get_return_url($order))),
+            'returnUrl'                     => $order->get_confirm_url(),
+            'cancelUrl'                     => $order->get_cancel_url(),
+            'notify_url'                    => $order->get_confirm_url(),
+            'notifyUrl'                     => home_url( '?paypal_ipn=true'),
 
             'currencyCode'                  => get_marketengine_currency(),
             'feesPayer'                     => 'EACHRECEIVER',
@@ -549,23 +558,42 @@ class ME_PPAdaptive_Request {
         update_post_meta($order_id, '_action_type', $response->actionType);
         update_post_meta($order_id, '_fees_payer', $response->feesPayer);
 
-        // TODO: email confirm
-
     }
 
+    /**
+     * Update order receiver list
+     *
+     * @param Object $response The paypal response Post back
+     * @param Int $order_id Current processing order id
+     *
+     * @since 1.0
+     * @author EngineThemes
+     * @return void
+     */
     private function update_receiver($response, $order_id) {
         $payment_info   = $response->paymentInfoList->paymentInfo;
         $receiver_items = me_get_order_items($order_id, 'receiver_item');
         foreach ($receiver_items as $key => $receiver) {
-            if(!empty($payment_info[$key]->transactionId)) {
+            if (!empty($payment_info[$key]->transactionId)) {
                 me_add_order_item_meta($receiver->order_item_id, '_transaction_id', $payment_info[$key]->transactionId);
-                me_add_order_item_meta($receiver->order_item_id, '_transaction_status', $payment_info[$key]->transactionStatus);    
+                me_add_order_item_meta($receiver->order_item_id, '_transaction_status', $payment_info[$key]->transactionStatus);
             }
             me_add_order_item_meta($receiver->order_item_id, 'refunded_amount', $payment_info[$key]->refundedAmount);
             me_add_order_item_meta($receiver->order_item_id, '_pending_refund', $payment_info[$key]->pendingRefund);
         }
     }
 
+    /**
+     * Finish the order
+     * Order has been completed and is paid to the target account Seller & Admin
+     *
+     * @param Object $response The paypal response Post back
+     * @param Int $order_id Current processing order id
+     *
+     * @since 1.0
+     * @author EngineThemes
+     * @return void
+     */
     private function order_finish($response, $order_id) {
         $this->update_receiver($response, $order_id);
         wp_update_post(array(
@@ -574,6 +602,17 @@ class ME_PPAdaptive_Request {
         ));
     }
 
+    /**
+     * The order is incomplete, fund just sent to primary receiver.
+     * Status of payment order was pay, but not yet eligible to transfer money to the Seller account
+     *
+     * @param Object $response The paypal response Post back
+     * @param Int $order_id Current processing order id
+     *
+     * @since 1.0
+     * @author EngineThemes
+     * @return void
+     */
     private function order_incomplete($response, $order_id) {
         $this->update_receiver($response, $order_id);
         // update order receiver item, commission fee item
@@ -583,23 +622,10 @@ class ME_PPAdaptive_Request {
         ));
     }
 
-
     private function order_pending($response, $order_id) {
-        //     if ($paymentInfo[0]->transactionStatus == 'PENDING') {
-        //         // TODO: update order pending reason
-        //         //pendingReason
-        //         $payment_return['pending_msg'] = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
-        //         $payment_return['msg']         = $ppadaptive->get_pending_message($paymentInfo[0]->pendingReason);
-        //     }
-        // }
-        // update_post_meta($order_id, '_sender_email', $response->senderEmail);
     }
 
     private function order_error($response, $order_id) {
-        // if (strtoupper($response->responseEnvelope->ack) == 'FAILURE') {
-        //     // order failure message
-        //     $payment_return['msg'] = $response->error[0]->message;
-        // }
     }
 
     private function api_fee() {
@@ -614,6 +640,3 @@ class ME_PPAdaptive_Request {
 
 // TODO: Paypal adaptive IPN class
 // https://developer.paypal.com/docs/classic/adaptive-payments/integration-guide/APIPN/
-function me_get_ppadaptive_support_currency() {
-
-}
