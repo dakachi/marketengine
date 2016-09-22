@@ -39,4 +39,8 @@ if(!$order->has_status('me-pending')) :
 	The order is onhold.
 <?php endif; ?>
 
-<?php var_dump(get_option( 'paypal_ipn' )); ?>
+<?php 
+echo "<pre>";
+print_r(get_option( 'paypal_ipn' )); 
+echo "</pre>";
+?>
