@@ -672,7 +672,7 @@ class ME_Adaptive_IPN {
         return self::$_instance;
     }
 
-    public function init_hook() {
+    public function __construct() {
         add_action('marketegine_me_ppadaptive_request', array($this, 'handle_ipn'));
     }
 
@@ -699,4 +699,4 @@ class ME_Adaptive_IPN {
         return false;
     }
 }
-ME_Adaptive_IPN::instance()->init_hook();
+ME_Adaptive_IPN::instance();
