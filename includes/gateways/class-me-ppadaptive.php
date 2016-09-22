@@ -673,7 +673,7 @@ class ME_Adaptive_IPN {
     }
 
     public function init_hook() {
-        add_action( 'marketegine_ME_PPAdaptive_Request', array(&$this, 'handle_ipn'));
+        add_action( 'marketegine_ME_PPAdaptive_Request', array($this, 'handle_ipn'));
     }
 
     private function handle_ipn($response) {

@@ -10,7 +10,6 @@ class ME_Checkout_Form
     {
         add_action('wp_loaded', array(__CLASS__, 'add_to_cart'));
         add_action('wp_loaded', array(__CLASS__, 'process_checkout'));
-
         add_action('wp_loaded', array(__CLASS__, 'confirm_payment'));
     }
 
