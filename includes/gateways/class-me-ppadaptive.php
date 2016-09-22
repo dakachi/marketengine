@@ -500,7 +500,7 @@ class ME_PPAdaptive_Request {
             //esc_url_raw(add_query_arg('utm_nooverride', '1', $this->gateway->get_return_url($order))),
             'returnUrl'                     => $order->get_confirm_url(),
             'cancelUrl'                     => $order->get_cancel_url(),
-            'notify_URL'                     => home_url( '?me-payment==ME_PPAdaptive_Request'),
+            'ipnNotificationUrl'            => home_url('?me-payment==ME_PPAdaptive_Request'),
 
             'currencyCode'                  => get_marketengine_currency(),
             'feesPayer'                     => 'EACHRECEIVER',
