@@ -500,7 +500,7 @@ class ME_PPAdaptive_Request {
             //esc_url_raw(add_query_arg('utm_nooverride', '1', $this->gateway->get_return_url($order))),
             'returnUrl'                     => $order->get_confirm_url(),
             'cancelUrl'                     => $order->get_cancel_url(),
-            'ipnNotificationUrl'            => home_url('?me-payment==ME_PPAdaptive_Request'),
+            'ipnNotificationUrl'            => home_url('?me-payment=ME_PPAdaptive_Request'),
 
             'currencyCode'                  => get_marketengine_currency(),
             'feesPayer'                     => 'EACHRECEIVER',
@@ -676,11 +676,9 @@ class ME_Adaptive_IPN {
         add_action( 'marketegine_ME_PPAdaptive_Request', array(&$this, 'handle_ipn'));
     }
 
-    private function handle_ipn() {
+    private function handle_ipn($response) {
         // update_option( 'paypal_ipn',$_POST );
         update_option( 'paypal_ipn', 'runned');
-        
-        $response = $_POST;
         if($response['transaction_type'] == 'Adaptive Payment PAY') {
             $paykey = $response['pay_key'];
             $order_id = $this->get_order_id($paykey);
