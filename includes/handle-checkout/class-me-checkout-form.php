@@ -11,7 +11,7 @@ class ME_Checkout_Form
         add_action('wp_loaded', array(__CLASS__, 'add_to_cart'));
         add_action('wp_loaded', array(__CLASS__, 'process_checkout'));
         // parse_request
-        add_action('parse_request', array(__CLASS__, 'confirm_payment'));
+        add_action('wp_loaded', array(__CLASS__, 'confirm_payment'));
     }
 
     public static function add_to_cart()
@@ -48,9 +48,7 @@ class ME_Checkout_Form
         if (!empty($_GET['me-payment'])) {  
             $request = sanitize_text_field( strtolower($_GET['me-payment']) );
             do_action('marketegine_' . $request , $_REQUEST);
-            update_option( 'handle', 'sipn_posted_to_marketegine_' . $request );
-            // $paypal = ME_PPAdaptive_Request::instance();
-            // $paypal->complete_payment($_REQUEST);            
+            update_option( 'handle', 'ipn_posted_to_marketegine_' . $request . time() );          
         }
     }
 

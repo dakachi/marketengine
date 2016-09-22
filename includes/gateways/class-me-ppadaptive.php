@@ -676,8 +676,8 @@ class ME_Adaptive_IPN {
         add_action('marketegine_me_ppadaptive_request', array($this, 'handle_ipn'));
     }
 
-    private function handle_ipn($response) {
-        // update_option( 'paypal_ipn',$_POST );
+    public function handle_ipn($response) {
+        
         update_option('paypal_ipn', 'runned');
         if ($response['transaction_type'] == 'Adaptive Payment PAY') {
             $paykey   = $response['pay_key'];
@@ -699,7 +699,4 @@ class ME_Adaptive_IPN {
         return false;
     }
 }
-add_action( 'init', 'me_handle_ipn' );
-function me_handle_ipn() {
-    ME_Adaptive_IPN::instance();    
-}
+ME_Adaptive_IPN::instance();
