@@ -699,4 +699,7 @@ class ME_Adaptive_IPN {
         return false;
     }
 }
-ME_Adaptive_IPN::instance();
+add_action( 'init', 'me_handle_ipn' );
+function me_handle_ipn() {
+    ME_Adaptive_IPN::instance();    
+}
