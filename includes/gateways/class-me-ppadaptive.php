@@ -646,8 +646,18 @@ class ME_PPAdaptive_Request {
 
 }
 
-// TODO: Paypal adaptive IPN class
-// https://developer.paypal.com/docs/classic/adaptive-payments/integration-guide/APIPN/
+/**
+ * ME_Adaptive_IPN
+ * Class handel paypal adaptive INP to process order
+ *
+ * https://developer.paypal.com/docs/classic/adaptive-payments/integration-guide/APIPN/
+ *
+ * @version     1.0
+ * @package     Payment
+ * @category    Includes/Gateways
+ *
+ * @author      Dakachi
+ */
 class ME_Adaptive_IPN {
     /**
      * The single instance of the class.
@@ -677,8 +687,6 @@ class ME_Adaptive_IPN {
     }
 
     public function handle_ipn($response) {
-        
-        update_option('paypal_ipn', 'runned');
         if ($response['transaction_type'] == 'Adaptive Payment PAY') {
             $paykey   = $response['pay_key'];
             $order_id = $this->get_order_id($paykey);
@@ -686,7 +694,6 @@ class ME_Adaptive_IPN {
                 ME_PPAdaptive_Request::instance()->process_order($order_id, $paykey);
             }
         }
-
     }
 
     private function get_order_id($paykey) {

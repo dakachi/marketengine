@@ -41,7 +41,6 @@ if(!$order->has_status('me-pending')) :
 
 <?php 
 echo "<pre>";
-print_r(get_option( 'paypal_ipn' )); 
-print_r(get_option( 'handle' )); 
+print_r(get_option( 'paypal_ipn' ));
 echo "</pre>";
 ?>

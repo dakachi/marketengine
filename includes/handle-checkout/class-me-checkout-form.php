@@ -48,7 +48,7 @@ class ME_Checkout_Form
         if (!empty($_GET['me-payment'])) {  
             $request = sanitize_text_field( strtolower($_GET['me-payment']) );
             do_action('marketegine_' . $request , $_REQUEST);
-            update_option( 'handle', 'ipn_posted_to_marketegine_' . $request . time() );          
+            update_option( 'paypal_ipn', $_POST );          
         }
     }
 
