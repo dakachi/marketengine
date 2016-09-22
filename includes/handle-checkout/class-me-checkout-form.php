@@ -46,12 +46,9 @@ class ME_Checkout_Form
     public static function confirm_payment()
     {
         if (!empty($_GET['me-payment'])) {
-            do_action('marketegine_' . $_REQUEST['me-payment'], $_REQUEST);
+            do_action('marketegine_' . $_GET['me-payment'], $_REQUEST);
             // $paypal = ME_PPAdaptive_Request::instance();
-            // $paypal->complete_payment($_REQUEST);
-
-            update_option( 'paypal_ipn',$_POST );
-            
+            // $paypal->complete_payment($_REQUEST);            
         }
     }
 

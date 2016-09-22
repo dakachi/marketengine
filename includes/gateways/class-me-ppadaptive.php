@@ -528,12 +528,22 @@ class ME_PPAdaptive_Request {
         if (!$order_id) {
             return;
         }
-
         $payKey   = get_post_meta($order_id, '_me_ppadaptive_paykey', true);
-        $response = $this->gateway->payment_details($payKey);
+        $this->process_order($order_id, $payKey);
+    }
 
+    /**
+     * Process the order
+     * 
+     * @param Int $order_id The order id
+     * @param String $paykey The paypal adaptive pay key
+     * @since 1.0
+     */
+    public function process_order($order_id, $payKey) {
+
+        $response = $this->gateway->payment_details($payKey);
         if (is_wp_error($response)) {
-            return;
+            return ;
         }
 
         switch ($response->status) {
@@ -556,7 +566,6 @@ class ME_PPAdaptive_Request {
         update_post_meta($order_id, '_sender_account_id', $response->sender->accountId);
         update_post_meta($order_id, '_action_type', $response->actionType);
         update_post_meta($order_id, '_fees_payer', $response->feesPayer);
-
     }
 
     /**
@@ -639,3 +648,55 @@ class ME_PPAdaptive_Request {
 
 // TODO: Paypal adaptive IPN class
 // https://developer.paypal.com/docs/classic/adaptive-payments/integration-guide/APIPN/
+class ME_Adaptive_IPN {
+    /**
+     * The single instance of the class.
+     *
+     * @var ME_Adaptive_IPN
+     * @since 1.0
+     */
+    static $_instance;
+
+    /**
+     * Main ME_Adaptive_IPN Instance.
+     *
+     * Ensures only one instance of ME_Adaptive_IPN is loaded or can be loaded.
+     *
+     * @since 1.0
+     * @return ME_Adaptive_IPN - Main instance.
+     */
+    public static function instance() {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    }
+
+    public function init_hook() {
+        add_action( 'marketegine_ME_PPAdaptive_Request', array(&$this, 'handle_ipn'));
+    }
+
+    private function handle_ipn() {
+        // update_option( 'paypal_ipn',$_POST );
+        $response = $_POST;
+        if($response['transaction_type'] == 'Adaptive Payment PAY') {
+            $paykey = $response['pay_key'];
+            $order_id = $this->get_order_id($paykey);
+            if($order_id) {
+                ME_PPAdaptive_Request::instance()->process_order($order_id, $paykey);    
+            }          
+        }
+        update_option( 'paypal_ipn', 'runned');
+    }
+
+    private function get_order_id($paykey) {
+        global $wpdb;
+        $sql = "select post_id, meta_key from $wpdb->postmeta where meta_value = '{$paykey}'";
+        $result = $wpdb->get_row( $sql, ARRAY_A );
+        if($result) {
+            return $result['post_id'];
+        }
+        return false;
+    }
+}
+ME_Adaptive_IPN::instance()->init_hook();
