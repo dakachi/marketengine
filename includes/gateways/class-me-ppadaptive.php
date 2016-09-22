@@ -501,7 +501,7 @@ class ME_PPAdaptive_Request {
             'returnUrl'                     => $order->get_confirm_url(),
             'cancelUrl'                     => $order->get_cancel_url(),
             'notify_url'                    => $order->get_confirm_url(),
-            'notifyUrl'                     => home_url( '?paypal_ipn=true'),
+            'notifyUrl'                     => home_url( '?me-payment==ME_PPAdaptive_Request'),
 
             'currencyCode'                  => get_marketengine_currency(),
             'feesPayer'                     => 'EACHRECEIVER',
