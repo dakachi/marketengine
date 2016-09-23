@@ -10,11 +10,11 @@ class ME_Multi_Field extends ME_Input{
 
         $this->_type        = 'multi-field';
         $this->_slug        = $args['slug'];
-        $this->_class       = $args['class'] ? $args['class'] : '';
         $this->_name        = $args['name'];
         $this->_label       = $args['label'];
         $this->_description = $args['description'];
         $this->_template 	= $args['template'];
+        $this->_class       = isset($args['class']) ? $args['class'] : '';
         $this->_container   = $options;
 
         $this->_options = $options;

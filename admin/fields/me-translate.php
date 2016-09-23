@@ -9,13 +9,13 @@ class ME_Translate extends ME_Input{
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));
 
         $this->_type        = 'translate';
-        $this->_id          = $args['id'] ? $args['id'] : '';
         $this->_name        = $args['name'];
         $this->_label       = $args['label'];
         $this->_description = $args['description'];
         $this->_slug        = $args['slug'];
-        $this->_opts        = $args['options'];
-        $this->_template 	= $args['template'];
+        $this->_template    = $args['template'];
+        $this->_id          = isset($args['id']) ? $args['id'] : '';
+        $this->_opts        = isset($args['options']) ? $args['options'] : array();
         $this->_container   = $options;
 
         $this->_options = $options;
