@@ -118,6 +118,7 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/abstracts/class-abstract-form.php';
 
             require_once ME_PLUGIN_PATH . '/includes/handle-options/class-me-options-handle.php';
+            require_once ME_PLUGIN_PATH . '/includes/handle-options/class-me-endpoint-options-handle.php';
 
             require_once ME_PLUGIN_PATH . '/includes/handle-authentication/class-me-authentication-form.php';
             require_once ME_PLUGIN_PATH . '/includes/handle-authentication/class-me-authentication.php';
@@ -228,6 +229,7 @@ if (!class_exists('MarketEngine')):
 
         public function add_ajax(){
             add_action('wp_ajax_me-option-sync', array('ME_Options_Handle', 'action_sync'));
+            add_action('wp_ajax_me-endpoint-sync', array('ME_Endpoint_Options_Handle', 'endpoint_sync'));
         }
 
         /**

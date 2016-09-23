@@ -145,10 +145,12 @@ add_filter('lostpassword_url', 'me_lostpassword_url', 10, 1);
  *
  * @return string
  */
-function me_get_endpoint_url($endpoint, $value = '', $permalink = '') {
+function me_get_endpoint_url($ep_query_var, $value = '', $permalink = '') {
     if (!$permalink) {
         $permalink = get_permalink();
     }
+    
+    $endpoint = me_get_endpoint_name($ep_query_var);
 
     if (get_option('permalink_structure')) {
         if (strstr($permalink, '?')) {

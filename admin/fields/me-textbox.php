@@ -13,6 +13,9 @@ class ME_Textbox extends ME_Input {
         $this->_label       = $args['label'];
         $this->_description = $args['description'];
         $this->_slug        = $args['slug'];
+        $this->_default     = $args['default'];
+        $this->_placeholder = $args['placeholder'];
+        $this->_isform      = $args['isform'];
         $this->_container   = $options;
 
         $this->_options = $options;
@@ -24,7 +27,7 @@ class ME_Textbox extends ME_Input {
         echo '<div class="me-group-field" '.$id.'>';
         $this->label();
         $this->description();
-        echo '<input type="text" name="'.$this->_name.'" class="me-input-field" value="' . $this->get_value() . '" />';
+        echo '<input type="text" name="'.$this->_name.'" class="me-input-field" value="' . $this->get_value() . '" placeholder="'.$this->_placeholder.'" />';
         echo '</div>';
         $this->close_form();
     }

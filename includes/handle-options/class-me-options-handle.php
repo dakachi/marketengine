@@ -3,7 +3,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
+// TODO: Make this become abstract class
 class ME_Options_Handle{
     public function action_sync() {
 
