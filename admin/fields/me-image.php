@@ -9,11 +9,11 @@ class ME_Image extends ME_Input{
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));
 
         $this->_type        = 'image';
-        $this->_id          = $args['id'];
         $this->_name        = $args['name'];
         $this->_label       = $args['label'];
         $this->_description = $args['description'];
-        $this->_gallery     = $args['gallery'];
+        $this->_id          = isset($args['id']) ? $args['id'] : '';;
+        $this->_gallery     = isset($args['gallery']) ? $args['gallery'] : '';
         $this->_container   = $options;
 
         $this->_options = $options;

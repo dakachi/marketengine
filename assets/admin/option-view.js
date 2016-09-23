@@ -36,6 +36,7 @@ window.ME = window.ME || {};
             contentType: 'application/x-www-form-urlencoded;charset=UTF-8'
         };
         ajaxParams = _.extend(ajaxParams, options);
+
         if (options.beforeSend !== 'undefined') ajaxParams.beforeSend = options.beforeSend;
         ajaxParams.success = function(result, status, jqXHR) {
             ME.pubsub.trigger('me:success', result, status, jqXHR);
@@ -55,7 +56,7 @@ window.ME = window.ME || {};
             type: 'POST',
             dataType: 'json',
             data: {},
-            url: me_globals.ajaxURL,
+            url: me_globals.ajaxurl,
             contentType: 'application/x-www-form-urlencoded;charset=UTF-8'
         };
         ajaxParams.data = _.extend(ajaxParams.data, options.data);
@@ -108,7 +109,7 @@ _.templateSettings = {
     interpolate: /\{\{=(.+?)\}\}/g,
     escape: /\{\{-(.+?)\}\}/g
 };
-(function(Models, Views, $, Backbone) {
+(function(Collections, Models, Views, $, Backbone) {
     Models.Options = Backbone.Model.extend({
         action: 'me-option-sync',
         defaults: function() {
@@ -216,7 +217,8 @@ _.templateSettings = {
             '#child-textbox',
             '#child-switch',
             '#child-radio',
-            '#me-translate'
+            '#me-translate',
+            '#endpoint-multi-fields'
         ];
         for(var i = 0; i < option_fiels.length; i++){
             if($(option_fiels[i]).length > 0){
@@ -226,6 +228,40 @@ _.templateSettings = {
                 });
             }
         }
+
+        /**
+         *  set up endpoint option view
+         *  @author: Ky Nguyen
+         */
+        Views.EP_Options = Views.Options.extend({
+            el: '#endpoint-multi-fields',
+            initialize: function(){
+                this.model.action = 'me-endpoint-sync';
+            },
+            events: {
+                'submit form': 'syncEndpoint'
+            },
+            syncEndpoint: function(e) {
+                e.preventDefault();
+                console.log(this.model.action);
+                this.model.save('', '', {
+                    success: function(result, status, jqXHR) {
+                        console.log(status);
+                        if (status.success) {
+                            // render selected language
+                        } else {
+                            if(typeof status.msg != 'undefined'){
+                                alert(status.msg);
+                            }
+                        }
+                    },
+                });
+            },
+        });
+        new Views.EP_Options({
+            model: new Models.Options(),
+        });
     });
 
-})(window.ME.Models, window.ME.Views, jQuery, Backbone);
+
+})(window.ME.Collections, window.ME.Models, window.ME.Views, jQuery, Backbone);

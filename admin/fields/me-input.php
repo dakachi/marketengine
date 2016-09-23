@@ -22,12 +22,18 @@ abstract class ME_Input {
         }
     }
 
-    protected function open_form(){
-        echo '<form novalidate="novalidate">';
+    protected function open_form() {
+        if(!isset($this->_isform) || $this->_isform)
+            echo '<form novalidate="novalidate">';
     }
 
-    protected function close_form(){
-        echo '</form>';
+    protected function close_form() {
+        if(!isset($this->_isform) || $this->_isform)
+            echo '</form>';
+    }
+
+    protected function get_id() {
+        return $this->_slug ? 'id="'.$this->_slug.'"' : '';
     }
 
     protected function get_value() {
@@ -38,7 +44,8 @@ abstract class ME_Input {
         $options     = $this->_options;
         $option_name = $this->_name;
 
-        return ME_Options::get_instance()->get_option( $option_name);
+        $option_value = ME_Options::get_instance()->get_option( $option_name);
+        return empty($option_value) ? $this->_default : $option_value;
         //return $options->$parent->$option_name;
     }
 }

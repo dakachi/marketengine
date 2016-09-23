@@ -25,9 +25,9 @@ if (!class_exists('ME_Options')) {
 
         static $instance = null;
 
-        public static function get_instance() {
+        public static function get_instance( $option_name = 'et_options' ) {
             if (self::$instance == null) {
-                self::$instance = new ME_Options('et_options');
+                self::$instance = new ME_Options($option_name);
             }
             return self::$instance;
         }
@@ -36,7 +36,7 @@ if (!class_exists('ME_Options')) {
          * construct the option using the provided option_name,
          * @param string $option_name
          */
-        public function __construct($option_name = 'et_options ') {
+        public function __construct($option_name) {
             $this->option_group = trim($option_name);
 
             // get the current value of this option

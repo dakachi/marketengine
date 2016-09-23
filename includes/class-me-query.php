@@ -1,17 +1,64 @@
 <?php
 
 /**
+ * Returns the endpoint name by query_var.
+ *
+ * @access public
+ * @param  string $query_var
+ * @return string
+ */
+function me_get_endpoint_name($query_var) {
+    $current_endpoints = me_setting_endpoint_name();
+    $query_var = str_replace('-', '_', $query_var);
+    return $current_endpoints[$query_var];
+}
+
+/**
+ * Returns the default endpoints.
+ *
+ * @access public
+ * @return array of endpoints
+ */
+function me_get_default_endpoints() {
+    $endpoint_arr = array(
+        'forgot_password'   => 'forgot-password',
+        'reset_password'   => 'reset-password',
+        'register'   => 'register',
+        'edit_profile'   => 'edit-profile',
+        'change_password'   => 'change-password',
+        'listings'   => 'listings',
+        'orders'   => 'orders',
+        'order'   => 'order',
+    );
+    return $endpoint_arr;
+}
+
+/**
+ * Renames endpoints and returns them.
+ *
+ * @access public
+ * @return array of endpoints
+ */
+function me_setting_endpoint_name() {
+    $me_options = ME_Options::get_instance();
+    $endpoint_arr = me_get_default_endpoints();
+    foreach($endpoint_arr as $key => $value){
+        $option_value = $me_options->get_option( 'ep_' . $key ) ;
+        if( isset($option_value) && !empty($option_value) && $option_value != $value )
+            $endpoint_arr[$key] = $option_value;
+    }
+    return $endpoint_arr;
+}
+
+
+/**
  * add account endpoint
  */
 function me_init_endpoint() {
-    add_rewrite_endpoint('forgot-password', EP_ROOT | EP_PAGES);
-    add_rewrite_endpoint('reset-password', EP_ROOT | EP_PAGES);
-    add_rewrite_endpoint('register', EP_ROOT | EP_PAGES);
-    add_rewrite_endpoint('edit-profile', EP_ROOT | EP_PAGES);
-    add_rewrite_endpoint('change-password', EP_ROOT | EP_PAGES);
-    add_rewrite_endpoint('listings', EP_ROOT | EP_PAGES);
-    add_rewrite_endpoint('orders', EP_ROOT | EP_PAGES);
-    add_rewrite_endpoint('order', EP_ROOT | EP_PAGES);
+    $endpoint_arr = me_setting_endpoint_name();
+    foreach($endpoint_arr as $key => $value){
+        add_rewrite_endpoint($value, EP_ROOT | EP_PAGES, str_replace('_', '-', $value));
+    }
 
     $page = get_page_by_path( 'process-payment' );
     add_rewrite_rule( '^process-payment/order/([^/]*)/?','index.php?page_id='.$page->ID.'&order-id=$matches[1]','top');

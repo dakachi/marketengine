@@ -13,7 +13,7 @@ class ME_Radio extends ME_Input {
         $this->_label       = $args['label'];
         $this->_description = $args['description'];
         $this->_slug        = $args['slug'];
-        $this->_data        = $args['data'];
+        $this->_data        = isset($args['data']) ? $args['data'] : array();
         $this->_container   = $options;
 
         $this->_options = $options;
