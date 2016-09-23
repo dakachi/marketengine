@@ -61,7 +61,9 @@ function me_init_endpoint() {
     }
 
     $page = get_page_by_path( 'process-payment' );
-    add_rewrite_rule( '^process-payment/order/([^/]*)/?','index.php?page_id='.$page->ID.'&order-id=$matches[1]','top');
+    if($page) {
+        add_rewrite_rule( '^process-payment/order/([^/]*)/?','index.php?page_id='.$page->ID.'&order-id=$matches[1]','top');
+    }
 
     $endpoint = 'orders';
     add_rewrite_rule('^(.?.+?)/' . $endpoint . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');

@@ -15,9 +15,9 @@ function marketengine_option_view() {
             'template' => include (dirname(__FILE__). '/options/authentication.php'),
         ),
         'endpoint-settings' => array(
-            'title'    => __("Endpoints", "enginethemes"),
+            'title'    => __("Endpoint Settings", "enginethemes"),
             'slug'     => 'endpoint-settings',
-            'template' => include (dirname(__FILE__). '/options/endpoints.php'),
+            'template' => include (dirname(__FILE__). '/options/endpoint-settings.php'),
         ),
     );
     echo '<div class="marketengine-tabs">';

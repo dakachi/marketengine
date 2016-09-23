@@ -23,7 +23,7 @@ class ME_Tab extends ME_Container {
     }
 
     public function start() {
-        echo '<div class="me-tab">';
+        echo '<div class="me-tab" id="em-setting-tab">';
     }
 
     public function end() {
