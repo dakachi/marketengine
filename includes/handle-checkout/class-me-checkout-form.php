@@ -9,8 +9,9 @@ class ME_Checkout_Form
     public static function init_hook()
     {
         add_action('wp_loaded', array(__CLASS__, 'add_to_cart'));
+        add_action('wp_loaded', array(__CLASS__, 'process_contact'));
         add_action('wp_loaded', array(__CLASS__, 'process_checkout'));
-
+        // parse_request
         add_action('wp_loaded', array(__CLASS__, 'confirm_payment'));
     }
 
@@ -45,16 +46,20 @@ class ME_Checkout_Form
 
     public static function confirm_payment()
     {
-        if (!empty($_GET['me-payment'])) {
-            do_action('marketegine_' . $_REQUEST['me-payment'], $_REQUEST);
-            $paypal = ME_PPAdaptive_Request::instance();
-            $paypal->complete_payment($_REQUEST);
+        if (!empty($_GET['me-payment'])) {  
+            $request = sanitize_text_field( strtolower($_GET['me-payment']) );
+            do_action('marketegine_' . $request , $_REQUEST);
+            update_option( 'paypal_ipn', $_POST );          
         }
     }
 
     public static function process_contact()
     {
-
+        if (isset($_POST['send_inquiry']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-send-inquiry')) {
+            
+            wp_redirect(home_url('/me-conversation'));
+            exit;
+        }
     }
 }
 ME_Checkout_Form::init_hook();

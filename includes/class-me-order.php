@@ -54,6 +54,15 @@ class ME_Order {
         return $this->order->post_status === $status;
     }
 
+    public function get_confirm_url() {
+        $page = get_page_by_path( 'process-payment' );
+        return get_permalink($page->ID) .'/order/' . $this->id;
+    }
+
+    public function get_cancel_url() {
+        return 'http://localhost/wp/cancel-payment/order/' . $this->id;
+    }
+
     /**
      * Retrieve Order Currency
      * @return String
