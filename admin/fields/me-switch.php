@@ -13,7 +13,7 @@ class ME_Switch extends ME_Input{
         $this->_label       = $args['label'];
         $this->_description = $args['description'];
         $this->_slug        = $args['slug'];
-        $this->_checked     = $args['checked'];
+        $this->_checked     = $args['checked'] ? $args['checked'] : '';
         $this->_container   = $options;
 
         $this->_options = $options;

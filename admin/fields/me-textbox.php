@@ -13,8 +13,8 @@ class ME_Textbox extends ME_Input {
         $this->_label       = $args['label'];
         $this->_description = $args['description'];
         $this->_slug        = $args['slug'];
-        $this->_default     = $args['default'];
-        $this->_placeholder = $args['placeholder'];
+        $this->_default     = $args['default'] ? $args['default'] : '';
+        $this->_placeholder = $args['placeholder'] ? $args['placeholder'] : '';
         $this->_isform      = $args['isform'];
         $this->_container   = $options;
 

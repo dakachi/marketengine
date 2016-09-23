@@ -9,7 +9,7 @@ class ME_Translate extends ME_Input{
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));
 
         $this->_type        = 'translate';
-        $this->_id          = $args['id'];
+        $this->_id          = $args['id'] ? $args['id'] : '';
         $this->_name        = $args['name'];
         $this->_label       = $args['label'];
         $this->_description = $args['description'];

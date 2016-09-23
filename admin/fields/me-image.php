@@ -13,7 +13,7 @@ class ME_Image extends ME_Input{
         $this->_name        = $args['name'];
         $this->_label       = $args['label'];
         $this->_description = $args['description'];
-        $this->_gallery     = $args['gallery'];
+        $this->_gallery     = $args['gallery'] ? $args['gallery'] : '';
         $this->_container   = $options;
 
         $this->_options = $options;
