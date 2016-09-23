@@ -5,6 +5,7 @@ class ME_Shortcodes_Listing {
         add_shortcode('me_listings', array(__CLASS__, 'the_listing'));
         add_shortcode('me_checkout_form', array(__CLASS__, 'checkout_form'));
         add_shortcode('me_confirm_order', array(__CLASS__, 'confirm_order'));
+        add_shortcode('me_inquiry_form', array(__CLASS__, 'inquiry_form'));
     }
     public static function post_listing_form() {
     	ob_start();
@@ -37,5 +38,14 @@ class ME_Shortcodes_Listing {
             return $content;
         }
     }
+
+
+    public static function inquiry_form() {
+        ob_start();
+        me_get_template('inquiry/inquiry');
+        $content = ob_get_clean();
+        return $content;
+    }
+
 }
 ME_Shortcodes_Listing::init_shortcodes();
