@@ -80,6 +80,7 @@ return array(
                 'label'       => __("Save changes", "enginethemes"),
                 'type'        => 'button',
                 'name'        => 'ep-button',
+                'slug'        => 'ep-button',
                 'template'    => array(),
             ),
         ),

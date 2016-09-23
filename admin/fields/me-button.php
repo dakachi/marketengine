@@ -18,6 +18,6 @@ class ME_Button extends ME_Input{
     }
 
     function render() {
-        echo '<input type="submit" name="'.$this->_name.'" value="'.$this->_label.'"/>';
+        echo '<input id="'.$this->_slug.'" type="submit" name="'.$this->_name.'" value="'.$this->_label.'"/>';
     }
 }
