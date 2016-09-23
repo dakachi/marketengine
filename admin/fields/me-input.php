@@ -45,7 +45,8 @@ abstract class ME_Input {
         $option_name = $this->_name;
 
         $option_value = ME_Options::get_instance()->get_option( $option_name);
-        return empty($option_value) ? $this->_default : $option_value;
+
+        return !empty($option_value) ? $option_value : '';
         //return $options->$parent->$option_name;
     }
 }

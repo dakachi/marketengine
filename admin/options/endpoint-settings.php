@@ -5,13 +5,11 @@ if (!defined('ABSPATH')) {
 }
 
 return array(
-    'endpoint-multi-fields' => array(
-        'label'       => __("Endpoint Settings", "enginethemes"),
-        'description' => __("Change endpoint name for your website", "enginethemes"),
-        'slug'        => 'endpoint-multi-fields',
-        'class'       => 'me-social-links',
-        'type'        => 'multi_field',
-        'template'    => array(
+    'general' => array(
+        'title'    => __("General", "enginethemes"),
+        'slug'     => 'general',
+        'type'     => 'section',
+        'template' => array(
             'ep-forgot-password' => array(
                 'label'       => __("Forgot Password", "enginethemes"),
                 'slug'        => 'ep-forgot-password',
@@ -36,6 +34,28 @@ return array(
                 'placeholder' => 'register',
                 'template'    => array(),
             ),
+            'ep-listings' => array(
+                'label'       => __("Listings", "enginethemes"),
+                'slug'        => 'ep-listings',
+                'type'        => 'textbox',
+                'name'        => 'ep_listings',
+                'placeholder' => 'listings',
+                'template'    => array(),
+            ),
+            'ep-button' => array(
+                'label'       => __("Save changes", "enginethemes"),
+                'type'        => 'button',
+                'name'        => 'ep-button',
+                'slug'        => 'ep-button',
+                'template'    => array(),
+            ),
+        ),
+    ),
+    'user-account' => array(
+        'title'    => __("User Account", "enginethemes"),
+        'slug'     => 'user-account',
+        'type'     => 'section',
+        'template' => array(
             'ep-edit-profile' => array(
                 'label'       => __("Edit Profile", "enginethemes"),
                 'slug'        => 'ep-edit-profile',
@@ -52,12 +72,20 @@ return array(
                 'placeholder' => 'change-password',
                 'template'    => array(),
             ),
-            'ep-listings' => array(
-                'label'       => __("Listings", "enginethemes"),
-                'slug'        => 'ep-listings',
+            'ep-orders' => array(
+                'label'       => __("Orders", "enginethemes"),
+                'slug'        => 'ep-orders',
                 'type'        => 'textbox',
-                'name'        => 'ep_listings',
-                'placeholder' => 'listings',
+                'name'        => 'ep_orders',
+                'placeholder' => 'orders',
+                'template'    => array(),
+            ),
+            'ep-order' => array(
+                'label'       => __("Order", "enginethemes"),
+                'slug'        => 'ep-order',
+                'type'        => 'textbox',
+                'name'        => 'ep_order',
+                'placeholder' => 'order',
                 'template'    => array(),
             ),
             'ep-orders' => array(
@@ -80,8 +108,16 @@ return array(
                 'label'       => __("Save changes", "enginethemes"),
                 'type'        => 'button',
                 'name'        => 'ep-button',
+                'slug'        => 'ep-button',
                 'template'    => array(),
             ),
+        ),
+    ),
+    'checkout' => array(
+        'title'    => __("Checkout", "enginethemes"),
+        'slug'     => 'checkout',
+        'type'     => 'section',
+        'template' => array(
         ),
     ),
 );

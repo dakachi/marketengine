@@ -126,6 +126,7 @@ _.templateSettings = {
             'change input[type=checkbox]': 'toggleSwitch',
             'click input.me-radio-field': 'checkRadio',
             'change select.select-field': 'changeSelect',
+            'click input#ep-button': 'syncEndpoint',
         },
         initialize: function() {
             var view = this;
@@ -134,7 +135,7 @@ _.templateSettings = {
         // text input, textarea change update option
         textChange: function(e) {
             var $target = $(e.currentTarget),
-                form = $target.parents('form'),
+                // form = $target.parents('form'),
                 view = this;
             view.option.set('name', $target.attr('name'));
             view.option.set('value', $target.val());
@@ -152,7 +153,7 @@ _.templateSettings = {
         },
         toggleSwitch: function(e) {
             var $target = $(e.currentTarget),
-                form = $target.parents('form'),
+                // form = $target.parents('form'),
                 view = this;
             view.option.set('name', $target.attr('name'));
             view.option.set('value', $target.attr('checked'));
@@ -170,7 +171,7 @@ _.templateSettings = {
         },
         checkRadio: function(e){
             var $target = $(e.currentTarget),
-                form = $target.parents('form'),
+                // form = $target.parents('form'),
                 view = this;
             view.option.set('name', $target.attr('name'));
             view.option.set('value', $target.val());
@@ -188,7 +189,7 @@ _.templateSettings = {
         },
         changeSelect: function (e) {
             var $target = $(e.currentTarget),
-                form = $target.parents('form'),
+                // form = $target.parents('form'),
                 view = this;
             view.option.set('name', $target.attr('name'));
             view.option.set('value', $target.val());
@@ -204,63 +205,32 @@ _.templateSettings = {
                 },
             });
         },
+        syncEndpoint: function(e) {
+            e.preventDefault();
+            this.model.action = 'me-endpoint-sync';
+            this.model.save('', '', {
+                success: function(result, status, jqXHR) {
+                    if (status.success) {
+                        // render selected language
+                    } else {
+                        if(typeof status.msg != 'undefined'){
+                            alert(status.msg);
+                        }
+                    }
+                    window.location.reload();
+                },
+            });
+        },
     });
 
     $(document).ready(function() {
         var option_model = new Models.Options();
-        var option_fiels = [
-            '#haha',
-            '#me-textarea',
-            '#me-switch-default',
-            '#me-switch-optional',
-            '#me-radio',
-            '#child-textbox',
-            '#child-switch',
-            '#child-radio',
-            '#me-translate',
-            '#endpoint-multi-fields'
-        ];
-        for(var i = 0; i < option_fiels.length; i++){
-            if($(option_fiels[i]).length > 0){
-                var option_view = new Views.Options({
-                    el: option_fiels[i],
-                    model: option_model,
-                });
-            }
+        if($('#em-setting-tab').length > 0){
+            var option_view = new Views.Options({
+                el: '#em-setting-tab',
+                model: option_model,
+            });
         }
-
-        /**
-         *  set up endpoint option view
-         *  @author: Ky Nguyen
-         */
-        Views.EP_Options = Views.Options.extend({
-            el: '#endpoint-multi-fields',
-            initialize: function(){
-                this.model.action = 'me-endpoint-sync';
-            },
-            events: {
-                'submit form': 'syncEndpoint'
-            },
-            syncEndpoint: function(e) {
-                e.preventDefault();
-                console.log(this.model.action);
-                this.model.save('', '', {
-                    success: function(result, status, jqXHR) {
-                        console.log(status);
-                        if (status.success) {
-                            // render selected language
-                        } else {
-                            if(typeof status.msg != 'undefined'){
-                                alert(status.msg);
-                            }
-                        }
-                    },
-                });
-            },
-        });
-        new Views.EP_Options({
-            model: new Models.Options(),
-        });
     });
 
 
