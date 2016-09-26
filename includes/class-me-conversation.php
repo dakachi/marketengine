@@ -26,3 +26,7 @@ class ME_Conversation {
 
     }
 }
+
+final class ME_Message {
+    
+}
