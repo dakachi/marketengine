@@ -3,7 +3,9 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
+/**
+ * 
+ */
 function me_insert_message($message_arr, $wp_error = false) {
     global $wpdb;
 
@@ -264,6 +266,9 @@ function me_insert_message($message_arr, $wp_error = false) {
     return $message_ID;
 }
 
+/**
+ * 
+ */
 function me_update_message($message_arr = array(), $wp_error = false ) {
 	if ( is_object($message_arr) ) {
 		// Non-escaped post was passed.
