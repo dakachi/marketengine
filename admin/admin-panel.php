@@ -1,4 +1,18 @@
 <?php
+function marketengine_get_list_of_page() {
+    $args = array(
+        'post_type' => 'page',
+        'post_status' => 'publish'
+    );
+
+    $pages = get_pages( $args );
+    $list_of_page = array();
+    foreach($pages as $page){
+        $list_of_page[$page->ID] = $page->post_title;
+    }
+    return $list_of_page;
+}
+
 function marketengine_option_view() {
 
     marketengine_option_header();
@@ -12,12 +26,19 @@ function marketengine_option_view() {
         'authenticate-settings' => array(
             'title'    => __("Authentication", "enginethemes"),
             'slug'     => 'authenticate-settings',
+            'id'       => 'authenticate-settings',
             'template' => include (dirname(__FILE__). '/options/authentication.php'),
         ),
-        'endpoint-settings' => array(
-            'title'    => __("Endpoint Settings", "enginethemes"),
-            'slug'     => 'endpoint-settings',
-            'template' => include (dirname(__FILE__). '/options/endpoint-settings.php'),
+        'listings-settings' => array(
+            'title'    => __("Listings", "enginethemes"),
+            'id'       => 'listings-settings',
+            'slug'     => 'listings-settings',
+            'template' => include (dirname(__FILE__). '/options/listings.php'),
+        ),
+        'me-payment' => array(
+            'title'    => __("Payment", "enginethemes"),
+            'slug'     => 'me-payment',
+            'template' => include (dirname(__FILE__). '/options/payments.php'),
         ),
     );
     echo '<div class="marketengine-tabs">';

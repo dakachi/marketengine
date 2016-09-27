@@ -15,7 +15,7 @@ class ME_Section extends ME_Container {
 
     public function start() {
         if($this->_first) {
-            echo '<div class="me-section-content">';    
+            echo '<div class="me-section-content">';
         }else {
             echo '<div class="me-section-content" style="display:none;">';
         }

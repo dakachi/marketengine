@@ -21,7 +21,6 @@ class ME_Radio extends ME_Input {
 
     public function render() {
         $id = $this->_slug ? 'id="'.$this->_slug.'"' : '';
-        $this->open_form();
         echo '<div class="me-group-field" '.$id.'>';
         $this->label();
         $this->description();
@@ -31,7 +30,6 @@ class ME_Radio extends ME_Input {
             echo '<input type="radio" class="me-radio-field" name="'.$this->_name.'" value="' . $value . '" '.$checked.' />' . $value;
         }
         echo '</div>';
-        $this->close_form();
     }
 }
 

@@ -211,16 +211,60 @@ _.templateSettings = {
             this.model.save('', '', {
                 success: function(result, status, jqXHR) {
                     if (status.success) {
-                        // render selected language
+                        window.location.reload();
                     } else {
                         if(typeof status.msg != 'undefined'){
                             alert(status.msg);
                         }
                     }
-                    window.location.reload();
                 },
             });
         },
+    });
+
+    Models.Page_Setting = Models.Options.extend({
+        action: 'me-get-page',
+    });
+    Views.Page_Setting = Backbone.View.extend({
+        initialize: function() {
+            var view = this;
+            this.model.action = 'me-edit-page';
+            this.user_acount_page_id = $('select[name=user-account-page]').val();
+        },
+        events: {
+            'click input#ep-button': 'setPage',
+            'change select': 'selectPage',
+        },
+        selectPage: function(e) {
+            var $target = $(e.currentTarget);
+            this.user_acount_page_id = $target.val();
+        },
+        setPage: function(e) {
+            e.preventDefault();
+            var fields = this.$el.find('input[type=text], select'),
+                view  = this,
+                group = {};
+
+            if(fields.length > 0){
+                $.each(fields, function(i, v){
+                    var $v = $(v);
+                    group[$v.attr('name')] = $v.val();
+                })
+                this.model.set('group', group);
+            }
+            this.model.set('page_id', this.user_acount_page_id);
+            this.model.save('', '', {
+                success: function(result, status, jqXHR) {
+                    if (status.success) {
+                        window.location.reload();
+                    } else {
+                        if(typeof status.msg != 'undefined'){
+                            alert(status.msg);
+                        }
+                    }
+                },
+            });
+        }
     });
 
     $(document).ready(function() {
@@ -229,6 +273,22 @@ _.templateSettings = {
             var option_view = new Views.Options({
                 el: '#em-setting-tab',
                 model: option_model,
+            });
+        }
+        if($('#authenticate-settings').length > 0){
+            var auth_view = new Views.Page_Setting({
+                el: '#authenticate-settings',
+                model: new Models.Page_Setting({
+                    content: '[me_user_account]'
+                }),
+            });
+        }
+        if($('#listings-settings').length > 0){
+            var auth_view = new Views.Page_Setting({
+                el: '#listings-settings',
+                model: new Models.Page_Setting({
+                    content: '[me_listings]'
+                }),
             });
         }
     });

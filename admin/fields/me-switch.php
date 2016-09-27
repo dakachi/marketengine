@@ -25,7 +25,6 @@ class ME_Switch extends ME_Input{
         $id = $this->_slug ? 'id="'. $this->_slug . '"' : '';
         $value = $this->get_value();
 
-        $this->open_form();
         echo '<div class="me-group-field" '.$id.'>';
         $this->label();
         $this->description();
@@ -37,6 +36,5 @@ class ME_Switch extends ME_Input{
                 </div>
             </label>';
         echo '</div>';
-        $this->close_form();
     }
 }
