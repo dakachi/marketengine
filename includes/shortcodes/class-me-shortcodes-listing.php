@@ -15,7 +15,10 @@ class ME_Shortcodes_Listing {
     }
 
     public static function the_listing() {
-    	
+    	ob_start();
+        me_get_template('taxonomy-listing_cat');
+        $content = ob_get_clean();
+        return $content;
     }
 
     public static function checkout_form() {

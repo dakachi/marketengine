@@ -36,9 +36,12 @@ $listing_type = $listing->get_listing_type();
 				<div class="marketengine-sidebar-detail">
 
 					<?php //me_get_template('single-listing/status');?>
-					<?php me_get_template('single-listing/'. $listing_type );?>
-					<?php me_get_template('single-listing/category');?>		
-					<?php me_get_template('single-listing/author');?>			
+					<?php
+						if($listing_type)
+						me_get_template('single-listing/'. $listing_type );
+					?>
+					<?php me_get_template('single-listing/category');?>
+					<?php me_get_template('single-listing/author');?>
 					<?php me_get_template('single-listing/report');?>
 				</div>
 

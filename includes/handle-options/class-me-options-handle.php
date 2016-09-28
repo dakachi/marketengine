@@ -126,7 +126,6 @@ class ME_Options_Handle{
         $a = me_setting_endpoint_name();
         me_init_endpoint();
         flush_rewrite_rules();
-        // wp_send_json( $a );
     }
 }
 

@@ -13,6 +13,7 @@ return array(
             'listings-page' => array(
                 'label'    => __("Listings Page", "enginethemes"),
                 'slug'     => 'listings-page',
+                'name'     => 'me_listings_page_id',
                 'type'     => 'select',
                 'data'     => marketengine_get_list_of_page(),
                 'template' => array(

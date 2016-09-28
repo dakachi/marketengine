@@ -15,7 +15,7 @@ return array(
                 'description' => __("Choose a page to display as User Account Page", "enginethemes"),
                 'slug'        => 'user-account-page',
                 'type'        => 'select',
-                'name'        => 'user-account-page',
+                'name'        => 'me_user_account_page_id',
                 'data'        => marketengine_get_list_of_page(),
                 'template'    => array(),
             ),

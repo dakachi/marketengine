@@ -78,7 +78,6 @@ function me_get_template($template_name, $args = array()) {
     }
 
     $located = me_locate_template($templates);
-
     include( $located );
 }
 
@@ -109,11 +108,13 @@ function me_get_sidebar() {
 
 // TODO: can dat ham nay cho dung vi tri file
 function me_get_page_permalink($page_name) {
-    $page = get_page_by_path($page_name);
+    $options = ME_Options::get_instance();
+    $page = $options->get_option('me_'. $page_name .'_page_id');
+    // $page = get_page_by_path($page_name);
     if (!$page) {
         return;
     }
-    return get_permalink($page->ID);
+    return get_permalink($page);
 }
 
 /**
