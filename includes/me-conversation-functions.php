@@ -323,7 +323,26 @@ function me_get_message() {
 
 }
 
-function me_get_message_field($field, $message = null, $context = 'display') {
+/**
+ * Retrieve data from a message field based on message ID.
+ *
+ * Examples of the message field will be, 'post_type', 'post_status', 'post_content',
+ * etc and based off of the post object property or key names.
+ *
+ * The context values are based off of the filter functions and
+ * supported values are found within those functions.
+ *
+ * @since 1.0
+ *
+ * @see sanitize_post_field()
+ *
+ * @param string      $field   Message field name.
+ * @param int|WP_Post $post    Optional. Message ID or Message object
+ * @param string      $context Optional. How to filter the field. Accepts 'raw', 'edit', 'db',
+ *                             or 'display'. Default 'display'.
+ * @return string The value of the message field on success, empty string on failure.
+ */
+function me_get_message_field($field, $message, $context = 'display') {
     $message = me_get_message($message);
 
     if (!$message) {
@@ -333,7 +352,6 @@ function me_get_message_field($field, $message = null, $context = 'display') {
     if (!isset($message->$field)) {
         return '';
     }
-
     return sanitize_post_field($field, $message->$field, $message->ID, $context);
 }
 
@@ -399,4 +417,4 @@ function me_delete_message_meta($mesage_id, $meta_key, $meta_value = '') {
     return delete_metadata('marketengine_message_item', $message_id, $meta_key, $meta_value);
 }
 
-me_add_message_meta
+// me_add_message_meta
