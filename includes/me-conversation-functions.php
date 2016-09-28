@@ -497,5 +497,8 @@ function me_delete_message_meta($mesage_id, $meta_key, $meta_value = '') {
 }
 add_action('init', 'test_message_query');
 function test_message_query() {
-	// $message_query = new ME_Message_Query(array('post_type' => 'p'));	
+	$message_query = new ME_Message_Query(array('post_type' => 'post'));
+	echo "<pre>";
+	print_r($message_query);
+	echo "</pre>";
 }
