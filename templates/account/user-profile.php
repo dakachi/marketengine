@@ -16,7 +16,7 @@ $user = ME()->get_current_user();
 <?php do_action('marketengine_before_user_profile', $user); ?>
 
 
-<div class="marketengine marketengine-content">
+<div class="marketengine marketengine-content me-profile">
 	
 	<?php me_print_notices(); ?>
 
@@ -75,9 +75,9 @@ $user = ME()->get_current_user();
 
 		</div>
 		<div class="marketengine-text-field edit-profile">
-			<a href="<?php echo me_get_endpoint_url('edit-profile'); ?>" class="marketengine-btn"><?php _e("Edit Profile", "enginethemes");?></a> |
-			<a href="<?php echo me_get_endpoint_url('change-password'); ?>" class="marketengine-btn"><?php _e("Change Password", "enginethemes");?></a>
+			<a href="<?php echo me_get_endpoint_url('edit-profile'); ?>" class="marketengine-btn"><?php _e("Edit Profile", "enginethemes");?></a>
 		</div>
+		<a href="<?php echo me_get_endpoint_url('change-password'); ?>" class="back-home-sigin me-backlink"><?php _e("Change Password", "enginethemes");?></a>
 
 	<?php do_action('marketengine_user_profile_end', $user); ?>
 </div>
