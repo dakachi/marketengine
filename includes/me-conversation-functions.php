@@ -210,7 +210,7 @@ function me_insert_message($message_arr, $wp_error = false) {
          * @since 1.0
          *
          * @param int     $message_ID   Message ID.
-         * @param WP_Post $post         Message object.
+         * @param ME_Message $post         Message object.
          */
         do_action('edit_message', $message_ID, $message);
         $message_after = me_get_message($message_ID);
@@ -221,8 +221,8 @@ function me_insert_message($message_arr, $wp_error = false) {
          * @since 1.0
          *
          * @param int     $message_ID      Message ID.
-         * @param WP_Post $message_after   Message object following the update.
-         * @param WP_Post $message_before  Message object before the update.
+         * @param ME_Message $message_after   Message object following the update.
+         * @param ME_Message $message_before  Message object before the update.
          */
         do_action('message_updated', $message_ID, $message_after, $message_before);
     }
@@ -236,7 +236,7 @@ function me_insert_message($message_arr, $wp_error = false) {
      * @since 1.0
      *
      * @param int     $message_ID message ID.
-     * @param WP_Post $message    message object.
+     * @param ME_Message $message    message object.
      * @param bool    $update  Whether this is an existing message being updated or not.
      */
     do_action("save_message_{$message->post_type}", $message_ID, $message, $update);
@@ -247,7 +247,7 @@ function me_insert_message($message_arr, $wp_error = false) {
      * @since 1.0
      *
      * @param int     $message_ID message ID.
-     * @param WP_Post $message    message object.
+     * @param ME_Message $message    message object.
      * @param bool    $update  Whether this is an existing message being updated or not.
      */
     do_action('save_message', $message_ID, $message, $update);
@@ -258,7 +258,7 @@ function me_insert_message($message_arr, $wp_error = false) {
      * @since 1.0
      *
      * @param int     $message_ID message ID.
-     * @param WP_Post $message    message object.
+     * @param ME_Message $message    message object.
      * @param bool    $update  Whether this is an existing message being updated or not.
      */
     do_action('me_insert_message', $message_ID, $message, $update);
@@ -315,14 +315,93 @@ function me_get_message_status_list() {
     ));
 }
 
-function me_get_messages() {
+function me_get_messages($args = null) {
+    $defaults = array(
+        'numberposts'      => 5,
+        'category'         => 0,
+        'orderby'          => 'date',
+        'order'            => 'DESC',
+        'include'          => array(),
+        'exclude'          => array(),
+        'meta_key'         => '',
+        'meta_value'       => '',
+        'post_type'        => 'post',
+        'suppress_filters' => true,
+    );
 
+    $r = wp_parse_args($args, $defaults);
+    if (empty($r['post_status'])) {
+        $r['post_status'] = ('attachment' == $r['post_type']) ? 'inherit' : 'publish';
+    }
+
+    if (!empty($r['numberposts']) && empty($r['posts_per_page'])) {
+        $r['posts_per_page'] = $r['numberposts'];
+    }
+
+    if (!empty($r['include'])) {
+        $incposts            = wp_parse_id_list($r['include']);
+        $r['posts_per_page'] = count($incposts); // only the number of posts included
+        $r['post__in']       = $incposts;
+    } elseif (!empty($r['exclude'])) {
+        $r['post__not_in'] = wp_parse_id_list($r['exclude']);
+    }
+
+    $r['ignore_sticky_posts'] = true;
+    $r['no_found_rows']       = true;
+
+    $get_posts = new WP_Query;
+    return $get_posts->query($r);
 }
 
-function me_get_message() {
+/**
+ * Retrieves message data given a message ID or message object.
+ *
+ * See sanitize_post() for optional $filter values. Also, the parameter
+ * `$message`, must be given as a variable, since it is passed by reference.
+ *
+ * @since 1.5.1
+ *
+ * @global ME_Message $message
+ *
+ * @param int|ME_Message|null $message   Optional. Post ID or message object. Defaults to global $message.
+ * @param string           $output Optional, default is Object. Accepts OBJECT, ARRAY_A, or ARRAY_N.
+ *                                 Default OBJECT.
+ * @param string           $filter Optional. Type of filter to apply. Accepts 'raw', 'edit', 'db',
+ *                                 or 'display'. Default 'raw'.
+ * @return ME_Message|array|null Type corresponding to $output on success or null on failure.
+ *                            When $output is OBJECT, a `ME_Message` instance is returned.
+ */
+function me_get_message($message, $output = OBJECT, $filter = 'raw') {
 
+    if ($message instanceof ME_Message) {
+        $_message = $message;
+    } elseif (is_object($message)) {
+        if (empty($message->filter)) {
+            $_message = sanitize_post($message, 'raw');
+            $_message = new ME_Message($_message);
+        } elseif ('raw' == $message->filter) {
+            $_message = new ME_Message($message);
+        } else {
+            $_message = ME_Message::get_instance($message->ID);
+        }
+    } else {
+        $_message = ME_Message::get_instance($message);
+    }
+
+    if (!$_message) {
+        return null;
+    }
+
+    $_message = $_message->filter($filter);
+
+    if ($output == ARRAY_A) {
+        return $_message->to_array();
+    } elseif ($output == ARRAY_N) {
+        return array_values($_message->to_array());
+    }
+
+    return $_message;
 }
-
 /**
  * Retrieve data from a message field based on message ID.
  *
@@ -337,7 +416,7 @@ function me_get_message() {
  * @see sanitize_post_field()
  *
  * @param string      $field   Message field name.
- * @param int|WP_Post $post    Optional. Message ID or Message object
+ * @param int|ME_Message $post    Optional. Message ID or Message object
  * @param string      $context Optional. How to filter the field. Accepts 'raw', 'edit', 'db',
  *                             or 'display'. Default 'display'.
  * @return string The value of the message field on success, empty string on failure.
@@ -416,5 +495,7 @@ function me_update_message_meta($mesage_id, $meta_key, $meta_value, $prev_value 
 function me_delete_message_meta($mesage_id, $meta_key, $meta_value = '') {
     return delete_metadata('marketengine_message_item', $message_id, $meta_key, $meta_value);
 }
-
-// me_add_message_meta
+add_action('init', 'test_message_query');
+function test_message_query() {
+	// $message_query = new ME_Message_Query(array('post_type' => 'p'));	
+}

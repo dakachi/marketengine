@@ -104,6 +104,8 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/class-me-shipping.php';
             require_once ME_PLUGIN_PATH . '/includes/class-me-options.php';
 
+            require_once ME_PLUGIN_PATH . '/includes/class-me-message-query.php';
+
             require_once ME_PLUGIN_PATH . '/includes/me-notices-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-template-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-email-functions.php';
