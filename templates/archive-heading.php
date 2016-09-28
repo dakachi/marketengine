@@ -1,9 +1,9 @@
-<?php 
+<?php
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
 }
-$selected = !empty($_GET['orderby']) ? $_GET['orderby'] : ''; 
+$selected = !empty($_GET['orderby']) ? $_GET['orderby'] : '';
 global $wp_query;
 ?>
 <div class="me-bar-shop">

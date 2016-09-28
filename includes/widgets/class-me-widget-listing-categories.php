@@ -95,7 +95,7 @@ class ME_Widget_Listing_Categories extends WP_Widget {
 <?php
 } else {
             ?>
-        <ul>
+        <ul class="me-menu-categories">
 <?php
 $cat_args['title_li'] = '';
 
@@ -111,7 +111,6 @@ $cat_args['title_li'] = '';
         </ul>
 <?php
 }
-
         echo $args['after_widget'];
     }
 

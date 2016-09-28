@@ -70,7 +70,7 @@ class ME_Listing {
     public function get_galleries() {
         $gallery      = get_post_meta($this->id, '_me_listing_gallery', true);
         $thumbnail_id = get_post_meta($this->id, '_thumbnail_id', true);
-        if ($thumbnail_id) {
+        if ($thumbnail_id && $gallery) {
             array_unshift($gallery, $thumbnail_id);
         }
         return (array) $gallery;

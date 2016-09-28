@@ -13,9 +13,10 @@ if (get_option('users_can_register')):
 ?>
 
 	<?php do_action('marketengine_before_user_register_form');?>
+<div class="marekengine-authen-wrap authen-register">
 
 	<form id="register-form" action="" method="post">
-		
+
 		<h3><?php _e("Register", "enginethemes"); ?></h3>
 
 		<?php me_print_notices(); ?>
@@ -41,7 +42,7 @@ if (get_option('users_can_register')):
 					    <input type="text" name="last_name" id="lastname" value="<?php if (!empty($_POST['last_name'])) {echo esc_attr($_POST['last_name']);}?>">
 					</div>
 				</div>
-			</div> 
+			</div>
 		</div>
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
@@ -82,6 +83,7 @@ if (get_option('users_can_register')):
 		<?php wp_nonce_field('me-register');?>
 		<?php do_action('marketengine_user_register_form_end');?>
 	</form>
+</div>
 <?php
 endif;
 	do_action('marketengine_before_user_register_form');
