@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 /**
- * 
+ *
  */
 function me_insert_message($message_arr, $wp_error = false) {
     global $wpdb;
@@ -163,10 +163,10 @@ function me_insert_message($message_arr, $wp_error = false) {
          *
          * @since 2.5.0
          *
-         * @param int   $post_ID Post ID.
+         * @param int   $message_ID Message ID.
          * @param array $data    Array of unslashed post data.
          */
-        do_action('pre_post_update', $post_ID, $data);
+        do_action('pre_post_update', $message_ID, $data);
         if (false === $wpdb->update($message_table, $data, $where)) {
             if ($wp_error) {
                 return new WP_Error('db_update_error', __('Could not update post in the database'), $wpdb->last_error);
@@ -189,28 +189,28 @@ function me_insert_message($message_arr, $wp_error = false) {
                 return 0;
             }
         }
-        $post_ID = (int) $wpdb->insert_id;
+        $message_ID = (int) $wpdb->insert_id;
 
-        // Use the newly generated $post_ID.
-        $where = array('ID' => $post_ID);
+        // Use the newly generated $message_ID.
+        $where = array('ID' => $message_ID);
     }
 
     // TODO: message meta
     if (!empty($message_arr['meta_input'])) {
         foreach ($message_arr['meta_input'] as $field => $value) {
-            update_post_meta($post_ID, $field, $value);
+            update_post_meta($message_ID, $field, $value);
         }
     }
 
-    $message = me_get_message( $message_ID );
+    $message = me_get_message($message_ID);
     if ($update) {
         /**
          * Fires once an existing message has been updated.
          *
          * @since 1.0
          *
-         * @param int     $post_ID Post ID.
-         * @param WP_Post $post    Post object.
+         * @param int     $message_ID   Message ID.
+         * @param WP_Post $post         Message object.
          */
         do_action('edit_message', $message_ID, $message);
         $message_after = me_get_message($message_ID);
@@ -267,46 +267,52 @@ function me_insert_message($message_arr, $wp_error = false) {
 }
 
 /**
- * 
+ *
  */
-function me_update_message($message_arr = array(), $wp_error = false ) {
-	if ( is_object($message_arr) ) {
-		// Non-escaped post was passed.
-		$message_arr = get_object_vars($message_arr);
-		$message_arr = wp_slash($message_arr);
-	}
+function me_update_message($message_arr = array(), $wp_error = false) {
+    if (is_object($message_arr)) {
+        // Non-escaped post was passed.
+        $message_arr = get_object_vars($message_arr);
+        $message_arr = wp_slash($message_arr);
+    }
 
-	// First, get all of the original fields.
-	$post = me_get_message($message_arr['ID'], ARRAY_A);
+    // First, get all of the original fields.
+    $post = me_get_message($message_arr['ID'], ARRAY_A);
 
-	if ( is_null( $post ) ) {
-		if ( $wp_error )
-			return new WP_Error( 'invalid_post', __( 'Invalid post ID.' ) );
-		return 0;
-	}
+    if (is_null($post)) {
+        if ($wp_error) {
+            return new WP_Error('invalid_post', __('Invalid post ID.'));
+        }
 
-	// Escape data pulled from DB.
-	$post = wp_slash($post);
+        return 0;
+    }
 
-	// Drafts shouldn't be assigned a date unless explicitly done so by the user.
-	if ( isset( $post['post_status'] ) && in_array($post['post_status'], array('draft', 'pending', 'auto-draft')) && empty($message_arr['edit_date']) &&
-			 ('0000-00-00 00:00:00' == $post['post_date_gmt']) )
-		$clear_date = true;
-	else
-		$clear_date = false;
+    // Escape data pulled from DB.
+    $post = wp_slash($post);
 
-	// Merge old and new fields with new fields overwriting old ones.
-	$message_arr = array_merge($post, $message_arr);
-	if ( $clear_date ) {
-		$message_arr['post_date'] = current_time('mysql');
-		$message_arr['post_date_gmt'] = '';
-	}
+    // Drafts shouldn't be assigned a date unless explicitly done so by the user.
+    if (isset($post['post_status']) && in_array($post['post_status'], array('draft', 'pending', 'auto-draft')) && empty($message_arr['edit_date']) &&
+        ('0000-00-00 00:00:00' == $post['post_date_gmt'])) {
+        $clear_date = true;
+    } else {
+        $clear_date = false;
+    }
 
-	return me_insert_message( $message_arr, $wp_error );
+    // Merge old and new fields with new fields overwriting old ones.
+    $message_arr = array_merge($post, $message_arr);
+    if ($clear_date) {
+        $message_arr['post_date']     = current_time('mysql');
+        $message_arr['post_date_gmt'] = '';
+    }
+
+    return me_insert_message($message_arr, $wp_error);
 }
 
 function me_get_message_status_list() {
-
+    return apply_filters('me_message_status_list', array(
+        'sent' => __("Sent", "enginethemes"),
+        'read' => __("Seen", "enginethemes"),
+    ));
 }
 
 function me_get_messages() {
@@ -331,18 +337,66 @@ function me_get_message_field($field, $message = null, $context = 'display') {
     return sanitize_post_field($field, $message->$field, $message->ID, $context);
 }
 
-function me_get_message_meta() {
-
+/**
+ * Retrieve message item meta field for a message item.
+ *
+ * @since 1.0
+ *
+ * @param int    $message_id    message ID.
+ * @param string $key     Optional. The meta key to retrieve. By default, returns data for all keys. Default empty.
+ * @param bool   $single  Optional. Whether to return a single value. Default false.
+ *                           Default false.
+ * @return mixed Will be an array if $single is false. Will be value of meta data field if $single is true.
+ */
+function me_get_message_meta($mesage_id, $key = '', $single = false) {
+    return get_metadata('marketengine_message_item', $message_id, $key, $single);
 }
 
-function me_add_message_meta() {
-
+/**
+ * Add meta data field to a message item
+ *
+ * @since 1.0
+ *
+ * @param int    $message_id Message ID.
+ * @param string $meta_key   Metadata name.
+ * @param mixed  $meta_value Metadata value. Must be serializable if non-scalar.
+ * @param bool   $unique     Optional. Whether the same key should not be added.
+ *                           Default false.
+ * @return int|false Meta ID on success, false on failure.
+ */
+function me_add_message_meta($message_id, $meta_key, $meta_value, $unique = true) {
+    return add_metadata('marketengine_message_item', $mesage_id, $meta_key, $meta_value, $unique);
 }
 
-function me_update_message_meta() {
-
+/**
+ *  Update Message meta field based on mesage_id.
+ *
+ * @since 1.0
+ *
+ * @param int    $message_id Message ID.
+ * @param string $meta_key   Metadata name.
+ * @param mixed  $meta_value Metadata value. Must be serializable if non-scalar.
+ * @param mixed  $prev_value Optional. Previous value to check before removing.
+ *                           Default empty.
+ * @return int|false Meta ID if the key didn't exist, true on successful update, false on failure.
+ */
+function me_update_message_meta($mesage_id, $meta_key, $meta_value, $prev_value = '') {
+    return update_metadata('marketengine_message_item', $message_id, $meta_key, $meta_value, $prev_value);
 }
 
-function me_delete_message_meta() {
-
+/**
+ * Remove metadata matching criteria from a message item.
+ *
+ * @since 1.0
+ *
+ * @param int    $mesage_id  Message ID.
+ * @param string $meta_key   Metadata name.
+ * @param mixed  $meta_value Metadata value. Must be serializable if non-scalar.
+ *
+ * @return bool True on success, false on failure.
+ */
+function me_delete_message_meta($mesage_id, $meta_key, $meta_value = '') {
+    return delete_metadata('marketengine_message_item', $message_id, $meta_key, $meta_value);
 }
+
+me_add_message_meta

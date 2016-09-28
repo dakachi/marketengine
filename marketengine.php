@@ -160,8 +160,16 @@ if (!class_exists('MarketEngine')):
             global $wpdb;
             $wpdb->marketengine_order_itemmeta = $wpdb->prefix . 'marketengine_order_itemmeta';
             $wpdb->marketengine_order_items    = $wpdb->prefix . 'marketengine_order_items';
+
+            $wpdb->marketengine_message_itemmeta = $wpdb->prefix . 'marketengine_message_itemmeta';
+            $wpdb->marketengine_message_item    = $wpdb->prefix . 'marketengine_message_item';
+
+
             $wpdb->tables[]                    = 'marketengine_order_itemmeta';
             $wpdb->tables[]                    = 'marketengine_order_items';
+
+            $wpdb->tables[]                    = 'marketengine_message_itemmeta';
+            $wpdb->tables[]                    = 'marketengine_message_item';
         }
 
         public function add_scripts() {
