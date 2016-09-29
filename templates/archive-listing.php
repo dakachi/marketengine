@@ -14,9 +14,6 @@ global $wp_query;
 <div id="marketengine-page">
 	<div class="me-container marketengine">
 		<div class="marketengine-content-wrap">
-			<div class="marketengine-page-title">
-				<p><?php echo get_the_title(me_get_page_id('listings')); ?></p>
-			</div>
 			<!-- marketengine-content -->
 			<div class="marketengine-content">
 				<div class="me-row">

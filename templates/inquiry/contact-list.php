@@ -9,7 +9,7 @@
 			<li class="active">
 				<a href="">
 					<span class="me-user-avatar">
-						<img src="../assets/img/avatar.png" alt="" class="mCS_img_loaded">
+						<img src="../assets/img/avatar.png" alt="" />
 					</span>
 					<span class="me-contact-author">
 						<span class="">EngineTheme Team</span>
@@ -21,7 +21,7 @@
 			<li>
 				<a href="">
 					<span class="me-user-avatar">
-						<img src="../assets/img/avatar.png" alt="" class="mCS_img_loaded">
+						<img src="../assets/img/avatar.png" alt="" />
 					</span>
 					<span class="me-contact-author">
 						<span>EngineTheme</span>
