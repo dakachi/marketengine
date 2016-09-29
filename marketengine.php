@@ -185,11 +185,10 @@ if (!class_exists('MarketEngine')):
             $suffix     = ME_SCRIPT_DEBUG ? '' : '.min';
             $dev_suffix = $develop_src ? '' : '.min';
 
-            // wp_enqueue_style('google-font', 'https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
-            // wp_enqueue_style('me_layout', $this->plugin_url() . '/assets/css/marketengine-layout.css');
-            // wp_enqueue_style('magnific_popup_css', $this->plugin_url() . '/assets/css/magnific-popup.css');
+            wp_enqueue_style('me_layout', $this->plugin_url() . '/assets/css/marketengine-layout.css');
+            wp_enqueue_style('magnific_popup_css', $this->plugin_url() . '/assets/css/magnific-popup.css');
             wp_enqueue_style('me_font_icon', $this->plugin_url() . '/assets/css/marketengine-font-icon.css');
-            // wp_enqueue_style('flexslider', $this->plugin_url() . '/assets/css/flexslider.css');
+            wp_enqueue_style('flexslider', $this->plugin_url() . '/assets/css/flexslider.css');
 
             wp_enqueue_script('plupload-all');
             wp_enqueue_script('user_profile', $this->plugin_url() . "/assets/js/user-profile$suffix.js", array('jquery'), $this->version, true);
