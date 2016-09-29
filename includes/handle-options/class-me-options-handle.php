@@ -67,35 +67,57 @@ class ME_Options_Handle{
      *  @author     KyNguyen
      */
     public function me_edit_page() {
+        if(!current_user_can( 'manage_options' )) {
+            wp_send_json( array('success' => false , 'msg' => __("You do not have permission to change option.", 'enginethemes')) );
+        }
 
         $request = $_REQUEST;
-        $page_id = $request['page_id'];
-        $content = $request['content'];
-        $page = array(
-            'ID'            => $page_id,
-            'post_content'  => $content,
-        );
 
-        $error = wp_update_post( $page, true );
+        if(isset($request['page_id'])) {
+            $page_id = $request['page_id'];
+            $content = $request['content'];
+            $page = array(
+                'ID'            => $page_id,
+                'post_content'  => $content,
+            );
+            $error = wp_update_post( $page, true );
+        }
+        else {
+            foreach ($request as $key => $value) {
+                if( strpos($key, 'page_id_') === 0 ){
+                    $page_id = substr($key, 8);
+                    $page = array(
+                        'ID'            => $page_id,
+                        'post_content'  => $value,
+                    );
+                    $error = wp_update_post( $page, true );
+                    if (is_wp_error($error)) break;
+                }
+            }
+        }
+
         if (is_wp_error($error)) {
             wp_send_json( array(
                 'success'    => false,
                 'msg'        => "There was an error occurred when you has added {$content} to {$page_id}",
-                'error'      => $error
+                'error'      => $request['group']
             ) );
         }
 
         if( !isset($this) ) {
             $option = new ME_Options_Handle();
             $option_sync_data = $option->action_sync($request);
+            $option->endpoint_sync();
         }
         else{
             $option_sync_data = $this->action_sync($request);
+            $this->endpoint_sync();
         }
+
 
         $response = array(
             'success'       => true,
-            'msg'           => "You has added {$content} to {$page_id}",
+            'msg'           => "Edit page successfully",
             'option_sync'   => $option_sync_data
         );
         wp_send_json( $response );

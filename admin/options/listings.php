@@ -10,13 +10,24 @@ return array(
         'slug'     => 'general',
         'type'     => 'section',
         'template' => array(
+            'post-listings-page' => array(
+                'label'         => __("Post Listing Page", "enginethemes"),
+                'description'   => '',
+                'slug'          => 'post-listings-page',
+                'name'          => 'me_post_listing_page_id',
+                'type'          => 'select',
+                'data'          => marketengine_get_list_of_page(),
+                'template'      => array(
+                ),
+            ),
             'listings-page' => array(
-                'label'    => __("Listings Page", "enginethemes"),
-                'slug'     => 'listings-page',
-                'name'     => 'me_listings_page_id',
-                'type'     => 'select',
-                'data'     => marketengine_get_list_of_page(),
-                'template' => array(
+                'label'         => __("Listings Page", "enginethemes"),
+                'description'   => '',
+                'slug'          => 'listings-page',
+                'name'          => 'me_listings_page_id',
+                'type'          => 'select',
+                'data'          => marketengine_get_list_of_page(),
+                'template'      => array(
                 ),
             ),
             'ep-button' => array(
