@@ -495,7 +495,7 @@ function me_update_message_meta($mesage_id, $meta_key, $meta_value, $prev_value 
 function me_delete_message_meta($mesage_id, $meta_key, $meta_value = '') {
     return delete_metadata('marketengine_message_item', $message_id, $meta_key, $meta_value);
 }
-add_action('init', 'test_message_query');
+//add_action('init', 'test_message_query');
 function test_message_query() {
 	$message_query = new ME_Message_Query(array('post_type' => 'post'));
 	echo "<pre>";

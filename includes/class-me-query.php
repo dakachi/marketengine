@@ -112,7 +112,7 @@ function me_setting_endpoint_name() {
 function me_init_endpoint() {
     $endpoint_arr = me_setting_endpoint_name();
     foreach($endpoint_arr as $key => $value){
-        add_rewrite_endpoint($value, EP_ROOT | EP_PAGES, str_replace('_', '-', $value));
+        add_rewrite_endpoint($value, EP_ROOT | EP_PAGES, str_replace('_', '-', $key));
     }
 
     $page = get_page_by_path( 'process-payment' );
