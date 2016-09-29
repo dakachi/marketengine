@@ -113,7 +113,7 @@ if(! function_exists('me_get_page_permalink') ){
         $page = $options->get_option('me_'. $page_name .'_page_id');
         // $page = get_page_by_path($page_name);
         if (!$page) {
-            return;
+            return home_url();
         }
         return get_permalink($page);
     }
