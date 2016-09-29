@@ -1164,32 +1164,6 @@ class ME_Message_Query {
 			if ( ! empty( $where_status ) ) {
 				$where .= " AND ($where_status)";
 			}
-		} elseif ( !$this->is_singular ) {
-			$where .= " AND ($this->table.post_status = 'publish'";
-
-			// Add public states.
-			$public_states = get_post_stati( array('public' => true) );
-			foreach ( (array) $public_states as $state ) {
-				if ( 'publish' == $state ) // Publish is hard-coded above.
-					continue;
-				$where .= " OR $this->table.post_status = '$state'";
-			}
-
-			if ( $this->is_admin ) {
-				// Add protected states that should show in the admin all list.
-				$admin_all_states = get_post_stati( array('protected' => true, 'show_in_admin_all_list' => true) );
-				foreach ( (array) $admin_all_states as $state )
-					$where .= " OR $this->table.post_status = '$state'";
-			}
-
-			if ( is_user_logged_in() ) {
-				// Add private states that are limited to viewing by the author of a post or someone who has caps to read private states.
-				$private_states = get_post_stati( array('private' => true) );
-				foreach ( (array) $private_states as $state )
-					$where .= current_user_can( $read_private_cap ) ? " OR $this->table.post_status = '$state'" : " OR $this->table.post_author = $user_id AND $this->table.post_status = '$state'";
-			}
-
-			$where .= ')';
 		}
 
 		/*
@@ -1205,7 +1179,7 @@ class ME_Message_Query {
 			 * @param string   $where The WHERE clause of the query.
 			 * @param WP_Query &$this The WP_Query instance (passed by reference).
 			 */
-			$where = apply_filters_ref_array( 'posts_where', array( $where, &$this ) );
+			$where = apply_filters_ref_array( 'messages_where', array( $where, &$this ) );
 
 			/**
 			 * Filters the JOIN clause of the query.
@@ -1215,7 +1189,7 @@ class ME_Message_Query {
 			 * @param string   $where The JOIN clause of the query.
 			 * @param WP_Query &$this The WP_Query instance (passed by reference).
 			 */
-			$join = apply_filters_ref_array( 'posts_join', array( $join, &$this ) );
+			$join = apply_filters_ref_array( 'messages_join', array( $join, &$this ) );
 		}
 
 		// Paging
@@ -1251,7 +1225,7 @@ class ME_Message_Query {
 			 * @param string   $where The WHERE clause of the query.
 			 * @param WP_Query &$this The WP_Query instance (passed by reference).
 			 */
-			$where = apply_filters_ref_array( 'posts_where_paged', array( $where, &$this ) );
+			$where = apply_filters_ref_array( 'messages_where_paged', array( $where, &$this ) );
 
 			/**
 			 * Filters the GROUP BY clause of the query.
@@ -1261,7 +1235,7 @@ class ME_Message_Query {
 			 * @param string   $groupby The GROUP BY clause of the query.
 			 * @param WP_Query &$this   The WP_Query instance (passed by reference).
 			 */
-			$groupby = apply_filters_ref_array( 'posts_groupby', array( $groupby, &$this ) );
+			$groupby = apply_filters_ref_array( 'messages_groupby', array( $groupby, &$this ) );
 
 			/**
 			 * Filters the JOIN clause of the query.
@@ -1273,7 +1247,7 @@ class ME_Message_Query {
 			 * @param string   $join  The JOIN clause of the query.
 			 * @param WP_Query &$this The WP_Query instance (passed by reference).
 			 */
-			$join = apply_filters_ref_array( 'posts_join_paged', array( $join, &$this ) );
+			$join = apply_filters_ref_array( 'messages_join_paged', array( $join, &$this ) );
 
 			/**
 			 * Filters the ORDER BY clause of the query.
@@ -1283,7 +1257,7 @@ class ME_Message_Query {
 			 * @param string   $orderby The ORDER BY clause of the query.
 			 * @param WP_Query &$this   The WP_Query instance (passed by reference).
 			 */
-			$orderby = apply_filters_ref_array( 'posts_orderby', array( $orderby, &$this ) );
+			$orderby = apply_filters_ref_array( 'messages_orderby', array( $orderby, &$this ) );
 
 			/**
 			 * Filters the DISTINCT clause of the query.
@@ -1293,7 +1267,7 @@ class ME_Message_Query {
 			 * @param string   $distinct The DISTINCT clause of the query.
 			 * @param WP_Query &$this    The WP_Query instance (passed by reference).
 			 */
-			$distinct = apply_filters_ref_array( 'posts_distinct', array( $distinct, &$this ) );
+			$distinct = apply_filters_ref_array( 'messages_distinct', array( $distinct, &$this ) );
 
 			/**
 			 * Filters the LIMIT clause of the query.
@@ -1303,7 +1277,7 @@ class ME_Message_Query {
 			 * @param string   $limits The LIMIT clause of the query.
 			 * @param WP_Query &$this  The WP_Query instance (passed by reference).
 			 */
-			$limits = apply_filters_ref_array( 'post_limits', array( $limits, &$this ) );
+			$limits = apply_filters_ref_array( 'message_limits', array( $limits, &$this ) );
 
 			/**
 			 * Filters the SELECT clause of the query.
@@ -1313,7 +1287,7 @@ class ME_Message_Query {
 			 * @param string   $fields The SELECT clause of the query.
 			 * @param WP_Query &$this  The WP_Query instance (passed by reference).
 			 */
-			$fields = apply_filters_ref_array( 'posts_fields', array( $fields, &$this ) );
+			$fields = apply_filters_ref_array( 'messages_fields', array( $fields, &$this ) );
 
 			/**
 			 * Filters all query clauses at once, for convenience.
@@ -1326,7 +1300,7 @@ class ME_Message_Query {
 			 * @param array    $clauses The list of clauses for the query.
 			 * @param WP_Query &$this   The WP_Query instance (passed by reference).
 			 */
-			$clauses = (array) apply_filters_ref_array( 'posts_clauses', array( compact( $pieces ), &$this ) );
+			$clauses = (array) apply_filters_ref_array( 'messages_clauses', array( compact( $pieces ), &$this ) );
 
 			$where = isset( $clauses[ 'where' ] ) ? $clauses[ 'where' ] : '';
 			$groupby = isset( $clauses[ 'groupby' ] ) ? $clauses[ 'groupby' ] : '';
@@ -1346,7 +1320,7 @@ class ME_Message_Query {
 		 *
 		 * @param string $selection The assembled selection query.
 		 */
-		do_action( 'posts_selection', $where . $groupby . $orderby . $limits . $join );
+		do_action( 'messages_selection', $where . $groupby . $orderby . $limits . $join );
 
 		/*
 		 * Filters again for the benefit of caching plugins.
@@ -1363,7 +1337,7 @@ class ME_Message_Query {
 			 * @param string   $where The WHERE clause of the query.
 			 * @param WP_Query &$this The WP_Query instance (passed by reference).
 			 */
-			$where = apply_filters_ref_array( 'posts_where_request', array( $where, &$this ) );
+			$where = apply_filters_ref_array( 'messages_where_request', array( $where, &$this ) );
 
 			/**
 			 * Filters the GROUP BY clause of the query.
@@ -1375,7 +1349,7 @@ class ME_Message_Query {
 			 * @param string   $groupby The GROUP BY clause of the query.
 			 * @param WP_Query &$this   The WP_Query instance (passed by reference).
 			 */
-			$groupby = apply_filters_ref_array( 'posts_groupby_request', array( $groupby, &$this ) );
+			$groupby = apply_filters_ref_array( 'messages_groupby_request', array( $groupby, &$this ) );
 
 			/**
 			 * Filters the JOIN clause of the query.
@@ -1387,7 +1361,7 @@ class ME_Message_Query {
 			 * @param string   $join  The JOIN clause of the query.
 			 * @param WP_Query &$this The WP_Query instance (passed by reference).
 			 */
-			$join = apply_filters_ref_array( 'posts_join_request', array( $join, &$this ) );
+			$join = apply_filters_ref_array( 'messages_join_request', array( $join, &$this ) );
 
 			/**
 			 * Filters the ORDER BY clause of the query.
@@ -1399,7 +1373,7 @@ class ME_Message_Query {
 			 * @param string   $orderby The ORDER BY clause of the query.
 			 * @param WP_Query &$this   The WP_Query instance (passed by reference).
 			 */
-			$orderby = apply_filters_ref_array( 'posts_orderby_request', array( $orderby, &$this ) );
+			$orderby = apply_filters_ref_array( 'messages_orderby_request', array( $orderby, &$this ) );
 
 			/**
 			 * Filters the DISTINCT clause of the query.
@@ -1411,7 +1385,7 @@ class ME_Message_Query {
 			 * @param string   $distinct The DISTINCT clause of the query.
 			 * @param WP_Query &$this    The WP_Query instance (passed by reference).
 			 */
-			$distinct = apply_filters_ref_array( 'posts_distinct_request', array( $distinct, &$this ) );
+			$distinct = apply_filters_ref_array( 'messages_distinct_request', array( $distinct, &$this ) );
 
 			/**
 			 * Filters the SELECT clause of the query.
@@ -1423,7 +1397,7 @@ class ME_Message_Query {
 			 * @param string   $fields The SELECT clause of the query.
 			 * @param WP_Query &$this  The WP_Query instance (passed by reference).
 			 */
-			$fields = apply_filters_ref_array( 'posts_fields_request', array( $fields, &$this ) );
+			$fields = apply_filters_ref_array( 'messages_fields_request', array( $fields, &$this ) );
 
 			/**
 			 * Filters the LIMIT clause of the query.
@@ -1435,7 +1409,7 @@ class ME_Message_Query {
 			 * @param string   $limits The LIMIT clause of the query.
 			 * @param WP_Query &$this  The WP_Query instance (passed by reference).
 			 */
-			$limits = apply_filters_ref_array( 'post_limits_request', array( $limits, &$this ) );
+			$limits = apply_filters_ref_array( 'message_limits_request', array( $limits, &$this ) );
 
 			/**
 			 * Filters all query clauses at once, for convenience.
@@ -1450,7 +1424,7 @@ class ME_Message_Query {
 			 * @param array    $pieces The pieces of the query.
 			 * @param WP_Query &$this  The WP_Query instance (passed by reference).
 			 */
-			$clauses = (array) apply_filters_ref_array( 'posts_clauses_request', array( compact( $pieces ), &$this ) );
+			$clauses = (array) apply_filters_ref_array( 'messages_clauses_request', array( compact( $pieces ), &$this ) );
 
 			$where = isset( $clauses[ 'where' ] ) ? $clauses[ 'where' ] : '';
 			$groupby = isset( $clauses[ 'groupby' ] ) ? $clauses[ 'groupby' ] : '';
@@ -1481,7 +1455,7 @@ class ME_Message_Query {
 			 * @param string   $request The complete SQL query.
 			 * @param WP_Query &$this   The WP_Query instance (passed by reference).
 			 */
-			$this->request = apply_filters_ref_array( 'posts_request', array( $this->request, &$this ) );
+			$this->request = apply_filters_ref_array( 'messages_request', array( $this->request, &$this ) );
 		}
 
 		/**
