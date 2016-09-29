@@ -13,4 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 * @category    Class
 */
 class ME_Seller extends ME_User {
+	public function __construct($id) {
+        $this->id = $id;
+        $this->user_data = get_user_meta($id);
+    }
+
 }
