@@ -28,7 +28,17 @@ $listing_type = $listing->get_listing_type();
 					<span class="post-price"><?php _e("Contact", "enginethemes"); ?></span>
 				</div>
 				<div class="me-contact-now">
-					<a href="#" class="me-contactnow-btn"><?php _e("CONTACT NOW", "enginethemes"); ?></a>
+					<form method="post">
+						<?php do_action('marketengine_single_listing_send_inquiry_form_start'); ?>
+						<div class="me-contact">
+							<input type="submit" class="me-buy-now-btn" value="<?php _e("CONTACT NOW", "enginethemes"); ?>">
+						</div>
+
+						<?php wp_nonce_field('me-send-inquiry'); ?>
+
+						<input type="hidden" name="send_inquiry" value="<?php the_ID(); ?>" />
+						<?php do_action('marketengine_single_listing_send_inquiry_form_end'); ?>
+					</form>
 				</div>
 			<?php endif; ?>
 			<?php if('purchasion' == $listing_type) :
@@ -61,7 +71,9 @@ $listing_type = $listing->get_listing_type();
 					<!-- <a href="#" class="me-buynow-btn"><?php _e("BUY NOW", "enginethemes"); ?></a> -->
 				</div>
 			<?php endif; ?>
+
 			<?php do_action('marketengine_after_listing_item_price'); ?>
+			
 			<div class="me-item-author">
 				<?php printf(__("by %s", "enginethemes"), get_the_author_posts_link()); ?>
 			</div>

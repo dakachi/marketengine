@@ -351,6 +351,28 @@ function me_get_message_types() {
     ));
 }
 
+/**
+ * Retrieve list of latest messages or messages matching criteria.
+ *
+ * The defaults are as follows:
+ *
+ * @since 1.0
+ *
+ * @see ME_Message_Query::parse_query()
+ *
+ * @param array $args {
+ *     Optional. Arguments to retrieve messages. See ME_Message_Query::parse_query() for all
+ *     available arguments.
+ *
+ *     @type int        $numberposts      Total number of posts to retrieve. Is an alias of $posts_per_page
+ *                                        in ME_Message_Query. Accepts -1 for all. Default 5.
+ *     @type array      $include          An array of post IDs to retrieve, sticky posts will be included.
+ *                                        Is an alias of $post__in in ME_Message_Query. Default empty array.
+ *     @type array      $exclude          An array of post IDs not to retrieve. Default empty array.
+ *     @type bool       $suppress_filters Whether to suppress filters. Default true.
+ * }
+ * @return array List of messages.
+ */
 function me_get_messages($args = null) {
     $defaults = array(
         'numberposts'      => 5,
@@ -407,7 +429,9 @@ function me_get_messages($args = null) {
  * @return ME_Message|array|null Type corresponding to $output on success or null on failure.
  *                            When $output is OBJECT, a `ME_Message` instance is returned.
  */
-function me_get_message($message, $output = OBJECT, $filter = 'raw') {
+function me_get_message($message = null, $output = OBJECT, $filter = 'raw') {
+    if ( empty( $message ) && isset( $GLOBALS['message'] ) )
+        $post = $GLOBALS['message'];
 
     if ($message instanceof ME_Message) {
         $_message = $message;
