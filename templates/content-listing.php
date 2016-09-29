@@ -31,12 +31,11 @@ $listing_type = $listing->get_listing_type();
 					<a href="#" class="me-contactnow-btn"><?php _e("CONTACT NOW", "enginethemes"); ?></a>
 				</div>
 			<?php endif; ?>
-
+			<?php if('purchasion' == $listing_type) :
+				$price = $listing->get_price();
+				$pricing_unit = $listing->get_pricing_unit();
+			?>
 				<div class="me-item-price">
-				<?php if('purchasion' == $listing_type) :
-					$price = $listing->get_price();
-					$pricing_unit = $listing->get_pricing_unit();
-				?>
 					<span itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="me-price pull-left">
 						<b itemprop="priceCurrency" content="USD">$</b>
 						<?php printf(__('<b itemprop="price" content="10">%d</b>%s', 'enginethemes'), $price, $pricing_unit) ?>
@@ -48,11 +47,8 @@ $listing_type = $listing->get_listing_type();
 						<i class="icon-me-star"></i>
 						<i class="icon-me-star-o"></i>
 					</div>
-
-				<?php endif; ?>
 				</div>
 				<div class="me-buy-now">
-				<?php if('purchasion' == $listing_type) : ?>
 					<form method="post">
 						<input type="hidden" required min="1" value="1" name="qty" />
 						<?php wp_nonce_field('me-add-to-cart'); ?>
@@ -63,8 +59,8 @@ $listing_type = $listing->get_listing_type();
 						<input type="submit" class="me-buy-now-btn" value="<?php _e("BUY NOW", "enginethemes"); ?>">
 					</form>
 					<!-- <a href="#" class="me-buynow-btn"><?php _e("BUY NOW", "enginethemes"); ?></a> -->
-				<?php endif; ?>
 				</div>
+			<?php endif; ?>
 			<?php do_action('marketengine_after_listing_item_price'); ?>
 			<div class="me-item-author">
 				<?php printf(__("by %s", "enginethemes"), get_the_author_posts_link()); ?>
