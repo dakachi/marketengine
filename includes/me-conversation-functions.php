@@ -11,14 +11,22 @@ function me_insert_message($message_arr, $wp_error = false) {
 
     $user_id = get_current_user_id();
 
+    if (empty($user_id)) {
+        if ($wp_error) {
+            return new WP_Error('empty_receiver', __('Sender is empty.'));
+        } else {
+            return 0;
+        }
+    }
+
     $defaults = array(
         'sender'                => $user_id,
         'receiver'              => '',
         'post_content'          => '',
         'post_content_filtered' => '',
         'post_title'            => '',
-        'post_status'           => 'draft',
-        'post_type'             => 'post',
+        'post_status'           => 'sent',
+        'post_type'             => 'inquiry',
         'post_password'         => '',
         'post_parent'           => 0,
         'guid'                  => '',
@@ -308,10 +316,38 @@ function me_update_message($message_arr = array(), $wp_error = false) {
     return me_insert_message($message_arr, $wp_error);
 }
 
+// TODO: archive message
+function me_archive_message() {
+
+}
+
+// TODO: delete message
+function me_delete_message() {
+
+}
+
+/**
+ * Retrieve messages statuses list
+ * @return Array
+ * @author EngineThemes
+ */
 function me_get_message_status_list() {
     return apply_filters('me_message_status_list', array(
         'sent' => __("Sent", "enginethemes"),
         'read' => __("Seen", "enginethemes"),
+        'archive' => __("Archived", "enginethemes")
+    ));
+}
+
+/**
+ * Retrieve messages types list
+ * @return Array
+ * @author EngineThemes
+ */
+function me_get_message_types() {
+    return apply_filters('me_message_status_list', array(
+        'inquiry' => __("Inquiry", "enginethemes"),
+        'inbox' => __("Inbox", "enginethemes"),
     ));
 }
 
@@ -349,7 +385,7 @@ function me_get_messages($args = null) {
     $r['ignore_sticky_posts'] = true;
     $r['no_found_rows']       = true;
 
-    $get_posts = new WP_Query;
+    $get_posts = new ME_Message_Query;
     return $get_posts->query($r);
 }
 
