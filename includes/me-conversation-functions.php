@@ -495,6 +495,9 @@ function me_update_message_meta($mesage_id, $meta_key, $meta_value, $prev_value 
 function me_delete_message_meta($mesage_id, $meta_key, $meta_value = '') {
     return delete_metadata('marketengine_message_item', $message_id, $meta_key, $meta_value);
 }
+
+
+
 // add_action('init', 'test_message_query');
 // function test_message_query() {
 //     // $result = me_insert_message(
@@ -505,7 +508,10 @@ function me_delete_message_meta($mesage_id, $meta_key, $meta_value = '') {
 //     // print_r($result);
 //     // echo "</pre>";
 // 	$message_query = new ME_Message_Query(array('post_type' => 'post', 'post_status' => 'draft', 's' => 'po'));
-// 	echo "<pre>";
-// 	print_r($message_query);
-// 	echo "</pre>";
+// 	echo "<pre>";	
+//     global $message;
+//     while ($message_query->have_posts()) { $message_query->the_post();
+//         print_r($message);
+//     }
+//     echo "</pre>";
 // }

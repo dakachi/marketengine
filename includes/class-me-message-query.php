@@ -1057,7 +1057,7 @@ class ME_Message_Query {
 				 * @param string   $search_orderby The ORDER BY clause.
 				 * @param WP_Query $this           The current WP_Query instance.
 				 */
-				$search_orderby = apply_filters( 'posts_search_orderby', $search_orderby, $this );
+				$search_orderby = apply_filters( 'messages_search_orderby', $search_orderby, $this );
 			}
 
 			if ( $search_orderby )
@@ -1096,9 +1096,6 @@ class ME_Message_Query {
 			$post_type_object = get_post_type_object ( 'post' );
 		}
 
-		$edit_cap = 'edit_post';
-		$read_cap = 'read_post';
-
 		if ( ! empty( $post_type_object ) ) {
 			$edit_others_cap = $post_type_object->cap->edit_others_posts;
 			$read_private_cap = $post_type_object->cap->read_private_posts;
@@ -1118,20 +1115,13 @@ class ME_Message_Query {
 			$r_status = array();
 			$p_status = array();
 			$e_status = array();
-			if ( in_array( 'any', $q_status ) ) {
-				foreach ( get_post_stati( array( 'exclude_from_search' => true ) ) as $status ) {
-					if ( ! in_array( $status, $q_status ) ) {
-						$e_status[] = "$this->table.post_status <> '$status'";
-					}
-				}
-			} else {
-				foreach ( get_post_stati() as $status ) {
-					if ( in_array( $status, $q_status ) ) {
-						if ( 'private' == $status )
-							$p_status[] = "$this->table.post_status = '$status'";
-						else
-							$r_status[] = "$this->table.post_status = '$status'";
-					}
+
+			foreach ( get_post_stati() as $status ) {
+				if ( in_array( $status, $q_status ) ) {
+					if ( 'private' == $status )
+						$p_status[] = "$this->table.post_status = '$status'";
+					else
+						$r_status[] = "$this->table.post_status = '$status'";
 				}
 			}
 
@@ -1144,21 +1134,10 @@ class ME_Message_Query {
 				$statuswheres[] = "(" . join( ' AND ', $e_status ) . ")";
 			}
 			if ( !empty($r_status) ) {
-				if ( !empty($q['perm'] ) && 'editable' == $q['perm'] && !current_user_can($edit_others_cap) )
-					$statuswheres[] = "($this->table.post_author = $user_id " . "AND (" . join( ' OR ', $r_status ) . "))";
-				else
-					$statuswheres[] = "(" . join( ' OR ', $r_status ) . ")";
+				$statuswheres[] = "(" . join( ' OR ', $r_status ) . ")";
 			}
 			if ( !empty($p_status) ) {
-				if ( !empty($q['perm'] ) && 'readable' == $q['perm'] && !current_user_can($read_private_cap) )
-					$statuswheres[] = "($this->table.post_author = $user_id " . "AND (" . join( ' OR ', $p_status ) . "))";
-				else
-					$statuswheres[] = "(" . join( ' OR ', $p_status ) . ")";
-			}
-			if ( $post_status_join ) {
-				$join .= " LEFT JOIN $this->table AS p2 ON ($this->table.post_parent = p2.ID) ";
-				foreach ( $statuswheres as $index => $statuswhere )
-					$statuswheres[$index] = "($statuswhere OR ($this->table.post_status = 'inherit' AND " . str_replace($this->table, 'p2', $statuswhere) . "))";
+				$statuswheres[] = "(" . join( ' OR ', $p_status ) . ")";
 			}
 			$where_status = implode( ' OR ', $statuswheres );
 			if ( ! empty( $where_status ) ) {
@@ -1590,7 +1569,7 @@ class ME_Message_Query {
 			 * @param string   $found_posts The query to run to find the found posts.
 			 * @param WP_Query &$this       The WP_Query instance (passed by reference).
 			 */
-			$this->found_posts = $wpdb->get_var( apply_filters_ref_array( 'found_posts_query', array( 'SELECT FOUND_ROWS()', &$this ) ) );
+			$this->found_posts = $wpdb->get_var( apply_filters_ref_array( 'found_messages_query', array( 'SELECT FOUND_ROWS()', &$this ) ) );
 		} else {
 			$this->found_posts = count( $this->posts );
 		}
@@ -1603,7 +1582,7 @@ class ME_Message_Query {
 		 * @param int      $found_posts The number of posts found.
 		 * @param WP_Query &$this       The WP_Query instance (passed by reference).
 		 */
-		$this->found_posts = apply_filters_ref_array( 'found_posts', array( $this->found_posts, &$this ) );
+		$this->found_posts = apply_filters_ref_array( 'found_messages', array( $this->found_posts, &$this ) );
 
 		if ( ! empty( $limits ) )
 			$this->max_num_pages = ceil( $this->found_posts / $q['posts_per_page'] );
@@ -1637,7 +1616,7 @@ class ME_Message_Query {
 	 * @global WP_Post $post
 	 */
 	public function the_post() {
-		global $post;
+		global $message;
 		$this->in_the_loop = true;
 
 		if ( $this->current_post == -1 ) // loop has just started
@@ -1650,8 +1629,8 @@ class ME_Message_Query {
 			 */
 			do_action_ref_array( 'loop_start', array( &$this ) );
 
-		$post = $this->next_post();
-		$this->setup_postdata( $post );
+		$message = $this->next_post();
+		$this->setup_postdata( $message );
 	}
 
 	/**
