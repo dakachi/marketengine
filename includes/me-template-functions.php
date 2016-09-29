@@ -107,15 +107,18 @@ function me_get_sidebar() {
 }
 
 // TODO: can dat ham nay cho dung vi tri file
-function me_get_page_permalink($page_name) {
-    $options = ME_Options::get_instance();
-    $page = $options->get_option('me_'. $page_name .'_page_id');
-    // $page = get_page_by_path($page_name);
-    if (!$page) {
-        return;
+if(! function_exists('me_get_page_permalink') ){
+    function me_get_page_permalink($page_name) {
+        $options = ME_Options::get_instance();
+        $page = $options->get_option('me_'. $page_name .'_page_id');
+        // $page = get_page_by_path($page_name);
+        if (!$page) {
+            return;
+        }
+        return get_permalink($page);
     }
-    return get_permalink($page);
 }
+
 
 /**
  * Returns the url to the lost password endpoint url.

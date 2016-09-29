@@ -41,7 +41,7 @@ $listing_type = $listing->get_listing_type();
 						me_get_template('single-listing/'. $listing_type );
 					?>
 					<?php me_get_template('single-listing/category');?>
-					<?php me_get_template('single-listing/author');?>
+					<?php me_get_template('single-listing/author', array('author_id' => $post->post_author));?>
 					<?php me_get_template('single-listing/report');?>
 				</div>
 

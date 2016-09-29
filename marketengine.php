@@ -104,6 +104,8 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/class-me-shipping.php';
             require_once ME_PLUGIN_PATH . '/includes/class-me-options.php';
 
+            require_once ME_PLUGIN_PATH . '/includes/users/class-me-user-seller.php';
+
             require_once ME_PLUGIN_PATH . '/includes/class-me-message-query.php';
             require_once ME_PLUGIN_PATH . '/includes/class-me-conversation.php';
 
@@ -241,7 +243,6 @@ if (!class_exists('MarketEngine')):
 
         public function add_ajax(){
             add_action('wp_ajax_me-option-sync', array('ME_Options_Handle', 'option_sync'));
-            // add_action('wp_ajax_me-endpoint-sync', array('ME_Options_Handle', 'endpoint_sync'));
             add_action('wp_ajax_me-edit-page', array('ME_Options_Handle', 'me_edit_page'));
         }
 
