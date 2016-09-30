@@ -77,13 +77,13 @@ function me_get_endpoint_name($query_var) {
 function me_get_default_endpoints() {
     $endpoint_arr = array(
         'forgot_password'   => 'forgot-password',
-        'reset_password'   => 'reset-password',
-        'register'   => 'register',
-        'edit_profile'   => 'edit-profile',
+        'reset_password'    => 'reset-password',
+        'register'          => 'register',
+        'edit_profile'      => 'edit-profile',
         'change_password'   => 'change-password',
-        'listings'   => 'listings',
-        'orders'   => 'orders',
-        'order'   => 'order',
+        'listings'          => 'listings',
+        'orders'            => 'orders',
+        'order'             => 'order',
     );
     return $endpoint_arr;
 }

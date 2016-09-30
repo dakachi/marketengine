@@ -43,20 +43,12 @@ return array(
                         'placeholder' => 'change-password',
                         'template'    => array(),
                     ),
-                    'ep-orders' => array(
-                        'label'       => __("Orders", "enginethemes"),
-                        'slug'        => 'ep-orders',
+                    'ep-listings' => array(
+                        'label'       => __("My Listings", "enginethemes"),
+                        'slug'        => 'ep-listings',
                         'type'        => 'textbox',
-                        'name'        => 'ep_orders',
-                        'placeholder' => 'orders',
-                        'template'    => array(),
-                    ),
-                    'ep-order' => array(
-                        'label'       => __("Order", "enginethemes"),
-                        'slug'        => 'ep-order',
-                        'type'        => 'textbox',
-                        'name'        => 'ep_order',
-                        'placeholder' => 'order',
+                        'name'        => 'ep_listings',
+                        'placeholder' => 'listings',
                         'template'    => array(),
                     ),
                     'ep-orders' => array(
