@@ -7,7 +7,6 @@ $args = array(
 	'post_status'      => 'any',
 );
 global $post;
-$purchasion = new ME_Listing_Purchasion($post);
 $posts = get_posts( $args );
 ?>
 		<div class="marketengine-content marketengine-snap-column listing-post">
@@ -37,7 +36,7 @@ $posts = get_posts( $args );
 						<div class="me-item-wrap">
 							<a href="<?php the_permalink(); ?>" class="me-item-img">
 								<!-- <img src="assets/img/1.jpg" alt=""> -->
-								<?php the_post_thumbnail(); ?>
+								<?php the_post_thumbnail( 'thumbnail' ); ?>
 								<span><?php echo __('VIEW DETAILS', 'enginethemes'); ?></span>
 								<div class="marketengine-ribbon-publish">
 									<span class="me-ribbon-content"><?php echo $post_status; ?></span>
@@ -52,7 +51,15 @@ $posts = get_posts( $args );
 								?>
 									<span class="me-price pull-left"><b>Contact</b></span>
 								<?php else : ?>
-									<span class="me-price pull-left">$105</span>
+								<?php
+								$purchasion = new ME_Listing_Purchasion($post);
+								$price = $purchasion->get_price();
+								$pricing_unit = $purchasion->get_pricing_unit();
+								?>
+									<span class="me-price pull-left">
+										<b itemprop="priceCurrency" content="USD">$</b>
+										<?php printf(__('<b itemprop="price" content="10">%d</b>%s', 'enginethemes'), $price, $pricing_unit) ?>
+									</span>
 									<div class="me-rating pull-right">
 										<i class="icon-me-star"></i>
 										<i class="icon-me-star"></i>
