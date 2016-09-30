@@ -139,8 +139,8 @@ class ME_PPAdaptive extends ME_Payment {
      * The GetVerifiedStatus API operation lets you determine whether the specified PayPal account's status is verified or unverified.
      */
     public function get_verified_account($info) {
-
-        $testmode = ae_get_option('test_mode');
+        $options = new ME_Options::get_instance();
+        $testmode = $options->get_option('test-mode') ? true : false;
         // test mod is on
         $endpoint = 'https://svcs.sandbox.paypal.com/AdaptiveAccounts/';
         // live mod is on
