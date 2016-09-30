@@ -13,22 +13,20 @@ return array(
             'post-listings-page' => array(
                 'label'         => __("Post Listing Page", "enginethemes"),
                 'description'   => '',
-                'slug'          => 'post-listings-page',
+                'slug'          => 'me_post_listing_form',
                 'name'          => 'me_post_listing_page_id',
                 'type'          => 'select',
                 'data'          => marketengine_get_list_of_page(),
-                'template'      => array(
-                ),
+                'template'      => array(),
             ),
             'listings-page' => array(
                 'label'         => __("Listings Page", "enginethemes"),
                 'description'   => '',
-                'slug'          => 'listings-page',
+                'slug'          => 'me_listings',
                 'name'          => 'me_listings_page_id',
                 'type'          => 'select',
                 'data'          => marketengine_get_list_of_page(),
-                'template'      => array(
-                ),
+                'template'      => array(),
             ),
             'ep-button' => array(
                 'label'       => __("Save changes", "enginethemes"),

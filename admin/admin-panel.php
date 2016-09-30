@@ -37,6 +37,7 @@ function marketengine_option_view() {
         ),
         'me-payment' => array(
             'title'    => __("Payment", "enginethemes"),
+            'id'     => 'payment-settings',
             'slug'     => 'me-payment',
             'template' => include (dirname(__FILE__). '/options/payments.php'),
         ),

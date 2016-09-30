@@ -22,11 +22,7 @@ class ME_Options_Handle{
 
     public function action_sync( $request ) {
 
-        if(!current_user_can( 'manage_options' )) {
-            wp_send_json( array('success' => false , 'msg' => __("You do not have permission to change option.", 'enginethemes')) );
-        }
 
-        $request = $_REQUEST;
         $name = $request['name'];
         $value = array();
 
@@ -72,7 +68,6 @@ class ME_Options_Handle{
         }
 
         $request = $_REQUEST;
-
         if(isset($request['page_id'])) {
             $page_id = $request['page_id'];
             $content = $request['content'];
@@ -86,6 +81,7 @@ class ME_Options_Handle{
             foreach ($request as $key => $value) {
                 if( strpos($key, 'page_id_') === 0 ){
                     $page_id = substr($key, 8);
+                    if( !$page_id ) continue;
                     $page = array(
                         'ID'            => $page_id,
                         'post_content'  => $value,
@@ -128,6 +124,12 @@ class ME_Options_Handle{
      *  @author     KyNguyen
      */
     public function option_sync() {
+        if(!current_user_can( 'manage_options' )) {
+            wp_send_json( array('success' => false , 'msg' => __("You do not have permission to change option.", 'enginethemes')) );
+        }
+
+        $request = $_REQUEST;
+
         if( !isset($this) ) {
             $option = new ME_Options_Handle();
             $option_sync_data = $option->action_sync($request);
