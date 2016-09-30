@@ -270,24 +270,10 @@ _.templateSettings = {
     Views.Listings_Setting = Backbone.View.extend({
         initialize: function() {
             this.model.action = 'me-edit-page';
-            this.post_listings_page_id = $('select[name=me_post_listing_page_id]').val();
-            this.listings_page_id = $('select[name=me_listings_page_id]').val();
         },
         events: {
             'click input#ep-button': 'setPage',
-            'change select': 'selectPage',
-        },
-        selectPage: function(e) {
-            var $target = $(e.currentTarget);
-            var select_ele = ($target.attr('name'));
-            switch(select_ele){
-                case 'me_post_listing_page_id':
-                    this.post_listings_page_id = $target.children('option:selected').val()
-                    break;
-                case 'me_listings_page_id':
-                    this.listings_page_id = $target.children('option:selected').val()
-                    break;
-            }
+            'change input[type=checkbox]': 'toggleSwitch',
         },
         setPage: function(e) {
             e.preventDefault();
@@ -302,8 +288,10 @@ _.templateSettings = {
                 })
                 this.model.set('group', group);
             }
-            this.model.set('page_id_' + this.listings_page_id, '[me_listings]');
-            this.model.set('page_id_' + this.post_listings_page_id, '[me_post_listing_form]');
+            var select_ele = this.$el.find('select');
+            $.each(select_ele, function(i, v){
+                view.model.set('page_id_' + $(v).val(), '[' + $(v).parent().attr('id') + ']');
+            });
             this.model.save('', '', {
                 success: function(result, status, jqXHR) {
                     if (status.success) {
@@ -312,11 +300,29 @@ _.templateSettings = {
                         if(typeof status.msg != 'undefined'){
                             alert(status.msg);
                         }
-                        console.log(status.error);
                     }
                 },
             });
-        }
+        },
+        toggleSwitch: function(e) {
+            var $target = $(e.currentTarget),
+                view = this;
+            this.option = this.model;
+            this.option.action = 'me-option-sync';
+            view.option.set('name', $target.attr('name'));
+            view.option.set('value', $target.attr('checked'));
+            view.option.save('', '', {
+                success: function(result, status, jqXHR) {
+                    if (status.success) {
+                        // do something
+                    } else {
+                        if(typeof status.msg != 'undefined'){
+                            alert(status.msg);
+                        }
+                    }
+                },
+            });
+        },
     });
 
     $(document).ready(function() {
@@ -338,6 +344,12 @@ _.templateSettings = {
         if($('#listings-settings').length > 0){
             var listings_view = new Views.Listings_Setting({
                 el: '#listings-settings',
+                model: new Models.Page_Setting(),
+            });
+        }
+        if($('#payment-settings').length > 0){
+            var payment_view = new Views.Listings_Setting({
+                el: '#payment-settings',
                 model: new Models.Page_Setting(),
             });
         }

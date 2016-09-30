@@ -25,7 +25,8 @@ class ME_Checkout_Form
 
             // neu co the mua thi dieu huong nguoi dung den trang thanh toan
             me_add_to_cart($listing_id, $_POST['qty']);
-            wp_redirect(home_url('/me-checkout'));
+            //wp_redirect(home_url('/me-checkout'));
+            wp_redirect(me_get_page_permalink('checkout'));
             exit;
         }
     }
