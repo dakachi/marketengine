@@ -123,7 +123,8 @@ class ME_Checkout_Handle {
                 'post_content' => $content,
                 'post_title'   => 'Inquire listing' . $listing_id,
                 'post_type'    => 'inquiry',
-                'receiver' => get_post_field( 'post_author', $listing_id )
+                'receiver' => get_post_field( 'post_author', $listing_id ),
+                'post_parent' => $listing_id
             ), true
         );
     }

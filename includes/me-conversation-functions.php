@@ -377,7 +377,6 @@ function me_get_message_types() {
 function me_get_messages($args = null) {
     $defaults = array(
         'numberposts'      => 10,
-        
         'orderby'          => 'date',
         'order'            => 'DESC',
         'post_type'        => 'post',
