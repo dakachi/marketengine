@@ -13,6 +13,7 @@ class ME_Checkout_Form
         add_action('wp_loaded', array(__CLASS__, 'process_checkout'));
         // parse_request
         add_action('wp_loaded', array(__CLASS__, 'confirm_payment'));
+        add_action('wp_loaded', array(__CLASS__, 'send_inquiry'));
     }
 
     public static function add_to_cart()
@@ -64,5 +65,20 @@ class ME_Checkout_Form
             exit;
         }
     }
+
+    public static function send_inquiry() {
+        if (isset($_POST['content']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-post-inquiry')) {
+            $result = ME_Checkout_Handle::inquiry($_POST);
+            if (is_wp_error($result)) {
+                me_wp_error_to_notices($result);
+            } else {
+                $redirect = home_url('/me-conversation');
+                $redirect = add_query_arg(array('id' => $_POST['inquiry_listing']), $redirect );
+                wp_redirect($redirect);
+                exit;
+            }
+        }
+    }
+
 }
 ME_Checkout_Form::init_hook();

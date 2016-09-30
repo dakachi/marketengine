@@ -14,10 +14,8 @@ if (!defined('ABSPATH')) {
  * @author      EngineThemesTeam
  * @category    Class
  */
-class ME_Checkout_Handle
-{
-    public static function checkout($data)
-    {
+class ME_Checkout_Handle {
+    public static function checkout($data) {
         $rules = array(
             'listing_id'     => 'required|numeric',
             'payment_method' => 'required|string',
@@ -62,8 +60,7 @@ class ME_Checkout_Handle
      * @since 1.0
      * @return WP_Error | ME_Order
      */
-    public static function create_order($data)
-    {
+    public static function create_order($data) {
         global $user_ID;
         $data['post_author'] = $user_ID;
 
@@ -107,5 +104,27 @@ class ME_Checkout_Handle
         $order->set_payment_method($data['payment_method']);
 
         return $order;
+    }
+
+    public static function inquiry($data) {
+        if (empty($data['inquiry_listing'])) {
+            return new WP_Error('empty_listing', __("The listing is required.", "enginethemes"));
+        }
+
+        if (empty($data['content'])) {
+            return new WP_Error('empty_inquiry_content', __("The inquiry content is required.", "enginethemes"));
+        }
+        $listing_id = $data['inquiry_listing'];
+        //TODO: validate listing id
+        $content = $data['content'];
+
+        $result = me_insert_message(
+            array(
+                'post_content' => $content,
+                'post_title'   => 'Inquire listing' . $listing_id,
+                'post_type'    => 'inquiry',
+                'receiver' => get_post_field( 'post_author', $listing_id )
+            ), true
+        );
     }
 }

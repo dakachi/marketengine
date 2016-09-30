@@ -47,7 +47,7 @@ class ME_Shortcodes_Listing {
         $listing_id = $_GET['id'];
         $listing  = get_post($listing_id);
         if($listing) {
-            $listing = new ME_Listing($listing);
+            $listing = new ME_Listing_Contact($listing);
         }
         ob_start();
         me_get_template('inquiry/inquiry', array('listing' => $listing));

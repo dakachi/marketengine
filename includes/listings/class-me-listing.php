@@ -35,6 +35,10 @@ class ME_Listing {
         return get_the_permalink($this->id, $leavename);
     }
 
+    public function get_author () {
+        return $this->post->post_author;
+    }
+
     public function get_title() {
         return get_the_title($this->id);
     }

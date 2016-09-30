@@ -25,6 +25,7 @@ function me_insert_message($message_arr, $wp_error = false) {
         'post_content'          => '',
         'post_content_filtered' => '',
         'post_title'            => '',
+        'post_excerpt'          => '',
         'post_status'           => 'sent',
         'post_type'             => 'inquiry',
         'post_password'         => '',
@@ -333,9 +334,9 @@ function me_delete_message() {
  */
 function me_get_message_status_list() {
     return apply_filters('me_message_status_list', array(
-        'sent' => __("Sent", "enginethemes"),
-        'read' => __("Seen", "enginethemes"),
-        'archive' => __("Archived", "enginethemes")
+        'sent'    => __("Sent", "enginethemes"),
+        'read'    => __("Seen", "enginethemes"),
+        'archive' => __("Archived", "enginethemes"),
     ));
 }
 
@@ -347,7 +348,7 @@ function me_get_message_status_list() {
 function me_get_message_types() {
     return apply_filters('me_message_status_list', array(
         'inquiry' => __("Inquiry", "enginethemes"),
-        'inbox' => __("Inbox", "enginethemes"),
+        'inbox'   => __("Inbox", "enginethemes"),
     ));
 }
 
@@ -430,8 +431,9 @@ function me_get_messages($args = null) {
  *                            When $output is OBJECT, a `ME_Message` instance is returned.
  */
 function me_get_message($message = null, $output = OBJECT, $filter = 'raw') {
-    if ( empty( $message ) && isset( $GLOBALS['message'] ) )
-        $post = $GLOBALS['message'];
+    if (empty($message) && isset($GLOBALS['message'])) {
+        $message = $GLOBALS['message'];
+    }
 
     if ($message instanceof ME_Message) {
         $_message = $message;
@@ -556,8 +558,6 @@ function me_delete_message_meta($mesage_id, $meta_key, $meta_value = '') {
     return delete_metadata('marketengine_message_item', $message_id, $meta_key, $meta_value);
 }
 
-
-
 // add_action('init', 'test_message_query');
 // function test_message_query() {
 //     // $result = me_insert_message(
@@ -567,8 +567,8 @@ function me_delete_message_meta($mesage_id, $meta_key, $meta_value = '') {
 //     // echo "<pre>";
 //     // print_r($result);
 //     // echo "</pre>";
-// 	$message_query = new ME_Message_Query(array('post_type' => 'post', 'post_status' => 'draft', 's' => 'po'));
-// 	echo "<pre>";	
+//     $message_query = new ME_Message_Query(array('post_type' => 'post', 'post_status' => 'draft', 's' => 'po'));
+//     echo "<pre>";
 //     global $message;
 //     while ($message_query->have_posts()) { $message_query->the_post();
 //         print_r($message);

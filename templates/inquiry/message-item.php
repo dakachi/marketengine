@@ -1,8 +1,11 @@
+<?php $message = me_get_message(); ?>
 <li>
-	<span class="me-mgs-author-avatar"><img src="../assets/img/avatar.png" alt="" class="mCS_img_loaded"></span>
+	<span class="me-mgs-author-avatar">
+		<?php echo get_avatar( $message->sender, '36'); ?>
+	</span>
 	<div class="me-message-author">
-		<h4 class="me-author">David Copperfield</h4>
-		<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui.</p>
-		<span>2 hours ago</span>
+		<h4 class="me-author"><?php echo get_the_author_meta( 'display_name', $message->sender ); ?></h4>
+		<p><?php echo esc_html( $message->post_content ); ?></p>
+		<span><?php echo human_time_diff( strtotime($message->post_date) ); ?></span>
 	</div>
 </li>
