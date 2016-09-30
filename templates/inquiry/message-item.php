@@ -1,4 +1,3 @@
-<?php $message = me_get_message(); ?>
 <li>
 	<span class="me-mgs-author-avatar">
 		<?php echo get_avatar( $message->sender, '36'); ?>

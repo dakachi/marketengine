@@ -1,11 +1,14 @@
 <?php if($listing) : ?>
 
-<?php $messages = new ME_Message_Query(array('post_type' => 'inquiry')); ?>
+<?php $messages = me_get_messages(array('post_type' => 'inquiry')); ?>
+<?php 
+$messages = array_reverse ($messages);
+?>
 <div class="marketengine">
 	<?php me_print_notices(); ?>
 	<div class="me-contact-listing-wrap">
 		
-		<?php me_get_template('inquiry/listing-info', array('listing' => $listing)); ?>
+		<?php me_get_template('inquiry/listing-info', array('listing' => $listing, 'showposts' => -1)); ?>
 
 		<div class="me-contact-listing">
 			<div class="me-row">
@@ -15,14 +18,11 @@
 							<h2><?php echo get_the_author_meta( 'display_name', $listing->get_author() ); ?></h2>
 						</div>
 						<div class="me-contact-messages" style="max-height: 500px;">
-							<ul class="me-contact-messages-list" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
+							<ul id="messages-container" class="me-contact-messages-list" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
 								
-								<?php while($messages->have_posts()) : ?>
-									
-									<?php $messages->the_post(); ?> 
-									<?php me_get_template('inquiry/message-item'); ?>
-
-								<?php endwhile; ?>
+								<?php foreach ($messages  as $key => $message) : ?>
+									<?php me_get_template('inquiry/message-item', array('message' => $message)); ?>
+								<?php endforeach; ?>
 
 							</ul>
 						</div>
@@ -47,5 +47,8 @@
 		</div>
 	</div>
 </div>
-
+<script type="text/javascript">
+	var objDiv = document.getElementById("messages-container");
+	objDiv.scrollTop = objDiv.scrollHeight;
+</script>
 <?php endif; ?>

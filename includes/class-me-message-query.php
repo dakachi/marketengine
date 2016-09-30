@@ -561,19 +561,19 @@ class ME_Message_Query {
 
 		$primary_meta_key = '';
 		$primary_meta_query = false;
-		$meta_clauses = $this->meta_query->get_clauses();
-		if ( ! empty( $meta_clauses ) ) {
-			$primary_meta_query = reset( $meta_clauses );
+		// $meta_clauses = $this->meta_query->get_clauses();
+		// if ( ! empty( $meta_clauses ) ) {
+		// 	$primary_meta_query = reset( $meta_clauses );
 
-			if ( ! empty( $primary_meta_query['key'] ) ) {
-				$primary_meta_key = $primary_meta_query['key'];
-				$allowed_keys[] = $primary_meta_key;
-			}
+		// 	if ( ! empty( $primary_meta_query['key'] ) ) {
+		// 		$primary_meta_key = $primary_meta_query['key'];
+		// 		$allowed_keys[] = $primary_meta_key;
+		// 	}
 
-			$allowed_keys[] = 'meta_value';
-			$allowed_keys[] = 'meta_value_num';
-			$allowed_keys   = array_merge( $allowed_keys, array_keys( $meta_clauses ) );
-		}
+		// 	$allowed_keys[] = 'meta_value';
+		// 	$allowed_keys[] = 'meta_value_num';
+		// 	$allowed_keys   = array_merge( $allowed_keys, array_keys( $meta_clauses ) );
+		// }
 
 		// If RAND() contains a seed value, sanitize and add to allowed keys.
 		$rand_with_seed = false;
@@ -615,11 +615,7 @@ class ME_Message_Query {
 				$orderby_clause = "{$primary_meta_query['alias']}.meta_value+0";
 				break;
 			default:
-				if ( array_key_exists( $orderby, $meta_clauses ) ) {
-					// $orderby corresponds to a meta_query clause.
-					$meta_clause = $meta_clauses[ $orderby ];
-					$orderby_clause = "CAST({$meta_clause['alias']}.meta_value AS {$meta_clause['cast']})";
-				} elseif ( $rand_with_seed ) {
+				if ( $rand_with_seed ) {
 					$orderby_clause = $orderby;
 				} else {
 					// Default: order by post field.

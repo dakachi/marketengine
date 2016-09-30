@@ -376,21 +376,16 @@ function me_get_message_types() {
  */
 function me_get_messages($args = null) {
     $defaults = array(
-        'numberposts'      => 5,
-        'category'         => 0,
+        'numberposts'      => 10,
+        
         'orderby'          => 'date',
         'order'            => 'DESC',
-        'include'          => array(),
-        'exclude'          => array(),
-        'meta_key'         => '',
-        'meta_value'       => '',
         'post_type'        => 'post',
-        'suppress_filters' => true,
     );
 
     $r = wp_parse_args($args, $defaults);
     if (empty($r['post_status'])) {
-        $r['post_status'] = ('attachment' == $r['post_type']) ? 'inherit' : 'publish';
+        $r['post_status'] =  'sent';
     }
 
     if (!empty($r['numberposts']) && empty($r['posts_per_page'])) {
