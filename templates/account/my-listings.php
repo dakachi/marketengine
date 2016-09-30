@@ -37,7 +37,7 @@ $posts = get_posts( $args );
 						<div class="me-item-wrap">
 							<a href="<?php the_permalink(); ?>" class="me-item-img">
 								<!-- <img src="assets/img/1.jpg" alt=""> -->
-								<?php the_post_thumbnail(); ?>
+								<?php the_post_thumbnail( 'thumbnail' ); ?>
 								<span><?php echo __('VIEW DETAILS', 'enginethemes'); ?></span>
 								<div class="marketengine-ribbon-publish">
 									<span class="me-ribbon-content"><?php echo $post_status; ?></span>

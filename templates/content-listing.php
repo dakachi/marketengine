@@ -15,7 +15,7 @@ $listing_type = $listing->get_listing_type();
 	<?php do_action('marketengine_listing_item_start', $listing); ?>
 	<div class="me-item-wrap">
 		<a href="<?php the_permalink(); ?>" title="<?php printf(__("View %s", "enginethemes"), get_the_title()); ?>" class="me-item-img">
-			<?php the_post_thumbnail(); ?>
+			<?php the_post_thumbnail( 'thumbnail' ); ?>
 			<span><?php _e("VIEW DETAILS", "enginethemes"); ?></span>
 		</a>
 		<div class="me-item-content">
