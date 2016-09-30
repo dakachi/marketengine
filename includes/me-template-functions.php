@@ -153,7 +153,7 @@ function me_get_endpoint_url($ep_query_var, $value = '', $permalink = '') {
     if (!$permalink) {
         $permalink = get_permalink();
     }
-    
+
     $endpoint = me_get_endpoint_name($ep_query_var);
 
     if (get_option('permalink_structure')) {
@@ -199,17 +199,17 @@ function me_post_tags_meta_box($default, $taxonomy) {
                 <label class="text" for="tax-input-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_or_remove_items; ?></label>
                 <p><textarea style="display:none;" name="<?php echo $tax_name; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled(!$user_can_assign_terms);?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace(',', $comma . ' ', $terms_to_edit); // textarea_escaped by esc_attr()    ?></textarea></p>
             </div>
-            
+
             <div class="ajaxtag hide-if-no-js">
                 <label class="screen-reader-text" for="new-tag-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_new_item; ?></label>
                 <p><input type="text" id="new-tag-<?php echo $tax_name; ?>" name="newtag[<?php echo $tax_name; ?>]" class="newtag form-input-tip" size="16" autocomplete="off" aria-describedby="new-tag-<?php echo $tax_name; ?>-desc" value="" />
             </div>
             <p class="howto" id="new-tag-<?php echo $tax_name; ?>-desc"><?php echo $taxonomy->labels->separate_items_with_commas; ?></p>
-            
+
             </div>
             <div class="tagchecklist"></div>
         </div>
-        
+
         <p class="hide-if-no-js"><a href="#titlediv" class="tagcloud-link" id="link-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->choose_from_most_used; ?></a></p>
     <?php endif;?>
 <?php

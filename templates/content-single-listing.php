@@ -6,6 +6,7 @@ if (!defined('ABSPATH')) {
 global $post;
 $listing = new ME_Listing($post);
 $listing_type = $listing->get_listing_type();
+$purchasion = new ME_Listing_Purchasion($post);
 $buyer = $post->post_author == get_current_user_id();
 ?>
 <div class="marketengine me-container">
@@ -37,11 +38,11 @@ $buyer = $post->post_author == get_current_user_id();
 				<div class="marketengine-sidebar-detail">
 
 					<?php
-					if( $buyer ) :
-						me_get_template('single-listing/status');
-						me_get_template('single-listing/control-action');
-					else :
-						if($listing_type) :
+					if($listing_type) :
+						if( $buyer ) :
+							me_get_template('single-listing/status' );
+							me_get_template('single-listing/control-action', array('listing_type' => $listing_type , 'purchasion' => $purchasion) );
+						else :
 							me_get_template('single-listing/'. $listing_type );
 						endif;
 					endif;
