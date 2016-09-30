@@ -1,7 +1,8 @@
+<?php if($listing) : ?>
 <div class="marketengine">
 	<div class="me-contact-listing-wrap">
 		
-		<?php me_get_template('inquiry/listing-info'); ?>
+		<?php me_get_template('inquiry/listing-info', array('listing' => $listing)); ?>
 
 		<div class="me-contact-listing">
 			<div class="me-row">
@@ -30,3 +31,4 @@
 		</div>
 	</div>
 </div>
+<?php endif; ?>

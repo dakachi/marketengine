@@ -44,8 +44,13 @@ class ME_Shortcodes_Listing {
 
 
     public static function inquiry_form() {
+        $listing_id = $_GET['id'];
+        $listing  = get_post($listing_id);
+        if($listing) {
+            $listing = new ME_Listing($listing);
+        }
         ob_start();
-        me_get_template('inquiry/inquiry');
+        me_get_template('inquiry/inquiry', array('listing' => $listing));
         $content = ob_get_clean();
         return $content;
     }
