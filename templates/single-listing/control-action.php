@@ -1,5 +1,17 @@
+<?php
+$price = $purchasion->get_price();
+$pricing_unit = $purchasion->get_pricing_unit();
+?>
+
 <div class="me-action">
-	<span class="icon-pause"></span>
-	<span class="icon-edit"></span>
-	<span class="icon-delete"></span>
+	<?php if( 'purchasion' === $listing_type ) : ?>
+		<span class="me-price">
+		<b itemprop="priceCurrency" content="USD">$</b>
+		<?php printf(__('<b itemprop="price" content="10">%d</b>%s', 'enginethemes'), $price, $pricing_unit) ?>
+		</span>
+		<span class="me-instock"><?php _e("In Stock", "enginethemes"); ?></span>
+	<?php endif; ?>
+	<span class="icon-me-pause"></span>
+	<span class="icon-me-edit"></span>
+	<span class="icon-me-delete"></span>
 </div>

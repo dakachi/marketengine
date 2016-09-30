@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 return array(
     'general'      => array(
         'title'    => __("General", "enginethemes"),
-        'slug'     => 'general',
+        'slug'     => 'general-section',
         'type'     => 'section',
         'template' => array(
             'test-mode' => array(
@@ -21,9 +21,18 @@ return array(
             'checkout-page' => array(
                 'label'       => __("Checkout Page", "enginethemes"),
                 'description' => __("Choose a page to display as Checkout Page", "enginethemes"),
-                'slug'        => 'checkout-page',
+                'slug'        => 'me_checkout_form',
                 'type'        => 'select',
                 'name'        => 'me_checkout_page_id',
+                'data'        => marketengine_get_list_of_page(),
+                'template'    => array(),
+            ),
+            'confirm-order-page' => array(
+                'label'       => __("Confirm Order Page", "enginethemes"),
+                'description' => __("Choose a page to display as Confirm Order Page", "enginethemes"),
+                'slug'        => 'me_confirm_order',
+                'type'        => 'select',
+                'name'        => 'me_confirm_order_id',
                 'data'        => marketengine_get_list_of_page(),
                 'template'    => array(),
             ),
@@ -46,40 +55,40 @@ return array(
     ),
     'paypal'      => array(
         'title'    => __("Paypal", "enginethemes"),
-        'slug'     => 'paypal',
+        'slug'     => 'paypal-section',
         'type'     => 'section',
         'template' => array(
             'app-api' => array(
                 'label'       => __("App API", "enginethemes"),
                 'description' => __("", "enginethemes"),
-                'slug'        => 'app-api',
+                'slug'        => 'paypal-app-api',
                 'type'        => 'textbox',
-                'name'        => 'app-api',
+                'name'        => 'paypal-app-api',
                 'template'    => array(),
             ),
             'username' => array(
                 'label'       => __("Username", "enginethemes"),
                 'description' => __("", "enginethemes"),
-                'slug'        => 'username',
+                'slug'        => 'paypal-api-username',
                 'type'        => 'textbox',
-                'name'        => 'username',
+                'name'        => 'paypal-api-username',
                 'template'    => array(),
             ),
             'password' => array(
                 'label'       => __("Password", "enginethemes"),
                 'description' => __("", "enginethemes"),
-                'slug'        => 'password',
+                'slug'        => 'paypal-api-password',
                 'type'        => 'textbox',
-                'name'        => 'password',
+                'name'        => 'paypal-api-password',
                 'ispassword'  => true,
                 'template'    => array(),
             ),
             'signature' => array(
                 'label'       => __("Signature", "enginethemes"),
                 'description' => __("", "enginethemes"),
-                'slug'        => 'signature',
+                'slug'        => 'paypal-api-signature',
                 'type'        => 'textbox',
-                'name'        => 'signature',
+                'name'        => 'paypal-api-signature',
                 'template'    => array(),
             ),
         ),

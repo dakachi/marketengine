@@ -26,17 +26,17 @@ if (!defined('ABSPATH')) {
 			<?php me_get_template('post-listing/listing-category'); ?>
 
 			<?php me_get_template('post-listing/listing-type'); ?>
-			
+
 			<?php me_get_template('post-listing/listing-information'); ?>
 
 			<?php do_action('marketengine_post_listing_information_form_fields'); ?>
-		
+
 			<?php me_get_template('post-listing/listing-gallery'); ?>
-		
+
 			<?php me_get_template('post-listing/listing-tags'); ?>
 
 			<?php do_action('marketengine_post_listing_form_fields'); ?>
-			
+
 			<?php wp_nonce_field('me-insert_listing'); ?>
 
 			<div class="marketengine-group-field me-text-center submit-post">
