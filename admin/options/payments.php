@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 return array(
     'general'      => array(
         'title'    => __("General", "enginethemes"),
-        'slug'     => 'general',
+        'slug'     => 'general-section',
         'type'     => 'section',
         'template' => array(
             'test-mode' => array(
@@ -55,7 +55,7 @@ return array(
     ),
     'paypal'      => array(
         'title'    => __("Paypal", "enginethemes"),
-        'slug'     => 'paypal',
+        'slug'     => 'paypal-section',
         'type'     => 'section',
         'template' => array(
             'app-api' => array(

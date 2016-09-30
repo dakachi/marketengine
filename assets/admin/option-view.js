@@ -349,8 +349,12 @@ _.templateSettings = {
         }
         if($('#payment-settings').length > 0){
             var payment_view = new Views.Listings_Setting({
-                el: '#payment-settings',
+                el: '#general-section',
                 model: new Models.Page_Setting(),
+            });
+            var payment_view = new Views.Options({
+                el: '#paypal-section',
+                model: new Models.Options(),
             });
         }
     });
