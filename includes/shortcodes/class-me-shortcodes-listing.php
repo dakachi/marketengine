@@ -49,6 +49,9 @@ class ME_Shortcodes_Listing {
         if($listing) {
             $listing = new ME_Listing_Contact($listing);
         }
+        
+        //TODO: check current user can access inquiry list or note
+
         ob_start();
         me_get_template('inquiry/inquiry', array('listing' => $listing));
         $content = ob_get_clean();
