@@ -46,17 +46,17 @@ class ME_Checkout_Form
 
     public static function confirm_payment()
     {
-        if (!empty($_GET['me-payment'])) {  
-            $request = sanitize_text_field( strtolower($_GET['me-payment']) );
-            do_action('marketegine_' . $request , $_REQUEST);
-            update_option( 'paypal_ipn', $_POST );          
+        if (!empty($_GET['me-payment'])) {
+            $request = sanitize_text_field(strtolower($_GET['me-payment']));
+            do_action('marketegine_' . $request, $_REQUEST);
+            update_option('paypal_ipn', $_POST);
         }
     }
 
     public static function process_contact()
     {
         if (isset($_POST['send_inquiry']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-send-inquiry')) {
-            
+
             wp_redirect(home_url('/me-conversation'));
             exit;
         }

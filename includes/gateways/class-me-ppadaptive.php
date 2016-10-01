@@ -455,7 +455,7 @@ class ME_PPAdaptive_Request {
         $receiver_list = array(
             'receiverList.receiver(0).amount' => $order->get_total(),
             'receiverList.receiver(0).email'  => $order->get_receiver_email(),
-            //'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
+            // 'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
 
             // freelancer receiver
             'receiverList.receiver(1).amount' => $this->get_commission_fee(),
