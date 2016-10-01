@@ -1,17 +1,17 @@
-<div class="me-container">
-	<div class="marketengine-content-wrap">
-		<!-- marketengine-content -->
-		<div class="marketengine-content listing-post">
+<?php
+$args = array(
+	'orderby'          => 'date',
+	'order'            => 'DESC',
+	'post_type'        => 'listing',
+	'author'	   	   => get_current_user_id(),
+	'post_status'      => 'any',
+);
+global $post;
+$posts = get_posts( $args );
+?>
+		<div class="marketengine-content marketengine-snap-column listing-post">
 			<div class="marketengine-filter">
 				<div class="marketengine-filter-listing pull-right">
-					<div class="filter-listing-search">
-						<div class="marketengine-search">
-						    <label>
-						        <input class="marketengine-search-field" type="text" name="keyword" placeholder="Search listing title">
-						    </label>
-						    <button class="marketengine-search-btn icon-research"></button>
-						</div>
-					</div>
 					<div class="filter-listing-status">
 						<select name="" id="">
 							<option value="">Publish</option>
@@ -24,131 +24,102 @@
 				</div>
 			</div>
 			<div class="marketengine-listing-post">
-				<ul class="listing-post">
-					<li class="item-post">
-						<div class="item-post-wrap">
-							<a href="#" class="item-post-img">
-								<img src="assets/img/1.jpg" alt="">
+				<ul class="me-listing-post me-row">
+				<?php
+				if( !empty($posts) ):
+					foreach( $posts as $post ) : setup_postdata( $post );
+						$listing = new ME_Listing($post);
+						$listing_type = $listing->get_listing_type();
+						$post_status = get_post_status();
+				?>
+					<li class="me-item-post me-col-md-3">
+						<div class="me-item-wrap">
+							<a href="<?php the_permalink(); ?>" class="me-item-img">
+								<!-- <img src="assets/img/1.jpg" alt=""> -->
+								<?php the_post_thumbnail( 'thumbnail' ); ?>
+								<span><?php echo __('VIEW DETAILS', 'enginethemes'); ?></span>
+								<div class="marketengine-ribbon-publish">
+									<span class="me-ribbon-content"><?php echo $post_status; ?></span>
+								</div>
 							</a>
-							<div class="item-post-content">
-								<h2><a href="#">This is listing title post on site</a></h2>
-								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text  versions of Lorem Ipsum.</p>
-								<div class="me-rating"><i class="icon-font star-on-png"></i><i class="icon-font star-on-png"></i><i class="icon-font star-on-png"></i><i class="icon-font star-half-png"></i><i class="icon-font star-off-png"></i></div>
-								<div class="item-post-status">
-									<div class="post-status">
-										<span class="marketengine-label-archive">Archived</span>
-										<div class="action-status">
-											<span class="icon-redo"></span>
-										</div>
+							<div class="me-item-content">
+								<h2><a href="<?php the_permalink(); ?>"><?php the_excerpt(); ?></a></h2>
+								<div class="me-item-price">
+								<?php
+								if( $listing_type ) :
+									if( 'purchasion' !== $listing_type ) :
+								?>
+									<span class="me-price pull-left"><b>Contact</b></span>
+								<?php else : ?>
+								<?php
+								$purchasion = new ME_Listing_Purchasion($post);
+								$price = $purchasion->get_price();
+								$pricing_unit = $purchasion->get_pricing_unit();
+								?>
+									<span class="me-price pull-left">
+										<b itemprop="priceCurrency" content="USD">$</b>
+										<?php printf(__('<b itemprop="price" content="10">%d</b>%s', 'enginethemes'), $price, $pricing_unit) ?>
+									</span>
+									<div class="me-rating pull-right">
+										<i class="icon-me-star"></i>
+										<i class="icon-me-star"></i>
+										<i class="icon-me-star"></i>
+										<i class="icon-me-star"></i>
+										<i class="icon-me-star-o"></i>
 									</div>
-									<span class="post-price">Contact</span>
+								<?php
+									endif;
+								endif;
+								?>
+								</div>
+								<div class="me-item-action">
+								<?php
+									$action_array = array();
+									switch ($post_status) {
+										case 'publish':
+								?>
+									<span class="icon-me-pause"></span>
+									<span class="icon-me-edit"></span>
+									<span class="icon-me-delete"></span>
+								<?php
+											break;
+										case 'archived':
+								?>
+									<span class="icon-me-action-reopen"></span>
+									<span class="icon-me-edit"></span>
+									<span class="icon-me-delete"></span>
+								<?php
+											break;
+										case 'pause':
+								?>
+									<span class="icon-me-resume"></span>
+									<span class="icon-me-edit"></span>
+									<span class="icon-me-delete"></span>
+								<?php
+											break;
+										default:
+								?>
+									<span class="icon-me-edit"></span>
+									<span class="icon-me-delete"></span>
+								<?php
+											break;
+									}
+								?>
 								</div>
 							</div>
-							<div class="item-post-line"></div>
 						</div>
 					</li>
-					<li class="item-post">
-						<div class="item-post-wrap">
-							<a href="#" class="item-post-img">
-								<img src="assets/img/1.jpg" alt="">
-							</a>
-							<div class="item-post-content">
-								<h2><a href="#">This is listing title post on site</a></h2>
-								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text  versions of Lorem Ipsum.</p>
-								<div class="me-rating"><i class="icon-font star-on-png"></i><i class="icon-font star-on-png"></i><i class="icon-font star-on-png"></i><i class="icon-font star-half-png"></i><i class="icon-font star-off-png"></i></div>
-								<div class="item-post-status">
-									<div class="post-status">
-										<span class="marketengine-label-pause">Paused</span>
-										<div class="action-status">
-											<span class="icon-resume"></span>
-											<span class="icon-edit"></span>
-											<span class="icon-delete"></span>
-										</div>
-									</div>
-									<span class="post-price">$10</span>
-								</div>
-							</div>
-							<div class="item-post-line"></div>
-						</div>
-					</li>
-					<li class="item-post">
-						<div class="item-post-wrap">
-							<a href="#" class="item-post-img">
-								<img src="assets/img/1.jpg" alt="">
-							</a>
-							<div class="item-post-content">
-								<h2><a href="#">This is listing title post on site</a></h2>
-								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text  versions of Lorem Ipsum.</p>
-								<div class="me-rating"><i class="icon-font star-on-png"></i><i class="icon-font star-on-png"></i><i class="icon-font star-on-png"></i><i class="icon-font star-half-png"></i><i class="icon-font star-off-png"></i></div>
-								<div class="item-post-status">
-									<div class="post-status">
-										<span class="marketengine-label-draft">Draft</span>
-										<div class="action-status">
-											<span class="icon-publish"></span>
-											<span class="icon-edit"></span>
-											<span class="icon-delete"></span>
-										</div>
-									</div>
-									<span class="post-price">$10</span>
-								</div>
-							</div>
-							<div class="item-post-line"></div>
-						</div>
-					</li>
-					<li class="item-post">
-						<div class="item-post-wrap">
-							<a href="#" class="item-post-img">
-								<img src="assets/img/1.jpg" alt="">
-							</a>
-							<div class="item-post-content">
-								<h2><a href="#">This is listing title post on site</a></h2>
-								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text  versions of Lorem Ipsum.</p>
-								<div class="me-rating"><i class="icon-font star-on-png"></i><i class="icon-font star-on-png"></i><i class="icon-font star-on-png"></i><i class="icon-font star-half-png"></i><i class="icon-font star-off-png"></i></div>
-								<div class="item-post-status">
-									<div class="post-status">
-										<span class="marketengine-label-pending">Pending</span>
-										<div class="action-status">
-											<!-- <span class="icon-pause"></span> -->
-											<span class="icon-edit"></span>
-											<span class="icon-delete"></span>
-										</div>
-									</div>
-									<span class="post-price">$10</span>
-								</div>
-							</div>
-							<div class="item-post-line"></div>
-						</div>
-					</li>
-					<li class="item-post">
-						<div class="item-post-wrap">
-							<a href="#" class="item-post-img">
-								<img src="assets/img/1.jpg" alt="">
-							</a>
-							<div class="item-post-content">
-								<h2><a href="#">This is listing title post on site</a></h2>
-								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text  versions of Lorem Ipsum.</p>
-								<div class="me-rating"><i class="icon-font star-on-png"></i><i class="icon-font star-on-png"></i><i class="icon-font star-on-png"></i><i class="icon-font star-half-png"></i><i class="icon-font star-off-png"></i></div>
-								<div class="item-post-status">
-									<div class="post-status">
-										<span class="marketengine-label-publish">Publish</span>
-										<div class="action-status">
-											<span class="icon-pause"></span>
-											<span class="icon-edit"></span>
-											<span class="icon-delete"></span>
-										</div>
-									</div>
-									<span class="post-price">$10</span>
-								</div>
-							</div>
-							<div class="item-post-line"></div>
-						</div>
-					</li>
+				<?php
+					endforeach;
+					wp_reset_postdata();
+				else:
+					me_get_template('content-listing-none');
+				endif;
+				?>
 				</ul>
-				<div class="paginations">
-					<a href="" class="marketengine-load-more">SHOW MORE</a>
+				<div class="marketengine-paginations">
+					<?php me_paginate_link (); ?>
 				</div>
 			</div>
 		</div>
 		<!--// marketengine-content -->
-	</div>
-</div>

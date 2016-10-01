@@ -104,6 +104,11 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/class-me-shipping.php';
             require_once ME_PLUGIN_PATH . '/includes/class-me-options.php';
 
+            require_once ME_PLUGIN_PATH . '/includes/users/class-me-user-seller.php';
+
+            require_once ME_PLUGIN_PATH . '/includes/class-me-message-query.php';
+            require_once ME_PLUGIN_PATH . '/includes/class-me-conversation.php';
+
             require_once ME_PLUGIN_PATH . '/includes/me-notices-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-template-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-email-functions.php';
@@ -118,7 +123,6 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/abstracts/class-abstract-form.php';
 
             require_once ME_PLUGIN_PATH . '/includes/handle-options/class-me-options-handle.php';
-            require_once ME_PLUGIN_PATH . '/includes/handle-options/class-me-endpoint-options-handle.php';
 
             require_once ME_PLUGIN_PATH . '/includes/handle-authentication/class-me-authentication-form.php';
             require_once ME_PLUGIN_PATH . '/includes/handle-authentication/class-me-authentication.php';
@@ -154,14 +158,23 @@ if (!class_exists('MarketEngine')):
 
             ME_Post_Types::register_post_type();
             ME_Post_Types::register_tanonomies();
+
         }
 
         public function wpdb_table_fix() {
             global $wpdb;
             $wpdb->marketengine_order_itemmeta = $wpdb->prefix . 'marketengine_order_itemmeta';
             $wpdb->marketengine_order_items    = $wpdb->prefix . 'marketengine_order_items';
+
+            $wpdb->marketengine_message_itemmeta = $wpdb->prefix . 'marketengine_message_itemmeta';
+            $wpdb->marketengine_message_item    = $wpdb->prefix . 'marketengine_message_item';
+
+
             $wpdb->tables[]                    = 'marketengine_order_itemmeta';
             $wpdb->tables[]                    = 'marketengine_order_items';
+
+            $wpdb->tables[]                    = 'marketengine_message_itemmeta';
+            $wpdb->tables[]                    = 'marketengine_message_item';
         }
 
         public function add_scripts() {
@@ -174,9 +187,10 @@ if (!class_exists('MarketEngine')):
             $suffix     = ME_SCRIPT_DEBUG ? '' : '.min';
             $dev_suffix = $develop_src ? '' : '.min';
 
-            wp_enqueue_style('me_font_icon', $this->plugin_url() . '/assets/css/marketengine-font-icon.css');
             wp_enqueue_style('me_layout', $this->plugin_url() . '/assets/css/marketengine-layout.css');
             wp_enqueue_style('magnific_popup_css', $this->plugin_url() . '/assets/css/magnific-popup.css');
+            wp_enqueue_style('me_font_icon', $this->plugin_url() . '/assets/css/marketengine-font-icon.css');
+            wp_enqueue_style('flexslider', $this->plugin_url() . '/assets/css/flexslider.css');
 
             wp_enqueue_script('plupload-all');
             wp_enqueue_script('user_profile', $this->plugin_url() . "/assets/js/user-profile$suffix.js", array('jquery'), $this->version, true);
@@ -228,8 +242,8 @@ if (!class_exists('MarketEngine')):
         }
 
         public function add_ajax(){
-            add_action('wp_ajax_me-option-sync', array('ME_Options_Handle', 'action_sync'));
-            add_action('wp_ajax_me-endpoint-sync', array('ME_Endpoint_Options_Handle', 'endpoint_sync'));
+            add_action('wp_ajax_me-option-sync', array('ME_Options_Handle', 'option_sync'));
+            add_action('wp_ajax_me-edit-page', array('ME_Options_Handle', 'me_edit_page'));
         }
 
         /**

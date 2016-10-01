@@ -13,4 +13,13 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 * @category    Class
 */
 class ME_Seller extends ME_User {
+	public function __construct($id) {
+        $this->id = $id;
+        $this->user_data = get_user_meta($id);
+    }
+    public function get_my_listings_permalink() {
+    	$profile_page = me_get_page_permalink( 'user_account' );
+    	$listings_endpoint = me_get_endpoint_name( 'listings' );
+    	return $profile_page . '/'.$listings_endpoint;
+    }
 }

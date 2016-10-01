@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
 
 	<?php do_action('marketengine_change_password_form_start'); ?>
 
-	<div class="marketengine-content">
+	<div class="marketengine-content change-password">
 		<div class="marketengine-profile-info">
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
@@ -51,8 +51,8 @@ if (!defined('ABSPATH')) {
 
 		<div class="marketengine-text-field edit-profile">
 			<input type="submit" class="marketengine-btn" name="change_password" value="<?php _e("Change password", "enginethemes");?>" />
-			<a href="<?php echo me_get_page_permalink('user-profile'); ?>" class="marketengine-btn"><?php _e("Cancel", "enginethemes");?></a>
 		</div>
+		<a href="<?php echo me_get_page_permalink('user_account'); ?>" class="back-home-sigin me-backlink"><?php _e("&lt; My profile", "enginethemes");?></a>
 	</div>
 
 	<?php do_action('marketengine_change_password_form_end'); ?>

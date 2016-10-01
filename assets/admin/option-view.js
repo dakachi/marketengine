@@ -211,13 +211,115 @@ _.templateSettings = {
             this.model.save('', '', {
                 success: function(result, status, jqXHR) {
                     if (status.success) {
-                        // render selected language
+                        window.location.reload();
                     } else {
                         if(typeof status.msg != 'undefined'){
                             alert(status.msg);
                         }
                     }
-                    window.location.reload();
+                },
+            });
+        },
+    });
+
+    Models.Page_Setting = Models.Options.extend({
+        action: 'me-get-page',
+    });
+    Views.Page_Setting = Backbone.View.extend({
+        initialize: function() {
+            this.model.action = 'me-edit-page';
+            this.user_acount_page_id = $('select[name=me_user_account_page_id]').val();
+        },
+        events: {
+            'click input#ep-button': 'setPage',
+            'change select': 'selectPage',
+        },
+        selectPage: function(e) {
+            var $target = $(e.currentTarget);
+            this.user_acount_page_id = $target.val();
+        },
+        setPage: function(e) {
+            e.preventDefault();
+            var fields = this.$el.find('input[type=text], select'),
+                view  = this,
+                group = {};
+
+            if(fields.length > 0){
+                $.each(fields, function(i, v){
+                    var $v = $(v);
+                    group[$v.attr('name')] = $v.val();
+                })
+                this.model.set('group', group);
+            }
+            this.model.set('page_id', this.user_acount_page_id);
+            this.model.save('', '', {
+                success: function(result, status, jqXHR) {
+                    if (status.success) {
+                        window.location.reload();
+                    } else {
+                        if(typeof status.msg != 'undefined'){
+                            alert(status.msg);
+                        }
+                        console.log(status.error);
+                    }
+                },
+            });
+        }
+    });
+
+    Views.Listings_Setting = Backbone.View.extend({
+        initialize: function() {
+            this.model.action = 'me-edit-page';
+        },
+        events: {
+            'click input#ep-button': 'setPage',
+            'change input[type=checkbox]': 'toggleSwitch',
+        },
+        setPage: function(e) {
+            e.preventDefault();
+            var fields = this.$el.find('input[type=text], select'),
+                view  = this,
+                group = {};
+                console.log(this.model);
+            if(fields.length > 0){
+                $.each(fields, function(i, v){
+                    var $v = $(v);
+                    group[$v.attr('name')] = $v.val();
+                })
+                this.model.set('group', group);
+            }
+            var select_ele = this.$el.find('select');
+            $.each(select_ele, function(i, v){
+                view.model.set('page_id_' + $(v).val(), '[' + $(v).parent().attr('id') + ']');
+            });
+            this.model.save('', '', {
+                success: function(result, status, jqXHR) {
+                    if (status.success) {
+                        window.location.reload();
+                    } else {
+                        if(typeof status.msg != 'undefined'){
+                            alert(status.msg);
+                        }
+                    }
+                },
+            });
+        },
+        toggleSwitch: function(e) {
+            var $target = $(e.currentTarget),
+                view = this;
+            this.option = this.model;
+            this.option.action = 'me-option-sync';
+            view.option.set('name', $target.attr('name'));
+            view.option.set('value', $target.attr('checked'));
+            view.option.save('', '', {
+                success: function(result, status, jqXHR) {
+                    if (status.success) {
+                        // do something
+                    } else {
+                        if(typeof status.msg != 'undefined'){
+                            alert(status.msg);
+                        }
+                    }
                 },
             });
         },
@@ -229,6 +331,30 @@ _.templateSettings = {
             var option_view = new Views.Options({
                 el: '#em-setting-tab',
                 model: option_model,
+            });
+        }
+        if($('#authenticate-settings').length > 0){
+            var auth_view = new Views.Page_Setting({
+                el: '#authenticate-settings',
+                model: new Models.Page_Setting({
+                    content: '[me_user_account]'
+                }),
+            });
+        }
+        if($('#listings-settings').length > 0){
+            var listings_view = new Views.Listings_Setting({
+                el: '#listings-settings',
+                model: new Models.Page_Setting(),
+            });
+        }
+        if($('#payment-settings').length > 0){
+            var payment_view = new Views.Listings_Setting({
+                el: '#general-section',
+                model: new Models.Page_Setting(),
+            });
+            var payment_view = new Views.Options({
+                el: '#paypal-section',
+                model: new Models.Options(),
             });
         }
     });

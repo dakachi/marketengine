@@ -15,6 +15,7 @@ class ME_Textbox extends ME_Input {
         $this->_slug        = $args['slug'];
         $this->_placeholder = isset($args['placeholder']) ? $args['placeholder'] : '';
         $this->_isform      = isset($args['isform']);
+        $this->_ispassword  = isset($args['ispassword']);
         $this->_container   = $options;
 
         $this->_options = $options;
@@ -22,13 +23,13 @@ class ME_Textbox extends ME_Input {
 
     public function render() {
         $id = $this->_slug ? 'id="'.$this->_slug.'"' : '';
-        $this->open_form();
+        $type = $this->_ispassword ? 'password' : 'text';
+
         echo '<div class="me-group-field" '.$id.'>';
         $this->label();
         $this->description();
-        echo '<input type="text" name="'.$this->_name.'" class="me-input-field" value="' . $this->get_value() . '" placeholder="'.$this->_placeholder.'" />';
+        echo '<input type="'.$type.'" name="'.$this->_name.'" class="me-input-field" value="' . $this->get_value() . '" placeholder="'.$this->_placeholder.'" />';
         echo '</div>';
-        $this->close_form();
     }
 }
 

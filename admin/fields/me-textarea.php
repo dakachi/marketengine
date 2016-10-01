@@ -19,14 +19,11 @@ class ME_Textarea extends ME_Input {
     }
     function render() {
         $id = $this->_slug ? 'id="'.$this->_slug.'"' : '';
-        $this->open_form();
         echo '<div class="me-group-field" '.$id.'>';
         $this->label();
         $this->description();
         echo '<textarea name="' . $this->_name .'" class="me-textarea-field" >'. $this->get_value() . '</textarea>';
         echo '</div>';
-        echo '</form>';
-        $this->close_form();
     }
 
 }

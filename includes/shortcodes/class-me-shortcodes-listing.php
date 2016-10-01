@@ -15,7 +15,10 @@ class ME_Shortcodes_Listing {
     }
 
     public static function the_listing() {
-    	
+    	ob_start();
+        me_get_template('taxonomy-listing_cat');
+        $content = ob_get_clean();
+        return $content;
     }
 
     public static function checkout_form() {
@@ -41,8 +44,16 @@ class ME_Shortcodes_Listing {
 
 
     public static function inquiry_form() {
+        $listing_id = $_GET['id'];
+        $listing  = get_post($listing_id);
+        if($listing) {
+            $listing = new ME_Listing_Contact($listing);
+        }
+        
+        //TODO: check current user can access inquiry list or note
+
         ob_start();
-        me_get_template('inquiry/inquiry');
+        me_get_template('inquiry/inquiry', array('listing' => $listing));
         $content = ob_get_clean();
         return $content;
     }

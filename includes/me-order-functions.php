@@ -265,7 +265,6 @@ function me_add_order_item_meta($order_item_id, $meta_key, $meta_value, $unique 
  *                           Default empty.
  * @return int|false Meta ID if the key didn't exist, true on successful update, false on failure.
  */
-
 function me_update_order_item_meta($order_item_id, $meta_key, $meta_value, $prev_value = '') {
     return update_metadata('marketengine_order_item', $order_item_id, $meta_key, $meta_value, $prev_value);
 }

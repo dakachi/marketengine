@@ -42,6 +42,35 @@ return array(
                 'name'        => 'me-switch-optional',
                 'template'    => array(),
             ),
+            'me-translate' => array(
+                'label'       => __("ME Translate", "enginethemes"),
+                'description' => __("The facebook authentication public api key", "enginethemes"),
+                'slug'        => 'me-translate',
+                'type'        => 'translate',
+                'name'        => 'me-translate',
+                'options'     => array(
+                    'language-1'    => 'English',
+                    'language-2'    => 'Vietnamese'
+                ),
+                'template'    => array(
+                    'language-1'   => array(
+                        'label'       => __("English", "enginethemes"),
+                        'name'        => 'language-1',
+                        'translate'   => array(
+                            'Text #1'   => '',
+                            'Text #2'   => 'English',
+                        ),
+                    ),
+                    'language-2' => array(
+                        'label'       => __("Vietnamese", "enginethemes"),
+                        'name'        => 'language-2',
+                        'translate'   => array(
+                            'Text #1'   => 'Vietnamese',
+                            'Text #2'   => '',
+                        ),
+                    ),
+                ),
+            ),
         ),
     ),
     'authenticate' => array(

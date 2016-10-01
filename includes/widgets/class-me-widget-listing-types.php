@@ -44,29 +44,33 @@ class ME_Widget_Listing_Types extends WP_Widget {
         $title = apply_filters('widget_title', empty($instance['title']) ? __('Listing Types', 'enginethemes') : $instance['title'], $instance, $this->id_base);
 
         echo $args['before_widget'];
-        
+
         $types = me_get_listing_types();
 
         $current = !empty($_GET['type']) ? $_GET['type'] : '';
 
         ?>
-            <h2 class="widget-title"><?php echo $title; ?></h2>
-            <div class="me-listingtype-filter">
-                <label>
+            <div class="me-title-sidebar">
+                <h3><?php echo __('LISTING TYPES', 'enginethemes'); ?></h3>
+            </div>
+            <!-- <div class="me-listingtype-filter"> -->
+                <!-- <label>
                     <input type="radio" name="type" value="" <?php checked( '', $current); ?>>
                     <a href="<?php echo remove_query_arg('type'); ?>" ><?php _e("All", "enginethemes"); ?></a>
-                </label>
-            </div>    
+                </label> -->
+            <!-- </div> -->
             <?php foreach ($types as $key => $type) :
                 $link = add_query_arg('type', $key);
                 $link = preg_replace('%\/page/[0-9]+%', '',  $link );
             ?>
-                <div class="me-listingtype-filter">
-                    <label>
-                        <input type="radio" name="type" value="<?php echo $key; ?>" <?php checked( $key, $current); ?>>
-                        <a href="<?php echo $link; ?>"><?php echo $type; ?></a>
-                    </label>
-                </div>    
+            <div class="me-listingtype-filter">
+                <label>
+                    <input type="checkbox" name="<?php echo $key; ?>" />
+                    <!-- <a href="<?php echo $link; ?>"> --><?php echo $type; ?><!-- </a> -->
+                    <!-- <input type="radio" name="type" value="<?php echo $key; ?>" <?php checked( $key, $current); ?>>
+                    <a href="<?php echo $link; ?>"><?php echo $type; ?></a> -->
+                </label>
+            </div>
             <?php endforeach; ?>
         <?php
 

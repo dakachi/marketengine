@@ -22,16 +22,6 @@ abstract class ME_Input {
         }
     }
 
-    protected function open_form() {
-        if(!isset($this->_isform) || $this->_isform)
-            echo '<form novalidate="novalidate">';
-    }
-
-    protected function close_form() {
-        if(!isset($this->_isform) || $this->_isform)
-            echo '</form>';
-    }
-
     protected function get_id() {
         return $this->_slug ? 'id="'.$this->_slug.'"' : '';
     }

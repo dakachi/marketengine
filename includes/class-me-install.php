@@ -83,47 +83,86 @@ class ME_Install {
             }
         }
 
+        $max_index_length = 191;
+
         $schemas = "CREATE TABLE {$wpdb->prefix}marketengine_order_items (
-					order_item_id bigint(20) NOT NULL auto_increment,
-					order_item_name longtext NOT NULL,
-					order_item_type varchar(200) NOT NULL DEFAULT '',
-					order_id bigint(20) NOT NULL,
-					PRIMARY KEY  (order_item_id),
-					KEY order_id (order_id)
-				) $collate;
+                    order_item_id bigint(20) NOT NULL auto_increment,
+                    order_item_name longtext NOT NULL,
+                    order_item_type varchar(200) NOT NULL DEFAULT '',
+                    order_id bigint(20) NOT NULL,
+                    PRIMARY KEY  (order_item_id),
+                    KEY order_id (order_id)
+                ) $collate;
 
-			CREATE TABLE {$wpdb->prefix}marketengine_order_itemmeta (
-					meta_id bigint(20) NOT NULL auto_increment,
-					marketengine_order_item_id bigint(20) NOT NULL,
-					meta_key varchar(255) NULL,
-					meta_value longtext NULL,
-					PRIMARY KEY  (meta_id),
-					KEY order_item_id (marketengine_order_item_id),
-					KEY meta_key (meta_key)
-				) $collate;
+            CREATE TABLE {$wpdb->prefix}marketengine_order_itemmeta (
+                    meta_id bigint(20) NOT NULL auto_increment,
+                    marketengine_order_item_id bigint(20) NOT NULL,
+                    meta_key varchar(255) NULL,
+                    meta_value longtext NULL,
+                    PRIMARY KEY  (meta_id),
+                    KEY marketengine_order_item_id (marketengine_order_item_id),
+                    KEY meta_key (meta_key)
+                ) $collate;
 
-			CREATE TABLE {$wpdb->prefix}marketengine_custom_fields (
-					field_id bigint(20) NOT NULL auto_increment,
-					field_name varchar(20) NOT NULL,
-					field_label longtext NOT NULL,
-					field_type longtext NOT NULL,
-					field_input_type longtext NOT NULL,
-					field_placeholder varchar(200) NOT NULL DEFAULT '',
-					field_description varchar(200) NOT NULL DEFAULT '',
-					field_constraint varchar(200) NOT NULL DEFAULT '',
-					PRIMARY KEY  (field_id),
-					KEY field_name (field_name)
-				) $collate;
+            CREATE TABLE {$wpdb->prefix}marketengine_custom_fields (
+                    field_id bigint(20) NOT NULL auto_increment,
+                    field_name varchar(20) NOT NULL,
+                    field_label longtext NOT NULL,
+                    field_type longtext NOT NULL,
+                    field_input_type longtext NOT NULL,
+                    field_placeholder varchar(200) NOT NULL DEFAULT '',
+                    field_description varchar(200) NOT NULL DEFAULT '',
+                    field_constraint varchar(200) NOT NULL DEFAULT '',
+                    PRIMARY KEY  (field_id),
+                    KEY field_name (field_name)
+                ) $collate;
 
-		CREATE TABLE {$wpdb->prefix}marketengine_sessions (
-					session_id bigint(20) NOT NULL AUTO_INCREMENT,
-					session_key char(32) NOT NULL,
-					session_value longtext NOT NULL,
-					session_expiry bigint(20) NOT NULL,
-					UNIQUE KEY session_id (session_id),
-					PRIMARY KEY  (session_key)
-				) $collate;
-		";
+        CREATE TABLE {$wpdb->prefix}marketengine_sessions (
+                    session_id bigint(20) NOT NULL AUTO_INCREMENT,
+                    session_key char(32) NOT NULL,
+                    session_value longtext NOT NULL,
+                    session_expiry bigint(20) NOT NULL,
+                    UNIQUE KEY session_id (session_id),
+                    PRIMARY KEY  (session_key)
+                ) $collate;
+
+        CREATE TABLE {$wpdb->prefix}marketengine_message_item (
+                ID bigint(20) unsigned NOT NULL auto_increment,
+                sender bigint(20) unsigned NOT NULL default '0',
+                receiver bigint(20) unsigned NOT NULL default '0',
+                post_date datetime NOT NULL default '0000-00-00 00:00:00',
+                post_date_gmt datetime NOT NULL default '0000-00-00 00:00:00',
+                post_content longtext NOT NULL,
+                post_title text NOT NULL,
+                post_excerpt text NOT NULL,
+                post_status varchar(20) NOT NULL default 'publish',
+                post_password varchar(20) NOT NULL default '',
+                post_name varchar(200) NOT NULL default '',
+                post_modified datetime NOT NULL default '0000-00-00 00:00:00',
+                post_modified_gmt datetime NOT NULL default '0000-00-00 00:00:00',
+                post_content_filtered longtext NOT NULL,
+                post_parent bigint(20) unsigned NOT NULL default '0',
+                guid varchar(255) NOT NULL default '',
+                post_type varchar(20) NOT NULL default 'post',
+                post_mime_type varchar(100) NOT NULL default '',
+                message_count bigint(20) NOT NULL default '0',
+                PRIMARY KEY  (ID),
+                KEY post_name (post_name($max_index_length)),
+                KEY type_status_date (post_status,post_date,ID),
+                KEY post_parent (post_parent),
+                KEY sender (sender)
+            ) $collate;
+
+        CREATE TABLE {$wpdb->prefix}marketengine_message_itemmeta (
+                    meta_id bigint(20) NOT NULL auto_increment,
+                    marketengine_message_id bigint(20) NOT NULL,
+                    meta_key varchar(255) NULL,
+                    meta_value longtext NULL,
+                    PRIMARY KEY  (meta_id),
+                    KEY marketengine_message_id (marketengine_message_id),
+                    KEY meta_key (meta_key)
+                ) $collate;
+        ";
 
         dbDelta($schemas);
     }

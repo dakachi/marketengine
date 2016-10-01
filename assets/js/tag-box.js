@@ -81,7 +81,7 @@ var tagBox, array_unique_noempty;
 
                 // If tags editing isn't disabled, create the X button.
                 if ( ! disabled ) {
-                    xbutton = $( '<i id="' + id + '-check-num-' + key + '" class="ntdelbutton icon-cancel" tabindex="0"></i>' );
+                    xbutton = $( '<i id="' + id + '-check-num-' + key + '" class="ntdelbutton icon-me-remove" tabindex="0"></i>' );
 
                     xbutton.on( 'click keypress', function( e ) {
                         // Trigger function if pressed Enter - keyboard navigation

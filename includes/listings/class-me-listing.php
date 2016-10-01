@@ -30,6 +30,15 @@ class ME_Listing {
     public function get_id() {
         return $this->id;
     }
+
+    public function get_permalink($leavename = false) {
+        return get_the_permalink($this->id, $leavename);
+    }
+
+    public function get_author () {
+        return $this->post->post_author;
+    }
+
     public function get_title() {
         return get_the_title($this->id);
     }
@@ -38,12 +47,20 @@ class ME_Listing {
         return $this->post->post_content;
     }
 
+    public function get_short_description($length = 40) {
+        return wp_trim_words($this->post->post_content, $length);
+    }
+
+    public function get_listing_thumbnail($size = 'post-thumbnail', $attr = '' ) {
+        return get_the_post_thumbnail( $this->id, $size, $attr );
+    }
+
     public function get_listing_type() {
         return get_post_meta($this->id, '_me_listing_type', true);
     }
     /**
      * Retrieve the number of product's reviews
-     * 
+     *
      * @since 1.0
      * @return int
      */
@@ -70,7 +87,7 @@ class ME_Listing {
     public function get_galleries() {
         $gallery      = get_post_meta($this->id, '_me_listing_gallery', true);
         $thumbnail_id = get_post_meta($this->id, '_thumbnail_id', true);
-        if ($thumbnail_id) {
+        if ($thumbnail_id && $gallery) {
             array_unshift($gallery, $thumbnail_id);
         }
         return (array) $gallery;

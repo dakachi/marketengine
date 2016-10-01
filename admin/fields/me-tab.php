@@ -4,6 +4,9 @@ class ME_Tab extends ME_Container {
     public function __construct($args) {
         $this->_name     = $args['slug'];
         $this->_template = $args['template'];
+        $this->_id = 'id="em-setting-tab"';
+        if( isset( $args['id'] ) && !empty($args['id']) )
+            $this->_id = 'id="'. $args['id'] .'"';
     }
 
     public function menus() {
@@ -23,7 +26,7 @@ class ME_Tab extends ME_Container {
     }
 
     public function start() {
-        echo '<div class="me-tab" id="em-setting-tab">';
+        echo '<div class="me-tab" '. $this->_id .'>';
     }
 
     public function end() {

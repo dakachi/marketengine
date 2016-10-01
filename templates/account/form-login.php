@@ -16,6 +16,7 @@ if (!empty($_REQUEST['redirect'])) {
     $register_link = add_query_arg(array('redirect' => $_REQUEST['redirect']), $register_link);
 }
 ?>
+<div class="marekengine-authen-wrap authen-login">
 	<form id="login-form" action="" method="post">
 		<h3><?php _e("Login", "enginethemes");?></h3>
 
@@ -54,6 +55,6 @@ if (!empty($_REQUEST['redirect'])) {
 
 		<?php do_action('marketengine_user_login_form_end');?>
 	</form>
-
+</div>
 <?php
 do_action('marketengine_after_user_login_form');

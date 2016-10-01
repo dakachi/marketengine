@@ -13,6 +13,7 @@ class ME_Checkout_Form
         add_action('wp_loaded', array(__CLASS__, 'process_checkout'));
         // parse_request
         add_action('wp_loaded', array(__CLASS__, 'confirm_payment'));
+        add_action('wp_loaded', array(__CLASS__, 'send_inquiry'));
     }
 
     public static function add_to_cart()
@@ -25,7 +26,8 @@ class ME_Checkout_Form
 
             // neu co the mua thi dieu huong nguoi dung den trang thanh toan
             me_add_to_cart($listing_id, $_POST['qty']);
-            wp_redirect(home_url('/me-checkout'));
+            //wp_redirect(home_url('/me-checkout'));
+            wp_redirect(me_get_page_permalink('checkout'));
             exit;
         }
     }
@@ -47,19 +49,36 @@ class ME_Checkout_Form
     public static function confirm_payment()
     {
         if (!empty($_GET['me-payment'])) {
-            $request = sanitize_text_field(strtolower($_GET['me-payment']));
-            do_action('marketegine_' . $request, $_REQUEST);
-            update_option('paypal_ipn', $_POST);
+            $request = sanitize_text_field( strtolower($_GET['me-payment']) );
+            do_action('marketegine_' . $request , $_REQUEST);
+            update_option( 'paypal_ipn', $_POST );
         }
     }
 
     public static function process_contact()
     {
         if (isset($_POST['send_inquiry']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-send-inquiry')) {
-
-            wp_redirect(home_url('/me-conversation'));
+            // TODO: change me conversation page link
+            $redirect = home_url('/me-conversation');
+            $redirect = add_query_arg(array('id' => $_POST['send_inquiry']), $redirect );
+            wp_redirect($redirect);
             exit;
         }
     }
+
+    public static function send_inquiry() {
+        if (isset($_POST['content']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-post-inquiry')) {
+            $result = ME_Checkout_Handle::inquiry($_POST);
+            if (is_wp_error($result)) {
+                me_wp_error_to_notices($result);
+            } else {
+                $redirect = home_url('/me-conversation');
+                $redirect = add_query_arg(array('id' => $_POST['inquiry_listing']), $redirect );
+                wp_redirect($redirect);
+                exit;
+            }
+        }
+    }
+
 }
 ME_Checkout_Form::init_hook();

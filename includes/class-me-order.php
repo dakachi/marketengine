@@ -55,8 +55,10 @@ class ME_Order {
     }
 
     public function get_confirm_url() {
-        $page = get_page_by_path( 'process-payment' );
-        return get_permalink($page->ID) .'/order/' . $this->id;
+        $page = me_get_page_permalink( 'confirm_order' );
+        $options = ME_Options::get_instance();
+        $order_endpoint = $options->get_option('order');
+        return $page . '/' .$order_endpoint. '/' . $this->id;
     }
 
     public function get_cancel_url() {

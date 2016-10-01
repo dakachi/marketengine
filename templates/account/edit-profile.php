@@ -23,7 +23,7 @@ $location = isset($_POST['location']) ? $_POST['location'] : $user->location;
 
 	<?php do_action('marketengine_edit_user_profile_form_start', $user); ?>
 
-	<div class="marketengine-content">
+	<div class="marketengine-content me-profile">
 		<div class="marketengine-profile-info">
 			<?php do_action('marketengine_before_edit_user_avatar', $user); ?>
 			<div class="marketengine-avatar-user">
@@ -110,8 +110,8 @@ $location = isset($_POST['location']) ? $_POST['location'] : $user->location;
 		</div>
 		<div class="marketengine-text-field edit-profile">
 			<input type="submit" class="marketengine-btn" name="update_profile" value="<?php _e("Update Profile", "enginethemes");?>" />
-			<a href="<?php echo me_get_page_permalink('user-profile'); ?>" class="marketengine-btn"><?php _e("Cancel", "enginethemes");?></a>
 		</div>
+		<a href="<?php echo me_get_page_permalink('user_account'); ?>" class="back-home-sigin me-backlink"><?php _e("Cancel", "enginethemes");?></a>
 	</div>
 
 	<?php do_action('marketengine_edit_user_profile_form_end', $user); ?>

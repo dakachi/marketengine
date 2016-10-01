@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
@@ -15,10 +15,11 @@ global $wp_query;
 	<div class="me-container marketengine">
 		<div class="marketengine-content-wrap">
 			<!-- marketengine-content -->
-			<div class="marketengine-content"> 
+			<div class="marketengine-content">
 				<div class="me-row">
+					<?php do_action('marketengine_sidebar'); ?>
 					<div id="primary" class="content-area me-col-md-9 marketengine-snap-column">
-						
+
 						<?php do_action('marketengine_before_listing_archive_content'); ?>
 
 						<div class="me-content-shop">
@@ -26,11 +27,9 @@ global $wp_query;
 							<?php me_get_template('archive-heading') ?>
 
 							<div class="marketengine-listing-post">
-							
 								<?php if(have_posts()) : ?>
-
 									<ul class="me-listing-post me-row">
-										<?php 
+										<?php
 										while (have_posts()) : the_post();
 											me_get_template('content-listing');
 										endwhile;
@@ -50,9 +49,9 @@ global $wp_query;
 						<?php do_action('marketengine_after_listing_archive_content'); ?>
 
 					</div>
+
 					
-					<?php do_action('marketengine_sidebar'); ?>
-					
+
 				</div>
 			</div>
 		</div>

@@ -1,6 +1,61 @@
 <?php
 
 /**
+ *
+ */
+function me_pre_get_posts($query){
+    // Only affect the main query
+    if( !$query->is_main_query() ){
+        return;
+    }
+    if( $GLOBALS['wp_rewrite']->use_verbose_page_rules && isset( $query->queried_object->ID ) && $query->queried_object->ID === me_get_page_id( 'listings' ) ){
+        $query->set( 'post_type', 'listing' );
+        $query->set( 'page', '' );
+        $query->set( 'pagename', '' );
+
+        // Fix conditional Functions
+        $query->is_archive           = true;
+        $query->is_post_type_archive = true;
+        $query->is_singular          = false;
+        $query->is_page              = false;
+    }
+
+
+    // When orderby is set, WordPress shows posts. Get around that here.
+    if ( $query->is_home() && 'page' === get_option( 'show_on_front' ) && absint( get_option( 'page_on_front' ) ) === wc_get_page_id( 'listings' ) ) {
+        $_query = wp_parse_args( $query->query );
+        if ( empty( $_query ) || ! array_diff( array_keys( $_query ), array( 'preview', 'page', 'paged', 'cpage', 'orderby' ) ) ) {
+            $query->is_page = true;
+            $query->is_home = false;
+            $query->set( 'page_id', (int) get_option( 'page_on_front' ) );
+            $query->set( 'post_type', 'listing' );
+        }
+    }
+}
+add_action('pre_get_posts', 'me_pre_get_posts' );
+
+function me_products_plugin_query_vars($vars)
+{
+    $vars[] = 'order-id';
+
+    return $vars;
+}
+add_filter('query_vars', 'me_products_plugin_query_vars');
+
+/**
+ * Returns the page id
+ *
+ * @access public
+ * @param  string $page
+ * @return int
+ */
+function me_get_page_id( $page ) {
+    $options = ME_Options::get_instance();
+    $page_id = $options->get_option('me_'. $page .'_page_id');
+    return $page_id ? absint($page_id) : -1 ;
+}
+
+/**
  * Returns the endpoint name by query_var.
  *
  * @access public
@@ -22,13 +77,13 @@ function me_get_endpoint_name($query_var) {
 function me_get_default_endpoints() {
     $endpoint_arr = array(
         'forgot_password'   => 'forgot-password',
-        'reset_password'   => 'reset-password',
-        'register'   => 'register',
-        'edit_profile'   => 'edit-profile',
+        'reset_password'    => 'reset-password',
+        'register'          => 'register',
+        'edit_profile'      => 'edit-profile',
         'change_password'   => 'change-password',
-        'listings'   => 'listings',
-        'orders'   => 'orders',
-        'order'   => 'order',
+        'listings'          => 'listings',
+        'orders'            => 'orders',
+        'order'             => 'order',
     );
     return $endpoint_arr;
 }
@@ -57,7 +112,7 @@ function me_setting_endpoint_name() {
 function me_init_endpoint() {
     $endpoint_arr = me_setting_endpoint_name();
     foreach($endpoint_arr as $key => $value){
-        add_rewrite_endpoint($value, EP_ROOT | EP_PAGES, str_replace('_', '-', $value));
+        add_rewrite_endpoint($value, EP_ROOT | EP_PAGES, str_replace('_', '-', $key));
     }
 
     $page = get_page_by_path( 'process-payment' );
@@ -71,14 +126,6 @@ function me_init_endpoint() {
 }
 add_action('init', 'me_init_endpoint');
 
-
-function me_products_plugin_query_vars($vars)
-{
-    $vars[] = 'order-id';
-
-    return $vars;
-}
-add_filter('query_vars', 'me_products_plugin_query_vars');
 /**
  * Filter listing query
  * @since 1.0

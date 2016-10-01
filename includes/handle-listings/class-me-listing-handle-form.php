@@ -28,8 +28,8 @@ class ME_Listing_Handle_Form extends ME_Form {
      * Handle redirect user to page login when not logged in
      */
     public static function redirect_to_login() {
-        if(!is_user_logged_in() && is_page('post-listing')) {
-            $link = me_get_page_permalink('user-profile');
+        if(!is_user_logged_in() && is_page( me_get_page_id('post-listing') ) ) {
+            $link = me_get_page_permalink('user_account');
             $link = add_query_arg(array('redirect' => get_permalink()), $link);
             wp_redirect( $link );
             exit;
