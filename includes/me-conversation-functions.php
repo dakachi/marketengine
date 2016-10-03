@@ -89,7 +89,7 @@ function me_insert_message($message_arr, $wp_error = false) {
      */
     if (apply_filters('me_insert_message_empty_content', $maybe_empty, $message_arr)) {
         if ($wp_error) {
-            return new WP_Error('empty_content', __('Content, title, and excerpt are empty.'));
+            return new WP_Error('empty_content', __('Content, title, and excerpt are empty.', 'enginethemes'));
         } else {
             return 0;
         }
@@ -97,7 +97,7 @@ function me_insert_message($message_arr, $wp_error = false) {
 
     if (empty($message_arr['receiver'])) {
         if ($wp_error) {
-            return new WP_Error('empty_receiver', __('Receiver is empty.'));
+            return new WP_Error('empty_receiver', __('Receiver is empty.', 'enginethemes'));
         } else {
             return 0;
         }
@@ -178,7 +178,7 @@ function me_insert_message($message_arr, $wp_error = false) {
         do_action('pre_post_update', $message_ID, $data);
         if (false === $wpdb->update($message_table, $data, $where)) {
             if ($wp_error) {
-                return new WP_Error('db_update_error', __('Could not update post in the database'), $wpdb->last_error);
+                return new WP_Error('db_update_error', __('Could not update post in the database', 'enginethemes'), $wpdb->last_error);
             } else {
                 return 0;
             }
@@ -193,7 +193,7 @@ function me_insert_message($message_arr, $wp_error = false) {
         }
         if (false === $wpdb->insert($message_table, $data)) {
             if ($wp_error) {
-                return new WP_Error('db_insert_error', __('Could not insert post into the database'), $wpdb->last_error);
+                return new WP_Error('db_insert_error', __('Could not insert post into the database', 'enginethemes'), $wpdb->last_error);
             } else {
                 return 0;
             }
