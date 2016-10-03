@@ -42,8 +42,8 @@ if( $query->have_posts() ):
 						<a href="<?php the_permalink(); ?>" class="me-item-img">
 							<?php the_post_thumbnail( 'thumbnail' ); ?>
 							<span><?php echo __('VIEW DETAILS', 'enginethemes'); ?></span>
-							<div class="marketengine-ribbon-publish">
-								<span class="me-ribbon-content"><?php echo $post_status; ?></span>
+							<div class="marketengine-ribbon-<?php echo $post_status; ?>">
+								<span class="me-ribbon-content"><?php echo ucfirst($post_status); ?></span>
 							</div>
 						</a>
 						<div class="me-item-content">
@@ -53,7 +53,7 @@ if( $query->have_posts() ):
 							if( $listing_type ) :
 								if( 'purchasion' !== $listing_type ) :
 							?>
-								<span class="me-price pull-left"><b>Contact</b></span>
+								<span class="me-price pull-left"><b><?php echo __('Contact', 'enginethemes'); ?></b></span>
 							<?php else : ?>
 							<?php
 							$purchasion = new ME_Listing_Purchasion($post_obj);
