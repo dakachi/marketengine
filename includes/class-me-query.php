@@ -171,6 +171,9 @@ function me_init_endpoint() {
     $endpoint = 'orders';
     add_rewrite_rule('^(.?.+?)/' . $endpoint . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
 
+    $endpoint = 'listings';
+    add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
+
 }
 add_action('init', 'me_init_endpoint');
 

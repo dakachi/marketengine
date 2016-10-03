@@ -220,15 +220,22 @@ function me_post_tags_meta_box($default, $taxonomy) {
  *
  * @since 1.0
  */
-function me_paginate_link() {
-    global $wp_query;
+function me_paginate_link( $me_query = array() ) {
+    $max_num_pages = 0;
+    if( $me_query === array() ) {
+        global $wp_query;
+        $max_num_pages = $wp_query->max_num_pages;
+    }
+    else {
+        $max_num_pages = $me_query->max_num_pages;
+    }
 
     $big = 999999999; // need an unlikely integer
 
     $args = array(
         'base'      => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
         'format'    => '?paged=%#%',
-        'total'     => $wp_query->max_num_pages,
+        'total'     => $max_num_pages,
         'current'   => max(1, get_query_var('paged')),
         'show_all'  => false,
         'end_size'  => 1,
@@ -239,6 +246,7 @@ function me_paginate_link() {
         'type'      => 'plain',
         'add_args'  => false,
     );
+
     echo paginate_links($args);
 }
 

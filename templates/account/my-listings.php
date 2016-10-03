@@ -1,13 +1,17 @@
 <?php
+
+$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+
 $args = array(
 	'orderby'          => 'date',
 	'order'            => 'DESC',
 	'post_type'        => 'listing',
 	'author'	   	   => get_current_user_id(),
 	'post_status'      => 'any',
+	'paged'			   => $paged,
 );
-global $post;
-$posts = get_posts( $args );
+
+$query = new WP_Query( $args );
 ?>
 		<div class="marketengine-content marketengine-snap-column listing-post">
 			<div class="marketengine-filter">
@@ -26,16 +30,17 @@ $posts = get_posts( $args );
 			<div class="marketengine-listing-post">
 				<ul class="me-listing-post me-row">
 				<?php
-				if( !empty($posts) ):
-					foreach( $posts as $post ) : setup_postdata( $post );
-						$listing = new ME_Listing($post);
+				if( !empty($query->have_posts()) ):
+					// foreach( $posts as $post ) : setup_postdata( $post );
+					while($query->have_posts()) : $query->the_post();
+						$post_obj = get_post(get_the_ID());
+						$listing = new ME_Listing($post_obj);
 						$listing_type = $listing->get_listing_type();
 						$post_status = get_post_status();
 				?>
 					<li class="me-item-post me-col-md-3">
 						<div class="me-item-wrap">
 							<a href="<?php the_permalink(); ?>" class="me-item-img">
-								<!-- <img src="assets/img/1.jpg" alt=""> -->
 								<?php the_post_thumbnail( 'thumbnail' ); ?>
 								<span><?php echo __('VIEW DETAILS', 'enginethemes'); ?></span>
 								<div class="marketengine-ribbon-publish">
@@ -52,7 +57,7 @@ $posts = get_posts( $args );
 									<span class="me-price pull-left"><b>Contact</b></span>
 								<?php else : ?>
 								<?php
-								$purchasion = new ME_Listing_Purchasion($post);
+								$purchasion = new ME_Listing_Purchasion($post_obj);
 								$price = $purchasion->get_price();
 								$pricing_unit = $purchasion->get_pricing_unit();
 								?>
@@ -110,7 +115,7 @@ $posts = get_posts( $args );
 						</div>
 					</li>
 				<?php
-					endforeach;
+					endwhile;
 					wp_reset_postdata();
 				else:
 					me_get_template('content-listing-none');
@@ -118,7 +123,7 @@ $posts = get_posts( $args );
 				?>
 				</ul>
 				<div class="marketengine-paginations">
-					<?php me_paginate_link (); ?>
+					<?php me_paginate_link ($query); ?>
 				</div>
 			</div>
 		</div>
