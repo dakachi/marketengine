@@ -17,3 +17,15 @@ function get_listing_type_by_cat($cat_id) {
 	$type = array_rand($default_listing_types);
 	return array($type => $default_listing_types[$type]);
 }
+
+function me_get_categories( $taxonomy = '' ) {
+	if( !taxonomy_exists( $taxonomy ) ) {
+		return;
+	}
+
+	$terms = get_terms( array(
+	    'taxonomy' => $taxonomy,
+	    'hide_empty' => false,
+	) );
+	return $terms;
+}

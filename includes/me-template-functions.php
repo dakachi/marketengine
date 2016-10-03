@@ -128,7 +128,7 @@ if(! function_exists('me_get_page_permalink') ){
  * @return string
  */
 function me_lostpassword_url($default_url = '') {
-    $profile_link       = me_get_page_permalink('user-profile');
+    $profile_link       = me_get_page_permalink('user_account');
     $password_reset_url = me_get_endpoint_url('forgot-password', '', $profile_link);
     if (false !== $password_reset_url) {
         return $password_reset_url;
@@ -267,3 +267,52 @@ function me_get_client_ip() {
 function me_get_client_agent() {
     return !empty($_SERVER['HTTP_USER_AGENT'])? strtolower($_SERVER['HTTP_USER_AGENT']) : '';
 }
+
+/**
+ * Returns url of user account page or an its endpoint.
+ *
+ * @param $query_var
+ * @return $url if user_account page is existed
+ *          $home_url if no user_account page
+ *
+ */
+
+function me_get_auth_url( $query_var = '' ) {
+    $url = me_get_page_permalink( 'user_account' );
+    if($url){
+        $url = me_get_endpoint_url( $query_var, '', $url );
+        return $url;
+    }
+    return home_url();
+}
+
+/**
+ * Prints shop categories.
+ *
+ * Adds an action to get shop categories selectbox template.
+ *
+ */
+function me_shop_categories_action(){
+    me_get_template('global/shop-categories');
+}
+add_action( 'me_shop_categories', 'me_shop_categories_action' );
+
+/**
+ * Prints account menu.
+ *
+ * Adds an action to get account menu selectbox template.
+ *
+ */
+function me_account_menu_action(){
+    me_get_template('global/account-menu');
+}
+add_action( 'me_account_menu', 'me_account_menu_action' );
+
+/**
+ * Prints post listing button.
+ *
+ */
+function me_post_listing_button_action(){
+    me_get_template('global/post-listing-button');
+}
+add_action( 'me_post_listing_button', 'me_post_listing_button_action' );
