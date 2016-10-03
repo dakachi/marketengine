@@ -110,27 +110,15 @@ function me_insert_message($message_arr, $wp_error = false) {
         }
     }
 
-    $post_status = empty($message_arr['post_status']) ? 'unread' : $message_arr['post_status'];
-    /*
-     * Create a valid post name. Drafts and pending posts are allowed to have
-     * an empty post name.
-     */
-    if (empty($post_name)) {
-        if (!in_array($post_status, array('draft', 'pending', 'auto-draft'))) {
-            $post_name = sanitize_title($post_title);
+    if ($message_arr['receiver'] == $message_arr['sender']) {
+        if ($wp_error) {
+            return new WP_Error('send_to_yourself', __('You can not send message to your self.', 'enginethemes'));
         } else {
-            $post_name = '';
-        }
-    } else {
-        // On updates, we need to check to see if it's using the old, fixed sanitization context.
-        $check_name = sanitize_title($post_name, '', 'old-save');
-        if ($update && strtolower(urlencode($post_name)) == $check_name && get_post_field('post_name', $message_ID) == $check_name) {
-            $post_name = $check_name;
-        } else {
-            // new post, or slug has changed.
-            $post_name = sanitize_title($post_name);
+            return 0;
         }
     }
+
+    $post_status = empty($message_arr['post_status']) ? 'sent' : $message_arr['post_status'];
 
     /*
      * If the post date is empty (due to having been new or a draft) and status

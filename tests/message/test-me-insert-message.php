@@ -63,4 +63,11 @@ class Tests_ME_Insert_Message extends WP_UnitTestCase {
         $this->assertEquals(new WP_Error('empty_content', __('Content, title, and excerpt are empty.')), $message_id);
     }
 
+    public function test_me_insert_message_to_me() {
+        $message_data = $this->message_data;
+        $message_data['receiver'] = $message_data['sender'];
+        $message_id = me_insert_message($message_data, true);
+        $this->assertEquals(new WP_Error('send_to_yourself', __('You can not send message to your self.')), $message_id);
+    }
+
 }
