@@ -12,7 +12,7 @@ $args = array(
 );
 
 $query = new WP_Query( $args );
-if( !$query->have_posts() ):
+if( $query->have_posts() ):
 ?>
 	<div class="marketengine-content marketengine-snap-column listing-post">
 		<div class="marketengine-filter">
