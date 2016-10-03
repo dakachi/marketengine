@@ -20,9 +20,20 @@ function me_pre_get_posts($query){
         $query->is_page              = false;
     }
 
+    // Fix for endpoints on the homepage
+    if ( $query->is_home() && 'page' === get_option( 'show_on_front' ) && absint( get_option( 'page_on_front' ) ) !== absint( $query->get( 'page_id' ) ) ) {
+        $_query = wp_parse_args( $query->query );
+        if ( ! empty( $_query ) ) {
+            $query->is_page     = true;
+            $query->is_home     = false;
+            $query->is_singular = true;
+            $query->set( 'page_id', (int) get_option( 'page_on_front' ) );
+            add_filter( 'redirect_canonical', '__return_false' );
+        }
+    }
 
     // When orderby is set, WordPress shows posts. Get around that here.
-    if ( $query->is_home() && 'page' === get_option( 'show_on_front' ) && absint( get_option( 'page_on_front' ) ) === wc_get_page_id( 'listings' ) ) {
+    if ( $query->is_home() && 'page' === get_option( 'show_on_front' ) && absint( get_option( 'page_on_front' ) ) === me_get_page_id( 'listings' ) ) {
         $_query = wp_parse_args( $query->query );
         if ( empty( $_query ) || ! array_diff( array_keys( $_query ), array( 'preview', 'page', 'paged', 'cpage', 'orderby' ) ) ) {
             $query->is_page = true;
@@ -30,6 +41,43 @@ function me_pre_get_posts($query){
             $query->set( 'page_id', (int) get_option( 'page_on_front' ) );
             $query->set( 'post_type', 'listing' );
         }
+    }
+
+    // Special check for shops with the listing archive on front
+    if ( $query->is_page() && 'page' === get_option( 'show_on_front' ) && absint( $query->get( 'page_id' ) ) === me_get_page_id( 'listings' ) ) {
+
+        // This is a front-page shop
+        $query->set( 'post_type', 'listing' );
+        $query->set( 'page_id', '' );
+
+        if ( isset( $query->query['paged'] ) ) {
+            $query->set( 'paged', $query->query['paged'] );
+        }
+
+        // Get the actual WP page to avoid errors and let us use is_front_page()
+        // This is hacky but works. Awaiting https://core.trac.wordpress.org/ticket/21096
+        global $wp_post_types;
+
+        $shop_page  = get_post( me_get_page_id( 'listings' ) );
+
+        $wp_post_types['listing']->ID           = $shop_page->ID;
+        $wp_post_types['listing']->post_title   = $shop_page->post_title;
+        $wp_post_types['listing']->post_name    = $shop_page->post_name;
+        $wp_post_types['listing']->post_type    = $shop_page->post_type;
+        $wp_post_types['listing']->ancestors    = get_ancestors( $shop_page->ID, $shop_page->post_type );
+
+        // Fix conditional Functions like is_front_page
+        $query->is_singular          = false;
+        $query->is_post_type_archive = true;
+        $query->is_archive           = true;
+        $query->is_page              = true;
+
+        // Remove post type archive name from front page title tag
+        add_filter( 'post_type_archive_title', '__return_empty_string', 5 );
+
+    // Only apply to product categories, the product post archive, the shop page, product tags, and product attribute taxonomies
+    } elseif ( ! $query->is_post_type_archive( 'listing' ) && ! $query->is_tax( get_object_taxonomies( 'listing' ) ) ) {
+        return;
     }
 }
 add_action('pre_get_posts', 'me_pre_get_posts' );
