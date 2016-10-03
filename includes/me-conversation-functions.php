@@ -461,6 +461,7 @@ function me_get_message($message = null, $output = OBJECT, $filter = 'raw') {
 
     return $_message;
 }
+
 /**
  * Retrieve data from a message field based on message ID.
  *
