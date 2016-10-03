@@ -52,4 +52,15 @@ class Tests_ME_Insert_Message extends WP_UnitTestCase {
         $message_id = me_insert_message($message_data, true);
         $this->assertEquals(new WP_Error('empty_receiver', __('Receiver is empty.')), $message_id);
     }
+
+    /**
+     * Insert message with empty content
+     */
+    public function test_insert_message_with_empty_content() {
+        $message_data = $this->message_data;
+        $message_data['post_content'] = '';
+        $message_id = me_insert_message($message_data, true);
+        $this->assertEquals(new WP_Error('empty_content', __('Content, title, and excerpt are empty.')), $message_id);
+    }
+
 }

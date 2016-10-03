@@ -4,7 +4,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 /**
+ * MarketEngine create a message
  *
+ * @param array $message_arr The message data
+ * @param bool $wp_error Return WP_Error when error occur
+ *
+ * @return WP_Error | int
+ * @since 1.0
+ *
+ * @author EngineTeam
  */
 function me_insert_message($message_arr, $wp_error = false) {
     global $wpdb;
@@ -72,8 +80,7 @@ function me_insert_message($message_arr, $wp_error = false) {
         $post_name = $message_before->post_name;
     }
 
-    $maybe_empty = 'attachment' !== $post_type
-    && !$post_content && !$post_title && !$post_excerpt;
+    $maybe_empty = 'attachment' !== $post_type && !$post_content;
 
     /**
      * Filters whether the message should be considered "empty".
@@ -117,7 +124,7 @@ function me_insert_message($message_arr, $wp_error = false) {
     } else {
         // On updates, we need to check to see if it's using the old, fixed sanitization context.
         $check_name = sanitize_title($post_name, '', 'old-save');
-        if ($update && strtolower(urlencode($post_name)) == $check_name && get_post_field('post_name', $post_ID) == $check_name) {
+        if ($update && strtolower(urlencode($post_name)) == $check_name && get_post_field('post_name', $message_ID) == $check_name) {
             $post_name = $check_name;
         } else {
             // new post, or slug has changed.
@@ -175,7 +182,7 @@ function me_insert_message($message_arr, $wp_error = false) {
          * @param int   $message_ID Message ID.
          * @param array $data    Array of unslashed post data.
          */
-        do_action('pre_post_update', $message_ID, $data);
+        do_action('pre_message_update', $message_ID, $data);
         if (false === $wpdb->update($message_table, $data, $where)) {
             if ($wp_error) {
                 return new WP_Error('db_update_error', __('Could not update post in the database', 'enginethemes'), $wpdb->last_error);
@@ -276,7 +283,15 @@ function me_insert_message($message_arr, $wp_error = false) {
 }
 
 /**
+ * MarketEngine update a message
  *
+ * @param array $message_arr The message data
+ * @param bool $wp_error Return WP_Error when error occur
+ *
+ * @return WP_Error | int
+ * @since 1.0
+ *
+ * @author EngineTeam
  */
 function me_update_message($message_arr = array(), $wp_error = false) {
     if (is_object($message_arr)) {
