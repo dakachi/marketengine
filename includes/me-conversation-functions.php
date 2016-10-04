@@ -580,7 +580,7 @@ function me_get_inquiries($args) {
     global $wpdb;
     $user_id = get_current_user_id();
     $where         = "WHERE message.sender = $user_id  ";
-    
+
     if (!empty($args['receiver'])) {
         $user_id = $args['receiver'];
         $where         = "WHERE message.receiver = $user_id  ";
@@ -776,12 +776,4 @@ function me_get_search_stopwords() {
      */
     $stopwords = apply_filters('wp_search_stopwords', $stopwords);
     return $stopwords;
-}
-
-add_action('init', 'test_get_messages');
-function test_get_messages() {
-    $inquiry = me_my_inquiries();
-    echo "<pre>";
-    print_r($inquiry);
-    echo "</pre>";
 }
