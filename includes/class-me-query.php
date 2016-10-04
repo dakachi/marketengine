@@ -170,7 +170,7 @@ function me_init_endpoint() {
     $page = get_post($page_id);
     // $page_title = get_page_template_slug($page_id);
     $order_endpoint = me_get_endpoint_name('order-id');
-    if($page_id) {
+    if($page) {
         add_rewrite_rule( '^/'.$page->post_name.'/'.$order_endpoint.'/([^/]*)/?','index.php?page_id='.$page_id.'&order-id=$matches[1]','top');
     }
 
