@@ -71,7 +71,7 @@ class ME_Checkout_Form
             if (is_wp_error($result)) {
                 me_wp_error_to_notices($result);
             } else {
-                $redirect = home_url('/me-conversation');
+                $redirect = me_get_page_permalink( 'inquiry' );
                 $redirect = add_query_arg(array('id' => $_POST['inquiry_listing']), $redirect );
                 wp_redirect($redirect);
                 exit;

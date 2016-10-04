@@ -1,7 +1,7 @@
 <div class="me-sidebar-contact">
 	<span class="me-contact-user-count">113 people contact listing</span>
 	<div class="me-contact-user-search">
-		<input type="text" placeholder="Search buyer">
+		<input type="text" placeholder="<?php echo __('Search buyer'); ?>">
 		<span class="me-user-search-btn"><i class="icon-me-search"></i></span>
 	</div>
 	<div class="me-contact-user-wrap" >
