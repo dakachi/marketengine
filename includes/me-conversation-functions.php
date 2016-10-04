@@ -649,7 +649,7 @@ function me_parse_search($args) {
     } else {
         if (preg_match_all('/".*?("|$)|((?<=[\t ",+])|^)[^\t ",+]+/', $args['s'], $matches)) {
             $args['search_terms_count'] = count($matches[0]);
-            $args['search_terms']       = parse_search_terms($matches[0]);
+            $args['search_terms']       = me_parse_search_terms($matches[0]);
             // if the search string has only short terms or stopwords, or is 10+ terms long, match it as sentence
             if (empty($args['search_terms']) || count($args['search_terms']) > 9) {
                 $args['search_terms'] = array($args['s']);
@@ -716,11 +716,11 @@ function me_parse_search($args) {
     return $search;
 }
 
-function parse_search_terms($terms) {
+function me_parse_search_terms($terms) {
     $strtolower = function_exists('mb_strtolower') ? 'mb_strtolower' : 'strtolower';
     $checked    = array();
 
-    $stopwords = get_search_stopwords();
+    $stopwords = me_get_search_stopwords();
 
     foreach ($terms as $term) {
         // keep before/after spaces when term is for exact match
@@ -745,7 +745,7 @@ function parse_search_terms($terms) {
     return $checked;
 }
 
-function get_search_stopwords() {
+function me_get_search_stopwords() {
     /* translators: This is a comma-separated list of very common words that should be excluded from a search,
      * like a, an, and the. These are usually called "stopwords". You should not simply translate these individual
      * words into your language. Instead, look for and provide commonly accepted stopwords in your language.
@@ -773,10 +773,10 @@ function get_search_stopwords() {
     return $stopwords;
 }
 
-add_action('init', 'test_get_messages');
-function test_get_messages() {
-    $inquiry = me_my_inquiries();
-    echo "<pre>";
-    print_r($inquiry);
-    echo "</pre>";
-}
+// add_action('init', 'test_get_messages');
+// function test_get_messages() {
+//     $inquiry = me_my_inquiries();
+//     echo "<pre>";
+//     print_r($inquiry);
+//     echo "</pre>";
+// }
