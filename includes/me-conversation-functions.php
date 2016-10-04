@@ -558,6 +558,7 @@ function me_delete_message_meta($mesage_id, $meta_key, $meta_value = '') {
 
 /**
  * Retrieves current user sent inquiry
+ * @return array
  */
 function me_my_inquiries($args = array()) {
     global $wpdb;
@@ -568,16 +569,16 @@ function me_my_inquiries($args = array()) {
     // }
 
     $message_table = $wpdb->prefix . 'marketengine_message_item';
-    $select        = "SELECT $wpdb->posts.*, message.post_date as message_date ";
+    $select        = "SELECT DISTINCT SQL_CALC_FOUND_ROWS $wpdb->posts.*, max(message.post_date) as message_date ";
     $from          = "FROM $wpdb->posts JOIN $message_table as message ON $wpdb->posts.ID = message.post_parent ";
-    $where         = "WHERE message.sender = $user_id ";
+    $where         = "WHERE message.sender = $user_id  ";
     $group_by      = "GROUP By $wpdb->posts.ID ";
 
     if (!empty($args['s'])) {
         $search = me_parse_search($args);
         $where .= $search;
 
-        $join_users = "JOIN $wpdb->users ON $wpdb->users.ID = message.receiver ";
+        $join_users = " JOIN $wpdb->users ON $wpdb->users.ID = message.receiver ";
         $from .= $join_users;
     }
 
@@ -588,9 +589,31 @@ function me_my_inquiries($args = array()) {
         $where .= $date_query;
     }
 
-    $request = $select . $from . $where . $group_by;
+    $order_by = 'ORDER BY message_date DESC ';
+
+    $args['paged'] = 1;
+    $args['posts_per_page'] = 10;
+    // Paging
+    if ( empty($args['nopaging']) ) {
+        $page = absint($args['paged']);
+        if ( !$page )
+            $page = 1;
+        $pgstrt = absint( ( $page - 1 ) * $args['posts_per_page'] ) . ', ';
+        
+        $limits = 'LIMIT ' . $pgstrt . $args['posts_per_page'];
+    }
+
+    $request = $select . $from . $where . $group_by . $order_by . $limits;
     
-    $results = $wpdb->get_results($request);
+    $posts = $wpdb->get_results($request);
+    $found_rows = $wpdb->get_var('SELECT FOUND_ROWS()');
+    
+    $results = array(
+        'posts' => $posts,
+        'found_rows' => $found_rows,
+        'max_num_pages' => ceil($found_rows/$args['posts_per_page'])
+    );
+
     return $results;
 
     // SELECT count(message.post_status) as count_status, post_status, message.post_parent FROM `me_marketengine_message_item` as message WHERE message.post_status = 'sent' GROUP by message.post_status, message.post_parent
@@ -598,6 +621,7 @@ function me_my_inquiries($args = array()) {
 
 /**
  * Retrieves current user accepted request
+ * @return array
  */
 function me_my_request($args) {
     global $wpdb;
@@ -608,16 +632,16 @@ function me_my_request($args) {
     // }
 
     $message_table = $wpdb->prefix . 'marketengine_message_item';
-    $select        = "SELECT $wpdb->posts.*, message.post_date as message_date ";
+    $select        = "SELECT $wpdb->posts.*, max(message.post_date) as message_date ";
     $from          = "FROM $wpdb->posts JOIN $message_table as message ON $wpdb->posts.ID = message.post_parent ";
     $where         = "WHERE message.receiver = $user_id ";
-    $group_by      = "GROUP By $wpdb->posts.ID ";
+    $group_by      = "GROUP By message.post_parent ";
 
     if (!empty($args['s'])) {
         $search = me_parse_search($args);
         $where .= $search;
 
-        $join_users = "JOIN $wpdb->users ON $wpdb->users.ID = message.sender ";
+        $join_users = " JOIN $wpdb->users ON $wpdb->users.ID = message.sender ";
         $from .= $join_users;
     }
 
@@ -628,7 +652,9 @@ function me_my_request($args) {
         $where .= $date_query;
     }
 
-    $request = $select . $from . $where . $group_by;
+    $order_by = 'ORDER BY message_date DESC';
+
+    $request = $select . $from . $where . $group_by . $order_by;
     
     $results = $wpdb->get_results($request);
     return $results;
@@ -773,10 +799,10 @@ function me_get_search_stopwords() {
     return $stopwords;
 }
 
-// add_action('init', 'test_get_messages');
-// function test_get_messages() {
-//     $inquiry = me_my_inquiries();
-//     echo "<pre>";
-//     print_r($inquiry);
-//     echo "</pre>";
-// }
+add_action('init', 'test_get_messages');
+function test_get_messages() {
+    $inquiry = me_my_inquiries();
+    echo "<pre>";
+    print_r($inquiry);
+    echo "</pre>";
+}
