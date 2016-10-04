@@ -108,12 +108,15 @@ function me_get_sidebar() {
 
 // TODO: can dat ham nay cho dung vi tri file
 if(! function_exists('me_get_page_permalink') ){
-    function me_get_page_permalink($page_name) {
+    function me_get_page_permalink($page_name, $login_required = true) {
         $options = ME_Options::get_instance();
         $page = $options->get_option('me_'. $page_name .'_page_id');
         // $page = get_page_by_path($page_name);
         if (!$page) {
             return home_url();
+        }
+        if($login_required && !is_user_logged_in()){
+            $page = $options->get_option('me_user_account_page_id');
         }
         return get_permalink($page);
     }

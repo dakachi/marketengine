@@ -308,7 +308,7 @@ class ME_Authentication {
             return $key;
         }
 
-        $profile_link = me_get_page_permalink('user-profile');
+        $profile_link = me_get_page_permalink('user_account');
         $reset_pass_link = add_query_arg(array(
             'key' => $key,
             'login' => rawurlencode($user_login),

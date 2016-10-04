@@ -73,7 +73,6 @@ $listing_type = $listing->get_listing_type();
 			<?php endif; ?>
 
 			<?php do_action('marketengine_after_listing_item_price'); ?>
-			
 			<div class="me-item-author">
 				<?php printf(__("by %s", "enginethemes"), get_the_author_posts_link()); ?>
 			</div>

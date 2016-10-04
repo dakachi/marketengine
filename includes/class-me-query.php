@@ -131,7 +131,9 @@ function me_get_default_endpoints() {
         'change_password'   => 'change-password',
         'listings'          => 'listings',
         'orders'            => 'orders',
-        'order'             => 'order',
+        'order_id'           => 'order',
+        'transactions'      => 'transactions',
+        'transaction'       => 'transaction',
     );
     return $endpoint_arr;
 }
@@ -163,16 +165,23 @@ function me_init_endpoint() {
         add_rewrite_endpoint($value, EP_ROOT | EP_PAGES, str_replace('_', '-', $key));
     }
 
-    $page = get_page_by_path( 'process-payment' );
-    if($page) {
-        add_rewrite_rule( '^process-payment/order/([^/]*)/?','index.php?page_id='.$page->ID.'&order-id=$matches[1]','top');
+    // $page = get_page_by_path( 'process-payment' );
+    $page_id = me_get_page_id( 'confirm_order' );
+    $page = get_post($page_id);
+    // $page_title = get_page_template_slug($page_id);
+    $order_endpoint = me_get_endpoint_name('order-id');
+    if($page_id) {
+        add_rewrite_rule( '^/'.$page->post_name.'/'.$order_endpoint.'/([^/]*)/?','index.php?page_id='.$page_id.'&order-id=$matches[1]','top');
     }
 
-    $endpoint = 'orders';
-    add_rewrite_rule('^(.?.+?)/' . $endpoint . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
+    $endpoints = array('orders', 'transactions', 'listings' );
+    foreach($endpoints as $endpoint){
+        add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
+    }
 
-    $endpoint = 'listings';
-    add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
+    // add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
+
+    // add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
 
 }
 add_action('init', 'me_init_endpoint');

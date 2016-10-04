@@ -56,12 +56,12 @@ class ME_Order {
 
     public function get_confirm_url() {
         $page = me_get_page_permalink( 'confirm_order' );
-        $options = ME_Options::get_instance();
-        $order_endpoint = $options->get_option('order');
-        return $page . '/' .$order_endpoint. '/' . $this->id;
+        $order_endpoint = me_get_endpoint_name('order-id');
+        return $page .$order_endpoint. '/' . $this->id;
     }
 
     public function get_cancel_url() {
+        // TODO: rewrite this url
         return 'http://localhost/wp/cancel-payment/order/' . $this->id;
     }
 

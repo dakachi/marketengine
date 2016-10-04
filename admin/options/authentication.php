@@ -61,10 +61,18 @@ return array(
                     ),
                     'ep-order' => array(
                         'label'       => __("Order", "enginethemes"),
-                        'slug'        => 'ep-order',
+                        'slug'        => 'ep-orderid',
                         'type'        => 'textbox',
-                        'name'        => 'ep_order',
+                        'name'        => 'ep_orderid',
                         'placeholder' => 'order',
+                        'template'    => array(),
+                    ),
+                    'ep-transactions' => array(
+                        'label'       => __("Transactions", "enginethemes"),
+                        'slug'        => 'ep-transactions',
+                        'type'        => 'textbox',
+                        'name'        => 'ep_transactions',
+                        'placeholder' => 'transactions',
                         'template'    => array(),
                     ),
                     'ep-forgot-password' => array(

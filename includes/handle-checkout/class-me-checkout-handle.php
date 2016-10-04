@@ -121,10 +121,10 @@ class ME_Checkout_Handle {
         $result = me_insert_message(
             array(
                 'post_content' => $content,
-                'post_title'   => 'Inquire listing' . $listing_id,
+                'post_title'   => 'Inquiry listing #' . $listing_id,
                 'post_type'    => 'inquiry',
-                'receiver' => get_post_field( 'post_author', $listing_id ),
-                'post_parent' => $listing_id
+                'receiver'     => get_post_field( 'post_author', $listing_id ),
+                'post_parent'  => $listing_id
             ), true
         );
     }
