@@ -561,17 +561,35 @@ function me_delete_message_meta($mesage_id, $meta_key, $meta_value = '') {
  * @return array
  */
 function me_my_inquiries($args = array()) {
-    global $wpdb;
-
     $user_id = get_current_user_id();
-    // if (empty($args['sender'])) {
-    //     return false;
-    // }
+    return me_get_inquiries(array('sender' => $user_id ));
+    // SELECT count(message.post_status) as count_status, post_status, message.post_parent FROM `me_marketengine_message_item` as message WHERE message.post_status = 'sent' GROUP by message.post_status, message.post_parent
+}
+
+/**
+ * Retrieves current user accepted request
+ * @return array
+ */
+function me_my_request($args) {
+    $user_id = get_current_user_id();
+    return me_get_inquiries(array('receiver' => $user_id ));
+}
+
+
+function me_get_inquiries($args) {
+    global $wpdb;
+    $user_id = get_current_user_id();
+    $where         = "WHERE message.sender = $user_id  ";
+    
+    if (!empty($args['receiver'])) {
+        $user_id = $args['receiver'];
+        $where         = "WHERE message.receiver = $user_id  ";
+    }
 
     $message_table = $wpdb->prefix . 'marketengine_message_item';
     $select        = "SELECT DISTINCT SQL_CALC_FOUND_ROWS $wpdb->posts.*, max(message.post_date) as message_date ";
     $from          = "FROM $wpdb->posts JOIN $message_table as message ON $wpdb->posts.ID = message.post_parent ";
-    $where         = "WHERE message.sender = $user_id  ";
+    
     $group_by      = "GROUP By $wpdb->posts.ID ";
 
     if (!empty($args['s'])) {
@@ -579,6 +597,10 @@ function me_my_inquiries($args = array()) {
         $where .= $search;
 
         $join_users = " JOIN $wpdb->users ON $wpdb->users.ID = message.receiver ";
+        if (!empty($args['receiver'])) {
+            $join_users = " JOIN $wpdb->users ON $wpdb->users.ID = message.sender ";
+        }
+
         $from .= $join_users;
     }
 
@@ -614,49 +636,6 @@ function me_my_inquiries($args = array()) {
         'max_num_pages' => ceil($found_rows/$args['posts_per_page'])
     );
 
-    return $results;
-
-    // SELECT count(message.post_status) as count_status, post_status, message.post_parent FROM `me_marketengine_message_item` as message WHERE message.post_status = 'sent' GROUP by message.post_status, message.post_parent
-}
-
-/**
- * Retrieves current user accepted request
- * @return array
- */
-function me_my_request($args) {
-    global $wpdb;
-
-    $user_id = get_current_user_id();
-    // if (empty($args['sender'])) {
-    //     return false;
-    // }
-
-    $message_table = $wpdb->prefix . 'marketengine_message_item';
-    $select        = "SELECT $wpdb->posts.*, max(message.post_date) as message_date ";
-    $from          = "FROM $wpdb->posts JOIN $message_table as message ON $wpdb->posts.ID = message.post_parent ";
-    $where         = "WHERE message.receiver = $user_id ";
-    $group_by      = "GROUP By message.post_parent ";
-
-    if (!empty($args['s'])) {
-        $search = me_parse_search($args);
-        $where .= $search;
-
-        $join_users = " JOIN $wpdb->users ON $wpdb->users.ID = message.sender ";
-        $from .= $join_users;
-    }
-
-    // Handle date queries
-    if ( ! empty( $args['date_query'] ) ) {
-        $date_query = new WP_Date_Query( $args['date_query'] );
-        $date_query = str_replace($wpdb->posts, $message_table, $date_query->get_sql());
-        $where .= $date_query;
-    }
-
-    $order_by = 'ORDER BY message_date DESC';
-
-    $request = $select . $from . $where . $group_by . $order_by;
-    
-    $results = $wpdb->get_results($request);
     return $results;
 }
 
