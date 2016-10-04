@@ -49,7 +49,7 @@ class ME_Shortcodes_Listing {
         if($listing) {
             $listing = new ME_Listing_Contact($listing);
         }
-        
+
         //TODO: check current user can access inquiry list or note
 
         ob_start();
