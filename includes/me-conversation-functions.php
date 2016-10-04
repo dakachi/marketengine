@@ -34,7 +34,7 @@ function me_insert_message($message_arr, $wp_error = false) {
         'post_content_filtered' => '',
         'post_title'            => '',
         'post_excerpt'          => '',
-        'post_status'           => 'sent',
+        'post_status'           => 'read',
         'post_type'             => 'inquiry',
         'post_password'         => '',
         'post_parent'           => 0,
@@ -379,15 +379,15 @@ function me_get_message_types() {
  */
 function me_get_messages($args = null) {
     $defaults = array(
-        'numberposts'      => 10,
-        'orderby'          => 'date',
-        'order'            => 'DESC',
-        'post_type'        => 'post',
+        'numberposts' => 10,
+        'orderby'     => 'date',
+        'order'       => 'DESC',
+        'post_type'   => 'post',
     );
 
     $r = wp_parse_args($args, $defaults);
     if (empty($r['post_status'])) {
-        $r['post_status'] =  'sent';
+        $r['post_status'] = 'sent';
     }
 
     if (!empty($r['numberposts']) && empty($r['posts_per_page'])) {
@@ -556,20 +556,227 @@ function me_delete_message_meta($mesage_id, $meta_key, $meta_value = '') {
     return delete_metadata('marketengine_message_item', $message_id, $meta_key, $meta_value);
 }
 
-// add_action('init', 'test_message_query');
-// function test_message_query() {
-//     // $result = me_insert_message(
-//     //     array('post_title' => 'abc', 'post_content' => 'xyz', 'post_excerpt' => 'qwerty', 'receiver' => 2),
-//     //     true
-//     // );
-//     // echo "<pre>";
-//     // print_r($result);
-//     // echo "</pre>";
-//     $message_query = new ME_Message_Query(array('post_type' => 'post', 'post_status' => 'draft', 's' => 'po'));
-//     echo "<pre>";
-//     global $message;
-//     while ($message_query->have_posts()) { $message_query->the_post();
-//         print_r($message);
-//     }
-//     echo "</pre>";
-// }
+/**
+ * Retrieves current user sent inquiry
+ */
+function me_my_inquiries($args = array()) {
+    global $wpdb;
+
+    $user_id = get_current_user_id();
+    // if (empty($args['sender'])) {
+    //     return false;
+    // }
+
+    $message_table = $wpdb->prefix . 'marketengine_message_item';
+    $select        = "SELECT $wpdb->posts.*, message.post_date as message_date ";
+    $from          = "FROM $wpdb->posts JOIN $message_table as message ON $wpdb->posts.ID = message.post_parent ";
+    $where         = "WHERE message.sender = $user_id ";
+    $group_by      = "GROUP By $wpdb->posts.ID ";
+
+    if (!empty($args['s'])) {
+        $search = me_parse_search($args);
+        $where .= $search;
+
+        $join_users = "JOIN $wpdb->users ON $wpdb->users.ID = message.receiver ";
+        $from .= $join_users;
+    }
+
+    // Handle date queries
+    if ( ! empty( $args['date_query'] ) ) {
+        $date_query = new WP_Date_Query( $args['date_query'] );
+        $date_query = str_replace($wpdb->posts, $message_table, $date_query->get_sql());
+        $where .= $date_query;
+    }
+
+    $request = $select . $from . $where . $group_by;
+    
+    $results = $wpdb->get_results($request);
+    return $results;
+
+    // SELECT count(message.post_status) as count_status, post_status, message.post_parent FROM `me_marketengine_message_item` as message WHERE message.post_status = 'sent' GROUP by message.post_status, message.post_parent
+}
+
+/**
+ * Retrieves current user accepted request
+ */
+function me_my_request($args) {
+    global $wpdb;
+
+    $user_id = get_current_user_id();
+    // if (empty($args['sender'])) {
+    //     return false;
+    // }
+
+    $message_table = $wpdb->prefix . 'marketengine_message_item';
+    $select        = "SELECT $wpdb->posts.*, message.post_date as message_date ";
+    $from          = "FROM $wpdb->posts JOIN $message_table as message ON $wpdb->posts.ID = message.post_parent ";
+    $where         = "WHERE message.receiver = $user_id ";
+    $group_by      = "GROUP By $wpdb->posts.ID ";
+
+    if (!empty($args['s'])) {
+        $search = me_parse_search($args);
+        $where .= $search;
+
+        $join_users = "JOIN $wpdb->users ON $wpdb->users.ID = message.sender ";
+        $from .= $join_users;
+    }
+
+    // Handle date queries
+    if ( ! empty( $args['date_query'] ) ) {
+        $date_query = new WP_Date_Query( $args['date_query'] );
+        $date_query = str_replace($wpdb->posts, $message_table, $date_query->get_sql());
+        $where .= $date_query;
+    }
+
+    $request = $select . $from . $where . $group_by;
+    
+    $results = $wpdb->get_results($request);
+    return $results;
+}
+
+function me_parse_search($args) {
+    global $wpdb;
+
+    $search = '';
+
+    // added slashes screw with quote grouping when done early, so done later
+    $args['s'] = stripslashes($args['s']);
+    // there are no line breaks in <input /> fields
+    $args['s']                  = str_replace(array("\r", "\n"), '', $args['s']);
+    $args['search_terms_count'] = 1;
+    if (!empty($args['sentence'])) {
+        $args['search_terms'] = array($args['s']);
+    } else {
+        if (preg_match_all('/".*?("|$)|((?<=[\t ",+])|^)[^\t ",+]+/', $args['s'], $matches)) {
+            $args['search_terms_count'] = count($matches[0]);
+            $args['search_terms']       = parse_search_terms($matches[0]);
+            // if the search string has only short terms or stopwords, or is 10+ terms long, match it as sentence
+            if (empty($args['search_terms']) || count($args['search_terms']) > 9) {
+                $args['search_terms'] = array($args['s']);
+            }
+
+        } else {
+            $args['search_terms'] = array($args['s']);
+        }
+    }
+
+    $n                         = !empty($args['exact']) ? '' : '%';
+    $searchand                 = '';
+    $args['search_orderby_title'] = array();
+    foreach ($args['search_terms'] as $term) {
+        // Terms prefixed with '-' should be excluded.
+        $include = '-' !== substr($term, 0, 1);
+        if ($include) {
+            $like_op  = 'LIKE';
+            $andor_op = 'OR';
+        } else {
+            $like_op  = 'NOT LIKE';
+            $andor_op = 'AND';
+            $term     = substr($term, 1);
+        }
+
+        if ($n && $include) {
+            $like                        = '%' . $wpdb->esc_like($term) . '%';
+            $args['search_orderby_title'][] = $wpdb->prepare("$wpdb->posts.post_title LIKE %s", $like);
+        }
+
+        $like = $n . $wpdb->esc_like($term) . $n;
+        $search .= $wpdb->prepare("{$searchand}(($wpdb->posts.post_title $like_op %s) $andor_op ($wpdb->posts.post_excerpt $like_op %s) $andor_op ($wpdb->posts.post_content $like_op %s))", $like, $like, $like);
+        $searchand = ' AND ';
+    }
+
+    $searchand   = '';
+    $search_user = '';
+    foreach ($args['search_terms'] as $term) {
+        // Terms prefixed with '-' should be excluded.
+        $include = '-' !== substr($term, 0, 1);
+        if ($include) {
+            $like_op  = 'LIKE';
+            $andor_op = 'OR';
+        } else {
+            $like_op  = 'NOT LIKE';
+            $andor_op = 'AND';
+            $term     = substr($term, 1);
+        }
+
+        if ($n && $include) {
+            $like                        = '%' . $wpdb->esc_like($term) . '%';
+            $args['search_orderby_title'][] = $wpdb->prepare("$wpdb->posts.post_title LIKE %s", $like);
+        }
+
+        $like = $n . $wpdb->esc_like($term) . $n;
+        $search_user .= $wpdb->prepare("{$searchand}(($wpdb->users.display_name $like_op %s))", $like, $like, $like);
+        $searchand = ' AND ';
+    }
+
+    if (!empty($search)) {
+        $search = " AND ({$search} OR {$search_user}) ";
+    }
+
+    return $search;
+}
+
+function parse_search_terms($terms) {
+    $strtolower = function_exists('mb_strtolower') ? 'mb_strtolower' : 'strtolower';
+    $checked    = array();
+
+    $stopwords = get_search_stopwords();
+
+    foreach ($terms as $term) {
+        // keep before/after spaces when term is for exact match
+        if (preg_match('/^".+"$/', $term)) {
+            $term = trim($term, "\"'");
+        } else {
+            $term = trim($term, "\"' ");
+        }
+
+        // Avoid single A-Z and single dashes.
+        if (!$term || (1 === strlen($term) && preg_match('/^[a-z\-]$/i', $term))) {
+            continue;
+        }
+
+        if (in_array(call_user_func($strtolower, $term), $stopwords, true)) {
+            continue;
+        }
+
+        $checked[] = $term;
+    }
+
+    return $checked;
+}
+
+function get_search_stopwords() {
+    /* translators: This is a comma-separated list of very common words that should be excluded from a search,
+     * like a, an, and the. These are usually called "stopwords". You should not simply translate these individual
+     * words into your language. Instead, look for and provide commonly accepted stopwords in your language.
+     */
+    $words = explode(',', _x('about,an,are,as,at,be,by,com,for,from,how,in,is,it,of,on,or,that,the,this,to,was,what,when,where,who,will,with,www',
+        'Comma-separated list of search stopwords in your language', 'enginethemes'));
+
+    $stopwords = array();
+    foreach ($words as $word) {
+        $word = trim($word, "\r\n\t ");
+        if ($word) {
+            $stopwords[] = $word;
+        }
+
+    }
+
+    /**
+     * Filters stopwords used when parsing search terms.
+     *
+     * @since 3.7.0
+     *
+     * @param array $stopwords Stopwords.
+     */
+    $stopwords = apply_filters('wp_search_stopwords', $stopwords);
+    return $stopwords;
+}
+
+add_action('init', 'test_get_messages');
+function test_get_messages() {
+    $inquiry = me_my_inquiries();
+    echo "<pre>";
+    print_r($inquiry);
+    echo "</pre>";
+}

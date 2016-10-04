@@ -283,3 +283,17 @@ function me_update_order_item_meta($order_item_id, $meta_key, $meta_value, $prev
 function me_delete_order_item_meta($order_item_id, $meta_key, $meta_value = '') {
     return delete_metadata('marketengine_order_item', $order_item_id, $meta_key, $meta_value);
 }
+
+/**
+ * Retrieve current user transactions
+ */
+function me_my_transactions($args) {
+
+}
+
+/**
+ * Retrieve current user orders
+ */
+function me_my_orders() {
+
+}
