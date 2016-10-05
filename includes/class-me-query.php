@@ -131,8 +131,8 @@ function me_get_default_endpoints() {
         'change_password'   => 'change-password',
         'listings'          => 'listings',
         'orders'            => 'orders',
-        'order_id'           => 'order',
-        'transactions'      => 'transactions',
+        'order_id'          => 'order',
+        'purchases'         => 'purchases',
         'transaction'       => 'transaction',
     );
     return $endpoint_arr;
@@ -155,6 +155,20 @@ function me_setting_endpoint_name() {
     return $endpoint_arr;
 }
 
+/**
+ * Rewrite authentication url. etc, order detail, transaction detail
+ *
+ * @access public
+ */
+function me_auth_rewrite_rule($rewrite_args){
+    foreach ($rewrite_args as $key => $value) {
+        if( $value['page_id'] > -1 ) {
+            $page = get_post($value['page_id']);
+            add_rewrite_rule( '^/'.$page->post_name.'/'.$value['endpoint_name'].'/([^/]*)/?','index.php?page_id='.$value['page_id'].'&'.$value['query_var'].'=$matches[1]','top' );
+        }
+    }
+}
+
 
 /**
  * add account endpoint
@@ -165,23 +179,24 @@ function me_init_endpoint() {
         add_rewrite_endpoint($value, EP_ROOT | EP_PAGES, str_replace('_', '-', $key));
     }
 
-    // $page = get_page_by_path( 'process-payment' );
-    $page_id = me_get_page_id( 'confirm_order' );
-    $page = get_post($page_id);
-    // $page_title = get_page_template_slug($page_id);
-    $order_endpoint = me_get_endpoint_name('order-id');
-    if($page) {
-        add_rewrite_rule( '^/'.$page->post_name.'/'.$order_endpoint.'/([^/]*)/?','index.php?page_id='.$page_id.'&order-id=$matches[1]','top');
-    }
+    $rewrite_args = array(
+        array(
+            'page_id'           => me_get_page_id( 'confirm_order' ),
+            'endpoint_name'    => me_get_endpoint_name( 'order-id' ),
+            'query_var'    => 'order-id' ,
+        ),
+        array(
+            'page_id'           => me_get_page_id( 'transaction_detail' ),
+            'endpoint_name'    => me_get_endpoint_name( 'transaction' ),
+            'query_var'    => 'transaction-id',
+        ),
+    );
+    me_auth_rewrite_rule( $rewrite_args );
 
-    $endpoints = array('orders', 'transactions', 'listings' );
+    $endpoints = array('orders', 'purchases', 'listings' );
     foreach($endpoints as $endpoint){
         add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
     }
-
-    // add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
-
-    // add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
 
 }
 add_action('init', 'me_init_endpoint');

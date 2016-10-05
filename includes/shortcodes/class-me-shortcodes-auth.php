@@ -23,6 +23,8 @@ class ME_Shortcodes_Auth {
             return self::me_user_listings();
         }elseif (isset($wp->query_vars['orders'])) {
             return self::me_user_orders();
+        }elseif (isset($wp->query_vars['purchases'])) {
+            return self::me_user_purchases();
         }
         return self::me_user_profile();
     }
@@ -70,6 +72,12 @@ class ME_Shortcodes_Auth {
     public static function me_user_orders() {
         ob_start();
         me_get_template('account/my-orders');
+        $content = ob_get_clean();
+        return $content;
+    }
+    public static function me_user_purchases() {
+        ob_start();
+        me_get_template('account/my-purchases');
         $content = ob_get_clean();
         return $content;
     }
