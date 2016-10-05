@@ -4,41 +4,13 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function me_get_listing($listing = null, $output = OBJECT, $filter = 'raw') {
-    if (empty($listing) && isset($GLOBALS['post'])) {
-        $listing = $GLOBALS['post'];
+function me_get_listing($post = null)
+{
+    if (null === $post) {
+        global $post;
     }
-
-    if ($listing instanceof ME_Listing) {
-        $_listing = $listing;
-    } elseif (is_object($listing)) {
-        if (empty($listing->filter)) {
-            $_listing = sanitize_post($listing, 'raw');
-            $_listing = new ME_Listing($_listing);
-        } elseif ('raw' == $listing->filter) {
-            $_listing = new ME_Listing($listing);
-        } else {
-            $_listing = ME_Listing::get_instance($listing->ID);
-        }
-    } else {
-        $_listing = ME_Listing::get_instance($listing);
-    }
-
-    if (!$_listing) {
-        return null;
-    }
-
-    $_listing = $_listing->filter($filter);
-
-    if ($output == ARRAY_A) {
-        return $_listing->to_array();
-    } elseif ($output == ARRAY_N) {
-        return array_values($_listing->to_array());
-    }
-
-    return $_listing;
+    return ME_Listing_Factory::instance()->get_listing($post);
 }
-
 
 function me_get_listing_types() {
     $listing_types = array(

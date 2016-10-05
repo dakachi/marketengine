@@ -214,12 +214,7 @@ class ME_Listing {
             $_listing = sanitize_post($_listing, 'raw');
         }
 
-        $type = get_post_meta($the_listing->ID, '_me_listing_type', true);
-        if($type == 'purchasion') {
-            return new ME_Listing_Purchasion($listing);
-        }
-
-        return new ME_Listing_Contact($_listing);
+        return new ME_Listing($_listing);
     }
 
     /**
@@ -298,11 +293,11 @@ class ME_Listing {
     }
 
     public function get_id() {
-        return $this->id;
+        return $this->ID;
     }
 
     public function get_permalink($leavename = false) {
-        return get_the_permalink($this->id, $leavename);
+        return get_the_permalink($this->ID, $leavename);
     }
 
     public function get_author () {
@@ -310,7 +305,7 @@ class ME_Listing {
     }
 
     public function get_title() {
-        return get_the_title($this->id);
+        return get_the_title($this->ID);
     }
 
     public function get_description() {
@@ -322,11 +317,11 @@ class ME_Listing {
     }
 
     public function get_listing_thumbnail($size = 'post-thumbnail', $attr = '' ) {
-        return get_the_post_thumbnail( $this->id, $size, $attr );
+        return get_the_post_thumbnail( $this->ID, $size, $attr );
     }
 
     public function get_listing_type() {
-        return get_post_meta($this->id, '_me_listing_type', true);
+        return get_post_meta($this->ID, '_me_listing_type', true);
     }
     /**
      * Retrieve the number of product's reviews
@@ -335,7 +330,7 @@ class ME_Listing {
      * @return int
      */
     public function get_review_count() {
-        return absint(get_post_meta($this->id, '_me_review_count', true));
+        return absint(get_post_meta($this->ID, '_me_review_count', true));
     }
 
     /**
@@ -345,7 +340,7 @@ class ME_Listing {
      * @return int
      */
     public function get_order_count() {
-        return absint(get_post_meta($this->id, '_me_order_count', true));
+        return absint(get_post_meta($this->ID, '_me_order_count', true));
     }
 
     /**
@@ -355,8 +350,8 @@ class ME_Listing {
      * @return array
      */
     public function get_galleries() {
-        $gallery      = get_post_meta($this->id, '_me_listing_gallery', true);
-        $thumbnail_id = get_post_meta($this->id, '_thumbnail_id', true);
+        $gallery      = get_post_meta($this->ID, '_me_listing_gallery', true);
+        $thumbnail_id = get_post_meta($this->ID, '_thumbnail_id', true);
         if ($thumbnail_id && $gallery) {
             array_unshift($gallery, $thumbnail_id);
         }

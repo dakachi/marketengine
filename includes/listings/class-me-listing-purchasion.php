@@ -24,6 +24,18 @@ class ME_Listing_Purchasion extends ME_Listing{
      * @since 1.0
      */
 
+    /**
+     * Constructor.
+     *
+     * @param ME_Listing|object $post Post object.
+     */
+    public function __construct($post) {
+        foreach (get_object_vars($post) as $key => $value) {
+            $this->$key = $value;
+        }
+
+    }
+
     public function get_price() {
         return get_post_meta($this->id, 'listing_price', true);
     }

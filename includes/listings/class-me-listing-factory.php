@@ -82,11 +82,3 @@ class ME_Listing_Factory
         return apply_filters('marketengine_get_listing_type', $type, $the_listing);
     }
 }
-
-function me_get_listing($post = null)
-{
-    if (null === $post) {
-        global $post;
-    }
-    return ME_Listing_Factory::instance()->get_listing($post);
-}
