@@ -1,13 +1,13 @@
 <?php if($listing) : ?>
 
 <?php $messages = me_get_messages(array('post_type' => 'inquiry')); ?>
-<?php 
+<?php
 $messages = array_reverse ($messages);
 ?>
 <div class="marketengine">
 	<?php me_print_notices(); ?>
 	<div class="me-contact-listing-wrap">
-		
+
 		<?php me_get_template('inquiry/listing-info', array('listing' => $listing, 'showposts' => -1)); ?>
 
 		<div class="me-contact-listing">
@@ -19,7 +19,7 @@ $messages = array_reverse ($messages);
 						</div>
 						<div class="me-contact-messages" style="max-height: 500px;">
 							<ul id="messages-container" class="me-contact-messages-list" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
-								
+
 								<?php foreach ($messages  as $key => $message) : ?>
 									<?php me_get_template('inquiry/message-item', array('message' => $message)); ?>
 								<?php endforeach; ?>
@@ -30,12 +30,12 @@ $messages = array_reverse ($messages);
 						<form method="post">
 							<textarea required name="content"></textarea>
 							<span class="me-message-send-btn"><i class="icon-me-attach"></i></span>
-							
+
 							<?php wp_nonce_field( 'me-post-inquiry' ); ?>
 							<input type="hidden" name="inquiry_listing" value="<?php echo $listing->get_id(); ?>" />
 
 							<input type="submit" value="<?php _e("Send", "enginethemes"); ?>" />
-							
+
 						</form>
 						</div>
 					</div>
