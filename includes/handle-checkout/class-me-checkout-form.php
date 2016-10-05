@@ -59,9 +59,17 @@ class ME_Checkout_Form
     {
         if (isset($_POST['send_inquiry']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-send-inquiry')) {
             $redirect = me_get_page_permalink( 'inquiry' );
-            $redirect = add_query_arg(array('id' => $_POST['send_inquiry']), $redirect );
-            wp_redirect($redirect);
-            exit;
+            //TODO: kiem tra giua 2 user da co inquiry chua, tra ve id va dieu huong den trang inquiry
+            $id = me_get_current_inquiry($_POST['send_inquiry']);
+            if(!$id) {
+                $redirect = add_query_arg(array('id' => $_POST['send_inquiry']), $redirect );
+                wp_redirect($redirect);
+                exit;  
+            }else {
+                $redirect = add_query_arg(array('id' => $_POST['send_inquiry']), $id );
+                wp_redirect($redirect);
+                exit;    
+            }
         }
     }
 

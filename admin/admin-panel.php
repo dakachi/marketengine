@@ -41,6 +41,12 @@ function marketengine_option_view() {
             'slug'     => 'me-payment',
             'template' => include (dirname(__FILE__). '/options/payments.php'),
         ),
+        'me-inquiry' => array(
+            'title'    => __("Inquiry", "enginethemes"),
+            'id'     => 'inquiry-settings',
+            'slug'     => 'me-inquiry',
+            'template' => include (dirname(__FILE__). '/options/inquiry.php'),
+        ),
     );
     echo '<div class="marketengine-tabs">';
 
