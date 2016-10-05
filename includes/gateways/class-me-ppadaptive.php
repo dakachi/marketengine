@@ -59,13 +59,6 @@ class ME_PPAdaptive extends ME_Payment {
      */
     public function __construct() {
         $options = ME_Options::get_instance();
-        // $this->api = ae_get_option('escrow_paypal_api',
-        //     array(
-        //         'username'  => 'dinhle1987-biz_api1.yahoo.com',
-        //         'password'  => '1362804968',
-        //         'signature' => 'A6LFoneN6dpKOQkj2auJBwoVZBiLAE-QivfFWXkjxrvJZ6McADtMu8Pe',
-        //     )
-        // );
         $this->api['username'] = $options->get_option('paypal-api-username');
         $this->api['password'] = $options->get_option('paypal-api-password');
         $this->api['signature'] = $options->get_option('paypal-api-signature');

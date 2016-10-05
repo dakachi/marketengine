@@ -23,10 +23,9 @@ class ME_Checkout_Form
             $listing_id = $_POST['add_to_cart'];
             $listing    = get_post($listing_id);
             // kiem tra san pham co ton tai hay ko
-
+            
             // neu co the mua thi dieu huong nguoi dung den trang thanh toan
-            me_add_to_cart($listing_id, $_POST['qty']);
-            //wp_redirect(home_url('/me-checkout'));
+            me_add_to_cart($listing_id, $_POST['qty']);            
             wp_redirect(me_get_page_permalink('checkout'));
             exit;
         }
@@ -51,7 +50,6 @@ class ME_Checkout_Form
         if (!empty($_GET['me-payment'])) {
             $request = sanitize_text_field( strtolower($_GET['me-payment']) );
             do_action('marketegine_' . $request , $_REQUEST);
-            update_option( 'paypal_ipn', $_POST );
         }
     }
 
