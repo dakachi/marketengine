@@ -5,6 +5,7 @@ class ME_Shortcodes_Listing {
         add_shortcode('me_listings', array(__CLASS__, 'the_listing'));
         add_shortcode('me_checkout_form', array(__CLASS__, 'checkout_form'));
         add_shortcode('me_confirm_order', array(__CLASS__, 'confirm_order'));
+        add_shortcode('me_transaction_detail', array(__CLASS__, 'transaction_detail'));
         add_shortcode('me_inquiry_form', array(__CLASS__, 'inquiry_form'));
     }
     public static function post_listing_form() {
@@ -29,16 +30,20 @@ class ME_Shortcodes_Listing {
     }
 
     public static function confirm_order() {
-        $paypal = ME_PPAdaptive_Request::instance();
-        $paypal->complete_payment($_REQUEST);
+        if( is_user_logged_in() ) {
+            $paypal = ME_PPAdaptive_Request::instance();
+            $paypal->complete_payment($_REQUEST);
 
-        $order_id = get_query_var( 'order-id' );
-        if($order_id) {
-            $order = new ME_Order($order_id);
-            ob_start();
-            me_get_template('checkout/confirm', array('order' => $order));
-            $content = ob_get_clean();
-            return $content;
+            $order_id = get_query_var( 'order-id' );
+            if($order_id) {
+                $order = new ME_Order($order_id);
+                ob_start();
+                me_get_template('checkout/confirm', array('order' => $order));
+                $content = ob_get_clean();
+                return $content;
+            }
+        } else {
+            return ME_Shortcodes_Auth::me_login_form();
         }
     }
 
@@ -56,6 +61,18 @@ class ME_Shortcodes_Listing {
         me_get_template('inquiry/inquiry', array('listing' => $listing));
         $content = ob_get_clean();
         return $content;
+    }
+
+    public static function transaction_detail() {
+        if( is_user_logged_in() ) {
+            // $order = new ME_Order(130);
+            ob_start();
+            me_get_template('purchases/transaction');
+            $content = ob_get_clean();
+            return $content;
+        } else {
+            return ME_Shortcodes_Auth::me_login_form();
+        }
     }
 
 }
