@@ -67,12 +67,12 @@ return array(
                         'placeholder' => 'order',
                         'template'    => array(),
                     ),
-                    'ep-transactions' => array(
-                        'label'       => __("Transactions", "enginethemes"),
-                        'slug'        => 'ep-transactions',
+                    'ep-purchases' => array(
+                        'label'       => __("Purchases", "enginethemes"),
+                        'slug'        => 'ep-purchases',
                         'type'        => 'textbox',
-                        'name'        => 'ep_transactions',
-                        'placeholder' => 'transactions',
+                        'name'        => 'ep_purchases',
+                        'placeholder' => 'purchases',
                         'template'    => array(),
                     ),
                     'ep-forgot-password' => array(
