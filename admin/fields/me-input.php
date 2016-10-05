@@ -34,7 +34,7 @@ abstract class ME_Input {
         $options     = $this->_options;
         $option_name = $this->_name;
 
-        $option_value = ME_Options::get_instance()->get_option( $option_name);
+        $option_value = me_option( $option_name);
 
         return !empty($option_value) ? $option_value : '';
         //return $options->$parent->$option_name;

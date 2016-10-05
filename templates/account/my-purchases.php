@@ -1,12 +1,12 @@
 <div class="me-orderlist">
 	<div class="marketengine-tabs">
 		<ul class="me-tabs">
-			<li class=""><span>Transactions</span></li>
-			<li class="active"><span>Inquiries</span></li>
+			<li class="active"><span><?php echo __('Transactions', 'enginethemes'); ?></span></li>
+			<li class=""><span><?php echo __('Inquiries', 'enginethemes'); ?></span></li>
 		</ul>
 		<div class="me-tabs-container">
 			<!-- Tabs Orders -->
-			<div class="me-tabs-section" style="display: none;">
+			<div class="me-tabs-section" style="display: block;">
 
 				<div class="me-orderlist-filter">
 					<div class="me-row">
@@ -43,7 +43,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="me-table-row">
+					<!-- <div class="me-table-row">
 						<div class="me-table-col me-order-id"><a href="">#ME123456</a></div>
 						<div class="me-table-col me-order-status"><span class="me-order-pending">Pending</span></div>
 						<div class="me-table-col me-order-amount">$1200.00</div>
@@ -75,7 +75,7 @@
 								<p>Extra Slim Innovator Wool Blend Navy Suit Jacket</p>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 
 				<div class="marketengine-paginations">
@@ -91,7 +91,7 @@
 
 			</div>
 			<!-- Tabs Inquiries -->
-			<div class="me-tabs-section" style="display: block;">
+			<div class="me-tabs-section" style="display: none;">
 				<div class="me-order-inquiries-filter">
 					<div class="me-inquiries-filter">
 						<select name="" id="">

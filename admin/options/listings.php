@@ -37,13 +37,6 @@ return array(
                 'data'          => marketengine_get_list_of_page(),
                 'template'      => array(),
             ),
-            'ep-button' => array(
-                'label'       => __("Save changes", "enginethemes"),
-                'type'        => 'button',
-                'name'        => 'ep-button',
-                'slug'        => 'ep-button',
-                'template'    => array(),
-            ),
         ),
     ),
 );
