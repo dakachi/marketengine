@@ -514,7 +514,6 @@ class ME_PPAdaptive_Request {
         if (!empty($response->payKey)) {
             update_post_meta($order->id, '_me_ppadaptive_paykey', $response->payKey);
         }
-
         return $response;
     }
 
