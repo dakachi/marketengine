@@ -1,6 +1,3 @@
-<pre>
-<?php print_r($transaction); ?>
-</pre>
 <?php
 $payment_date = date_i18n( get_option( 'date_format' ), strtotime( $transaction->post_date ) );
 $order_number = '#' . $transaction->get_order_number();
