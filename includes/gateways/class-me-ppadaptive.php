@@ -446,7 +446,7 @@ class ME_PPAdaptive_Request {
      * Get the site's receive commission email
      */
     private function get_commission_email() {
-        return ae_get_option('commission_email', 'dinhle198722-pers@yahoo.com');
+        return ae_get_option('commission_email', 'dinhle1987-pers@yahoo.com');
     }
 
     /**
@@ -514,7 +514,6 @@ class ME_PPAdaptive_Request {
         if (!empty($response->payKey)) {
             update_post_meta($order->id, '_me_ppadaptive_paykey', $response->payKey);
         }
-
         return $response;
     }
 
