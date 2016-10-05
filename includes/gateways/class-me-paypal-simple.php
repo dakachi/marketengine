@@ -53,8 +53,7 @@ class ME_Paypal_Simple extends ME_Payment {
         $api = ae_get_option('simple_paypal_api', array('receiver_email' => 'david87dang@gmail.com'));
 
         // $this->receiver_email = 'dinhle1987-biz@yahoo.com';
-        $options = ME_Options::get_instance();
-        $this->receiver_email = $options->get_option('paypal-receiver-email');
+        $this->receiver_email = me_option('paypal-receiver-email');
 
         // username : dinhle1987-biz_api1.yahoo.com
         // password: 1362804968
@@ -64,7 +63,7 @@ class ME_Paypal_Simple extends ME_Payment {
 
         $this->_proxy    = false;
         // $this->_test_mod = ae_get_option('is_test_mod', true);
-        $this->_test_mod = $options->get_option('test-mode') ? true : false;
+        $this->_test_mod = me_option('test-mode') ? true : false;
 
         $this->_paypal_url = 'https://www.paypal.com/cgi-bin/webscr?';
         if ($this->_test_mod) {

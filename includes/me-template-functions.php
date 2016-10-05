@@ -109,8 +109,7 @@ function me_get_sidebar() {
 // TODO: can dat ham nay cho dung vi tri file
 if(! function_exists('me_get_page_permalink') ){
     function me_get_page_permalink( $page_name ) {
-        $options = ME_Options::get_instance();
-        $page = $options->get_option('me_'. $page_name .'_page_id');
+        $page = me_option('me_'. $page_name .'_page_id');
         if (!$page) {
             return home_url();
         }
@@ -257,6 +256,11 @@ add_action('marketengine_sidebar', 'marketengine_sidebar');
 // TODO: tam thoi de day
 function ae_get_option($option, $default = '') {
     return get_option( $option, $default );
+}
+
+function me_option($option){
+    $options = ME_Options::get_instance();
+    return $options->get_option($option);
 }
 
 // TODO: noi bo ham nay

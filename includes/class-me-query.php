@@ -98,8 +98,7 @@ add_filter('query_vars', 'me_products_plugin_query_vars');
  * @return int
  */
 function me_get_page_id( $page ) {
-    $options = ME_Options::get_instance();
-    $page_id = $options->get_option('me_'. $page .'_page_id');
+    $page_id = me_option('me_'. $page .'_page_id');
     return $page_id ? absint($page_id) : -1 ;
 }
 
@@ -145,10 +144,9 @@ function me_get_default_endpoints() {
  * @return array of endpoints
  */
 function me_setting_endpoint_name() {
-    $me_options = ME_Options::get_instance();
     $endpoint_arr = me_get_default_endpoints();
     foreach($endpoint_arr as $key => $value){
-        $option_value = $me_options->get_option( 'ep_' . $key ) ;
+        $option_value = me_option( 'ep_' . $key ) ;
         if( isset($option_value) && !empty($option_value) && $option_value != $value )
             $endpoint_arr[$key] = $option_value;
     }

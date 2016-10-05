@@ -58,7 +58,6 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.0
      */
     public function __construct() {
-        $options = ME_Options::get_instance();
         // $this->api = ae_get_option('escrow_paypal_api',
         //     array(
         //         'username'  => 'dinhle1987-biz_api1.yahoo.com',
@@ -66,15 +65,15 @@ class ME_PPAdaptive extends ME_Payment {
         //         'signature' => 'A6LFoneN6dpKOQkj2auJBwoVZBiLAE-QivfFWXkjxrvJZ6McADtMu8Pe',
         //     )
         // );
-        $this->api['username'] = $options->get_option('paypal-api-username');
-        $this->api['password'] = $options->get_option('paypal-api-password');
-        $this->api['signature'] = $options->get_option('paypal-api-signature');
-        $this->api['appID'] = $options->get_option('paypal-app-api');
+        $this->api['username']  = me_option('paypal-api-username');
+        $this->api['password']  = me_option('paypal-api-password');
+        $this->api['signature'] = me_option('paypal-api-signature');
+        $this->api['appID']     = me_option('paypal-app-api');
 
         $this->appID = isset($this->api['appID']) ? $this->api['appID'] : 'APP-80W284485P519543T';
 
         // $testmode = ae_get_option('test_mode', true);
-        $testmode = $options->get_option('test-mode') ? true : false;
+        $testmode = me_option('test-mode') ? true : false;
         // test mod is on
         $this->endpoint        = 'https://svcs.sandbox.paypal.com/AdaptivePayments/';
         $this->paypal_url      = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey=';
@@ -139,8 +138,7 @@ class ME_PPAdaptive extends ME_Payment {
      * The GetVerifiedStatus API operation lets you determine whether the specified PayPal account's status is verified or unverified.
      */
     public function get_verified_account($info) {
-        $options = ME_Options::get_instance();
-        $testmode = $options->get_option('test-mode') ? true : false;
+        $testmode = me_option('test-mode') ? true : false;
         // test mod is on
         $endpoint = 'https://svcs.sandbox.paypal.com/AdaptiveAccounts/';
         // live mod is on
