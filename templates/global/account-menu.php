@@ -4,7 +4,7 @@
 		<option disabled selected><?php echo __('MY ACCOUNT', 'enginethemes'); ?></option>
 		<option value="#"><?php echo __('Dashboard', 'enginethemes'); ?></option>
 		<option value="<?php echo me_get_auth_url( 'listings' ); ?>"><?php echo __('My Listing', 'enginethemes'); ?></option>
-		<option value="#"><?php echo __('Transactions', 'enginethemes'); ?></option>
+		<option value="<?php echo me_get_auth_url( 'purchases' ); ?>"><?php echo __('Transactions', 'enginethemes'); ?></option>
 		<option value="#"><?php echo __('Inbox', 'enginethemes'); ?></option>
 		<option value="<?php echo wp_logout_url( get_the_permalink() ); ?>"><?php echo __('Logout', 'enginethemes'); ?></option>
 	</select>

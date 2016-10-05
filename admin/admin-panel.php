@@ -26,18 +26,15 @@ function marketengine_option_view() {
         'authenticate-settings' => array(
             'title'    => __("Authentication", "enginethemes"),
             'slug'     => 'authenticate-settings',
-            'id'       => 'authenticate-settings',
             'template' => include (dirname(__FILE__). '/options/authentication.php'),
         ),
         'listings-settings' => array(
             'title'    => __("Listings", "enginethemes"),
-            'id'       => 'listings-settings',
             'slug'     => 'listings-settings',
             'template' => include (dirname(__FILE__). '/options/listings.php'),
         ),
         'me-payment' => array(
             'title'    => __("Payment", "enginethemes"),
-            'id'     => 'payment-settings',
             'slug'     => 'me-payment',
             'template' => include (dirname(__FILE__). '/options/payments.php'),
         ),

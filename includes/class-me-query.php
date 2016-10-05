@@ -133,7 +133,7 @@ function me_get_default_endpoints() {
         'orders'            => 'orders',
         'order_id'          => 'order',
         'purchases'         => 'purchases',
-        'transaction'       => 'transaction',
+        'transaction_id'       => 'transaction',
     );
     return $endpoint_arr;
 }
@@ -187,7 +187,7 @@ function me_init_endpoint() {
         ),
         array(
             'page_id'           => me_get_page_id( 'transaction_detail' ),
-            'endpoint_name'    => me_get_endpoint_name( 'transaction' ),
+            'endpoint_name'    => me_get_endpoint_name( 'transaction-id' ),
             'query_var'    => 'transaction-id',
         ),
     );

@@ -1,3 +1,7 @@
+<?php
+$payment_date = date_i18n( get_option( 'date_format' ), strtotime( $transaction->post_date ) );
+$order_number = '#' . $transaction->get_order_number();
+?>
 <div class="marketengine-content">
 	<div class="me-order-detail">
 		<div class="me-order-detail-block">
@@ -6,24 +10,24 @@
 					<div class="me-row">
 						<div class="me-col-md-6 me-col-xs-6">
 							<div class="me-orderid-info">
-								<h5>Transaction ID:</h5>
-								<p>#ME02132</p>
+								<h5><?php echo __( 'Transaction ID:', 'enginethemes' ); ?></h5>
+								<p><?php echo $order_number; ?></p>
 							</div>
 						</div>
 						<div class="me-col-md-6 me-col-xs-6">
 							<div class="me-orderdate-info">
-								<h5>Date of purchase:</h5>
-								<p class="me-orderdate-info">8 July, 2016</p>
+								<h5><?php echo __('Date of purchase:', 'enginethemes'); ?></h5>
+								<p class="me-orderdate-info"><?php echo $payment_date; ?></p>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="me-order-detail-block">
 			<div class="me-orderstatus-info">
-				<h5>Order status:</h5>
+				<h5><?php echo __('Order status:', 'enginethemes'); ?></h5>
 				<div class="me-orderstatus">
 					<!-- <span class="me-order-complete">Complete</span>
 					<span class="me-order-pending">Pending</span>
@@ -47,18 +51,18 @@
 					</div>
 				</div>
 			</div>
-			
+
 		</div>
 
 		<div class="me-order-detail-block">
 			<div class="me-orderitem-info">
-				<h5>Order item</h5>
+				<h5><?php echo __('Order item', 'enginethemes'); ?></h5>
 				<div class="me-table me-cart-table">
 					<div class="me-table-rhead">
-						<div class="me-table-col me-cart-name">Listing</div>
-						<div class="me-table-col me-cart-price">Price</div>
-						<div class="me-table-col me-cart-units">Units</div>
-						<div class="me-table-col me-cart-units-total">Total</div>
+						<div class="me-table-col me-cart-name"><?php echo __('Listing', 'enginethemes'); ?></div>
+						<div class="me-table-col me-cart-price"><?php echo __('Price', 'enginethemes'); ?></div>
+						<div class="me-table-col me-cart-units"><?php echo __('Units', 'enginethemes'); ?></div>
+						<div class="me-table-col me-cart-units-total"><?php echo __('Total', 'enginethemes'); ?></div>
 					</div>
 					<div class="me-table-row me-cart-item">
 						<div class="me-table-col me-cart-name">
@@ -89,13 +93,13 @@
 					<div class="me-table-row me-cart-rshippingfee">
 						<div class="me-table-col me-table-empty"></div>
 						<div class="me-table-col me-table-empty"></div>
-						<div class="me-table-col me-cart-shippingfee">Shipping fee:</div>
+						<div class="me-table-col me-cart-shippingfee"><?php echo __('Shipping fee:', 'enginethemes'); ?></div>
 						<div class="me-table-col me-cart-shippingfee-price">$100</div>
 					</div>
 					<div class="me-table-row me-cart-rtotals">
 						<div class="me-table-col me-table-empty"></div>
 						<div class="me-table-col me-table-empty"></div>
-						<div class="me-table-col me-cart-amount">Total amount:</div>
+						<div class="me-table-col me-cart-amount"><?php echo __('Total amount:', 'enginethemes'); ?></div>
 						<div class="me-table-col me-cart-totals">$1220</div>
 					</div>
 				</div>
@@ -103,7 +107,7 @@
 					<input class="me-order-submit-btn" type="submit" value="MARK COMPLETED">
 				</div>
 			</div>
-			
+
 
 		</div>
 
@@ -113,13 +117,13 @@
 					<div class="me-row">
 						<div class="me-col-md-6 me-col-sm-6">
 							<div class="me-orderbill-info">
-								<h5>Billed to:</h5>
+								<h5><?php echo __( 'Billed to:', 'enginethemes' ); ?></h5>
 								<p>Sean Connery 1017 Lac Long Quan ,CMC, Vietnam</p>
 							</div>
 						</div>
 						<div class="me-col-md-6 me-col-sm-6">
 							<div class="me-ordership-info">
-								<h5>Shipped to:</h5>
+								<h5><?php echo __( 'Shipped to:', 'enginethemes' ); ?></h5>
 								<p>Sean Connery 1017 Lac Long Quan ,CMC, Vietnam</p>
 							</div>
 						</div>
@@ -127,7 +131,7 @@
 				</div>
 				<div class="me-col-md-5">
 					<div class="me-ordernotes-info">
-						<h5>Order Notes:</h5>
+						<h5><?php echo __( 'Order Notes:', 'enginethemes' ); ?></h5>
 						<p class="">Curabitur Curabitur dictum laoreet lectus vel tempus. Ut ultricies lorem augue, ac gravida di Curabitur dictum laoreet lectus vel tempus. Ut ultricies lorem augue, ac gravida diam bibendum et. Proin ligula urna, feugiat u Curabitur dictum laoreet lectus vel tempus. Ut ultricies lorem augue, ac gravida diam bibendum et. Proin ligula urna, feugiat u am bibendum et. Proin ligula urna, feugiat u dictum laoreet lectus vel tempus. Ut ultricies lorem augue, ac gravida diam bibendum et. Proin ligula urna, feugiat ut risus ac,  Duis maximus quam ut justo accumsan, in luctus lacus semper. Suspendisse facilisis hendrerit ante, a congue lacus cursus vitae. Nunc iaculis lacinia dolor, sed congue nibh.</p>
 					</div>
 				</div>
@@ -164,27 +168,27 @@
 				</span>
 				<ul class="me-author-info">
 					<li>
-						<span class="pull-left">From:</span>
+						<span class="pull-left"><?php echo __( 'From:', 'enginethemes' ); ?></span>
 						<b class="pull-right">Banglades</b>
 					</li>
 					<li>
-						<span class="pull-left">Language:</span>
+						<span class="pull-left"><?php echo __( 'Language:', 'enginethemes' ); ?></span>
 						<b class="pull-right">Vietnam</b>
 					</li>
 					<li>
-						<span class="pull-left">Member Sinced:</span>
+						<span class="pull-left"><?php echo __( 'Member Sinced:', 'enginethemes' ); ?></span>
 						<b class="pull-right">30 NOV, 2017</b>
 					</li>
 				</ul>
-				<a href="" class="me-view-profile">View profile</a>
+				<a href="" class="me-view-profile"><?php echo __( 'View profile', 'enginethemes' ); ?></a>
 			</div>
 
 
 			<div class="me-transaction-dispute">
-				<p>In the case you find out something unexpected. Please tell us your problems.</p>
+				<p><?php echo __('In the case you find out something unexpected. Please tell us your problems.', 'enginethemes'); ?></p>
 				<a href="#" class="">DISPUTE</a>
 			</div>
-			
+
 		</div>
 		<div class="me-col-md-3 me-hidden-sm me-hidden-xs">
 			<div class="me-authors">

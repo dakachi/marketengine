@@ -65,9 +65,10 @@ class ME_Shortcodes_Listing {
 
     public static function transaction_detail() {
         if( is_user_logged_in() ) {
-            // $order = new ME_Order(130);
+            $transaction_id = get_query_var( 'transaction-id' );
+            $transaction = new ME_Order($transaction_id);
             ob_start();
-            me_get_template('purchases/transaction');
+            me_get_template('purchases/transaction', array( 'transaction' => $transaction ) );
             $content = ob_get_clean();
             return $content;
         } else {
