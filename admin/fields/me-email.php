@@ -4,11 +4,11 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class ME_Textbox extends ME_Input {
+class ME_Email extends ME_Input {
     public function __construct($args, $options) {
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));
 
-        $this->_type        = 'textbox';
+        $this->_type        = 'email';
         $this->_name        = $args['name'];
         $this->_label       = $args['label'];
         $this->_description = $args['description'];
@@ -26,7 +26,7 @@ class ME_Textbox extends ME_Input {
         echo '<div class="me-group-field" '.$id.'>';
         $this->label();
         $this->description();
-        echo '<input type="text" name="'.$this->_name.'" class="me-input-field" value="' . $this->get_value() . '" placeholder="'.$this->_placeholder.'" />';
+        echo '<input type="email" name="'.$this->_name.'" class="me-input-field" value="' . $this->get_value() . '" placeholder="'.$this->_placeholder.'" />';
         echo '</div>';
     }
 }
