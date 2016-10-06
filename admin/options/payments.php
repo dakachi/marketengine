@@ -80,9 +80,8 @@ return array(
                 'label'       => __("Password", "enginethemes"),
                 'description' => __("", "enginethemes"),
                 'slug'        => 'paypal-api-password',
-                'type'        => 'textbox',
+                'type'        => 'password',
                 'name'        => 'paypal-api-password',
-                'ispassword'  => true,
                 'template'    => array(),
             ),
             'signature' => array(
