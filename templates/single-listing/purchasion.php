@@ -4,8 +4,6 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-global $post;
-$listing = new ME_Listing_Purchasion($post);
 $price = $listing->get_price();
 $pricing_unit = $listing->get_pricing_unit();
 ?>
@@ -35,7 +33,7 @@ $pricing_unit = $listing->get_pricing_unit();
 
 			<?php do_action('marketengine_single_listing_add_to_cart_form_field'); ?>
 
-			<input type="hidden" name="add_to_cart" value="<?php echo $post->ID; ?>" />
+			<input type="hidden" name="add_to_cart" value="<?php echo $listing->ID; ?>" />
 			<input type="submit" class="me-buy-now-btn" value="<?php _e("BUY NOW", "enginethemes"); ?>">
 
 			<?php do_action('marketengine_single_listing_add_to_cart_form_end'); ?>

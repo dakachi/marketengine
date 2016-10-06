@@ -16,8 +16,7 @@ $total = 0;
 		<?php do_action( 'marketengine_before_cart_item_list' ); ?>
 
 		<?php foreach ($cart_items as $key => $item) :
-
-			$listing =  me_get_listing($item['id']);
+			$listing =  me_get_listing(absint( $item['id'] ));
 
 			$total += $listing->get_price();
 			$unit = ($item['qty']) ? $item['qty'] : 1;

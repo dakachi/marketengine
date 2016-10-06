@@ -4,7 +4,6 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$listing = me_get_listing();
 $listing_type = $listing->get_listing_type();
 $buyer = $listing->post_author == get_current_user_id();
 ?>
@@ -40,9 +39,9 @@ $buyer = $listing->post_author == get_current_user_id();
 					if($listing_type) :
 						if( $buyer ) :
 							me_get_template('single-listing/status' );
-							me_get_template('single-listing/control-action', array('listing_type' => $listing_type , 'purchasion' => $purchasion) );
+							me_get_template('single-listing/control-action', array('listing_type' => $listing_type , 'listing' => $listing) );
 						else :
-							me_get_template('single-listing/'. $listing_type );
+							me_get_template('single-listing/'. $listing_type , array('listing' => $listing));
 						endif;
 					endif;
 					?>
