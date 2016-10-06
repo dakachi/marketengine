@@ -17,7 +17,7 @@ global $wp_query;
 			<!-- marketengine-content -->
 			<div class="marketengine-content">
 				<div class="me-row">
-					<?php do_action('marketengine_sidebar'); ?>
+					
 					<div id="primary" class="content-area me-col-md-9 marketengine-snap-column">
 
 						<?php do_action('marketengine_before_listing_archive_content'); ?>
@@ -50,7 +50,7 @@ global $wp_query;
 
 					</div>
 
-					
+					<?php do_action('marketengine_sidebar'); ?>
 
 				</div>
 			</div>
