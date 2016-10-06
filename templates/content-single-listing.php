@@ -3,11 +3,9 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-global $post;
-$listing = new ME_Listing($post);
+
 $listing_type = $listing->get_listing_type();
-$purchasion = new ME_Listing_Purchasion($post);
-$buyer = $post->post_author == get_current_user_id();
+$buyer = $listing->post_author == get_current_user_id();
 ?>
 <div class="marketengine me-container">
 	<div itemscope itemtype="http://schema.org/Product" class="marketengine-listing-detail">
@@ -41,16 +39,16 @@ $buyer = $post->post_author == get_current_user_id();
 					if($listing_type) :
 						if( $buyer ) :
 							me_get_template('single-listing/status' );
-							me_get_template('single-listing/control-action', array('listing_type' => $listing_type , 'purchasion' => $purchasion) );
+							me_get_template('single-listing/control-action', array('listing_type' => $listing_type , 'listing' => $listing) );
 						else :
-							me_get_template('single-listing/'. $listing_type );
+							me_get_template('single-listing/'. $listing_type , array('listing' => $listing));
 						endif;
 					endif;
 					?>
 					<?php me_get_template('single-listing/category');?>
 					<?php
 					if( !$buyer ) :
-						me_get_template('seller-info', array('author_id' => $post->post_author));
+						me_get_template('single-listing/author', array('author_id' => $listing->post_author));
 						me_get_template('single-listing/report');
 					endif;
 					?>

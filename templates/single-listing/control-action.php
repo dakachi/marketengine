@@ -1,6 +1,6 @@
 <?php
-$price = $purchasion->get_price();
-$pricing_unit = $purchasion->get_pricing_unit();
+$price = $listing->get_price();
+$pricing_unit = $listing->get_pricing_unit();
 ?>
 
 <div class="me-action">

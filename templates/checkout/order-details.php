@@ -20,8 +20,7 @@ $total = 0;
 		<?php do_action( 'marketengine_before_cart_item_list' ); ?>
 
 		<?php foreach ($cart_items as $key => $item) :
-			$post = get_post($item['id']);
-			$listing =  me_get_listing($post);
+			$listing =  me_get_listing(absint( $item['id'] ));
 
 			$total += $listing->get_price();
 			$unit = ($item['qty']) ? $item['qty'] : 1;
@@ -30,9 +29,9 @@ $total = 0;
 		<div class="me-table-row me-cart-item">
 			<div class="me-table-col me-cart-name">
 				<div class="me-cart-listing">
-					<a href="<?php echo get_permalink( $post->ID ); ?>">
-						<?php echo get_the_post_thumbnail($post->ID); ?>
-						<span><?php echo esc_html(get_the_title($post->ID)); ?></span>
+					<a href="<?php echo get_permalink( $listing->ID ); ?>">
+						<?php echo get_the_post_thumbnail($listing->ID); ?>
+						<span><?php echo esc_html(get_the_title($listing->ID)); ?></span>
 					</a>
 				</div>
 			</div>
