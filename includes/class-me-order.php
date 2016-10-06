@@ -73,18 +73,17 @@ class ME_Order {
     }
 
     /**
-     * Retrieve Order Currency
+     * Retrieve Order Currency Code
      * @return String
      * @since 1.0
      */
     public function get_currency() {
-        return 'USD';
+        return get_post_meta( $this->ID, '_order_currency_code', true );
     }
 
     public function get_receiver_email() {
         return 'dinhle1987-biz@yahoo.com';
     }
-
 
     public function get_receiver_name() {
         return 'dakachi';

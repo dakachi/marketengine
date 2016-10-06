@@ -108,6 +108,34 @@ return array(
                 'type'        => 'textbox',
                 'name'        => 'paypal-commission-fee'
             )
+        )
+    ),
+    'payment-currency'      => array(
+        'title'    => __("Currency", "enginethemes"),
+        'slug'     => 'currency-section',
+        'type'     => 'section',
+        'template' => array(
+            'currency-icon' => array(
+                'label'       => __("Icon", "enginethemes"),
+                'description' => __("", "enginethemes"),
+                'slug'        => 'payment-currency-icon',
+                'type'        => 'textbox',
+                'name'        => 'payment-currency-icon'
+            ),
+            'currency-lable' => array(
+                'label'       => __("Lable", "enginethemes"),
+                'description' => __("", "enginethemes"),
+                'slug'        => 'payment-currency-lable',
+                'type'        => 'textbox',
+                'name'        => 'payment-currency-lable',
+            ),
+            'currency-code' => array(
+                'label'       => __("Code", "enginethemes"),
+                'description' => __("", "enginethemes"),
+                'slug'        => 'payment-currency-code',
+                'type'        => 'textbox',
+                'name'        => 'payment-currency-code'
+            )
         ),
     ),
 );
