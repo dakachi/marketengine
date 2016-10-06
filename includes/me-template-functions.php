@@ -303,7 +303,7 @@ function me_get_auth_url( $query_var = '' ) {
  * Adds an action to get shop categories selectbox template.
  *
  */
-function me_shop_categories_action(){
+function me_shop_categories_action() {
     me_get_template('global/shop-categories');
 }
 add_action( 'me_shop_categories', 'me_shop_categories_action' );
@@ -314,7 +314,7 @@ add_action( 'me_shop_categories', 'me_shop_categories_action' );
  * Adds an action to get account menu selectbox template.
  *
  */
-function me_account_menu_action(){
+function me_account_menu_action() {
     me_get_template('global/account-menu');
 }
 add_action( 'me_account_menu', 'me_account_menu_action' );
@@ -323,7 +323,11 @@ add_action( 'me_account_menu', 'me_account_menu_action' );
  * Prints post listing button.
  *
  */
-function me_post_listing_button_action(){
+function me_post_listing_button_action() {
     me_get_template('global/post-listing-button');
 }
 add_action( 'me_post_listing_button', 'me_post_listing_button_action' );
+
+function me_print_address( $address ) {
+    echo "{$address['address']}, {$address['city']}, {$address['country']}";
+}

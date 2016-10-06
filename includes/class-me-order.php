@@ -18,12 +18,13 @@ class ME_Order {
         if(is_numeric($order)) {
             $order       = absint($order);
             $this->id    = $order;
-            $this->order = get_post($order);    
+            $this->order = get_post($order);
         }else {
             $this->order = $order;
             $this->id = $order->ID;
         }
-        
+        $this->caculate_subtotal();
+        $this->caculate_total();
     }
 
     public function __get($name) {
@@ -57,6 +58,12 @@ class ME_Order {
     public function get_confirm_url() {
         $page = me_get_page_permalink( 'confirm_order' );
         $order_endpoint = me_get_endpoint_name('order-id');
+        return $page .$order_endpoint. '/' . $this->id;
+    }
+
+    public function get_transaction_detail_url() {
+        $page = me_get_page_permalink( 'transaction_detail' );
+        $order_endpoint = me_get_endpoint_name('transaction-id');
         return $page .$order_endpoint. '/' . $this->id;
     }
 
@@ -96,10 +103,11 @@ class ME_Order {
         if (!is_object($listing)) {
             return false;
         }
-        $order_item_id = me_add_order_item($this->id, get_the_title( $listing->ID ), 'listing_item');
+
+        $order_item_id = me_add_order_item($this->id, $listing->get_title(), 'listing_item');
         if ($order_item_id) {
-            me_add_order_item_meta($order_item_id, '_listing_id', $listing->ID);
-            me_add_order_item_meta($order_item_id, '_listing_description', $listing->post_content);
+            me_add_order_item_meta($order_item_id, '_listing_id', $listing->id);
+            me_add_order_item_meta($order_item_id, '_listing_description', $listing->get_description());
 
             me_add_order_item_meta($order_item_id, '_qty', $qty);
             me_add_order_item_meta($order_item_id, '_listing_price', $listing->get_price());
@@ -380,7 +388,7 @@ class ME_Order {
     public function get_payment_method() {
         return get_post_meta($this->id, '_me_payment_gateway', true);
     }
- 
+
     public function get_transaction_url() {
 
     }

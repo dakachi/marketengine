@@ -33,7 +33,6 @@ class ME_Listing_Purchasion extends ME_Listing{
         foreach (get_object_vars($post) as $key => $value) {
             $this->$key = $value;
         }
-
     }
 
     public function get_price() {
@@ -47,7 +46,7 @@ class ME_Listing_Purchasion extends ME_Listing{
             'per_unit' => __("/Unit", "enginethemes"),
             'per_hour' => __("/Hour", "enginethemes")
         );
-        return $pricing_text[get_post_meta($this->id, 'pricing_unit', true)];   
+        return $pricing_text[get_post_meta($this->ID, 'pricing_unit', true)];   
     }
 
     public function is_downloadable() {

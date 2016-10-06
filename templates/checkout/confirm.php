@@ -15,7 +15,7 @@ if(!$order->has_status('me-pending')) :
 			<div class="me-col-md-4 me-pc-redirect-1">
 				<div class="">
 					<h4><?php _e("Manage Transaction", "enginethemes"); ?></h4>
-					<p>To view further information of this transaction, or make reviews &amp; ratings for listings, open <a href="">Transaction Detail</a>.</p>
+					<p>To view further information of this transaction, or make reviews &amp; ratings for listings, open <a href="<?php echo $order->get_transaction_detail_url(); ?>">Transaction Detail</a>.</p>
 				</div>
 			</div>
 			<div class="me-col-md-4 me-pc-redirect-2">
