@@ -81,14 +81,6 @@ class ME_Order {
         return get_post_meta( $this->ID, '_order_currency_code', true );
     }
 
-    public function get_receiver_email() {
-        return 'dinhle1987-biz@yahoo.com';
-    }
-
-    public function get_receiver_name() {
-        return 'dakachi';
-    }
-
     /**
      * Add listing item to order details
      *
@@ -103,17 +95,28 @@ class ME_Order {
             return false;
         }
 
-        $order_item_id = me_add_order_item($this->id, $listing->get_title(), 'listing_item');
+        $order_item_id = me_add_order_item($this->id, get_the_title( $listing->ID ), 'listing_item');
         if ($order_item_id) {
-            me_add_order_item_meta($order_item_id, '_listing_id', $listing->id);
-            me_add_order_item_meta($order_item_id, '_listing_description', $listing->get_description());
+            me_add_order_item_meta($order_item_id, '_listing_id', $listing->ID);
+            me_add_order_item_meta($order_item_id, '_listing_description', $listing->post_content);
 
             me_add_order_item_meta($order_item_id, '_qty', $qty);
             me_add_order_item_meta($order_item_id, '_listing_price', $listing->get_price());
         }
 
+        $seller = $listing->post_author;
+
         $this->caculate_subtotal();
         $this->caculate_total();
+
+        $receiver_0 = (object) array(
+            'user_name'  => get_the_author_meta( 'display_name', $seller),
+            'email'      => get_user_meta( $seller, 'paypal_email', true ),
+            'amount'     => $this->get_total(),
+            'is_primary' => false
+        );
+
+        $this->add_receiver($receiver_0);
 
         return $order_item_id;
     }

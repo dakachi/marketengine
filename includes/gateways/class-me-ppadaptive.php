@@ -449,23 +449,20 @@ class ME_PPAdaptive_Request {
      * @return array
      */
     private function get_receiver_list_args($order) {
-        $receiver_list = array(
-            'receiverList.receiver(0).amount' => $order->get_total(),
-            'receiverList.receiver(0).email'  => $order->get_receiver_email(),
-            // 'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
+        $receiver_items = me_get_order_items($order->id, 'receiver_item');
+        if(!empty($receiver_items)) {
+            $order_item_id = $receiver_items[0]->order_item_id;
+            $receiver_list = array(
+                'receiverList.receiver(0).amount' => me_get_order_item_meta($order_item_id, '_amount', true),
+                'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
+                // 'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
 
-            // admin receiver
-            'receiverList.receiver(1).amount' => $this->get_commission_fee(),
-            'receiverList.receiver(1).email'  => $this->get_commission_email(),
-            //'receiverList.receiver(1).primary' => $this->is_pay_primary(),
-        );
-
-        $receiver_0 = (object) array(
-            'user_name'  => $order->get_receiver_name(),
-            'email'      => $order->get_receiver_email(),
-            'amount'     => $order->get_total(),
-            'is_primary' => true,
-        );
+                // admin receiver
+                'receiverList.receiver(1).amount' => $this->get_commission_fee(),
+                'receiverList.receiver(1).email'  => $this->get_commission_email(),
+                //'receiverList.receiver(1).primary' => $this->is_pay_primary(),
+            );
+        }
 
         $receiver_1 = (object) array(
             'user_name'  => 'admin',
@@ -474,7 +471,7 @@ class ME_PPAdaptive_Request {
             'is_primary' => false,
         );
 
-        $order->add_receiver($receiver_0);
+        //$order->add_receiver($receiver_0);
         $order->add_receiver($receiver_1);
 
         return apply_filters('marketegnine_ppadaptive_receiver_list', $receiver_list, $order);
