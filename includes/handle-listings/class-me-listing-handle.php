@@ -88,7 +88,6 @@ class ME_Listing_Handle {
             $galleries = self::process_gallery($attachment['listing_gallery'], $post);
             update_post_meta($post, '_me_listing_gallery', $galleries);
         }
-
         return $post;
     }
 

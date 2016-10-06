@@ -23,10 +23,14 @@ class ME_Shortcodes_Listing {
     }
 
     public static function checkout_form() {
-        ob_start();
-        me_get_template('checkout/checkout');
-        $content = ob_get_clean();
-        return $content;
+        if( is_user_logged_in() ) {
+            ob_start();
+            me_get_template('checkout/checkout');
+            $content = ob_get_clean();
+            return $content;
+        } else {
+            return ME_Shortcodes_Auth::me_login_form();
+        }
     }
 
     public static function confirm_order() {

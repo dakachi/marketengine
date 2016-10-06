@@ -50,7 +50,7 @@ $buyer = $post->post_author == get_current_user_id();
 					<?php me_get_template('single-listing/category');?>
 					<?php
 					if( !$buyer ) :
-						me_get_template('single-listing/author', array('author_id' => $post->post_author));
+						me_get_template('seller-info', array('author_id' => $post->post_author));
 						me_get_template('single-listing/report');
 					endif;
 					?>

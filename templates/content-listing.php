@@ -46,7 +46,7 @@ $listing_type = $listing->get_listing_type();
 
 						<?php do_action('marketengine_single_listing_add_to_cart_form_field'); ?>
 
-						<input type="hidden" name="add_to_cart" value="<?php echo $post->ID; ?>" />
+						<input type="hidden" name="add_to_cart" value="<?php the_ID(); ?>" />
 						<input type="submit" class="me-buy-now-btn" value="<?php _e("BUY NOW", "enginethemes"); ?>">
 					</form>
 				</div>

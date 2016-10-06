@@ -1,3 +1,7 @@
+<?php
+$shipping_fee = $transaction->shipping_fee ? '$' . $transaction->shipping_fee : $transaction->shipping_fee;
+$total = $transaction->total ? '$' . $transaction->total : $transaction->total;
+?>
 <div class="me-order-detail-block">
 	<div class="me-orderitem-info">
 		<h5><?php echo __('Order item', 'enginethemes'); ?></h5>
@@ -38,13 +42,13 @@
 				<div class="me-table-col me-table-empty"></div>
 				<div class="me-table-col me-table-empty"></div>
 				<div class="me-table-col me-cart-shippingfee"><?php echo __('Shipping fee:', 'enginethemes'); ?></div>
-				<div class="me-table-col me-cart-shippingfee-price">$100</div>
+				<div class="me-table-col me-cart-shippingfee-price"><?php echo $shipping_fee; ?></div>
 			</div>
 			<div class="me-table-row me-cart-rtotals">
 				<div class="me-table-col me-table-empty"></div>
 				<div class="me-table-col me-table-empty"></div>
 				<div class="me-table-col me-cart-amount"><?php echo __('Total amount:', 'enginethemes'); ?></div>
-				<div class="me-table-col me-cart-totals">$1220</div>
+				<div class="me-table-col me-cart-totals"><?php echo $total; ?></div>
 			</div>
 		</div>
 		<div class="me-order-submit">
