@@ -31,13 +31,13 @@ global $wp_query;
 									<ul class="me-listing-post me-row">
 										<?php
 										while (have_posts()) : the_post();
-											me_get_template('content-listing');
+											me_get_template('loop/content-listing');
 										endwhile;
 										?>
 									</ul>
 
 								<?php else :
-									me_get_template( 'content-listing-none' );
+									me_get_template( 'loop/content-listing-none' );
 								endif; ?>
 							</div>
 							<div class="marketengine-paginations">
