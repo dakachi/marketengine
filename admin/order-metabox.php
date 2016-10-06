@@ -14,7 +14,7 @@ function me_order_payment_details() {
 	$post_id = $post->ID;
 	$paykey =  get_post_meta( $post_id, '_me_ppadaptive_paykey', true );
 	$response = ME_PPAdaptive::instance()->payment_details($paykey);
-	// echo "<pre>";
-	// print_r($response);
-	// echo "</pre>";
+	echo "<pre>";
+	print_r($response);
+	echo "</pre>";
 }

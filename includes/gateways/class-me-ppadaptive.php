@@ -430,14 +430,14 @@ class ME_PPAdaptive_Request {
      * Get the site's commission fee
      */
     private function get_commission_fee() {
-        return ae_get_option('commission_fee', 5);
+        return me_option('paypal-commission-fee');
     }
 
     /**
      * Get the site's receive commission email
      */
     private function get_commission_email() {
-        return ae_get_option('commission_email', 'dinhle1987-pers@yahoo.com');
+        return me_option('paypal-receiver-email');
     }
 
     /**
@@ -454,14 +454,14 @@ class ME_PPAdaptive_Request {
             'receiverList.receiver(0).email'  => $order->get_receiver_email(),
             // 'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
 
-            // freelancer receiver
+            // admin receiver
             'receiverList.receiver(1).amount' => $this->get_commission_fee(),
             'receiverList.receiver(1).email'  => $this->get_commission_email(),
             //'receiverList.receiver(1).primary' => $this->is_pay_primary(),
         );
 
         $receiver_0 = (object) array(
-            'user_name'  => 'dinhle',
+            'user_name'  => $order->get_receiver_name(),
             'email'      => $order->get_receiver_email(),
             'amount'     => $order->get_total(),
             'is_primary' => true,
