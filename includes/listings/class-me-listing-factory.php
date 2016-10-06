@@ -46,10 +46,12 @@ class ME_Listing_Factory
         if (!($the_listing instanceof WP_Post)) {
             return false;
         }
+
         $listing_class = $this->get_listing_class($the_listing);
         if (!class_exists($listing_class)) {
             $listing_class = 'ME_Listing';
         }
+
         return new $listing_class($the_listing);
     }
     /**
