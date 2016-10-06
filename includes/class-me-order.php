@@ -77,6 +77,12 @@ class ME_Order {
     public function get_receiver_email() {
         return 'dinhle1987-biz@yahoo.com';
     }
+
+
+    public function get_receiver_name() {
+        return 'dakachi';
+    }
+
     /**
      * Add listing item to order details
      *
