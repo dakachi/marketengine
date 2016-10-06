@@ -4,11 +4,12 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function me_get_listing($post = null)
+function me_get_listing($post)
 {
-    if (null === $post) {
-        global $post;
+    if(is_numeric($post)) {
+    	$post = get_post($post);
     }
+
     return ME_Listing_Factory::instance()->get_listing($post);
 }
 
