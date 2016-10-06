@@ -33,11 +33,10 @@ class ME_Listing_Purchasion extends ME_Listing{
         foreach (get_object_vars($post) as $key => $value) {
             $this->$key = $value;
         }
-
     }
 
     public function get_price() {
-        return get_post_meta($this->id, 'listing_price', true);
+        return get_post_meta($this->ID, 'listing_price', true);
     }
 
     public function get_pricing_unit() {
@@ -47,15 +46,15 @@ class ME_Listing_Purchasion extends ME_Listing{
             'per_unit' => __("/Unit", "enginethemes"),
             'per_hour' => __("/Hour", "enginethemes")
         );
-        return $pricing_text[get_post_meta($this->id, 'pricing_unit', true)];   
+        return $pricing_text[get_post_meta($this->ID, 'pricing_unit', true)];   
     }
 
     public function is_downloadable() {
-        return get_post_meta($this->id, 'me_is_downloadable', true);
+        return get_post_meta($this->ID, 'me_is_downloadable', true);
     }
 
     public function is_in_stock() {
-        return get_post_meta($this->id, 'me_is_in_stock', true);
+        return get_post_meta($this->ID, 'me_is_in_stock', true);
     }
 
     public function get_shipping_fee() {
