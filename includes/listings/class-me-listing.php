@@ -341,6 +341,6 @@ class ME_Listing {
      * @return bool
      */
     public function is_available() {
-        return 'listing' === $this->post->post_type;
+        return 'listing' === $this->post_type;
     }
 }
