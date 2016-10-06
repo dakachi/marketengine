@@ -3,11 +3,10 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-global $post;
-$listing = new ME_Listing($post);
+
+$listing = me_get_listing();
 $listing_type = $listing->get_listing_type();
-$purchasion = new ME_Listing_Purchasion($post);
-$buyer = $post->post_author == get_current_user_id();
+$buyer = $listing->post_author == get_current_user_id();
 ?>
 <div class="marketengine me-container">
 	<div itemscope itemtype="http://schema.org/Product" class="marketengine-listing-detail">
@@ -50,7 +49,7 @@ $buyer = $post->post_author == get_current_user_id();
 					<?php me_get_template('single-listing/category');?>
 					<?php
 					if( !$buyer ) :
-						me_get_template('single-listing/author', array('author_id' => $post->post_author));
+						me_get_template('single-listing/author', array('author_id' => $listing->post_author));
 						me_get_template('single-listing/report');
 					endif;
 					?>

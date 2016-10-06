@@ -292,32 +292,8 @@ class ME_Listing {
         return $post;
     }
 
-    public function get_id() {
-        return $this->ID;
-    }
-
-    public function get_permalink($leavename = false) {
-        return get_the_permalink($this->ID, $leavename);
-    }
-
-    public function get_author () {
-        return $this->post_author;
-    }
-
-    public function get_title() {
-        return get_the_title($this->ID);
-    }
-
-    public function get_description() {
-        return $this->post_content;
-    }
-
     public function get_short_description($length = 40) {
         return wp_trim_words($this->post_content, $length);
-    }
-
-    public function get_listing_thumbnail($size = 'post-thumbnail', $attr = '' ) {
-        return get_the_post_thumbnail( $this->ID, $size, $attr );
     }
 
     public function get_listing_type() {
