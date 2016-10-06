@@ -7,6 +7,7 @@ if (!defined('ABSPATH')) {
 function me_add_user_meta($meta) {
     if (isset($_POST['location'])) {
         $meta['location'] = $_POST['location'];
+        $meta['paypal_email'] = $_POST['paypal_email'];
     }
     return $meta;
 }

@@ -66,9 +66,14 @@ $user = ME()->get_current_user();
 				<p><?php echo $user->user_email; ?></p>
 			</div>
 
-			<div class="marketengine-text-field me-no-margin-bottom">
+			<div class="marketengine-text-field">
 				<label class="text"><?php _e("Location", "enginethemes");?></label>
 				<p><?php echo $user->location; ?></p>
+			</div>
+
+			<div class="marketengine-text-field me-no-margin-bottom">
+				<label class="text"><?php _e("Paypal Email", "enginethemes");?></label>
+				<p><?php echo $user->paypal_email; ?></p>
 			</div>
 
 			<?php do_action('marketengine_after_user_profile_information', $user); ?>

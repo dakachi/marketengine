@@ -13,6 +13,7 @@ $user = ME()->get_current_user();
 $first_name = isset($_POST['first_name']) ? $_POST['first_name'] : $user->first_name;
 $last_name = isset($_POST['last_name']) ? $_POST['last_name'] : $user->last_name;
 $location = isset($_POST['location']) ? $_POST['location'] : $user->location;
+$paypal_email = isset($_POST['paypal_email']) ? $_POST['paypal_email'] : $user->paypal_email;
 ?>
 
 <?php do_action('marketengine_before_edit_user_profile_form', $user); ?>
@@ -99,12 +100,20 @@ $location = isset($_POST['location']) ? $_POST['location'] : $user->location;
 
 			<?php do_action('marketengine_edit_user_profile', $user); ?>
 
-			<div class="marketengine-group-field me-no-margin-bottom">
+			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
 					<label class="text"><?php _e("Location", "enginethemes");?></label>
 					<input type="text" value="<?php echo $location; ?>" name="location" id="location">
 				</div>
 			</div>
+
+			<div class="marketengine-group-field me-no-margin-bottom">
+				<div class="marketengine-input-field">
+					<label class="text"><?php _e("Paypal Email", "enginethemes");?></label>
+					<input type="text" value="<?php echo $paypal_email; ?>" name="paypal_email" id="paypal_email">
+				</div>
+			</div>
+
 			<?php wp_nonce_field('me-update_profile'); ?>
 			<?php do_action('marketengine_after_edit_user_profile', $user); ?>
 		</div>
