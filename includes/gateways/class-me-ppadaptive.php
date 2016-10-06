@@ -470,8 +470,6 @@ class ME_PPAdaptive_Request {
             'amount'     => $this->get_commission_fee(),
             'is_primary' => false,
         );
-
-        //$order->add_receiver($receiver_0);
         $order->add_receiver($receiver_1);
 
         return apply_filters('marketegnine_ppadaptive_receiver_list', $receiver_list, $order);
