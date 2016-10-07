@@ -34,20 +34,16 @@ class ME_Shortcodes_Listing {
     }
 
     public static function confirm_order() {
-        if( is_user_logged_in() ) {
-            $paypal = ME_PPAdaptive_Request::instance();
-            $paypal->complete_payment($_REQUEST);
+        $paypal = ME_PPAdaptive_Request::instance();
+        $paypal->complete_payment($_REQUEST);
 
-            $order_id = get_query_var( 'order-id' );
-            if($order_id) {
-                $order = new ME_Order($order_id);
-                ob_start();
-                me_get_template('checkout/confirm', array('order' => $order));
-                $content = ob_get_clean();
-                return $content;
-            }
-        } else {
-            return ME_Shortcodes_Auth::me_login_form();
+        $order_id = get_query_var( 'order-id' );
+        if($order_id) {
+            $order = new ME_Order($order_id);
+            ob_start();
+            me_get_template('checkout/confirm', array('order' => $order));
+            $content = ob_get_clean();
+            return $content;
         }
     }
 
