@@ -2,6 +2,7 @@
 $payment_date = date_i18n( get_option( 'date_format' ), strtotime( $transaction->post_date ) );
 // TODO: Replace with transaction id.
 $order_number = '#' . $transaction->get_order_number();
+$order_status = get_post_status( $transaction->id );
 $listing_meta = me_get_order_item_meta($transaction->id);
 $listing_post = get_post($listing_meta['_listing_id'][0]);
 $author_id = $listing_post->post_author;
@@ -10,7 +11,7 @@ $author_id = $listing_post->post_author;
 	<div class="me-order-detail">
 		<?php
 			me_get_template( 'purchases/transaction-info', array( 'order_number' => $order_number, 'payment_date' => $payment_date ) );
-			me_get_template( 'purchases/order-status' );
+			me_get_template( 'purchases/order-status', array( 'order_status' => $order_status ) );
 			me_get_template( 'purchases/order-item', array( 'listing_meta' => $listing_meta) );
 			me_get_template( 'purchases/order-bill-info', array('transaction' => $transaction) );
 		?>

@@ -333,29 +333,49 @@ function me_status_list_action() {
 }
 add_action( 'me_status_list', 'me_status_list_action' );
 
-function me_print_order_status( $status ) {
+function me_get_order_status_info( $status, $needed = '' ) {
     $status_list = me_get_order_status_list();
     switch ($status) {
         case 'me-pending':
-            $class = 'me-order-pending';
+            $style = 'me-order-pending';
+            $order_process = 1;
+            break;
+        // chua co class cho status nay
+        case 'publish':
+            $style = 'me-order-complete';
+            $order_process = 2;
             break;
         case 'me-complete':
-            $class = 'me-order-complete';
+            $style = 'me-order-complete';
+            $order_process = 3;
             break;
         case 'me-disputed':
-            $class = 'me-order-disputed';
+            $style = 'me-order-disputed';
+            $order_process = 4;
             break;
         case 'me-closed':
-            $class = 'me-order-closed';
+            $style = 'me-order-closed';
+            $order_process = 5;
             break;
         case 'me-resolved':
-            $class = 'me-order-resolved';
+            $style = 'me-order-resolved';
+            $order_process = 5;
             break;
         default:
-            $class = 'me-order-complete';
+            $style = 'me-order-pending';
+            $order_process = 1;
             break;
     }
-    echo '<span class="'.$class.'">'.$status_list[$status].'</span>';
+    if('style' === $needed){
+        return $style;
+    }
+    return $order_process;
+}
+
+function me_print_order_status( $status ) {
+    $status_list = me_get_order_status_list();
+    $style = me_get_order_status_info( $status, 'style' );
+    echo '<span class="'.$style.'">'.$status_list[$status].'</span>';
 }
 
 function me_print_address( $address ) {
