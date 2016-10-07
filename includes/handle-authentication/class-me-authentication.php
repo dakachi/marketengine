@@ -229,7 +229,6 @@ class ME_Authentication {
          *
          */
         do_action('marketengine_user_register', $user, $user_data);
-        // TODO: send confirm email
         return $user;
     }
 

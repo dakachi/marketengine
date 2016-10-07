@@ -34,14 +34,26 @@ class ME_Checkout_Form
     public static function process_checkout()
     {
         if (isset($_POST['checkout']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-checkout')) {
-            $result = ME_Checkout_Handle::checkout($_POST);
-            if (!$result || is_wp_error($result)) {
-                me_wp_error_to_notices($result);
+            $order = ME_Checkout_Handle::checkout($_POST);
+            if (!$order || is_wp_error($order)) {
+                me_wp_error_to_notices($order);
             } else {
                 // redirect to payment gateway or confirm payment
-                wp_redirect($result->transaction_url);
-                exit;
+                self::pay($order);
+                
             }
+        }
+    }
+
+    public static function pay($order){
+        $result = ME_Checkout_Handle::pay($order);
+        if (!$result || is_wp_error($result)) {
+            me_wp_error_to_notices($result);
+            wp_redirect('/me-checkout/pay/'. $order->ID);
+            exit;
+        }else {
+            wp_redirect($result->transaction_url);
+            exit;    
         }
     }
 

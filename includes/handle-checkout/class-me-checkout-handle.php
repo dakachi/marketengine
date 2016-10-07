@@ -44,8 +44,12 @@ class ME_Checkout_Handle {
             return $order;
         }
 
+        return $order;
+    }
+
+    public static function pay($order) {
         $payments       = me_get_available_payment_gateways();
-        $payment_method = $data['payment_method'];
+        $payment_method = $order->get_payment_method();
         // TODO: can dua qua trang pay/order_id de han che tinh trang gap loi khi thanh toan se tao them order moi
         $result = $payments[$payment_method]->setup_payment($order);
 
