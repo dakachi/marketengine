@@ -40,10 +40,6 @@ class ME_Checkout_Handle {
         }
         // create order
         $order = self::create_order($data);
-        if (is_wp_error($order)) {
-            return $order;
-        }
-
         return $order;
     }
 

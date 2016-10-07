@@ -382,8 +382,8 @@ class ME_Order {
             update_post_meta($this->id, '_me_payment_gateway', $payment->name);
             update_post_meta($this->id, '_me_gateway_title', $payment->title);
         } else {
-            update_post_meta($this->id, '_me_payment_gateway', '');
-            update_post_meta($this->id, '_me_gateway_title', '');
+            update_post_meta($this->id, '_me_payment_gateway', $payment);
+            update_post_meta($this->id, '_me_gateway_title', $payment);
         }
     }
 
