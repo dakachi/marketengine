@@ -146,15 +146,4 @@ $shipping_fields = apply_filters('marketengine_shipping_fields', $address_fields
 			</div>
 		</div>
 	</div>
-	
-	<div class="me-switch-billing">
-		<input id="me-local-pickup-input" type="radio" name="me-billing">
-		<label class="me-switch-bill-label" for="me-local-pickup-input"><?php _e("I want local pickup", "enginethemes"); ?></label>
-		<div class="me-local-pickup">
-			<h4>Pickup address:</h4>
-			<p><b>Address:</b>007 Lac Long Quan, Q1, TpHCM</p>
-			<p><b>Email:</b>seller@email.com</p>
-			<p><b>Phone:</b>01234567899</p>
-		</div>
-	</div>
 </div>
