@@ -12,6 +12,8 @@ if(empty($cart_items)) {
 	print_r(__("There is no item selected.", "enginethemes"));
 	return;
 }
+
+var_dump(get_query_var( 'pay'));
 ?>
 <div class="marketengine">
 	<?php me_print_notices(); ?>
@@ -21,8 +23,7 @@ if(empty($cart_items)) {
 		// note
 		me_get_template('checkout/note');
 		// listing details
-		me_get_template('checkout/order-details', array('cart_items' => $cart_items));
-		// include ME()->plugin_path() . '/templates/checkout/order-details.php';
+		me_get_template('checkout/order-details', array('cart_items' => $cart_items));		
 		// seller information
 		me_get_template('checkout/seller-info');
 		// payment gateways

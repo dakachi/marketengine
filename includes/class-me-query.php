@@ -3,15 +3,15 @@
 /**
  *
  */
-function me_pre_get_posts($query){
+function me_pre_get_posts($query) {
     // Only affect the main query
-    if( !$query->is_main_query() ){
+    if (!$query->is_main_query()) {
         return;
     }
-    if( $GLOBALS['wp_rewrite']->use_verbose_page_rules && isset( $query->queried_object->ID ) && $query->queried_object->ID === me_get_page_id( 'listings' ) ){
-        $query->set( 'post_type', 'listing' );
-        $query->set( 'page', '' );
-        $query->set( 'pagename', '' );
+    if ($GLOBALS['wp_rewrite']->use_verbose_page_rules && isset($query->queried_object->ID) && $query->queried_object->ID === me_get_page_id('listings')) {
+        $query->set('post_type', 'listing');
+        $query->set('page', '');
+        $query->set('pagename', '');
 
         // Fix conditional Functions
         $query->is_archive           = true;
@@ -21,50 +21,50 @@ function me_pre_get_posts($query){
     }
 
     // Fix for endpoints on the homepage
-    if ( $query->is_home() && 'page' === get_option( 'show_on_front' ) && absint( get_option( 'page_on_front' ) ) !== absint( $query->get( 'page_id' ) ) ) {
-        $_query = wp_parse_args( $query->query );
-        if ( ! empty( $_query ) ) {
+    if ($query->is_home() && 'page' === get_option('show_on_front') && absint(get_option('page_on_front')) !== absint($query->get('page_id'))) {
+        $_query = wp_parse_args($query->query);
+        if (!empty($_query)) {
             $query->is_page     = true;
             $query->is_home     = false;
             $query->is_singular = true;
-            $query->set( 'page_id', (int) get_option( 'page_on_front' ) );
-            add_filter( 'redirect_canonical', '__return_false' );
+            $query->set('page_id', (int) get_option('page_on_front'));
+            add_filter('redirect_canonical', '__return_false');
         }
     }
 
     // When orderby is set, WordPress shows posts. Get around that here.
-    if ( $query->is_home() && 'page' === get_option( 'show_on_front' ) && absint( get_option( 'page_on_front' ) ) === me_get_page_id( 'listings' ) ) {
-        $_query = wp_parse_args( $query->query );
-        if ( empty( $_query ) || ! array_diff( array_keys( $_query ), array( 'preview', 'page', 'paged', 'cpage', 'orderby' ) ) ) {
+    if ($query->is_home() && 'page' === get_option('show_on_front') && absint(get_option('page_on_front')) === me_get_page_id('listings')) {
+        $_query = wp_parse_args($query->query);
+        if (empty($_query) || !array_diff(array_keys($_query), array('preview', 'page', 'paged', 'cpage', 'orderby'))) {
             $query->is_page = true;
             $query->is_home = false;
-            $query->set( 'page_id', (int) get_option( 'page_on_front' ) );
-            $query->set( 'post_type', 'listing' );
+            $query->set('page_id', (int) get_option('page_on_front'));
+            $query->set('post_type', 'listing');
         }
     }
 
     // Special check for shops with the listing archive on front
-    if ( $query->is_page() && 'page' === get_option( 'show_on_front' ) && absint( $query->get( 'page_id' ) ) === me_get_page_id( 'listings' ) ) {
+    if ($query->is_page() && 'page' === get_option('show_on_front') && absint($query->get('page_id')) === me_get_page_id('listings')) {
 
         // This is a front-page shop
-        $query->set( 'post_type', 'listing' );
-        $query->set( 'page_id', '' );
+        $query->set('post_type', 'listing');
+        $query->set('page_id', '');
 
-        if ( isset( $query->query['paged'] ) ) {
-            $query->set( 'paged', $query->query['paged'] );
+        if (isset($query->query['paged'])) {
+            $query->set('paged', $query->query['paged']);
         }
 
         // Get the actual WP page to avoid errors and let us use is_front_page()
         // This is hacky but works. Awaiting https://core.trac.wordpress.org/ticket/21096
         global $wp_post_types;
 
-        $shop_page  = get_post( me_get_page_id( 'listings' ) );
+        $shop_page = get_post(me_get_page_id('listings'));
 
-        $wp_post_types['listing']->ID           = $shop_page->ID;
-        $wp_post_types['listing']->post_title   = $shop_page->post_title;
-        $wp_post_types['listing']->post_name    = $shop_page->post_name;
-        $wp_post_types['listing']->post_type    = $shop_page->post_type;
-        $wp_post_types['listing']->ancestors    = get_ancestors( $shop_page->ID, $shop_page->post_type );
+        $wp_post_types['listing']->ID         = $shop_page->ID;
+        $wp_post_types['listing']->post_title = $shop_page->post_title;
+        $wp_post_types['listing']->post_name  = $shop_page->post_name;
+        $wp_post_types['listing']->post_type  = $shop_page->post_type;
+        $wp_post_types['listing']->ancestors  = get_ancestors($shop_page->ID, $shop_page->post_type);
 
         // Fix conditional Functions like is_front_page
         $query->is_singular          = false;
@@ -73,17 +73,16 @@ function me_pre_get_posts($query){
         $query->is_page              = true;
 
         // Remove post type archive name from front page title tag
-        add_filter( 'post_type_archive_title', '__return_empty_string', 5 );
+        add_filter('post_type_archive_title', '__return_empty_string', 5);
 
-    // Only apply to product categories, the product post archive, the shop page, product tags, and product attribute taxonomies
-    } elseif ( ! $query->is_post_type_archive( 'listing' ) && ! $query->is_tax( get_object_taxonomies( 'listing' ) ) ) {
+        // Only apply to product categories, the product post archive, the shop page, product tags, and product attribute taxonomies
+    } elseif (!$query->is_post_type_archive('listing') && !$query->is_tax(get_object_taxonomies('listing'))) {
         return;
     }
 }
-add_action('pre_get_posts', 'me_pre_get_posts' );
+add_action('pre_get_posts', 'me_pre_get_posts');
 
-function me_products_plugin_query_vars($vars)
-{
+function me_products_plugin_query_vars($vars) {
     $vars[] = 'order-id';
 
     return $vars;
@@ -97,9 +96,9 @@ add_filter('query_vars', 'me_products_plugin_query_vars');
  * @param  string $page
  * @return int
  */
-function me_get_page_id( $page ) {
-    $page_id = me_option('me_'. $page .'_page_id');
-    return $page_id ? absint($page_id) : -1 ;
+function me_get_page_id($page) {
+    $page_id = me_option('me_' . $page . '_page_id');
+    return $page_id ? absint($page_id) : -1;
 }
 
 /**
@@ -111,7 +110,7 @@ function me_get_page_id( $page ) {
  */
 function me_get_endpoint_name($query_var) {
     $current_endpoints = me_setting_endpoint_name();
-    $query_var = str_replace('-', '_', $query_var);
+    $query_var         = str_replace('-', '_', $query_var);
     return $current_endpoints[$query_var];
 }
 
@@ -123,16 +122,17 @@ function me_get_endpoint_name($query_var) {
  */
 function me_get_default_endpoints() {
     $endpoint_arr = array(
-        'forgot_password'   => 'forgot-password',
-        'reset_password'    => 'reset-password',
-        'register'          => 'register',
-        'edit_profile'      => 'edit-profile',
-        'change_password'   => 'change-password',
-        'listings'          => 'listings',
-        'orders'            => 'orders',
-        'order_id'          => 'order',
-        'purchases'         => 'purchases',
-        'transaction_id'       => 'transaction',
+        'forgot_password' => 'forgot-password',
+        'reset_password'  => 'reset-password',
+        'register'        => 'register',
+        'edit_profile'    => 'edit-profile',
+        'change_password' => 'change-password',
+        'listings'        => 'listings',
+        'orders'          => 'orders',
+        'order_id'        => 'order',
+        'purchases'       => 'purchases',
+        'transaction_id'  => 'transaction',
+        'pay'        => 'pay',
     );
     return $endpoint_arr;
 }
@@ -145,10 +145,12 @@ function me_get_default_endpoints() {
  */
 function me_setting_endpoint_name() {
     $endpoint_arr = me_get_default_endpoints();
-    foreach($endpoint_arr as $key => $value){
-        $option_value = me_option( 'ep_' . $key ) ;
-        if( isset($option_value) && !empty($option_value) && $option_value != $value )
+    foreach ($endpoint_arr as $key => $value) {
+        $option_value = me_option('ep_' . $key);
+        if (isset($option_value) && !empty($option_value) && $option_value != $value) {
             $endpoint_arr[$key] = $option_value;
+        }
+
     }
     return $endpoint_arr;
 }
@@ -158,41 +160,45 @@ function me_setting_endpoint_name() {
  *
  * @access public
  */
-function me_auth_rewrite_rule($rewrite_args){
+function me_auth_rewrite_rule($rewrite_args) {
     foreach ($rewrite_args as $key => $value) {
-        if( $value['page_id'] > -1 ) {
+        if ($value['page_id'] > -1) {
             $page = get_post($value['page_id']);
-            add_rewrite_rule( '^/'.$page->post_name.'/'.$value['endpoint_name'].'/([^/]*)/?','index.php?page_id='.$value['page_id'].'&'.$value['query_var'].'=$matches[1]','top' );
+            add_rewrite_rule('^/' . $page->post_name . '/' . $value['endpoint_name'] . '/([^/]*)/?', 'index.php?page_id=' . $value['page_id'] . '&' . $value['query_var'] . '=$matches[1]', 'top');
         }
     }
 }
-
 
 /**
  * add account endpoint
  */
 function me_init_endpoint() {
     $endpoint_arr = me_setting_endpoint_name();
-    foreach($endpoint_arr as $key => $value){
+    foreach ($endpoint_arr as $key => $value) {
         add_rewrite_endpoint($value, EP_ROOT | EP_PAGES, str_replace('_', '-', $key));
     }
 
     $rewrite_args = array(
         array(
-            'page_id'           => me_get_page_id( 'confirm_order' ),
-            'endpoint_name'    => me_get_endpoint_name( 'order-id' ),
-            'query_var'    => 'order-id' ,
+            'page_id'       => me_get_page_id('confirm_order'),
+            'endpoint_name' => me_get_endpoint_name('order-id'),
+            'query_var'     => 'order-id',
         ),
         array(
-            'page_id'           => me_get_page_id( 'transaction_detail' ),
-            'endpoint_name'    => me_get_endpoint_name( 'transaction-id' ),
-            'query_var'    => 'transaction-id',
+            'page_id'       => me_get_page_id('transaction_detail'),
+            'endpoint_name' => me_get_endpoint_name('transaction-id'),
+            'query_var'     => 'transaction-id',
+        ),
+        array(
+            'page_id'       => me_get_page_id('me_checkout'),
+            'endpoint_name' => me_get_endpoint_name('pay'),
+            'query_var'     => 'pay',
         ),
     );
-    me_auth_rewrite_rule( $rewrite_args );
+    me_auth_rewrite_rule($rewrite_args);
 
-    $endpoints = array('orders', 'purchases', 'listings' );
-    foreach($endpoints as $endpoint){
+    $endpoints = array('orders', 'purchases', 'listings');
+    foreach ($endpoints as $endpoint) {
         add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
     }
 
@@ -255,7 +261,6 @@ function me_filter_listing_type_query($query) {
     }
     return $query;
 }
-
 
 /**
  * Sort the listing
