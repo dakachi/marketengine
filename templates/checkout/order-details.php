@@ -4,11 +4,7 @@ $total = 0;
 ?>
 <?php do_action( 'marketengine_before_checkout_form' ); ?>
 <div class="me-shopping-cart">
-	<?php if( !isset($is_transaction) ) : ?>
 	<h3><?php _e("Your order", "enginethemes"); ?></h3>
-	<?php else: ?>
-	<h5><?php _e("Order Item", "enginethemes"); ?></h5>
-	<?php endif; ?>
 	<div class="me-table me-cart-table">
 		<div class="me-table-rhead">
 			<div class="me-table-col me-cart-name"><?php _e("Listing", "enginethemes"); ?></div>
@@ -68,7 +64,6 @@ $total = 0;
 			<div class="me-table-col me-cart-totals">$<?php echo $total  ?></div>
 		</div>
 	</div>
-	<?php if( !isset($is_transaction) ) : ?>
 	<?php wp_nonce_field('me-checkout'); ?>
 	<div>
 		<input type="hidden" name="payment_method" value="ppadaptive" />
@@ -76,11 +71,6 @@ $total = 0;
 	<div class="me-checkout-submit">
 		<input class="me-checkout-submit-btn" type="submit" name="checkout" value="<?php _e("MAKE PAYMENT", "enginethemes"); ?>">
 	</div>
-	<?php else: ?>
-	<div class="me-checkout-submit">
-		<input class="me-checkout-submit-btn" type="submit" name="checkout" value="<?php _e("MAKE COMPLETED", "enginethemes"); ?>">
-	</div>
-	<?php endif; ?>
 </div>
 
 <?php do_action( 'marketengine_after_checkout_form' ); ?>
