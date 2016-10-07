@@ -24,6 +24,9 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-me-download:before {
+  content: "\e91f";
+}
 .icon-me-reply:before {
   content: "\e91c";
 }

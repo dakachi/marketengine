@@ -333,6 +333,31 @@ function me_status_list_action() {
 }
 add_action( 'me_status_list', 'me_status_list_action' );
 
+function me_print_order_status( $status ) {
+    $status_list = me_get_order_status_list();
+    switch ($status) {
+        case 'me-pending':
+            $class = 'me-order-pending';
+            break;
+        case 'me-complete':
+            $class = 'me-order-complete';
+            break;
+        case 'me-disputed':
+            $class = 'me-order-disputed';
+            break;
+        case 'me-closed':
+            $class = 'me-order-closed';
+            break;
+        case 'me-resolved':
+            $class = 'me-order-resolved';
+            break;
+        default:
+            $class = 'me-order-complete';
+            break;
+    }
+    echo '<span class="'.$class.'">'.$status_list[$status].'</span>';
+}
+
 function me_print_address( $address ) {
     echo "{$address['address']}, {$address['city']}, {$address['country']}";
 }

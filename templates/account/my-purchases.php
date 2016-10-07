@@ -1,3 +1,12 @@
+<?php
+	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+	$query = new WP_Query( array(
+		'post_type' 	=> 'me_order',
+		'post_status'	=> 'any',
+		'post_author'	=> get_current_user_id(),
+		'paged'			   => $paged,
+	) );
+?>
 <div class="me-orderlist">
 	<div class="marketengine-tabs">
 		<ul class="me-tabs">
@@ -8,16 +17,14 @@
 			<!-- Tabs Orders -->
 			<div class="me-tabs-section" style="display: block;">
 
-				<div class="me-orderlist-filter">
-					<div class="me-row">
-						<div class="me-col-sm-6 me-col-sm-pull-6">
-							<a href="#" class="me-export-report">Export report</a>
-						</div>
-						<div class="me-col-sm-6 me-col-sm-push-6">
-							<?php do_action( 'me_status_list' ); ?>
-						</div>
-					</div>
+				<!--Mobile-->
+				<div class="me-orderlist-filter-tabs">
+					<span>Filter</span>
+					<span>Filter list</span>
 				</div>
+
+				<?php me_get_template('global/order-filter'); ?>
+
 				<div class="me-table me-orderlist-table">
 					<div class="me-table-rhead">
 						<div class="me-table-col me-order-id">TRANSACTION ID</div>
@@ -26,62 +33,45 @@
 						<div class="me-table-col me-order-date">DATE OF ORDER</div>
 						<div class="me-table-col me-order-listing">LISTING</div>
 					</div>
+					<?php
+					if( $query->have_posts() ) :
+						while( $query->have_posts() ) : $query->the_post();
+
+							$order = new ME_Order( get_the_ID() );
+							$order_total = $order->get_total();
+
+							$order_listing = me_get_order_items( get_the_ID() );
+							$order_date = get_the_date(get_option('date_format'), get_the_ID());
+
+					?>
 					<div class="me-table-row">
-						<div class="me-table-col me-order-id"><a href="">#ME123456</a></div>
-						<div class="me-table-col me-order-status"><span class="me-order-complete">Complete</span></div>
-						<div class="me-table-col me-order-amount">$630001200.00</div>
-						<div class="me-table-col me-order-date">7 july, 2016</div>
+					<?php // TODO: replace this with transaction number ?>
+						<div class="me-table-col me-order-id"><a href="<?php echo $order->get_transaction_detail_url(); ?>">#<?php the_ID(); ?></a></div>
+						<div class="me-table-col me-order-status"><?php me_print_order_status( get_post_status( get_the_ID()) ); ?></div>
+						<div class="me-table-col me-order-amount">$<?php echo $order_total; ?></div>
+						<div class="me-table-col me-order-date"><?php echo $order_date; ?></div>
 						<div class="me-table-col me-order-listing">
 							<div class="me-order-listing-info">
-								<p>Extra Slim Innovator Wool Blend Navy Suit Jacket Extra Slim Innovator Wool Blend Navy Suit Jacket</p>
+								<p><?php echo isset($order_listing[0]) ? $order_listing[0]->order_item_name : '' ?></p>
 							</div>
 						</div>
 					</div>
-					<!-- <div class="me-table-row">
-						<div class="me-table-col me-order-id"><a href="">#ME123456</a></div>
-						<div class="me-table-col me-order-status"><span class="me-order-pending">Pending</span></div>
-						<div class="me-table-col me-order-amount">$1200.00</div>
-						<div class="me-table-col me-order-date">7 july, 2016</div>
-						<div class="me-table-col me-order-listing">
-							<div class="me-order-listing-info">
-								<p>Extra Slim Innovator Wool Blend Navy Suit Jacket</p>
-							</div>
-						</div>
-					</div>
-					<div class="me-table-row">
-						<div class="me-table-col me-order-id"><a href="">#ME123456</a></div>
-						<div class="me-table-col me-order-status"><span class="me-order-close">Close</span></div>
-						<div class="me-table-col me-order-amount">$1200.00</div>
-						<div class="me-table-col me-order-date">7 july, 2016</div>
-						<div class="me-table-col me-order-listing">
-							<div class="me-order-listing-info">
-								<p>Extra Slim Innovator Wool Blend Navy Suit Jacket</p>
-							</div>
-						</div>
-					</div>
-					<div class="me-table-row">
-						<div class="me-table-col me-order-id"><a href="">#ME123456</a></div>
-						<div class="me-table-col me-order-status"><span class="me-order-dispute">Dispute</span></div>
-						<div class="me-table-col me-order-amount">$1200.00</div>
-						<div class="me-table-col me-order-date">7 july, 2016</div>
-						<div class="me-table-col me-order-listing">
-							<div class="me-order-listing-info">
-								<p>Extra Slim Innovator Wool Blend Navy Suit Jacket</p>
-							</div>
-						</div>
-					</div> -->
+					<?php
+						endwhile;
+					?>
 				</div>
 
 				<div class="marketengine-paginations">
-					<a class="prev page-numbers" href="#">&lt;</a>
-					<a class="page-numbers" href="#">1</a>
-					<span class="page-numbers current">2</span>
-					<a class="page-numbers" href="#">3</a>
-					<a class="next page-numbers" href="">&gt;</a>
+					<?php me_paginate_link( $query ); ?>
 				</div>
 				<div class="marketengine-loadmore">
 					<a href="" class="me-loadmore me-loadmore-order">Load more</a>
 				</div>
+
+				<?php
+	wp_reset_postdata();
+					endif;
+				?>
 
 			</div>
 			<!-- Tabs Inquiries -->

@@ -3,7 +3,7 @@
 	if( !empty($status_list) ) :
 ?>
 	<select name="" id="">
-		<option value="">Filter transaction's status</option>
+		<option value="">Filter order's status</option>
 	<?php
 		foreach ($status_list as $key => $status) :
 	?>
