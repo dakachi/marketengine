@@ -26,5 +26,7 @@ $location = $seller->location[0] ? $seller->location[0] : '';
 			<b class="pull-right"><?php echo date( 'd M, Y', strtotime($seller->user_registered)); ?></b>
 		</li>
 	</ul>
-	<a href="<?php echo get_author_posts_url($author_id); ?>" class="me-view-profile">View profile</a>
+	<a href="<?php echo get_author_posts_url($author_id); ?>" class="me-view-profile">
+		<?php _e("View profile", "enginethemes"); ?>
+	</a>
 </div>
