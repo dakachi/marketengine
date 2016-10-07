@@ -14,13 +14,7 @@
 							<a href="#" class="me-export-report">Export report</a>
 						</div>
 						<div class="me-col-sm-6 me-col-sm-push-6">
-							<select name="" id="">
-								<option value="">Filter transaction's status</option>
-								<option value="complete">Complete</option>
-								<option value="pending">Pending</option>
-								<option value="close">Close</option>
-								<option value="Dispute">Dispute</option>
-							</select>
+							<?php do_action( 'me_status_list' ); ?>
 						</div>
 					</div>
 				</div>
