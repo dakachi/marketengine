@@ -40,6 +40,11 @@ class ME_Checkout_Form {
 
             }
         }
+
+        if (isset($_POST['order_id']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-pay')) {
+            $order = new ME_Order($_POST['order_id']);
+            self::process_pay($order);            
+        }
     }
 
     public static function process_pay($order) {

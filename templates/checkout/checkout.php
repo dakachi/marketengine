@@ -13,7 +13,6 @@ if(empty($cart_items)) {
 	return;
 }
 
-var_dump(get_query_var( 'pay'));
 ?>
 <div class="marketengine">
 	<?php me_print_notices(); ?>
