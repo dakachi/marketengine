@@ -11,9 +11,9 @@ function me_add_to_cart($item, $qty) {
     }
     $me_cart = ME()->session->get('me_carts', array());
     /**
-     * me_add_$notice_type
-     * filter notice message
-     * @param String $message
+     * me_add_to_cart
+     *
+     * @param int $item
      * @since 1.0
      */
     $item            = apply_filters('me_add_to_cart', $item);
@@ -31,13 +31,6 @@ function me_get_cart_items() {
     if (empty($me_cart)) {
         return false;
     }
-
-    /**
-     * me_add_$notice_type
-     * filter notice message
-     * @param String $message
-     * @since 1.0
-     */
     return $me_cart['item'];
 }
 
@@ -47,11 +40,6 @@ function me_empty_cart() {
         return;
     }
     $me_cart = ME()->session->get('me_carts', array());
-    /**
-     * me_add_$notice_type
-     * filter notice message
-     * @param String $message
-     * @since 1.0
-     */
+    // empty cart
     ME()->session->set('me_carts', array());
 }

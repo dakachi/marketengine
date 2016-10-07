@@ -36,13 +36,13 @@ class ME_Checkout_Form {
             } else {
                 me_empty_cart();
                 // redirect to payment gateway or confirm payment
-                self::pay($order);
+                self::process_pay($order);
 
             }
         }
     }
 
-    public static function pay($order) {
+    public static function process_pay($order) {
         $result = ME_Checkout_Handle::pay($order);
         if (!$result || is_wp_error($result)) {
             me_wp_error_to_notices($result);

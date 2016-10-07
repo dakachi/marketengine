@@ -42,7 +42,7 @@ class Tests_ME_Order_Add_Listing extends WP_UnitTestCase {
             'sub_cat' => $this->sub_cat,
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
-        $this->listing = new ME_Listing_Purchasion($p1);
+        $this->listing = me_get_listing($p1);
     }
 
     /**
@@ -55,7 +55,7 @@ class Tests_ME_Order_Add_Listing extends WP_UnitTestCase {
         $listing_id = me_get_order_item_meta($item_id, '_listing_id', true);
         $price = me_get_order_item_meta($item_id, '_listing_price', true);
 
-        $this->assertEquals($this->listing->id, $listing_id);
+        $this->assertEquals($this->listing->ID, $listing_id);
         $this->assertEquals(1000, $price);
 
     }
