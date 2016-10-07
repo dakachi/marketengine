@@ -46,7 +46,7 @@
 					?>
 					<div class="me-table-row">
 					<?php // TODO: replace this with transaction number ?>
-						<div class="me-table-col me-order-id"><a href="">#<?php the_ID(); ?></a></div>
+						<div class="me-table-col me-order-id"><a href="<?php echo $order->get_transaction_detail_url(); ?>">#<?php the_ID(); ?></a></div>
 						<div class="me-table-col me-order-status"><?php me_print_order_status( get_post_status( get_the_ID()) ); ?></div>
 						<div class="me-table-col me-order-amount">$<?php echo $order_total; ?></div>
 						<div class="me-table-col me-order-date"><?php echo $order_date; ?></div>
