@@ -107,6 +107,7 @@ class ME_Checkout_Handle {
     }
 
     public static function inquiry($data) {
+
         if (empty($data['inquiry_listing'])) {
             return new WP_Error('empty_listing', __("The listing is required.", "enginethemes"));
         }
@@ -116,25 +117,45 @@ class ME_Checkout_Handle {
         }
 
         $id = me_get_current_inquiry($listing_id);
-        if(!$id) {
-            $listing_id = $data['inquiry_listing'];
+        // TODO: tao inquiry link voi listing dong thoi tao message, inquiry chi luu thong tin listing thoi
+        if (!$id) {
             //TODO: validate listing id
+            $listing_id = $data['inquiry_listing'];
+
+            // TODO: filter the content
             $content = $data['content'];
 
+
+            // create inquiry
             $result = me_insert_message(
                 array(
-                    'post_content' => $content,
+                    'post_content' => 'Inquiry listing #' . $listing_id,
                     'post_title'   => 'Inquiry listing #' . $listing_id,
                     'post_type'    => 'inquiry',
-                    'receiver'     => get_post_field( 'post_author', $listing_id ),
-                    'post_parent'  => $listing_id
+                    'receiver'     => get_post_field('post_author', $listing_id),
+                    'post_parent'  => $listing_id,
                 ), true
             );
+
+            if ($result) {
+                // add message to inquiry
+                me_insert_message(
+                    array(
+                        'post_content' => $content,
+                        'post_title'   => 'Message listing #' . $listing_id,
+                        'post_type'    => 'message',
+                        'receiver'     => get_post_field('post_author', $listing_id),
+                        'post_parent'  => $result,
+                    ), true
+                );
+            }
         }
     }
 
     public static function message($data) {
-
+        // inquiry id
+        // get receiver
+        // add message
     }
 
 }

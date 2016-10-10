@@ -4,6 +4,9 @@
 <?php
 // TODO: kiem tra da co inquiry chua, neu có thi tao message form, chua thi tao inquiry form
 // inquiry se nam giu thong tin listing va lien ket cac message lai voi nhau
+
+// danh sach inquiry chi co the sap xep theo tra loi moi nhat
+// new message sent and read ??
 $messages = array_reverse ($messages);
 ?>
 <div class="marketengine">
