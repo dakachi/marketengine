@@ -69,6 +69,8 @@ class ME_Checkout_Form {
 
     public static function process_contact() {
         if (isset($_POST['send_inquiry']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-send-inquiry')) {
+            // check user login
+
             $redirect = me_get_page_permalink('inquiry');
             //TODO: kiem tra giua 2 user da co inquiry chua, tra ve id va dieu huong den trang inquiry
             $id = me_get_current_inquiry($_POST['send_inquiry']);
@@ -85,6 +87,7 @@ class ME_Checkout_Form {
     }
 
     public static function send_inquiry() {
+        // send inquiry to listing's owner
         if (isset($_POST['content']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-post-inquiry')) {
             $result = ME_Checkout_Handle::inquiry($_POST);
             if (is_wp_error($result)) {
@@ -96,6 +99,8 @@ class ME_Checkout_Form {
                 exit;
             }
         }
+
+        // send message in an inquiry
     }
 
 }

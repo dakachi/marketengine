@@ -114,18 +114,27 @@ class ME_Checkout_Handle {
         if (empty($data['content'])) {
             return new WP_Error('empty_inquiry_content', __("The inquiry content is required.", "enginethemes"));
         }
-        $listing_id = $data['inquiry_listing'];
-        //TODO: validate listing id
-        $content = $data['content'];
 
-        $result = me_insert_message(
-            array(
-                'post_content' => $content,
-                'post_title'   => 'Inquiry listing #' . $listing_id,
-                'post_type'    => 'inquiry',
-                'receiver'     => get_post_field( 'post_author', $listing_id ),
-                'post_parent'  => $listing_id
-            ), true
-        );
+        $id = me_get_current_inquiry($listing_id);
+        if(!$id) {
+            $listing_id = $data['inquiry_listing'];
+            //TODO: validate listing id
+            $content = $data['content'];
+
+            $result = me_insert_message(
+                array(
+                    'post_content' => $content,
+                    'post_title'   => 'Inquiry listing #' . $listing_id,
+                    'post_type'    => 'inquiry',
+                    'receiver'     => get_post_field( 'post_author', $listing_id ),
+                    'post_parent'  => $listing_id
+                ), true
+            );
+        }
     }
+
+    public static function message($data) {
+
+    }
+
 }

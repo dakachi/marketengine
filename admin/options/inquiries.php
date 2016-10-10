@@ -17,7 +17,6 @@ return array(
                 'type'        => 'select',
                 'name'        => 'me_inquiry_page_id',
                 'data'        => marketengine_get_list_of_page(),
-                'template'    => array(),
             )
         ),
     )

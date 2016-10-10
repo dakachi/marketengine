@@ -2,6 +2,8 @@
 
 <?php $messages = me_get_messages(array('post_type' => 'inquiry')); ?>
 <?php
+// TODO: kiem tra da co inquiry chua, neu có thi tao message form, chua thi tao inquiry form
+// inquiry se nam giu thong tin listing va lien ket cac message lai voi nhau
 $messages = array_reverse ($messages);
 ?>
 <div class="marketengine">
