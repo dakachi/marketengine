@@ -14,6 +14,13 @@ class ME_Checkout_Form {
         add_action('wp_loaded', array(__CLASS__, 'send_inquiry'));
     }
 
+    public static function confirm_payment() {
+        if (!empty($_GET['me-payment'])) {
+            $request = sanitize_text_field(strtolower($_GET['me-payment']));
+            do_action('marketegine_' . $request, $_REQUEST);
+        }
+    }
+
     public static function add_to_cart() {
         if (isset($_POST['add_to_cart']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-add-to-cart')) {
             // kiem tra san pham co con duoc ban ko
@@ -43,7 +50,7 @@ class ME_Checkout_Form {
         // TODO: update order function
         if (isset($_POST['order_id']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-pay')) {
             $order = new ME_Order($_POST['order_id']);
-            self::process_pay($order);            
+            self::process_pay($order);
         }
     }
 
@@ -60,15 +67,10 @@ class ME_Checkout_Form {
         }
     }
 
-    public static function confirm_payment() {
-        if (!empty($_GET['me-payment'])) {
-            $request = sanitize_text_field(strtolower($_GET['me-payment']));
-            do_action('marketegine_' . $request, $_REQUEST);
-        }
-    }
-
     public static function process_contact() {
         if (isset($_POST['send_inquiry']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-send-inquiry')) {
+            // check user login
+
             $redirect = me_get_page_permalink('inquiry');
             //TODO: kiem tra giua 2 user da co inquiry chua, tra ve id va dieu huong den trang inquiry
             $id = me_get_current_inquiry($_POST['send_inquiry']);
@@ -77,7 +79,7 @@ class ME_Checkout_Form {
                 wp_redirect($redirect);
                 exit;
             } else {
-                $redirect = add_query_arg(array('id' => $_POST['send_inquiry']), $id);
+                $redirect = add_query_arg(array('id' => $id), $redirect);
                 wp_redirect($redirect);
                 exit;
             }
@@ -85,8 +87,22 @@ class ME_Checkout_Form {
     }
 
     public static function send_inquiry() {
+        // send inquiry to listing's owner
         if (isset($_POST['content']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-post-inquiry')) {
             $result = ME_Checkout_Handle::inquiry($_POST);
+            if (is_wp_error($result)) {
+                me_wp_error_to_notices($result);
+            } else {
+                $redirect = me_get_page_permalink('inquiry');
+                $redirect = add_query_arg(array('id' => $_POST['inquiry_listing']), $redirect);
+                wp_redirect($redirect);
+                exit;
+            }
+        }
+
+        // send message in an inquiry
+        if (isset($_POST['content']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-inquiry-message')) {
+            $result = ME_Checkout_Handle::message($_POST);
             if (is_wp_error($result)) {
                 me_wp_error_to_notices($result);
             } else {

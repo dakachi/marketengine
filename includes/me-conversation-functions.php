@@ -561,18 +561,20 @@ function me_delete_message_meta($mesage_id, $meta_key, $meta_value = '') {
  * @param int $listing_id
  * @return int $inquiry_id
  */
-function me_get_current_inquiry($listing_id) {
+function me_get_current_inquiry($listing_id, $sender = '') {
     global $wpdb;
+    if(!$sender) {
+        $sender = get_current_user_id();
+    }
 
-    $user_id = get_current_user_id();
-    if(!$user_id) return false;
+    if(!$sender) return false;
 
-    $message_table = $wpdb->prefix . 'marketengine_message_item'; 
-    $sql = "SELECT ID FROM $message_table WHERE sender = $user_id AND $post_parent = $listing_id AND post_type='inquiry'";
+    $message_table = $wpdb->prefix . 'marketengine_message_item';
+    $sql = "SELECT ID FROM $message_table WHERE sender = $sender AND post_parent = $listing_id AND post_type='inquiry'";
 
     $inquiry_id = $wpdb->get_var($sql);
 
-    return $inquiry_id;   
+    return $inquiry_id;
 }
 
 /**

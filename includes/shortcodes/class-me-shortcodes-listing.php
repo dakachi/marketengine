@@ -49,18 +49,31 @@ class ME_Shortcodes_Listing {
 
 
     public static function inquiry_form() {
-        $listing_id = $_GET['id'];
-        $listing  = get_post($listing_id);
-        if($listing) {
-            $listing = new ME_Listing_Contact($listing);
+        if(!empty($_GET['id'])) {
+            $listing_id = $_GET['id'];
+            $listing  = get_post($listing_id);
+            if($listing) {
+                $listing = new ME_Listing_Contact($listing);
+            }
+
+            //TODO: check current user can access inquiry list or note
+
+            ob_start();
+            me_get_template('inquiry/inquiry', array('listing' => $listing));
+            $content = ob_get_clean();
+            return $content;
         }
 
-        //TODO: check current user can access inquiry list or note
+        if(!empty($_GET['inquiry_id'])) {
+            $inquiry_id = $_GET['inquiry_id'];
+            $inquiry  = me_get_message($inquiry_id);
+            //TODO: check current user can access inquiry list or note
+            ob_start();
+            me_get_template('inquiry/inquiry-message', array('inquiry' => $inquiry));
+            $content = ob_get_clean();
+            return $content;
+        }
 
-        ob_start();
-        me_get_template('inquiry/inquiry', array('listing' => $listing));
-        $content = ob_get_clean();
-        return $content;
     }
 
     public static function transaction_detail() {

@@ -40,9 +40,8 @@ function marketengine_option_view() {
         ),
         'me-inquiry' => array(
             'title'    => __("Inquiry", "enginethemes"),
-            'id'     => 'inquiry-settings',
             'slug'     => 'me-inquiry',
-            'template' => include (dirname(__FILE__). '/options/inquiry.php'),
+            'template' => include (dirname(__FILE__). '/options/inquiries.php'),
         ),
     );
     echo '<div class="marketengine-tabs">';
