@@ -126,6 +126,6 @@ if( $query->have_posts() ):
 	<!--// marketengine-content -->
 <?php
 else:
-	me_get_template('content-listing-none');
+	me_get_template('loop/content-listing-none');
 endif;
 ?>
