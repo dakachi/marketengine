@@ -147,6 +147,21 @@ class ME_Order {
     }
 
     /**
+     * Get listing item
+     *
+     * @param string $type Order id
+     *
+     * @since 1.0
+     *
+     * @return listing item
+     */
+    public function get_listing() {
+        $order_listing_item = me_get_order_items($this->id, 'listing_item');
+        $listing_item = me_get_order_item_meta($order_listing_item[0]->order_item_id);
+        return $listing_item;
+    }
+
+    /**
      * Add receiver to order details
      *
      * @param ME_User $receiver The ME user object

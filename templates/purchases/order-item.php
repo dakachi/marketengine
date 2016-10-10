@@ -15,29 +15,27 @@ $total = 0;
 		<?php do_action( 'marketengine_before_cart_item_list' ); ?>
 
 		<?php
-			extract($listing_meta);
-			$listing = me_get_listing($_listing_id[0]);
-			$total += $listing->get_price();
-			$unit = ($_qty[0]) ? $_qty[0] : 1;
+			$listing = $listing_item['_listing_id'];
+			$unit = ($listing_item['_qty']) ? $listing_item['_qty'][0] : 1;
 		?>
 
 		<div class="me-table-row me-cart-item">
 			<div class="me-table-col me-cart-name">
 				<div class="me-cart-listing">
-					<a href="<?php echo get_permalink( $listing->ID ); ?>">
-						<?php echo get_the_post_thumbnail($listing->ID); ?>
-						<span><?php echo esc_html(get_the_title($listing->ID)); ?></span>
+					<a href="<?php echo get_permalink( $listing_obj->ID ); ?>">
+						<?php echo get_the_post_thumbnail($listing_obj->ID); ?>
+						<span><?php echo esc_html(get_the_title($listing_obj->ID)); ?></span>
 					</a>
 				</div>
 			</div>
 			<div class="me-table-col me-cart-price">
-				$<?php echo $listing->get_price(); ?>
+				$<?php echo $listing_obj->get_price(); ?>
 			</div>
 			<div class="me-table-col me-cart-units">
 				<?php echo $unit ?>
 			</div>
 			<div class="me-table-col me-cart-units-total">
-				$<?php echo ($listing->get_price()) * $unit; ?>
+				$<?php echo ($listing_obj->get_price()) * $unit; ?>
 			</div>
 
 			<input type="hidden" name="listing_item[<?php echo $key; ?>][id]" value="<?php echo $item['id']; ?>" />
@@ -58,7 +56,7 @@ $total = 0;
 			<div class="me-table-col me-table-empty"></div>
 			<div class="me-table-col me-table-empty"></div>
 			<div class="me-table-col me-cart-amount"><?php _e("Total amount:", "enginethemes"); ?></div>
-			<div class="me-table-col me-cart-totals">$<?php echo $total  ?></div>
+			<div class="me-table-col me-cart-totals">$<?php echo ($listing_obj->get_price()) * $unit;  ?></div>
 		</div>
 	</div>
 	<div class="me-checkout-submit">
