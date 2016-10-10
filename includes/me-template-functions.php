@@ -379,5 +379,9 @@ function me_print_order_status( $status ) {
 }
 
 function me_print_address( $address ) {
-    echo "{$address['address']}, {$address['city']}, {$address['country']}";
+    echo "Name: {$address['first_name']} {$address['last_name']} ";
+    foreach ($address as $key => $value) {
+        if($key === 'first_name' || $key === 'last_name') continue;
+        echo "<p>{$key}: {$value}</p>";
+    }
 }
