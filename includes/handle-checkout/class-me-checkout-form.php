@@ -101,6 +101,17 @@ class ME_Checkout_Form {
         }
 
         // send message in an inquiry
+        if (isset($_POST['content']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-inquiry-message')) {
+            $result = ME_Checkout_Handle::message($_POST);
+            if (is_wp_error($result)) {
+                me_wp_error_to_notices($result);
+            } else {
+                $redirect = me_get_page_permalink('inquiry');
+                $redirect = add_query_arg(array('id' => $_POST['inquiry_listing']), $redirect);
+                wp_redirect($redirect);
+                exit;
+            }
+        }
     }
 
 }
