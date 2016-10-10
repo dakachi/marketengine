@@ -196,7 +196,7 @@ if (!class_exists('MarketEngine')):
             wp_enqueue_script('user_profile', $this->plugin_url() . "/assets/js/user-profile$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('tag_box', $this->plugin_url() . "/assets/js/tag-box$suffix.js", array('jquery', 'suggest'), $this->version, true);
             wp_enqueue_script('post_listing', $this->plugin_url() . "/assets/js/post-listing$suffix.js", array('jquery'), $this->version, true);
-            wp_enqueue_script('jquery.ui', $this->plugin_url() . "/assets/js/jquery.ui$suffix.js", array('jquery'), $this->version, true);
+            wp_enqueue_script('jquery-ui', $this->plugin_url() . "/assets/js/jquery-ui$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('jquery.slider', $this->plugin_url() . "/assets/js/jquery.slider$suffix.js", array('jquery', 'jquery.ui'), $this->version, true);
 
             wp_enqueue_script('magnific_popup', $this->plugin_url() . "/assets/js/jquery.magnific-popup.min$suffix.js", array('jquery'), $this->version, true);
