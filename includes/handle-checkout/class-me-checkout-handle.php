@@ -14,8 +14,10 @@ if (!defined('ABSPATH')) {
  * @author      EngineThemesTeam
  * @category    Class
  */
-class ME_Checkout_Handle {
-    public static function checkout($data) {
+class ME_Checkout_Handle
+{
+    public static function checkout($data)
+    {
         $rules = array(
             'listing_id'     => 'required|numeric',
             'payment_method' => 'required|string',
@@ -43,7 +45,8 @@ class ME_Checkout_Handle {
         return $order;
     }
 
-    public static function pay($order) {
+    public static function pay($order)
+    {
         $payments       = me_get_available_payment_gateways();
         $payment_method = $order->get_payment_method();
         // TODO: can dua qua trang pay/order_id de han che tinh trang gap loi khi thanh toan se tao them order moi
@@ -60,7 +63,8 @@ class ME_Checkout_Handle {
      * @since 1.0
      * @return WP_Error | ME_Order
      */
-    public static function create_order($data) {
+    public static function create_order($data)
+    {
         global $user_ID;
         $data['post_author'] = $user_ID;
 
@@ -106,7 +110,8 @@ class ME_Checkout_Handle {
         return $order;
     }
 
-    public static function inquiry($data) {
+    public static function inquiry($data)
+    {
 
         if (empty($data['inquiry_listing'])) {
             return new WP_Error('empty_listing', __("The listing is required.", "enginethemes"));
@@ -115,19 +120,18 @@ class ME_Checkout_Handle {
         if (empty($data['content'])) {
             return new WP_Error('empty_inquiry_content', __("The inquiry content is required.", "enginethemes"));
         }
+        //TODO: validate listing id
+        $listing_id = $data['inquiry_listing'];
+        $listing = get_post( $listing_id );
 
-        $id = me_get_current_inquiry($listing_id);
+        // get listing's current inquiry id
+        $inquiry_id = me_get_current_inquiry($listing_id);
+        // strip html tag
+        $content = strip_tags($data['content']);
         // TODO: tao inquiry link voi listing dong thoi tao message, inquiry chi luu thong tin listing thoi
-        if (!$id) {
-            //TODO: validate listing id
-            $listing_id = $data['inquiry_listing'];
-
-            // TODO: filter the content
-            $content = $data['content'];
-
-
+        if (!$inquiry_id) {
             // create inquiry
-            $result = me_insert_message(
+            $inquiry_id = me_insert_message(
                 array(
                     'post_content' => 'Inquiry listing #' . $listing_id,
                     'post_title'   => 'Inquiry listing #' . $listing_id,
@@ -136,26 +140,64 @@ class ME_Checkout_Handle {
                     'post_parent'  => $listing_id,
                 ), true
             );
-
-            if ($result) {
-                // add message to inquiry
-                me_insert_message(
-                    array(
-                        'post_content' => $content,
-                        'post_title'   => 'Message listing #' . $listing_id,
-                        'post_type'    => 'message',
-                        'receiver'     => get_post_field('post_author', $listing_id),
-                        'post_parent'  => $result,
-                    ), true
-                );
+            if (is_wp_error($inquiry_id)) {
+                return $inquiry_id;
             }
         }
+
+        $message_data = array(
+            'listing_id' => $listing_id,
+            'content'    => $content,
+            'inquiry_id' => $inquiry_id,
+        );
+        return self::insert_message($message_data);
     }
 
-    public static function message($data) {
+    public static function message($data)
+    {
+        // TODO: check user can send message in inquiry ? sender or receiver
         // inquiry id
         // get receiver
+        $listing_id = $data['inquiry_listing'];
+        $inquiry_id = $data['inquiry_id'];
+        $listing = get_post( $listing_id );
+        // strip html tag
+        $content = strip_tags($data['content']);
         // add message
+        $message_data = array(
+            'listing_id' => $listing_id,
+            'content'    => $content,
+            'inquiry_id' => $inquiry_id,
+        );
+        return self::insert_message($message_data);
     }
 
+    public static function insert_message($message_data)
+    {
+        if ($message_data['inquiry_id']) {
+            // add message to inquiry
+            $current_user = get_current_user_id();
+            $inquiry      = me_get_message($message_data['inquiry_id']);
+
+            if ($inquiry->sender == $current_user) {
+                $receiver = $inquiry->receiver;
+            } else {
+                $receiver = $inquiry->sender;
+            }
+            $message_id = me_insert_message(
+                array(
+                    'post_content' => $message_data['content'],
+                    'post_title'   => 'Message listing #' . $message_data['listing_id'],
+                    'post_type'    => 'message',
+                    'receiver'     => $receiver,
+                    'post_parent'  => $message_data['inquiry_id'],
+                ), true
+            );
+            if (is_wp_error($message_id)) {
+                return $message_id;
+            }
+
+        }
+        return $inquiry_id;
+    }
 }
