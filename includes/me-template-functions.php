@@ -382,6 +382,7 @@ function me_print_address( $address ) {
     echo "Name: {$address['first_name']} {$address['last_name']} ";
     foreach ($address as $key => $value) {
         if($key === 'first_name' || $key === 'last_name') continue;
+        $key = ucfirst( $key );
         echo "<p>{$key}: {$value}</p>";
     }
 }
