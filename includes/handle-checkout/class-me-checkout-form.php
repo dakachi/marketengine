@@ -14,6 +14,13 @@ class ME_Checkout_Form {
         add_action('wp_loaded', array(__CLASS__, 'send_inquiry'));
     }
 
+    public static function confirm_payment() {
+        if (!empty($_GET['me-payment'])) {
+            $request = sanitize_text_field(strtolower($_GET['me-payment']));
+            do_action('marketegine_' . $request, $_REQUEST);
+        }
+    }
+
     public static function add_to_cart() {
         if (isset($_POST['add_to_cart']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-add-to-cart')) {
             // kiem tra san pham co con duoc ban ko
@@ -60,13 +67,6 @@ class ME_Checkout_Form {
         }
     }
 
-    public static function confirm_payment() {
-        if (!empty($_GET['me-payment'])) {
-            $request = sanitize_text_field(strtolower($_GET['me-payment']));
-            do_action('marketegine_' . $request, $_REQUEST);
-        }
-    }
-
     public static function process_contact() {
         if (isset($_POST['send_inquiry']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-send-inquiry')) {
             $redirect = me_get_page_permalink('inquiry');
@@ -77,7 +77,7 @@ class ME_Checkout_Form {
                 wp_redirect($redirect);
                 exit;
             } else {
-                $redirect = add_query_arg(array('id' => $_POST['send_inquiry']), $id);
+                $redirect = add_query_arg(array('id' => $id), $redirect);
                 wp_redirect($redirect);
                 exit;
             }
