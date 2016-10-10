@@ -2,8 +2,8 @@
 	$status_list = me_get_order_status_list();
 	if( !empty($status_list) ) :
 ?>
-	<select name="" id="">
-		<option value="">Filter order's status</option>
+	<select name="order_status" id="">
+		<option value="any">Filter order's status</option>
 	<?php
 		foreach ($status_list as $key => $status) :
 	?>

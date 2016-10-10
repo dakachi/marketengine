@@ -1,11 +1,17 @@
 <?php
 	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
-	$query = new WP_Query( array(
+	$args = array(
 		'post_type' 	=> 'me_order',
-		'post_status'	=> 'any',
 		'post_author'	=> get_current_user_id(),
 		'paged'			   => $paged,
-	) );
+	);
+
+	if( isset($_REQUEST['order_status']) && $_REQUEST['order_status'] !== '' ){
+		$args['post_status'] = $_REQUEST['order_status'];
+	}
+
+	$query = new WP_Query( $args );
+
 ?>
 <div class="me-orderlist">
 	<div class="marketengine-tabs">
@@ -42,7 +48,6 @@
 
 							$order_listing = me_get_order_items( get_the_ID() );
 							$order_date = get_the_date(get_option('date_format'), get_the_ID());
-
 					?>
 					<div class="me-table-row">
 					<?php // TODO: replace this with transaction number ?>
