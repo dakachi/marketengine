@@ -17,12 +17,12 @@
 						</ul>
 						<div class="me-tabs-container">
 							<div class="me-tabs-section">
-							<?php 
-								if(empty($_GET['tab']) || $_GET['tab'] == 'order') : 
+							<?php
+								if(empty($_GET['tab']) || $_GET['tab'] == 'order') :
 									me_get_template('account/order-list');
 								else :
 									me_get_template('account/inquiry-list');
-								endif; 
+								endif;
 								?>
 							</div>
 

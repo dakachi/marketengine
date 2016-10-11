@@ -60,18 +60,19 @@ query_posts($args);
 	<?php while(have_posts()) : the_post(); ?>
 
 	<?php
+		$order = new ME_Order( get_the_ID() );
+		$order_total = $order->get_total();
+
 		$listing_item = me_get_order_items(get_the_ID(), 'listing_item');
 		$item_id = me_get_order_item_meta($listing_item[0]->order_item_id, '_listing_id', true);
 	?>
 		<div class="me-table-row">
 			<div class="me-table-col me-order-id"><a href="<?php the_permalink(); ?>">#ME123456</a></div>
 			<div class="me-table-col me-order-status">
-				<span class="me-order-<?php echo get_post_status(); ?>">
-					<?php echo get_post_status_object(get_post_status())->label; ?>
-				</span>
+				<?php me_print_order_status( get_post_status( get_the_ID()) ); ?>
 			</div>
-			<div class="me-table-col me-order-amount">$630001200.00</div>
-			<div class="me-table-col me-order-date"><?php echo get_the_date(); ?></div>
+			<div class="me-table-col me-order-amount">$<?php echo $order_total; ?></div>
+			<div class="me-table-col me-order-date"><?php echo get_the_date(get_option('date_format'), get_the_ID()); ?></div>
 			<div class="me-table-col me-order-listing">
 				<div class="me-order-listing-info">
 					<p><?php echo esc_html( get_the_title($item_id) ); ?></p>
