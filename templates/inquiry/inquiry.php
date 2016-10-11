@@ -1,7 +1,7 @@
 <?php if($listing) : ?>
 
-<?php $messages = me_get_messages(array('post_type' => 'message')); ?>
-<?php
+<?php 
+$messages = me_get_messages(array('post_type' => 'message',  'sender' => get_current_user_id())); 
 // TODO: kiem tra da co inquiry chua, neu có thi tao message form, chua thi tao inquiry form
 // inquiry se nam giu thong tin listing va lien ket cac message lai voi nhau
 
@@ -32,16 +32,15 @@ $messages = array_reverse ($messages);
 							</ul>
 						</div>
 						<div class="me-message-typing">
-						<form method="post">
-							<textarea required name="content"></textarea>
-							<span class="me-message-send-btn"><i class="icon-me-attach"></i></span>
+							<form method="post">
+								<textarea required name="content"></textarea>
+								<span class="me-message-send-btn"><i class="icon-me-attach"></i></span>
 
-							<?php wp_nonce_field( 'me-post-inquiry' ); ?>
-							<input type="hidden" name="inquiry_listing" value="<?php echo $listing->get_id(); ?>" />
-							<input type="hidden" name="inquiry_id" value="<?php echo $listing->get_inquiry_id(); ?>" />
-							<input type="submit" value="<?php _e("Send", "enginethemes"); ?>" />
+								<?php wp_nonce_field( 'me-post-inquiry' ); ?>
+								<input type="hidden" name="inquiry_listing" value="<?php echo $listing->get_id(); ?>" />
+								<input type="submit" value="<?php _e("Send", "enginethemes"); ?>" />
 
-						</form>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -52,6 +51,7 @@ $messages = array_reverse ($messages);
 		</div>
 	</div>
 </div>
+
 <script type="text/javascript">
 	var objDiv = document.getElementById("messages-container");
 	objDiv.scrollTop = objDiv.scrollHeight;

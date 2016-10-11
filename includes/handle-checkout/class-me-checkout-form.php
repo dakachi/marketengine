@@ -79,7 +79,7 @@ class ME_Checkout_Form {
                 wp_redirect($redirect);
                 exit;
             } else {
-                $redirect = add_query_arg(array('id' => $id), $redirect);
+                $redirect = add_query_arg(array('inquiry_id' => $id), $redirect);
                 wp_redirect($redirect);
                 exit;
             }
@@ -94,7 +94,7 @@ class ME_Checkout_Form {
                 me_wp_error_to_notices($result);
             } else {
                 $redirect = me_get_page_permalink('inquiry');
-                $redirect = add_query_arg(array('id' => $_POST['inquiry_listing']), $redirect);
+                $redirect = add_query_arg(array('inquiry_id' => $result), $redirect);
                 wp_redirect($redirect);
                 exit;
             }
@@ -107,7 +107,7 @@ class ME_Checkout_Form {
                 me_wp_error_to_notices($result);
             } else {
                 $redirect = me_get_page_permalink('inquiry');
-                $redirect = add_query_arg(array('id' => $_POST['inquiry_listing']), $redirect);
+                $redirect = add_query_arg(array('inquiry_id' => $_POST['inquiry_id']), $redirect);
                 wp_redirect($redirect);
                 exit;
             }

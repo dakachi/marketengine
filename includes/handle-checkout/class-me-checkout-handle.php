@@ -198,6 +198,6 @@ class ME_Checkout_Handle
             }
 
         }
-        return $inquiry_id;
+        return $message_data['inquiry_id'];
     }
 }
