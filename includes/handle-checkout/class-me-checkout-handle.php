@@ -119,11 +119,13 @@ class ME_Checkout_Handle {
         $listing_id = $data['inquiry_listing'];
         $listing    = get_post($listing_id);
 
-        // get listing's current inquiry id
+        if (is_wp_error($listing) || $listing->post_type != 'listing') {
+            return new WP_Error('invalid_listing', __("Invalid listing.", "enginethemes"));
+        }
+
         $inquiry_id = me_get_current_inquiry($listing_id);
         // strip html tag
         $content = strip_tags($data['content']);
-        // TODO: tao inquiry link voi listing dong thoi tao message, inquiry chi luu thong tin listing thoi
         if (!$inquiry_id) {
             // create inquiry
             $inquiry_id = me_insert_message(
@@ -149,12 +151,8 @@ class ME_Checkout_Handle {
     }
 
     public static function message($data) {
-        // TODO: check user can send message in inquiry ? sender or receiver
-        // inquiry id
-        // get receiver
         $listing_id = $data['inquiry_listing'];
         $inquiry_id = $data['inquiry_id'];
-        $listing    = get_post($listing_id);
         // strip html tag
         $content = strip_tags($data['content']);
         // add message
@@ -171,6 +169,10 @@ class ME_Checkout_Handle {
             // add message to inquiry
             $current_user = get_current_user_id();
             $inquiry      = me_get_message($message_data['inquiry_id']);
+
+            if (!$inquiry) {
+                return new WP_Error('invalid_inquiry', __("Invalid inquiry.", "enginethemes"));
+            }
 
             if ($inquiry->sender == $current_user) {
                 $receiver = $inquiry->receiver;
