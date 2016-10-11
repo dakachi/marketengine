@@ -34,16 +34,16 @@
 								</ul>
 							</div>
 							<div class="me-message-typing">
-							<form method="post">
-								<textarea required name="content"></textarea>
-								<span class="me-message-send-btn"><i class="icon-me-attach"></i></span>
+								<form method="post">
+									<textarea required name="content"></textarea>
+									<span class="me-message-send-btn"><i class="icon-me-attach"></i></span>
 
-								<?php wp_nonce_field( 'me-inquiry-message' ); ?>
-								<input type="hidden" name="inquiry_listing" value="<?php echo $listing->get_id(); ?>" />
-								<input type="hidden" name="inquiry_id" value="<?php echo $inquiry->ID; ?>" />
-								<input type="submit" value="<?php _e("Send", "enginethemes"); ?>" />
+									<?php wp_nonce_field( 'me-inquiry-message' ); ?>
+									<input type="hidden" name="inquiry_listing" value="<?php echo $listing->get_id(); ?>" />
+									<input type="hidden" name="inquiry_id" value="<?php echo $inquiry->ID; ?>" />
+									<input type="submit" value="<?php _e("Send", "enginethemes"); ?>" />
 
-							</form>
+								</form>
 							</div>
 						</div>
 					</div>
