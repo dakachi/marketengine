@@ -11,15 +11,15 @@
 				<div class="me-order-pick-date-filter">
 					<label>Date of Order</label>
 					<div class="me-order-pick-date">
-						<input id="me-order-pick-date-1" name="from-date" type="text" placeholder="From date">
-						<input id="me-order-pick-date-2" name="to-date" type="text" placeholder="To date">
+						<input id="me-order-pick-date-1" name="from_date" type="text" placeholder="From date">
+						<input id="me-order-pick-date-2" name="to_date" type="text" placeholder="To date">
 					</div>
 				</div>
 			</div>
 			<div class="me-col-md-7">
 				<div class="me-order-keyword-filter">
 					<label>Keyword</label>
-					<input type="text" name="order-id" placeholder="Order ID, listing name...">
+					<input type="text" name="keyword" placeholder="Order ID, listing name...">
 				</div>
 			</div>
 		</div>
