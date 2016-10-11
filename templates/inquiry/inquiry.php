@@ -1,5 +1,4 @@
 <?php if($listing) : ?>
-
 <div class="marketengine">
 	<?php me_print_notices(); ?>
 	<div class="me-contact-listing-wrap">
@@ -40,9 +39,4 @@
 		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-	var objDiv = document.getElementById("messages-container");
-	objDiv.scrollTop = objDiv.scrollHeight;
-</script>
 <?php endif; ?>

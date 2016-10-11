@@ -1,6 +1,6 @@
 <?php if($inquiry) :  ?>
 
-	<?php 
+<?php 
 	$user_id = get_current_user_id();
 	$listing = me_get_listing($inquiry->post_parent);
 	$messages = me_get_messages(array('post_type' => 'message', 'post_parent' => $inquiry->ID)); 
@@ -10,7 +10,7 @@
 	// danh sach inquiry chi co the sap xep theo tra loi moi nhat
 	// new message sent and read ??
 	$messages = array_reverse ($messages);
-	?>
+?>
 	<div class="marketengine">
 		<?php me_print_notices(); ?>
 		<div class="me-contact-listing-wrap">
