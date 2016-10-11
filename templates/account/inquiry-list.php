@@ -1,7 +1,6 @@
 <?php
 	$inquiry_object = me_my_inquiries();
 	$inquiries = $inquiry_object['posts'];
-	// var_dump($inquiry_object);
 ?>
 
 <!-- Tabs Inquiries -->

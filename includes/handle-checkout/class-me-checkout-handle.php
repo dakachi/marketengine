@@ -179,7 +179,7 @@ class ME_Checkout_Handle {
             } elseif ($inquiry->receiver == $current_user) {
                 $receiver = $inquiry->sender;
             } else {
-                return new WP_Error('permission_denied', __("You do not have permision to post message in this inquiry.", "enginethemes"))
+                return new WP_Error('permission_denied', __("You do not have permision to post message in this inquiry.", "enginethemes"));
             }
 
             $message_data = array(

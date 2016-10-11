@@ -63,6 +63,12 @@ query_posts( $args );
 </div>
 
 <?php
-	wp_reset_query();
+	else:
+?>
+	<div class="me-table-row-empty">
+		There is no transaction yet.
+	</div>
+<?php
 	endif;
+	wp_reset_query();
 ?>
