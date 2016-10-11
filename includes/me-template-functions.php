@@ -333,6 +333,11 @@ function me_status_list_action() {
 }
 add_action( 'me_status_list', 'me_status_list_action' );
 
+/**
+ *  Returns css class for each order status
+ *  @param: $status
+ *  @param: $needed style or index of order process
+ */
 function me_get_order_status_info( $status, $needed = '' ) {
     $status_list = me_get_order_status_list();
     switch ($status) {
@@ -372,13 +377,20 @@ function me_get_order_status_info( $status, $needed = '' ) {
     return $order_process;
 }
 
+/**
+ *  Prints html of order status
+ */
 function me_print_order_status( $status ) {
     $status_list = me_get_order_status_list();
     $style = me_get_order_status_info( $status, 'style' );
     echo '<span class="'.$style.'">'.$status_list[$status].'</span>';
 }
 
-function me_print_address( $address ) {
+/**
+ *  Prints buyer's information
+ *  @param: $address
+ */
+function me_print_buyer_information( $address ) {
     echo "Name: {$address['first_name']} {$address['last_name']} ";
     foreach ($address as $key => $value) {
         if($key === 'first_name' || $key === 'last_name') continue;
@@ -387,6 +399,11 @@ function me_print_address( $address ) {
     }
 }
 
+/**
+ *  Returns order query args
+ *  @param: $query
+ *  @return: $args - query args
+ */
 function me_filter_order_query( $query ) {
     $args = array();
 
