@@ -11,8 +11,8 @@ query_posts($args);
 ?>
 <!--Mobile-->
 <div class="me-orderlist-filter-tabs">
-	<span>Filter</span>
-	<span>Filter list</span>
+	<span><?php echo __('Filter', 'enginethemes'); ?></span>
+	<span><?php echo __('Filter list', 'enginethemes'); ?></span>
 </div>
 <!--/Mobile-->
 <?php me_get_template('global/order-filter', array('type' => 'order')); ?>

@@ -12,23 +12,23 @@ query_posts( $args );
 ?>
 <!--Mobile-->
 <div class="me-orderlist-filter-tabs">
-	<span>Filter</span>
-	<span>Filter list</span>
+	<span><?php echo __('Filter', 'enginethemes'); ?></span>
+	<span><?php echo __('Filter list', 'enginethemes'); ?></span>
 </div>
 
 <?php me_get_template('global/order-filter'); ?>
 
 <div class="me-table me-orderlist-table">
 	<div class="me-table-rhead">
-		<div class="me-table-col me-order-id">TRANSACTION ID</div>
-		<div class="me-table-col me-order-status">STATUS</div>
-		<div class="me-table-col me-order-amount">AMOUNT</div>
-		<div class="me-table-col me-order-date">DATE OF ORDER</div>
-		<div class="me-table-col me-order-listing">LISTING</div>
+		<div class="me-table-col me-order-id"><?php _e("TRANSACTION ID", "enginethemes"); ?></div>
+		<div class="me-table-col me-order-status"><?php _e("STATUS", "enginethemes"); ?></div>
+		<div class="me-table-col me-order-amount"><?php _e("AMOUNT", "enginethemes"); ?></div>
+		<div class="me-table-col me-order-date"><?php _e("DATE OF ORDER", "enginethemes"); ?></div>
+		<div class="me-table-col me-order-listing"><?php _e("LISTING", "enginethemes"); ?></div>
 	</div>
 	<?php
-	if( $query->have_posts() ) :
-		while( $query->have_posts() ) : $query->the_post();
+	if( have_posts() ) :
+		while( have_posts() ) : the_post();
 
 			$order = new ME_Order( get_the_ID() );
 			$order_total = $order->get_total();
@@ -56,10 +56,10 @@ query_posts( $args );
 </div>
 
 <div class="marketengine-paginations">
-	<?php me_paginate_link( $query ); ?>
+	<?php me_paginate_link(); ?>
 </div>
 <div class="marketengine-loadmore">
-	<a href="" class="me-loadmore me-loadmore-order">Load more</a>
+	<a href="" class="me-loadmore me-loadmore-order"><?php _e("Load more", "enginethemes"); ?></a>
 </div>
 
 <?php
