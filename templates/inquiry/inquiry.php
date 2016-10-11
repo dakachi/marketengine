@@ -1,15 +1,4 @@
 <?php if($listing) : ?>
-
-<?php 
-$inquiry_id = me_get_current_inquiry($listing->ID);
-$messages = me_get_messages(array('post_type' => 'message', 'post_parent' => $inquiry_id)); 
-// TODO: kiem tra da co inquiry chua, neu có thi tao message form, chua thi tao inquiry form
-// inquiry se nam giu thong tin listing va lien ket cac message lai voi nhau
-
-// danh sach inquiry chi co the sap xep theo tra loi moi nhat
-// new message sent and read ??
-$messages = array_reverse ($messages);
-?>
 <div class="marketengine">
 	<?php me_print_notices(); ?>
 	<div class="me-contact-listing-wrap">
@@ -26,9 +15,7 @@ $messages = array_reverse ($messages);
 						<div class="me-contact-messages" style="max-height: 500px;">
 							<ul id="messages-container" class="me-contact-messages-list" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
 
-								<?php foreach ($messages  as $key => $message) : ?>
-									<?php me_get_template('inquiry/message-item', array('message' => $message)); ?>
-								<?php endforeach; ?>
+								<li><?php printf(__("Send the first inquiry to %s", "enginethemes"), get_the_author_meta( 'display_name', $listing->get_author() )) ?></li>
 
 							</ul>
 						</div>
@@ -52,9 +39,4 @@ $messages = array_reverse ($messages);
 		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-	var objDiv = document.getElementById("messages-container");
-	objDiv.scrollTop = objDiv.scrollHeight;
-</script>
 <?php endif; ?>
