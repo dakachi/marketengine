@@ -1,7 +1,8 @@
 <?php if($listing) : ?>
 
 <?php 
-$messages = me_get_messages(array('post_type' => 'message',  'sender' => get_current_user_id())); 
+$inquiry_id = me_get_current_inquiry($listing->ID);
+$messages = me_get_messages(array('post_type' => 'message', 'post_parent' => $inquiry_id)); 
 // TODO: kiem tra da co inquiry chua, neu có thi tao message form, chua thi tao inquiry form
 // inquiry se nam giu thong tin listing va lien ket cac message lai voi nhau
 
@@ -45,7 +46,7 @@ $messages = array_reverse ($messages);
 					</div>
 				</div>
 				<div class="me-col-md-3 me-col-sm-4 ">
-					<?php me_get_template('inquiry/contact-list', array('listing' => $listing)); ?>
+					<?php me_get_template('seller-info', array('author_id' => $listing->post_author)); ?>
 				</div>
 			</div>
 		</div>
