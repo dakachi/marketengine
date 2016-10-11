@@ -61,9 +61,14 @@ class ME_Order {
         return $page .$order_endpoint. '/' . $this->id;
     }
 
-    public function get_transaction_detail_url() {
-        $page = me_get_page_permalink( 'transaction_detail' );
-        $order_endpoint = me_get_endpoint_name('transaction-id');
+    public function get_order_detail_url( $type = '' ) {
+        if( 'transaction' === $type ) {
+            $page = me_get_page_permalink( 'transaction_detail' );
+            $order_endpoint = me_get_endpoint_name('transaction-id');
+        } else {
+            $page = me_get_page_permalink( 'order_detail' );
+            $order_endpoint = me_get_endpoint_name('order-id');
+        }
         return $page .$order_endpoint. '/' . $this->id;
     }
 
