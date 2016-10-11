@@ -20,10 +20,11 @@
 				<div class="me-order-keyword-filter">
 					<label>Keyword</label>
 					<input type="text" name="keyword" placeholder="Order ID, listing name...">
+					<input class="me-order-filter-btn" type="submit" value="FILTER">
 				</div>
 			</div>
 		</div>
-		<input class="me-order-filter-btn" type="submit" value="FILTER">
+		<input name="tab" type="hidden" value="transaction">
 	</form>
 </div>
 <a href="#" class="me-order-export"><i class="icon-me-download"></i>Export report</a>

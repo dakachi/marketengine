@@ -1,26 +1,18 @@
-
-	<div class="me-order-inquiries-filter">
-		<div class="me-inquiries-filter">
-			<select name="" id="">
-				<option value="">View all listings</option>
-				<option value="">View all unread</option>
-				<option value="">View all read</option>
-			</select>
-			
-		</div>
-		<div class="me-inquiries-search">
-			<span class="me-inquiries-refresh">
-				<i class="icon-me-refresh"></i>
-			</span>
-			<input type="text">
-			<i class="icon-me-search"></i>
-		</div>
+<!-- Tabs Inquiries -->
+<div class="me-tabs-section">
+	<!--Mobile-->
+	<div class="me-inquiries-filter-tabs">
+		<span>Filter</span>
+		<span>Filter list</span>
 	</div>
+	<!--/Mobile-->
+	<?php me_get_template('global/inquiry-filter'); ?>
+
 	<div class="me-table me-order-inquiries-table">
 		<div class="me-table-rhead">
 			<div class="me-table-col me-order-listing">LISTING</div>
 			<div class="me-table-col me-order-status">STATUS</div>
-			<div class="me-table-col me-order-buyer">BUYER</div>
+			<div class="me-table-col me-order-buyer">SELLER</div>
 			<div class="me-table-col me-order-date-contact">DATE OF CONTACT</div>
 		</div>
 		<div class="me-table-row">
@@ -74,3 +66,4 @@
 	<div class="marketengine-loadmore">
 		<a href="" class="me-loadmore me-loadmore-order-inquiries">Load more</a>
 	</div>
+</div>
