@@ -11,13 +11,13 @@ $note = $transaction->order->post_excerpt;
 				<div class="me-col-md-6 me-col-sm-6">
 					<div class="me-orderbill-info">
 						<h5><?php echo __( 'Billed to:', 'enginethemes' ); ?></h5>
-						<p><?php $bill_address ? me_print_address( $bill_address ) : ''; ?></p>
+						<p><?php $bill_address ? me_print_buyer_information( $bill_address ) : ''; ?></p>
 					</div>
 				</div>
 				<div class="me-col-md-6 me-col-sm-6">
 					<div class="me-ordership-info">
 						<h5><?php echo __( 'Shipped to:', 'enginethemes' ); ?></h5>
-						<p><?php $shipping_address ? me_print_address( $shipping_address ) : ''; ?></p>
+						<p><?php $shipping_address ? me_print_buyer_information( $shipping_address ) : ''; ?></p>
 					</div>
 				</div>
 			</div>
