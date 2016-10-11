@@ -966,6 +966,42 @@ class ME_Message_Query {
 			$whichauthor .= " AND ($this->table.sender = " . absint($q['sender']) . ')';
 		}
 
+		// Receiver
+		if ( ! empty( $q['receiver'] ) && $q['receiver'] != '0' ) {
+			$q['receiver'] = addslashes_gpc( '' . urldecode( $q['receiver'] ) );
+			$authors = array_unique( array_map( 'intval', preg_split( '/[,\s]+/', $q['receiver'] ) ) );
+			foreach ( $authors as $author ) {
+				$key = $author > 0 ? 'author__in' : 'author__not_in';
+				$q[$key][] = abs( $author );
+			}
+			$q['receiver'] = implode( ',', $authors );
+		}
+
+		if ( ! empty( $q['author__not_in'] ) ) {
+			$author__not_in = implode( ',', array_map( 'absint', array_unique( (array) $q['author__not_in'] ) ) );
+			$where .= " AND {$this->table}.post_author NOT IN ($author__not_in) ";
+		} elseif ( ! empty( $q['author__in'] ) ) {
+			$author__in = implode( ',', array_map( 'absint', array_unique( (array) $q['author__in'] ) ) );
+			$where .= " AND {$this->table}.receiver IN ($author__in) ";
+		}
+
+		// Author stuff for nice URLs
+		if ( '' != $q['receiver_name'] ) {
+			if ( strpos($q['receiver_name'], '/') !== false ) {
+				$q['receiver_name'] = explode('/', $q['receiver_name']);
+				if ( $q['receiver_name'][ count($q['receiver_name'])-1 ] ) {
+					$q['receiver_name'] = $q['receiver_name'][count($q['receiver_name'])-1]; // no trailing slash
+				} else {
+					$q['receiver_name'] = $q['receiver_name'][count($q['receiver_name'])-2]; // there was a trailing slash
+				}
+			}
+			$q['receiver_name'] = sanitize_title_for_query( $q['receiver_name'] );
+			$q['receiver'] = get_user_by('slug', $q['receiver_name']);
+			if ( $q['receiver'] )
+				$q['receiver'] = $q['receiver']->ID;
+			$whichauthor .= " AND ($this->table.receiver = " . absint($q['receiver']) . ')';
+		}
+
 		$where .= $search . $whichauthor;
 
 		if ( ! empty( $this->meta_query->queries ) ) {
