@@ -3,15 +3,23 @@
 	$args = array(
 		'post_type' 	=> 'me_order',
 		'post_author'	=> get_current_user_id(),
-		'paged'			   => $paged,
+		'paged'			=> $paged,
 	);
 
 	if( isset($_REQUEST['order_status']) && $_REQUEST['order_status'] !== '' ){
-		$args['post_status'] = $_REQUEST['order_status'];
-	}
+        $args['post_status'] = $_REQUEST['order_status'];
+    }
+
+    if( isset($_REQUEST['from_date']) && isset($_REQUEST['to_date']) ){
+        $args['date_query'] = array(
+            array(
+                'after'     => $_REQUEST['from_date'],
+                'before'    => $_REQUEST['to_date'] . '23:59:59',
+            ),
+        );
+    }
 
 	$query = new WP_Query( $args );
-
 ?>
 <div class="me-orderlist">
 	<div class="marketengine-tabs">
@@ -74,7 +82,7 @@
 				</div>
 
 				<?php
-	wp_reset_postdata();
+					wp_reset_postdata();
 					endif;
 				?>
 
