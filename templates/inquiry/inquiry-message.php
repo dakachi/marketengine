@@ -3,12 +3,7 @@
 <?php 
 	$user_id = get_current_user_id();
 	$listing = me_get_listing($inquiry->post_parent);
-	$messages = me_get_messages(array('post_type' => 'message', 'post_parent' => $inquiry->ID)); 
-	// TODO: kiem tra da co inquiry chua, neu có thi tao message form, chua thi tao inquiry form
-	// inquiry se nam giu thong tin listing va lien ket cac message lai voi nhau
-
-	// danh sach inquiry chi co the sap xep theo tra loi moi nhat
-	// new message sent and read ??
+	$messages = me_get_messages(array('post_type' => 'message', 'post_parent' => $inquiry->ID, 'showposts' => 10)); 
 	$messages = array_reverse ($messages);
 ?>
 	<div class="marketengine">

@@ -12,6 +12,8 @@ class ME_Checkout_Form {
         // parse_request
         add_action('wp_loaded', array(__CLASS__, 'confirm_payment'));
         add_action('wp_loaded', array(__CLASS__, 'send_inquiry'));
+
+        add_action('wp_ajax_get_messages', array(__CLASS__, 'fetch_messages'));
     }
 
     public static function confirm_payment() {
@@ -111,6 +113,25 @@ class ME_Checkout_Form {
                 wp_redirect($redirect);
                 exit;
             }
+        }
+    }
+
+    public static function fetch_messages() {
+        if (!empty($_GET['parent']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'me-inquiry-message')) {
+            $parent = me_get_message($_GET['parent']);
+            $user_id = get_current_user_id();
+            if($parent->receiver != $user_id && $parent->sender != $user_id) {
+                wp_send_json( array('success' => false) );
+            }
+            $messages = me_get_messages(array('post_type' => 'message', 'post_parent' => $_GET['parent'],'paged' => 2));
+            $messages = array_reverse ($messages);
+            ob_start();
+            foreach ($messages  as $key => $message) {
+                me_get_template('inquiry/message-item', array('message' => $message));
+            }
+            $content = ob_get_clean();
+
+            wp_send_json( array('success' => true, 'data' => $content) );
         }
     }
 

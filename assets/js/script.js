@@ -63,16 +63,16 @@ jQuery(document).ready(function($) {
 	$('input.me-range-min').val(range_price.slider('values', 0));
 	$('input.me-range-max').val(range_price.slider('values', 1));
 
-	$('.me-related-slider').flexslider({
-		slideshow: false,
-		animation: "slide",
-		animationLoop: false,
-		itemWidth: 247,
-		itemMargin: 30,
-		controlNav: false,
-		prevText: '',
-		nextText: ''
-	});
+	// $('.me-related-slider').flexslider({
+	// 	slideshow: false,
+	// 	animation: "slide",
+	// 	animationLoop: false,
+	// 	itemWidth: 247,
+	// 	itemMargin: 30,
+	// 	controlNav: false,
+	// 	prevText: '',
+	// 	nextText: ''
+	// });
 
 	/**
 	 * Hover category show/hide
@@ -141,25 +141,25 @@ jQuery(document).ready(function($) {
 	var height_contact_header = $('.me-contact-header').innerHeight();
 	var height_message_typing = $('.me-message-typing').innerHeight();
 	var height_Scrollbar = height_window - height_header_top - height_message_typing - height_contact_header - 3;
-	if(width_window <= 767) {
-		$('.me-contact-messages').mCustomScrollbar({
-			setTop:"-1000000px",
-			setHeight: height_Scrollbar
-		});
-		$('.me-contact-user-wrap').mCustomScrollbar({
-			setHeight: height_Scrollbar
-		});
+	// if(width_window <= 767) {
+	// 	$('.me-contact-messages').mCustomScrollbar({
+	// 		setTop:"-1000000px",
+	// 		setHeight: height_Scrollbar
+	// 	});
+	// 	$('.me-contact-user-wrap').mCustomScrollbar({
+	// 		setHeight: height_Scrollbar
+	// 	});
 
-	} else {
-		$('.me-contact-messages').mCustomScrollbar({
-			setTop:"-1000000px",
-			setHeight:500
-		});
+	// } else {
+	// 	$('.me-contact-messages').mCustomScrollbar({
+	// 		setTop:"-1000000px",
+	// 		setHeight:500
+	// 	});
 
-		$('.me-contact-user-wrap').mCustomScrollbar({
-			setHeight:536
-		});
-	}
+	// 	$('.me-contact-user-wrap').mCustomScrollbar({
+	// 		setHeight:536
+	// 	});
+	// }
 	/**
 	 * -----------------------------------------------------------------------------------
 	 * Order
