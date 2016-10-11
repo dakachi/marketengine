@@ -24,7 +24,7 @@
 				</div>
 			</div>
 		</div>
-		<input name="tab" type="hidden" value="transaction">
+		<input name="tab" type="hidden" value="<?php echo isset($type) ? $type : 'transaction'; ?>">
 	</form>
 </div>
 <a href="#" class="me-order-export"><i class="icon-me-download"></i>Export report</a>

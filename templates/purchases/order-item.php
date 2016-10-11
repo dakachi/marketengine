@@ -60,7 +60,7 @@ $total = 0;
 		</div>
 	</div>
 	<div class="me-checkout-submit">
-		<input class="me-checkout-submit-btn" type="submit" name="checkout" value="<?php _e("MAKE COMPLETED", "enginethemes"); ?>">
+		<!-- <input class="me-checkout-submit-btn" type="submit" name="checkout" value="<?php _e("MAKE COMPLETED", "enginethemes"); ?>"> -->
 	</div>
 </div>
 

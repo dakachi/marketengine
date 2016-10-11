@@ -1,25 +1,14 @@
 <?php
-	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
-	$args = array(
-		'post_type' 	=> 'me_order',
-		'post_author'	=> get_current_user_id(),
-		'paged'			=> $paged,
-	);
+$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+$args = array(
+	'post_type' 	=> 'me_order',
+	'post_author'	=> get_current_user_id(),
+	'paged'			=> $paged,
+);
 
-	if( isset($_REQUEST['order_status']) && $_REQUEST['order_status'] !== '' ){
-        $args['post_status'] = $_REQUEST['order_status'];
-    }
+$args = array_merge(apply_filters( 'me_filter_order', $_GET ), $args);
 
-    if( isset($_REQUEST['from_date']) && isset($_REQUEST['to_date']) ){
-        $args['date_query'] = array(
-            array(
-                'after'     => $_REQUEST['from_date'],
-                'before'    => $_REQUEST['to_date'] . '23:59:59',
-            ),
-        );
-    }
-
-	$query = new WP_Query( $args );
+query_posts( $args );
 ?>
 <!--Mobile-->
 <div class="me-orderlist-filter-tabs">
@@ -49,7 +38,7 @@
 	?>
 	<div class="me-table-row">
 	<?php // TODO: replace this with transaction number ?>
-		<div class="me-table-col me-order-id"><a href="<?php echo $order->get_transaction_detail_url(); ?>">#<?php the_ID(); ?></a></div>
+		<div class="me-table-col me-order-id"><a href="<?php echo $order->get_order_detail_url( 'transaction' ); ?>">#<?php the_ID(); ?></a></div>
 		<div class="me-table-col me-order-status">
 			<?php me_print_order_status( get_post_status( get_the_ID()) ); ?>
 		</div>
@@ -74,6 +63,6 @@
 </div>
 
 <?php
-	wp_reset_postdata();
+	wp_reset_query();
 	endif;
 ?>
