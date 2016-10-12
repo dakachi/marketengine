@@ -66,7 +66,7 @@ query_posts( $args );
 	else:
 ?>
 	<div class="me-table-row-empty">
-		There is no transaction yet.
+		There is no transactions yet.
 	</div>
 <?php
 	endif;

@@ -59,4 +59,13 @@ query_posts($args);
 <div class="marketengine-loadmore">
 	<a href="" class="me-loadmore me-loadmore-order">Load more</a>
 </div>
-<?php wp_reset_query(); ?>
+<?php
+	else:
+?>
+	<div class="me-table-row-empty">
+		There is no orders yet.
+	</div>
+<?php
+	endif;
+	wp_reset_query();
+?>
