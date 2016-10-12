@@ -150,8 +150,7 @@ class ME_Checkout_Form {
             $args = array(
                 'paged'       => $paged,
                 'post_parent' => $listing->ID,
-                'post_type'   => 'inquiry',
-                'showposts'   => 1,
+                'post_type'   => 'inquiry'
             );
             $messages = new ME_Message_Query($args);
 
