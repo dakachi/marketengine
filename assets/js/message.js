@@ -8,23 +8,28 @@
             $.ajax({
                 url: me_globals.ajaxurl,
                 type: 'get',
-                data : {
-                    action : 'get_messages',
-                    type : 'inquiry',
-                    parent : 62,
-                    paged : paged,
-                    _wpnonce : $('#_wpnonce').val()
+                data: {
+                    action: 'get_messages',
+                    type: 'inquiry',
+                    parent: 62,
+                    paged: paged,
+                    _wpnonce: $('#_wpnonce').val()
                 },
                 beforeSend: function() {
                     paged++;
                 },
                 success: function(res, xhr) {
-                    if(res.data) {
+                    if (res.data) {
                         $('#messages-container').prepend(res.data);
-                        $('#messages-container').scrollTop(600);    
+                        $('#messages-container').scrollTop(600);
                     }
                 }
             });
         }
     });
+
+    // search buyer
+
+    // scroll buyer list
+
 })(jQuery);

@@ -11,19 +11,9 @@ $messages = new ME_Message_Query(array('post_parent' => $listing->ID, 'post_type
 		<span class="me-user-search-btn"><i class="icon-me-search"></i></span>
 	</div>
 	<div class="me-contact-user-wrap" >
-		<ul class="me-contact-user-list">
+		<ul class="me-contact-user-list" style="max-height: 620px;overflow: hidden;overflow-y: scroll;">
 			<?php while($messages->have_posts()): $messages->the_post(); ?>
-				<?php $message = me_get_message(); ?>
-				<li <?php if($message->ID == $_GET['inquiry_id']) {echo 'class="active"';} ?>>
-					<a href="<?php echo add_query_arg('inquiry_id', $message->ID); ?>">
-						<span class="me-user-avatar">
-							<?php echo get_avatar( $message->sender, 36); ?>
-						</span>
-						<span class="me-contact-author">
-							<span><?php echo get_the_author_meta( 'display_name', $message->sender ); ?></span>
-						</span>
-					</a>
-				</li>
+				<?php me_get_template('inquiry/contact-item'); ?>
 			<?php endwhile; ?>
 		</ul>
 	</div>
