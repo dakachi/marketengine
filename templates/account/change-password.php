@@ -1,6 +1,7 @@
 <?php
 /**
- * This template can be overridden by copying it to yourtheme/marketengine/account/reset-pass.php.
+ * This template can be overridden by copying it to yourtheme/marketengine/account/change-password.php.
+ *
  * @package     MarketEngine/Templates
  * @version     1.0
  */
@@ -35,7 +36,7 @@ if (!defined('ABSPATH')) {
 					<input class="required" type="password" value="" name="new_password" id="new_password">
 				</div>
 			</div>
-		</div>	
+		</div>
 		<div class="marketengine-profile-info">
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">

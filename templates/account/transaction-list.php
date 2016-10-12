@@ -1,4 +1,13 @@
 <?php
+/**
+ *	The Template for displaying list of transactions that buyer purchased.
+ * 	This template can be overridden by copying it to yourtheme/marketengine/account/transaction-list.php.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ * @version     1.0.0
+ */
+
 $paged = get_query_var('paged') ? get_query_var('paged') : 1;
 $args = array(
 	'post_type' 	=> 'me_order',
@@ -66,7 +75,7 @@ query_posts( $args );
 	else:
 ?>
 	<div class="me-table-row-empty">
-		There is no transaction yet.
+		<?php _e('There is no transactions yet.', 'enginethemes'); ?>
 	</div>
 <?php
 	endif;

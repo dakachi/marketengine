@@ -1,4 +1,12 @@
 <?php
+/**
+ *	The Template for displaying listings posted by the current user.
+ * 	This template can be overridden by copying it to yourtheme/marketengine/account/my-listings.php.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ * @version     1.0.0
+ */
 
 $paged = get_query_var('paged') ? get_query_var('paged') : 1;
 

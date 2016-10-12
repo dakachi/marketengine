@@ -1,12 +1,21 @@
 <?php
-	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
-	$args = array(
-		'post_type'		=> 'inquiry',
-		'paged'			=> $paged,
-		'sender'		=> get_current_user_id(),
-	);
+/**
+ *	The Template for displaying list of inquiries that buyer sent.
+ * 	This template can be overridden by copying it to yourtheme/marketengine/account/buyer-inquiry-list.php.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ * @version     1.0.0
+ */
 
-	$query = new ME_Message_Query($args);
+$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+$args = array(
+	'post_type'		=> 'inquiry',
+	'paged'			=> $paged,
+	'sender'		=> get_current_user_id(),
+);
+
+$query = new ME_Message_Query($args);
 ?>
 <!-- Tabs Inquiries -->
 <div class="me-tabs-section">
@@ -38,7 +47,7 @@
 				</div>
 			</div>
 			<div class="me-table-col me-order-status me-read">read</div>
-			<div class="me-table-col me-order-buyer"><?php echo get_the_author_meta( 'display_name', $inquiry->post_author ); ?></div>
+			<div class="me-table-col me-order-buyer"><?php echo get_the_author_meta( 'display_name', $inquiry->receiver ); ?></div>
 			<div class="me-table-col me-order-date-contact"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $inquiry->post_date ) ); ?></div>
 		</div>
 

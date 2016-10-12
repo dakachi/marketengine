@@ -1,12 +1,21 @@
-	<?php
-	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
-	$args = array(
-		'post_type'		=> 'inquiry',
-		'paged'			=> $paged,
-		'receiver'		=> get_current_user_id(),
-	);
+<?php
+/**
+ *	The Template for displaying list of inquiries that seller received.
+ * 	This template can be overridden by copying it to yourtheme/marketengine/account/seller-inquiry-list.php.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ * @version     1.0.0
+ */
 
-	$query = new ME_Message_Query($args);
+$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+$args = array(
+	'post_type'		=> 'inquiry',
+	'paged'			=> $paged,
+	'receiver'		=> get_current_user_id(),
+);
+
+$query = new ME_Message_Query($args);
 ?>
 <!-- Tabs Inquiries -->
 <div class="me-tabs-section">
