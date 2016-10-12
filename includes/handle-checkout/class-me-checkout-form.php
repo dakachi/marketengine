@@ -14,6 +14,8 @@ class ME_Checkout_Form {
         add_action('wp_loaded', array(__CLASS__, 'send_inquiry'));
 
         add_action('wp_ajax_get_messages', array(__CLASS__, 'fetch_messages'));
+        add_action('wp_ajax_get_contact_list', array(__CLASS__, 'fetch_contact_list'));
+
     }
 
     public static function confirm_payment() {
@@ -118,20 +120,48 @@ class ME_Checkout_Form {
 
     public static function fetch_messages() {
         if (!empty($_GET['parent']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'me-inquiry-message')) {
-            $parent = me_get_message($_GET['parent']);
+            $parent  = me_get_message($_GET['parent']);
             $user_id = get_current_user_id();
-            if($parent->receiver != $user_id && $parent->sender != $user_id) {
-                wp_send_json( array('success' => false) );
+            if ($parent->receiver != $user_id && $parent->sender != $user_id) {
+                wp_send_json(array('success' => false));
             }
-            $messages = me_get_messages(array('post_type' => 'message', 'post_parent' => $_GET['parent'],'paged' => $_GET['paged']));
-            $messages = array_reverse ($messages);
+            $messages = me_get_messages(array('post_type' => 'message', 'post_parent' => $_GET['parent'], 'paged' => $_GET['paged']));
+            $messages = array_reverse($messages);
             ob_start();
-            foreach ($messages  as $key => $message) {
+            foreach ($messages as $key => $message) {
                 me_get_template('inquiry/message-item', array('message' => $message));
             }
             $content = ob_get_clean();
 
-            wp_send_json( array('success' => true, 'data' => $content) );
+            wp_send_json(array('success' => true, 'data' => $content));
+        }
+    }
+
+    public static function fetch_contact_list() {
+        if (!empty($_GET['listing'])) {
+            $user_id = get_current_user_id();
+            $listing = get_post($_GET['listing']);
+
+            $paged = $_GET['paged'];
+
+            if ($listing->post_author != $user_id) {
+                wp_send_json(array('success' => false));
+            }
+            $args = array(
+                'paged'       => $paged,
+                'post_parent' => $listing->ID,
+                'post_type'   => 'inquiry',
+                'showposts'   => 1,
+            );
+            $messages = new ME_Message_Query($args);
+
+            ob_start();
+            while ($messages->have_posts()): $messages->the_post();
+                me_get_template('inquiry/contact-item');
+            endwhile;
+            $content = ob_get_clean();
+
+            wp_send_json(array('success' => true, 'data' => $content));
         }
     }
 
