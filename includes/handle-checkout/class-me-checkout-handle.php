@@ -165,6 +165,7 @@ class ME_Checkout_Handle {
     }
 
     public static function insert_message($message_data) {
+        $inquiry_id = $message_data['inquiry_id'];
         if ($message_data['inquiry_id']) {
             // add message to inquiry
             $current_user = get_current_user_id();
@@ -195,6 +196,6 @@ class ME_Checkout_Handle {
                 return $message_id;
             }
         }
-        return $message_data['inquiry_id'];
+        return $inquiry_id;
     }
 }

@@ -930,7 +930,6 @@ class ME_Message_Query {
 		}
 
 		// Author/user stuff
-
 		if ( ! empty( $q['sender'] ) && $q['sender'] != '0' ) {
 			$q['sender'] = addslashes_gpc( '' . urldecode( $q['sender'] ) );
 			$authors = array_unique( array_map( 'intval', preg_split( '/[,\s]+/', $q['sender'] ) ) );
@@ -975,14 +974,14 @@ class ME_Message_Query {
 				$q[$key][] = abs( $author );
 			}
 			$q['receiver'] = implode( ',', $authors );
-		}
 
-		if ( ! empty( $q['author__not_in'] ) ) {
-			$author__not_in = implode( ',', array_map( 'absint', array_unique( (array) $q['author__not_in'] ) ) );
-			$where .= " AND {$this->table}.post_author NOT IN ($author__not_in) ";
-		} elseif ( ! empty( $q['author__in'] ) ) {
-			$author__in = implode( ',', array_map( 'absint', array_unique( (array) $q['author__in'] ) ) );
-			$where .= " AND {$this->table}.receiver IN ($author__in) ";
+			if ( ! empty( $q['author__not_in'] ) ) {
+				$author__not_in = implode( ',', array_map( 'absint', array_unique( (array) $q['author__not_in'] ) ) );
+				$where .= " AND {$this->table}.post_author NOT IN ($author__not_in) ";
+			} elseif ( ! empty( $q['author__in'] ) ) {
+				$author__in = implode( ',', array_map( 'absint', array_unique( (array) $q['author__in'] ) ) );
+				$where .= " AND {$this->table}.receiver IN ($author__in) ";
+			}
 		}
 
 		// Author stuff for nice URLs

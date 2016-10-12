@@ -1,8 +1,13 @@
-<?php
-	$inquiry_object = me_my_inquiries();
-	$inquiries = $inquiry_object['posts'];
-?>
+	<?php
+	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+	$args = array(
+		'post_type'		=> 'inquiry',
+		'paged'			=> $paged,
+		'receiver'		=> get_current_user_id(),
+	);
 
+	$query = new ME_Message_Query($args);
+?>
 <!-- Tabs Inquiries -->
 <div class="me-tabs-section">
 	<!--Mobile-->
@@ -15,26 +20,26 @@
 
 	<div class="me-table me-order-inquiries-table">
 		<div class="me-table-rhead">
-			<div class="me-table-col me-order-listing"><?php echo __('LISTING', 'enginethemes'); ?></div>
+			<div class="me-table-col me-order-buyer"><?php echo __('BUYER', 'enginethemes'); ?></div>
 			<div class="me-table-col me-order-status"><?php echo __('STATUS', 'enginethemes'); ?></div>
-			<div class="me-table-col me-order-buyer"><?php echo __('SELLER', 'enginethemes'); ?></div>
+			<div class="me-table-col me-order-listing"><?php echo __('LISTING', 'enginethemes'); ?></div>
 			<div class="me-table-col me-order-date-contact"><?php echo __('DATE OF CONTACT', 'enginethemes'); ?></div>
 		</div>
 		<?php
-		if(!empty($inquiries)) :
-			foreach( $inquiries as $key => $inquiry ) :
-
+		if( $query->have_posts() ) :
+			foreach( $query->posts as $inquiry ) :
+				$listing = me_get_listing($inquiry->post_parent);
 		?>
 
 		<div class="me-table-row">
-			<div class="me-table-col me-order-listing">
+			<div class="me-table-col me-order-buyer">
 				<div class="me-order-listing-info">
-					<p><?php echo $inquiry->post_title; ?></p>
+					<p><a href="<?php echo me_inquiry_permalink($inquiry->ID); ?>"><?php echo get_the_author_meta( 'display_name', $inquiry->sender ); ?></a></p>
 				</div>
 			</div>
 			<div class="me-table-col me-order-status me-read">read</div>
-			<div class="me-table-col me-order-buyer"><?php echo get_the_author_meta( 'display_name', $inquiry->post_author ); ?></div>
-			<div class="me-table-col me-order-date-contact"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $inquiry->message_date ) ); ?></div>
+			<div class="me-table-col me-order-listing"><?php echo esc_html($listing->get_title()); ?></div>
+			<div class="me-table-col me-order-date-contact"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $inquiry->post_date ) ); ?></div>
 		</div>
 
 		<?php
@@ -44,11 +49,7 @@
 	</div>
 
 	<div class="marketengine-paginations">
-		<a class="prev page-numbers" href="#">&lt;</a>
-		<a class="page-numbers" href="#">1</a>
-		<span class="page-numbers current">2</span>
-		<a class="page-numbers" href="#">3</a>
-		<a class="next page-numbers" href="">&gt;</a>
+		<?php me_paginate_link($query); ?>
 	</div>
 	<div class="marketengine-loadmore">
 		<a href="" class="me-loadmore me-loadmore-order-inquiries"><?php echo __('Load more', 'enginethemes'); ?></a>

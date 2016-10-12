@@ -14,7 +14,7 @@
 				if(empty($_GET['tab']) || $_GET['tab'] == 'order') :
 					me_get_template('account/order-list');
 				else :
-					me_get_template('account/inquiry-list');
+					me_get_template('account/seller-inquiry-list');
 				endif;
 				?>
 			</div>

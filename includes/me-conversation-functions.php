@@ -583,7 +583,8 @@ function me_get_current_inquiry($listing_id, $sender = '') {
  */
 function me_my_inquiries($args = array()) {
     $user_id = get_current_user_id();
-    return me_get_inquiries(array('sender' => $user_id ));
+    $args = array_merge($args, array('sender' => $user_id));
+    return me_get_inquiries($args);
     // SELECT count(message.post_status) as count_status, post_status, message.post_parent FROM `me_marketengine_message_item` as message WHERE message.post_status = 'sent' GROUP by message.post_status, message.post_parent
 }
 
@@ -593,7 +594,8 @@ function me_my_inquiries($args = array()) {
  */
 function me_my_request($args) {
     $user_id = get_current_user_id();
-    return me_get_inquiries(array('receiver' => $user_id ));
+    $args = array_merge($args, array('receiver' => $user_id));
+    return me_get_inquiries($args);
 }
 
 
@@ -797,4 +799,10 @@ function me_get_search_stopwords() {
      */
     $stopwords = apply_filters('wp_search_stopwords', $stopwords);
     return $stopwords;
+}
+
+function me_inquiry_permalink( $inquiry_id ) {
+    $link = me_get_page_permalink('inquiry');
+    $link = add_query_arg(array('inquiry_id' => $inquiry_id), $link);
+    return $link;
 }

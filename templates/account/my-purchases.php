@@ -20,7 +20,7 @@
 					if(empty($_GET['tab']) || $_GET['tab'] == 'transaction') :
 						me_get_template('account/transaction-list');
 					else :
-						me_get_template('account/inquiry-list');
+						me_get_template('account/buyer-inquiry-list');
 					endif;
 				?>
 
