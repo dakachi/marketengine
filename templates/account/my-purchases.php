@@ -1,3 +1,13 @@
+<?php
+/**
+ *	The Template for displaying transactions and inquiries of buyer.
+ * 	This template can be overridden by copying it to yourtheme/marketengine/account/my-purchases.php.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ * @version     1.0.0
+ */
+?>
 <div class="me-orderlist">
 	<div class="marketengine-tabs">
 		<ul class="me-tabs">

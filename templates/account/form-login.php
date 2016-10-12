@@ -1,6 +1,7 @@
 <?php
 /**
  * This template can be overridden by copying it to yourtheme/marketengine/account/form-login.php.
+ *
  * @package     MarketEngine/Templates
  * @version     1.0
  */
