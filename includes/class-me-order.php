@@ -15,35 +15,35 @@ class ME_Order {
      *
      */
     public function __construct($order = 0) {
-        if(is_numeric($order)) {
+        if (is_numeric($order)) {
             $order       = absint($order);
             $this->id    = $order;
             $this->order = get_post($order);
-        }else {
+        } else {
             $this->order = $order;
-            $this->id = $order->ID;
+            $this->id    = $order->ID;
         }
         $this->caculate_subtotal();
         $this->caculate_total();
     }
 
     public function __get($name) {
-        if(strrpos($name, 'billing') !== false ) {
+        if (strrpos($name, 'billing') !== false) {
             $billing_address = $this->get_address('billing');
-            $name = str_replace('billing_', '', $name);
-            if(isset($billing_address[$name])) {
+            $name            = str_replace('billing_', '', $name);
+            if (isset($billing_address[$name])) {
                 return $billing_address[$name];
-            }else {
+            } else {
                 return '';
             }
         }
 
-        if(strrpos($name, 'shipping') !== false ) {
+        if (strrpos($name, 'shipping') !== false) {
             $shipping = $this->get_address('shipping');
-            $name = str_replace('shipping_', '', $name);
-            if(isset($shipping[$name])) {
+            $name     = str_replace('shipping_', '', $name);
+            if (isset($shipping[$name])) {
                 return $shipping[$name];
-            }else {
+            } else {
                 return '';
             }
         }
@@ -56,20 +56,20 @@ class ME_Order {
     }
 
     public function get_confirm_url() {
-        $page = me_get_page_permalink( 'confirm_order' );
+        $page           = me_get_page_permalink('confirm_order');
         $order_endpoint = me_get_endpoint_name('order-id');
-        return $page .$order_endpoint. '/' . $this->id;
+        return $page . $order_endpoint . '/' . $this->id;
     }
 
-    public function get_order_detail_url( $type = '' ) {
-        if( 'transaction' === $type ) {
-            $page = me_get_page_permalink( 'transaction_detail' );
+    public function get_order_detail_url($type = '') {
+        if ('transaction' === $type) {
+            $page           = me_get_page_permalink('transaction_detail');
             $order_endpoint = me_get_endpoint_name('transaction-id');
         } else {
-            $page = me_get_page_permalink( 'order_detail' );
+            $page           = me_get_page_permalink('order_detail');
             $order_endpoint = me_get_endpoint_name('order-id');
         }
-        return $page .$order_endpoint. '/' . $this->id;
+        return $page . $order_endpoint . '/' . $this->id;
     }
 
     public function get_cancel_url() {
@@ -83,7 +83,7 @@ class ME_Order {
      * @since 1.0
      */
     public function get_currency() {
-        return get_post_meta( $this->ID, '_order_currency_code', true );
+        return get_post_meta($this->ID, '_order_currency_code', true);
     }
 
     /**
@@ -100,7 +100,7 @@ class ME_Order {
             return false;
         }
 
-        $order_item_id = me_add_order_item($this->id, get_the_title( $listing->ID ), 'listing_item');
+        $order_item_id = me_add_order_item($this->id, get_the_title($listing->ID), 'listing_item');
         if ($order_item_id) {
             me_add_order_item_meta($order_item_id, '_listing_id', $listing->ID);
             me_add_order_item_meta($order_item_id, '_listing_description', $listing->post_content);
@@ -114,11 +114,12 @@ class ME_Order {
         $this->caculate_subtotal();
         $this->caculate_total();
 
+        // TODO: neu add nhieu listing thi de o day khong on
         $receiver_0 = (object) array(
-            'user_name'  => get_the_author_meta( 'display_name', $seller),
-            'email'      => get_user_meta( $seller, 'paypal_email', true ),
+            'user_name'  => get_the_author_meta('display_name', $seller),
+            'email'      => get_user_meta($seller, 'paypal_email', true),
             'amount'     => $this->get_total(),
-            'is_primary' => false
+            'is_primary' => false,
         );
 
         $this->add_receiver($receiver_0);
@@ -162,7 +163,7 @@ class ME_Order {
      */
     public function get_listing() {
         $order_listing_item = me_get_order_items($this->id, 'listing_item');
-        $listing_item = me_get_order_item_meta($order_listing_item[0]->order_item_id);
+        $listing_item       = me_get_order_item_meta($order_listing_item[0]->order_item_id);
         return $listing_item;
     }
 
@@ -222,7 +223,7 @@ class ME_Order {
      */
     public function get_address($type = 'billing') {
         $address_fields = array('first_name', 'last_name', 'phone', 'email', 'postcode', 'address', 'city', 'country');
-        $address       = array();
+        $address        = array();
         foreach ($address_fields as $field) {
             $address[$field] = get_post_meta($this->id, '_me_' . $type . '_' . $field, true);
         }
