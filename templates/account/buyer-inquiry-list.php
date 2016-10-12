@@ -38,7 +38,7 @@
 				</div>
 			</div>
 			<div class="me-table-col me-order-status me-read">read</div>
-			<div class="me-table-col me-order-buyer"><?php echo get_the_author_meta( 'display_name', $inquiry->post_author ); ?></div>
+			<div class="me-table-col me-order-buyer"><?php echo get_the_author_meta( 'display_name', $inquiry->receiver ); ?></div>
 			<div class="me-table-col me-order-date-contact"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $inquiry->post_date ) ); ?></div>
 		</div>
 
