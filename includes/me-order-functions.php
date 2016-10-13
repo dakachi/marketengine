@@ -84,7 +84,10 @@ function me_update_order($order_data) {
 }
 
 
-
+/**
+ * Order completed, fund has been sent to seller
+ * @param int $order_id The order id
+ */
 function me_complete_order($order_id) {
     wp_update_post(array(
         'ID'          => $order_id,
@@ -92,11 +95,14 @@ function me_complete_order($order_id) {
     ));
 }
 
-
+/**
+ * Order in-complete, order was not yet eligible to transfer money to the account Seller.
+ * @param int $order_id The order id
+ */
 function me_active_order($order_id) {
     wp_update_post(array(
         'ID'          => $order_id,
-        'post_status' => 'me-active',
+        'post_status' => 'publish',
     ));
 }
     
@@ -115,9 +121,9 @@ function me_get_order_status_list() {
         'me-pending'  => __("Pending", "enginethemes"), // mainly intended for technical case, when an error occurs payment, or payment by bank transfer confirmation to admin
         'publish'     => __("Active", "enginethemes"), // Status of payment order was not yet eligible to transfer money to the account Seller.
         'me-complete' => __("Finished", "enginethemes"), // State order has been completed and is paid to the target account Seller & Admin.
-        // 'me-disputed' => __("Disputed", "enginethemes"), // Order status are taken into account when processing complaints occur
-        // 'me-closed'   => __("Closed", "enginethemes"), // The end of the first order, while moving through this state can not be anymore Dispute
-        // 'me-resolved' => __("Resolved", "enginethemes"), // Similar "closed", the end point of the first order, after the complaint was handled.
+        'me-disputed' => __("Disputed", "enginethemes"), // Order status are taken into account when processing complaints occur
+        'me-closed'   => __("Closed", "enginethemes"), // The end of the first order, while moving through this state can not be anymore Dispute
+        'me-resolved' => __("Resolved", "enginethemes"), // Similar "closed", the end point of the first order, after the complaint was handled.
     );
     return apply_filters('marketengine_get_order_status_list', $order_status);
 }
