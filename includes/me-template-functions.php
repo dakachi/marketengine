@@ -318,6 +318,11 @@ function me_account_menu_action() {
     me_get_template('global/account-menu');
 }
 add_action( 'me_account_menu', 'me_account_menu_action' );
+function me_account_menu_flag_filter($flag) {
+    $flag = false;
+    return $flag;
+}
+add_filter('me_account_menu_flag', 'me_account_menu_flag_filter');
 
 /**
  * Prints post listing button.
