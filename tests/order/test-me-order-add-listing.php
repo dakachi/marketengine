@@ -79,4 +79,32 @@ class Tests_ME_Order_Handle extends WP_UnitTestCase {
         $order = ME_Checkout_Handle::create_order($order_data);
         $this->assertEquals($order, new WP_Error('empty_cart', 'The order is empty.'));
     }
+
+    public function test_create_order_invalid_listing() {
+        
+        $this->order_data['listing_item'] = array( 313 => array('id' => 313, 'qty' => 0));
+        $this->order_data['payment_method'] = 'ppadaptive';
+
+        $order_data = $this->order_data;
+        $order = ME_Checkout_Handle::create_order($order_data);
+        $this->assertEquals($order, new WP_Error('invalid_listing', 'The selected listing is invalid.'));
+    }
+
+    public function test_create_order_invalid_quantity() {
+        $this->order_data['listing_item'] = array($this->listing->ID => array('id' => $this->listing->ID, 'qty' => 0));
+        $this->order_data['payment_method'] = 'ppadaptive';
+
+        $order_data = $this->order_data;
+        $order = ME_Checkout_Handle::create_order($order_data);
+        $this->assertEquals(new WP_Error('invalid_qty', 'The listing quantity must be greater than 1.'), $order);
+    }
+
+    public function test_create_order_success() {
+        $this->order_data['listing_item'] = array($this->listing->ID => array('id' => $this->listing->ID, 'qty' => 1));
+        $this->order_data['payment_method'] = 'ppadaptive';
+
+        $order_data = $this->order_data;
+        $order = ME_Checkout_Handle::create_order($order_data);
+        $this->assertInstanceOf(ME_Order::class, $order);
+    }
 }

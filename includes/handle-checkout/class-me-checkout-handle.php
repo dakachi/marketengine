@@ -40,6 +40,12 @@ class ME_Checkout_Handle {
         }
         // create order
         $order = self::create_order($data);
+
+        $order->set_address($data['billing_info']);
+        if (!empty($data['shipping_address'])) {
+            $order->set_address($data['shipping_address'], 'shipping');
+        }
+
         return $order;
     }
 
@@ -78,13 +84,13 @@ class ME_Checkout_Handle {
             if (!$listing) {
                 return new WP_Error("invalid_listing", __("The selected listing is invalid.", "enginethemes"));
             }
-            
+
             if (!$listing->is_available()) {
                 return new WP_Error("unavailable_listing", __("The listing is not available for sale.", "enginethemes"));
             }
 
-            if (!$value['qty']) {
-                return new WP_Error("unavailable_listing", __("The listing quantity must be greater than 1.", "enginethemes"));
+            if (!$value['qty'] || $value['qty'] <= 0 ) {
+                return new WP_Error("invalid_qty", __("The listing quantity must be greater than 1.", "enginethemes"));
             }
 
             $items[] = array('id' => $listing, 'qty' => $value['qty']);
@@ -100,12 +106,7 @@ class ME_Checkout_Handle {
             $order->add_listing($item['id'], $item['qty']);
         }
 
-        $order->set_address($data['billing_info']);
-        if (!empty($data['shipping_address'])) {
-            $order->set_address($data['shipping_address'], 'shipping');
-        }
         $order->set_payment_method($data['payment_method']);
-
         return $order;
     }
 
@@ -153,20 +154,6 @@ class ME_Checkout_Handle {
         return self::insert_message($message_data);
     }
 
-    public static function message($data) {
-        $listing_id = $data['inquiry_listing'];
-        $inquiry_id = $data['inquiry_id'];
-        // strip html tag
-        $content = strip_tags($data['content']);
-        // add message
-        $message_data = array(
-            'listing_id' => $listing_id,
-            'content'    => $content,
-            'inquiry_id' => $inquiry_id,
-        );
-        return self::insert_message($message_data);
-    }
-
     public static function insert_message($message_data) {
         $inquiry_id = $message_data['inquiry_id'];
         if ($message_data['inquiry_id']) {
@@ -200,5 +187,19 @@ class ME_Checkout_Handle {
             }
         }
         return $inquiry_id;
+    }
+
+    public static function message($data) {
+        $listing_id = $data['inquiry_listing'];
+        $inquiry_id = $data['inquiry_id'];
+        // strip html tag
+        $content = strip_tags($data['content']);
+        // add message
+        $message_data = array(
+            'listing_id' => $listing_id,
+            'content'    => $content,
+            'inquiry_id' => $inquiry_id,
+        );
+        return self::insert_message($message_data);
     }
 }
