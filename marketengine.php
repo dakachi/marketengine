@@ -157,7 +157,7 @@ if (!class_exists('MarketEngine')):
             $this->session = ME_Session::instance();
 
             ME_Post_Types::register_post_type();
-            ME_Post_Types::register_tanonomies();
+            ME_Post_Types::register_taxonomies();
 
         }
 

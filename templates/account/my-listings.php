@@ -9,33 +9,41 @@
  */
 
 $paged = get_query_var('paged') ? get_query_var('paged') : 1;
-
+$listing_status = isset($_GET['status']) ? $_GET['status'] : 'any';
 $args = array(
 	'orderby'          => 'date',
 	'order'            => 'DESC',
 	'post_type'        => 'listing',
 	'author'	   	   => get_current_user_id(),
-	'post_status'      => 'any',
+	'post_status'      => $listing_status,
 	'paged'			   => $paged,
 );
 
 $query = new WP_Query( $args );
-if( $query->have_posts() ):
+
 ?>
 	<div class="marketengine-content marketengine-snap-column listing-post">
 		<div class="marketengine-filter">
 			<div class="marketengine-filter-listing pull-right">
 				<div class="filter-listing-status">
-					<select name="" id="">
-						<option value="">Publish</option>
-						<option value="">Pending</option>
-						<option value="">Archived</option>
-						<option value="">Draft</option>
-						<option value="">Paused</option>
+					<select name="" id="" onchange="window.location.href='?status=' + this.value;">
+
+					<?php
+						$filter_options = me_listings_status_list();
+						foreach( $filter_options as $key => $label) :
+					?>
+						<option value="<?php echo $key; ?>" <?php echo ($listing_status == $key) ? 'selected' : ''; ?>><?php echo $label; ?></option>
+					<?php
+						endforeach;
+					?>
 					</select>
+
 				</div>
 			</div>
 		</div>
+
+		<?php if( $query->have_posts() ): ?>
+
 		<div class="marketengine-listing-post">
 			<ul class="me-listing-post me-row">
 			<?php
