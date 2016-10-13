@@ -68,14 +68,17 @@ class ME_Checkout_Handle {
             return new WP_Error("invalid_payment_method", __("The selected payment method is not available now.", "enginethemes"));
         }
 
+        if(empty($data['listing_item'])) {
+            return new WP_Error("empty_cart", __("The order is empty.", "enginethemes"));   
+        }
+
         $items = array();
         foreach ($data['listing_item'] as $key => $value) {
-            $listing = get_post($value['id']);
-            if (is_wp_error($listing)) {
+            $listing = me_get_listing($value['id']);
+            if (!$listing) {
                 return new WP_Error("invalid_listing", __("The selected listing is invalid.", "enginethemes"));
             }
-
-            $listing = new ME_Listing_Purchasion($listing);
+            
             if (!$listing->is_available()) {
                 return new WP_Error("unavailable_listing", __("The listing is not available for sale.", "enginethemes"));
             }

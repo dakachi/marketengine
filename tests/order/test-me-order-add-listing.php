@@ -1,5 +1,5 @@
 <?php
-class Tests_ME_Order_Add_Listing extends WP_UnitTestCase {
+class Tests_ME_Order_Handle extends WP_UnitTestCase {
     public function __construct($factory = null) {
         parent::__construct($factory);
         $this->listing_category = new WP_UnitTest_Factory_For_Term($this, 'listing_category');
@@ -45,6 +45,11 @@ class Tests_ME_Order_Add_Listing extends WP_UnitTestCase {
         $this->listing = me_get_listing($p1);
     }
 
+    public function tearDown() {
+        wp_delete_term($this->parent_cat , 'listing_category');
+        wp_delete_term($this->sub_cat , 'listing_category');
+    }
+
     /**
      * @cover ME_Order::add_listing()
      */
@@ -58,5 +63,20 @@ class Tests_ME_Order_Add_Listing extends WP_UnitTestCase {
         $this->assertEquals($this->listing->ID, $listing_id);
         $this->assertEquals(1000, $price);
 
+    }
+    /**
+     * @cover ME_Checkout_Handle::create_order
+     */
+    public function test_create_order_invalid_payment_method() {
+        $order_data = $this->order_data;
+        $order = ME_Checkout_Handle::create_order($order_data);
+        $this->assertEquals($order, new WP_Error('invalid_payment_method', 'The selected payment method is not available now.'));
+    }
+
+    public function test_create_order_empty_cart() {
+        $this->order_data['payment_method'] = 'ppadaptive';
+        $order_data = $this->order_data;
+        $order = ME_Checkout_Handle::create_order($order_data);
+        $this->assertEquals($order, new WP_Error('empty_cart', 'The order is empty.'));
     }
 }

@@ -2,6 +2,7 @@
 class Tests_ME_Create_Order extends WP_UnitTestCase {
     public function __construct($factory = null) {
         parent::__construct($factory);
+        $this->listing_category = new WP_UnitTest_Factory_For_Term($this, 'listing_category');
     }
 
     public function setUp() {
@@ -47,11 +48,18 @@ class Tests_ME_Create_Order extends WP_UnitTestCase {
     /**
      * @cover ME_Checkout_Handle::create_order
      */
-    public function test_marketengine_create_order() {
-        $order_data = $this->order_data;
-        $order = ME_Checkout_Handle::create_order($order_data);
-        $this->assertEquals($order, new WP_Error('invalid_payment_method', 'The selected payment method is not available now.'));
-    }
+    // public function test_marketengine_create_order_invalid_payment_method() {
+    //     $order_data = $this->order_data;
+    //     $order = ME_Checkout_Handle::create_order($order_data);
+    //     $this->assertEquals($order, new WP_Error('invalid_payment_method', 'The selected payment method is not available now.'));
+    // }
+
+    // public function test_marketengine_create_order_empty_cart() {
+    //     $this->order_data['payment_method'] = 'ppadaptive';
+    //     $order_data = $this->order_data;
+    //     $order = ME_Checkout_Handle::create_order($order_data);
+    //     $this->assertEquals($order, new WP_Error('empty_cart', 'The order is empty.'));
+    // }
 
     public function get_currency_code($code) {
         return 'GBP';
