@@ -83,7 +83,7 @@ function me_update_order($order_data) {
     return me_insert_order($order_data);
 }
 
-function me_dispute_order($order_id) {}
+
 
 function me_complete_order($order_id) {
     wp_update_post(array(
@@ -91,6 +91,16 @@ function me_complete_order($order_id) {
         'post_status' => 'me-complete',
     ));
 }
+
+
+function me_active_order($order_id) {
+    wp_update_post(array(
+        'ID'          => $order_id,
+        'post_status' => 'me-active',
+    ));
+}
+    
+function me_dispute_order($order_id) {}
 
 /**
  * MarketEngine Get Order Status Listing

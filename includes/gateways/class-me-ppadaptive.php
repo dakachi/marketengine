@@ -607,10 +607,7 @@ class ME_PPAdaptive_Request {
     private function order_incomplete($response, $order_id) {
         $this->update_receiver($response, $order_id);
         // update order receiver item, commission fee item
-        wp_update_post(array(
-            'ID'          => $order_id,
-            'post_status' => 'me-active',
-        ));
+        me_active_order($order_id);
     }
 
     private function order_pending($response, $order_id) {
