@@ -47,10 +47,10 @@ class Tests_ME_Create_Order extends WP_UnitTestCase {
     /**
      * @cover ME_Checkout_Handle::create_order
      */
-    public function test_marketengine_order() {
+    public function test_marketengine_create_order() {
         $order_data = $this->order_data;
         $order = ME_Checkout_Handle::create_order($order_data);
-        $this->assertEquals($order, '1');
+        $this->assertEquals($order, new WP_Error('invalid_payment_method', 'The selected payment method is not available now.'));
     }
 
     public function get_currency_code($code) {

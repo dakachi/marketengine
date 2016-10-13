@@ -590,10 +590,7 @@ class ME_PPAdaptive_Request {
      */
     private function order_finish($response, $order_id) {
         $this->update_receiver($response, $order_id);
-        wp_update_post(array(
-            'ID'          => $order_id,
-            'post_status' => 'me-complete',
-        ));
+        me_complete_order($order_id);
     }
 
     /**

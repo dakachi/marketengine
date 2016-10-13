@@ -365,6 +365,7 @@ class ME_Listing {
      * @return bool
      */
     public function is_available() {
+        // TODO: cap nhat cho nay
         return 'listing' === $this->post_type;
     }
 }

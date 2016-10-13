@@ -61,7 +61,7 @@ class ME_Checkout_Handle {
      * @return WP_Error | ME_Order
      */
     public static function create_order($data) {
-        global $user_ID;
+        $user_ID = get_current_user_id();
         $data['post_author'] = $user_ID;
 
         if (empty($data['payment_method']) || !me_is_available_payment_gateway($data['payment_method'])) {

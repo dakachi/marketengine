@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 function me_get_available_payment_gateways() {
 	$available_gateways =  array(
 		// 'cash' => new ME_Cash(),
-		'ppsimple' => new ME_Paypal_Simple(),
+		// 'ppsimple' => new ME_Paypal_Simple(),
 		'ppadaptive' => ME_PPAdaptive_Request::instance()
 	);
 	return apply_filters('marketengine_available_payment_gateways', $available_gateways);
@@ -31,12 +31,4 @@ function me_is_available_payment_gateway($gateway) {
 
 function get_marketengine_currency() {
 	return 'USD';
-}
-
-function me_setup_payment($order) {
-	
-}
-
-function me_process_payment($order) {
-	
 }

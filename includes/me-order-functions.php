@@ -29,8 +29,8 @@ function me_insert_order($order_data) {
      * @since 1.0
      */
     $order_data = apply_filters('marketengine_insert_order_data', $order_data);
-    $order_id   = wp_insert_post($order_data);
-    if (!is_wp_error($order_id)) {
+    $order_id   = wp_insert_post($order_data, false);
+    if ($order_id) {
         /**
          * filter to get order currency code
          * @param string
@@ -61,21 +61,36 @@ function me_insert_order($order_data) {
  * Update a order with new order data.
  *
  * @see wp_update_post
- * @param array $order
+ * @param array $order_data
  *
  * @since 1.0
  *
  * @return int|WP_Error The post ID on success. The value 0 or WP_Error on failure.
  */
 function me_update_order($order_data) {
-    $order_data['post_type'] = 'me_order';
     $order_data              = apply_filters('marketengine_update_order_data', $order_data);
-    return wp_update_post($order);
+    // First, get all of the original fields.
+    $post = get_post($order_data['ID'], ARRAY_A);
+
+    if ( is_null( $post ) || $post->post_type  !== 'me_order' ) {
+        return new WP_Error( 'invalid_order', __( 'Invalid order ID.', 'enginethemes' ) );
+    }
+
+    // Escape data pulled from DB.
+    $post = wp_slash($post);
+    $order_data = array_merge($post, $order_data);
+
+    return me_insert_order($order_data);
 }
 
 function me_dispute_order($order_id) {}
 
-function me_complete_order($order_id) {}
+function me_complete_order($order_id) {
+    wp_update_post(array(
+        'ID'          => $order_id,
+        'post_status' => 'me-complete',
+    ));
+}
 
 /**
  * MarketEngine Get Order Status Listing
