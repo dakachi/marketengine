@@ -29,12 +29,12 @@ $listing_type = $listing->get_listing_type();
 
 			<?php do_action('marketengine_after_listing_item_price'); ?>
 
-			<?php 
+			<?php
 				if('purchasion' == $listing_type) :
 					me_get_template('loop/purchasion', array('listing' => $listing));
-				else : 
+				else :
 					me_get_template('loop/contact', array('listing' => $listing));
-				endif; 
+				endif;
 			 ?>
 
 			<?php do_action('marketengine_after_listing_item_price'); ?>

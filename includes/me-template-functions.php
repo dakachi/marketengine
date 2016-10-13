@@ -424,5 +424,5 @@ function me_filter_order_query( $query ) {
 
     return $args;
 }
+add_filter( 'me_filter_order', 'me_filter_order_query' );
 
-add_action( 'me_filter_order', 'me_filter_order_query' );

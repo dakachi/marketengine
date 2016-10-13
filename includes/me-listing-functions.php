@@ -42,3 +42,22 @@ function me_get_categories($taxonomy = '') {
     ));
     return $terms;
 }
+
+/**
+ * MarketEngine Get Listing Status List
+ *
+ * Retrieve marketengine listing status list
+ *
+ * @since 1.0
+ * @return array
+ */
+function me_listings_status_list() {
+    $listing_status = array(
+        'publish'     => __("Publish", "enginethemes"),
+        'me-pending'  => __("Pending", "enginethemes"),
+        'me-archived'  => __("Archived", "enginethemes"),
+        'draft'  => __("Draft", "enginethemes"),
+        'me-pause'  => __("Pause", "enginethemes"),
+    );
+    return apply_filters('marketengine_listing_status_list', $listing_status);
+}

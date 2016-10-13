@@ -41,7 +41,7 @@ class ME_Post_Types {
     /**
      * Register default taxonomies
      */
-    public static function register_tanonomies() {
+    public static function register_taxonomies() {
         $labels = array(
             'name'                  => _x('Category', 'Taxonomy plural name', "enginethemes"),
             'singular_name'         => _x('Listing category', 'Taxonomy singular name', "enginethemes"),
@@ -158,6 +158,25 @@ class ME_Post_Types {
             'hierarchical'       => false,
             'menu_position'      => 25,
             'supports'           => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'custom-fields'),
+        ));
+
+        register_post_status('me-archived', array(
+            'label'                     => _x('Archived', 'listing'),
+            'public'                    => false,
+            'exclude_from_search'       => false,
+            'private'                   => true,
+            'show_in_admin_all_list'    => true,
+            'show_in_admin_status_list' => true,
+            'label_count'               => _n_noop('Archived <span class="count">(%s)</span>', 'Archived <span class="count">(%s)</span>'),
+        ));
+        register_post_status('me-pause', array(
+            'label'                     => _x('Paused', 'listing'),
+            'public'                    => false,
+            'exclude_from_search'       => false,
+            'private'                   => true,
+            'show_in_admin_all_list'    => true,
+            'show_in_admin_status_list' => true,
+            'label_count'               => _n_noop('Paused <span class="count">(%s)</span>', 'Paused <span class="count">(%s)</span>'),
         ));
 
         // TODO: tam thoi de day
