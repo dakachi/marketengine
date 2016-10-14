@@ -105,11 +105,14 @@ class ME_Checkout_Handle {
         foreach ($items as $item) {
             $order->add_listing($item['id'], $item['qty']);
         }
-
         $order->set_payment_method($data['payment_method']);
+
         return $order;
     }
 
+    /**
+     * Handle buyer inquire a listing
+     */
     public static function inquiry($data) {
 
         if (empty($data['inquiry_listing'])) {
