@@ -159,7 +159,7 @@ class ME_Checkout_Handle {
 
     public static function insert_message($message_data) {
         $inquiry_id = $message_data['inquiry_id'];
-        if ($message_data['inquiry_id']) {
+        if ($inquiry_id) {
             // add message to inquiry
             $current_user = get_current_user_id();
             $inquiry      = me_get_message($message_data['inquiry_id']);

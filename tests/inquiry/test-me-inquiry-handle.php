@@ -42,9 +42,16 @@ class Tests_ME_Inquiry_Handle extends WP_UnitTestCase {
     public function test_me_handle_inquiry_message_content() {
     	wp_set_current_user($this->user_2);
     	$id = ME_Checkout_Handle::inquiry($this->inquiry_data);
-    	//$this->assertEquals(new WP_Error('invalid_payment_method', 'The selected payment method is not available now.'), $id);
 
     	$messages = me_get_messages(array('post_type' => 'message', 'post_parent' => $id));
     	$this->assertEquals('Inquiry message 1', $messages[0]->post_content);
+        $this->assertEquals($id, $messages[0]->post_parent);
+    }
+
+    public function test_me_handle_inquiry_yourself() {
+    	wp_set_current_user($this->user_1);
+    	$id = ME_Checkout_Handle::inquiry($this->inquiry_data);
+        $this->assertEquals(new WP_Error('send_to_yourself', 'You can not send message to your self.'), $id);
     }
 }
+// test get message

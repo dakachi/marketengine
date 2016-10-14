@@ -36,4 +36,9 @@ class Tests_ME_Message_Query extends WP_UnitTestCase {
         $message_query = new ME_Message_Query(array('receiver_name' => 'Bui'));
 
     }
+
+    public function test_me_get_message(){
+        $message = me_get_message(0);
+        $this->assertEquals(new WP_Error('invalid_message', 'Invalid message.'), $message);
+    }
 }
