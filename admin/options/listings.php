@@ -28,15 +28,6 @@ return array(
                 'data'          => marketengine_get_list_of_page(),
                 'template'      => array(),
             ),
-            'conversation-page' => array(
-                'label'         => __("Conversation Page", "enginethemes"),
-                'description'   => '',
-                'slug'          => 'me_inquiry_form',
-                'name'          => 'me_inquiry_page_id',
-                'type'          => 'select',
-                'data'          => marketengine_get_list_of_page(),
-                'template'      => array(),
-            ),
         ),
     ),
 );

@@ -27,7 +27,7 @@ $author_id = $listing_obj->post_author;
 
 			<div class="me-transaction-dispute">
 				<p><?php echo __('In the case you find out something unexpected. Please tell us your problems.', 'enginethemes'); ?></p>
-				<a href="#" class="">DISPUTE</a>
+				<a href="<?php echo me_get_page_id('dispute'); ?>" class="">DISPUTE</a>
 			</div>
 
 		</div>

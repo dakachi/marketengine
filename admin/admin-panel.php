@@ -18,11 +18,6 @@ function marketengine_option_view() {
     marketengine_option_header();
     //include 'option-view.php';
     $tabs = array(
-        'general-settings'      => array(
-            'title'    => __("General", "enginethemes"),
-            'slug'     => 'general-settings',
-            'template' => include (dirname(__FILE__). '/options/general.php')
-        ),
         'authenticate-settings' => array(
             'title'    => __("Authentication", "enginethemes"),
             'slug'     => 'authenticate-settings',
@@ -49,7 +44,7 @@ function marketengine_option_view() {
     echo '<ul class="me-nav me-tabs-nav">';
 
     if (empty($_REQUEST['tab'])) {
-        $requested_tab = 'general-settings';
+        $requested_tab = 'authenticate-settings';
     } else {
         $requested_tab = $_REQUEST['tab'];
     }
