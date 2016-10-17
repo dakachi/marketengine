@@ -22,13 +22,6 @@ $listing_type = $listing->get_listing_type();
 
 	<?php if('purchasion' == $listing_type) : ?>
 		<div class="me-rating-purchases">
-			<div class="me-rating">
-				<i class="icon-me-star"></i>
-				<i class="icon-me-star"></i>
-				<i class="icon-me-star"></i>
-				<i class="icon-me-star"></i>
-				<i class="icon-me-star"></i>
-			</div>
 			<span class="me-count-purchases">
 				<?php printf(_n("%d Purchase", "%d Purchases", $review_count,"enginethemes"),$review_count ); ?>
 			</span>

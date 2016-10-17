@@ -63,14 +63,6 @@ return array(
                 'data'        => marketengine_get_list_of_page(),
                 'template'    => array(),
             ),
-            'checkout-endpoints' => array(
-                'label'       => __("Checkout Endpoints", "enginethemes"),
-                'description' => __("", "enginethemes"),
-                'slug'        => 'checkout-endpoints',
-                'type'        => 'multi_field',
-                'name'        => 'checkout-endpoints',
-                'template'    => array(),
-            ),
         ),
     ),
     'paypal'      => array(
@@ -132,22 +124,22 @@ return array(
         'slug'     => 'currency-section',
         'type'     => 'section',
         'template' => array(
-            'currency-icon' => array(
-                'label'       => __("Icon", "enginethemes"),
+            'currency-sign' => array(
+                'label'       => __("Currency Sign", "enginethemes"),
                 'description' => __("", "enginethemes"),
-                'slug'        => 'payment-currency-icon',
+                'slug'        => 'payment-currency-sign',
                 'type'        => 'textbox',
-                'name'        => 'payment-currency-icon'
+                'name'        => 'payment-currency-sign'
             ),
             'currency-lable' => array(
-                'label'       => __("Lable", "enginethemes"),
+                'label'       => __("Currency Lable", "enginethemes"),
                 'description' => __("", "enginethemes"),
                 'slug'        => 'payment-currency-lable',
                 'type'        => 'textbox',
                 'name'        => 'payment-currency-lable',
             ),
             'currency-code' => array(
-                'label'       => __("Code", "enginethemes"),
+                'label'       => __("Currency Code", "enginethemes"),
                 'description' => __("", "enginethemes"),
                 'slug'        => 'payment-currency-code',
                 'type'        => 'textbox',
