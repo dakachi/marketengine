@@ -464,12 +464,6 @@ class ME_PPAdaptive_Request {
             );
         }
 
-        echo "<pre>";
-        print_r($receiver_items);
-        print_r($receiver_list);
-        echo "</pre>";
-        exit;
-
         $receiver_1 = (object) array(
             'user_name'  => 'admin',
             'email'      => $this->get_commission_email(),
