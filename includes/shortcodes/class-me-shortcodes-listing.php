@@ -8,7 +8,6 @@ class ME_Shortcodes_Listing
         add_shortcode('me_checkout_form', array(__CLASS__, 'checkout_form'));
         add_shortcode('me_confirm_order', array(__CLASS__, 'confirm_order'));
         add_shortcode('me_transaction_detail', array(__CLASS__, 'transaction_detail'));
-        add_shortcode('me_order_detail', array(__CLASS__, 'order_detail'));
         add_shortcode('me_inquiry_form', array(__CLASS__, 'inquiry_form'));
     }
     public static function post_listing_form()
@@ -100,24 +99,15 @@ class ME_Shortcodes_Listing
     public static function transaction_detail()
     {
         if (is_user_logged_in()) {
-            $transaction_id = get_query_var('transaction-id');
-            $transaction    = new ME_Order($transaction_id);
-            ob_start();
-            me_get_template('purchases/transaction', array('transaction' => $transaction));
-            $content = ob_get_clean();
-            return $content;
-        } else {
-            return ME_Shortcodes_Auth::me_login_form();
-        }
-    }
-
-    public static function order_detail()
-    {
-        if (is_user_logged_in()) {
             $order_id = get_query_var('order-id');
-            $order    = new ME_Order($order_id);
+            $order = new ME_Order($order_id);
+            $buyer = $order->order->post_author;
             ob_start();
-            me_get_template('purchases/order', array('order' => $order));
+            if( $buyer == get_current_user_id() ) {
+                me_get_template('purchases/transaction', array('transaction' => $order));
+            } else {
+                me_get_template('purchases/order', array('order' => $order));
+            }
             $content = ob_get_clean();
             return $content;
         } else {

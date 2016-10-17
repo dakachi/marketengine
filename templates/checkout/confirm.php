@@ -15,20 +15,20 @@ if(!$order->has_status('me-pending')) :
 			<div class="me-col-md-4 me-pc-redirect-1">
 				<div class="">
 					<h4><?php _e("Manage Transaction", "enginethemes"); ?></h4>
-					<p>To view further information of this transaction, or make reviews &amp; ratings for listings, open <a href="<?php echo $order->get_order_detail_url( 'transaction' ); ?>">Transaction Detail</a>.</p>
+					<p><?php printf(__('To view further information of this transaction, or make reviews &amp; ratings for listings, open <a href="%s">Transaction Detail</a>.', 'enginethemes'), $order->get_order_detail_url()); ?></p>
 				</div>
 			</div>
 			<div class="me-col-md-4 me-pc-redirect-2">
 				<div class="">
 					<h4><?php _e("Manage All Transaction", "enginethemes"); ?></h4>
-					<p>To view all of transactions and manage them, open <a href="<?php echo me_get_page_permalink('transactions') ?>">Manage Transactions</a>.</p>
+					<p><?php printf(__('To view all of transactions and manage them, open <a href="%s">Manage Transactions</a>.', 'enginethemes'), me_get_auth_url( 'purchases' )); ?></p>
 				</div>
 
 			</div>
 			<div class="me-col-md-4 me-pc-redirect-3">
 				<div class="">
 					<h4><?php _e("Keep Shopping", "enginethemes"); ?></h4>
-					<p>There are many cool products waiting for you to explore. Click <a href="<?php echo me_get_page_permalink('listings') ?>">here</a> to continue shopping.</p>
+					<p><?php printf(__('There are many cool products waiting for you to explore. Click <a href="%s">here</a> to continue shopping.', 'enginethemes'), me_get_page_permalink('listings') ); ?></p>
 				</div>
 			</div>
 		</div>
