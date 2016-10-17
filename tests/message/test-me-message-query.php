@@ -9,7 +9,7 @@ class Tests_ME_Message_Query extends WP_UnitTestCase
     public function setUp()
     {
         $this->user_1 = self::factory()->user->create(array('role' => 'author', 'first_name' => 'Orime', 'last_name' => 'Dakachi'));
-        $this->user_2 = self::factory()->user->create(array('user_name' => 'bui_nguyen', 'role' => 'author', 'first_name' => 'Bui Nguyen', 'last_name' => 'Loi Dinh'));
+        $this->user_2 = self::factory()->user->create(array('user_login' => 'bui_nguyen', 'role' => 'author', 'first_name' => 'Bui Nguyen', 'last_name' => 'Loi Dinh'));
         $this->user_3 = self::factory()->user->create(array('role' => 'author', 'first_name' => 'Do Huynh', 'last_name' => 'Anh Em'));
         wp_set_current_user($this->user_1);
         $defaults = array(
@@ -66,7 +66,7 @@ class Tests_ME_Message_Query extends WP_UnitTestCase
     public function test_me_get_message()
     {
         $message_data             = $this->message_data;
-        $message_data['receiver'] = $this->user_2;
+        $message_data['receiver'] = $this->user_3;
         $message_id               = me_insert_message($message_data);
 
         $message = me_get_message($message_id);
