@@ -10,7 +10,6 @@ if (!defined('ABSPATH')) {
 $cart_items = me_get_cart_items();
 if(empty($cart_items)) {
 	print_r(__("There is no item selected.", "enginethemes"));
-	return;
 }
 
 ?>

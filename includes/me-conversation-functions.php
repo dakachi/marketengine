@@ -326,8 +326,10 @@ function me_archive_message() {
 }
 
 // TODO: delete message
-function me_delete_message() {
-
+function me_delete_message($message_id) {
+    global $wpdb;
+    $message_table = $wpdb->prefix . 'marketengine_message_item';
+    $wpdb->delete( $message_table, array('ID' => $message_id) );
 }
 
 /**
