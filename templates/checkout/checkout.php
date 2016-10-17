@@ -8,13 +8,16 @@ if (!defined('ABSPATH')) {
 }
 
 $cart_items = me_get_cart_items();
-if(empty($cart_items)) {
-	print_r(__("There is no item selected.", "enginethemes"));
-}
 
 ?>
 <div class="marketengine">
 	<?php me_print_notices(); ?>
+	<?php
+	if(empty($cart_items)) {
+		print_r(__("There is no item selected.", "enginethemes"));
+		return;
+	}
+	?>
 	<form method="post">
 		<?php
 		me_get_template('checkout/billing');
