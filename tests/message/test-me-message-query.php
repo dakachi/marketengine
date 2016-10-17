@@ -37,8 +37,13 @@ class Tests_ME_Message_Query extends WP_UnitTestCase {
 
     }
 
-    public function test_me_get_message(){
+    public function test_me_get_message_null(){
         $message = me_get_message(0);
-        $this->assertEquals(new WP_Error('invalid_message', 'Invalid message.'), $message);
+        $this->assertNull($message);
     }
+
+    public function test_me_get_message() {
+        
+    }
+
 }
