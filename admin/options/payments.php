@@ -45,15 +45,6 @@ return array(
                 'data'        => marketengine_get_list_of_page(),
                 'template'    => array(),
             ),
-            'order-page' => array(
-                'label'       => __("Order Detail Page", "enginethemes"),
-                'description' => __("", "enginethemes"),
-                'slug'        => 'me_order_detail',
-                'type'        => 'select',
-                'name'        => 'me_order_detail_page_id',
-                'data'        => marketengine_get_list_of_page(),
-                'template'    => array(),
-            ),
             'dispute-page' => array(
                 'label'       => __("Dispute Page", "enginethemes"),
                 'description' => __("", "enginethemes"),
@@ -61,14 +52,6 @@ return array(
                 'type'        => 'select',
                 'name'        => 'me_dispute_page_id',
                 'data'        => marketengine_get_list_of_page(),
-                'template'    => array(),
-            ),
-            'checkout-endpoints' => array(
-                'label'       => __("Checkout Endpoints", "enginethemes"),
-                'description' => __("", "enginethemes"),
-                'slug'        => 'checkout-endpoints',
-                'type'        => 'multi_field',
-                'name'        => 'checkout-endpoints',
                 'template'    => array(),
             ),
         ),
@@ -132,22 +115,22 @@ return array(
         'slug'     => 'currency-section',
         'type'     => 'section',
         'template' => array(
-            'currency-icon' => array(
-                'label'       => __("Icon", "enginethemes"),
+            'currency-sign' => array(
+                'label'       => __("Currency Sign", "enginethemes"),
                 'description' => __("", "enginethemes"),
-                'slug'        => 'payment-currency-icon',
+                'slug'        => 'payment-currency-sign',
                 'type'        => 'textbox',
-                'name'        => 'payment-currency-icon'
+                'name'        => 'payment-currency-sign'
             ),
             'currency-lable' => array(
-                'label'       => __("Lable", "enginethemes"),
+                'label'       => __("Currency Lable", "enginethemes"),
                 'description' => __("", "enginethemes"),
                 'slug'        => 'payment-currency-lable',
                 'type'        => 'textbox',
                 'name'        => 'payment-currency-lable',
             ),
             'currency-code' => array(
-                'label'       => __("Code", "enginethemes"),
+                'label'       => __("Currency Code", "enginethemes"),
                 'description' => __("", "enginethemes"),
                 'slug'        => 'payment-currency-code',
                 'type'        => 'textbox',
