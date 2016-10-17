@@ -45,15 +45,6 @@ return array(
                 'data'        => marketengine_get_list_of_page(),
                 'template'    => array(),
             ),
-            'order-page' => array(
-                'label'       => __("Order Detail Page", "enginethemes"),
-                'description' => __("", "enginethemes"),
-                'slug'        => 'me_order_detail',
-                'type'        => 'select',
-                'name'        => 'me_order_detail_page_id',
-                'data'        => marketengine_get_list_of_page(),
-                'template'    => array(),
-            ),
             'dispute-page' => array(
                 'label'       => __("Dispute Page", "enginethemes"),
                 'description' => __("", "enginethemes"),
