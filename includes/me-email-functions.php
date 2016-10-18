@@ -116,3 +116,8 @@ function me_filter_post_placeholder($content, $post = '') {
 
     return $content;
 }
+
+function me_complete_order_email($order_id) {
+    
+}
+add_action('marketengine_complete_order', 'me_complete_order_email');

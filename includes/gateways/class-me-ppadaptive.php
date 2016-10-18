@@ -449,11 +449,19 @@ class ME_PPAdaptive_Request {
      * @return array
      */
     private function get_receiver_list_args($order) {
+        
         $receiver_items = me_get_order_items($order->id, 'receiver_item');
-        if(!empty($receiver_items)) {
+        $commission_fee = $this->get_commission_fee();
+        if (!empty($receiver_items)) {
             $order_item_id = $receiver_items[0]->order_item_id;
+
+            $amount = me_get_order_item_meta($order_item_id, '_amount', true);
+            if ($commission_fee > 0) {
+                $amount = $amount - $commission_fee;
+            }
+
             $receiver_list = array(
-                'receiverList.receiver(0).amount' => me_get_order_item_meta($order_item_id, '_amount', true),
+                'receiverList.receiver(0).amount' => $amount,
                 'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
                 // 'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
 
@@ -464,13 +472,23 @@ class ME_PPAdaptive_Request {
             );
         }
 
-        $receiver_1 = (object) array(
-            'user_name'  => 'admin',
-            'email'      => $this->get_commission_email(),
-            'amount'     => $this->get_commission_fee(),
-            'is_primary' => false,
-        );
-        $order->add_receiver($receiver_1);
+        // add commission fee to order details
+        if ($commission_fee > 0) {
+            $commission_items = me_get_order_items($order->id, 'commission_item');
+            $receiver_1 = (object) array(
+                'user_name'  => 'admin',
+                'email'      => $this->get_commission_email(),
+                'amount'     => $this->get_commission_fee(),
+                'is_primary' => false,
+            );
+            if(!empty($commission_items)) {
+                $order_item_id = $receiver_items[0]->order_item_id;
+                $order->update_commission($order_item_id, $receiver_1);
+            }else {
+                $order->add_commission($receiver_1);    
+            }
+            
+        }
 
         return apply_filters('marketegnine_ppadaptive_receiver_list', $receiver_list, $order);
     }
@@ -529,7 +547,7 @@ class ME_PPAdaptive_Request {
 
         $response = $this->gateway->payment_details($payKey);
         if (is_wp_error($response)) {
-            return;
+            return false;
         }
 
         switch ($response->status) {
@@ -548,10 +566,12 @@ class ME_PPAdaptive_Request {
             break;
         }
 
-        update_post_meta($order_id, '_sender_email', $response->senderEmail);
-        update_post_meta($order_id, '_sender_account_id', $response->sender->accountId);
-        update_post_meta($order_id, '_action_type', $response->actionType);
-        update_post_meta($order_id, '_fees_payer', $response->feesPayer);
+        if ($response->status == 'COMPLETED' || $response->status == 'INCOMPLETE' || $response->status == 'PENDING') {
+            update_post_meta($order_id, '_sender_email', $response->senderEmail);
+            update_post_meta($order_id, '_sender_account_id', $response->sender->accountId);
+            update_post_meta($order_id, '_action_type', $response->actionType);
+            update_post_meta($order_id, '_fees_payer', $response->feesPayer);
+        }
     }
 
     /**
@@ -606,7 +626,6 @@ class ME_PPAdaptive_Request {
      */
     private function order_incomplete($response, $order_id) {
         $this->update_receiver($response, $order_id);
-        // update order receiver item, commission fee item
         me_active_order($order_id);
     }
 
