@@ -65,8 +65,6 @@ class ME_Widget_Listing_Types extends WP_Widget {
             ?>
             <div class="me-listingtype-filter">
                 <label>
-                    <input type="checkbox" name="<?php echo $key; ?>" />
-                    <a href="<?php echo $link; ?>"><?php echo $type; ?></a>
                     <input type="radio" name="type" value="<?php echo $key; ?>" <?php checked( $key, $current); ?>>
                     <a href="<?php echo $link; ?>"><?php echo $type; ?></a>
                 </label>

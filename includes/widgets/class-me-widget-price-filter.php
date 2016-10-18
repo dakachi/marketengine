@@ -63,19 +63,15 @@ class ME_Widget_Price_Filter extends WP_Widget {
 
         ?>
         <form method="get" action="<?php echo $form_action; ?>">
-
-            <h2 class="widget-title"><?php echo $title; ?></h2>
-
-            <div id="me-range-price" min="<?php echo $min; ?>" max="<?php echo $max; ?>" step="1"></div>
-            <div class="me-row">
-                <div class="me-col-xs-5">
-                    <input class="me-range-price me-range-min" type="number" name="price-min" value="<?php echo !empty($_GET['price-min']) ? $_GET['price-min'] : $min; ?>">
-                </div>
-                <div class="me-col-xs-2 ">
-                    <span class="me-range-dash">-</span>
-                </div>
-                <div class="me-col-xs-5">
-                    <input class="me-range-price me-range-max" type="number" name="price-max" value="<?php echo !empty($_GET['price-max']) ? $_GET['price-max'] : $max; ?>">
+            <div class="me-title-sidebar">
+                <h3><?php echo $title; ?></h3>
+            </div>
+            <div class="me-price-filter">
+                <div id="me-range-price" min="<?php echo $min; ?>" max="<?php echo $max; ?>" step="1"></div>
+                <div class="me-row">
+                    <div class="me-col-xs-5"><input class="me-range-price me-range-min" type="number" name="price-min" value="<?php echo !empty($_GET['price-min']) ? $_GET['price-min'] : $min; ?>"></div>
+                    <div class="me-col-xs-2 "><span class="me-range-dash">-</span></div>
+                    <div class="me-col-xs-5"><input class="me-range-price me-range-max" type="number" name="price-max" value="<?php echo !empty($_GET['price-max']) ? $_GET['price-max'] : $max; ?>"></div>
                 </div>
             </div>
             <div class="me-filter-button">

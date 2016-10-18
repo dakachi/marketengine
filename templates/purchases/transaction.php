@@ -39,7 +39,7 @@ $author_id = $listing_obj->post_author;
 		</div>
 	</div>
 	<?php
-		me_get_template( 'purchases/listing-slider' );
+		//me_get_template( 'purchases/listing-slider' );
 	?>
 </div>
 <!--// marketengine-content -->

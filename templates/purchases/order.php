@@ -7,7 +7,7 @@ $order_status = get_post_status( $order->id );
 $listing_item = $order->get_listing();
 $listing_obj = me_get_listing($listing_item['_listing_id'][0]);
 
-$author_id = $order->order->post_author;
+$author_id = $order->post_author;
 ?>
 <div class="marketengine-content">
 	<div class="me-order-detail">
