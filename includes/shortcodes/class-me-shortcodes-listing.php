@@ -101,7 +101,7 @@ class ME_Shortcodes_Listing
         if (is_user_logged_in()) {
             $order_id = get_query_var('order-id');
             $order = new ME_Order($order_id);
-            $buyer = $order->order->post_author;
+            $buyer = $order->post_author;
             ob_start();
             if( $buyer == get_current_user_id() ) {
                 me_get_template('purchases/transaction', array('transaction' => $order));

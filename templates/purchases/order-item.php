@@ -60,7 +60,14 @@ $total = 0;
 		</div>
 	</div>
 	<div class="me-checkout-submit">
-		<!-- <input class="me-checkout-submit-btn" type="submit" name="checkout" value="<?php _e("MAKE COMPLETED", "enginethemes"); ?>"> -->
+	<?php if( $transaction->post_status === 'me-pending' ) : ?>
+		<form method="post">
+			<?php wp_nonce_field('me-pay'); ?>
+			<input type="hidden" name="order_id" value="<?php echo $transaction->id; ?>" />
+			<input type="hidden" name="payment_method" value="ppadaptive" />
+			<input class="me-checkout-submit-btn" type="submit" name="checkout" value="<?php _e("MAKE COMPLETED", "enginethemes"); ?>">
+		</form>
+	<?php endif; ?>
 	</div>
 </div>
 

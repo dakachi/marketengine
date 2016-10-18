@@ -6,7 +6,7 @@
 				me_print_order_status( $order_status );
 				if( 'me-disputed' === $order_status ) :
 			?>
-			<p class=""><i class="icon-me-status-info"></i>This order has been disputed by buyer. Resolve it as soon as possible.</p>
+			<p class=""><i class="icon-me-status-info"></i><?php _e('This order has been disputed by buyer. Resolve it as soon as possible.', 'enginethemes'); ?></p>
 			<?php
 				endif;
 			?>
@@ -16,16 +16,16 @@
 		?>
 		<div class="me-line-process-order">
 			<div class="me-line-step-order <?php echo $process_index >= 1 ? 'active' : '' ?>">
-				<span>Check payment</span>
+				<span><?php _e('Check payment', 'enginethemes'); ?></span>
 			</div>
 			<div class="me-line-step-order <?php echo $process_index >= 2 ? 'active' : '' ?>">
-				<span>Active order</span>
+				<span><?php _e('Active order', 'enginethemes'); ?></span>
 			</div>
 			<div class="me-line-step-order <?php echo $process_index >= 3 ? 'active' : '' ?>">
-				<span>Mark completed</span>
+				<span><?php _e('Mark completed', 'enginethemes'); ?></span>
 			</div>
 			<div class="me-line-step-order <?php echo $process_index >= 4 ? 'active' : '' ?>">
-				<span>Closed order</span>
+				<span><?php _e('Closed order', 'enginethemes'); ?></span>
 			</div>
 		</div>
 	</div>
