@@ -50,9 +50,19 @@ class ME_Checkout_Handle {
     }
 
     public static function pay($order) {
+        $user_id = get_current_user_id();
+
+        if($order->post_author != $user_id) {
+            return new WP_Error('permission_denied', __("You do not have permission to process this order.", "enginethemes"));
+        }
+
         $payments       = me_get_available_payment_gateways();
         $payment_method = $order->get_payment_method();
-        // TODO: can dua qua trang pay/order_id de han che tinh trang gap loi khi thanh toan se tao them order moi
+
+        if(!isset($payments[$payment_method])) {
+            return new WP_Error("invalid_payment_method", __("The selected payment method is not available now.", "enginethemes"));
+        }
+
         $result = $payments[$payment_method]->setup_payment($order);
 
         return $result;
