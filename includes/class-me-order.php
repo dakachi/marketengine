@@ -5,24 +5,162 @@ if (!defined('ABSPATH')) {
 }
 
 class ME_Order {
+    /**
+     * Order ID.
+     *
+     * @var int
+     */
     public $id;
-    public $order;
-    public $subtotal;
-    public $total;
-    public $shipping_info = array();
-    public $items         = array();
+    /**
+     * Order ID.
+     *
+     * @var int
+     */
+    public $ID;
+
+    /**
+     * ID of sender.
+     *
+     * A numeric string, for compatibility reasons.
+     *
+     * @var string
+     */
+    public $sender = 0;
+
+    /**
+     * ID of receiver.
+     *
+     * A numeric string, for compatibility reasons.
+     *
+     * @var string
+     */
+    public $receiver = 0;
+
+    /**
+     * The Order's local publication time.
+     *
+     * @var string
+     */
+    public $post_date = '0000-00-00 00:00:00';
+
+    /**
+     * The Order's GMT publication time.
+     *
+     * @var string
+     */
+    public $post_date_gmt = '0000-00-00 00:00:00';
+
+    /**
+     * The Order's content.
+     *
+     * @var string
+     */
+    public $post_content = '';
+
+    /**
+     * The Order's title.
+     *
+     * @var string
+     */
+    public $post_title = '';
+
+    /**
+     * The Order's excerpt.
+     *
+     * @var string
+     */
+    public $post_excerpt = '';
+
+    /**
+     * The Order's status.
+     *
+     * @var string
+     */
+    public $post_status = 'sent';
+
+    /**
+     * The Order's password in plain text.
+     *
+     * @var string
+     */
+    public $post_password = '';
+
+    /**
+     * The Order's slug.
+     *
+     * @var string
+     */
+    public $post_name = '';
+
+    /**
+     * The Order's local modified time.
+     *
+     * @var string
+     */
+    public $post_modified = '0000-00-00 00:00:00';
+
+    /**
+     * The Order's GMT modified time.
+     *
+     * @var string
+     */
+    public $post_modified_gmt = '0000-00-00 00:00:00';
+
+    /**
+     * A utility DB field for Order content.
+     *
+     *
+     * @var string
+     */
+    public $post_content_filtered = '';
+
+    /**
+     * ID of a Order's parent Order.
+     *
+     * @var int
+     */
+    public $post_parent = 0;
+
+    /**
+     * The unique identifier for a Order, not necessarily a URL, used as the feed GUID.
+     *
+     * @var string
+     */
+    public $guid = '';
+
+    /**
+     * The Order's type, like post or page.
+     *
+     * @var string
+     */
+    public $post_type = 'post';
+
+    /**
+     * Stores the Order object's sanitization level.
+     *
+     * Does not correspond to a DB field.
+     *
+     * @var string
+     */
+    public $filter;
     /**
      *
      */
+
     public function __construct($order = 0) {
-        if (is_numeric($order)) {
-            $order       = absint($order);
-            $this->id    = $order;
-            $this->order = get_post($order);
-        } else {
-            $this->order = $order;
-            $this->id    = $order->ID;
+        $order_id = (int) $order_id;
+        if (!$order_id) {
+            return false;
         }
+
+        $post = get_post($order_id);
+        
+        foreach (get_object_vars($post) as $key => $value) {
+            $this->$key = $value;
+        }
+
+        $this->id = $this->ID;
+
         $this->caculate_subtotal();
         $this->caculate_total();
     }
