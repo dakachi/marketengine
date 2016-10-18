@@ -35,7 +35,7 @@ function me_filter_authentication_placeholder($content, $user = null) {
      * author posts link
      */
     $author_link = '<a href="' . get_author_posts_url($user->ID) . '" >' . __("Author's Posts", "enginethemes") . '</a>';
-    $content = str_ireplace('[author_link]', $author_link, $content);
+    $content     = str_ireplace('[author_link]', $author_link, $content);
     /**
      * filter mail content et_filter_auth_email
      *
@@ -47,17 +47,17 @@ function me_filter_authentication_placeholder($content, $user = null) {
     $content = apply_filters('me_filter_authentication_placeholder', $content, $user);
 
     // filter site info placeholder tag
-    $content = str_ireplace('[site_url]', get_bloginfo('url') , $content);
-    $content = str_ireplace('[blogname]', get_bloginfo('name') , $content);
-    $content = str_ireplace('[admin_email]', get_option('admin_email') , $content);
+    $content = str_ireplace('[site_url]', get_bloginfo('url'), $content);
+    $content = str_ireplace('[blogname]', get_bloginfo('name'), $content);
+    $content = str_ireplace('[admin_email]', get_option('admin_email'), $content);
 
     return $content;
 }
 
 add_filter('marketengine_activation_mail_content', 'me_filter_authentication_placeholder', 10, 2);
 add_filter('marketengine_registration_success_mail_content', 'me_filter_authentication_placeholder', 10, 2);
-add_filter('marketengine_reset_password_mail_content', 'me_filter_authentication_placeholder', 10, 2 );
-add_filter('marketengine_reset_password_success_mail_content', 'me_filter_authentication_placeholder', 10, 2 );
+add_filter('marketengine_reset_password_mail_content', 'me_filter_authentication_placeholder', 10, 2);
+add_filter('marketengine_reset_password_success_mail_content', 'me_filter_authentication_placeholder', 10, 2);
 
 /**
  * Marketengine Filter post placeholder tag
@@ -96,13 +96,13 @@ function me_filter_post_placeholder($content, $post = '') {
      * post link
      */
     $post_link = '<a href="' . get_permalink($post_id) . '" >' . $title . '</a>';
-    $content = str_ireplace('[link]', $post_link, $content);
+    $content   = str_ireplace('[link]', $post_link, $content);
 
     /**
      * author posts link
      */
     $author_link = '<a href="' . get_author_posts_url($post->post_author) . '" >' . __("Author's Posts", "enginethemes") . '</a>';
-    $content = str_ireplace('[author_link]', $author_link, $content);
+    $content     = str_ireplace('[author_link]', $author_link, $content);
 
     /**
      * filter mail content et_filter_ad_email
@@ -117,7 +117,34 @@ function me_filter_post_placeholder($content, $post = '') {
     return $content;
 }
 
+/**
+ * Send complete order email to seller
+ */
 function me_complete_order_email($order_id) {
-    
+    if (!$order_id) {
+        return false;
+    }
+
+    $receiver_item = me_get_order_items($order_id, 'receiver_item');
+
+    if (empty($receiver_item)) {
+        return false;
+    }
+
+    $user_name = $receiver_item[0]->order_item_name;
+
+    $seller = get_user_by( 'user_login', $user_name );
+    if(!$seller) return false;
+
+    $subject = sprintf(__("You have a new order on %s.", "enginethemes"), get_bloginfo('blogname'));
+    $message = me_get_template('email/order-success', 
+            array(  
+                'user' => $seller, 
+                'blogname' => get_bloginfo('blogname')
+            )
+        );
+
+    wp_mail($seller->user_email, $subject, $message);
+
 }
 add_action('marketengine_complete_order', 'me_complete_order_email');
