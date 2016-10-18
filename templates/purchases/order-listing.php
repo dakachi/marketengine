@@ -13,11 +13,7 @@
 			<!-- <span>12 Purchase</span><span>30 review</span> -->
 		</div>
 		<p><?php echo $listing_obj->get_description(); ?></p>
-	<?php if(!$seller) : ?>
 		<a class="me-listing-info-view" href="<?php echo $listing_obj->get_permalink(); ?>"><?php _e('view detail', 'enginethemes'); ?></a>
 	</div>
 	<a class="me-orderlisting-review" href=""><?php _e('RATE &amp; REVIEW NOW', 'enginethemes'); ?></a>
-	<?php else: ?>
-	</div>
-	<?php endif; ?>
 </div>
