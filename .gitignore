@@ -1,3 +1,5 @@
+doc.txt
+readme.txt
 composer.lock
 node_modules/*
 vendor/*

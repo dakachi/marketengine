@@ -10,6 +10,7 @@ $listing_obj = me_get_listing($listing_item['_listing_id'][0]);
 $author_id = $listing_obj->post_author;
 ?>
 <div class="marketengine-content">
+	<?php me_print_notices(); ?>
 	<div class="me-order-detail">
 		<?php
 			me_get_template( 'purchases/transaction-info', array( 'order_number' => $order_number, 'payment_date' => $payment_date ) );

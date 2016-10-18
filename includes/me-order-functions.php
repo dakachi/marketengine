@@ -105,8 +105,12 @@ function me_active_order($order_id) {
         'post_status' => 'publish',
     ));
 }
-    
+
 function me_dispute_order($order_id) {}
+
+function me_get_order($order_id) {
+
+}
 
 /**
  * MarketEngine Get Order Status Listing

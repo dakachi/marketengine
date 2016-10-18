@@ -63,7 +63,7 @@ class ME_Checkout_Form {
         if (!$result || is_wp_error($result)) {
             me_wp_error_to_notices($result);
             // TODO: update link nay
-            wp_redirect(home_url('/me-checkout/pay/' . $order->id));
+            wp_redirect($order->get_order_detail_url());
             exit;
         } else {
             wp_redirect($result->transaction_url);
