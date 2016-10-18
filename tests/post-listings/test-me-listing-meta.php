@@ -31,6 +31,7 @@ class Tests_ME_Listing extends WP_UnitTestCase {
         );
 
         $user_id = self::factory()->user->create( array( 'role' => 'author' ) );
+        update_user_meta( $user_id, 'paypal_email', 'dinhle1987-per@yahoo.com' );
         wp_set_current_user( $user_id );
 
         $this->listing_data = array(

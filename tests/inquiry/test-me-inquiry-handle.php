@@ -7,6 +7,7 @@ class Tests_ME_Inquiry_Handle extends WP_UnitTestCase {
 
     public function setUp() {
         $this->user_1 = self::factory()->user->create(array('role' => 'author'));
+        update_user_meta( $this->user_1, 'paypal_email', 'dinhle1987-per@yahoo.com' );
         $this->user_2 = self::factory()->user->create(array('role' => 'author'));
         wp_set_current_user($this->user_1);
         $this->inquiry_data = array('customer_note' => 'Order note');
