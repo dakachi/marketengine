@@ -89,10 +89,12 @@ function me_update_order($order_data) {
  * @param int $order_id The order id
  */
 function me_complete_order($order_id) {
-    wp_update_post(array(
+    $order_id = wp_update_post(array(
         'ID'          => $order_id,
         'post_status' => 'me-complete',
     ));
+
+    do_action('marketengine_complete_order', $order_id);
 }
 
 /**
@@ -104,6 +106,7 @@ function me_active_order($order_id) {
         'ID'          => $order_id,
         'post_status' => 'publish',
     ));
+    do_action('marketengine_active_order', $order_id);
 }
 
 function me_dispute_order($order_id) {}
