@@ -10,13 +10,14 @@
 
 $user_id = get_current_user_id();
 $args = array(
-		'post_type' => 'me_order',
-		'post_author' => $user_id,
-		'paged' => get_query_var('paged')
-	);
+	'post_type' => 'me_order',
+	'author'	=> $user_id,
+	'paged' => get_query_var('paged')
+);
 $args = array_merge(apply_filters( 'me_filter_order', $_GET ), $args);
 
 query_posts($args);
+
 ?>
 <!--Mobile-->
 <div class="me-orderlist-filter-tabs">
@@ -25,8 +26,6 @@ query_posts($args);
 </div>
 <!--/Mobile-->
 <?php me_get_template('global/order-filter', array('type' => 'order')); ?>
-
-<a href="#" class="me-order-export"><i class="icon-me-download"></i><?php _e('Export report', 'enginethemes'); ?></a>
 
 <div class="me-table me-orderlist-table">
 	<div class="me-table-rhead">

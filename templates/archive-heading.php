@@ -19,9 +19,9 @@ global $wp_query;
 			<select name="orderby" id="listing-orderby">
 				<?php /* <option <?php selected( $selected, '') ?> value=""><?php _e("Default Sort", "enginethemes"); ?></option>
 				<option <?php selected( $selected, 'rating') ?> value="rating"><?php _e("Sort by average rating", "enginethemes"); ?></option> */ ?>
-				<option <?php selected( $selected, 'date') ?> value="date"><?php _e("Sort by newness", "enginethemes"); ?></option>
-				<option <?php selected( $selected, 'price') ?> value="price"><?php _e("Sort by price: low to high", "enginethemes"); ?></option>
-				<option <?php selected( $selected, 'price-desc') ?> value="price-desc"><?php _e("Sort by price: high to low", "enginethemes"); ?></option>
+				<option <?php selected( $selected, 'date') ?> value="date"><?php _e("Sort by newest", "enginethemes"); ?></option>
+				<option <?php selected( $selected, 'price') ?> value="price"><?php _e("Price: Low to High", "enginethemes"); ?></option>
+				<option <?php selected( $selected, 'price-desc') ?> value="price-desc"><?php _e("Price: High to Low", "enginethemes"); ?></option>
 			</select>
 			<?php  if(!empty($_GET['price-min'])) : ?>
 				<input type="hidden" name="price-min" value="<?php echo $_GET['price-min'];  ?>" ?>
