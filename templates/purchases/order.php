@@ -27,7 +27,7 @@ $author_id = $order->post_author;
 
 			<div class="me-orderwarning-info">
 				<p><?php echo __('Your order has been disputed by buyer. Resolve it as soon as possible.', 'enginethemes'); ?></p>
-				<a href="#" class="me-resolution-center">TO RESOLUTION CENTER</a>
+				<a href="#" class="me-resolution-center"><?php _e('TO RESOLUTION CENTER', 'enginethemes'); ?></a>
 			</div>
 
 		</div>

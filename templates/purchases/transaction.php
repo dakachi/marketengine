@@ -15,7 +15,7 @@ $author_id = $listing_obj->post_author;
 		<?php
 			me_get_template( 'purchases/transaction-info', array( 'order_number' => $order_number, 'payment_date' => $payment_date ) );
 			me_get_template( 'purchases/order-status', array( 'order_status' => $order_status ) );
-			me_get_template( 'purchases/order-item', array( 'listing_item' => $listing_item, 'listing_obj' => $listing_obj ) );
+			me_get_template( 'purchases/order-item', array( 'listing_item' => $listing_item, 'listing_obj' => $listing_obj, 'transaction' => $transaction ) );
 			me_get_template( 'purchases/order-bill-info', array('transaction' => $transaction) );
 		?>
 	</div>
@@ -28,7 +28,7 @@ $author_id = $listing_obj->post_author;
 
 			<div class="me-transaction-dispute">
 				<p><?php echo __('In the case you find out something unexpected. Please tell us your problems.', 'enginethemes'); ?></p>
-				<a href="<?php echo me_get_page_id('dispute'); ?>" class="">DISPUTE</a>
+				<a href="<?php echo me_get_page_id('dispute'); ?>" class=""><?php _e('DISPUTE', 'enginethemes'); ?></a>
 			</div>
 
 		</div>
