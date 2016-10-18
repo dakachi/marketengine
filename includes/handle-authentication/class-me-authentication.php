@@ -616,6 +616,14 @@ class ME_Authentication {
             $errors->add('first_name', __("The last name cannot be empty.", "enginethemes"));
         }
 
+        if(empty($_POST['paypal_email'])){
+            $errors->add('paypal_email_empty', __("The paypal email field cannot be empty.", "enginethemes"));
+        }
+
+        if (!empty($_POST['paypal_email']) && !is_email( $_POST['paypal_email'] )) {
+            $errors->add('first_name', __("The paypal email is incorrect.", "enginethemes"));
+        }
+
         if ($errors->get_error_code()) {
             return $errors;
         }
