@@ -7,13 +7,13 @@ $pricing_unit = $listing->get_pricing_unit();
 		<b itemprop="priceCurrency" content="USD">$</b>
 		<?php printf(__('<b itemprop="price" content="10">%d</b>%s', 'enginethemes'), $price, $pricing_unit) ?>
 	</span>
-	<div class="me-rating pull-right">
+	<!-- <div class="me-rating pull-right">
 		<i class="icon-me-star"></i>
 		<i class="icon-me-star"></i>
 		<i class="icon-me-star"></i>
 		<i class="icon-me-star"></i>
 		<i class="icon-me-star-o"></i>
-	</div>
+	</div> -->
 </div>
 <div class="me-buy-now">
 	<form method="post">
