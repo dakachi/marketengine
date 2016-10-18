@@ -545,8 +545,4 @@ class ME_Order {
         return get_post_meta($this->id, '_me_payment_gateway', true);
     }
 
-    public function get_transaction_url() {
-
-    }
-
 }
