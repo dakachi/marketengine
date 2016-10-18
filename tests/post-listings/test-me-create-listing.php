@@ -189,7 +189,7 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
     }
 
     public function test_create_purchasion_listing_with_empty_paypal_email() {
-        wp_set_current_user( $this->user_1 );
+        wp_set_current_user( $this->user_2 );
         $listing_data = array(
             'listing_title' => 'Listing A',
             'listing_description' => 'Sample content',
