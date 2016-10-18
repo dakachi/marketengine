@@ -159,6 +159,7 @@ class ME_Order {
         }
 
         $this->id = $this->ID;
+        $this->order = $post;
 
         $this->caculate_subtotal();
         $this->caculate_total();
@@ -189,7 +190,7 @@ class ME_Order {
     }
 
     public function has_status($status) {
-        return $this->order->post_status === $status;
+        return $this->post_status === $status;
     }
 
     public function get_confirm_url() {
