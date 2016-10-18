@@ -28,6 +28,10 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
                 'parent' => $this->parent_cat,
             )
         );
+        $this->user_1 = self::factory()->user->create(array('role' => 'author'));
+        update_user_meta( $this->user_1, 'paypal_email', 'dinhle1987-per@yahoo.com' );
+        $this->user_2 = self::factory()->user->create(array('role' => 'author'));
+        wp_set_current_user($this->user_1);
     }
     /**
      * @covers ME_Listing_Handle::insert
@@ -182,6 +186,22 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         );
         $p1 = ME_Listing_Handle::insert($listing_data);
         $this->assertEquals(new WP_Error('contact_email', 'The contact email must be a valid email address.'), $p1);
+    }
+
+    public function test_create_purchasion_listing_with_empty_paypal_email() {
+        wp_set_current_user( $this->user_1 );
+        $listing_data = array(
+            'listing_title' => 'Listing A',
+            'listing_description' => 'Sample content',
+            'listing_type' => 'purchasion',
+            'meta_input' => array(
+                'listing_price' => 10,
+            ),
+            'parent_cat' => $this->parent_cat,
+            'sub_cat' => $this->sub_cat,
+        );
+        $p1 = ME_Listing_Handle::insert($listing_data);
+        $this->assertEquals(new WP_Error('empty_paypal_email', 'You must input paypal email in your profile to start selling.'), $p1);
     }
 
     public function test_create_listing_with_gallery_over_maximum_files() {
