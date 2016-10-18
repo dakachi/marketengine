@@ -17,8 +17,8 @@ global $wp_query;
 	<div class="me-sort-listing pull-right">
 		<form method="get">
 			<select name="orderby" id="listing-orderby">
-				<!-- <option <?php selected( $selected, '') ?> value=""><?php _e("Default Sort", "enginethemes"); ?></option> -->
-				<!-- <option <?php selected( $selected, 'rating') ?> value="rating"><?php _e("Sort by average rating", "enginethemes"); ?></option> -->
+				<?php /* <option <?php selected( $selected, '') ?> value=""><?php _e("Default Sort", "enginethemes"); ?></option>
+				<option <?php selected( $selected, 'rating') ?> value="rating"><?php _e("Sort by average rating", "enginethemes"); ?></option> */ ?>
 				<option <?php selected( $selected, 'date') ?> value="date"><?php _e("Sort by newness", "enginethemes"); ?></option>
 				<option <?php selected( $selected, 'price') ?> value="price"><?php _e("Sort by price: low to high", "enginethemes"); ?></option>
 				<option <?php selected( $selected, 'price-desc') ?> value="price-desc"><?php _e("Sort by price: high to low", "enginethemes"); ?></option>
