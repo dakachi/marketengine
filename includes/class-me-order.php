@@ -339,9 +339,9 @@ class ME_Order {
             return false;
         }
 
-        me_update_order_item_meta($order_item_id, '_receive_email', $receiver->get_receiver_email());
-        me_update_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary());
-        me_update_order_item_meta($order_item_id, '_amount', $receiver->get_amount());
+        me_update_order_item_meta($order_item_id, '_receive_email', $receiver->email);
+        me_update_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary);
+        me_update_order_item_meta($order_item_id, '_amount', $receiver->amount);
 
         return $order_item_id;
     }
@@ -367,9 +367,9 @@ class ME_Order {
             return false;
         }
 
-        me_update_order_item_meta($order_item_id, '_receive_email', $receiver->get_receiver_email());
-        me_update_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary());
-        me_update_order_item_meta($order_item_id, '_amount', $receiver->get_amount());
+        me_update_order_item_meta($order_item_id, '_receive_email', $receiver->email);
+        me_update_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary);
+        me_update_order_item_meta($order_item_id, '_amount', $receiver->amount);
 
         return $order_item_id;
     }

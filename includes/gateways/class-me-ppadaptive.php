@@ -449,9 +449,9 @@ class ME_PPAdaptive_Request {
      * @return array
      */
     private function get_receiver_list_args($order) {
-        
-        $receiver_items = me_get_order_items($order->id, 'receiver_item');
         $commission_fee = $this->get_commission_fee();
+
+        $receiver_items = me_get_order_items($order->id, 'receiver_item');
         if (!empty($receiver_items)) {
             $order_item_id = $receiver_items[0]->order_item_id;
 
@@ -459,7 +459,6 @@ class ME_PPAdaptive_Request {
             if ($commission_fee > 0) {
                 $amount = $amount - $commission_fee;
             }
-
             $receiver_list = array(
                 'receiverList.receiver(0).amount' => $amount,
                 'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
@@ -482,7 +481,7 @@ class ME_PPAdaptive_Request {
                 'is_primary' => false,
             );
             if(!empty($commission_items)) {
-                $order_item_id = $receiver_items[0]->order_item_id;
+                $order_item_id = $commission_items[0]->order_item_id;
                 $order->update_commission($order_item_id, $receiver_1);
             }else {
                 $order->add_commission($receiver_1);    
