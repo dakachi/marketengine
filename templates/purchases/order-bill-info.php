@@ -1,7 +1,7 @@
 <?php
 $bill_address = $transaction->get_address();
 $shipping_address = $transaction->get_address( 'shipping' );
-$note = $transaction->order->post_excerpt;
+$note = $transaction->post_excerpt;
 ?>
 
 <div class="me-order-detail-block">

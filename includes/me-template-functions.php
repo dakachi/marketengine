@@ -249,7 +249,7 @@ function me_paginate_link( $me_query = array() ) {
 }
 
 function marketengine_sidebar() {
-    me_get_template('sidebar');
+    me_get_template('global/sidebar');
 }
 add_action('marketengine_sidebar', 'marketengine_sidebar');
 
