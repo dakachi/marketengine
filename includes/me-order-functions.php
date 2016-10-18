@@ -111,9 +111,54 @@ function me_active_order($order_id) {
 
 function me_dispute_order($order_id) {}
 
-function me_get_order($order_id) {
+function me_get_order() {
 
 }
+
+function me_get_order_ids( $user_login ) {
+    global $wpdb;
+    $query = "SELECT order_items.order_id
+            FROM $wpdb->marketengine_order_items as order_items
+            WHERE order_items.order_item_type = 'receiver_item' AND
+                order_items.order_item_name = '{$user_login}'";
+
+    $results = $wpdb->get_col($query);
+    return $results;
+}
+
+/**
+ *  Returns order query args
+ *  @param: $query
+ *  @return: $args - query args
+ */
+function me_filter_order_query( $query ) {
+    $args = array();
+
+    if( isset($query['order_status']) && $query['order_status'] !== '' ){
+        $args['post_status'] = $query['order_status'];
+    }
+
+    if( isset($query['from_date']) || isset($query['to_date']) ){
+        $after = isset($query['from_date']) ? $query['from_date'] : '';
+        $before = isset($query['to_date']) ? $query['to_date'] . '23:59:59' : '';
+        $args['date_query'] = array(
+            array(
+                'after'     => $after,
+                'before'    => $before,
+            ),
+        );
+    }
+
+    // set order id to retrive on order list page
+    if( !isset($query['author']) ) {
+        $user_data = get_userdata( get_current_user_id() );
+        $order_ids = me_get_order_ids( $user_data->user_login );
+        $args['post__in'] = $order_ids;
+    }
+
+    return $args;
+}
+add_filter( 'me_filter_order', 'me_filter_order_query' );
 
 /**
  * MarketEngine Get Order Status Listing

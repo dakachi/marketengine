@@ -8,16 +8,12 @@
  * @version     1.0.0
  */
 
-$user_id = get_current_user_id();
+
 $args = array(
 	'post_type' => 'me_order',
-	'author'	=> $user_id,
-	'paged' => get_query_var('paged')
+	'paged' 	=> get_query_var('paged')
 );
 $args = array_merge(apply_filters( 'me_filter_order', $_GET ), $args);
-
-query_posts($args);
-
 ?>
 <!--Mobile-->
 <div class="me-orderlist-filter-tabs">
@@ -36,7 +32,8 @@ query_posts($args);
 		<div class="me-table-col me-order-listing"><?php _e("LISTING", "enginethemes"); ?></div>
 	</div>
 	<?php 
-	if(have_posts()) :
+	if( !empty($args['post__in']) ) :
+		query_posts($args);
 		while(have_posts()) : the_post(); ?>
 
 	<?php
