@@ -146,8 +146,7 @@ class ME_Order {
     /**
      *
      */
-
-    public function __construct($order = 0) {
+    public function __construct($order_id = 0) {
         $order_id = (int) $order_id;
         if (!$order_id) {
             return false;
