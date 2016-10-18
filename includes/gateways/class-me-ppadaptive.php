@@ -474,13 +474,20 @@ class ME_PPAdaptive_Request {
 
         // add commission fee to order details
         if ($commission_fee > 0) {
+            $commission_items = me_get_order_items($order->id, 'commission_item');
             $receiver_1 = (object) array(
                 'user_name'  => 'admin',
                 'email'      => $this->get_commission_email(),
                 'amount'     => $this->get_commission_fee(),
                 'is_primary' => false,
             );
-            $order->add_receiver($receiver_1);
+            if(!empty($commission_items)) {
+                $order_item_id = $receiver_items[0]->order_item_id;
+                $order->update_commission($order_item_id, $receiver_1);
+            }else {
+                $order->add_commission($receiver_1);    
+            }
+            
         }
 
         return apply_filters('marketegnine_ppadaptive_receiver_list', $receiver_list, $order);

@@ -242,15 +242,15 @@ class ME_Order {
             me_add_order_item_meta($order_item_id, '_listing_price', $listing->get_price());
         }
 
-        $seller = $listing->post_author;
+        $seller = get_userdata( $listing->post_author );
 
         $this->caculate_subtotal();
         $this->caculate_total();
 
         // TODO: neu add nhieu listing thi de o day khong on
         $receiver_0 = (object) array(
-            'user_name'  => get_the_author_meta('display_name', $seller),
-            'email'      => get_user_meta($seller, 'paypal_email', true),
+            'user_name'  =>  $seller->user_login,
+            'email'      => get_user_meta($seller->ID, 'paypal_email', true),
             'amount'     => $this->get_total(),
             'is_primary' => false,
         );
@@ -259,6 +259,7 @@ class ME_Order {
 
         return $order_item_id;
     }
+
     /**
      * Update listing item
      *
@@ -332,6 +333,34 @@ class ME_Order {
      * @return int|bool Return order item id if sucess, if not success return false
      */
     public function update_receiver($item_id, $receiver) {
+        $order_item_id = absint($item_id);
+
+        if (!$order_item_id) {
+            return false;
+        }
+
+        me_update_order_item_meta($order_item_id, '_receive_email', $receiver->get_receiver_email());
+        me_update_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary());
+        me_update_order_item_meta($order_item_id, '_amount', $receiver->get_amount());
+
+        return $order_item_id;
+    }
+
+    public function add_commission($receiver) {
+        if (!is_object($receiver)) {
+            return false;
+        }
+
+        $order_item_id = me_add_order_item($this->id, $receiver->user_name, 'commission_item');
+        if ($order_item_id) {
+            me_add_order_item_meta($order_item_id, '_receive_email', $receiver->email);
+            me_add_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary);
+            me_add_order_item_meta($order_item_id, '_amount', $receiver->amount);
+        }
+        return $order_item_id;
+    }
+
+    public function update_commission($item_id, $receiver) {
         $order_item_id = absint($item_id);
 
         if (!$order_item_id) {
