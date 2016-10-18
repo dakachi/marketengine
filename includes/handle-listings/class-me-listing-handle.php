@@ -341,12 +341,13 @@ class ME_Listing_Handle {
      *
      */
     public static function validate($listing_data) {
+        $current_user_id = get_current_user_id();
         $invalid_data = array();
         // validate post data
         $rules = array(
             'listing_title' => 'required|string|max:150',
             'listing_description' => 'required',
-            'listing_type' => 'required|in:contact,purchasion,rental',
+            'listing_type' => 'required|in:contact,purchasion',
         );
         /**
          * Filter listing data validate rule
@@ -366,6 +367,7 @@ class ME_Listing_Handle {
         if (!$is_valid) {
             $invalid_data = me_get_invalid_message($listing_data, $rules, $custom_attributes);
         }
+
         /**
          * Filter listing meta data validate rule
          *
@@ -396,6 +398,15 @@ class ME_Listing_Handle {
                 $invalid_data['invalid_sub_listing_category'] = __("The selected sub listing category is invalid.", "enginethemes");
             }
         } // end validate listing category
+
+
+        // user must add paypal email to start selling
+        if($listing_data['listing_type'] == 'purchasion') {
+            $user_paypal_email = get_user_meta( $current_user_id, 'paypal_email', true );
+            if(!is_email( $user_paypal_email )) {
+                $invalid_data['empty_paypal_email'] = __("You must input paypal email in your profile to start selling.", "enginethemes");
+            }
+        }
 
         if (!empty($invalid_data)) {
             $errors = new WP_Error();
