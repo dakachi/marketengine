@@ -11,7 +11,7 @@
 $paged = get_query_var('paged') ? get_query_var('paged') : 1;
 $args = array(
 	'post_type' 	=> 'me_order',
-	'post_author'	=> get_current_user_id(),
+	'author'	=> get_current_user_id(),
 	'paged'			=> $paged,
 );
 
