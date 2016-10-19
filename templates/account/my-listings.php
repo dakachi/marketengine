@@ -51,15 +51,15 @@ $query = new WP_Query( $args );
 					$post_obj = get_post(get_the_ID());
 					$listing = new ME_Listing($post_obj);
 					$listing_type = $listing->get_listing_type();
-					$post_status = get_post_status();
+					$listing_status = get_post_status_object(get_post_status());
 			?>
 				<li class="me-item-post me-col-md-3">
 					<div class="me-item-wrap">
 						<a href="<?php the_permalink(); ?>" class="me-item-img">
 							<?php the_post_thumbnail( 'thumbnail' ); ?>
 							<span><?php echo __('VIEW DETAILS', 'enginethemes'); ?></span>
-							<div class="marketengine-ribbon-<?php echo $post_status; ?>">
-								<span class="me-ribbon-content"><?php echo ucfirst($post_status); ?></span>
+							<div class="marketengine-ribbon-<?php echo $listing_status->name; ?>">
+								<span class="me-ribbon-content"><?php echo ucfirst($listing_status->label); ?></span>
 							</div>
 						</a>
 						<div class="me-item-content">
@@ -97,7 +97,7 @@ $query = new WP_Query( $args );
 							<div class="me-item-action">
 								<form method="post">
 
-								<?php me_get_template('account/my-listing-action', array( 'post_status' => $post_status) ); ?>
+								<?php me_get_template('account/my-listing-action', array( 'listing_status' => $listing_status) ); ?>
 								<?php wp_nonce_field( 'me_update_listing_status' ); ?>
 									<input type="hidden" id="listing_id" value="<?php the_ID(); ?>" />
 
