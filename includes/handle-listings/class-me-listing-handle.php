@@ -376,6 +376,7 @@ class ME_Listing_Handle {
          * @since 1.0
          */
         $listing_meta_data_rules = self::get_listing_type_fields_rule($listing_data['listing_type']);
+
         // validate post meta data
         $is_valid = me_validate($listing_data['meta_input'], $listing_meta_data_rules['rules'], $listing_meta_data_rules['custom_attributes']);
         if (!$is_valid) {
@@ -406,6 +407,13 @@ class ME_Listing_Handle {
             if(!is_email( $user_paypal_email )) {
                 $invalid_data['empty_paypal_email'] = __("You must input paypal email in your profile to start selling.", "enginethemes");
             }
+        }
+
+        if($listing_data['listing_type'] == 'contact') {
+            unset($listing_data['meta_input']['listing_price']);
+            unset($listing_data['meta_input']['pricing_unit']);
+        }else {
+            unset($listing_data['meta_input']['contact_email']);
         }
 
         if (!empty($invalid_data)) {

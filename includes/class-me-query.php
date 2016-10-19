@@ -278,6 +278,7 @@ function me_sort_listing_query($query) {
             $query->set('order', 'asc');
             break;
         case 'price-desc':
+            $query->set('meta_key', 'listing_price');
             $query->set('orderby', 'meta_value_num');
             $query->set('order', 'desc');
             break;
