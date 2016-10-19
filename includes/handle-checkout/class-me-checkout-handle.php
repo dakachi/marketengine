@@ -41,9 +41,11 @@ class ME_Checkout_Handle {
         // create order
         $order = self::create_order($data);
 
-        $order->set_address($data['billing_info']);
-        if (!empty($data['shipping_address'])) {
-            $order->set_address($data['shipping_address'], 'shipping');
+        if (!is_wp_error($order)) {
+            $order->set_address($data['billing_info']);
+            if (!empty($data['shipping_address'])) {
+                $order->set_address($data['shipping_address'], 'shipping');
+            }
         }
 
         return $order;
@@ -52,14 +54,14 @@ class ME_Checkout_Handle {
     public static function pay($order) {
         $user_id = get_current_user_id();
 
-        if($order->post_author != $user_id) {
+        if ($order->post_author != $user_id) {
             return new WP_Error('permission_denied', __("You do not have permission to process this order.", "enginethemes"));
         }
 
         $payments       = me_get_available_payment_gateways();
         $payment_method = $order->get_payment_method();
 
-        if(!isset($payments[$payment_method])) {
+        if (!isset($payments[$payment_method])) {
             return new WP_Error("invalid_payment_method", __("The selected payment method is not available now.", "enginethemes"));
         }
 
@@ -77,15 +79,15 @@ class ME_Checkout_Handle {
      * @return WP_Error | ME_Order
      */
     public static function create_order($data) {
-        $user_ID = get_current_user_id();
-        $data['post_author'] = $user_ID;
+        $current_user_id     = get_current_user_id();
+        $data['post_author'] = $current_user_id;
 
         if (empty($data['payment_method']) || !me_is_available_payment_gateway($data['payment_method'])) {
             return new WP_Error("invalid_payment_method", __("The selected payment method is not available now.", "enginethemes"));
         }
 
-        if(empty($data['listing_item'])) {
-            return new WP_Error("empty_cart", __("The order is empty.", "enginethemes"));   
+        if (empty($data['listing_item'])) {
+            return new WP_Error("empty_cart", __("The order is empty.", "enginethemes"));
         }
 
         $items = array();
@@ -99,7 +101,11 @@ class ME_Checkout_Handle {
                 return new WP_Error("unavailable_listing", __("The listing is not available for sale.", "enginethemes"));
             }
 
-            if (!$value['qty'] || $value['qty'] <= 0 ) {
+            if ($listing->post_author == $current_user_id) {
+                return new WP_Error('purchase_yourself', __("You cannot buy your listing.", "enginethemes"));
+            }
+
+            if (!$value['qty'] || $value['qty'] <= 0) {
                 return new WP_Error("invalid_qty", __("The listing quantity must be greater than 1.", "enginethemes"));
             }
 
