@@ -404,30 +404,4 @@ function me_print_buyer_information( $address ) {
     }
 }
 
-/**
- *  Returns order query args
- *  @param: $query
- *  @return: $args - query args
- */
-function me_filter_order_query( $query ) {
-    $args = array();
-
-    if( isset($query['order_status']) && $query['order_status'] !== '' ){
-        $args['post_status'] = $query['order_status'];
-    }
-
-    if( isset($query['from_date']) || isset($query['to_date']) ){
-        $after = isset($query['from_date']) ? $query['from_date'] : '';
-        $before = isset($query['to_date']) ? $query['to_date'] . '23:59:59' : '';
-        $args['date_query'] = array(
-            array(
-                'after'     => $after,
-                'before'    => $before,
-            ),
-        );
-    }
-
-    return $args;
-}
-add_filter( 'me_filter_order', 'me_filter_order_query' );
 
