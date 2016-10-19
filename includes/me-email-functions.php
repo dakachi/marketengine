@@ -135,13 +135,13 @@ function me_complete_order_email($order_id) {
         return false;
     }
 
-    if(!empty($commission_item)) {
-        $commission = me_get_order_item_meta($commission_item[0]->order_item_id, '_amount', true);
+    if(!empty($commision_item)) {
+        $commission = me_get_order_item_meta($commision_item[0]->order_item_id, '_amount', true);
     }
-
+    
     $user_name = $receiver_item[0]->order_item_name;
 
-    $seller = get_user_by('user_login', $user_name);
+    $seller = get_user_by('login', $user_name);    
     if (!$seller) {
         return false;
     }
@@ -151,21 +151,19 @@ function me_complete_order_email($order_id) {
 
     $subject = sprintf(__("You have a new order on %s.", "enginethemes"), get_bloginfo('blogname'));
     ob_start();
-    me_get_template('email/order-success',
+    me_get_template('emails/order-success',
         array(
             'display_name' => get_the_author_meta( 'display_name', $seller->ID ),
-            'listing_link' => get_permalink($listing_id),
+            'listing_link' => '<a href="'.get_permalink($listing_id).'" >'.get_the_title($listing_id).'</a>',
             'buyer_name' => get_the_author_meta( 'display_name', $order->post_author ),
             'listing_price' => me_get_order_item_meta($listing_item[0]->order_item_id,'_listing_price', true),
             'total' => $order->get_total(),
             'commission' => $commission,
             'currency' => $order->get_currency(),
-            'order_link' => $order->get_order_detail_url()
+            'order_link' => '<a href="'.$order->get_order_detail_url().'" >'.$order->ID.'</a>'
         )
     );
     $message = ob_get_clean();
-
-    wp_mail($seller->user_email, $subject, $message);
-
+    return wp_mail($seller->user_email, $subject, $message);
 }
 add_action('marketengine_complete_order', 'me_complete_order_email');

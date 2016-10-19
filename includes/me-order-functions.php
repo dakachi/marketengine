@@ -89,6 +89,11 @@ function me_update_order($order_data) {
  * @param int $order_id The order id
  */
 function me_complete_order($order_id) {
+
+    $post_status = get_post_status( $order_id );
+
+    if($post_status == 'me-complete') return ;
+
     $order_id = wp_update_post(array(
         'ID'          => $order_id,
         'post_status' => 'me-complete',
@@ -102,6 +107,11 @@ function me_complete_order($order_id) {
  * @param int $order_id The order id
  */
 function me_active_order($order_id) {
+
+    $post_status = get_post_status( $order_id );
+
+    if($post_status == 'publish') return ;
+
     wp_update_post(array(
         'ID'          => $order_id,
         'post_status' => 'publish',
