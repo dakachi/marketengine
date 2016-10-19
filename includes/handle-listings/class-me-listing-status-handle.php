@@ -39,10 +39,11 @@ class ME_Listing_Status_Handle extends ME_Form {
                     'error' => $resule,
                 );
             } else {
+                $redirect = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : me_get_auth_url('listings');
                 $response = array(
                     'success'    => true,
                     'listing' => $resule,
-                    'redirect' => me_get_auth_url('listings'),
+                    'redirect' => $redirect,
                 );
             }
             wp_send_json( $response);

@@ -6,6 +6,7 @@ if (!defined('ABSPATH')) {
 
 $listing_type = $listing->get_listing_type();
 $buyer = $listing->post_author == get_current_user_id();
+$listing_status = get_post_status_object($listing->post_status);
 ?>
 <div class="marketengine me-container">
 	<div itemscope itemtype="http://schema.org/Product" class="marketengine-listing-detail">
@@ -38,8 +39,8 @@ $buyer = $listing->post_author == get_current_user_id();
 					<?php
 					if($listing_type) :
 						if( $buyer ) :
-							me_get_template('single-listing/status' );
-							me_get_template('single-listing/control-action', array('listing_type' => $listing_type , 'listing' => $listing) );
+							me_get_template('single-listing/status', array('listing_status' => $listing_status) );
+							me_get_template('single-listing/control-action', array('listing_type' => $listing_type , 'listing' => $listing, 'listing_status' => $listing_status) );
 						else :
 							me_get_template('single-listing/'. $listing_type , array('listing' => $listing));
 						endif;

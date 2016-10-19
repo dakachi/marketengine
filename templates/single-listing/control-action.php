@@ -11,7 +11,10 @@
 		</span>
 		<span class="me-instock"><?php _e("In Stock", "enginethemes"); ?></span>
 	<?php endif; ?>
-	<span class="icon-me-pause"></span>
-	<span class="icon-me-edit"></span>
-	<span class="icon-me-delete"></span>
+		<form method="post">
+			<?php me_get_template('account/my-listing-action', array('listing_status' => $listing_status)); ?>
+			<?php wp_nonce_field( 'me_update_listing_status' ); ?>
+			<input type="hidden" id="listing_id" value="<?php the_ID(); ?>" />
+			<input type="hidden" id="redirect_url" value="<?php the_permalink(); ?>" />
+		</form>
 </div>

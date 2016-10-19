@@ -1,6 +1,5 @@
 <?php
-	$action_array = array();
-	switch ($post_status) {
+	switch ($listing_status->name) {
 		case 'publish':
 ?>
 	<span data-status="me-paused" class="icon-me-pause"></span>
@@ -19,7 +18,7 @@
 	<span data-status="me-archived" class="icon-me-delete"></span>
 <?php
 			break;
-		case 'me-pause':
+		case 'me-paused':
 ?>
 	<span data-status="publish" class="icon-me-step-forward"></span>
 	<span class="icon-me-edit"></span>
