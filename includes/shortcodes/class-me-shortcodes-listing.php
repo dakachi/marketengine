@@ -58,7 +58,7 @@ class ME_Shortcodes_Listing
         $user_id = get_current_user_id();
 
         if (!$user_id) {
-            return __("You have to login to inquire listing.", "enginethemes");
+            return ME_Shortcodes_Auth::me_login_form();
         }
 
         if (!empty($_GET['id'])) {
