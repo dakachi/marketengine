@@ -13,9 +13,6 @@ if (!defined('ABSPATH')) {
 do_action('marketengine_before_user_login_form');
 
 $register_link = me_get_endpoint_url('register');
-if (!empty($_REQUEST['redirect'])) {
-    $register_link = add_query_arg(array('redirect' => $_REQUEST['redirect']), $register_link);
-}
 ?>
 <div class="marekengine-authen-wrap authen-login">
 	<form id="login-form" action="" method="post">
@@ -44,7 +41,7 @@ if (!empty($_REQUEST['redirect'])) {
 		</div>
 		<div class="marketengine-group-field forgot-sigin">
 			<a href="<?php echo me_get_endpoint_url('forgot-password'); ?>" class="forgot-pass"><?php _e("Forgot password? &nbsp;", "enginethemes");?></a>
-			<span class="account-register"><?php _e("Need an account?", "enginethemes");?><a href="<?php echo $register_link; ?>"><?php _e("Register", "enginethemes");?></a></span>
+			<span class="account-register"><?php _e("Need an account?", "enginethemes");?><a href="<?php echo me_get_auth_url('register'); ?>"><?php _e("Register", "enginethemes");?></a></span>
 		</div>
 		<a href="<?php echo home_url(); ?>" class="back-home-sigin"><?php _e("&lt;  Back to Home", "enginethemes");?></a>
 

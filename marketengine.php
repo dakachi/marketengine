@@ -128,6 +128,7 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/handle-authentication/class-me-authentication.php';
 
             require_once ME_PLUGIN_PATH . '/includes/handle-listings/class-me-listing-handle.php';
+            require_once ME_PLUGIN_PATH . '/includes/handle-listings/class-me-listing-status-handle.php';
             require_once ME_PLUGIN_PATH . '/includes/handle-listings/class-me-listing-handle-form.php';
 
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-factory.php';
@@ -204,6 +205,7 @@ if (!class_exists('MarketEngine')):
             wp_enqueue_script('script.js', $this->plugin_url() . "/assets/js/script$suffix.js", array('jquery', 'jquery-ui'), $this->version, true);
             wp_enqueue_script('index', $this->plugin_url() . "/assets/js/index$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('message.js', $this->plugin_url() . "/assets/js/message$suffix.js", array('jquery'), $this->version, true);
+            wp_enqueue_script('my-listings.js', $this->plugin_url() . "/assets/js/my-listings$suffix.js", array('jquery'), $this->version, true);
 
             wp_localize_script(
                 'post_listing',

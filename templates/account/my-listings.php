@@ -95,38 +95,13 @@ $query = new WP_Query( $args );
 							?>
 							</div>
 							<div class="me-item-action">
-							<?php
-								$action_array = array();
-								switch ($post_status) {
-									case 'publish':
-							?>
-								<span class="icon-me-pause"></span>
-								<span class="icon-me-edit"></span>
-								<span class="icon-me-delete"></span>
-							<?php
-										break;
-									case 'archived':
-							?>
-								<span class="icon-me-action-reopen"></span>
-								<span class="icon-me-edit"></span>
-								<span class="icon-me-delete"></span>
-							<?php
-										break;
-									case 'pause':
-							?>
-								<span class="icon-me-resume"></span>
-								<span class="icon-me-edit"></span>
-								<span class="icon-me-delete"></span>
-							<?php
-										break;
-									default:
-							?>
-								<span class="icon-me-edit"></span>
-								<span class="icon-me-delete"></span>
-							<?php
-										break;
-								}
-							?>
+								<form method="post">
+
+								<?php me_get_template('account/my-listing-action', array( 'post_status' => $post_status) ); ?>
+								<?php wp_nonce_field( 'me_update_listing_status' ); ?>
+									<input type="hidden" id="listing_id" value="<?php the_ID(); ?>" />
+
+								</form>
 							</div>
 						</div>
 					</div>
