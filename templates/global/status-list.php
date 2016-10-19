@@ -3,7 +3,7 @@
 	if( !empty($status_list) ) :
 ?>
 	<select name="order_status" id="">
-		<option value="any">Filter order's status</option>
+		<option value="any"><?php _e("Filter order's status", 'enginethemes'); ?></option>
 	<?php
 		foreach ($status_list as $key => $status) :
 	?>
