@@ -131,7 +131,7 @@ function me_get_default_endpoints() {
         'orders'          => 'orders',
         'order_id'        => 'order',
         'purchases'       => 'purchases',
-        'pay'        => 'pay',
+        'pay'             => 'pay',
     );
     return $endpoint_arr;
 }
@@ -274,11 +274,32 @@ function me_sort_listing_query($query) {
             break;
         case 'price':
             $query->set('meta_key', 'listing_price');
+            $query->set('meta_key', 'listing_price');
+            $query->set('meta_query', array(
+                array(
+                    'key' => 'listing_price',
+                ),
+                array(
+                    'key'     => '_me_listing_type',
+                    'value'   => 'purchasion',
+                    'compare' => '='
+                ),
+            ));
             $query->set('orderby', 'meta_value_num');
             $query->set('order', 'asc');
             break;
         case 'price-desc':
             $query->set('meta_key', 'listing_price');
+            $query->set('meta_query', array(
+                array(
+                    'key' => 'listing_price',
+                ),
+                array(
+                    'key'     => '_me_listing_type',
+                    'value'   => 'purchasion',
+                    'compare' => '='
+                ),
+            ));
             $query->set('orderby', 'meta_value_num');
             $query->set('order', 'desc');
             break;

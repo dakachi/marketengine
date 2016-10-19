@@ -409,13 +409,6 @@ class ME_Listing_Handle {
             }
         }
 
-        if($listing_data['listing_type'] == 'contact') {
-            unset($listing_data['meta_input']['listing_price']);
-            unset($listing_data['meta_input']['pricing_unit']);
-        }else {
-            unset($listing_data['meta_input']['contact_email']);
-        }
-
         if (!empty($invalid_data)) {
             $errors = new WP_Error();
             foreach ($invalid_data as $key => $message) {
