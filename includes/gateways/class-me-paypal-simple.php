@@ -90,7 +90,7 @@ class ME_Paypal_Simple extends ME_Payment {
         $order_data = apply_filters('marketengine_paypal_args', array_merge(
             array(
                 'cmd'           => '_cart',
-                'business'      => 'dinhle1987-biz@yahoo.com', //$this->gateway->get_option('email'),
+                'business'      => 'dinhle1987-buyer@yahoo.com', //$this->gateway->get_option('email'),
                 'no_note'       => 1,
                 'currency_code' => get_marketengine_currency(),
                 'charset'       => 'utf-8',
@@ -118,7 +118,6 @@ class ME_Paypal_Simple extends ME_Payment {
             //$this->get_shipping_args($order),
             $this->get_listing_item_args($order)
         ), $order);
-
         return http_build_query($order_data);
     }
 

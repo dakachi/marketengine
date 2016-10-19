@@ -274,7 +274,6 @@ function me_sort_listing_query($query) {
             break;
         case 'price':
             $query->set('meta_key', 'listing_price');
-            $query->set('meta_key', 'listing_price');
             $query->set('meta_query', array(
                 array(
                     'key' => 'listing_price',
