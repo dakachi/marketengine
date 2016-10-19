@@ -376,6 +376,7 @@ class ME_Listing_Handle {
          * @since 1.0
          */
         $listing_meta_data_rules = self::get_listing_type_fields_rule($listing_data['listing_type']);
+
         // validate post meta data
         $is_valid = me_validate($listing_data['meta_input'], $listing_meta_data_rules['rules'], $listing_meta_data_rules['custom_attributes']);
         if (!$is_valid) {
