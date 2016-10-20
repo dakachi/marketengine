@@ -50,7 +50,7 @@ global $wp_query;
 
 					</div>
 
-					<div class="me-col-md-3">
+					<div class="">
 
 						<?php do_action('marketengine_sidebar'); ?>
 
