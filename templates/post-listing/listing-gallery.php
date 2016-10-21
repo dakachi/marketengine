@@ -46,7 +46,7 @@ li .uploading-progress {
 </style>
 <div class="marketengine-group-field">
     <div class="marketengine-upload-field">
-        <label for="upload_company_gallery"><?php _e('Your listing image', 'enginethemes'); ?></label>
+        <label class="text" for="upload_company_gallery"><?php _e('Your listing image', 'enginethemes'); ?></label>
         <?php
         me_get_template('upload-file/upload-form', array(
             'id' => 'upload_listing_image',
@@ -62,7 +62,7 @@ li .uploading-progress {
 </div>
 <div class="marketengine-group-field">
     <div class="marketengine-upload-field">
-        <label for="upload_company_gallery"><?php _e('Gallery', 'enginethemes'); ?></label>
+        <label class="text" for="upload_company_gallery"><?php _e('Gallery', 'enginethemes'); ?></label>
         <?php
         // $company_gallery = get_children(
         //     array(
