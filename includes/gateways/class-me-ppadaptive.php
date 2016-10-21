@@ -458,17 +458,24 @@ class ME_PPAdaptive_Request {
             $amount = me_get_order_item_meta($order_item_id, '_amount', true);
             if ($commission_fee > 0) {
                 $amount = $amount - $commission_fee;
-            }
-            $receiver_list = array(
-                'receiverList.receiver(0).amount' => $amount,
-                'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
-                // 'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
+                $receiver_list = array(
+                    'receiverList.receiver(0).amount' => $amount,
+                    'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
+                    // 'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
 
-                // admin receiver
-                'receiverList.receiver(1).amount' => $this->get_commission_fee(),
-                'receiverList.receiver(1).email'  => $this->get_commission_email(),
-                //'receiverList.receiver(1).primary' => $this->is_pay_primary(),
-            );
+                    // admin receiver
+                    'receiverList.receiver(1).amount' => $this->get_commission_fee(),
+                    'receiverList.receiver(1).email'  => $this->get_commission_email(),
+                    //'receiverList.receiver(1).primary' => $this->is_pay_primary(),
+                );    
+            }else {
+                $receiver_list = array(
+                    'receiverList.receiver(0).amount' => $amount,
+                    'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
+                    // 'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
+                );    
+            }
+            
         }
 
         // add commission fee to order details

@@ -131,6 +131,8 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/handle-listings/class-me-listing-status-handle.php';
             require_once ME_PLUGIN_PATH . '/includes/handle-listings/class-me-listing-handle-form.php';
 
+            require_once ME_PLUGIN_PATH . '/includes/handle-upload/class-me-upload-handle.php';
+
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-factory.php';
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing.php';
             require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-purchasion.php';
@@ -207,11 +209,15 @@ if (!class_exists('MarketEngine')):
             wp_enqueue_script('message.js', $this->plugin_url() . "/assets/js/message$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('my-listings.js', $this->plugin_url() . "/assets/js/my-listings$suffix.js", array('jquery'), $this->version, true);
 
+
+            wp_enqueue_script('muploader.js', $this->plugin_url() . "/assets/js/muploader$suffix.js", array('jquery','plupload-all'), $this->version, true);
+
             wp_localize_script(
                 'post_listing',
                 'me_globals',
                 array(
                     'ajaxurl' => admin_url('admin-ajax.php'),
+                    'limitFile' => __("Exceed number of allowed file upload. Max file upload is ", "enginethemes")
                 )
             );
 
@@ -238,9 +244,7 @@ if (!class_exists('MarketEngine')):
                     ),
                     'runtimes'            => 'html5,gears,flash,silverlight,browserplus,html4',
                     'multipart_params'    => $post_params,
-                    'error'               => array(
-                        'max_files' => sprintf(__("'no more than %d file(s)'", "enginethemes"), $max_files),
-                    ),
+                    
                 )
             );
         }

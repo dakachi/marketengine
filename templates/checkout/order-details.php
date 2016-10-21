@@ -18,7 +18,7 @@ $total = 0;
 		<?php foreach ($cart_items as $key => $item) :
 			$listing =  me_get_listing(absint( $item['id'] ));
 
-			$total += $listing->get_price();
+			$total += ($listing->get_price() * $item['qty']);
 			$unit = ($item['qty']) ? $item['qty'] : 1;
 		?>
 
