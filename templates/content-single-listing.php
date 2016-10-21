@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 $listing_type = $listing->get_listing_type();
-$buyer = $listing->post_author == get_current_user_id();
+$is_owner = $listing->post_author == get_current_user_id();
 $listing_status = get_post_status_object($listing->post_status);
 ?>
 <div class="marketengine me-container">
@@ -38,7 +38,7 @@ $listing_status = get_post_status_object($listing->post_status);
 
 					<?php
 					if($listing_type) :
-						if( $buyer ) :
+						if( $is_owner ) :
 							me_get_template('single-listing/status', array('listing_status' => $listing_status) );
 							me_get_template('single-listing/control-action', array('listing_type' => $listing_type , 'listing' => $listing, 'listing_status' => $listing_status) );
 						else :
@@ -48,7 +48,7 @@ $listing_status = get_post_status_object($listing->post_status);
 					?>
 					<?php me_get_template('single-listing/category');?>
 					<?php
-					if( !$buyer ) :
+					if( !$is_owner ) :
 						me_get_template('single-listing/author', array('author_id' => $listing->post_author));
 						me_get_template('single-listing/report');
 					endif;
