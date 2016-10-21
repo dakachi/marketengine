@@ -51,6 +51,14 @@ return array(
                         'placeholder' => 'listings',
                         'template'    => array(),
                     ),
+                    'ep-edit-listing' => array(
+                        'label'       => __("Edit Listing", "enginethemes"),
+                        'slug'        => 'ep-listing-id',
+                        'type'        => 'textbox',
+                        'name'        => 'ep_listing_id',
+                        'placeholder' => 'edit-listing',
+                        'template'    => array(),
+                    ),
                     'ep-orders' => array(
                         'label'       => __("Orders", "enginethemes"),
                         'slug'        => 'ep-orders',

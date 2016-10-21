@@ -12,7 +12,7 @@
 		<span class="me-instock"><?php _e("In Stock", "enginethemes"); ?></span>
 	<?php endif; ?>
 		<form method="post">
-			<?php me_get_template('account/my-listing-action', array('listing_status' => $listing_status)); ?>
+			<?php me_get_template('account/my-listing-action', array('listing_status' => $listing_status, 'listing_id' => get_the_ID())); ?>
 			<?php wp_nonce_field( 'me_update_listing_status' ); ?>
 			<input type="hidden" id="listing_id" value="<?php the_ID(); ?>" />
 			<input type="hidden" id="redirect_url" value="<?php the_permalink(); ?>" />

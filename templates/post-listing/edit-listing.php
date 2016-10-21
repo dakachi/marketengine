@@ -40,7 +40,7 @@ $selected_listing_type = $listing->get_listing_type();
 
 			<?php do_action('marketengine_edit_listing_form_start', $listing); ?>
 
-			<?php me_get_template('post-listing/listing-category', array('selected_cat' => $selected_cat, 'selected_sub_cat' => $selected_sub_cat); ?>
+			<?php me_get_template('post-listing/listing-category', array('selected_cat' => $selected_cat, 'selected_sub_cat' => $selected_sub_cat) ); ?>
 
 			<?php me_get_template('post-listing/listing-type', array('selected_listing_type' => $selected_listing_type)); ?>
 

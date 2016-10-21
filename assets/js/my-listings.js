@@ -1,15 +1,15 @@
 jQuery(document).ready(function($){
-	$('.me-item-action span, .me-action span').on('click', function(e){
+	$('.me-item-action span:not(.icon-me-edit), .me-action span:not(.icon-me-edit)').on('click', function(e){
 		var form = $(this).parents('form'),
 			_status = $(this).data('status'),
-			_lising_id = form.children('#listing_id').val(),
-			data = {
-				action: 'me_update_listing_status',
-				status: _status,
-				listing_id: _lising_id,
-				redirect_url: form.children('#redirect_url').val(),
-				_wpnonce: form.children('#_wpnonce').val()
-			};
+			_lising_id = form.children('#listing_id').val();
+		data = {
+			action: 'me_update_listing_status',
+			status: _status,
+			listing_id: _lising_id,
+			redirect_url: form.children('#redirect_url').val(),
+			_wpnonce: form.children('#_wpnonce').val()
+		};
 
 		var _confirm = false;
 		if( 'me-archived' == _status ) {
