@@ -34,24 +34,24 @@ if (!empty($_POST['meta_input']['pricing_unit'])) {$unit =  esc_attr($_POST['met
 		<?php do_action('marketengine_post_listing_price_form_start'); ?>
 
 		<div class="me-col-md-6">
-			<div class="marketengine-input-field">
-			    <label class="text"><?php _e("Price", "enginethemes"); ?></label>
-			    <input type="text" name="meta_input[listing_price]" placeholder="$" class="required me-input-price" value="<?php echo $price; ?>">
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
 				    <label class="text"><?php _e("Price", "enginethemes"); ?></label>
-				    <input type="text" name="meta_input[listing_price]" placeholder="$" class="required me-input-price" value="<?php if (!empty($_POST['meta_input']['listing_price'])) {echo esc_attr($_POST['meta_input']['listing_price']);}?>">
+				    <input type="text" name="meta_input[listing_price]" placeholder="$" class="required me-input-price" value="<?php echo $price; ?>">
 				</div>
 			</div>
 		</div>
+
 		<div class="me-col-md-6">
-			<div class="marketengine-select-field">
-			    <label class="text"><?php _e("Pricing unit", "enginethemes"); ?></label>
-			    <select class="pricing-unit" name="meta_input[pricing_unit]">
-			    	<option value="none" <?php if(!$unit) echo 'selected'; ?>><?php _e("None", "enginethemes"); ?></option>
-			    	<option value="per_unit" <?php if($unit == 'per_unit') echo 'selected'; ?> ><?php _e("Per Unit", "enginethemes"); ?></option>
-			    	<option value="per_hour" <?php if($unit == 'per_hour') echo 'selected'; ?> ><?php _e("Per Hour", "enginethemes"); ?></option>
-			    </select>
+			<div class="marketengine-group-field">
+				<div class="marketengine-select-field">
+				    <label class="text"><?php _e("Pricing unit", "enginethemes"); ?></label>
+				    <select class="pricing-unit" name="meta_input[pricing_unit]">
+				    	<option value="none" <?php if(!$unit) echo 'selected'; ?>><?php _e("None", "enginethemes"); ?></option>
+				    	<option value="per_unit" <?php if($unit == 'per_unit') echo 'selected'; ?> ><?php _e("Per Unit", "enginethemes"); ?></option>
+				    	<option value="per_hour" <?php if($unit == 'per_hour') echo 'selected'; ?> ><?php _e("Per Hour", "enginethemes"); ?></option>
+				    </select>
+				</div>
 			</div>
 		</div>
 
