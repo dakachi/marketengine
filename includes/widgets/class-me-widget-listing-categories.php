@@ -61,7 +61,7 @@ class ME_Widget_Listing_Categories extends WP_Widget {
             $dropdown_id    = ($first_dropdown) ? 'listing_category' : "{$this->id_base}-dropdown-{$this->number}";
             $first_dropdown = false;
 
-            echo '<label class="screen-reader-text" for="' . esc_attr($dropdown_id) . '">' . $title . '</label>';
+            // echo '<label class="screen-reader-text" for="' . esc_attr($dropdown_id) . '">' . $title . '</label>';
 
             $cat_args['show_option_none'] = __('Select Category');
             $cat_args['id']               = $dropdown_id;

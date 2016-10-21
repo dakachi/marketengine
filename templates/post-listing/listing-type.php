@@ -21,7 +21,7 @@ $selected_listing_type = empty($_POST['listing_type']) ? 'purchasion' : $_POST['
 	<?php do_action('marketengine_post_listing_type_form_end'); ?>
 
 </div>
-<div class="marketengine-group-field marketengine-<?php echo $selected_listing_type; ?>">
+<div class="marketengine-<?php echo $selected_listing_type; ?>">
 
 	<?php do_action('marketengine_post_listing_type_form_fields_start'); ?>
 
@@ -30,19 +30,23 @@ $selected_listing_type = empty($_POST['listing_type']) ? 'purchasion' : $_POST['
 		<?php do_action('marketengine_post_listing_price_form_start'); ?>
 
 		<div class="me-col-md-6">
-			<div class="marketengine-input-field">
-			    <label class="text"><?php _e("Price", "enginethemes"); ?></label>
-			    <input type="text" name="meta_input[listing_price]" placeholder="$" class="required me-input-price" value="<?php if (!empty($_POST['meta_input']['listing_price'])) {echo esc_attr($_POST['meta_input']['listing_price']);}?>">
+			<div class="marketengine-group-field">
+				<div class="marketengine-input-field">
+				    <label class="text"><?php _e("Price", "enginethemes"); ?></label>
+				    <input type="text" name="meta_input[listing_price]" placeholder="$" class="required me-input-price" value="<?php if (!empty($_POST['meta_input']['listing_price'])) {echo esc_attr($_POST['meta_input']['listing_price']);}?>">
+				</div>
 			</div>
 		</div>
 		<div class="me-col-md-6">
-			<div class="marketengine-select-field">
-			    <label class="text"><?php _e("Pricing unit", "enginethemes"); ?></label>
-			    <select class="pricing-unit" name="meta_input[pricing_unit]">
-			    	<option value="none"><?php _e("None", "enginethemes"); ?></option>
-			    	<option value="per_unit"><?php _e("Per Unit", "enginethemes"); ?></option>
-			    	<option value="per_hour"><?php _e("Per Hour", "enginethemes"); ?></option>
-			    </select>
+			<div class="marketengine-group-field">
+				<div class="marketengine-select-field">
+				    <label class="text"><?php _e("Pricing unit", "enginethemes"); ?></label>
+				    <select class="pricing-unit" name="meta_input[pricing_unit]">
+				    	<option value="none"><?php _e("None", "enginethemes"); ?></option>
+				    	<option value="per_unit"><?php _e("Per Unit", "enginethemes"); ?></option>
+				    	<option value="per_hour"><?php _e("Per Hour", "enginethemes"); ?></option>
+				    </select>
+				</div>
 			</div>
 		</div>
 
