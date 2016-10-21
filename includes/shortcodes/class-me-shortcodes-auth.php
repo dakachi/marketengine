@@ -25,6 +25,8 @@ class ME_Shortcodes_Auth {
             return self::me_user_orders();
         }elseif (isset($wp->query_vars['purchases'])) {
             return self::me_user_purchases();
+        }elseif (isset($wp->query_vars['listing-id'])) {
+            return self::me_user_edit_listing();
         }
         return self::me_user_profile();
     }
@@ -65,6 +67,13 @@ class ME_Shortcodes_Auth {
     public static function me_user_listings() {
         ob_start();
         me_get_template('account/my-listings');
+        $content = ob_get_clean();
+        return $content;
+    }
+
+    public static function me_user_edit_listing() {
+        ob_start();
+        me_get_template('post-listing/edit-listing');
         $content = ob_get_clean();
         return $content;
     }

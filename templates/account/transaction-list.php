@@ -75,7 +75,7 @@ query_posts( $args );
 	else:
 ?>
 	<div class="me-table-row-empty">
-		<?php _e('There is no transactions yet.', 'enginethemes'); ?>
+		<?php _e('There are no transactions yet.', 'enginethemes'); ?>
 	</div>
 <?php
 	endif;
