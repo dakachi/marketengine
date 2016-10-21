@@ -4,7 +4,7 @@
             <?php
             if($source) {
                 if(!$multi) {
-                    jeg_get_template_part('upload-file/single-image-form', array(
+                    me_get_template('upload-file/single-file-form', array(
                         'image_id' => $source,
                         'filename' => $name,
                         'close' => apply_filters('me_enable_close', true)

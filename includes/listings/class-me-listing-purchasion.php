@@ -39,6 +39,10 @@ class ME_Listing_Purchasion extends ME_Listing{
         return get_post_meta($this->ID, 'listing_price', true);
     }
 
+    public function get_unit() {
+        return get_post_meta($this->ID, 'pricing_unit', true);
+    }
+
     public function get_pricing_unit() {
         $pricing_text = array(
             '0' => '',

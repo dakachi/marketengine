@@ -343,6 +343,16 @@ class ME_Listing {
         return absint(get_post_meta($this->ID, '_me_order_count', true));
     }
 
+
+    public function get_gallery() {
+        $gallery      = get_post_meta($this->ID, '_me_listing_gallery', true);
+        return (array) $gallery;
+    }
+
+    public function get_featured_image(){
+        return get_post_meta($this->ID, '_thumbnail_id', true);
+    }
+
     /**
      * Retrieve listing galleries
      *

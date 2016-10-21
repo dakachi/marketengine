@@ -1,6 +1,10 @@
 <?php 
 $listing_types = me_get_listing_types();
-$selected_listing_type = empty($_POST['listing_type']) ? 'purchasion' : $_POST['listing_type'];
+$selected_listing_type = empty($_POST['listing_type']) ? $selected_listing_type : $_POST['listing_type'];
+
+if (!empty($_POST['meta_input']['contact_email'])) {$contact_email = esc_attr($_POST['meta_input']['contact_email']);}
+if (!empty($_POST['meta_input']['listing_price'])) {$price =  esc_attr($_POST['meta_input']['listing_price']);}
+if (!empty($_POST['meta_input']['pricing_unit'])) {$unit =  esc_attr($_POST['meta_input']['pricing_unit']);}
 ?>
 
 <?php do_action('marketengine_before_post_listing_type_form'); ?>
@@ -29,22 +33,23 @@ $selected_listing_type = empty($_POST['listing_type']) ? 'purchasion' : $_POST['
 
 		<?php do_action('marketengine_post_listing_price_form_start'); ?>
 
-		<div class="me-col-sm-6">
+		<div class="me-col-md-6">
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
 				    <label class="text"><?php _e("Price", "enginethemes"); ?></label>
-				    <input type="text" name="meta_input[listing_price]" placeholder="$" class="required me-input-price" value="<?php if (!empty($_POST['meta_input']['listing_price'])) {echo esc_attr($_POST['meta_input']['listing_price']);}?>">
+				    <input type="text" name="meta_input[listing_price]" placeholder="$" class="required me-input-price" value="<?php echo $price; ?>">
 				</div>
 			</div>
 		</div>
-		<div class="me-col-sm-6">
+
+		<div class="me-col-md-6">
 			<div class="marketengine-group-field">
 				<div class="marketengine-select-field">
 				    <label class="text"><?php _e("Pricing unit", "enginethemes"); ?></label>
 				    <select class="pricing-unit" name="meta_input[pricing_unit]">
-				    	<option value="none"><?php _e("None", "enginethemes"); ?></option>
-				    	<option value="per_unit"><?php _e("Per Unit", "enginethemes"); ?></option>
-				    	<option value="per_hour"><?php _e("Per Hour", "enginethemes"); ?></option>
+				    	<option value="none" <?php if(!$unit) echo 'selected'; ?>><?php _e("None", "enginethemes"); ?></option>
+				    	<option value="per_unit" <?php if($unit == 'per_unit') echo 'selected'; ?> ><?php _e("Per Unit", "enginethemes"); ?></option>
+				    	<option value="per_hour" <?php if($unit == 'per_hour') echo 'selected'; ?> ><?php _e("Per Hour", "enginethemes"); ?></option>
 				    </select>
 				</div>
 			</div>
@@ -61,7 +66,7 @@ $selected_listing_type = empty($_POST['listing_type']) ? 'purchasion' : $_POST['
 		<?php do_action('marketengine_post_listing_offering_email_form_start'); ?>
 
 	    <label class="text"><?php _e("Contact Email", "enginethemes");?></label>
-	    <input type="email" name="meta_input[contact_email]" value="<?php if (!empty($_POST['meta_input']['contact_email'])) {echo esc_attr($_POST['meta_input']['contact_email']);}?>" >
+	    <input type="email" name="meta_input[contact_email]" value="<?php echo $contact_email; ?>" >
 	    
 	    <?php do_action('marketengine_post_listing_offering_email_form_end'); ?>
 

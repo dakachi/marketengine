@@ -51,11 +51,11 @@ li .uploading-progress {
         me_get_template('upload-file/upload-form', array(
             'id' => 'upload_listing_image',
             'name' => 'listing_image',
-            'source' => '', //$company_gallery,
+            'source' => $listing_image,
             'button' => 'btn-listing-image',
             'multi' => false,
             'maxsize' => esc_html( '2mb' ),
-            'maxcount' => 5
+            'maxcount' => 1
         ));
         ?>
     </div>
@@ -64,32 +64,23 @@ li .uploading-progress {
     <div class="marketengine-upload-field">
         <label class="text" for="upload_company_gallery"><?php _e('Gallery', 'enginethemes'); ?></label>
         <?php
-        // $company_gallery = get_children(
-        //     array(
-        //         'order'				=> 'ASC',
-        //         'orderby'			=>'menu_order',
-        //         'post_parent' 		=> get_the_ID(),
-        //         'post_type' 		=> 'attachment',
-        //         'post_mime_type' 	=>'image'
-        //     )
-        // );
 
-        // ob_start();
-        // if($company_gallery) {
-        //     foreach($company_gallery as $gallery) {
-        //         jeg_get_template_part('additional/multi-image-form', array(
-        //             'image_id' => $gallery->ID,
-        //             'filename' => 'company_gallery',
-        //             'close' => apply_filters('jeg_enable_close', true)
-        //         ));
-        //     }
-        // }
-        // $company_gallery = ob_get_clean();
+        ob_start();
+        if($listing_gallery) {
+            foreach($listing_gallery as $gallery) {
+                me_get_template('upload-file/multi-file-form', array(
+                    'image_id' => $gallery,
+                    'filename' => 'listing_gallery',
+                    'close' => true
+                ));
+            }
+        }
+        $listing_gallery = ob_get_clean();
 
         me_get_template('upload-file/upload-form', array(
             'id' => 'upload_listing_gallery',
             'name' => 'listing_gallery',
-            'source' => '', //$company_gallery,
+            'source' => $listing_gallery,
             'button' => 'me-btn-upload',
             'multi' => true,
             'maxsize' => esc_html( '2mb' ),
