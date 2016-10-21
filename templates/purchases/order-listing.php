@@ -18,7 +18,7 @@
 
 	</div>
 
-	<?php if(isset($seller) && !$seller && 'me-pending' !== $order_status ) : ?>
+	<?php if(isset($seller) && 'me-pending' !== $order_status ) : ?>
 	<a class="me-orderlisting-review" href=""><?php _e('RATE &amp; REVIEW NOW', 'enginethemes'); ?></a>
 	<?php endif; ?>
 
