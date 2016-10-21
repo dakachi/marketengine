@@ -25,7 +25,7 @@ if (!empty($_POST['meta_input']['pricing_unit'])) {$unit =  esc_attr($_POST['met
 	<?php do_action('marketengine_post_listing_type_form_end'); ?>
 
 </div>
-<div class="marketengine-group-field marketengine-<?php echo $selected_listing_type; ?>">
+<div class="marketengine-<?php echo $selected_listing_type; ?>">
 
 	<?php do_action('marketengine_post_listing_type_form_fields_start'); ?>
 
@@ -37,6 +37,11 @@ if (!empty($_POST['meta_input']['pricing_unit'])) {$unit =  esc_attr($_POST['met
 			<div class="marketengine-input-field">
 			    <label class="text"><?php _e("Price", "enginethemes"); ?></label>
 			    <input type="text" name="meta_input[listing_price]" placeholder="$" class="required me-input-price" value="<?php echo $price; ?>">
+			<div class="marketengine-group-field">
+				<div class="marketengine-input-field">
+				    <label class="text"><?php _e("Price", "enginethemes"); ?></label>
+				    <input type="text" name="meta_input[listing_price]" placeholder="$" class="required me-input-price" value="<?php if (!empty($_POST['meta_input']['listing_price'])) {echo esc_attr($_POST['meta_input']['listing_price']);}?>">
+				</div>
 			</div>
 		</div>
 		<div class="me-col-md-6">

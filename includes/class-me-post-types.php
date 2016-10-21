@@ -96,7 +96,7 @@ class ME_Post_Types {
             'update_item'           => __('Update listing tag', "enginethemes"),
             'add_new_item'          => __('Add New listing tag', "enginethemes"),
             'new_item_name'         => __('New listing tag Name', "enginethemes"),
-            'add_or_remove_items'   => __('Add or remove tag', "enginethemes"),
+            'add_or_remove_items'   => __('Tags (Add or remove tag)', "enginethemes"),
             'choose_from_most_used' => __('Choose from most used enginetheme ', "enginethemes"),
             'menu_name'             => __('Listing Tag', "enginethemes"),
         );

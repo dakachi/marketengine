@@ -199,10 +199,8 @@ function me_post_tags_meta_box($default, $taxonomy) {
             </div>
 
             <div class="ajaxtag hide-if-no-js">
-                <label class="screen-reader-text" for="new-tag-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_new_item; ?></label>
                 <p><input type="text" id="new-tag-<?php echo $tax_name; ?>" name="newtag[<?php echo $tax_name; ?>]" class="newtag form-input-tip" size="16" autocomplete="off" aria-describedby="new-tag-<?php echo $tax_name; ?>-desc" placeholder="Type here and press enter to create listing tags." value="" />
             </div>
-            <p class="howto" id="new-tag-<?php echo $tax_name; ?>-desc"><?php echo $taxonomy->labels->separate_items_with_commas; ?></p>
 
             </div>
             <div class="tagchecklist"></div>
@@ -288,10 +286,10 @@ function me_get_client_agent() {
  *
  */
 
-function me_get_auth_url( $query_var = '' ) {
+function me_get_auth_url( $query_var = '', $value = '' ) {
     $url = me_get_page_permalink( 'user_account' );
     if($url){
-        $url = me_get_endpoint_url( $query_var, '', $url );
+        $url = me_get_endpoint_url( $query_var, $value, $url );
         return $url;
     }
     return home_url();

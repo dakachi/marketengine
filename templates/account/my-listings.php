@@ -97,7 +97,7 @@ $query = new WP_Query( $args );
 							<div class="me-item-action">
 								<form method="post">
 
-								<?php me_get_template('account/my-listing-action', array( 'listing_status' => $listing_status) ); ?>
+								<?php me_get_template('account/my-listing-action', array( 'listing_status' => $listing_status, 'listing_id' => get_the_ID()) ); ?>
 								<?php wp_nonce_field( 'me_update_listing_status' ); ?>
 									<input type="hidden" id="listing_id" value="<?php the_ID(); ?>" />
 
