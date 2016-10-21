@@ -19,7 +19,7 @@ $selected_cat = '';
 $selected_sub_cat = '';
 $terms = wp_get_post_terms( $listing->ID, 'listing_category');
 foreach ($terms as $key => $term) {
-	if(!$terms->post_parent) {
+	if(!$term->parent) {
 		$selected_cat = $term->term_id;
 	}else {
 		$selected_sub_cat = $term->term_id;
@@ -27,7 +27,11 @@ foreach ($terms as $key => $term) {
 }
 
 $selected_listing_type = $listing->get_listing_type();
-
+if($selected_listing_type == 'purchasion') {
+	$listing_types =  array('selected_listing_type' => $selected_listing_type, 'price' => $listing->get_price(), 'unit' => $listing->get_unit(), 'contact_email' => '');
+}else {
+	$listing_types =  array('selected_listing_type' => $selected_listing_type, 'contact_email' => $listing->get_contact_info(), 'price' => '', 'unit' => '');
+}
 ?>
 
 <?php do_action('marketengine_before_edit_listing_form', $listing); ?>
@@ -40,21 +44,23 @@ $selected_listing_type = $listing->get_listing_type();
 
 			<?php do_action('marketengine_edit_listing_form_start', $listing); ?>
 
-			<?php me_get_template('post-listing/listing-category', array('selected_cat' => $selected_cat, 'selected_sub_cat' => $selected_sub_cat); ?>
+			<?php me_get_template('post-listing/listing-category', array('selected_cat' => $selected_cat, 'selected_sub_cat' => $selected_sub_cat)); ?>
 
-			<?php me_get_template('post-listing/listing-type', array('selected_listing_type' => $selected_listing_type)); ?>
+			<?php me_get_template('post-listing/listing-type', $listing_types); ?>
 
-			<?php me_get_template('post-listing/listing-information', array('listing_content', $listing->post_content)); ?>
+			<?php me_get_template('post-listing/listing-information', array('listing_content' => $listing->post_content,  'listing_title' => $listing->post_title)); ?>
 
 			<?php do_action('marketengine_edit_listing_information_form_fields', $listing); ?>
 
-			<?php me_get_template('post-listing/listing-gallery', array('listing' => $listing)); ?>
+			<?php me_get_template('post-listing/listing-gallery', array('listing_gallery' => $listing->get_gallery(), 'listing_image' => $listing->get_featured_image())); ?>
 
 			<?php me_get_template('post-listing/listing-tags', array('listing', $listing)); ?>
 
 			<?php do_action('marketengine_edit_listing_form_fields', $listing); ?>
 
 			<?php wp_nonce_field('me-edit_listing'); ?>
+
+			<input type="hidden" name="edit" value="<?php echo $listing->ID; ?>" />
 
 			<div class="marketengine-group-field me-text-center submit-post">
 				<input class="marketengine-post-submit-btn" type="submit" name="insert_lisiting" value="<?php _e("SUBMIT", "enginethemes"); ?>">
