@@ -53,7 +53,6 @@ $query = new ME_Message_Query($args);
 
 		<?php
 			endforeach;
-		endif;
 		?>
 	</div>
 
@@ -63,4 +62,13 @@ $query = new ME_Message_Query($args);
 	<div class="marketengine-loadmore">
 		<a href="" class="me-loadmore me-loadmore-order-inquiries"><?php echo __('Load more', 'enginethemes'); ?></a>
 	</div>
+	<?php
+	else:
+	?>
+		<div class="me-table-row-empty">
+			<?php _e('There are no conversations yet.', 'enginethemes'); ?>
+		</div>
+	<?php
+	endif;
+	?>
 </div>
