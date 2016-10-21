@@ -33,18 +33,22 @@ class ME_Checkout_Handle {
             'country'    => 'required',
         );
 
-        if (!empty($data['is_ship_to_billing_address'])) {
+        if (empty($data['me-shipping'])) {
             $shipping_rules = $billing_rules;
         } else {
-            $data['shipping_address'] = $data['billing_info'];
+            $data['shipping'] = $data['billing_info'];
         }
+
+        // echo '<pre>';
+        // print_r($data);exit;
+        // echo '</pre>';
         // create order
         $order = self::create_order($data);
 
         if (!is_wp_error($order)) {
             $order->set_address($data['billing_info']);
-            if (!empty($data['shipping_address'])) {
-                $order->set_address($data['shipping_address'], 'shipping');
+            if (!empty($data['shipping'])) {
+                $order->set_address($data['shipping'], 'shipping');
             }
         }
 
