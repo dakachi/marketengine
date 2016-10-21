@@ -94,9 +94,12 @@ class ME_PPAdaptive extends ME_Payment {
         $reason         = array(
             'ECHECK'         => __('The payment is pending because it was made by an eCheck that has not yet cleared.', 'enginethemes'),
             'MULTI_CURRENCY' => __('The receiver does not have a balance in the currency sent, and does not have the Payment Receiving Preferences set to automatically convert and accept this payment. Receiver must manually accept or deny this payment from the Account Overview.', 'enginethemes'),
+            'INTERNATIONAL'  => __("The payment is pending because the receiver holds a non-U.S. account and does not have a withdrawal mechanism. The receiver must manually accept or deny this payment from the Account Overview.", "enginethemes"),
             'UPGRADE'        => __('The payment is pending because it was made via credit card and the receiver must upgrade the account to a Business account or Premier status to receive the funds. It can also mean that receiver has reached the monthly limit for transactions on the account', 'enginethemes'),
             'VERIFY'         => __('The payment is pending because the receiver is not yet verified.', 'enginethemes'),
             'RISK'           => __('The payment is pending while it is being reviewed by PayPal for risk.', 'enginethemes'),
+            'UNILATERAL'     => __("The payment is pending because it was made to an email address that is not yet registered or confirmed.", "enginethemes"),
+            'UPGRADE'        => __("The payment is pending because it was made via credit card and the receiver must upgrade the account to a Business account or Premier status to receive the funds. It can also mean that receiver has reached the monthly limit for transactions on the account.", "enginethemes"),
             'OTHER'          => __('The payment is pending for review. For more information, contact PayPal Customer Service.', 'enginethemes'),
         );
         if (isset($reason[$pending_reason])) {
@@ -457,7 +460,7 @@ class ME_PPAdaptive_Request {
 
             $amount = me_get_order_item_meta($order_item_id, '_amount', true);
             if ($commission_fee > 0) {
-                $amount = $amount - $commission_fee;
+                $amount        = $amount - $commission_fee;
                 $receiver_list = array(
                     'receiverList.receiver(0).amount' => $amount,
                     'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
@@ -467,33 +470,33 @@ class ME_PPAdaptive_Request {
                     'receiverList.receiver(1).amount' => $this->get_commission_fee(),
                     'receiverList.receiver(1).email'  => $this->get_commission_email(),
                     //'receiverList.receiver(1).primary' => $this->is_pay_primary(),
-                );    
-            }else {
+                );
+            } else {
                 $receiver_list = array(
                     'receiverList.receiver(0).amount' => $amount,
                     'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
                     // 'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
-                );    
+                );
             }
-            
+
         }
 
         // add commission fee to order details
         if ($commission_fee > 0) {
             $commission_items = me_get_order_items($order->id, 'commission_item');
-            $receiver_1 = (object) array(
+            $receiver_1       = (object) array(
                 'user_name'  => 'admin',
                 'email'      => $this->get_commission_email(),
                 'amount'     => $this->get_commission_fee(),
                 'is_primary' => false,
             );
-            if(!empty($commission_items)) {
+            if (!empty($commission_items)) {
                 $order_item_id = $commission_items[0]->order_item_id;
                 $order->update_commission($order_item_id, $receiver_1);
-            }else {
-                $order->add_commission($receiver_1);    
+            } else {
+                $order->add_commission($receiver_1);
             }
-            
+
         }
 
         return apply_filters('marketegnine_ppadaptive_receiver_list', $receiver_list, $order);
@@ -594,12 +597,22 @@ class ME_PPAdaptive_Request {
         $payment_info   = $response->paymentInfoList->paymentInfo;
         $receiver_items = me_get_order_items($order_id, 'receiver_item');
         foreach ($receiver_items as $key => $receiver) {
-            if (!empty($payment_info[$key]->transactionId)) {
-                me_add_order_item_meta($receiver->order_item_id, '_transaction_id', $payment_info[$key]->transactionId);
-                me_add_order_item_meta($receiver->order_item_id, '_transaction_status', $payment_info[$key]->transactionStatus);
+
+            $transaction_info = $payment_info[$key];
+
+            if (!empty($transaction_info->transactionId)) {
+                me_add_order_item_meta($receiver->order_item_id, '_transaction_id', $transaction_info->transactionId);
+                me_add_order_item_meta($receiver->order_item_id, '_transaction_status', $transaction_info->transactionStatus);
             }
-            me_add_order_item_meta($receiver->order_item_id, 'refunded_amount', $payment_info[$key]->refundedAmount);
-            me_add_order_item_meta($receiver->order_item_id, '_pending_refund', $payment_info[$key]->pendingRefund);
+
+            if(!empty($transaction_info->pendingReason)) {
+                $pending_messages = $this->gateway->get_pending_message();
+                $pending_reason = $transaction_info->pendingReason;
+                me_add_order_item_meta($receiver->order_item_id, '_pending_reason', $pending_messages[$pending_reason]);
+            }
+
+            me_add_order_item_meta($receiver->order_item_id, 'refunded_amount', $transaction_info->refundedAmount);
+            me_add_order_item_meta($receiver->order_item_id, '_pending_refund', $transaction_info->pendingRefund);
         }
     }
 

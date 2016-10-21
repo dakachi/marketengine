@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 <p><?php _e("Here are the order’s details:", "enginethemes"); ?></p>
 <ol>
 	<li><?php printf(__("Buyer Name: %s", "enginethemes"), $buyer_name) ?></li>
-	<li><?php printf(__("Listing: %s", "enginethemes"), $listing_price) ?></li>
+	<li><?php printf(__("Listing price: %s", "enginethemes"), $listing_price) ?></li>
 	<li><?php printf(__("Total: %s", "enginethemes"), $total) ?></li>
 </ol>
 <p>
