@@ -196,12 +196,20 @@ class ME_Order {
     public function get_confirm_url() {
         $page           = me_get_page_permalink('confirm_order');
         $order_endpoint = me_get_endpoint_name('order-id');
+        $permalink_setting = get_option( 'permalink_setting');
+        if( empty($permalink_setting) ) {
+            return $page . '&order-id=' . $this->id;
+        }
         return $page . $order_endpoint . '/' . $this->id;
     }
 
     public function get_order_detail_url() {
         $page           = me_get_page_permalink('transaction_detail');
         $order_endpoint = me_get_endpoint_name('order-id');
+        $permalink_setting = get_option( 'permalink_setting');
+        if( empty($permalink_setting) ) {
+            return $page . '&order-id=' . $this->id;
+        }
         return $page . $order_endpoint . '/' . $this->id;
     }
 
