@@ -147,7 +147,7 @@ function me_get_default_endpoints() {
         'purchases'       => 'purchases',
         'pay'             => 'pay',
         'cancel_payment'  => 'cancel-payment',
-        'edit_listing'    => 'edit-listing',
+        'listing_id'      => 'edit-listing',
     );
     return $endpoint_arr;
 }
@@ -170,11 +170,11 @@ function me_setting_endpoint_name() {
 }
 
 /**
- * Rewrite authentication url. etc, order detail, transaction detail
+ * Rewrite page url.
  *
  * @access public
  */
-function me_auth_rewrite_rule($rewrite_args) {
+function me_page_rewrite_rule($rewrite_args) {
     foreach ($rewrite_args as $key => $value) {
         if ($value['page_id'] > -1) {
             $page = get_post($value['page_id']);
@@ -208,8 +208,13 @@ function me_init_endpoint() {
             'endpoint_name' => me_get_endpoint_name('pay'),
             'query_var'     => 'pay',
         ),
+        array(
+            'page_id'       => me_get_page_id('user_account'),
+            'endpoint_name' => me_get_endpoint_name('listing-id'),
+            'query_var'     => 'listing-id',
+        ),
     );
-    me_auth_rewrite_rule($rewrite_args);
+    me_page_rewrite_rule($rewrite_args);
 
     $endpoints = array('orders', 'purchases', 'listings');
     foreach ($endpoints as $endpoint) {
