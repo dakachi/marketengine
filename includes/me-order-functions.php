@@ -125,12 +125,12 @@ function me_get_order() {
 
 }
 
-function me_get_order_ids( $user_login ) {
+function me_get_order_ids( $value, $type ) {
     global $wpdb;
     $query = "SELECT order_items.order_id
             FROM $wpdb->marketengine_order_items as order_items
-            WHERE order_items.order_item_type = 'receiver_item' AND
-                order_items.order_item_name = '{$user_login}'";
+            WHERE order_items.order_item_type = '{$type}' AND
+                order_items.order_item_name = '{$value}'";
 
     $results = $wpdb->get_col($query);
     return $results;
@@ -162,8 +162,17 @@ function me_filter_order_query( $query ) {
     // set order id to retrive on order list page
     if( !isset($query['author']) ) {
         $user_data = get_userdata( get_current_user_id() );
-        $order_ids = me_get_order_ids( $user_data->user_login );
+        $order_ids = me_get_order_ids( $user_data->user_login, 'receiver_item' );
         $args['post__in'] = $order_ids;
+    }
+
+    if( isset($query['keyword']) ) {
+        if( is_numeric($query['keyword']) ) {
+            $args['post__in'] = array( $query['keyword'] );
+        }
+
+        $id_by_listing = me_get_order_ids( $user_data->user_login, 'listing_item' );
+        $args['post__in'] = array_merge( array($query['keyword']), $args['post__in'] );
     }
 
     return $args;

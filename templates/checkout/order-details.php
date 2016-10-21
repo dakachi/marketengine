@@ -61,7 +61,7 @@ $total = 0;
 			<div class="me-table-col me-table-empty"></div>
 			<div class="me-table-col me-table-empty"></div>
 			<div class="me-table-col me-cart-amount"><?php _e("Total amount:", "enginethemes"); ?></div>
-			<div class="me-table-col me-cart-totals">$<?php echo $total  ?></div>
+			<div class="me-table-col me-cart-totals">$<?php echo ($listing->get_price()) * $unit;  ?></div>
 		</div>
 	</div>
 	<?php wp_nonce_field('me-checkout'); ?>
