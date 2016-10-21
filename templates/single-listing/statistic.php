@@ -16,7 +16,7 @@ $listing_type = $listing->get_listing_type();
 		<div class="me-rating-contact">
 			<span class="me-count-contact">
 			<?php printf(_n("%d Contact", "%d Contacts", $review_count,"enginethemes"),$review_count ); ?>
-		</span>|
+		</span>
 		</div>
 	<?php endif; ?>
 
