@@ -368,4 +368,10 @@ class ME_Listing {
         // TODO: cap nhat cho nay
         return 'listing' === $this->post_type;
     }
+
+    public function get_edit_url(){
+        $page           = me_get_page_permalink('user_account');
+        $edit = me_get_endpoint_name('edit-listing');
+        return $page . $edit . '/' . $this->id;
+    }
 }
