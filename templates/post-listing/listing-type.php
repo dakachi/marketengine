@@ -29,7 +29,7 @@ $selected_listing_type = empty($_POST['listing_type']) ? 'purchasion' : $_POST['
 
 		<?php do_action('marketengine_post_listing_price_form_start'); ?>
 
-		<div class="me-col-md-6">
+		<div class="me-col-sm-6">
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
 				    <label class="text"><?php _e("Price", "enginethemes"); ?></label>
@@ -37,7 +37,7 @@ $selected_listing_type = empty($_POST['listing_type']) ? 'purchasion' : $_POST['
 				</div>
 			</div>
 		</div>
-		<div class="me-col-md-6">
+		<div class="me-col-sm-6">
 			<div class="marketengine-group-field">
 				<div class="marketengine-select-field">
 				    <label class="text"><?php _e("Pricing unit", "enginethemes"); ?></label>
