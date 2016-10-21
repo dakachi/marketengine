@@ -22,7 +22,7 @@
         if(apply_filters('me_enable_upload', true)) {
     ?>
     <span id="<?php echo esc_attr($button); ?>" class="me-gallery-add-img">
-        Choose images
+        <?php _e("Choose image", "enginethemes"); ?>
     </span>
     <?php
         } else {
