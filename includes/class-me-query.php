@@ -131,7 +131,9 @@ function me_get_default_endpoints() {
         'orders'          => 'orders',
         'order_id'        => 'order',
         'purchases'       => 'purchases',
-        'pay'             => 'pay'
+        'pay'             => 'pay',
+        'cancel_payment'  => 'cancel-payment',
+        'edit_listing'    => 'edit-listing',
     );
     return $endpoint_arr;
 }
@@ -149,7 +151,6 @@ function me_setting_endpoint_name() {
         if (isset($option_value) && !empty($option_value) && $option_value != $value) {
             $endpoint_arr[$key] = $option_value;
         }
-
     }
     return $endpoint_arr;
 }
