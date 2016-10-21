@@ -13,6 +13,23 @@ if (!defined('ABSPATH')) {
 
 <?php if($listing) : ?>
 
+<?php
+
+$selected_cat = '';
+$selected_sub_cat = '';
+$terms = wp_get_post_terms( $listing->ID, 'listing_category');
+foreach ($terms as $key => $term) {
+	if(!$terms->post_parent) {
+		$selected_cat = $term->term_id;
+	}else {
+		$selected_sub_cat = $term->term_id;
+	}
+}
+
+$selected_listing_type = $listing->get_listing_type();
+
+?>
+
 <?php do_action('marketengine_before_edit_listing_form', $listing); ?>
 
 <div id="marketengine-wrapper" class="marketengine">
@@ -23,11 +40,11 @@ if (!defined('ABSPATH')) {
 
 			<?php do_action('marketengine_edit_listing_form_start', $listing); ?>
 
-			<?php me_get_template('post-listing/listing-category', array('listing', $listing)); ?>
+			<?php me_get_template('post-listing/listing-category', array('selected_cat' => $selected_cat, 'selected_sub_cat' => $selected_sub_cat); ?>
 
-			<?php me_get_template('post-listing/listing-type', array('listing', $listing)); ?>
+			<?php me_get_template('post-listing/listing-type', array('selected_listing_type' => $selected_listing_type)); ?>
 
-			<?php me_get_template('post-listing/listing-information', array('listing', $listing)); ?>
+			<?php me_get_template('post-listing/listing-information', array('listing_content', $listing->post_content)); ?>
 
 			<?php do_action('marketengine_edit_listing_information_form_fields', $listing); ?>
 
