@@ -131,7 +131,7 @@ function me_get_default_endpoints() {
         'orders'          => 'orders',
         'order_id'        => 'order',
         'purchases'       => 'purchases',
-        'pay'             => 'pay',
+        'pay'             => 'pay'
     );
     return $endpoint_arr;
 }
