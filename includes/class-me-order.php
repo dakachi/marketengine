@@ -391,7 +391,7 @@ class ME_Order {
      *
      * @return array Array of address details
      */
-    public function get_address($type = 'billing') {
+    public function get_address($type) {
         $address_fields = array('first_name', 'last_name', 'phone', 'email', 'postcode', 'address', 'city', 'country');
         $address        = array();
         foreach ($address_fields as $field) {

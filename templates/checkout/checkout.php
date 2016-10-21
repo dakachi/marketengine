@@ -24,7 +24,7 @@ $cart_items = me_get_cart_items();
 		// note
 		me_get_template('checkout/note');
 		// listing details
-		me_get_template('checkout/order-details', array('cart_items' => $cart_items));		
+		me_get_template('checkout/order-details', array('cart_items' => $cart_items));
 		// seller information
 		me_get_template('checkout/seller-info');
 		// payment gateways
