@@ -14,21 +14,26 @@
                 }
             }
             ?>
+            
+            <?php
+                if(apply_filters('me_enable_upload', true)) {
+            ?>
+            <li id="<?php echo esc_attr($button); ?>" class="me-item-img">
+                <span class="me-gallery-img me-gallery-add-img">
+                    <a class="me-add-img">
+                        <i class="icon-me-add"></i>
+                    </a>
+                </span>
+            </li>
+            <?php
+                } else {
+                    echo apply_filters('me_enable_upload_msg', '');
+                }
+            ?>
+
         </ul>
     </div>
 
-    <?php
-        if(apply_filters('me_enable_upload', true)) {
-    ?>
-    <div id="<?php echo esc_attr($button); ?>" class="btn btn-default btn-sm btn-block-xs">
-        <i class="fa fa-folder-open-o"></i>
-        <?php _e('Choose Image', 'enginethemes'); ?>
-    </div>
-    <?php
-        } else {
-            echo apply_filters('me_enable_upload_msg', '');
-        }
-    ?>
 </div>
 <script>
     (function ($) {
