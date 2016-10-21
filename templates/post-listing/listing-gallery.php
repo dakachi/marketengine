@@ -90,7 +90,7 @@ li .uploading-progress {
             'id' => 'upload_listing_gallery',
             'name' => 'listing_gallery',
             'source' => '', //$company_gallery,
-            'button' => 'btn-upload',
+            'button' => 'me-btn-upload',
             'multi' => true,
             'maxsize' => esc_html( '2mb' ),
             'maxcount' => 5
