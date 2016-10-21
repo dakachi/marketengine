@@ -1,4 +1,4 @@
-<div id="<?php echo esc_attr($id); ?>" class="upload_wrapper">
+<div id="<?php echo esc_attr($id); ?>" class="me-upload-wrapper">
     <div class="upload_preview_container">
         <ul class="marketengine-gallery-img">
             <?php
@@ -14,25 +14,21 @@
                 }
             }
             ?>
-            
-            <?php
-                if(apply_filters('me_enable_upload', true)) {
-            ?>
-            <li id="<?php echo esc_attr($button); ?>" class="me-item-img">
-                <span class="me-gallery-img me-gallery-add-img">
-                    <a class="me-add-img">
-                        <i class="icon-me-add"></i>
-                    </a>
-                </span>
-            </li>
-            <?php
-                } else {
-                    echo apply_filters('me_enable_upload_msg', '');
-                }
-            ?>
 
         </ul>
     </div>
+
+    <?php
+        if(apply_filters('me_enable_upload', true)) {
+    ?>
+    <span id="<?php echo esc_attr($button); ?>" class="me-gallery-add-img">
+        Choose images
+    </span>
+    <?php
+        } else {
+            echo apply_filters('me_enable_upload_msg', '');
+        }
+    ?>
 
 </div>
 <script>
