@@ -1,4 +1,17 @@
 <?php
+/**
+ * Handle redirects before content is output - hooked into template_redirect so is_page works.
+ */
+function me_template_redirect() {
+    global $wp_query, $wp;
+
+    // When default permalinks are enabled, redirect shop page to post type archive url
+    if ( ! empty( $_GET['page_id'] ) && '' === get_option( 'permalink_structure' ) && $_GET['page_id'] == me_get_page_id( 'listings' ) ) {
+        wp_safe_redirect( get_post_type_archive_link('listing') );
+        exit;
+    }
+}
+add_action( 'template_redirect', 'me_template_redirect' );
 
 /**
  *
@@ -8,6 +21,7 @@ function me_pre_get_posts($query) {
     if (!$query->is_main_query()) {
         return;
     }
+
     if ($GLOBALS['wp_rewrite']->use_verbose_page_rules && isset($query->queried_object->ID) && $query->queried_object->ID === me_get_page_id('listings')) {
         $query->set('post_type', 'listing');
         $query->set('page', '');
