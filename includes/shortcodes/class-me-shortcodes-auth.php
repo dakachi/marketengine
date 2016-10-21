@@ -73,7 +73,10 @@ class ME_Shortcodes_Auth {
 
     public static function me_user_edit_listing() {
         ob_start();
-        me_get_template('post-listing/edit-listing');
+        $listing_id = get_query_var('listing-id');
+        $listing = me_get_listing($listing_id);
+
+        me_get_template('post-listing/edit-listing', array('listing' => $listing));
         $content = ob_get_clean();
         return $content;
     }
