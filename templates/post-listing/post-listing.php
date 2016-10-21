@@ -42,7 +42,7 @@ if (!defined('ABSPATH')) {
 			<div class="marketengine-group-field me-text-center submit-post">
 				<input class="marketengine-post-submit-btn" type="submit" name="insert_lisiting" value="<?php _e("SUBMIT", "enginethemes"); ?>">
 			</div>
-			<a href="#" class="back-link-page me-forward-section" data-active="2"><?php _e("&lt; Back to home", "enginethemes"); ?></a>
+			<a href="<?php echo home_url(); ?>" class="back-link-page me-forward-section" data-active="2"><?php _e("&lt; Back to home", "enginethemes"); ?></a>
 
 			<?php do_action('marketengine_post_listing_form_end'); ?>
 
