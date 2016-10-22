@@ -70,7 +70,9 @@ $args = array_merge(apply_filters( 'me_filter_order', $_GET ), $args);
 	else:
 ?>
 	<div class="me-table-row-empty">
-		<?php _e('There are no orders yet.', 'enginethemes'); ?>
+		<div>
+			<span><?php _e('There are no orders yet.', 'enginethemes'); ?></span>
+		</div>
 	</div>
 <?php
 	endif;

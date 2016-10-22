@@ -66,7 +66,9 @@ $query = new ME_Message_Query($args);
 	else:
 	?>
 		<div class="me-table-row-empty">
-			<?php _e('There are no conversations yet.', 'enginethemes'); ?>
+			<div>
+				<span><?php _e('There are no conversations yet.', 'enginethemes'); ?></span>
+			</div>
 		</div>
 	<?php
 	endif;
