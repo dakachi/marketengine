@@ -14,6 +14,7 @@ class ME_Switch extends ME_Input{
         $this->_description = $args['description'];
         $this->_slug        = $args['slug'];
         $this->_checked     = isset($args['checked']) ? $args['checked'] : '';
+        $this->_text        = isset($args['text']) ? $args['text'] : array();
         $this->_container   = $options;
 
         $this->_options = $options;
@@ -22,6 +23,11 @@ class ME_Switch extends ME_Input{
     function render() {
         $enable_text = __("Enable", 'enginethemes');
         $disable_text = __("Disable", 'enginethemes');
+        if(!empty($this->_text)) {
+            $enable_text = $this->_text[0];
+            $disable_text = $this->_text[1];
+        }
+
         $id = $this->_slug ? 'id="'. $this->_slug . '"' : '';
         $value = $this->get_value();
 

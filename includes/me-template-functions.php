@@ -402,4 +402,25 @@ function me_print_buyer_information( $address ) {
     }
 }
 
+/**
+ *  Prints html of price
+ *  @param: $price
+ */
+function me_print_price_html( $price, $unit = '' ) {
+    $currency_sign = me_option('payment-currency-sign');
+    $currency_code = me_option('payment-currency-code');
+    $sign_position = me_option('currency-sign-postion') ? true : false;
+    if($sign_position) {
+        printf( '
+            <b itemprop="priceCurrency" content="%s">%s</b> <b itemprop="price" content="%d">%d</b>', $currency_code, $currency_sign, $price, $price
+        );
+    } else {
+        printf( '
+            <b itemprop="price" content="%d">%d</b> <b itemprop="priceCurrency" content="%s">%s</b>', $price, $price, $currency_code, $currency_sign
+        );
+    }
 
+    if( !empty($unit) ) {
+        echo " {$unit}";
+    }
+}

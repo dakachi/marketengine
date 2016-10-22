@@ -122,6 +122,15 @@ return array(
                 'type'        => 'textbox',
                 'name'        => 'payment-currency-sign'
             ),
+            'currency-sign-postion' => array(
+                'label'       => __("", "enginethemes"),
+                'description' => __("", "enginethemes"),
+                'slug'        => 'currency-sign-postion',
+                'type'        => 'switch',
+                'name'        => 'currency-sign-postion',
+                'text'        => array( __('Left', 'enginethemes'), __('Right', 'enginethemes') ),
+                'template'    => array(),
+            ),
             'currency-lable' => array(
                 'label'       => __("Currency Lable", "enginethemes"),
                 'description' => __("", "enginethemes"),
@@ -135,7 +144,7 @@ return array(
                 'slug'        => 'payment-currency-code',
                 'type'        => 'textbox',
                 'name'        => 'payment-currency-code'
-            )
+            ),
         ),
     ),
 );
