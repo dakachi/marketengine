@@ -47,6 +47,10 @@ class ME_Listing_Factory
             return false;
         }
 
+        if($the_listing->post_type !== 'listing') {
+            return false;
+        }
+
         $listing_class = $this->get_listing_class($the_listing);
         if (!class_exists($listing_class)) {
             $listing_class = 'ME_Listing';

@@ -147,6 +147,7 @@ if (!class_exists('MarketEngine')):
 
             require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-auth.php';
             require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-listing.php';
+            require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-transaction.php';
         }
 
         private function init_hooks() {
@@ -196,6 +197,7 @@ if (!class_exists('MarketEngine')):
             wp_enqueue_style('flexslider', $this->plugin_url() . '/assets/css/flexslider.css');
 
             wp_enqueue_script('plupload-all');
+            wp_enqueue_script('raty.js', $this->plugin_url() . "/assets/js/jquery.raty$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('user_profile', $this->plugin_url() . "/assets/js/user-profile$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('tag_box', $this->plugin_url() . "/assets/js/tag-box$suffix.js", array('jquery', 'suggest'), $this->version, true);
             wp_enqueue_script('post_listing', $this->plugin_url() . "/assets/js/post-listing$suffix.js", array('jquery'), $this->version, true);

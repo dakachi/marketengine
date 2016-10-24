@@ -20,9 +20,12 @@ class ME_Listing_Handle_Form extends ME_Form {
 
         add_action('wp_loaded', array(__CLASS__, 'process_insert'));
         add_action('wp_loaded', array(__CLASS__, 'process_update'));
+
         // ajax action
         add_action('wp_ajax_me-load-sub-category', array(__CLASS__, 'load_sub_category'));
         add_action('wp_ajax_nopriv_me-load-sub-category', array(__CLASS__, 'load_sub_category'));        
+
+        add_action('wp_loaded', array(__CLASS__, 'process_review_listing'));
     }
     /** 
      * Handle redirect user to page login when not logged in
@@ -105,6 +108,20 @@ class ME_Listing_Handle_Form extends ME_Form {
             wp_send_json_success($content);
         }
     }
-}
 
+    /**
+     * Handle review listing
+     * @since 1.0
+     */
+    public static function process_review_listing() {
+        if (!empty($_POST['listing_id']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-review-listing')) {
+            $review = ME_Listing_Handle::insert_review($_POST);
+            if(is_wp_error( $review )) {
+                me_wp_error_to_notices($review);
+            }else {
+
+            }
+        }
+    }
+}
 ME_Listing_Handle_Form::init_hook();
