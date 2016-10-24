@@ -236,5 +236,35 @@ class ME_Post_Types {
             'show_in_admin_status_list' => true,
             'label_count'               => _n_noop('Completed <span class="count">(%s)</span>', 'Completed <span class="count">(%s)</span>'),
         ));
+
+        register_post_status('me-disputed', array(
+            'label'                     => _x('Disputed', 'me-order'),
+            'public'                    => false,
+            'exclude_from_search'       => false,
+            'private'                   => true,
+            'show_in_admin_all_list'    => true,
+            'show_in_admin_status_list' => true,
+            'label_count'               => _n_noop('Completed <span class="count">(%s)</span>', 'Disputed <span class="count">(%s)</span>'),
+        ));
+
+        register_post_status('me-closed', array(
+            'label'                     => _x('Closed', 'me-order'),
+            'public'                    => false,
+            'exclude_from_search'       => false,
+            'private'                   => true,
+            'show_in_admin_all_list'    => true,
+            'show_in_admin_status_list' => true,
+            'label_count'               => _n_noop('Completed <span class="count">(%s)</span>', 'Closed <span class="count">(%s)</span>'),
+        ));
+
+        register_post_status('me-resolved', array(
+            'label'                     => _x('Resolved', 'me-order'),
+            'public'                    => false,
+            'exclude_from_search'       => false,
+            'private'                   => true,
+            'show_in_admin_all_list'    => true,
+            'show_in_admin_status_list' => true,
+            'label_count'               => _n_noop('Completed <span class="count">(%s)</span>', 'Resolved <span class="count">(%s)</span>'),
+        ));
     }
 }

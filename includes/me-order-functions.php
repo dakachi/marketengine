@@ -144,13 +144,17 @@ function me_get_order_ids( $value, $type ) {
 function me_filter_order_query( $query, $type = '') {
     $args = array();
 
+    if( isset($query['order_status']) && $query['order_status'] !== '' && $query['order_status'] !== 'any' ){
+        $args['post_status'] = $query['order_status'];
+    }
+
     if( $type == 'order' && (!isset($query['order_status']) || $query['order_status'] == '' || $query['order_status'] == 'any') ) {
         $statuses = me_get_order_status_list();
         unset($statuses['me-pending']);
         unset($statuses['publish']);
         $query['order_status'] = array_keys($statuses);
+        $args['post_status'] = $query['order_status'];
     }
-    $args['post_status'] = $query['order_status'];
 
     if( isset($query['from_date']) || isset($query['to_date']) ){
         $after = isset($query['from_date']) ? $query['from_date'] : '';
@@ -170,7 +174,7 @@ function me_filter_order_query( $query, $type = '') {
         $args['post__in'] = $order_ids;
     }
 
-    if( isset($query['keyword']) ) {
+    if( isset($query['keyword']) && !empty($query['keyword']) ) {
         if( is_numeric($query['keyword']) ) {
             $args['post__in'] = array( $query['keyword'] );
         }
