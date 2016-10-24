@@ -323,6 +323,7 @@ class ME_Listing {
     public function get_listing_type() {
         return get_post_meta($this->ID, '_me_listing_type', true);
     }
+
     /**
      * Retrieve the number of product's reviews
      *
@@ -330,7 +331,17 @@ class ME_Listing {
      * @return int
      */
     public function get_review_count() {
-        return absint(get_post_meta($this->ID, '_me_review_count', true));
+        return absint(get_post_meta($this->ID, '_me_reviews_count', true));
+    }
+
+    /**
+     * Retrieve the listing rating score
+     *
+     * @since 1.0
+     * @return float
+     */
+    public function get_review_score() {
+        return get_post_meta($this->ID, '_rating_score', true);   
     }
 
     /**

@@ -561,11 +561,43 @@ class ME_Listing_Handle {
             'comment_approved'     => 1,
         );
 
-        $comment = wp_insert_comment($commentdata);
-        if (!is_wp_error($comment)) {
-            update_comment_meta($comment, '_me_rating_score', $data['score']);
+        $comment_id = wp_insert_comment($commentdata);
+        if (!is_wp_error($comment_id)) {
+            update_comment_meta($comment_id, '_me_rating_score', $data['score']);
+
+            $comment = get_comment( $comment_id );
+            do_action('marketengine_insert_review', $comment_id,  $comment);
         }
 
-        return $comment;
+        
+
+        return $comment_id;
+    }
+
+    /**
+     * catch hook wp_insert_comment to update rating
+     * @param int $comment_id
+     * @param $comment
+     * @author Dakachi
+     */
+    public static function update_post_rating($comment_id, $comment) {
+        global $wpdb;
+        $post_id = $comment->comment_post_ID;
+        $post = get_post($post_id);
+        if ($post->post_type == 'listing') {
+            // update post rating score
+            $sql = "SELECT AVG(M.meta_value)  as rate_point, COUNT(C.comment_ID) as count
+                    FROM    $wpdb->comments as C 
+                        JOIN $wpdb->commentmeta as M 
+                                on C.comment_ID = M.comment_id 
+                    WHERE   M.meta_key = '_me_rating_score'
+                            AND C.comment_post_ID = $post_id 
+                            AND C.comment_approved = 1";
+
+            $results = $wpdb->get_results($sql);
+            // update post rating score
+            update_post_meta($post_id, '_rating_score', $results[0]->rate_point);
+            update_post_meta($post_id, '_me_reviews_count', $results[0]->count);
+        }
     }
 }
