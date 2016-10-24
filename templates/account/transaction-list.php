@@ -11,9 +11,10 @@
 $paged = get_query_var('paged') ? get_query_var('paged') : 1;
 $args = array(
 	'post_type' 	=> 'me_order',
-	'author'		=> get_current_user_id(),
 	'paged'			=> $paged,
 );
+
+$_GET['author'] = get_current_user_id();
 
 $args = array_merge(apply_filters( 'me_filter_order', $_GET ), $args);
 

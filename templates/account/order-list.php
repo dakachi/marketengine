@@ -15,6 +15,8 @@ $args = array(
 );
 $type = 'order';
 $args = array_merge(apply_filters( 'me_filter_order', $_GET, $type ), $args);
+
+query_posts($args);
 ?>
 <!--Mobile-->
 <div class="me-orderlist-filter-tabs">
@@ -33,8 +35,7 @@ $args = array_merge(apply_filters( 'me_filter_order', $_GET, $type ), $args);
 		<div class="me-table-col me-order-listing"><?php _e("LISTING", "enginethemes"); ?></div>
 	</div>
 	<?php
-	if( !empty($args['post__in']) ) :
-		query_posts($args);
+	if( have_posts() ) :
 		while(have_posts()) : the_post(); ?>
 
 	<?php

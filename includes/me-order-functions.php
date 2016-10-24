@@ -127,10 +127,15 @@ function me_get_order() {
 
 function me_get_order_ids( $value, $type ) {
     global $wpdb;
+    $operator = '=';
+    if( $type == 'listing_item') {
+        $operator = 'LIKE';
+        $value = "%{$value}%";
+    }
     $query = "SELECT order_items.order_id
             FROM $wpdb->marketengine_order_items as order_items
             WHERE order_items.order_item_type = '{$type}' AND
-                order_items.order_item_name = '{$value}'";
+                order_items.order_item_name {$operator} '{$value}'";
 
     $results = $wpdb->get_col($query);
     return $results;
@@ -142,7 +147,7 @@ function me_get_order_ids( $value, $type ) {
  *  @return: $args - query args
  */
 function me_filter_order_query( $query, $type = '') {
-    $args = array();
+    $args['post__in'] = array();
 
     if( isset($query['order_status']) && $query['order_status'] !== '' && $query['order_status'] !== 'any' ){
         $args['post_status'] = $query['order_status'];
@@ -167,20 +172,38 @@ function me_filter_order_query( $query, $type = '') {
         );
     }
 
-    // set order id to retrive on order list page
-    if( !isset($query['author']) ) {
+    if( $type == 'order' ) {
         $user_data = get_userdata( get_current_user_id() );
         $order_ids = me_get_order_ids( $user_data->user_login, 'receiver_item' );
-        $args['post__in'] = $order_ids;
+        if( empty($order_ids) ) {
+            $args['post__in'] = array(-1);
+            return $args;
+        } else {
+            $args['post__in'] = $order_ids;
+        }
+    } else {
+        $args['author'] = $query['author'];
     }
 
+    $keyword_result = array();
     if( isset($query['keyword']) && !empty($query['keyword']) ) {
+        $id_by_listing = me_get_order_ids( $query['keyword'], 'listing_item' );
+
+        $id_by_keyword = array();
         if( is_numeric($query['keyword']) ) {
-            $args['post__in'] = array( $query['keyword'] );
+            $id_by_keyword = array( $query['keyword'] );
+        }
+        $keyword_result = array_merge($id_by_keyword, $id_by_listing);
+
+        if( $type == 'order') {
+            $args['post__in'] = array_intersect($keyword_result, $args['post__in']);
+        } else {
+            $args['post__in'] = $keyword_result;
         }
 
-        $id_by_listing = me_get_order_ids( $user_data->user_login, 'listing_item' );
-        $args['post__in'] = array_merge( array($query['keyword']), $args['post__in'] );
+        if( empty($args['post__in']) ) {
+            $args['post__in'] = array(-1);
+        }
     }
 
     return $args;
