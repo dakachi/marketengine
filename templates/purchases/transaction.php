@@ -22,7 +22,7 @@ $author_id = $listing_obj->post_author;
 	<div class="me-row">
 		<div class="me-col-md-9">
 			<?php
-				me_get_template( 'purchases/order-listing', array('listing_obj' => $listing_obj, 'order_status' => $order_status) );
+				me_get_template( 'purchases/order-listing', array('listing_obj' => $listing_obj, 'order' => $transaction) );
 				me_get_template( 'seller-info', array('class' => 'me-authors-xs me-visible-sm me-visible-xs', 'author_id' => $author_id ) );
 			?>
 

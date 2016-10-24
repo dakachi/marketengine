@@ -40,15 +40,15 @@
     $('#listing-orderby').on('change', function() {
         $(this).closest('form').submit();
     });
-
     $('.do-rating').raty({
         // half: true,
         readOnly: false,
     });
-
     $('.result-rating').raty({
         // half: true,
         readOnly: true,
+        score: function() {
+            return $(this).attr('data-score');
+        }
     });
-
 })(jQuery);
