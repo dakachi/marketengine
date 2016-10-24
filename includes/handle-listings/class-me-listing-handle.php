@@ -507,7 +507,8 @@ class ME_Listing_Handle {
             return new WP_Error('invalid_order', __("Invalid order id.", "enginethemes"));   
         }
 
-        $listing = me_get_listing($data['listing_id']);
+        $listing_id = $data['listing_id'];
+        $listing = me_get_listing($listing_id);
         if(!$listing || is_wp_error( $listing )) {
             return new WP_Error('invalid_listing', __("The reviewed listing is invalid.", "enginethemes"));
         }
@@ -522,6 +523,10 @@ class ME_Listing_Handle {
             return new WP_Error('order_onhold', __("You must complete the order to send review.", "enginethemes"));
         }
 
+        $listing_items = $order->get_listing_items();
+        if(array_key_exists($listing_id, $listing_items)) {
+            return new WP_Error('listing_not_in_order', sprintf(__("You are trying to review listing is not belong to order %d", "enginethemes"), $order->ID));
+        }
         // insert review
     }
 }
