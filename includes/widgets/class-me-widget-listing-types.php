@@ -51,7 +51,7 @@ class ME_Widget_Listing_Types extends WP_Widget {
 
         ?>
             <div class="me-title-sidebar">
-                <h3><?php echo __('LISTING TYPES', 'enginethemes'); ?></h3>
+                <h2><?php echo __('LISTING TYPES', 'enginethemes'); ?></h2>
             </div>
             <div class="me-listingtype-filter">
                 <label>
