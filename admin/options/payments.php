@@ -36,6 +36,17 @@ return array(
                 'data'        => marketengine_get_list_of_page(),
                 'template'    => array(),
             ),
+
+            'cancel-order-page' => array(
+                'label'       => __("Cancel Order Page", "enginethemes"),
+                'description' => __("Choose a page to display as Cancel Order Page", "enginethemes"),
+                'slug'        => 'me_cancel_order',
+                'type'        => 'select',
+                'name'        => 'me_cancel_order_page_id',
+                'data'        => marketengine_get_list_of_page(),
+                'template'    => array(),
+            ),
+
             'transaction-page' => array(
                 'label'       => __("Transaction Detail Page", "enginethemes"),
                 'description' => __("", "enginethemes"),

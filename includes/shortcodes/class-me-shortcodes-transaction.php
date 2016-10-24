@@ -5,6 +5,7 @@ class ME_Shortcodes_Transaction
     {
         add_shortcode('me_checkout_form', array(__CLASS__, 'checkout_form'));
         add_shortcode('me_confirm_order', array(__CLASS__, 'confirm_order'));
+        add_shortcode('me_cancel_payment', array(__CLASS__, 'cancel_order'));
         add_shortcode('me_transaction_detail', array(__CLASS__, 'transaction_detail'));
         add_shortcode('me_inquiry_form', array(__CLASS__, 'inquiry_form'));
     }
@@ -31,6 +32,18 @@ class ME_Shortcodes_Transaction
             $order = new ME_Order($order_id);
             ob_start();
             me_get_template('checkout/confirm', array('order' => $order));
+            $content = ob_get_clean();
+            return $content;
+        }
+    }
+
+    public static function cancel_order()
+    {
+        $order_id = get_query_var('order-id');
+        if ($order_id) {
+            $order = new ME_Order($order_id);
+            ob_start();
+            me_get_template('checkout/cancel-payment', array('order' => $order));
             $content = ob_get_clean();
             return $content;
         }

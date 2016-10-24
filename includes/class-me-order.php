@@ -208,8 +208,13 @@ class ME_Order {
     }
 
     public function get_cancel_url() {
-        // TODO: rewrite this url
-        return 'http://localhost/wp/cancel-payment/order/' . $this->id;
+        $page           = me_get_page_permalink('cancel_order');
+        $order_endpoint = me_get_endpoint_name('order-id');
+        $permalink_structure = get_option( 'permalink_structure');
+        if( empty($permalink_structure) ) {
+            return $page . '&order-id=' . $this->id;
+        }
+        return $page . $order_endpoint . '/' . $this->id;
     }
 
     /**
