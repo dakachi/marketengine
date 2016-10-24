@@ -42,12 +42,12 @@
     });
 
     $('.do-rating').raty({
-        half: true,
+        // half: true,
         readOnly: false,
     });
 
     $('.result-rating').raty({
-        half: true,
+        // half: true,
         readOnly: true,
     });
 
