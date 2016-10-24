@@ -26,7 +26,7 @@ class ME_Listing_Status_Handle extends ME_Form {
      */
 
     public static function update_status() {
-        if (!empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me_update_listing_status')) {
+        if (current_user_can('edit_posts') && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me_update_listing_status')) {
             $update_data = array(
                 'ID'          => $_POST['listing_id'],
                 'post_status' => $_POST['status']
