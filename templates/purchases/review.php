@@ -1,4 +1,5 @@
 <div class="marketengine-content">
+<?php me_print_notices(); ?>
 <form method="post" >
 	<div class="me-review-listing">
 		<h3><?php echo esc_html( get_the_title( $listing_id ) ); ?></h3>
@@ -8,7 +9,7 @@
 			<i class="icon-me-star-o"></i>
 			<i class="icon-me-star-o"></i>
 			<i class="icon-me-star-o"></i> -->
-			<div class="do-rating" data-score="4"></div>
+			<div class="do-rating" data-score=""></div>
 		</div>
 		<p><?php _e("Share your review about this listing", "enginethemes"); ?></p>
 		<textarea name="content"></textarea>
@@ -20,8 +21,9 @@
 	</div>
 
 	<input type="hidden" name="listing_id" value="<?php echo $listing_id; ?>">
+	<input type="hidden" name="order_id" value="<?php echo get_query_var( 'order-id' ); ?>">
 
-	<?php wp_nonce_field( 'me-review' ); ?>
+	<?php wp_nonce_field( 'me-review-listing' ); ?>
 
 </form>
 </div>

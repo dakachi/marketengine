@@ -25,16 +25,7 @@ class ME_Order {
      *
      * @var string
      */
-    public $sender = 0;
-
-    /**
-     * ID of receiver.
-     *
-     * A numeric string, for compatibility reasons.
-     *
-     * @var string
-     */
-    public $receiver = 0;
+    public $post_author = 0;
 
     /**
      * The Order's local publication time.
@@ -190,6 +181,9 @@ class ME_Order {
     }
 
     public function has_status($status) {
+        if(is_array($status)) {
+            return in_array($this->post_status, $status);
+        }
         return $this->post_status === $status;
     }
 

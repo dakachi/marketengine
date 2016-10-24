@@ -745,7 +745,7 @@
     scoreName    : 'score',
     single       : false,
     space        : true,
-    starHalf     : 'icon-me-star',
+    starHalf     : 'icon-me-star-half',
     starOff      : 'icon-me-star-o',
     starOn       : 'icon-me-star',
     starType     : 'i',

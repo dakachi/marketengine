@@ -459,4 +459,69 @@ class ME_Listing_Handle {
 
         return apply_filters('marketengine_insert_listing_meta_rules', $the_rules, $listing_type);
     }
+
+    /**
+     * Insert Listing Review
+     * 
+     * @param array $data The review data
+     * 
+     * @since 1.0
+     * 
+     * @return WP_Error | ME_Review
+     */
+    public static function insert_review($data) {
+        // validate current user
+        $current_user_id = get_current_user_id();
+        $rules = array('content' => 'required', 'score' => 'required|greaterThan:0');
+        
+        $custom_attributes = array(
+            'content' => __("review content", "enginethemes"),
+            'score' => __("rating", "enginethemes"),
+        );
+        /**
+         * Filter review data validate rule
+         *
+         * @param array $rules
+         * @param array $data
+         * @since 1.0
+         */
+        $rules = apply_filters('marketengine_insert_review_rules', $rules, $data);
+        $is_valid = me_validate($data, $rules, $custom_attributes);
+        if (!$is_valid) {
+            $invalid_data = me_get_invalid_message($data, $rules, $custom_attributes);
+        }
+
+        if (!empty($invalid_data)) {
+            $errors = new WP_Error();
+            foreach ($invalid_data as $key => $message) {
+                $errors->add($key, $message);
+            }
+            return $errors;
+        }
+
+        if(empty($data['listing_id'])) {
+            return new WP_Error('invalid_listing', __("The reviewed listing is invalid.", "enginethemes"));
+        }
+
+        if(empty($data['order_id'])) {
+            return new WP_Error('invalid_order', __("Invalid order id.", "enginethemes"));   
+        }
+
+        $listing = me_get_listing($data['listing_id']);
+        if(!$listing || is_wp_error( $listing )) {
+            return new WP_Error('invalid_listing', __("The reviewed listing is invalid.", "enginethemes"));
+        }
+
+        // validate is ordered listing
+        $order = new ME_Order($data['order_id']);
+        if($order->post_author != $current_user_id) {
+            return new WP_Error('permission_denied', __("You cannot review the listing base on this order.", "enginethemes"));
+        }
+
+        if(!$order->has_status(array('me-complete', 'me-closed','me-resolved'))) {
+            return new WP_Error('order_onhold', __("You must complete the order to send review.", "enginethemes"));
+        }
+
+        // insert review
+    }
 }

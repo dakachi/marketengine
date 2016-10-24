@@ -147,6 +147,7 @@ if (!class_exists('MarketEngine')):
 
             require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-auth.php';
             require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-listing.php';
+            require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-transaction.php';
         }
 
         private function init_hooks() {
