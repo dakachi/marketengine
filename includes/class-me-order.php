@@ -292,6 +292,7 @@ class ME_Order {
     /**
      * Retrieve ordered listing items
      * @return array
+     * @since 1.0
      */
     public function get_listing_items() {
         $order_listing_item = me_get_order_items($this->id, 'listing_item');
