@@ -7,6 +7,8 @@
  * @package 	MarketEngine/Templates
  * @version     1.0.0
  */
+
+$type = isset($type) ? $type : 'transaction';
 ?>
 
 <div class="me-orderlist-filter">
@@ -15,7 +17,7 @@
 			<div class="me-col-md-2">
 				<div class="me-order-status-filter">
 					<label><?php _e('Status', 'enginethemes'); ?></label>
-					<?php do_action( 'me_status_list' ); ?>
+					<?php do_action( 'me_status_list', $type ); ?>
 				</div>
 			</div>
 			<div class="me-col-md-3">
