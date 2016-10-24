@@ -45,7 +45,7 @@
         readOnly: false,
     });
     $('.result-rating').raty({
-        // half: true,
+        half: true,
         readOnly: true,
         score: function() {
             return $(this).attr('data-score');

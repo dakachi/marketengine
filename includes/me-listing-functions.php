@@ -81,6 +81,6 @@ function me_get_user_rate_listing_score($listing_id, $user_id) {
     return 0;
 }
 
-function me_get_listing_average_review(){
-
+function me_get_listing_average_review($listing_id){
+    
 }
