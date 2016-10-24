@@ -36,5 +36,5 @@ if(!$order->has_status('me-pending')) :
 	</div>
 </div>
 <?php else : ?>
-	The order is onhold.
+	<?php _e("The order is onhold.", "enginethemes"); ?>
 <?php endif; ?>
