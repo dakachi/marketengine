@@ -28,14 +28,16 @@ $query = new ME_Message_Query($args);
 	<?php me_get_template('global/inquiry-filter'); ?>
 
 	<div class="me-table me-order-inquiries-table">
-		<div class="me-table-rhead">
-			<div class="me-table-col me-order-listing"><?php echo __('LISTING', 'enginethemes'); ?></div>
-			<div class="me-table-col me-order-status"><?php echo __('STATUS', 'enginethemes'); ?></div>
-			<div class="me-table-col me-order-buyer"><?php echo __('SELLER', 'enginethemes'); ?></div>
-			<div class="me-table-col me-order-date-contact"><?php echo __('DATE OF CONTACT', 'enginethemes'); ?></div>
-		</div>
+		
 		<?php
-		if( $query->have_posts() ) :
+		if( $query->have_posts() ) : ?>
+			<div class="me-table-rhead">
+				<div class="me-table-col me-order-listing"><?php echo __('LISTING', 'enginethemes'); ?></div>
+				<div class="me-table-col me-order-status"><?php echo __('STATUS', 'enginethemes'); ?></div>
+				<div class="me-table-col me-order-buyer"><?php echo __('SELLER', 'enginethemes'); ?></div>
+				<div class="me-table-col me-order-date-contact"><?php echo __('DATE OF CONTACT', 'enginethemes'); ?></div>
+			</div>
+		<?php
 			foreach( $query->posts as $inquiry ) :
 			$listing = me_get_listing($inquiry->post_parent);
 		?>
@@ -65,6 +67,12 @@ $query = new ME_Message_Query($args);
 	<?php
 	else:
 	?>
+		<div class="me-table-rhead me-table-rhead-empty">
+			<div class="me-table-col me-order-listing"><?php echo __('LISTING', 'enginethemes'); ?></div>
+			<div class="me-table-col me-order-status"><?php echo __('STATUS', 'enginethemes'); ?></div>
+			<div class="me-table-col me-order-buyer"><?php echo __('SELLER', 'enginethemes'); ?></div>
+			<div class="me-table-col me-order-date-contact"><?php echo __('DATE OF CONTACT', 'enginethemes'); ?></div>
+		</div>
 		<div class="me-table-row-empty">
 			<div>
 				<span><?php _e('There are no conversations yet.', 'enginethemes'); ?></span>
