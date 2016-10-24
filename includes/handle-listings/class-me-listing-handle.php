@@ -39,7 +39,7 @@ class ME_Listing_Handle {
 
         if (isset($attachment['listing_gallery'])) {
             $maximum_files_allowed = get_option('marketengine_listing_maximum_images_allowed', 5);
-            $number_of_files = count($attachment['listing_gallery']['name']);
+            $number_of_files       = count($attachment['listing_gallery']['name']);
             if ($number_of_files > $maximum_files_allowed) {
                 return new WP_Error('over_maximum_files_allowed', sprintf(__("You can only add %d image(s) to listing gallery.", "enginethemes"), $maximum_files_allowed));
             }
@@ -121,7 +121,7 @@ class ME_Listing_Handle {
     public static function filter($listing_data) {
         $listing_data['post_type'] = 'listing';
 
-        $listing_data['post_title'] = $listing_data['listing_title'];
+        $listing_data['post_title']   = $listing_data['listing_title'];
         $listing_data['post_content'] = $listing_data['listing_description'];
         // filter taxonomy
         $listing_data['tax_input']['listing_category'] = array($listing_data['parent_cat'], $listing_data['sub_cat']);
@@ -163,11 +163,11 @@ class ME_Listing_Handle {
         global $user_ID;
         $mimes = array(
             'jpg|jpeg|jpe' => 'image/jpeg',
-            'gif' => 'image/gif',
-            'png' => 'image/png',
-            'bmp' => 'image/bmp',
-            'tif|tiff' => 'image/tiff',
-            'ico' => 'image/x-icon',
+            'gif'          => 'image/gif',
+            'png'          => 'image/png',
+            'bmp'          => 'image/bmp',
+            'tif|tiff'     => 'image/tiff',
+            'ico'          => 'image/x-icon',
         );
         return self::process_file_upload($file, 0, $user_ID, $mimes);
     }
@@ -190,19 +190,19 @@ class ME_Listing_Handle {
         global $user_ID;
         $mimes = array(
             'jpg|jpeg|jpe' => 'image/jpeg',
-            'gif' => 'image/gif',
-            'png' => 'image/png',
-            'bmp' => 'image/bmp',
-            'tif|tiff' => 'image/tiff',
-            'ico' => 'image/x-icon',
+            'gif'          => 'image/gif',
+            'png'          => 'image/png',
+            'bmp'          => 'image/bmp',
+            'tif|tiff'     => 'image/tiff',
+            'ico'          => 'image/x-icon',
         );
 
         $gallery = array();
         foreach ($files['name'] as $key => $value) {
             $file = array(
-                'name' => $files['name'][$key],
-                'size' => $files['size'][$key],
-                'type' => $files['type'][$key],
+                'name'     => $files['name'][$key],
+                'size'     => $files['size'][$key],
+                'type'     => $files['type'][$key],
                 'tmp_name' => $files['tmp_name'][$key],
             );
             $attach_id = self::process_file_upload($file, $parent, $user_ID, $mimes);
@@ -245,7 +245,7 @@ class ME_Listing_Handle {
             if (!function_exists('wp_handle_upload')) {
                 require_once ABSPATH . 'wp-admin/includes/file.php';
             }
-            $overrides = apply_filters('marketengine_file_upload_overrides', $overrides, $file);
+            $overrides     = apply_filters('marketengine_file_upload_overrides', $overrides, $file);
             $uploaded_file = wp_handle_upload($file, $overrides);
 
             //if there was an error quit early
@@ -263,12 +263,12 @@ class ME_Listing_Handle {
 
                 // Set up options array to add this file as an attachment
                 $attachment = array(
-                    'guid' => $uploaded_file['url'],
+                    'guid'           => $uploaded_file['url'],
                     'post_mime_type' => $uploaded_file['type'],
-                    'post_title' => $file_title_for_media_library,
-                    'post_content' => '',
-                    'post_status' => 'inherit',
-                    'post_author' => $author,
+                    'post_title'     => $file_title_for_media_library,
+                    'post_content'   => '',
+                    'post_status'    => 'inherit',
+                    'post_author'    => $author,
                 );
                 /**
                  * Run the wp_insert_attachment function.This adds the file to the media library and generates the thumbnails.
@@ -342,12 +342,12 @@ class ME_Listing_Handle {
      */
     public static function validate($listing_data) {
         $current_user_id = get_current_user_id();
-        $invalid_data = array();
+        $invalid_data    = array();
         // validate post data
         $rules = array(
-            'listing_title' => 'required|string|max:150',
+            'listing_title'       => 'required|string|max:150',
             'listing_description' => 'required',
-            'listing_type' => 'required|in:contact,purchasion',
+            'listing_type'        => 'required|in:contact,purchasion',
         );
         /**
          * Filter listing data validate rule
@@ -357,12 +357,12 @@ class ME_Listing_Handle {
          * @since 1.0
          */
         $custom_attributes = array(
-            'listing_title' => __("listing title", "enginethemes"),
+            'listing_title'       => __("listing title", "enginethemes"),
             'listing_description' => __("listing description", "enginethemes"),
-            'listing_type' => __("listing type", "enginethemes"),
+            'listing_type'        => __("listing type", "enginethemes"),
         );
 
-        $rules = apply_filters('marketengine_insert_listing_rules', $rules, $listing_data);
+        $rules    = apply_filters('marketengine_insert_listing_rules', $rules, $listing_data);
         $is_valid = me_validate($listing_data, $rules, $custom_attributes);
         if (!$is_valid) {
             $invalid_data = me_get_invalid_message($listing_data, $rules, $custom_attributes);
@@ -390,7 +390,7 @@ class ME_Listing_Handle {
             $invalid_data['invalid_listing_category'] = __("The selected listing category is invalid.", "enginethemes");
         } else {
             // check the parent cat sub is empty or not
-            $child_cats = get_terms('listing_category', array('hide_empty' => false, 'parent' => $listing_data['parent_cat']));
+            $child_cats          = get_terms('listing_category', array('hide_empty' => false, 'parent' => $listing_data['parent_cat']));
             $is_child_cats_empty = empty($child_cats);
             // validate sub cat
             if (!$is_child_cats_empty && empty($listing_data['sub_cat'])) {
@@ -400,11 +400,10 @@ class ME_Listing_Handle {
             }
         } // end validate listing category
 
-
         // user must add paypal email to start selling
-        if($listing_data['listing_type'] == 'purchasion') {
-            $user_paypal_email = get_user_meta( $current_user_id, 'paypal_email', true );
-            if(!is_email( $user_paypal_email )) {
+        if ($listing_data['listing_type'] == 'purchasion') {
+            $user_paypal_email = get_user_meta($current_user_id, 'paypal_email', true);
+            if (!is_email($user_paypal_email)) {
                 $invalid_data['empty_paypal_email'] = __("You must input paypal email in your profile to start selling.", "enginethemes");
             }
         }
@@ -441,19 +440,19 @@ class ME_Listing_Handle {
     public static function get_listing_type_fields_rule($listing_type) {
         switch ($listing_type) {
         case 'contact':
-            $rules = array('contact_email' => 'required|email');
+            $rules      = array('contact_email' => 'required|email');
             $attributes = array('contact_email' => __("contact email", "enginethemes"));
             break;
         case 'rental':
 
         default:
-            $rules = array('listing_price' => 'required|numeric|greaterThan:0');
+            $rules      = array('listing_price' => 'required|numeric|greaterThan:0');
             $attributes = array('listing_price' => __("listing price", "enginethemes"));
             break;
         }
 
         $the_rules = array(
-            'rules' => $rules,
+            'rules'             => $rules,
             'custom_attributes' => $attributes,
         );
 
@@ -462,21 +461,21 @@ class ME_Listing_Handle {
 
     /**
      * Insert Listing Review
-     * 
+     *
      * @param array $data The review data
-     * 
+     *
      * @since 1.0
-     * 
+     *
      * @return WP_Error | ME_Review
      */
     public static function insert_review($data) {
         // validate current user
         $current_user_id = get_current_user_id();
-        $rules = array('content' => 'required', 'score' => 'required|greaterThan:0');
-        
+        $rules           = array('content' => 'required', 'score' => 'required|greaterThan:0');
+
         $custom_attributes = array(
             'content' => __("review content", "enginethemes"),
-            'score' => __("rating", "enginethemes"),
+            'score'   => __("rating", "enginethemes"),
         );
         /**
          * Filter review data validate rule
@@ -485,7 +484,7 @@ class ME_Listing_Handle {
          * @param array $data
          * @since 1.0
          */
-        $rules = apply_filters('marketengine_insert_review_rules', $rules, $data);
+        $rules    = apply_filters('marketengine_insert_review_rules', $rules, $data);
         $is_valid = me_validate($data, $rules, $custom_attributes);
         if (!$is_valid) {
             $invalid_data = me_get_invalid_message($data, $rules, $custom_attributes);
@@ -499,34 +498,74 @@ class ME_Listing_Handle {
             return $errors;
         }
 
-        if(empty($data['listing_id'])) {
+        if (empty($data['listing_id'])) {
             return new WP_Error('invalid_listing', __("The reviewed listing is invalid.", "enginethemes"));
         }
 
-        if(empty($data['order_id'])) {
-            return new WP_Error('invalid_order', __("Invalid order id.", "enginethemes"));   
+        if (empty($data['order_id'])) {
+            return new WP_Error('invalid_order', __("Invalid order id.", "enginethemes"));
         }
 
         $listing_id = $data['listing_id'];
-        $listing = me_get_listing($listing_id);
-        if(!$listing || is_wp_error( $listing )) {
+        $listing    = me_get_listing($listing_id);
+        if (!$listing || is_wp_error($listing)) {
             return new WP_Error('invalid_listing', __("The reviewed listing is invalid.", "enginethemes"));
         }
 
-        // validate is ordered listing
         $order = new ME_Order($data['order_id']);
-        if($order->post_author != $current_user_id) {
+        if ($order->post_author != $current_user_id) {
             return new WP_Error('permission_denied', __("You cannot review the listing base on this order.", "enginethemes"));
         }
 
-        if(!$order->has_status(array('me-complete', 'me-closed','me-resolved'))) {
+        if (!$order->has_status(array('me-complete', 'me-closed', 'me-resolved'))) {
             return new WP_Error('order_onhold', __("You must complete the order to send review.", "enginethemes"));
         }
 
         $listing_items = $order->get_listing_items();
-        if(array_key_exists($listing_id, $listing_items)) {
+        if (!array_key_exists($listing_id, $listing_items)) {
             return new WP_Error('listing_not_in_order', sprintf(__("You are trying to review listing is not belong to order %d", "enginethemes"), $order->ID));
         }
-        // insert review
+
+        $current_user = wp_get_current_user();
+        $comments     = get_comments(array(
+            'post_id'        => $listing_id,
+            'type'           => 'review',
+            'author_email'   => $current_user->user_email,
+            'number'         => 1,
+            'comment_parent' => 0,
+        ));
+
+        if (!empty($comments)) {
+            return new WP_Error('duplicationde', sprintf(__("You have already review on %s.", 'enginethemes'), esc_html(get_the_title($listing_id))));
+        }
+
+        $review_item = me_get_order_items($order->ID, 'review_item');
+        if (empty($review_item)) {
+            $order_item_id = me_add_order_item($order->ID, esc_html(get_the_title($listing_id)), 'review_item');
+            me_add_order_item_meta($order_item_id, '_listing_id', $listing_id);
+            me_add_order_item_meta($order_item_id, '_review_score', $data['score']);
+            me_add_order_item_meta($order_item_id, '_review_content', $data['content']);
+        }
+
+        $commentdata = array(
+            'comment_post_ID'      => $listing_id,
+            'comment_author'       => $current_user->display_name,
+            'comment_author_email' => $current_user->user_email,
+            // 'comment_author_url'   => 'http://',
+            'comment_content'      => $data['content'],
+            'comment_type'         => 'review',
+            'comment_parent'       => 0,
+            'user_id'              => $current_user_id,
+            'comment_author_IP'    => $_SERVER['REMOTE_ADDR'],
+            // 'comment_agent'        => $browser['userAgent'],
+            'comment_approved'     => 1,
+        );
+
+        $comment = wp_insert_comment($commentdata);
+        if (!is_wp_error($comment)) {
+            update_comment_meta($comment, '_me_rating_score', $data['score']);
+        }
+
+        return $comment;
     }
 }
