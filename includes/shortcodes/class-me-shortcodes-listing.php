@@ -104,7 +104,11 @@ class ME_Shortcodes_Listing
             $buyer = $order->post_author;
             ob_start();
             if( $buyer == get_current_user_id() ) {
-                me_get_template('purchases/transaction', array('transaction' => $order));
+                if('review' == $_GET['action'] && $_GET['id']) {
+                    me_get_template('purchases/review', array('transaction' => $order, 'listing_id' => $_GET['id']));
+                }else {
+                    me_get_template('purchases/transaction', array('transaction' => $order));    
+                }                
             } else {
                 me_get_template('purchases/order', array('order' => $order));
             }
