@@ -18,17 +18,9 @@
         </ul>
     </div>
 
-    <?php
-        if(apply_filters('me_enable_upload', true)) {
-    ?>
     <span id="<?php echo esc_attr($button); ?>" class="me-gallery-add-img">
         <?php _e("Choose image", "enginethemes"); ?>
     </span>
-    <?php
-        } else {
-            echo apply_filters('me_enable_upload_msg', '');
-        }
-    ?>
 
 </div>
 <script>
