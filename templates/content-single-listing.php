@@ -13,7 +13,7 @@ $listing_status = get_post_status_object($listing->post_status);
 		<div class="me-row">
 			<div class="me-col-md-12">
 				<?php me_get_template('single-listing/title');?>
-				<?php me_get_template('single-listing/statistic');?>
+				<?php me_get_template('single-listing/statistic', array('listing' => $listing));?>
 			</div>
 		</div>
 		<div class="me-row">

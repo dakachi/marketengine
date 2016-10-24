@@ -23,6 +23,8 @@
             maxheight: 0
         };
 
+        var file_limit = 0;
+
         if (options) {
             options = $.extend(setting, options);
         } else {
@@ -61,6 +63,8 @@
                     FilesAdded: function(up, files) {
                         var current = $(preview).find('li').size();
                         var totalfile = files.length + current;
+                        console.log(current);
+                        console.log(files.length);
                         if(options.multi) {
                             if(totalfile > options.maxcount) {
                                 alert(me_globals.limitFile + options.maxcount);
@@ -98,7 +102,7 @@
             uploader.init();
 
             $(this).find(".upload_preview_container").on('click', '.remove', function(){
-                var parent = $(this).parent();
+                var parent = $(this).parents('li.me-item-img');
                 $(parent).fadeOut(function(){
                     $(this).remove();
                 });

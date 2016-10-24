@@ -26,6 +26,9 @@ class ME_Listing_Handle_Form extends ME_Form {
         add_action('wp_ajax_nopriv_me-load-sub-category', array(__CLASS__, 'load_sub_category'));        
 
         add_action('wp_loaded', array(__CLASS__, 'process_review_listing'));
+        add_action('transition_comment_status', array(__CLASS__, 'approve_review_callback'), 10, 3);
+        add_action('marketengine_insert_review', array(__CLASS__,'insert_review_callback'), 10, 2);
+
     }
     /** 
      * Handle redirect user to page login when not logged in
@@ -123,5 +126,28 @@ class ME_Listing_Handle_Form extends ME_Form {
             }
         }
     }
+
+    /**
+     * @param $new_status
+     * @param $old_status
+     * @param $comment
+     * @since 1.0
+     */
+    public static function approve_review_callback($new_status, $old_status, $comment) {
+        if ($old_status != $new_status) {
+            ME_Listing_Handle::update_post_rating($comment->comment_ID, $comment);
+        }
+    }
+
+    /**
+     * catch hook wp_insert_comment to update rating
+     * @param int $comment_id
+     * @param $comment
+     * @since 1.0
+     */
+    public static function insert_review_callback($comment_id, $comment) {
+        ME_Listing_Handle::update_post_rating($comment_id, $comment);
+    }
+
 }
 ME_Listing_Handle_Form::init_hook();
