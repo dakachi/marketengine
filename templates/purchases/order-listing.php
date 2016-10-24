@@ -3,7 +3,7 @@
 	<div class="me-listing-info">
 		<h2><a href="<?php echo $listing_obj->get_permalink(); ?>"><?php echo esc_html($listing_obj->get_title()); ?></a></h2>
 		<div class="me-rating">
-			<div class="result-rating" data-score="<?php echo me_get_user_rate_listing_score($listing_obj->ID, $order->post_author) ; ?>"></div>
+			<div class="result-rating" data-score="<?php echo $listing_obj->get_review_score(); ?>"></div>
 		</div>
 		<div class="me-count-purchases-review">
 			<?php // <span>12 Purchase</span><span>30 review</span> ?>
@@ -14,7 +14,7 @@
 
 	</div>
 
-	<?php if( !me_get_user_rate_listing_score($listing_obj->ID, $order->post_author) && !$order->has_status('me-pending') ) : ?>
+	<?php if( !me_get_user_rate_listing_score($listing_obj->ID, $transaction->post_author) && !$transaction->has_status('me-pending') ) : ?>
 		<a class="me-orderlisting-review" href="<?php echo add_query_arg(array('id' => $listing_obj->ID, 'action' => 'review')); ?>">
 			<?php _e('RATE &amp; REVIEW NOW', 'enginethemes'); ?>
 		</a>
