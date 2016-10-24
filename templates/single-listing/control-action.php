@@ -6,8 +6,7 @@
 	?>
 
 		<span class="me-price">
-		<b itemprop="priceCurrency" content="USD">$</b>
-		<?php printf(__('<b itemprop="price" content="10">%d</b>%s', 'enginethemes'), $price, $pricing_unit) ?>
+			<?php me_print_price_html( $price, $pricing_unit ); ?>
 		</span>
 		<span class="me-instock"><?php _e("In Stock", "enginethemes"); ?></span>
 	<?php endif; ?>

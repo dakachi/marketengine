@@ -37,7 +37,7 @@ if (!empty($_POST['meta_input']['pricing_unit'])) {$unit =  esc_attr($_POST['met
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
 				    <label class="text"><?php _e("Price", "enginethemes"); ?></label>
-				    <input type="text" name="meta_input[listing_price]" placeholder="$" class="required me-input-price" value="<?php echo $price; ?>">
+				    <input type="text" name="meta_input[listing_price]" placeholder="<?php echo me_option('payment-currency-sign'); ?>" class="required me-input-price" value="<?php echo $price; ?>">
 				</div>
 			</div>
 		</div>
