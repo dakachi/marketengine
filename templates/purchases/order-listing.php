@@ -19,7 +19,8 @@
 	</div>
 
 	<?php if(!isset($seller) && 'me-pending' !== $order_status ) : ?>
-	<a class="me-orderlisting-review" href=""><?php _e('RATE &amp; REVIEW NOW', 'enginethemes'); ?></a>
+		<a class="me-orderlisting-review" href="<?php echo add_query_arg(array('id' => $listing_obj->ID, 'action' => 'review')); ?>">
+			<?php _e('RATE &amp; REVIEW NOW', 'enginethemes'); ?>
+		</a>
 	<?php endif; ?>
-
 </div>
