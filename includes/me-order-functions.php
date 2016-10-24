@@ -182,7 +182,7 @@ function me_filter_order_query( $query, $type = '') {
             $args['post__in'] = $order_ids;
         }
     } else {
-        $args['author'] = $query['author'];
+        $args['author'] = get_current_user_id();
     }
 
     $keyword_result = array();
