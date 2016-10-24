@@ -64,7 +64,7 @@ class ME_Widget_Price_Filter extends WP_Widget {
         ?>
         <form method="get" action="<?php echo $form_action; ?>">
             <div class="me-title-sidebar">
-                <h3><?php echo $title; ?></h3>
+                <h2><?php echo $title; ?></h2>
             </div>
             <div class="me-price-filter">
                 <div id="me-range-price" min="<?php echo $min; ?>" max="<?php echo $max; ?>" step="1"></div>

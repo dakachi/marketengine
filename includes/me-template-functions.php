@@ -331,8 +331,8 @@ function me_post_listing_button_action() {
 }
 add_action( 'me_post_listing_button', 'me_post_listing_button_action' );
 
-function me_status_list_action() {
-    me_get_template('global/status-list');
+function me_status_list_action( $type = '' ) {
+    me_get_template('global/status-list', array('type' => $type) );
 }
 add_action( 'me_status_list', 'me_status_list_action' );
 

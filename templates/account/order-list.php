@@ -13,7 +13,8 @@ $args = array(
 	'post_type' => 'me_order',
 	'paged' 	=> get_query_var('paged')
 );
-$args = array_merge(apply_filters( 'me_filter_order', $_GET ), $args);
+$type = 'order';
+$args = array_merge(apply_filters( 'me_filter_order', $_GET, $type ), $args);
 ?>
 <!--Mobile-->
 <div class="me-orderlist-filter-tabs">
@@ -21,7 +22,7 @@ $args = array_merge(apply_filters( 'me_filter_order', $_GET ), $args);
 	<span><?php echo __('Filter list', 'enginethemes'); ?></span>
 </div>
 <!--/Mobile-->
-<?php me_get_template('global/order-filter', array('type' => 'order')); ?>
+<?php me_get_template('global/order-filter', array('type' => $type)); ?>
 
 <div class="me-table me-orderlist-table">
 	<div class="me-table-rhead">
@@ -31,7 +32,7 @@ $args = array_merge(apply_filters( 'me_filter_order', $_GET ), $args);
 		<div class="me-table-col me-order-date"><?php _e("DATE OF ORDER", "enginethemes"); ?></div>
 		<div class="me-table-col me-order-listing"><?php _e("LISTING", "enginethemes"); ?></div>
 	</div>
-	<?php 
+	<?php
 	if( !empty($args['post__in']) ) :
 		query_posts($args);
 		while(have_posts()) : the_post(); ?>

@@ -47,7 +47,7 @@ class ME_Widget_Listing_Categories extends WP_Widget {
 
         echo $args['before_widget'];
         if ($title) {
-            echo $args['before_title'] . $title . $args['after_title'];
+            //echo $args['before_title'] . $title . $args['after_title'];
         }
 
         $cat_args = array(
@@ -95,6 +95,15 @@ class ME_Widget_Listing_Categories extends WP_Widget {
 <?php
 } else {
             ?>
+        <div class="me-title-sidebar">
+            <?php
+                if ($title) { ?>
+                    <h2><?php echo $title ?></h2>
+            <?php 
+                }
+            ?>
+            
+        </div>
         <ul class="me-menu-categories">
 <?php
 $cat_args['title_li'] = '';

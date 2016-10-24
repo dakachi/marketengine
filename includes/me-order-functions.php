@@ -141,10 +141,18 @@ function me_get_order_ids( $value, $type ) {
  *  @param: $query
  *  @return: $args - query args
  */
-function me_filter_order_query( $query ) {
+function me_filter_order_query( $query, $type = '') {
     $args = array();
 
-    if( isset($query['order_status']) && $query['order_status'] !== '' ){
+    if( isset($query['order_status']) && $query['order_status'] !== '' && $query['order_status'] !== 'any' ){
+        $args['post_status'] = $query['order_status'];
+    }
+
+    if( $type == 'order' && (!isset($query['order_status']) || $query['order_status'] == '' || $query['order_status'] == 'any') ) {
+        $statuses = me_get_order_status_list();
+        unset($statuses['me-pending']);
+        unset($statuses['publish']);
+        $query['order_status'] = array_keys($statuses);
         $args['post_status'] = $query['order_status'];
     }
 
@@ -166,7 +174,7 @@ function me_filter_order_query( $query ) {
         $args['post__in'] = $order_ids;
     }
 
-    if( isset($query['keyword']) ) {
+    if( isset($query['keyword']) && !empty($query['keyword']) ) {
         if( is_numeric($query['keyword']) ) {
             $args['post__in'] = array( $query['keyword'] );
         }
@@ -177,7 +185,7 @@ function me_filter_order_query( $query ) {
 
     return $args;
 }
-add_filter( 'me_filter_order', 'me_filter_order_query' );
+add_filter( 'me_filter_order', 'me_filter_order_query', 1, 2 );
 
 /**
  * MarketEngine Get Order Status Listing
