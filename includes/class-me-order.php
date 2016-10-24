@@ -25,16 +25,7 @@ class ME_Order {
      *
      * @var string
      */
-    public $sender = 0;
-
-    /**
-     * ID of receiver.
-     *
-     * A numeric string, for compatibility reasons.
-     *
-     * @var string
-     */
-    public $receiver = 0;
+    public $post_author = 0;
 
     /**
      * The Order's local publication time.
@@ -190,6 +181,9 @@ class ME_Order {
     }
 
     public function has_status($status) {
+        if(is_array($status)) {
+            return in_array($this->post_status, $status);
+        }
         return $this->post_status === $status;
     }
 
@@ -292,6 +286,29 @@ class ME_Order {
         $this->caculate_total();
 
         return $item_id;
+    }
+
+
+    /**
+     * Retrieve ordered listing items
+     * @return array
+     */
+    public function get_listing_items() {
+        $order_listing_item = me_get_order_items($this->id, 'listing_item');
+        $listing_items = array();
+        if(!empty($order_listing_item)) {
+            foreach ($order_listing_item as $key => $item) {
+                $id = me_get_order_item_meta($item->order_item_id, '_listing_id', true);
+                $listing_items[$id] = (object)array(
+                    'ID' => $id,
+                    'title' =>  $item->order_item_name,
+                    'qty' => me_get_order_item_meta($item->order_item_id, '_qty', true),
+                    'price' => me_get_order_item_meta($item->order_item_id, '_listing_price', true),
+                    'description' => me_get_order_item_meta($item->order_item_id, '_listing_description', true)
+                );
+            }
+        }
+        return $listing_items; 
     }
 
     /**
