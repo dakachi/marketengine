@@ -403,26 +403,26 @@ function me_print_buyer_information( $address ) {
 }
 
 /**
- *  Prints html of price
+ *  Returns html of price
  *  @param: $price
  */
-function me_print_price_html( $price, $unit = '' ) {
+function me_price_html( $price, $unit = '' ) {
     $currency_sign = me_option('payment-currency-sign');
     $currency_code = me_option('payment-currency-code');
     $sign_position = me_option('currency-sign-postion') ? true : false;
+    $html = '';
+
     if($sign_position) {
-        printf( '
-            <b itemprop="priceCurrency" content="%s">%s</b> <b itemprop="price" content="%d">%d</b>', $currency_code, $currency_sign, $price, $price
-        );
+        $html .= '<b itemprop="priceCurrency" content="' . $currency_code .'">'. $currency_sign .'</b> <b itemprop="price" content="'. $price .'">'. $price .'</b>';
     } else {
-        printf( '
-            <b itemprop="price" content="%d">%d</b> <b itemprop="priceCurrency" content="%s">%s</b>', $price, $price, $currency_code, $currency_sign
-        );
+        $html .= '<b itemprop="price" content="'. $price .'">'. $price .'</b> <b itemprop="priceCurrency" content="' . $currency_code .'">'. $currency_sign .'</b>';
     }
 
     if( !empty($unit) ) {
-        echo " {$unit}";
+        $html .= " {$unit}";
     }
+
+    return $html;
 }
 
 

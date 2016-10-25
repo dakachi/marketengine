@@ -77,7 +77,7 @@ $query = new WP_Query( $args );
 							$pricing_unit = $purchasion->get_pricing_unit();
 							?>
 								<span class="me-price pull-left">
-									<?php me_print_price_html( $price, $pricing_unit ) ?>
+									<?php echo me_price_html( $price, $pricing_unit ) ?>
 								</span>
 								<?php /*
 								<div class="me-rating pull-right">

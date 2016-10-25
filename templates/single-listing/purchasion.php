@@ -12,7 +12,7 @@ $pricing_unit = $listing->get_pricing_unit();
 
 <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="me-amount">
 	<span class="me-price">
-		<?php me_print_price_html( $price, $pricing_unit ); ?>
+		<?php echo me_price_html( $price, $pricing_unit ); ?>
 	</span>
 	<span class="me-instock"><?php _e("In Stock", "enginethemes"); ?></span>
 	<div class="me-addtocart">
