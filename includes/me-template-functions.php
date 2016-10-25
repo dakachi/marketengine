@@ -447,6 +447,27 @@ function me_price_html( $price, $unit = '' ) {
     return $html;
 }
 
+
+function me_price_format($price, $args = array()) {
+    $sign = me_option('payment-currency-sign');
+    $code = me_option('payment-currency-code');
+
+    $args = wp_parse_args( $args, array('code' => $code, 'sign' => $sign) );
+    extract($args);
+
+    $html = '';
+
+    $sign_position_is_align_right = me_option('currency-sign-postion') ? true : false;
+
+    if($sign_position_is_align_right) {
+        $html .= '<b itemprop="priceCurrency" content="' . $code .'">'. $sign .'</b> <b itemprop="price" content="'. $price .'">'. $price .'</b>';
+    } else {
+        $html .= '<b itemprop="price" content="'. $price .'">'. $price .'</b> <b itemprop="priceCurrency" content="' . $code .'">'. $sign .'</b>';
+    }
+
+    return $html;
+}
+
 function marketengine_comments( $comment, $args, $depth ){
     me_get_template('single-listing/review-item', array('comment' => $comment, 'args' => $args, 'depth' => $depth));
 }

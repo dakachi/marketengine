@@ -29,6 +29,17 @@ function me_is_available_payment_gateway($gateway) {
 	return isset($available_gateways[$gateway]);
 }
 
+/**
+ * Retrive site currency settings
+ * @return Array
+ * @since 1.0
+ */
 function get_marketengine_currency() {
-	return 'USD';
+	$sign = me_option('payment-currency-sign', '$');
+    $code = me_option('payment-currency-code', 'USD');
+    $is_align_right = me_option('currency-sign-postion') ? true : false;
+    $label = me_option('payment-currency-lable', 'USD');
+    return compact('sign', 'code', 'is_align_right', 'label');
 }
+
+add_filter('marketengine_currency_code', 'get_marketengine_currency');

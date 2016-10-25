@@ -229,7 +229,7 @@ class ME_Paypal_Simple extends ME_Payment {
     }
 
     private function validate_currency($currency, $order) {
-        return $currency === $order->get_currency();
+        return $currency === $order->get_currency_code();
     }
 
     private function check_txn_id($id) {

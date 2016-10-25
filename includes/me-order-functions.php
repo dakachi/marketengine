@@ -32,12 +32,13 @@ function me_insert_order($order_data) {
     $order_id   = wp_insert_post($order_data, false);
     if ($order_id) {
         /**
-         * filter to get order currency code
+         * filter to get order currency
          * @param string
          * @since 1.0
          */
-        $currency_code = apply_filters('marketengine_currency_code', 'USD');
-        update_post_meta($order_id, '_order_currency_code', $currency_code);
+        $currency = apply_filters('marketengine_currency_code', 'USD');
+        update_post_meta($order_id, '_order_currency_code', $currency['USD']);
+        update_post_meta($order_id, '_order_currency', $currency);
         // hash password
         update_post_meta($order_id, '_me_order_key', 'marketengine-' . wp_hash_password(time()));
         // store client ip, agent
