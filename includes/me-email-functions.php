@@ -120,7 +120,7 @@ function me_filter_post_placeholder($content, $post = '') {
 /**
  * Send complete order email to seller
  */
-function me_complete_order_email($order_id) {
+function me_complete_order_email_seller($order_id) {
     if (!$order_id) {
         return false;
     }
@@ -153,7 +153,7 @@ function me_complete_order_email($order_id) {
     $subject  = sprintf(__("You have a new order on %s.", "enginethemes"), get_bloginfo('blogname'));
     $currency = $order->get_currency();
     ob_start();
-    me_get_template('emails/order-success',
+    me_get_template('emails/seller/order-success',
         array(
             'display_name'  => get_the_author_meta('display_name', $seller->ID),
             'listing_link'  => '<a href="' . get_permalink($listing_id) . '" >' . get_the_title($listing_id) . '</a>',
