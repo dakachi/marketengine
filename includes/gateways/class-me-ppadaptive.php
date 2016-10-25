@@ -511,12 +511,18 @@ class ME_PPAdaptive_Request {
      * @return object
      */
     public function setup_payment($order) {
+        $currency = $order->get_currency_code();
+        if(!$currency) {
+            update_post_meta($order->id, '_me_currency_code', me_option('payment-currency-code', 'USD'));
+            $currency = me_option('payment-currency-code', 'USD');
+        }
+
         $order_data = array_merge(array(
             'returnUrl'                     => $order->get_confirm_url(),
             'cancelUrl'                     => $order->get_cancel_url(),
             'ipnNotificationUrl'            => home_url('?me-payment=ME_PPAdaptive_Request'),
 
-            'currencyCode'                  => get_marketengine_currency(),
+            'currencyCode'                  => $currency,
             'feesPayer'                     => 'EACHRECEIVER',
             'requestEnvelope.errorLanguage' => get_bloginfo('language'),
         ),

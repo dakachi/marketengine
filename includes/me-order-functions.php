@@ -37,7 +37,7 @@ function me_insert_order($order_data) {
          * @since 1.0
          */
         $currency = apply_filters('marketengine_currency_code', 'USD');
-        update_post_meta($order_id, '_order_currency_code', $currency['USD']);
+        update_post_meta($order_id, '_order_currency_code', $currency['code']);
         update_post_meta($order_id, '_order_currency', $currency);
         // hash password
         update_post_meta($order_id, '_me_order_key', 'marketengine-' . wp_hash_password(time()));
