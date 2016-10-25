@@ -16,11 +16,13 @@ if (!defined('ABSPATH')) {
 
 <form id="edit-profile-form" action="" method="post" >
 
-	<?php me_print_notices(); ?>
 
 	<?php do_action('marketengine_change_password_form_start'); ?>
 
 	<div class="marketengine-content change-password">
+
+		<?php me_print_notices(); ?>
+		
 		<div class="marketengine-profile-info">
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
