@@ -1,29 +1,11 @@
-<?php do_action('marketengine_before_post_listing_picture_form');?>
-<div class="marketengine-group-field">
+<?php
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
 
-	<?php do_action('marketengine_before_post_listing_image_form');?>
 
-	<div class="marketengine-upload-field">
-		<label class="text"><?php _e("Your listing image", "enginethemes");?>&nbsp;<small><?php _e("(optional)", "enginethemes");?></small></label>
-		<input type="file" name='listing_image' accept="image/*" />
-	</div>
-
-	<?php do_action('marketengine_after_post_listing_image_form');?>
-
-</div>
-<div class="marketengine-group-field">
-
-	<?php do_action('marketengine_before_post_listing_gallery_form');?>
-
-	<div class="marketengine-upload-field">
-		<label class="text"><?php _e("Gallery", "enginethemes");?>&nbsp;<small><?php _e("(optional)", "enginethemes");?></small></label>
-		<input type="file" name='listing_gallery[]' multiple accept="image/*" />
-	</div>
-
-	<?php do_action('marketengine_after_post_listing_gallery_form');?>
-
-</div>
-<?php do_action('marketengine_after_post_listing_picture_form');?>
+?>
 <style type="text/css">
 	li.uploading {
     border: 1px dashed #ccc;
@@ -44,8 +26,15 @@ li .uploading-progress {
     -ms-transition: width 0.6s ease 0s;
 }
 </style>
+
+<?php do_action('marketengine_before_post_listing_picture_form');?>
+
 <div class="marketengine-group-field">
+
+    <?php do_action('marketengine_before_post_listing_image_form');?>
+
     <div class="marketengine-upload-field">
+
         <label class="text" for="upload_company_gallery"><?php _e('Your listing image', 'enginethemes'); ?></label>
         <?php
         me_get_template('upload-file/upload-form', array(
@@ -59,8 +48,14 @@ li .uploading-progress {
         ));
         ?>
     </div>
+
+    <?php do_action('marketengine_after_post_listing_image_form');?>
+
 </div>
 <div class="marketengine-group-field">
+
+    <?php do_action('marketengine_before_post_listing_gallery_form');?>
+
     <div class="marketengine-upload-field">
         <label class="text" for="upload_company_gallery"><?php _e('Gallery', 'enginethemes'); ?></label>
         <?php
@@ -88,4 +83,10 @@ li .uploading-progress {
         ));
         ?>
     </div>
+
+    <?php do_action('marketengine_after_post_listing_gallery_form');?>
+
 </div>
+
+<?php do_action('marketengine_after_post_listing_picture_form');?>
+

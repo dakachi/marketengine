@@ -28,7 +28,8 @@ class ME_Listing_Handle {
      * @return WP_Error| WP_Post
      */
     public static function insert($listing_data, $attachment = array()) {
-        global $user_ID;
+
+        $user_ID = get_current_user_id();
         // validate data
         $is_valid = self::validate($listing_data);
         if (is_wp_error($is_valid)) {
@@ -37,22 +38,21 @@ class ME_Listing_Handle {
 
         $listing_data = self::filter($listing_data);
 
-        if (isset($attachment['listing_gallery'])) {
+        if (isset($listing_data['listing_gallery'])) {
             $maximum_files_allowed = get_option('marketengine_listing_maximum_images_allowed', 5);
-            $number_of_files       = count($attachment['listing_gallery']['name']);
+            $number_of_files       = count($listing_data['listing_gallery']);
             if ($number_of_files > $maximum_files_allowed) {
                 return new WP_Error('over_maximum_files_allowed', sprintf(__("You can only add %d image(s) to listing gallery.", "enginethemes"), $maximum_files_allowed));
             }
+
+            foreach ($listing_data['listing_gallery'] as $key => $value) {
+                $listing_data['listing_gallery'][$key] = esc_sql( $value );
+            }
         }
 
-        if (isset($attachment['listing_image'])) {
+        if (isset($listing_data['listing_image'])) {
             // process upload featured image
-            $featured_image = self::process_feature_image($attachment['listing_image']);
-            if (!is_wp_error($featured_image)) {
-                $listing_data['meta_input']['_thumbnail_id'] = $featured_image;
-            } else {
-                return $featured_image;
-            }
+            $listing_data['meta_input']['_thumbnail_id'] = absint(esc_sql( $listing_data['listing_image'] ));
         }
 
         if (isset($listing_data['ID'])) {
@@ -83,10 +83,9 @@ class ME_Listing_Handle {
             do_action('marketengine_after_insert_listing', $post, $listing_data);
         }
 
-        if (isset($attachment['listing_gallery'])) {
+        if (isset($listing_data['listing_gallery'])) {
             //process upload image gallery
-            $galleries = self::process_gallery($attachment['listing_gallery'], $post);
-            update_post_meta($post, '_me_listing_gallery', $galleries);
+            update_post_meta($post, '_me_listing_gallery', $listing_data['listing_gallery']);
         }
         return $post;
     }
