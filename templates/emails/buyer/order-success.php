@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
 <p><?php printf(__("Your payment for the listing %s on %s has been accepted. ", "enginethemes"), $listing_link, get_bloginfo('blogname') ); ?></p>
 <p><?php _e("Here are the payment details:", "enginethemes"); ?></p>
 <ol>
-	<li><?php printf(__("Listing: %s", "enginethemes"), $buyer_name) ?></li>
+	<li><?php printf(__("Listing: %s", "enginethemes"), $listing_link) ?></li>
 	<li><?php printf(__("Price: %s", "enginethemes"), $listing_price) ?></li>
 	<li><?php printf(__("Unit: %s", "enginethemes"), $unit) ?></li>
 	<li><?php printf(__("Total: %s", "enginethemes"), $total) ?></li>
