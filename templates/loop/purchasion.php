@@ -4,7 +4,7 @@ $pricing_unit = $listing->get_pricing_unit();
 ?>
 <div class="me-item-price">
 	<span itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="me-price pull-left">
-		<?php me_print_price_html( $price, $pricing_unit ); ?>
+		<?php echo me_price_html( $price, $pricing_unit ); ?>
 	</span>
 	<!-- <div class="me-rating pull-right">
 		<i class="icon-me-star"></i>

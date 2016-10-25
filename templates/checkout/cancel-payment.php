@@ -1,10 +1,6 @@
-<?php
-$total = '$' . $order->get_total();
-me_print_price_html();
-?>
 <div class="marketengine">
 	<div class="me-payment-complete">
-		<p><?php printf(__('Your have canceled payment of %s.', 'enginethemes'), $total) ?></p>
+		<p><?php printf(__('Your have canceled payment of order #%s.', 'enginethemes'), $order->id) ?></p>
 
 		<div class="me-row">
 			<div class="me-col-md-4 me-pc-redirect-1">

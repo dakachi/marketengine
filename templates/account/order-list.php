@@ -50,7 +50,7 @@ query_posts($args);
 			<div class="me-table-col me-order-status">
 				<?php me_print_order_status( get_post_status( get_the_ID()) ); ?>
 			</div>
-			<div class="me-table-col me-order-amount"><?php me_print_price_html($order_total); ?></div>
+			<div class="me-table-col me-order-amount"><?php echo me_price_html($order_total); ?></div>
 			<div class="me-table-col me-order-date"><?php echo get_the_date(get_option('date_format'), get_the_ID()); ?></div>
 			<div class="me-table-col me-order-listing">
 				<div class="me-order-listing-info">
