@@ -106,8 +106,10 @@ class ME_Listing_Handle {
     public static function update($listing_data, $attachment = array()) {
         $current_user_id = get_current_user_id();
         $listing_data['ID'] = $listing_data['edit'];
-        $listing_data['post_author'] = $listing->post_author;
+
         $listing = me_get_listing($listing_data['ID']);
+        $listing_data['post_author'] = $listing->post_author;
+        
         // if($listing->post_author != $current_user_id) {
         //     return new WP_Error('permission_denied', __("You are not allowed to edit this listing.", "enginethemes"));
         // }
