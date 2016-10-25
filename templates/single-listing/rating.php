@@ -11,7 +11,6 @@ if(!$listing->allow_rating()) {
 $review_count = $listing->get_review_count();
 $review_score = $listing->get_review_score();
 $comments = get_comments(array('type' => 'review', 'post_id' => $listing->ID));
-wp_list_comments( $args = array(), $comments = null )
 ?>
 
 <?php do_action('marketengine_before_single_listing_rating', $listing); ?>
@@ -48,7 +47,8 @@ wp_list_comments( $args = array(), $comments = null )
 		</div>
 		
 		<ul class="me-comment-list">
-		<?php for ($i=0; $i < 3; $i++) : ?>
+			<?php wp_list_comments( array('callback' => 'marketengine_comments'), $comments ); ?>
+			<?php /* for ($i=0; $i < 3; $i++) : ?>
 			<li itemprop="review" itemscope itemtype="http://schema.org/Review" class="me-media">	
 				<div class="">
 					<a href="" class="avatar-comment pull-left">
@@ -105,7 +105,7 @@ wp_list_comments( $args = array(), $comments = null )
 					</li>
 				</ul>
 			</li>
-			<?php endfor; ?>
+			<?php endfor;*/ ?>
 		</ul>
 			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) :
 				echo '<nav class="me-pagination">';

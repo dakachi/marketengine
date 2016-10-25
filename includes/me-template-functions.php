@@ -424,3 +424,8 @@ function me_price_html( $price, $unit = '' ) {
 
     return $html;
 }
+
+
+function marketengine_comments( $comment, $args, $depth ){
+    me_get_template('single-listing/review-item', array('comment' => $comment, 'args' => $args, 'depth' => $depth));
+}
