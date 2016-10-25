@@ -606,9 +606,9 @@ class ME_PPAdaptive_Request {
             }
 
             if(!empty($transaction_info->pendingReason)) {
-                $pending_messages = $this->gateway->get_pending_message();
                 $pending_reason = $transaction_info->pendingReason;
-                me_add_order_item_meta($receiver->order_item_id, '_pending_reason', $pending_messages[$pending_reason]);
+                $pending_message = $this->gateway->get_pending_message($pending_reason);
+                me_add_order_item_meta($receiver->order_item_id, '_pending_reason', $pending_message);
             }
 
             me_add_order_item_meta($receiver->order_item_id, 'refunded_amount', $transaction_info->refundedAmount);
