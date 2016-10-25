@@ -228,7 +228,7 @@ class ME_Post_Types {
         ));
 
         register_post_status('me-complete', array(
-            'label'                     => _x('Finished', 'me-order'),
+            'label'                     => _x('Completed', 'me-order'),
             'public'                    => false,
             'exclude_from_search'       => false,
             'private'                   => true,
