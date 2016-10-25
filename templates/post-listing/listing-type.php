@@ -60,16 +60,17 @@ if (!empty($_POST['meta_input']['pricing_unit'])) {$unit =  esc_attr($_POST['met
 	</div>
 	
 	<?php do_action('marketengine_post_listing_type_form_fields'); ?>
+	<div class="marketengine-group-field">
+		<div class="marketengine-input-field listing-type-info" id="contact-type-field" <?php if($selected_listing_type !='contact') echo 'style="display:none";'; ?>>
 
-	<div class="marketengine-input-field listing-type-info" id="contact-type-field" <?php if($selected_listing_type !='contact') echo 'style="display:none";'; ?>>
+			<?php do_action('marketengine_post_listing_offering_email_form_start'); ?>
 
-		<?php do_action('marketengine_post_listing_offering_email_form_start'); ?>
+		    <label class="text"><?php _e("Contact Email", "enginethemes");?></label>
+		    <input type="email" name="meta_input[contact_email]" value="<?php echo $contact_email; ?>" >
+		    
+		    <?php do_action('marketengine_post_listing_offering_email_form_end'); ?>
 
-	    <label class="text"><?php _e("Contact Email", "enginethemes");?></label>
-	    <input type="email" name="meta_input[contact_email]" value="<?php echo $contact_email; ?>" >
-	    
-	    <?php do_action('marketengine_post_listing_offering_email_form_end'); ?>
-
+		</div>
 	</div>
 
 	<?php do_action('marketengine_post_listing_type_form_fields_end'); ?>
