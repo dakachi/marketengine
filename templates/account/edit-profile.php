@@ -21,8 +21,6 @@ $paypal_email = isset($_POST['paypal_email']) ? $_POST['paypal_email'] : $user->
 
 <form id="edit-profile-form" action="" method="post" >
 
-	<?php me_print_notices(); ?>
-
 	<?php do_action('marketengine_edit_user_profile_form_start', $user); ?>
 
 	<div class="marketengine-content me-profile">
@@ -38,6 +36,8 @@ $paypal_email = isset($_POST['paypal_email']) ? $_POST['paypal_email'] : $user->
 			</div>
 
 			<?php do_action('marketengine_after_edit_user_avatar', $user); ?>
+			
+			<?php me_print_notices(); ?>
 
 			<?php do_action('marketengine_before_edit_user_profile', $user); ?>
 
