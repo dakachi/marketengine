@@ -596,7 +596,7 @@ class ME_Listing_Handle {
 
             $results = $wpdb->get_results($sql);
             // update post rating score
-            update_post_meta($post_id, '_rating_score', $results[0]->rate_point);
+            update_post_meta($post_id, '_rating_score', round($results[0]->rate_point, 1));
             update_post_meta($post_id, '_me_reviews_count', $results[0]->count);
         }
     }

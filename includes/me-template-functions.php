@@ -296,6 +296,28 @@ function me_get_auth_url( $query_var = '', $value = '' ) {
 }
 
 /**
+ * Returns url to process order
+ *
+ * @param $query_var
+ * @return $url if user_account page is existed
+ *          $home_url if no user_account page
+ *
+ */
+
+function me_get_order_url( $page, $query_var = 'order-id', $value = '' ) {
+    $url           = me_get_page_permalink( $page );
+    $order_endpoint = me_get_endpoint_name( $query_var );
+    $permalink_structure = get_option( 'permalink_structure');
+
+    if($url){
+        $url = me_get_endpoint_url( $query_var, $value, $url );
+        return $url;
+    }
+    return home_url();
+}
+
+
+/**
  * Prints shop categories.
  *
  * Adds an action to get shop categories selectbox template.
@@ -424,7 +446,6 @@ function me_price_html( $price, $unit = '' ) {
 
     return $html;
 }
-
 
 function marketengine_comments( $comment, $args, $depth ){
     me_get_template('single-listing/review-item', array('comment' => $comment, 'args' => $args, 'depth' => $depth));

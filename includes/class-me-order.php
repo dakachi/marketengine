@@ -188,33 +188,15 @@ class ME_Order {
     }
 
     public function get_confirm_url() {
-        $page           = me_get_page_permalink('confirm_order');
-        $order_endpoint = me_get_endpoint_name('order-id');
-        $permalink_structure = get_option( 'permalink_structure');
-        if( empty($permalink_structure) ) {
-            return $page . '&order-id=' . $this->id;
-        }
-        return $page . $order_endpoint . '/' . $this->id;
+        return me_get_order_url( 'confirm_order', 'order-id', $this->id);
     }
 
     public function get_order_detail_url() {
-        $page           = me_get_page_permalink('transaction_detail');
-        $order_endpoint = me_get_endpoint_name('order-id');
-        $permalink_structure = get_option( 'permalink_structure');
-        if( empty($permalink_structure) ) {
-            return $page . '&order-id=' . $this->id;
-        }
-        return $page . $order_endpoint . '/' . $this->id;
+        return me_get_order_url( 'transaction_detail', 'order-id', $this->id);
     }
 
     public function get_cancel_url() {
-        $page           = me_get_page_permalink('cancel_order');
-        $order_endpoint = me_get_endpoint_name('order-id');
-        $permalink_structure = get_option( 'permalink_structure');
-        if( empty($permalink_structure) ) {
-            return $page . '&order-id=' . $this->id;
-        }
-        return $page . $order_endpoint . '/' . $this->id;
+        return me_get_order_url( 'cancel_order', 'order-id', $this->id);
     }
 
     /**
