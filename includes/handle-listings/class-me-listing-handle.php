@@ -535,9 +535,9 @@ class ME_Listing_Handle {
             'comment_parent' => 0,
         ));
 
-        if (!empty($comments)) {
-            return new WP_Error('duplicationde', sprintf(__("You have already review on %s.", 'enginethemes'), esc_html(get_the_title($listing_id))));
-        }
+        // if (!empty($comments)) {
+        //     return new WP_Error('duplicationde', sprintf(__("You have already review on %s.", 'enginethemes'), esc_html(get_the_title($listing_id))));
+        // }
 
         $review_item = me_get_order_items($order->ID, 'review_item');
         if (empty($review_item)) {

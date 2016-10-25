@@ -210,7 +210,7 @@ if (!class_exists('MarketEngine')):
             wp_enqueue_script('index', $this->plugin_url() . "/assets/js/index$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('message.js', $this->plugin_url() . "/assets/js/message$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('my-listings.js', $this->plugin_url() . "/assets/js/my-listings$suffix.js", array('jquery'), $this->version, true);
-
+            wp_enqueue_script('listing-review', $this->plugin_url() . "/assets/js/listing-review$suffix.js", array('jquery'), $this->version, true);
 
             wp_enqueue_script('muploader.js', $this->plugin_url() . "/assets/js/muploader$suffix.js", array('jquery','plupload-all'), $this->version, true);
 
