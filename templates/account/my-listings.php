@@ -79,15 +79,11 @@ $query = new WP_Query( $args );
 								<span class="me-price pull-left">
 									<?php echo me_price_html( $price, $pricing_unit ) ?>
 								</span>
-								<?php /*
+								
 								<div class="me-rating pull-right">
-									<i class="icon-me-star"></i>
-									<i class="icon-me-star"></i>
-									<i class="icon-me-star"></i>
-									<i class="icon-me-star"></i>
-									<i class="icon-me-star-o"></i>
+									<div class="result-rating" data-score="<?php echo $purchasion->get_review_score(); ?>"></div>
 								</div>
-								*/ ?>
+								
 							<?php
 								endif;
 							endif;

@@ -6,13 +6,9 @@ $pricing_unit = $listing->get_pricing_unit();
 	<span itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="me-price pull-left">
 		<?php echo me_price_html( $price, $pricing_unit ); ?>
 	</span>
-	<!-- <div class="me-rating pull-right">
-		<i class="icon-me-star"></i>
-		<i class="icon-me-star"></i>
-		<i class="icon-me-star"></i>
-		<i class="icon-me-star"></i>
-		<i class="icon-me-star-o"></i>
-	</div> -->
+	<div class="me-rating pull-right">
+		<div class="result-rating" data-score="<?php echo $listing->get_review_score(); ?>"></div>
+	</div>
 </div>
 <div class="me-buy-now">
 	<form method="post">
