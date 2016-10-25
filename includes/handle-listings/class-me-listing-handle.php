@@ -535,9 +535,9 @@ class ME_Listing_Handle {
             'comment_parent' => 0,
         ));
 
-        // if (!empty($comments)) {
-        //     return new WP_Error('duplicationde', sprintf(__("You have already review on %s.", 'enginethemes'), esc_html(get_the_title($listing_id))));
-        // }
+        if (!empty($comments)) {
+            return new WP_Error('duplicationde', sprintf(__("You have already review on %s.", 'enginethemes'), esc_html(get_the_title($listing_id))));
+        }
 
         $review_item = me_get_order_items($order->ID, 'review_item');
         if (empty($review_item)) {
@@ -596,7 +596,7 @@ class ME_Listing_Handle {
 
             $results = $wpdb->get_results($sql);
             // update post rating score
-            update_post_meta($post_id, '_rating_score', $results[0]->rate_point);
+            update_post_meta($post_id, '_rating_score', round($results[0]->rate_point, 1));
             update_post_meta($post_id, '_me_reviews_count', $results[0]->count);
         }
     }
