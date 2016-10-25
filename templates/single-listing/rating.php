@@ -4,6 +4,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+if(!$listing->allow_rating()) {
+	return;
+}
+
 $review_count = $listing->get_review_count();
 $review_score = $listing->get_review_score();
 $comments = get_comments(array('type' => 'review', 'post_id' => $listing->ID));

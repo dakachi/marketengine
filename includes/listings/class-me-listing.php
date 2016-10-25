@@ -395,4 +395,15 @@ class ME_Listing {
         $edit = me_get_endpoint_name('edit-listing');
         return $page . $edit . '/' . $this->id;
     }
+
+    /**
+     * Check listing is allowed rating or not
+     * 
+     * @since 1.0
+     *
+     * @return bool
+     */
+    public function allow_rating() {
+        return 'contact'!= $this->get_listing_type();
+    }
 }
