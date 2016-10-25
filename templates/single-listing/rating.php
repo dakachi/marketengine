@@ -4,26 +4,29 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-global $post;
-$listing = new ME_Listing($post);
 $review_count = $listing->get_review_count();
+$review_score = $listing->get_review_score();
+$comments = get_comments(array('type' => 'review', 'post_id' => $listing->ID));
+wp_list_comments( $args = array(), $comments = null )
 ?>
 
-<?php do_action('marketengine_before_single_listing_rating'); ?>
+<?php do_action('marketengine_before_single_listing_rating', $listing); ?>
 
 <div class="me-comments">
 	<div class="marketengine-comments">
 		<h3 class="me-title-comment"><?php printf(_n("Review (%d)", "Reviews (%d)", $review_count,"enginethemes"),$review_count ); ?></h3>
-		<?php if ( have_comments() ) : ?>
+		<?php if ( $review_count ) : ?>
 		<div class="me-row">
 			<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating"  class="me-col-md-3">
 				<div class="me-count-rating">
 					<meta itemprop="worstRating" content = "1">
-					<meta itemprop="bestRating" content = "10">
-					<span itemprop="ratingValue" class="me-count">8,6</span>
-					<div class="me-rating"><i class="icon-font star-on-png"></i><i class="icon-font star-on-png"></i><i class="icon-font star-on-png"></i><i class="icon-font star-half-png"></i><i class="icon-font star-off-png"></i></div>
+					<meta itemprop="bestRating" content = "5">
+					<span itemprop="ratingValue" class="me-count"><?php echo $review_score; ?></span>
+					<div class="me-rating">
+						<div class="result-rating" data-score="<?php echo $review_score; ?>"></div>
+					</div>
 					<span class="me-base-review">
-						Based on <?php printf(_n('<b itemprop="reviewCount">%d<b> review', '<b itemprop="reviewCount">%d<b> reviews', $review_count,"enginethemes"),$review_count ); ?>
+						<?php printf(_n('Based on <b itemprop="reviewCount">%d<b> review', 'Based on <b itemprop="reviewCount">%d<b> reviews', $review_count,"enginethemes"),$review_count ); ?>
 					</span>
 				</div>
 			</div>
@@ -118,4 +121,4 @@ $review_count = $listing->get_review_count();
 	
 </div>
 
-<?php do_action('marketengine_after_single_listing_rating'); ?>
+<?php do_action('marketengine_after_single_listing_rating', $listing); ?>
