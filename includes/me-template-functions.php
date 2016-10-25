@@ -413,9 +413,9 @@ function me_price_html( $price, $unit = '' ) {
     $html = '';
 
     if($sign_position) {
-        $html .= '<b itemprop="priceCurrency" content="' . $currency_code .'">'. $currency_code .'</b> <b itemprop="price" content="'. $price .'">'. $price .'</b>';
+        $html .= '<b itemprop="priceCurrency" content="' . $currency_code .'">'. $currency_sign .'</b> <b itemprop="price" content="'. $price .'">'. $price .'</b>';
     } else {
-        $html .= '<b itemprop="price" content="'. $price .'">'. $price .'</b> <b itemprop="priceCurrency" content="' . $currency_code .'">'. $currency_code .'</b>';
+        $html .= '<b itemprop="price" content="'. $price .'">'. $price .'</b> <b itemprop="priceCurrency" content="' . $currency_code .'">'. $currency_sign .'</b>';
     }
 
     if( !empty($unit) ) {
