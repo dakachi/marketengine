@@ -4,11 +4,6 @@
 	<div class="me-review-listing">
 		<h3><?php echo esc_html( get_the_title( $listing_id ) ); ?></h3>
 		<div class="me-rating">
-			<!-- <i class="icon-me-star-o"></i>
-			<i class="icon-me-star-o"></i>
-			<i class="icon-me-star-o"></i>
-			<i class="icon-me-star-o"></i>
-			<i class="icon-me-star-o"></i> -->
 			<div class="do-rating" data-score=""></div>
 		</div>
 		<p><?php _e("Share your review about this listing", "enginethemes"); ?></p>

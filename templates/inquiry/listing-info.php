@@ -9,11 +9,7 @@
 			</a>
 		</h2>
 		<div class="me-rating">
-			<i class="icon-me-star"></i>
-			<i class="icon-me-star"></i>
-			<i class="icon-me-star"></i>
-			<i class="icon-me-star"></i>
-			<i class="icon-me-star-o"></i>
+			<div class="result-rating" data-score="<?php echo $listing->get_review_score(); ?>"></div>
 		</div>
 		<div class="me-count-purchases-review">
 			<span>12 Purchase</span><span>30 review</span>
