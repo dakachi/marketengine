@@ -33,7 +33,7 @@ if (!defined('ABSPATH')) {
 
 			<?php me_get_template('post-listing/listing-gallery',  array('listing_gallery' => '', 'listing_image' => '')); ?>
 
-			<?php me_get_template('post-listing/listing-tags'); ?>
+			<?php me_get_template('post-listing/listing-tags', array('default' => '')); ?>
 
 			<?php do_action('marketengine_post_listing_form_fields'); ?>
 

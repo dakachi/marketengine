@@ -6,3 +6,4 @@ node_modules/*
 vendor/*
 phpunit.xml
 wordpress-developer
+includes/- paypal

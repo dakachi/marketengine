@@ -81,14 +81,14 @@ class ME_Listing_Handle_Form extends ME_Form {
     public static function process_update($data) {
         if (!empty($_POST['update_lisiting']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-update_listing')) {
             $listing = ME_Listing_Handle::update($_POST);
-            if (is_wp_error($new_listing)) {
+            if (is_wp_error($listing)) {
                 me_wp_error_to_notices($listing);
             } else {
                 // set the redirect link after update listing
                 if (isset($_POST['redirect'])) {
                     $redirect = $_POST['redirect'];
                 } else {
-                    $redirect = get_permalink($listing->ID);
+                    $redirect = get_permalink($listing);
                 }
                 /**
                  * action filter redirect link after user update listing
