@@ -72,6 +72,7 @@ class ME_Listing_Handle {
             if (!self::current_user_can_create_listing()) {
                 return new WP_Error('create_posts', __("You are not allowed to create posts as this user.", "enginethemes"));
             }
+
             $post = wp_insert_post($listing_data);
             /**
              * Do action after insert listing
@@ -103,6 +104,14 @@ class ME_Listing_Handle {
      * @return WP_Error| WP_Post
      */
     public static function update($listing_data, $attachment = array()) {
+        $current_user_id = get_current_user_id();
+        $listing_data['ID'] = $listing_data['edit'];
+
+        $listing = me_get_listing($listing_data['ID']);
+        if($listing->post_author != $current_user_id) {
+            return new WP_Error('permission_denied', __("You are not allowed to edit this listing.", "enginethemes"));
+        }
+
         return self::insert($listing_data, $attachment);
     }
 
@@ -126,6 +135,8 @@ class ME_Listing_Handle {
         $listing_data['tax_input']['listing_category'] = array($listing_data['parent_cat'], $listing_data['sub_cat']);
         if (!empty($listing_data['listing_tag'])) {
             $listing_data['tax_input']['listing_tag'] = $listing_data['listing_tag'];
+        }else {
+            $listing_data['tax_input']['listing_tag'] = '';
         }
         // set listing status
         if (self::current_user_can_publish_listing()) {

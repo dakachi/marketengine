@@ -6,7 +6,7 @@
 
 	<div class="marketengine-input-field">
 	    <?php
-	    	$listing_tag = !empty($_POST['listing_tag']) ? $_POST['listing_tag'] : '';
+	    	$listing_tag = !empty($_POST['listing_tag']) ? $_POST['listing_tag'] : $default;
 	    	me_post_tags_meta_box($listing_tag, 'listing_tag'); 
 	    ?>
 	</div>

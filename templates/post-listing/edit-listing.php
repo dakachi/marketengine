@@ -32,6 +32,8 @@ if($selected_listing_type == 'purchasion') {
 }else {
 	$listing_types =  array('selected_listing_type' => $selected_listing_type, 'contact_email' => $listing->get_contact_info(), 'price' => '', 'unit' => '');
 }
+
+$listing_tag = wp_get_post_terms($listing->ID, 'listing_tag', array('fields' => 'names'));
 ?>
 
 <?php do_action('marketengine_before_edit_listing_form', $listing); ?>
@@ -54,16 +56,16 @@ if($selected_listing_type == 'purchasion') {
 
 			<?php me_get_template('post-listing/listing-gallery', array('listing_gallery' => $listing->get_gallery(), 'listing_image' => $listing->get_featured_image())); ?>
 
-			<?php me_get_template('post-listing/listing-tags', array('listing', $listing)); ?>
+			<?php me_get_template('post-listing/listing-tags', array('default' => join(',', $listing_tag))); ?>
 
 			<?php do_action('marketengine_edit_listing_form_fields', $listing); ?>
 
-			<?php wp_nonce_field('me-edit_listing'); ?>
+			<?php wp_nonce_field('me-update_listing'); ?>
 
 			<input type="hidden" name="edit" value="<?php echo $listing->ID; ?>" />
 
 			<div class="marketengine-group-field me-text-center submit-post">
-				<input class="marketengine-post-submit-btn" type="submit" name="insert_lisiting" value="<?php _e("SUBMIT", "enginethemes"); ?>">
+				<input class="marketengine-post-submit-btn" type="submit" name="update_lisiting" value="<?php _e("SUBMIT", "enginethemes"); ?>">
 			</div>
 			<a href="#" class="back-link-page me-forward-section" data-active="2"><?php _e("&lt; Back to home", "enginethemes"); ?></a>
 
