@@ -29,13 +29,13 @@ $total = 0;
 				</div>
 			</div>
 			<div class="me-table-col me-cart-price">
-				<?php me_print_price_html( $listing_obj->get_price() ); ?>
+				<?php echo me_price_html( $listing_obj->get_price() ); ?>
 			</div>
 			<div class="me-table-col me-cart-units">
 				<?php echo $unit ?>
 			</div>
 			<div class="me-table-col me-cart-units-total">
-				<?php me_print_price_html($listing_obj->get_price() * $unit); ?>
+				<?php echo me_price_html($listing_obj->get_price() * $unit); ?>
 			</div>
 
 			<input type="hidden" name="listing_item[<?php echo $key; ?>][id]" value="<?php echo $item['id']; ?>" />
@@ -56,7 +56,7 @@ $total = 0;
 			<div class="me-table-col me-table-empty"></div>
 			<div class="me-table-col me-table-empty"></div>
 			<div class="me-table-col me-cart-amount"><?php _e("Total amount:", "enginethemes"); ?></div>
-			<div class="me-table-col me-cart-totals"><?php me_print_price_html($listing_obj->get_price() * $unit); ?></div>
+			<div class="me-table-col me-cart-totals"><?php echo me_price_html($listing_obj->get_price() * $unit); ?></div>
 		</div>
 	</div>
 	<div class="me-checkout-submit">

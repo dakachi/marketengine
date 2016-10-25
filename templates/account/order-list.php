@@ -15,6 +15,8 @@ $args = array(
 );
 $type = 'order';
 $args = array_merge(apply_filters( 'me_filter_order', $_GET, $type ), $args);
+
+query_posts($args);
 ?>
 <!--Mobile-->
 <div class="me-orderlist-filter-tabs">
@@ -25,9 +27,7 @@ $args = array_merge(apply_filters( 'me_filter_order', $_GET, $type ), $args);
 <?php me_get_template('global/order-filter', array('type' => $type)); ?>
 
 <div class="me-table me-orderlist-table">
-	
-	<?php 
-	if( !empty($args['post__in']) ) : ?>
+<?php if( have_posts() ) : ?>
 		<div class="me-table-rhead">
 			<div class="me-table-col me-order-id"><?php _e("ORDER ID", "enginethemes"); ?></div>
 			<div class="me-table-col me-order-status"><?php _e("STATUS", "enginethemes"); ?></div>
@@ -36,7 +36,6 @@ $args = array_merge(apply_filters( 'me_filter_order', $_GET, $type ), $args);
 			<div class="me-table-col me-order-listing"><?php _e("LISTING", "enginethemes"); ?></div>
 		</div>
 	<?php
-		query_posts($args);
 		while(have_posts()) : the_post(); ?>
 
 	<?php
@@ -51,7 +50,7 @@ $args = array_merge(apply_filters( 'me_filter_order', $_GET, $type ), $args);
 			<div class="me-table-col me-order-status">
 				<?php me_print_order_status( get_post_status( get_the_ID()) ); ?>
 			</div>
-			<div class="me-table-col me-order-amount"><?php me_print_price_html($order_total); ?></div>
+			<div class="me-table-col me-order-amount"><?php echo me_price_html($order_total); ?></div>
 			<div class="me-table-col me-order-date"><?php echo get_the_date(get_option('date_format'), get_the_ID()); ?></div>
 			<div class="me-table-col me-order-listing">
 				<div class="me-order-listing-info">

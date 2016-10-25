@@ -39,9 +39,6 @@ class ME_Checkout_Handle {
             $data['shipping'] = $data['billing_info'];
         }
 
-        // echo '<pre>';
-        // print_r($data);exit;
-        // echo '</pre>';
         // create order
         $order = self::create_order($data);
 

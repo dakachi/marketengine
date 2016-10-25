@@ -6,7 +6,7 @@
 	?>
 
 		<span class="me-price">
-			<?php me_print_price_html( $price, $pricing_unit ); ?>
+			<?php echo me_price_html( $price, $pricing_unit ); ?>
 		</span>
 		<span class="me-instock"><?php _e("In Stock", "enginethemes"); ?></span>
 	<?php endif; ?>

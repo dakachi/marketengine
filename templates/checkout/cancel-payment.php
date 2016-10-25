@@ -1,15 +1,6 @@
-<?php
-$total = '$' . $order->get_total();
-$payment_date = date_i18n( get_option( 'date_format' ), strtotime( $order->post_date ) );
-$order_number = '#' . $order->get_order_number();
-
-if(!$order->has_status('me-pending')) :
-?>
 <div class="marketengine">
 	<div class="me-payment-complete">
-		<p><?php printf(__('Your payment of %s has been received on %s', 'enginethemes'), $total, $payment_date) ?></p>
-		<p><?php printf(__('Your transaction number is <span id="me-orderid">%s</span>', 'enginethemes'), $order_number); ?></p>
-		<p><?php _e('A detailed summary of your transaction is sent to your mail.', 'enginethemes'); ?></p>
+		<p><?php printf(__('Your have canceled payment of order #%s.', 'enginethemes'), $order->id) ?></p>
 
 		<div class="me-row">
 			<div class="me-col-md-4 me-pc-redirect-1">
@@ -35,6 +26,3 @@ if(!$order->has_status('me-pending')) :
 
 	</div>
 </div>
-<?php else : ?>
-	<?php _e("The order is onhold.", "enginethemes"); ?>
-<?php endif; ?>

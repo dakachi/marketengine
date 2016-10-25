@@ -25,7 +25,7 @@ class ME_User {
 
     public function __get($name) {
         if (isset($this->user_data[$name])) {
-            return $this->user_data[$name];
+            return $this->user_data[$name][0];
         }
         return get_the_author_meta($name, $this->id);
     }

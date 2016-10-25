@@ -24,7 +24,7 @@ $listing_status = get_post_status_object($listing->post_status);
 				<div class="marketengine-content-detail">
 					<?php me_get_template('single-listing/gallery');?>
 					<?php me_get_template('single-listing/description');?>
-					<?php me_get_template('single-listing/rating');?>
+					<?php me_get_template('single-listing/rating', array('listing' => $listing));?>
 				</div>
 
 				<?php do_action('marketengine_after_single_listing_details'); ?>
@@ -49,7 +49,7 @@ $listing_status = get_post_status_object($listing->post_status);
 					<?php me_get_template('single-listing/category');?>
 					<?php
 					if( !$is_owner ) :
-						me_get_template('single-listing/author', array('author_id' => $listing->post_author));
+						me_get_template('seller-info', array('author_id' => $listing->post_author));
 						me_get_template('single-listing/report');
 					endif;
 					?>

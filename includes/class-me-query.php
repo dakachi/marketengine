@@ -198,6 +198,13 @@ function me_init_endpoint() {
             'endpoint_name' => me_get_endpoint_name('order-id'),
             'query_var'     => 'order-id',
         ),
+
+        array(
+            'page_id'       => me_get_page_id('cancel_order'),
+            'endpoint_name' => me_get_endpoint_name('order-id'),
+            'query_var'     => 'order-id',
+        ),
+
         array(
             'page_id'       => me_get_page_id('transaction_detail'),
             'endpoint_name' => me_get_endpoint_name('order-id'),
