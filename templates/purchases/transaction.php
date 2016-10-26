@@ -9,7 +9,7 @@ $listing_obj = me_get_listing($listing_item['_listing_id'][0]);
 
 $author_id = $listing_obj->post_author;
 	
-$commission_item = me_get_order_item($transaction->id, 'commission_item');
+$commission_item = me_get_order_items($transaction->id, 'commission_item');
 echo "<pre>";
 print_r($commission_item);
 echo "</pre>";
