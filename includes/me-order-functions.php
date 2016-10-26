@@ -418,6 +418,45 @@ function me_delete_order_item_meta($order_item_id, $meta_key, $meta_value = '') 
     return delete_metadata('marketengine_order_item', $order_item_id, $meta_key, $meta_value);
 }
 
+function me_order_table_header( $type ) {
+    if($type == 'order') {
+        return array(
+            __("ORDER ID", "enginethemes"),
+            __("STATUS", "enginethemes"),
+            __("AMOUNT", "enginethemes"),
+            __("DATE OF ORDER", "enginethemes"),
+            __("LISTING", "enginethemes"),
+        );
+    } else {
+        return array(
+            __("TRANSACTION ID", "enginethemes"),
+            __("STATUS", "enginethemes"),
+            __("AMOUNT", "enginethemes"),
+            __("DATE OF ORDER", "enginethemes"),
+            __("LISTING", "enginethemes"),
+        );
+    }
+}
+
+function me_export_orders( $report_body, $type ) {
+    if( empty($report_body) ) {
+        return;
+    }
+
+    $header = me_order_table_header( $type );
+    $report_body = json_decode($report_body);
+
+    // $table_data = array_merge($header, $report_body);
+
+    $file = fopen("test_report.csv", "w");
+    fputcsv($file, $header);
+    foreach( $report_body as $key => $row) {
+        fputcsv($file, $row);
+    }
+
+    fclose($file);
+}
+
 /**
  * Retrieve current user transactions
  */

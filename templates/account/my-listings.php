@@ -26,13 +26,13 @@ $query = new WP_Query( $args );
 		<div class="marketengine-filter">
 			<div class="marketengine-filter-listing pull-right">
 				<div class="filter-listing-status">
-					<select name="" id="" onchange="window.location.href='?status=' + this.value;">
-
+					<select name="" id="" onchange="window.location.href=this.value;">
+						<option value="<?php echo me_get_auth_url('listings') ?>"><?php _e('All status', 'enginethemes'); ?></option>
 					<?php
 						$filter_options = me_listings_status_list();
 						foreach( $filter_options as $key => $label) :
 					?>
-						<option value="<?php echo $key; ?>" <?php echo ($listing_status == $key) ? 'selected' : ''; ?>><?php echo $label; ?></option>
+						<option value="<?php echo '?status=' . $key; ?>" <?php echo ($listing_status == $key) ? 'selected' : ''; ?>><?php echo $label; ?></option>
 					<?php
 						endforeach;
 					?>
@@ -79,11 +79,11 @@ $query = new WP_Query( $args );
 								<span class="me-price pull-left">
 									<?php echo me_price_html( $price, $pricing_unit ) ?>
 								</span>
-								
+
 								<div class="me-rating pull-right">
 									<div class="result-rating" data-score="<?php echo $purchasion->get_review_score(); ?>"></div>
 								</div>
-								
+
 							<?php
 								endif;
 							endif;

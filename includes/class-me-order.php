@@ -210,7 +210,7 @@ class ME_Order {
 
 
     public function get_currency() {
-        return get_post_meta($this->ID, '_order_currency', true);   
+        return get_post_meta($this->ID, '_order_currency', true);
     }
 
     /**

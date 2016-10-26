@@ -27,16 +27,29 @@ class ME_Checkout_Handle {
             'last_name'  => 'required',
             'phone'      => 'required|numeric',
             'email'      => 'required|email',
-            'postcode'   => 'string',
             'address'    => 'required|string',
             'city'       => 'required',
             'country'    => 'required',
         );
 
-        if (empty($data['me-shipping'])) {
-            $shipping_rules = $billing_rules;
-        } else {
-            $data['shipping'] = $data['billing_info'];
+        $custom_attributes = array(
+            'first_name' => __("first name", "enginethemes"),
+            'last_name'  => __("last name", "enginethemes"),
+            'phone'      => __("phone", "enginethemes"),
+            'email'      => __("billing email", "enginethemes"),
+            'city'       => __("billing city", "enginethemes"),
+            'address'    => __("billing address", "enginethemes"),
+            'country'    => __("billing country", "enginethemes"),
+        );
+
+        $is_valid = me_validate($data, $billing_rules, $custom_attributes);
+        if (!$is_valid) {
+            $errors = new WP_Error();
+            $invalid_data = me_get_invalid_message($data, $billing_rules, $custom_attributes);
+            foreach ($invalid_data as $key => $message) {
+                $errors->add($key, $message);
+            }
+            return $errors;
         }
 
         // create order
