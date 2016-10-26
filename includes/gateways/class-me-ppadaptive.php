@@ -600,11 +600,11 @@ class ME_PPAdaptive_Request {
      */
     private function update_receiver($response, $order_id) {
         $payment_info   = $response->paymentInfoList->paymentInfo;
-        
+
         $receiver_items = me_get_order_items($order_id, 'receiver_item');
         $commission_items = me_get_order_items($order_id, 'commission_item');
 
-        $$receiver_items = array_merge($receiver_items, $commission_items);
+        $receiver_items = array_merge($receiver_items, $commission_items);
         foreach ($receiver_items as $key => $receiver) {
 
             $transaction_info = $payment_info[$key];
