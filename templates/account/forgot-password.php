@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
 
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
-			    <span class="text"><?php _e("Enter your email", "enginethemes"); ?></span>
+			    <span class="me-field-title"><?php _e("Enter your email", "enginethemes"); ?></span>
 			    <input class="required email" type="email" name="user_email" value="<?php if (!empty($_POST['user_email'])) {echo esc_attr($_POST['user_email']);}?>">
 			</div>
 		</div>

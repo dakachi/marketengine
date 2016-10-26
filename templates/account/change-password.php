@@ -26,7 +26,7 @@ if (!defined('ABSPATH')) {
 		<div class="marketengine-profile-info">
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
-					<label class="text"><?php _e("Your current password", "enginethemes");?></label>
+					<label class="me-field-title"><?php _e("Your current password", "enginethemes");?></label>
 					<input class="required" type="password" value="" name="current_password" id="current_password">
 				</div>
 			</div>
@@ -34,7 +34,7 @@ if (!defined('ABSPATH')) {
 		<div class="marketengine-profile-info">
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
-					<label class="text"><?php _e("New password", "enginethemes");?></label>
+					<label class="me-field-title"><?php _e("New password", "enginethemes");?></label>
 					<input class="required" type="password" value="" name="new_password" id="new_password">
 				</div>
 			</div>
@@ -42,7 +42,7 @@ if (!defined('ABSPATH')) {
 		<div class="marketengine-profile-info">
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
-					<label class="text"><?php _e("Confirm password", "enginethemes");?></label>
+					<label class="me-field-title"><?php _e("Confirm password", "enginethemes");?></label>
 					<input class="required" type="password" value="" name="confirm_password" id="confirm_password">
 				</div>
 			</div>

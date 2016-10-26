@@ -45,7 +45,7 @@ $paypal_email = isset($_POST['paypal_email']) ? $_POST['paypal_email'] : $user->
 				<div class="me-col-md-6">
 					<div class="marketengine-group-field">
 						<div class="marketengine-input-field">
-							<label class="text"><?php _e("First name", "enginethemes");?></label>
+							<label class="me-field-title"><?php _e("First name", "enginethemes");?></label>
 							<input type="text" value="<?php echo $first_name; ?>" name="first_name" id="first_name" />
 						</div>
 					</div>
@@ -53,7 +53,7 @@ $paypal_email = isset($_POST['paypal_email']) ? $_POST['paypal_email'] : $user->
 				<div class="me-col-md-6">
 					<div class="marketengine-group-field">
 						<div class="marketengine-input-field">
-							<label class="text"><?php _e("Last name", "enginethemes");?></label>
+							<label class="me-field-title"><?php _e("Last name", "enginethemes");?></label>
 							<input type="text" value="<?php echo $last_name; ?>" name="last_name" id="last_name">
 						</div>
 					</div>
@@ -61,7 +61,7 @@ $paypal_email = isset($_POST['paypal_email']) ? $_POST['paypal_email'] : $user->
 			</div>
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
-					<label class="text"><?php _e("Display name", "enginethemes");?></label>
+					<label class="me-field-title"><?php _e("Display name", "enginethemes");?></label>
 					<select name="display_name" id="display_name">
 						<?php
 						$public_display = array();
@@ -103,14 +103,14 @@ $paypal_email = isset($_POST['paypal_email']) ? $_POST['paypal_email'] : $user->
 
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
-					<label class="text"><?php _e("Location", "enginethemes");?></label>
+					<label class="me-field-title"><?php _e("Location", "enginethemes");?></label>
 					<input type="text" value="<?php echo $location; ?>" name="location" id="location">
 				</div>
 			</div>
 
 			<div class="marketengine-group-field me-no-margin-bottom">
 				<div class="marketengine-input-field">
-					<label class="text"><?php _e("Paypal Email", "enginethemes");?></label>
+					<label class="me-field-title"><?php _e("Paypal Email", "enginethemes");?></label>
 					<input type="text" value="<?php echo $paypal_email; ?>" name="paypal_email" id="paypal_email">
 				</div>
 			</div>
