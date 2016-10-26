@@ -91,9 +91,9 @@ function me_update_order($order_data) {
  */
 function me_complete_order($order_id) {
 
-    $post_status = get_post_status( $order_id );
+    // $post_status = get_post_status( $order_id );
 
-    if($post_status == 'me-complete') return ;
+    // if($post_status == 'me-complete') return ;
 
     $order_id = wp_update_post(array(
         'ID'          => $order_id,

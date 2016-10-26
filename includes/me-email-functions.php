@@ -1,4 +1,14 @@
 <?php
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+add_filter('wp_mail_content_type', 'me_set_html_content_type');
+function me_set_html_content_type() {
+    return 'text/html';
+}
+
 /**
  * Marketengine Filter user placeholder tag
  *
@@ -152,14 +162,15 @@ function me_complete_order_email($order_id) {
 
     $subject  = sprintf(__("You have a new order on %s.", "enginethemes"), get_bloginfo('blogname'));
     $currency = $order->get_currency();
-    $total = $order->get_total();
+    $total    = $order->get_total();
+
     $order_details = array(
         'listing_link'  => '<a href="' . get_permalink($listing_id) . '" >' . get_the_title($listing_id) . '</a>',
         'listing_price' => me_price_format($listing_price, $currency),
         'unit'          => me_get_order_item_meta($listing_item[0]->order_item_id, '_qty', true),
-        'total'         => me_price_format($order->get_total(), $currency),
+        'total'         => me_price_format($total, $currency),
         'commission'    => me_price_format($commission, $currency),
-        'earning' => me_price_format(($total-$commission), $currency),
+        'earning'       => me_price_format(($total - $commission), $currency),
         'order_link'    => '<a href="' . $order->get_order_detail_url() . '" >' . $order->ID . '</a>',
         'currency'      => $currency,
     );
@@ -167,20 +178,19 @@ function me_complete_order_email($order_id) {
     ob_start();
     me_get_template('emails/seller/order-success',
         array_merge(array(
-            'display_name'  => get_the_author_meta('display_name', $seller->ID),
-            'buyer_name'    => get_the_author_meta('display_name', $order->post_author)
+            'display_name' => get_the_author_meta('display_name', $seller->ID),
+            'buyer_name'   => get_the_author_meta('display_name', $order->post_author),
         ), $order_details)
     );
     $seller_message = ob_get_clean();
     wp_mail($seller->user_email, $subject, $seller_message);
 
-
-    $subject = sprintf(__("Your payment on %s has been accepted", "enginethemes"),get_bloginfo('blogname'));
-    $buyer = get_userdata($order->post_author);
+    $subject = sprintf(__("Your payment on %s has been accepted", "enginethemes"), get_bloginfo('blogname'));
+    $buyer   = get_userdata($order->post_author);
     ob_start();
     me_get_template('emails/buyer/order-success',
         array_merge(array(
-            'display_name'  => get_the_author_meta('display_name', $order->post_author)
+            'display_name' => get_the_author_meta('display_name', $order->post_author),
         ), $order_details)
     );
     $buyer_message = ob_get_clean();
@@ -190,7 +200,7 @@ function me_complete_order_email($order_id) {
     /**
      * mail to admin
      */
-    $subject = sprintf(__("New order and commission earning on %s", "enginethemes"),get_bloginfo('blogname'));
+    $subject = sprintf(__("New order and commission earning on %s", "enginethemes"), get_bloginfo('blogname'));
     ob_start();
     me_get_template('emails/admin/order-success',
         array_merge(array(
@@ -200,6 +210,12 @@ function me_complete_order_email($order_id) {
         ), $order_details)
     );
     $admin_message = ob_get_clean();
+
+
+    echo $admin_message;
+    echo $buyer_message;
+    echo $seller_message;
+    exit;
 
     wp_mail(get_option('admin_email'), $subject, $admin_message);
 }
