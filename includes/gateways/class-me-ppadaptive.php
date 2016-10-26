@@ -599,8 +599,14 @@ class ME_PPAdaptive_Request {
      * @return void
      */
     private function update_receiver($response, $order_id) {
+        ob_start();
         $payment_info   = $response->paymentInfoList->paymentInfo;
+        update_option( 'payment_info', $payment_info);
         $receiver_items = me_get_order_items($order_id, 'receiver_item');
+        $commission_items = me_get_order_items($order_id, 'commission_item');
+
+        $receiver_items = array_merge($receiver_items, $commission_items);
+        update_option( 'receiver_items', $receiver_items );
         foreach ($receiver_items as $key => $receiver) {
 
             $transaction_info = $payment_info[$key];
@@ -617,8 +623,9 @@ class ME_PPAdaptive_Request {
                 $pending_message = $this->gateway->get_pending_message($pending_reason);
                 me_add_order_item_meta($receiver->order_item_id, '_pending_reason', $pending_message);
             }
-
         }
+        $message = ob_get_clean();
+        update_option( 'ipn_error', $message );
     }
 
     /**
@@ -710,7 +717,10 @@ class ME_Adaptive_IPN {
     }
 
     public function handle_ipn($response) {
-        if ($response['transaction_type'] == 'Adaptive Payment PAY') {
+        $option = get_option( 'ipn' );
+        update_option('ipn', 'ipn ' . $option );
+        update_option( 'response', $response );
+        if ( $response['pay_key'] ) {
             $paykey   = $response['pay_key'];
             $order_id = $this->get_order_id($paykey);
             if ($order_id) {

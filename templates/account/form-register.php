@@ -70,15 +70,15 @@ if (get_option('users_can_register')):
 			<input type="hidden" name="redirect" value="<?php echo $_REQUEST['redirect']; ?>" />
 		<?php endif;?>
 
-		<div class="marketengine-group-field terms-signup">
+		<div class="marketengine-group-field me-terms-signup">
 			<div class="marketengine-checkbox-field">
 				<label for="agree-with-tos">
 					<input id="agree-with-tos" name="agree_with_tos" class="required" type="checkbox"><?php printf(__("I agree to the site's <a href=''>Terms of Service</a>", "enginethemes"));?>
 				</label>
 			</div>
 		</div>
-		<div class="marketengine-group-field submit-signup">
-			<input class="marketengine-btn disable" type="submit" name="register" value="<?php _e("Sign up", "enginethemes")?>">
+		<div class="marketengine-group-field me-submit-signup">
+			<input class="marketengine-btn me-submit-signup-btn disable" type="submit" name="register" value="<?php _e("Sign up", "enginethemes")?>">
 		</div>
 		<a href="<?php echo home_url(); ?>" class="back-home-sigin">&lt; <?php _e("Back to Home", "enginethemes");?></a>
 		<?php wp_nonce_field('me-register');?>
