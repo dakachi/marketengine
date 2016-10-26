@@ -488,12 +488,11 @@ class ME_PPAdaptive_Request {
                 } else {
                     $order->add_commission($receiver_1);
                 }
-                
+
             } else {
                 $receiver_list = array(
                     'receiverList.receiver(0).amount' => $amount,
                     'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
-                    // 'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
                 );
             }
 
