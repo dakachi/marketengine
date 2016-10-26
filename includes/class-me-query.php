@@ -146,7 +146,6 @@ function me_get_default_endpoints() {
         'order_id'        => 'order',
         'purchases'       => 'purchases',
         'pay'             => 'pay',
-        'cancel_payment'  => 'cancel-payment',
         'listing_id'      => 'edit-listing',
     );
     return $endpoint_arr;

@@ -164,7 +164,7 @@ function me_filter_order_query( $query, $type = '') {
 
     if( isset($query['from_date']) || isset($query['to_date']) ){
         $after = isset($query['from_date']) ? $query['from_date'] : '';
-        $before = isset($query['to_date']) ? $query['to_date'] . '23:59:59' : '';
+        $before = isset($query['to_date']) ? $query['to_date'] . ' 23:59:59' : '';
         $args['date_query'] = array(
             array(
                 'after'     => $after,
