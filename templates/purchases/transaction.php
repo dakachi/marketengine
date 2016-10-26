@@ -14,6 +14,7 @@ echo "<pre>";
 print_r($commission_item);
 echo "</pre>";
 echo me_get_order_item_meta($commission_item[0]->order_item_id, '_transaction_status', true);
+echo get_option( 'ipn');
 ?>
 <div class="marketengine-content">
 	<?php me_print_notices(); ?>
