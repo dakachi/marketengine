@@ -428,7 +428,7 @@ function me_print_buyer_information( $address ) {
  *  Returns html of price
  *  @param: $price
  */
-function me_price_html( $price, $unit = '' ) {
+function me_price_html( $price, $currency_sign = '' , $unit = '' ) {
     $currency_sign = me_option('payment-currency-sign');
     $currency_code = me_option('payment-currency-code');
     $sign_position = me_option('currency-sign-postion') ? true : false;
