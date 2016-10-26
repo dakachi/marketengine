@@ -207,7 +207,7 @@ class ME_Message_Query {
 		unset($this->posts);
 		unset($this->query);
 		$this->query_vars = array();
-	
+
 		$this->found_posts = 0;
 		$this->max_num_pages = 0;
 
@@ -252,7 +252,7 @@ class ME_Message_Query {
 			, 'receiver_name'
 			, 'meta_key'
 			, 'meta_value'
-			
+
 			, 's'
 
 			, 'title'
@@ -301,9 +301,9 @@ class ME_Message_Query {
 		$qv['w'] = absint($qv['w']);
 
 		$qv['paged'] = absint($qv['paged']);
-		
+
 		$qv['sender'] = preg_replace( '|[^0-9,-]|', '', $qv['sender'] ); // comma separated list of positive or negative integers
-				
+
 		$qv['title'] = trim( $qv['title'] );
 		if ( '' !== $qv['hour'] ) $qv['hour'] = absint($qv['hour']);
 		if ( '' !== $qv['minute'] ) $qv['minute'] = absint($qv['minute']);
@@ -803,20 +803,6 @@ class ME_Message_Query {
 			$q['page_id'] = get_option('page_on_front');
 		}
 
-		$q['p'] = isset($q['p']) ? $q['p'] : array();
-		$q['post__in'] = isset($q['post__in']) ? $q['post__in'] : array();
-		$q['post__not_in'] = isset($q['post__not_in']) ? $q['post__not_in'] : array();
-		// If a post number is specified, load that post
-		if ( $q['p'] ) {
-			$where .= " AND {$wpdb->posts}.ID = " . $q['p'];
-		} elseif ( $q['post__in'] ) {
-			$post__in = implode(',', array_map( 'absint', $q['post__in'] ));
-			$where .= " AND {$wpdb->posts}.ID IN ($post__in)";
-		} elseif ( $q['post__not_in'] ) {
-			$post__not_in = implode(',',  array_map( 'absint', $q['post__not_in'] ));
-			$where .= " AND {$wpdb->posts}.ID NOT IN ($post__not_in)";
-		}
-
 		if ( isset($q['page']) ) {
 			$q['page'] = trim($q['page'], '/');
 			$q['page'] = absint($q['page']);
@@ -918,12 +904,31 @@ class ME_Message_Query {
 		}
 
 		// If a post number is specified, load that post
+		$q['p'] = isset($q['p']) ? $q['p'] : array();
+		$q['post__in'] = isset($q['post__in']) ? $q['post__in'] : array();
+		$q['post__not_in'] = isset($q['post__not_in']) ? $q['post__not_in'] : array();
+
 		if ( $q['p'] ) {
 			$where .= " AND {$this->table}.ID = " . $q['p'];
+		} elseif ( $q['post__in'] ) {
+			$post__in = implode(',', array_map( 'absint', $q['post__in'] ));
+			$where .= " AND {$wpdb->posts}.ID IN ($post__in)";
+		} elseif ( $q['post__not_in'] ) {
+			$post__not_in = implode(',',  array_map( 'absint', $q['post__not_in'] ));
+			$where .= " AND {$wpdb->posts}.ID NOT IN ($post__not_in)";
 		}
 
+		$q['post_parent__in'] = isset($q['post_parent__in']) ? $q['post_parent__in'] : array();
+		$q['post_parent__not_in'] = isset($q['post_parent__not_in']) ? $q['post_parent__not_in'] : array();
+		
 		if ( is_numeric( $q['post_parent'] ) ) {
 			$where .= $wpdb->prepare( " AND $this->table.post_parent = %d ", $q['post_parent'] );
+		} elseif ( $q['post_parent__in'] ) {
+			$post_parent__in = implode( ',', array_map( 'absint', $q['post_parent__in'] ) );
+			$where .= " AND {$wpdb->posts}.post_parent IN ($post_parent__in)";
+		} elseif ( $q['post_parent__not_in'] ) {
+			$post_parent__not_in = implode( ',',  array_map( 'absint', $q['post_parent__not_in'] ) );
+			$where .= " AND {$wpdb->posts}.post_parent NOT IN ($post_parent__not_in)";
 		}
 
 		// If a search pattern is specified, load the posts that match.
@@ -1781,7 +1786,7 @@ class ME_Message_Query {
 			return isset( $this->$name );
 		}
 	}
-	
+
 	/**
 	 * Set up global post data.
 	 *

@@ -819,6 +819,7 @@ function me_get_inquiry_ids( $value, $type = 'listing' ) {
         AND $wpdb->posts.post_title LIKE '%{$value}%'";
 
     $results = $wpdb->get_col($query);
+
     return $results;
 }
 
@@ -846,10 +847,10 @@ function me_filter_inquiry_query( $query ) {
         // $ids_by_user = me_get_inquiry_ids( $query['keyword'], 'user' );
 
         if($ids_by_listing) {
-            $args['post__in'] = $ids_by_listing;
+            $args['post_parent'] = $ids_by_listing;
         }
     }
-
+var_dump($args['post_parent']);
     return $args;
 }
 add_filter( 'me_filter_inquiry', 'me_filter_inquiry_query' );
