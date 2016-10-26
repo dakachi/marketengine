@@ -65,6 +65,13 @@ return array(
                 'data'        => marketengine_get_list_of_page(),
                 'template'    => array(),
             ),
+            'commission_fee' => array(
+                'label'       => __("Commission Fee", "enginethemes"),
+                'description' => __("The commission fee will charge the seller", "enginethemes"),
+                'slug'        => 'paypal-commission-fee',
+                'type'        => 'number',
+                'name'        => 'paypal-commission-fee'
+            )
         ),
     ),
     'paypal'      => array(
@@ -112,13 +119,6 @@ return array(
                 'name'        => 'paypal-receiver-email',
                 'template'    => array(),
             ),
-            'commission_fee' => array(
-                'label'       => __("Commission Fee", "enginethemes"),
-                'description' => __("The commission fee will charge the seller", "enginethemes"),
-                'slug'        => 'paypal-commission-fee',
-                'type'        => 'textbox',
-                'name'        => 'paypal-commission-fee'
-            )
         )
     ),
     'payment-currency'      => array(

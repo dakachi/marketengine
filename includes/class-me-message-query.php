@@ -803,6 +803,20 @@ class ME_Message_Query {
 			$q['page_id'] = get_option('page_on_front');
 		}
 
+		$q['p'] = isset($q['p']) ? $q['p'] : array();
+		$q['post__in'] = isset($q['post__in']) ? $q['post__in'] : array();
+		$q['post__not_in'] = isset($q['post__not_in']) ? $q['post__not_in'] : array();
+		// If a post number is specified, load that post
+		if ( $q['p'] ) {
+			$where .= " AND {$wpdb->posts}.ID = " . $q['p'];
+		} elseif ( $q['post__in'] ) {
+			$post__in = implode(',', array_map( 'absint', $q['post__in'] ));
+			$where .= " AND {$wpdb->posts}.ID IN ($post__in)";
+		} elseif ( $q['post__not_in'] ) {
+			$post__not_in = implode(',',  array_map( 'absint', $q['post__not_in'] ));
+			$where .= " AND {$wpdb->posts}.ID NOT IN ($post__not_in)";
+		}
+
 		if ( isset($q['page']) ) {
 			$q['page'] = trim($q['page'], '/');
 			$q['page'] = absint($q['page']);
@@ -874,8 +888,8 @@ class ME_Message_Query {
 		if ( ! empty( $q['date_query'] ) ) {
 			$this->date_query = new WP_Date_Query( $q['date_query'] );
 			$where .= $this->date_query->get_sql();
+			$where = str_replace('posts', 'marketengine_message_item', $where);
 		}
-
 
 		// If we've got a post_type AND it's not "any" post_type.
 		if ( !empty($q['post_type']) && 'any' != $q['post_type'] ) {

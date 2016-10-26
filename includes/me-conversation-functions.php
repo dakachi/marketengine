@@ -614,7 +614,7 @@ function me_get_inquiries($args) {
     $message_table = $wpdb->prefix . 'marketengine_message_item';
     $select        = "SELECT DISTINCT SQL_CALC_FOUND_ROWS $wpdb->posts.*, max(message.post_date) as message_date ";
     $from          = "FROM $wpdb->posts JOIN $message_table as message ON $wpdb->posts.ID = message.post_parent ";
-    
+
     $group_by      = "GROUP By $wpdb->posts.ID ";
 
     if (!empty($args['s'])) {
@@ -646,15 +646,15 @@ function me_get_inquiries($args) {
         if ( !$page )
             $page = 1;
         $pgstrt = absint( ( $page - 1 ) * $args['posts_per_page'] ) . ', ';
-        
+
         $limits = 'LIMIT ' . $pgstrt . $args['posts_per_page'];
     }
 
     $request = $select . $from . $where . $group_by . $order_by . $limits;
-    
+
     $posts = $wpdb->get_results($request);
     $found_rows = $wpdb->get_var('SELECT FOUND_ROWS()');
-    
+
     $results = array(
         'posts' => $posts,
         'found_rows' => $found_rows,
@@ -808,3 +808,48 @@ function me_inquiry_permalink( $inquiry_id ) {
     $link = add_query_arg(array('inquiry_id' => $inquiry_id), $link);
     return $link;
 }
+
+function me_get_inquiry_ids( $value, $type = 'listing' ) {
+    global $wpdb;
+    $query = "SELECT $wpdb->posts.ID
+        FROM $wpdb->marketengine_message_item
+        LEFT JOIN $wpdb->posts
+        ON $wpdb->marketengine_message_item.post_parent = $wpdb->posts.ID
+        WHERE $wpdb->marketengine_message_item.post_type = 'inquiry'
+        AND $wpdb->posts.post_title LIKE '%{$value}%'";
+
+    $results = $wpdb->get_col($query);
+    return $results;
+}
+
+/**
+ *  Returns inquiry query args
+ *  @param: $query
+ *  @return: $args - query args
+ */
+function me_filter_inquiry_query( $query ) {
+    $args = array();
+
+    if( isset($query['from_date']) || isset($query['to_date']) ){
+        $after = isset($query['from_date']) ? $query['from_date'] : '';
+        $before = isset($query['to_date']) ? $query['to_date'] . ' 23:59:59' : '';
+        $args['date_query'] = array(
+            array(
+                'after'     => $after,
+                'before'    => $before,
+            ),
+        );
+    }
+
+    if( isset($query['keyword']) && $query['keyword'] != '' ) {
+        $ids_by_listing = me_get_inquiry_ids( $query['keyword'], 'listing' );
+        // $ids_by_user = me_get_inquiry_ids( $query['keyword'], 'user' );
+
+        if($ids_by_listing) {
+            $args['post__in'] = $ids_by_listing;
+        }
+    }
+
+    return $args;
+}
+add_filter( 'me_filter_inquiry', 'me_filter_inquiry_query' );
