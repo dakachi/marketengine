@@ -18,6 +18,12 @@ echo get_option( 'ipn');
 echo "<pre>";
 print_r(get_option( 'response'));
 echo "</pre>";
+echo "<pre>";
+print_r(get_option( 'payment_info'));
+echo "</pre>";
+echo "<pre>";
+print_r(get_option( 'receiver_items'));
+echo "</pre>";
 ?>
 <div class="marketengine-content">
 	<?php me_print_notices(); ?>
