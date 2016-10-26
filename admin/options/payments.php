@@ -70,8 +70,10 @@ return array(
                 'description' => __("The commission fee will charge the seller", "enginethemes"),
                 'slug'        => 'paypal-commission-fee',
                 'type'        => 'number',
-                'class_name' => 'positive',
-                'min'         => 0,
+                'class_name'  => 'positive',
+                'attributes'  => array(
+                    'min'       => 0,
+                ),
                 'name'        => 'paypal-commission-fee'
             )
         ),
