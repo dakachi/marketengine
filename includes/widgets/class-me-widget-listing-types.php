@@ -55,17 +55,20 @@ class ME_Widget_Listing_Types extends WP_Widget {
             </div>
             <div class="me-listingtype-filter">
                 <label>
-                    <input type="radio" name="type" value="" <?php checked( '', $current); ?>>
+                    <input type="radio" name="type" value="" <?php checked( '', $current); ?> onclick="window.location.href='<?php echo remove_query_arg('type'); ?>'">
                     <a href="<?php echo remove_query_arg('type'); ?>" ><?php _e("All", "enginethemes"); ?></a>
                 </label>
             </div>
             <?php foreach ($types as $key => $type) :
                 $link = add_query_arg('type', $key);
                 $link = preg_replace('%\/page/[0-9]+%', '',  $link );
+                if($key == 'contact') {
+                    $link = remove_query_arg( array('price-min', 'price-max'), $link );
+                }
             ?>
             <div class="me-listingtype-filter">
                 <label>
-                    <input type="radio" name="type" value="<?php echo $key; ?>" <?php checked( $key, $current); ?>>
+                    <input type="radio" name="type" value="<?php echo $key; ?>" <?php checked( $key, $current); ?> onclick="window.location.href='<?php echo $link; ?>'">
                     <a href="<?php echo $link; ?>"><?php echo $type; ?></a>
                 </label>
             </div>

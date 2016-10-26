@@ -15,6 +15,9 @@ class ME_Number extends ME_Input {
         $this->_slug        = $args['slug'];
         $this->_placeholder = isset($args['placeholder']) ? $args['placeholder'] : '';
         $this->_isform      = isset($args['isform']);
+        $this->_class = (empty($args['class_name'])) ? '' : $args['class_name'];
+        $this->_min      = isset($args['min']) ? $args['min'] : '';
+        $this->_max      = isset($args['max']) ? $args['max'] : '';
         $this->_container   = $options;
 
         $this->_options = $options;
@@ -26,7 +29,7 @@ class ME_Number extends ME_Input {
         echo '<div class="me-group-field" '.$id.'>';
         $this->label();
         $this->description();
-        echo '<input type="number" name="'.$this->_name.'" class="me-input-field" value="' . $this->get_value() . '" placeholder="'.$this->_placeholder.'" />';
+        echo '<input type="number" min="'.$this->_min.'" max="'.$this->_max.'" name="'.$this->_name.'" class="me-input-field '. $this->_class .'" value="' . $this->get_value() . '" placeholder="'.$this->_placeholder.'" />';
         echo '</div>';
     }
 }

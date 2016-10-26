@@ -15,6 +15,8 @@ $args = array(
 	'sender'		=> get_current_user_id(),
 );
 
+$role = 'sender';
+$args = array_merge(apply_filters( 'me_filter_inquiry', $_GET, $role ), $args);
 $query = new ME_Message_Query($args);
 ?>
 <!-- Tabs Inquiries -->
@@ -28,7 +30,7 @@ $query = new ME_Message_Query($args);
 	<?php me_get_template('global/inquiry-filter'); ?>
 
 	<div class="me-table me-order-inquiries-table">
-		
+
 		<?php
 		if( $query->have_posts() ) : ?>
 			<div class="me-table-rhead">

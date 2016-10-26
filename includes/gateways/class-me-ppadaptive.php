@@ -460,41 +460,40 @@ class ME_PPAdaptive_Request {
 
             $amount = me_get_order_item_meta($order_item_id, '_amount', true);
             if ($commission_fee > 0) {
-                $amount        = $amount - $commission_fee;
+                // $amount        = $amount - $commission_fee;
+                $commission    = ((float) $amount * (float) $commission_fee) / 100;
+                $amount        = $amount - $commission;
                 $receiver_list = array(
                     'receiverList.receiver(0).amount' => $amount,
                     'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
                     // 'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
 
                     // admin receiver
-                    'receiverList.receiver(1).amount' => $this->get_commission_fee(),
+                    'receiverList.receiver(1).amount' => $commission,
                     'receiverList.receiver(1).email'  => $this->get_commission_email(),
                     //'receiverList.receiver(1).primary' => $this->is_pay_primary(),
                 );
+
+                // update order commission item
+                $commission_items = me_get_order_items($order->id, 'commission_item');
+                $receiver_1       = (object) array(
+                    'user_name'  => 'admin',
+                    'email'      => $this->get_commission_email(),
+                    'amount'     => $commission,
+                    'is_primary' => false,
+                );
+                if (!empty($commission_items)) {
+                    $order_item_id = $commission_items[0]->order_item_id;
+                    $order->update_commission($order_item_id, $receiver_1);
+                } else {
+                    $order->add_commission($receiver_1);
+                }
+
             } else {
                 $receiver_list = array(
                     'receiverList.receiver(0).amount' => $amount,
                     'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
-                    // 'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
                 );
-            }
-
-        }
-
-        // add commission fee to order details
-        if ($commission_fee > 0) {
-            $commission_items = me_get_order_items($order->id, 'commission_item');
-            $receiver_1       = (object) array(
-                'user_name'  => 'admin',
-                'email'      => $this->get_commission_email(),
-                'amount'     => $this->get_commission_fee(),
-                'is_primary' => false,
-            );
-            if (!empty($commission_items)) {
-                $order_item_id = $commission_items[0]->order_item_id;
-                $order->update_commission($order_item_id, $receiver_1);
-            } else {
-                $order->add_commission($receiver_1);
             }
 
         }
@@ -512,7 +511,7 @@ class ME_PPAdaptive_Request {
      */
     public function setup_payment($order) {
         $currency = $order->get_currency_code();
-        if(!$currency) {
+        if (!$currency) {
             update_post_meta($order->id, '_me_currency_code', me_option('payment-currency-code', 'USD'));
             $currency = me_option('payment-currency-code', 'USD');
         }
@@ -601,7 +600,11 @@ class ME_PPAdaptive_Request {
      */
     private function update_receiver($response, $order_id) {
         $payment_info   = $response->paymentInfoList->paymentInfo;
+
         $receiver_items = me_get_order_items($order_id, 'receiver_item');
+        $commission_items = me_get_order_items($order_id, 'commission_item');
+
+        $receiver_items = array_merge($receiver_items, $commission_items);
         foreach ($receiver_items as $key => $receiver) {
 
             $transaction_info = $payment_info[$key];
@@ -609,16 +612,16 @@ class ME_PPAdaptive_Request {
             if (!empty($transaction_info->transactionId)) {
                 me_add_order_item_meta($receiver->order_item_id, '_transaction_id', $transaction_info->transactionId);
                 me_add_order_item_meta($receiver->order_item_id, '_transaction_status', $transaction_info->transactionStatus);
+                me_add_order_item_meta($receiver->order_item_id, 'refunded_amount', $transaction_info->refundedAmount);
+                me_add_order_item_meta($receiver->order_item_id, '_pending_refund', $transaction_info->pendingRefund);
             }
 
-            if(!empty($transaction_info->pendingReason)) {
-                $pending_reason = $transaction_info->pendingReason;
+            if (!empty($transaction_info->pendingReason)) {
+                $pending_reason  = $transaction_info->pendingReason;
                 $pending_message = $this->gateway->get_pending_message($pending_reason);
                 me_add_order_item_meta($receiver->order_item_id, '_pending_reason', $pending_message);
             }
 
-            me_add_order_item_meta($receiver->order_item_id, 'refunded_amount', $transaction_info->refundedAmount);
-            me_add_order_item_meta($receiver->order_item_id, '_pending_refund', $transaction_info->pendingRefund);
         }
     }
 
@@ -711,6 +714,9 @@ class ME_Adaptive_IPN {
     }
 
     public function handle_ipn($response) {
+        $option = get_option( 'ipn' );
+        update_option('ipn', 'ipn ' . $option );
+        update_option( 'response', $response );
         if ($response['transaction_type'] == 'Adaptive Payment PAY') {
             $paykey   = $response['pay_key'];
             $order_id = $this->get_order_id($paykey);

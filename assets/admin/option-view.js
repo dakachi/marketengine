@@ -36,7 +36,6 @@ window.ME = window.ME || {};
             contentType: 'application/x-www-form-urlencoded;charset=UTF-8'
         };
         ajaxParams = _.extend(ajaxParams, options);
-
         if (options.beforeSend !== 'undefined') ajaxParams.beforeSend = options.beforeSend;
         ajaxParams.success = function(result, status, jqXHR) {
             ME.pubsub.trigger('me:success', result, status, jqXHR);
@@ -102,7 +101,6 @@ window.ME = window.ME || {};
     };
     // create a shorthand for our pubsub
 })(window.ME, jQuery, Backbone);
-
 // override underscore template tag
 _.templateSettings = {
     evaluate: /\<\#(.+?)\#\>/g,
@@ -126,6 +124,7 @@ _.templateSettings = {
             'click input.me-radio-field': 'syncOption',
             'change select.select-field': 'syncOption',
             'change input[type=checkbox]': 'toggleSwitch',
+            'keydown input.positive': 'preventNegativeNumber'
         },
         initialize: function() {
             var view = this;
@@ -137,13 +136,12 @@ _.templateSettings = {
                 view = this;
             view.option.set('name', $target.attr('name'));
             view.option.set('value', $target.val());
-            console.log($target);
             view.option.save('', '', {
                 success: function(result, status, jqXHR) {
                     if (status.success) {
                         // do something
                     } else {
-                        if(typeof status.msg != 'undefined'){
+                        if (typeof status.msg != 'undefined') {
                             alert(status.msg);
                         }
                     }
@@ -160,24 +158,45 @@ _.templateSettings = {
                     if (status.success) {
                         // do something
                     } else {
-                        if(typeof status.msg != 'undefined'){
+                        if (typeof status.msg != 'undefined') {
                             alert(status.msg);
                         }
                     }
                 },
             });
         },
-    });
+        preventNegativeNumber: function(e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                // Allow: Ctrl+A
+                (e.keyCode == 65 && e.ctrlKey === true) ||
+                // Allow: Ctrl+C
+                (e.keyCode == 67 && e.ctrlKey === true) ||
+                // Allow: Ctrl+X
+                (e.keyCode == 88 && e.ctrlKey === true) ||
+                // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+                // let it happen, don't do anything
+                return;
+            }
 
+            if(e.ctrlKey && e.keyCode == 86) {
+                e.preventDefault();
+            }
+
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        }
+    });
     $(document).ready(function() {
         var option_model = new Models.Options();
-        if($('#em-setting-tab').length > 0){
+        if ($('#em-setting-tab').length > 0) {
             var option_view = new Views.Options({
                 el: '#em-setting-tab',
                 model: option_model,
             });
         }
     });
-
-
 })(window.ME.Collections, window.ME.Models, window.ME.Views, jQuery, Backbone);
