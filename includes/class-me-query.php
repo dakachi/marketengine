@@ -6,12 +6,12 @@ function me_template_redirect() {
     global $wp_query, $wp;
 
     // When default permalinks are enabled, redirect shop page to post type archive url
-    if ( ! empty( $_GET['page_id'] ) && '' === get_option( 'permalink_structure' ) && $_GET['page_id'] == me_get_page_id( 'listings' ) ) {
-        wp_safe_redirect( get_post_type_archive_link('listing') );
+    if (!empty($_GET['page_id']) && '' === get_option('permalink_structure') && $_GET['page_id'] == me_get_page_id('listings')) {
+        wp_safe_redirect(get_post_type_archive_link('listing'));
         exit;
     }
 }
-add_action( 'template_redirect', 'me_template_redirect' );
+add_action('template_redirect', 'me_template_redirect');
 
 /**
  *
@@ -267,6 +267,13 @@ function me_filter_price_query($query) {
             'type'    => 'numeric',
             'compare' => 'BETWEEN',
         );
+
+        $query->query_vars['meta_query']['type'] = array(
+            'key'     => '_me_listing_type',
+            'value'   => 'purchasion',
+            'compare' => '=',
+        );
+
     }
     return $query;
 }
@@ -307,7 +314,7 @@ function me_sort_listing_query($query) {
                 array(
                     'key'     => '_me_listing_type',
                     'value'   => 'purchasion',
-                    'compare' => '='
+                    'compare' => '=',
                 ),
             ));
             $query->set('orderby', 'meta_value_num');
@@ -322,7 +329,7 @@ function me_sort_listing_query($query) {
                 array(
                     'key'     => '_me_listing_type',
                     'value'   => 'purchasion',
-                    'compare' => '='
+                    'compare' => '=',
                 ),
             ));
             $query->set('orderby', 'meta_value_num');
