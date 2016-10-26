@@ -14,7 +14,7 @@ if (!empty($_POST['meta_input']['pricing_unit'])) {$unit =  esc_attr($_POST['met
 	<?php do_action('marketengine_post_listing_type_form_start'); ?>
 
 	<div class="marketengine-select-field">
-	    <label class="text"><?php _e("Listing Type", "enginethemes"); ?></label>
+	    <label class="me-field-title"><?php _e("Listing Type", "enginethemes"); ?></label>
 	    <select class="listing-type" name="listing_type" id="listing-type-select">
 	    	<?php foreach ($listing_types as $key => $name) : ?>
 	    		<option value="<?php echo $key ?>" <?php selected( $selected_listing_type, $key) ?>><?php echo $name; ?></option>
@@ -36,7 +36,7 @@ if (!empty($_POST['meta_input']['pricing_unit'])) {$unit =  esc_attr($_POST['met
 		<div class="me-col-md-6">
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
-				    <label class="text"><?php _e("Price", "enginethemes"); ?></label>
+				    <label class="me-field-title"><?php _e("Price", "enginethemes"); ?></label>
 				    <input type="text" name="meta_input[listing_price]" placeholder="<?php echo me_option('payment-currency-sign'); ?>" class="required me-input-price" value="<?php echo $price; ?>">
 				</div>
 			</div>
@@ -45,7 +45,7 @@ if (!empty($_POST['meta_input']['pricing_unit'])) {$unit =  esc_attr($_POST['met
 		<div class="me-col-md-6">
 			<div class="marketengine-group-field">
 				<div class="marketengine-select-field">
-				    <label class="text"><?php _e("Pricing unit", "enginethemes"); ?></label>
+				    <label class="me-field-title"><?php _e("Pricing unit", "enginethemes"); ?></label>
 				    <select class="pricing-unit" name="meta_input[pricing_unit]">
 				    	<option value="none" <?php if(!$unit) echo 'selected'; ?>><?php _e("None", "enginethemes"); ?></option>
 				    	<option value="per_unit" <?php if($unit == 'per_unit') echo 'selected'; ?> ><?php _e("Per Unit", "enginethemes"); ?></option>
