@@ -78,7 +78,7 @@ $shipping_fields = apply_filters('marketengine_shipping_fields', $address_fields
 					</div>
 				</div>
 			</div>
-
+			<?php /*
 			<input id="me-shipping-address-input" type="checkbox" name="me-shipping" checked="">
 			<label class="me-use-ship-label" for="me-shipping-address-input">
 				<?php _e("Use the same address as the billing address", "enginethemes"); ?>
@@ -144,6 +144,7 @@ $shipping_fields = apply_filters('marketengine_shipping_fields', $address_fields
 					</div>
 				</div>
 			</div>
+			*/ ?>
 		</div>
 	</div>
 </div>
