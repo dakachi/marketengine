@@ -62,6 +62,9 @@ class ME_Widget_Listing_Types extends WP_Widget {
             <?php foreach ($types as $key => $type) :
                 $link = add_query_arg('type', $key);
                 $link = preg_replace('%\/page/[0-9]+%', '',  $link );
+                if($key == 'contact') {
+                    $link = remove_query_arg( array('price-min', 'price-max'), $link );
+                }
             ?>
             <div class="me-listingtype-filter">
                 <label>
