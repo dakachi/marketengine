@@ -204,8 +204,13 @@ class ME_Order {
      * @return String
      * @since 1.0
      */
-    public function get_currency() {
+    public function get_currency_code() {
         return get_post_meta($this->ID, '_order_currency_code', true);
+    }
+
+
+    public function get_currency() {
+        return get_post_meta($this->ID, '_order_currency', true);   
     }
 
     /**
