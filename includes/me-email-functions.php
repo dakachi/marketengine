@@ -159,6 +159,7 @@ function me_complete_order_email($order_id) {
         'unit'          => me_get_order_item_meta($listing_item[0]->order_item_id, '_qty', true),
         'total'         => me_price_format($order->get_total(), $currency),
         'commission'    => me_price_format($commission, $currency),
+        'earning' => me_price_format(($total-$commission), $currency),
         'order_link'    => '<a href="' . $order->get_order_detail_url() . '" >' . $order->ID . '</a>',
         'currency'      => $currency,
     );

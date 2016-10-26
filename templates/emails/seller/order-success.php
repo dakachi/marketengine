@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
 	<li><?php printf(__("Price: %s", "enginethemes"), $listing_price) ?></li>
 	<li><?php printf(__("Unit: %s", "enginethemes"), $unit) ?></li>
 	<li><?php printf(__("Total: %s", "enginethemes"), $total) ?></li>
-	<li><?php printf(__("Earnings (commission deducted): %s", "enginethemes"), $total - $commission) ?></li>
+	<li><?php printf(__("Earnings (commission deducted): %s", "enginethemes"), $earning) ?></li>
 </ol>
 <p>
 <?php printf(__("For this order, %s commission fee has been deducted from your total earnings of %s. <br/>View your order details here: %s.", "enginethemes"), $commission, $total, $order_link) ?>
