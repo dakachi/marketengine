@@ -809,7 +809,7 @@ function me_inquiry_permalink( $inquiry_id ) {
     return $link;
 }
 
-function me_get_inquiry_ids( $value, $type = 'listing' ) {
+function me_inquiry_ids_by_listing( $value ) {
     global $wpdb;
     $query = "SELECT $wpdb->posts.ID
         FROM $wpdb->marketengine_message_item
@@ -823,12 +823,26 @@ function me_get_inquiry_ids( $value, $type = 'listing' ) {
     return $results;
 }
 
+function me_inquiry_ids_by_user( $user, $role ) {
+    global $wpdb;
+    $query = "SELECT $wpdb->marketengine_message_item.post_parent
+        FROM $wpdb->marketengine_message_item
+        LEFT JOIN $wpdb->users
+        ON $wpdb->marketengine_message_item.{$role} = $wpdb->users.ID
+        WHERE $wpdb->marketengine_message_item.post_type = 'inquiry'
+        AND $wpdb->users.display_name LIKE '%{$user}%'";
+
+    $results = $wpdb->get_col($query);
+
+    return $results;
+}
+
 /**
  *  Returns inquiry query args
  *  @param: $query
  *  @return: $args - query args
  */
-function me_filter_inquiry_query( $query ) {
+function me_filter_inquiry_query( $query, $role ) {
     $args = array();
 
     if( isset($query['from_date']) || isset($query['to_date']) ){
@@ -843,14 +857,29 @@ function me_filter_inquiry_query( $query ) {
     }
 
     if( isset($query['keyword']) && $query['keyword'] != '' ) {
-        $ids_by_listing = me_get_inquiry_ids( $query['keyword'], 'listing' );
-        // $ids_by_user = me_get_inquiry_ids( $query['keyword'], 'user' );
+        $ids_by_listing = $ids_by_user = array();
 
-        if($ids_by_listing) {
-            $args['post_parent'] = $ids_by_listing;
+        $ids_by_listing = me_inquiry_ids_by_listing( $query['keyword'] );
+        if( $role == 'sender' ) {
+            $ids_by_user = me_inquiry_ids_by_user( $query['keyword'], 'receiver' );
+        } else {
+            $ids_by_user = me_inquiry_ids_by_user( $query['keyword'], 'sender' );
         }
+
+        $post_parent = array_merge($ids_by_listing, $ids_by_user);
+
+        if( $post_parent ) {
+            if( sizeof($post_parent) === 1 ) {
+                $post_parent = (int) $post_parent[0];
+                $args['post_parent'] = $post_parent;
+            } else {
+                $args['post_parent__in'] = $post_parent;
+            }
+        } else {
+            $args['post_parent'] = -1;
+        }
+
     }
-var_dump($args['post_parent']);
     return $args;
 }
-add_filter( 'me_filter_inquiry', 'me_filter_inquiry_query' );
+add_filter( 'me_filter_inquiry', 'me_filter_inquiry_query', 1, 2 );
