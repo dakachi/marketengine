@@ -211,12 +211,6 @@ function me_complete_order_email($order_id) {
     );
     $admin_message = ob_get_clean();
 
-
-    echo $admin_message;
-    echo $buyer_message;
-    echo $seller_message;
-    exit;
-
     wp_mail(get_option('admin_email'), $subject, $admin_message);
 }
 add_action('marketengine_complete_order', 'me_complete_order_email');
