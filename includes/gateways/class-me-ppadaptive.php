@@ -599,33 +599,28 @@ class ME_PPAdaptive_Request {
      * @return void
      */
     private function update_receiver($response, $order_id) {
-        ob_start();
+
         $payment_info   = $response->paymentInfoList->paymentInfo;
-        update_option( 'payment_info', $payment_info);
         $receiver_items = me_get_order_items($order_id, 'receiver_item');
         $commission_items = me_get_order_items($order_id, 'commission_item');
 
         $receiver_items = array_merge($receiver_items, $commission_items);
-        update_option( 'receiver_items', $receiver_items );
         foreach ($receiver_items as $key => $receiver) {
 
             $transaction_info = $payment_info[$key];
-
             if (!empty($transaction_info->transactionId)) {
-                me_add_order_item_meta($receiver->order_item_id, '_transaction_id', $transaction_info->transactionId);
-                me_add_order_item_meta($receiver->order_item_id, '_transaction_status', $transaction_info->transactionStatus);
-                me_add_order_item_meta($receiver->order_item_id, 'refunded_amount', $transaction_info->refundedAmount);
-                me_add_order_item_meta($receiver->order_item_id, '_pending_refund', $transaction_info->pendingRefund);
+                me_update_order_item_meta($receiver->order_item_id, '_transaction_id', $transaction_info->transactionId);
+                me_update_order_item_meta($receiver->order_item_id, '_transaction_status', $transaction_info->transactionStatus);
+                me_update_order_item_meta($receiver->order_item_id, 'refunded_amount', $transaction_info->refundedAmount);
+                me_update_order_item_meta($receiver->order_item_id, '_pending_refund', $transaction_info->pendingRefund);
             }
 
             if (!empty($transaction_info->pendingReason)) {
                 $pending_reason  = $transaction_info->pendingReason;
                 $pending_message = $this->gateway->get_pending_message($pending_reason);
-                me_add_order_item_meta($receiver->order_item_id, '_pending_reason', $pending_message);
+                me_update_order_item_meta($receiver->order_item_id, '_pending_reason', $pending_message);
             }
         }
-        $message = ob_get_clean();
-        update_option( 'ipn_error', $message );
     }
 
     /**
@@ -717,9 +712,6 @@ class ME_Adaptive_IPN {
     }
 
     public function handle_ipn($response) {
-        $option = get_option( 'ipn' );
-        update_option('ipn', 'ipn ' . $option );
-        update_option( 'response', $response );
         if ( $response['pay_key'] ) {
             $paykey   = $response['pay_key'];
             $order_id = $this->get_order_id($paykey);
@@ -727,6 +719,7 @@ class ME_Adaptive_IPN {
                 ME_PPAdaptive_Request::instance()->process_order($order_id, $paykey);
             }
         }
+        exit;
     }
 
     private function get_order_id($paykey) {

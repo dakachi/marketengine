@@ -14,19 +14,7 @@ echo "<pre>";
 print_r($commission_item);
 echo "</pre>";
 echo me_get_order_item_meta($commission_item[0]->order_item_id, '_transaction_status', true);
-echo get_option( 'ipn');
-echo "<pre>";
-print_r(get_option( 'response'));
-echo "</pre>";
-echo "<pre>";
-print_r(get_option( 'payment_info'));
-echo "</pre>";
-echo "<pre>";
-print_r(get_option( 'receiver_items'));
-echo "</pre>";
-echo "<pre>";
-print_r(get_option( 'ipn_error'));
-echo "</pre>";
+
 ?>
 <div class="marketengine-content">
 	<?php me_print_notices(); ?>
