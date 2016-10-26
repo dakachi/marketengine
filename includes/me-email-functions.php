@@ -120,7 +120,7 @@ function me_filter_post_placeholder($content, $post = '') {
 /**
  * Send complete order email to seller
  */
-function me_complete_order_email_seller($order_id) {
+function me_complete_order_email($order_id) {
     if (!$order_id) {
         return false;
     }
@@ -154,14 +154,12 @@ function me_complete_order_email_seller($order_id) {
     $currency = $order->get_currency();
 
     $order_details = array(
+        'listing_link'  => '<a href="' . get_permalink($listing_id) . '" >' . get_the_title($listing_id) . '</a>',
         'listing_price' => me_price_format($listing_price, $currency),
         'unit'          => me_get_order_item_meta($listing_item[0]->order_item_id, '_qty', true),
         'total'         => me_price_format($order->get_total(), $currency),
-
-        'commission'    => $commission,
-
+        'commission'    => me_price_format($commission, $currency),
         'order_link'    => '<a href="' . $order->get_order_detail_url() . '" >' . $order->ID . '</a>',
-
         'currency'      => $currency,
     );
 
@@ -169,14 +167,11 @@ function me_complete_order_email_seller($order_id) {
     me_get_template('emails/seller/order-success',
         array_merge(array(
             'display_name'  => get_the_author_meta('display_name', $seller->ID),
-            'listing_link'  => '<a href="' . get_permalink($listing_id) . '" >' . get_the_title($listing_id) . '</a>',
-
             'buyer_name'    => get_the_author_meta('display_name', $order->post_author)
         ), $order_details)
     );
-    $message = ob_get_clean();
-    // mail to seller
-    wp_mail($seller->user_email, $subject, $message);
+    $seller_message = ob_get_clean();
+    wp_mail($seller->user_email, $subject, $seller_message);
 
 
     $subject = sprintf(__("Your payment on %s has been accepted", "enginethemes"),get_bloginfo('blogname'));
@@ -184,12 +179,12 @@ function me_complete_order_email_seller($order_id) {
     ob_start();
     me_get_template('emails/buyer/order-success',
         array_merge(array(
-            'display_name'  => get_the_author_meta('display_name', $order->post_author),
-            'listing_link'  => '<a href="' . get_permalink($listing_id) . '" >' . get_the_title($listing_id) . '</a>',
+            'display_name'  => get_the_author_meta('display_name', $order->post_author)
         ), $order_details)
     );
-    $message = ob_get_clean();
-    wp_mail($buyer->user_email, $subject, $message);
+    $buyer_message = ob_get_clean();
+
+    wp_mail($buyer->user_email, $subject, $buyer_message);
 
     /**
      * mail to admin
@@ -199,14 +194,12 @@ function me_complete_order_email_seller($order_id) {
     me_get_template('emails/admin/order-success',
         array_merge(array(
             'display_name' => 'Admin',
-            'listing_link' => '<a href="' . get_permalink($listing_id) . '" >' . get_the_title($listing_id) . '</a>',
-
             'seller_name'  => get_the_author_meta('display_name', $seller->ID),
             'buyer_name'   => get_the_author_meta('display_name', $order->post_author),
         ), $order_details)
     );
-    $message = ob_get_clean();
+    $admin_message = ob_get_clean();
 
-    wp_mail(get_option('admin_email'), $subject, $message);
+    wp_mail(get_option('admin_email'), $subject, $admin_message);
 }
 add_action('marketengine_complete_order', 'me_complete_order_email');
