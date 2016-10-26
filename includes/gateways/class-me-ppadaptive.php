@@ -608,6 +608,8 @@ class ME_PPAdaptive_Request {
             if (!empty($transaction_info->transactionId)) {
                 me_add_order_item_meta($receiver->order_item_id, '_transaction_id', $transaction_info->transactionId);
                 me_add_order_item_meta($receiver->order_item_id, '_transaction_status', $transaction_info->transactionStatus);
+                me_add_order_item_meta($receiver->order_item_id, 'refunded_amount', $transaction_info->refundedAmount);
+                me_add_order_item_meta($receiver->order_item_id, '_pending_refund', $transaction_info->pendingRefund);
             }
 
             if (!empty($transaction_info->pendingReason)) {
@@ -616,8 +618,6 @@ class ME_PPAdaptive_Request {
                 me_add_order_item_meta($receiver->order_item_id, '_pending_reason', $pending_message);
             }
 
-            me_add_order_item_meta($receiver->order_item_id, 'refunded_amount', $transaction_info->refundedAmount);
-            me_add_order_item_meta($receiver->order_item_id, '_pending_refund', $transaction_info->pendingRefund);
         }
     }
 

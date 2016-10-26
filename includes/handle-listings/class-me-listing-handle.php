@@ -452,7 +452,7 @@ class ME_Listing_Handle {
     public static function get_listing_type_fields_rule($listing_type) {
         switch ($listing_type) {
         case 'contact':
-            $rules      = array('contact_email' => 'required|email');
+            $rules      = array('contact_email' => 'email');
             $attributes = array('contact_email' => __("contact email", "enginethemes"));
             break;
         case 'rental':
