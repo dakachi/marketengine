@@ -152,7 +152,7 @@ function me_complete_order_email($order_id) {
 
     $subject  = sprintf(__("You have a new order on %s.", "enginethemes"), get_bloginfo('blogname'));
     $currency = $order->get_currency();
-
+    $total = $order->get_total();
     $order_details = array(
         'listing_link'  => '<a href="' . get_permalink($listing_id) . '" >' . get_the_title($listing_id) . '</a>',
         'listing_price' => me_price_format($listing_price, $currency),
