@@ -4,14 +4,14 @@ $parent_cat = $_REQUEST['parent-cat'];
 $child_categories = get_terms( array('taxonomy' => 'listing_category', 'hide_empty' => false, 'parent' => $parent_cat) );
 if(!$parent_cat || empty($child_categories)) : ?>
 	<div class="marketengine-select-field">
-	    <label class="text"><?php _e("Sub-category", "enginethemes"); ?></label>
+	    <label class="me-field-title"><?php _e("Sub-category", "enginethemes"); ?></label>
 	    <select class="select-category sub-category" name="sub_cat">
 	    	<option value=""><?php _e("Select sub category", "enginethemes"); ?></option>
 	    </select>
 	</div>
 <?php else: ?>
 	<div class="marketengine-select-field">
-	    <label class="text"><?php _e("Sub-category", "enginethemes"); ?></label>
+	    <label class="me-field-title"><?php _e("Sub-category", "enginethemes"); ?></label>
 	    <select class="select-category  sub-category" name="sub_cat">
 	    	<option value=""><?php _e("Select sub category", "enginethemes"); ?></option>
 	    	<?php foreach ($child_categories as $key => $child_cat) : ?>

@@ -12,7 +12,7 @@ $selected_sub_cat = empty($_POST['sub_cat']) ? $selected_sub_cat : $_POST['sub_c
 <div class="marketengine-post-step active select-category">
 	<div class="marketengine-group-field" id="me-parent-cat-container">
 		<div class="marketengine-select-field">
-		    <label class="text"><?php _e("Category", "enginethemes");?></label>
+		    <label class="me-field-title"><?php _e("Category", "enginethemes");?></label>
 		    <select class="select-category  parent-category" name="parent_cat">
 		    	<option value=""><?php _e("Select your category", "enginethemes");?></option>
 		    	<?php foreach ($parent_categories as $key => $parent_cat): ?>
@@ -25,7 +25,7 @@ $selected_sub_cat = empty($_POST['sub_cat']) ? $selected_sub_cat : $_POST['sub_c
 	</div>
 	<div class="marketengine-group-field" id="me-sub-cat-container">
 		<div class="marketengine-select-field">
-		    <label class="text"><?php _e("Sub-category", "enginethemes");?></label>
+		    <label class="me-field-title"><?php _e("Sub-category", "enginethemes");?></label>
 		    <select class="select-category sub-category" name="sub_cat">
 		    	<option value=""><?php _e("Select sub category", "enginethemes");?></option>
 		    	<?php foreach ($child_cats as $key => $sub_cat): ?>
