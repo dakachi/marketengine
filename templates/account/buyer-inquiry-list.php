@@ -17,7 +17,9 @@ $args = array(
 
 $args = array_merge(apply_filters( 'me_filter_inquiry', $_GET ), $args);
 $query = new ME_Message_Query($args);
-// var_dump($query);
+echo '<pre>';
+print_r($query->request);
+echo '</pre>';
 ?>
 <!-- Tabs Inquiries -->
 <div class="me-tabs-section">

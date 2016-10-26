@@ -71,6 +71,7 @@ return array(
                 'slug'        => 'paypal-commission-fee',
                 'type'        => 'number',
                 'class_name' => 'positive',
+                'min'         => 0,
                 'name'        => 'paypal-commission-fee'
             )
         ),
