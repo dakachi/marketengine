@@ -15,8 +15,10 @@ $args = array(
 	'receiver'		=> get_current_user_id(),
 );
 
-$args = array_merge(apply_filters( 'me_filter_inquiry', $_GET ), $args);
+$role = 'receiver';
+$args = array_merge(apply_filters( 'me_filter_inquiry', $_GET, $role ), $args);
 $query = new ME_Message_Query($args);
+
 ?>
 <!-- Tabs Inquiries -->
 <div class="me-tabs-section">

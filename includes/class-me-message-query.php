@@ -912,23 +912,24 @@ class ME_Message_Query {
 			$where .= " AND {$this->table}.ID = " . $q['p'];
 		} elseif ( $q['post__in'] ) {
 			$post__in = implode(',', array_map( 'absint', $q['post__in'] ));
-			$where .= " AND {$wpdb->posts}.ID IN ($post__in)";
+			$where .= " AND {$this->table}.ID IN ($post__in)";
 		} elseif ( $q['post__not_in'] ) {
 			$post__not_in = implode(',',  array_map( 'absint', $q['post__not_in'] ));
-			$where .= " AND {$wpdb->posts}.ID NOT IN ($post__not_in)";
+			$where .= " AND {$this->table}.ID NOT IN ($post__not_in)";
 		}
 
+		$q['post_parent'] = isset($q['post_parent']) ? $q['post_parent'] : '';
 		$q['post_parent__in'] = isset($q['post_parent__in']) ? $q['post_parent__in'] : array();
 		$q['post_parent__not_in'] = isset($q['post_parent__not_in']) ? $q['post_parent__not_in'] : array();
-		
-		if ( is_numeric( $q['post_parent'] ) ) {
+
+		if ( is_numeric( $q['post_parent']) ) {
 			$where .= $wpdb->prepare( " AND $this->table.post_parent = %d ", $q['post_parent'] );
 		} elseif ( $q['post_parent__in'] ) {
 			$post_parent__in = implode( ',', array_map( 'absint', $q['post_parent__in'] ) );
-			$where .= " AND {$wpdb->posts}.post_parent IN ($post_parent__in)";
+			$where .= " AND {$this->table}.post_parent IN ($post_parent__in)";
 		} elseif ( $q['post_parent__not_in'] ) {
 			$post_parent__not_in = implode( ',',  array_map( 'absint', $q['post_parent__not_in'] ) );
-			$where .= " AND {$wpdb->posts}.post_parent NOT IN ($post_parent__not_in)";
+			$where .= " AND {$this->table}.post_parent NOT IN ($post_parent__not_in)";
 		}
 
 		// If a search pattern is specified, load the posts that match.
