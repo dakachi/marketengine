@@ -599,6 +599,7 @@ class ME_PPAdaptive_Request {
      * @return void
      */
     private function update_receiver($response, $order_id) {
+        ob_start();
         $payment_info   = $response->paymentInfoList->paymentInfo;
         update_option( 'payment_info', $payment_info);
         $receiver_items = me_get_order_items($order_id, 'receiver_item');
@@ -622,8 +623,9 @@ class ME_PPAdaptive_Request {
                 $pending_message = $this->gateway->get_pending_message($pending_reason);
                 me_add_order_item_meta($receiver->order_item_id, '_pending_reason', $pending_message);
             }
-
         }
+        $message = ob_get_clean();
+        update_option( 'ipn_error', $message );
     }
 
     /**
