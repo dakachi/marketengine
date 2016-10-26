@@ -36,7 +36,6 @@ window.ME = window.ME || {};
             contentType: 'application/x-www-form-urlencoded;charset=UTF-8'
         };
         ajaxParams = _.extend(ajaxParams, options);
-
         if (options.beforeSend !== 'undefined') ajaxParams.beforeSend = options.beforeSend;
         ajaxParams.success = function(result, status, jqXHR) {
             ME.pubsub.trigger('me:success', result, status, jqXHR);
@@ -102,7 +101,6 @@ window.ME = window.ME || {};
     };
     // create a shorthand for our pubsub
 })(window.ME, jQuery, Backbone);
-
 // override underscore template tag
 _.templateSettings = {
     evaluate: /\<\#(.+?)\#\>/g,
@@ -137,13 +135,13 @@ _.templateSettings = {
                 view = this;
             view.option.set('name', $target.attr('name'));
             view.option.set('value', $target.val());
-            console.log($target);
+
             view.option.save('', '', {
                 success: function(result, status, jqXHR) {
                     if (status.success) {
                         // do something
                     } else {
-                        if(typeof status.msg != 'undefined'){
+                        if (typeof status.msg != 'undefined') {
                             alert(status.msg);
                         }
                     }
@@ -160,7 +158,7 @@ _.templateSettings = {
                     if (status.success) {
                         // do something
                     } else {
-                        if(typeof status.msg != 'undefined'){
+                        if (typeof status.msg != 'undefined') {
                             alert(status.msg);
                         }
                     }
@@ -168,16 +166,13 @@ _.templateSettings = {
             });
         },
     });
-
     $(document).ready(function() {
         var option_model = new Models.Options();
-        if($('#em-setting-tab').length > 0){
+        if ($('#em-setting-tab').length > 0) {
             var option_view = new Views.Options({
                 el: '#em-setting-tab',
                 model: option_model,
             });
         }
     });
-
-
 })(window.ME.Collections, window.ME.Models, window.ME.Views, jQuery, Backbone);

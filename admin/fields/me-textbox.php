@@ -13,6 +13,7 @@ class ME_Textbox extends ME_Input {
         $this->_label       = $args['label'];
         $this->_description = $args['description'];
         $this->_slug        = $args['slug'];
+        $this->_class = (empty($args['class_name'])) ? '' : $args['class_name'];
         $this->_placeholder = isset($args['placeholder']) ? $args['placeholder'] : '';
         $this->_isform      = isset($args['isform']);
         $this->_container   = $options;
@@ -26,7 +27,7 @@ class ME_Textbox extends ME_Input {
         echo '<div class="me-group-field" '.$id.'>';
         $this->label();
         $this->description();
-        echo '<input type="text" name="'.$this->_name.'" class="me-input-field" value="' . $this->get_value() . '" placeholder="'.$this->_placeholder.'" />';
+        echo '<input type="text" name="'.$this->_name.'" class="me-input-field ' .$this->_class. '" value="' . $this->get_value() . '" placeholder="'.$this->_placeholder.'" />';
         echo '</div>';
     }
 }
