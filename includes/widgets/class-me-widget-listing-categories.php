@@ -107,6 +107,7 @@ class ME_Widget_Listing_Categories extends WP_Widget {
         <ul class="me-menu-categories">
 <?php
 $cat_args['title_li'] = '';
+$cat_args['show_option_all'] = __("All categories", "enginethemes");
 
             /**
              * Filter the arguments for the Categories widget.
