@@ -13,7 +13,7 @@ $commission_item = me_get_order_items($transaction->id, 'commission_item');
 echo "<pre>";
 print_r($commission_item);
 echo "</pre>";
-
+echo me_get_order_item_meta($commission_item[0]->order_item_id, '_transaction_status', true);
 ?>
 <div class="marketengine-content">
 	<?php me_print_notices(); ?>
