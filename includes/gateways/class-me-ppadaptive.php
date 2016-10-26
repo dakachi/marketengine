@@ -718,7 +718,7 @@ class ME_Adaptive_IPN {
         $option = get_option( 'ipn' );
         update_option('ipn', 'ipn ' . $option );
         update_option( 'response', $response );
-        if ($response['pay_key'] == 'Adaptive Payment PAY') {
+        if ( $response['pay_key'] ) {
             $paykey   = $response['pay_key'];
             $order_id = $this->get_order_id($paykey);
             if ($order_id) {
