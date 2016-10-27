@@ -144,7 +144,7 @@ class ME_Order {
         }
 
         $post = get_post($order_id);
-        
+
         foreach (get_object_vars($post) as $key => $value) {
             $this->$key = $value;
         }
@@ -301,7 +301,7 @@ class ME_Order {
                 );
             }
         }
-        return $listing_items; 
+        return $listing_items;
     }
 
     /**

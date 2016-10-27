@@ -48,7 +48,7 @@ query_posts( $args );
 	?>
 	<div class="me-table-row">
 	<?php // TODO: replace this with transaction number ?>
-		<div class="me-table-col me-order-id"><a href="<?php echo $order->get_order_detail_url(); ?>">#<?php the_ID(); ?></a></div>
+		<div class="me-table-col me-order-id"><a href="<?php the_permalink(); ?>">#<?php the_ID(); ?></a></div>
 		<div class="me-table-col me-order-status">
 			<?php echo me_print_order_status( $order_status ); ?>
 		</div>

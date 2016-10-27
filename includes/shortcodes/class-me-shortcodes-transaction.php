@@ -103,8 +103,8 @@ class ME_Shortcodes_Transaction
                 if(!empty($_GET['action']) && 'review' == $_GET['action'] && !empty($_GET['id'])) {
                     me_get_template('purchases/review', array('transaction' => $order, 'listing_id' => $_GET['id']));
                 }else {
-                    me_get_template('purchases/transaction', array('transaction' => $order));    
-                }                
+                    me_get_template('purchases/transaction', array('transaction' => $order));
+                }
             } else {
                 me_get_template('purchases/order', array('order' => $order));
             }

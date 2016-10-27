@@ -227,11 +227,7 @@ function me_init_endpoint() {
         add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
     }
 
-
-    // add_rewrite_rule('^(.?.+?)/transaction-detail/' . me_get_endpoint_name() . '/?$', 'index.php?me_order=$matches[1]', 'top');
-
-    // add_rewrite_rule('^/' . $page->post_name . '/' . $value['endpoint_name'] . '/([^/]*)/?', 'index.php?page_id=' . $value['page_id'] . '&' . $value['query_var'] . '=$matches[1]', 'top');
-
+    rewrite_order_url();
 }
 add_action('init', 'me_init_endpoint');
 
@@ -356,28 +352,20 @@ function me_sort_listing_query($query) {
 }
 
 function rewrite_order_url() {
-    // TODO: di chuyen sang me query
+    $order_endpoint = me_get_endpoint_name('order_id');
     add_filter('post_type_link', 'custom_me_order_link', 1, 3);
 
-    add_rewrite_rule( 'me_order/([0-9]+)/?$', 'index.php?post_type=me_order&p=$matches[1]', 'top' );
-
-    global $wp_rewrite;
-
-    $new_rules = array();
-    foreach ( $wp_rewrite->extra_rules_top as $key => $rule ) {
-
-        if (strpos($key, 'me_order/%post_id%/') === 0 ) {
-            $new_rules[ str_replace('%post_id%/', '', $key) ] = $rule;
-            unset( $wp_rewrite->extra_rules_top[$key] );
-        }
-    }
+    add_rewrite_rule( $order_endpoint . '/([0-9]+)/?$', 'index.php?post_type=me_order&p=$matches[1]', 'top' );
 }
-add_action( 'init', 'rewrite_order_url' );
 
-function custom_me_order_link($post_link, $post = 0, $leavename = false) {
+function custom_me_order_link($order_link, $post = 0) {
     if ($post->post_type == 'me_order') {
-        return str_replace('%post_id%', $post->ID, $post_link);
+        if(get_option('permalink_structure')) {
+            $pos = strrpos($order_link, '%/');
+            $order_link = substr($order_link, 0, $pos+1);
+        }
+        return str_replace('%post_id%', $post->ID, $order_link);
     } else {
-        return $post_link;
+        return $order_link;
     }
 }
