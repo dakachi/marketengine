@@ -1,4 +1,6 @@
 <?php
+// TODO: sua ten lai file thanh user info.php
+
 $display_name = get_the_author_meta('display_name', $author_id);
 $location = get_the_author_meta('location', $author_id);
 $member_sinced = date_i18n( get_option( 'date_format' ), strtotime(get_the_author_meta( 'user_registered', $author_id )) );

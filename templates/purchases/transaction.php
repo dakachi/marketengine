@@ -8,6 +8,7 @@ $listing_item = $transaction->get_listing();
 $listing_obj = me_get_listing($listing_item['_listing_id'][0]);
 
 $author_id = $listing_obj->post_author;
+// TODO: tach order details ra 1 template rieng
 ?>
 <div class="marketengine-content">
 	<?php me_print_notices(); ?>
@@ -23,6 +24,8 @@ $author_id = $listing_obj->post_author;
 		<div class="me-col-md-9">
 			<?php
 				me_get_template( 'purchases/order-listing', array('listing_obj' => $listing_obj, 'transaction' => $transaction) );
+			?>
+			<?php
 				me_get_template( 'seller-info', array('class' => 'me-authors-xs me-visible-sm me-visible-xs', 'author_id' => $author_id ) );
 			?>
 
