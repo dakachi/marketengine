@@ -313,12 +313,7 @@ function me_sort_listing_query($query) {
                 'relation' => 'AND',
                 array(
                     'key' => 'listing_price',
-                ),
-                array(
-                    'key'     => '_me_listing_type',
-                    'value'   => 'purchasion',
-                    'compare' => '=',
-                ),
+                )
             ));
             $query->set('orderby', 'meta_value_num');
             $query->set('order', 'asc');
