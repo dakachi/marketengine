@@ -14,6 +14,7 @@ global $wp_query;
 		?>
 		<span><?php printf(_n( 'One item in total', "%d items in totals", $wp_query->found_posts, "enginethemes" ), $wp_query->found_posts) ?></span>
 	</div>
+	<?php if(empty($_GET['type']) || $_GET['type'] != 'contact') : ?>
 	<div class="me-sort-listing pull-right">
 		<form method="get">
 			<select name="orderby" id="listing-orderby">
@@ -31,4 +32,5 @@ global $wp_query;
 			<?php  endif; ?>
 		</form>
 	</div>
+	<?php endif; ?>
 </div>
