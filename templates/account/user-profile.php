@@ -72,7 +72,9 @@ $user = ME()->get_current_user();
 			</div>
 
 			<div class="marketengine-text-field me-no-margin-bottom">
-				<label class="text"><?php _e("Paypal Email", "enginethemes");?></label>
+				<label class="text">
+					<?php _e("Paypal Email (this email will be used for Paypal payment)", "enginethemes"); ?>
+				</label>
 				<p><?php echo $user->paypal_email; ?></p>
 			</div>
 

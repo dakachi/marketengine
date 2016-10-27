@@ -110,7 +110,7 @@ $paypal_email = isset($_POST['paypal_email']) ? $_POST['paypal_email'] : $user->
 
 			<div class="marketengine-group-field me-no-margin-bottom">
 				<div class="marketengine-input-field">
-					<label class="me-field-title"><?php _e("Paypal Email", "enginethemes");?></label>
+					<label class="me-field-title"><?php _e("Paypal Email (this email will be used for Paypal payment)", "enginethemes"); ?></label>
 					<input type="text" value="<?php echo $paypal_email; ?>" name="paypal_email" id="paypal_email">
 				</div>
 			</div>
