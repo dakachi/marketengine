@@ -24,6 +24,7 @@ global $wp_query;
 				<option <?php selected( $selected, 'price') ?> value="price"><?php _e("Price: Low to High", "enginethemes"); ?></option>
 				<option <?php selected( $selected, 'price-desc') ?> value="price-desc"><?php _e("Price: High to Low", "enginethemes"); ?></option>
 			</select>
+			<input type="hidden" name="paged" value="1" ?>
 			<?php  if(!empty($_GET['price-min'])) : ?>
 				<input type="hidden" name="price-min" value="<?php echo $_GET['price-min'];  ?>" ?>
 			<?php endif; ?>
