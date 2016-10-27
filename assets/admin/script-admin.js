@@ -12,5 +12,7 @@ $(document).ready(function() {
 	$('.me-scroll-language').mCustomScrollbar({
 		setHeight:340
 	});
+
+	
 });
 })(jQuery);
