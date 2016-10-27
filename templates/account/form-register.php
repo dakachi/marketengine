@@ -14,7 +14,7 @@ if (get_option('users_can_register')):
 ?>
 
 	<?php do_action('marketengine_before_user_register_form');?>
-<div class="marekengine-authen-wrap authen-register">
+<div class="me-authen-wrap me-authen-register">
 
 	<form id="register-form" action="" method="post">
 
