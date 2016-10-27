@@ -26,7 +26,7 @@ $author_id = $listing_obj->post_author;
 				me_get_template( 'purchases/order-listing', array('listing_obj' => $listing_obj, 'transaction' => $transaction) );
 			?>
 			<?php
-				me_get_template( 'seller-info', array('class' => 'me-authors-xs me-visible-sm me-visible-xs', 'author_id' => $author_id ) );
+				me_get_template( 'user-info', array('class' => 'me-authors-xs me-visible-sm me-visible-xs', 'author_id' => $author_id ) );
 			?>
 
 			<div class="me-transaction-dispute">
@@ -37,7 +37,7 @@ $author_id = $listing_obj->post_author;
 		</div>
 		<div class="me-col-md-3 me-hidden-sm me-hidden-xs">
 			<?php
-				me_get_template( 'seller-info', array('author_id' => $author_id)  );
+				me_get_template( 'user-info', array('author_id' => $author_id)  );
 			?>
 		</div>
 	</div>

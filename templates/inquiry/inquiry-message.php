@@ -49,7 +49,7 @@
 
 					<?php else : ?>
 
-						<?php me_get_template('seller-info', array('author_id' => $listing->post_author)); ?>
+						<?php me_get_template('user-info', array('author_id' => $listing->post_author)); ?>
 
 					<?php endif; ?>
 					</div>
