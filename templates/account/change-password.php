@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
 
 	<?php do_action('marketengine_change_password_form_start'); ?>
 
-	<div class="marketengine-content change-password">
+	<div class="me-authen-wrap me-authen-change">
 
 		<?php me_print_notices(); ?>
 		

@@ -14,7 +14,7 @@ do_action('marketengine_before_user_login_form');
 
 $register_link = me_get_endpoint_url('register');
 ?>
-<div class="marekengine-authen-wrap authen-login">
+<div class="me-authen-wrap me-authen-login">
 	<form id="login-form" action="" method="post">
 		<h3><?php _e("Login", "enginethemes");?></h3>
 

@@ -249,9 +249,9 @@ function me_filter_listing_query($query) {
         return $query;
     }
 
+    $query = me_sort_listing_query($query);
     $query = me_filter_price_query($query);
     $query = me_filter_listing_type_query($query);
-    $query = me_sort_listing_query($query);
 
     return $query;
 }
@@ -278,6 +278,8 @@ function me_filter_price_query($query) {
             'value'   => 'purchasion',
             'compare' => '=',
         );
+
+        $query->query_vars['meta_query']['relation'] = 'AND';
 
     }
     return $query;
@@ -312,31 +314,35 @@ function me_sort_listing_query($query) {
             break;
         case 'price':
             $query->set('meta_key', 'listing_price');
-            $query->set('meta_query', array(
-                array(
+            $meta_query = array(
+                'relation' => 'AND',
+                'filter_price' => array(
                     'key' => 'listing_price',
                 ),
-                array(
+                'type' => array(
                     'key'     => '_me_listing_type',
                     'value'   => 'purchasion',
                     'compare' => '=',
                 ),
-            ));
+            );
+            $query->set('meta_query', $meta_query);
             $query->set('orderby', 'meta_value_num');
             $query->set('order', 'asc');
             break;
         case 'price-desc':
             $query->set('meta_key', 'listing_price');
-            $query->set('meta_query', array(
-                array(
+            $meta_query = array(
+                'relation' => 'AND',
+                'filter_price' => array(
                     'key' => 'listing_price',
                 ),
-                array(
+                'type' => array(
                     'key'     => '_me_listing_type',
                     'value'   => 'purchasion',
                     'compare' => '=',
                 ),
-            ));
+            );
+            $query->set('meta_query', $meta_query);
             $query->set('orderby', 'meta_value_num');
             $query->set('order', 'desc');
             break;

@@ -14,6 +14,7 @@ global $wp_query;
 		?>
 		<span><?php printf(_n( 'One item in total', "%d items in totals", $wp_query->found_posts, "enginethemes" ), $wp_query->found_posts) ?></span>
 	</div>
+	<?php if(empty($_GET['type']) || $_GET['type'] != 'contact') : ?>
 	<div class="me-sort-listing pull-right">
 		<form method="get">
 			<select name="orderby" id="listing-orderby">
@@ -23,6 +24,7 @@ global $wp_query;
 				<option <?php selected( $selected, 'price') ?> value="price"><?php _e("Price: Low to High", "enginethemes"); ?></option>
 				<option <?php selected( $selected, 'price-desc') ?> value="price-desc"><?php _e("Price: High to Low", "enginethemes"); ?></option>
 			</select>
+			<input type="hidden" name="paged" value="1" ?>
 			<?php  if(!empty($_GET['price-min'])) : ?>
 				<input type="hidden" name="price-min" value="<?php echo $_GET['price-min'];  ?>" ?>
 			<?php endif; ?>
@@ -31,4 +33,5 @@ global $wp_query;
 			<?php  endif; ?>
 		</form>
 	</div>
+	<?php endif; ?>
 </div>
