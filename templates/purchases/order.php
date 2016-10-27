@@ -22,7 +22,7 @@ $author_id = $order->post_author;
 		<div class="me-col-md-9">
 			<?php
 				me_get_template( 'purchases/order-listing', array('listing_obj' => $listing_obj, 'seller' => true, 'transaction' => $order) );
-				me_get_template( 'seller-info', array('class' => 'me-authors-xs me-visible-sm me-visible-xs', 'author_id' => $author_id ) );
+				me_get_template( 'user-info', array('class' => 'me-authors-xs me-visible-sm me-visible-xs', 'author_id' => $author_id ) );
 			?>
 
 			<div class="me-orderwarning-info">
@@ -33,7 +33,7 @@ $author_id = $order->post_author;
 		</div>
 		<div class="me-col-md-3 me-hidden-sm me-hidden-xs">
 			<?php
-				me_get_template( 'seller-info', array('author_id' => $author_id)  );
+				me_get_template( 'user-info', array('author_id' => $author_id)  );
 			?>
 		</div>
 	</div>
