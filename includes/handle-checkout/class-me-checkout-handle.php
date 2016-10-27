@@ -45,7 +45,7 @@ class ME_Checkout_Handle {
         $is_valid = me_validate($data['billing_info'], $billing_rules, $custom_attributes);
         if (!$is_valid) {
             $errors = new WP_Error();
-            $invalid_data = me_get_invalid_message($data, $billing_rules, $custom_attributes);
+            $invalid_data = me_get_invalid_message($data['billing_info'], $billing_rules, $custom_attributes);
             foreach ($invalid_data as $key => $message) {
                 $errors->add($key, $message);
             }
