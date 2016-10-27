@@ -1,128 +1,72 @@
+<?php
+
+$args = array(
+	'posts_per_page'	=> 12,
+	'post_type' 		=> 'listing',
+	'exclude'			=> $curr_listing['_listing_id'],
+);
+
+if(!empty($listing_cat)) {
+	$args['tax_query'] = array();
+	foreach ($listing_cat as $key => $cat) {
+		$args['tax_query'][] = array(
+			'taxonomy' 	=> 'listing_category',
+			'field' 	=> 'slug',
+			'terms' 	=> $cat,
+		);
+	}
+}
+
+$listings = get_posts( $args );
+
+if(!empty($listings)) :
+?>
+
 <div class="marketengine-related-wrap">
-	<h2>You may like these listings</h2>
+	<?php ?>
+	<h2><?php _e('You may like these listings', 'enginethemes'); ?></h2>
 	<div class="me-related-slider flexslider">
 		<ul class="me-related slides">
+		<?php
+			foreach( $listings as $listing ) :
+				$listing = me_get_listing($listing);
+				$listing_type = $listing->get_listing_type();
+		?>
 			<li class="me-item-post">
+
 				<div class="me-item-wrap">
+
 					<a href="#" class="me-item-img">
-						<img src="../assets/img/1.jpg" alt="">
-						<span>VIEW DETAILS</span>
+						<img src="<?php echo $listing->get_listing_thumbnail(); ?>" alt="">
+						<span><?php _e('VIEW DETAILS', 'enginethemes'); ?></span>
 					</a>
+
 					<div class="me-item-content">
-						<h2><a href="#">Dark Gray End-On-End Innovator Suit Pant this is listing title post on site</a></h2>
-						<div class="me-item-price">
-							<span class="me-price pull-left">Contact</span>
-						</div>
+						<h2><a href="<?php echo $listing->get_permalink() ?>"><?php echo $listing->get_title(); ?></a></h2>
+
+						<?php
+							if('purchasion' == $listing_type) :
+								me_get_template('loop/purchasion', array('listing' => $listing));
+							else :
+								me_get_template('loop/contact', array('listing' => $listing));
+							endif;
+						 ?>
+
 						<div class="me-item-author">
-							<a href="#"><i>by</i>Username</a>
-						</div>
-						<div class="me-buy-now">
-							<a class="me-buy-now-btn" href="#">CONTACT</a>
+						<?php
+							$seller = get_userdata( $listing->get_author() );
+						?>
+							<a href="#"><?php printf( __('<i>by</i>%s'), $seller->display_name ); ?></a>
 						</div>
 					</div>
+
 				</div>
+
 			</li>
-			<li class="me-item-post">
-				<div class="me-item-wrap">
-					<a href="#" class="me-item-img">
-						<img src="../assets/img/1.jpg" alt="">
-						<span>VIEW DETAILS</span>
-					</a>
-					<div class="me-item-content">
-						<h2><a href="#">This is listing title post on site</a></h2>
-						<div class="me-item-price">
-							<span class="me-price pull-left"><b>$105</b></span>
-							<div class="me-rating pull-right">
-								<i class="icon-me-star-full"></i>
-								<i class="icon-me-star-full"></i>
-								<i class="icon-me-star-full"></i>
-								<i class="icon-me-star-full"></i>
-								<i class="icon-me-star-empty"></i>
-							</div>
-						</div>
-						<div class="me-item-author">
-							<a href="#"><i>by</i>Admin</a>
-						</div>
-						<div class="me-buy-now">
-							<a class="me-buy-now-btn" href="#">BUY NOW</a>
-						</div>
-					</div>
-				</div>
-			</li>
-			<li class="me-item-post">
-				<div class="me-item-wrap">
-					<a href="#" class="me-item-img">
-						<img src="../assets/img/1.jpg" alt="">
-						<span>VIEW DETAILS</span>
-					</a>
-					<div class="me-item-content">
-						<h2><a href="#">Dark Gray End-On-End Innovator Suit Pant this is listing title post on site</a></h2>
-						<div class="me-item-price">
-							<span class="me-price pull-left">Contact</span>
-						</div>
-						<div class="me-item-author">
-							<a href="#"><i>by</i>Username</a>
-						</div>
-						<div class="me-buy-now">
-							<a class="me-buy-now-btn" href="#">CONTACT</a>
-						</div>
-					</div>
-				</div>
-			</li>
-			<li class="me-item-post">
-				<div class="me-item-wrap">
-					<a href="#" class="me-item-img">
-						<img src="../assets/img/1.jpg" alt="">
-						<span>VIEW DETAILS</span>
-					</a>
-					<div class="me-item-content">
-						<h2><a href="#">Dark Gray End-On-End Innovator Suit Pant this is listing title post on site</a></h2>
-						<div class="me-item-price">
-							<span class="me-price pull-left">$213</span>
-							<div class="me-rating pull-right">
-								<i class="icon-me-star-full"></i>
-								<i class="icon-me-star-full"></i>
-								<i class="icon-me-star-full"></i>
-								<i class="icon-me-star-full"></i>
-								<i class="icon-me-star-empty"></i>
-							</div>
-						</div>
-						<div class="me-item-author">
-							<a href="#"><i>by</i>Username</a>
-						</div>
-						<div class="me-buy-now">
-							<a class="me-buy-now-btn" href="#">BUY NOW</a>
-						</div>
-					</div>
-				</div>
-			</li>
-			<li class="me-item-post">
-				<div class="me-item-wrap">
-					<a href="#" class="me-item-img">
-						<img src="../assets/img/1.jpg" alt="">
-						<span>VIEW DETAILS</span>
-					</a>
-					<div class="me-item-content">
-						<h2><a href="#">Dark Gray End-On-End Innovator Suit Pant this is listing title post on site</a></h2>
-						<div class="me-item-price">
-							<span class="me-price pull-left">$112</span>
-							<div class="me-rating pull-right">
-								<i class="icon-me-star-full"></i>
-								<i class="icon-me-star-full"></i>
-								<i class="icon-me-star-full"></i>
-								<i class="icon-me-star-full"></i>
-								<i class="icon-me-star-empty"></i>
-							</div>
-						</div>
-						<div class="me-item-author">
-							<a href="#"><i>by</i>Username</a>
-						</div>
-						<div class="me-buy-now">
-							<a class="me-buy-now-btn" href="#">BUY NOW</a>
-						</div>
-					</div>
-				</div>
-			</li>
+
+		<?php endforeach; ?>
 		</ul>
 	</div>
 </div>
+
+<?php endif; ?>
