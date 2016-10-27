@@ -198,6 +198,9 @@ class ME_Post_Types {
             ),
             'public'             => false,
             'publicly_queryable' => true,
+            'rewrite'            => array(
+                'slug' => me_get_endpoint_name('order-id') . '/%post_id%',
+            ),
             'show_ui'            => true,
             'show_in_menu'       => true,
             'query_var'          => true,

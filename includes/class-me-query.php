@@ -227,6 +227,7 @@ function me_init_endpoint() {
         add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
     }
 
+    rewrite_order_url();
 }
 add_action('init', 'me_init_endpoint');
 
@@ -244,9 +245,9 @@ function me_filter_listing_query($query) {
         return $query;
     }
 
+    $query = me_sort_listing_query($query);
     $query = me_filter_price_query($query);
     $query = me_filter_listing_type_query($query);
-    $query = me_sort_listing_query($query);
 
     return $query;
 }
@@ -273,6 +274,8 @@ function me_filter_price_query($query) {
             'value'   => 'purchasion',
             'compare' => '=',
         );
+
+        $query->query_vars['meta_query']['relation'] = 'AND';
 
     }
     return $query;
@@ -307,31 +310,35 @@ function me_sort_listing_query($query) {
             break;
         case 'price':
             $query->set('meta_key', 'listing_price');
-            $query->set('meta_query', array(
-                array(
+            $meta_query = array(
+                'relation' => 'AND',
+                'filter_price' => array(
                     'key' => 'listing_price',
                 ),
-                array(
+                'type' => array(
                     'key'     => '_me_listing_type',
                     'value'   => 'purchasion',
                     'compare' => '=',
                 ),
-            ));
+            );
+            $query->set('meta_query', $meta_query);
             $query->set('orderby', 'meta_value_num');
             $query->set('order', 'asc');
             break;
         case 'price-desc':
             $query->set('meta_key', 'listing_price');
-            $query->set('meta_query', array(
-                array(
+            $meta_query = array(
+                'relation' => 'AND',
+                'filter_price' => array(
                     'key' => 'listing_price',
                 ),
-                array(
+                'type' => array(
                     'key'     => '_me_listing_type',
                     'value'   => 'purchasion',
                     'compare' => '=',
                 ),
-            ));
+            );
+            $query->set('meta_query', $meta_query);
             $query->set('orderby', 'meta_value_num');
             $query->set('order', 'desc');
             break;
@@ -342,4 +349,23 @@ function me_sort_listing_query($query) {
         }
     }
     return $query;
+}
+
+function rewrite_order_url() {
+    $order_endpoint = me_get_endpoint_name('order_id');
+    add_filter('post_type_link', 'custom_me_order_link', 1, 3);
+
+    add_rewrite_rule( $order_endpoint . '/([0-9]+)/?$', 'index.php?post_type=me_order&p=$matches[1]', 'top' );
+}
+
+function custom_me_order_link($order_link, $post = 0) {
+    if ($post->post_type == 'me_order') {
+        if(get_option('permalink_structure')) {
+            $pos = strrpos($order_link, '%/');
+            $order_link = substr($order_link, 0, $pos+1);
+        }
+        return str_replace('%post_id%', $post->ID, $order_link);
+    } else {
+        return $order_link;
+    }
 }
