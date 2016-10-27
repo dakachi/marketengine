@@ -455,17 +455,17 @@ function me_price_format($price, $args = array()) {
     $args = wp_parse_args( $args, array('code' => $code, 'sign' => $sign) );
     extract($args);
 
-    $html = '';
+    $format = '';
 
     $sign_position_is_align_right = me_option('currency-sign-postion') ? true : false;
 
     if($sign_position_is_align_right) {
-        $html .= '<b itemprop="priceCurrency" content="' . $code .'">'. $sign .'</b> <b itemprop="price" content="'. $price .'">'. $price .'</b>';
+        $format .= $sign .' '. $price;
     } else {
-        $html .= '<b itemprop="price" content="'. $price .'">'. $price .'</b> <b itemprop="priceCurrency" content="' . $code .'">'. $sign .'</b>';
+        $format .= $price .' '. $sign;
     }
 
-    return $html;
+    return $format;
 }
 
 function marketengine_comments( $comment, $args, $depth ){

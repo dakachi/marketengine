@@ -33,7 +33,7 @@
 					</div>
 				</div>
 				<div class="me-col-md-3 me-col-sm-4 ">
-					<?php me_get_template('seller-info', array('author_id' => $listing->post_author)); ?>
+					<?php me_get_template('user-info', array('author_id' => $listing->post_author)); ?>
 				</div>
 			</div>
 		</div>
