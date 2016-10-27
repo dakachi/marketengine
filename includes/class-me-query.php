@@ -311,9 +311,6 @@ function me_sort_listing_query($query) {
             $query->set('meta_key', 'listing_price');
             $meta_query = array(
                 'relation' => 'AND',
-                array(
-                    'key' => 'listing_price',
-                ),
                 'type' => array(
                     'key'     => '_me_listing_type',
                     'value'   => 'purchasion',
