@@ -447,7 +447,6 @@ function me_price_html( $price, $currency_sign = '' , $unit = '' ) {
     return $html;
 }
 
-// TODO: sua lai ko xai dinh dang html
 function me_price_format($price, $args = array()) {
     $sign = me_option('payment-currency-sign');
     $code = me_option('payment-currency-code');

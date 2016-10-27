@@ -198,6 +198,13 @@ class ME_Post_Types {
             ),
             'public'             => false,
             'publicly_queryable' => true,
+            'rewrite'            => array(
+                'slug' => 'me_order/%post_id%',
+                'with_front' => false,
+                'pages' => true,
+                'ep_mask' => 1
+            ),
+            'has_archive'        => true,
             'show_ui'            => true,
             'show_in_menu'       => true,
             'query_var'          => true,
