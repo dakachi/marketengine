@@ -6,7 +6,6 @@ class ME_Shortcodes_Transaction
         add_shortcode('me_checkout_form', array(__CLASS__, 'checkout_form'));
         add_shortcode('me_confirm_order', array(__CLASS__, 'confirm_order'));
         add_shortcode('me_cancel_payment', array(__CLASS__, 'cancel_order'));
-        add_shortcode('me_transaction_detail', array(__CLASS__, 'transaction_detail'));
         add_shortcode('me_inquiry_form', array(__CLASS__, 'inquiry_form'));
     }
 
@@ -91,29 +90,5 @@ class ME_Shortcodes_Transaction
         }
 
     }
-
-    public static function transaction_detail()
-    {
-        if (is_user_logged_in()) {
-            $order_id = get_query_var('order-id');
-            $order = new ME_Order($order_id);
-            $buyer = $order->post_author;
-            ob_start();
-            if( $buyer == get_current_user_id() ) {
-                if(!empty($_GET['action']) && 'review' == $_GET['action'] && !empty($_GET['id'])) {
-                    me_get_template('purchases/review', array('transaction' => $order, 'listing_id' => $_GET['id']));
-                }else {
-                    me_get_template('purchases/transaction', array('transaction' => $order));
-                }
-            } else {
-                me_get_template('purchases/order', array('order' => $order));
-            }
-            $content = ob_get_clean();
-            return $content;
-        } else {
-            return ME_Shortcodes_Auth::me_login_form();
-        }
-    }
-
 }
 ME_Shortcodes_Transaction::init_shortcodes();
