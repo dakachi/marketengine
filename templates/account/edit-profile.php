@@ -23,7 +23,7 @@ $paypal_email = isset($_POST['paypal_email']) ? $_POST['paypal_email'] : $user->
 
 	<?php do_action('marketengine_edit_user_profile_form_start', $user); ?>
 
-	<div class="marketengine-content me-profile">
+	<div class="me-authen-wrap me-authen-profile">
 		<div class="marketengine-profile-info">
 			<?php do_action('marketengine_before_edit_user_avatar', $user); ?>
 			<div class="marketengine-avatar-user">

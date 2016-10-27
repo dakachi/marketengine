@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 ?>
 
 <?php do_action('marketengine_before_forgot_password_form');?>
-<div class="marekengine-authen-wrap authen-forgot">
+<div class="me-authen-wrap me-authen-forgot">
 	<form id="forgot-password-form" action="" method="post">
 		<h3><?php _e("Forgot Password", "enginethemes"); ?></h3>
 
