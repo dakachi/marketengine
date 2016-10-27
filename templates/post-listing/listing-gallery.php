@@ -6,26 +6,6 @@ if (!defined('ABSPATH')) {
 
 
 ?>
-<style type="text/css">
-	li.uploading {
-    border: 1px dashed #ccc;
-    width: 130px;
-    height: 80px;
-    display: inline-block;
-    position: relative;
-}
-
-li .uploading-progress {
-    height: 100%;
-    background: #eee;
-    width: 0;
-
-    -webkit-transition: width 0.6s ease 0s;
-    -moz-transition: width 0.6s ease 0s;
-    -o-transition: width 0.6s ease 0s;
-    -ms-transition: width 0.6s ease 0s;
-}
-</style>
 
 <?php do_action('marketengine_before_post_listing_picture_form');?>
 
