@@ -274,6 +274,8 @@ function me_filter_price_query($query) {
             'compare' => '=',
         );
 
+        $query->query_vars['meta_query']['relation'] = 'AND';
+
     }
     return $query;
 }
