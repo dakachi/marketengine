@@ -310,6 +310,7 @@ function me_sort_listing_query($query) {
         case 'price':
             $query->set('meta_key', 'listing_price');
             $query->set('meta_query', array(
+                'relation' => 'AND',
                 array(
                     'key' => 'listing_price',
                 ),
