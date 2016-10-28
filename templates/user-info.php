@@ -7,7 +7,7 @@ $member_sinced = date_i18n( get_option( 'date_format' ), strtotime(get_the_autho
 ?>
 <div class="me-authors <?php echo !empty($class) ? $class : ''; ?>">
 	<span class="me-avatar">
-		<?php echo get_avatar( $author_id ); ?>
+		<?php echo me_get_avatar( $author_id ); ?>
 		<b><?php echo $display_name; ?></b>
 	</span>
 	<ul class="me-author-info">
