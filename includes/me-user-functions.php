@@ -18,7 +18,12 @@ function me_add_user_meta($meta) {
 }
 add_filter('insert_user_meta', 'me_add_user_meta');
 
-
+/**
+ * Retrieve the avatar `<img>` tag for a user, email address, MD5 hash, comment, or post.
+ *
+ * @param int $user_id
+ * @return string
+*/
 function me_get_avatar($user_id) {
 	$user_avatar = get_user_meta( $user_id, 'user_avatar', true);
     if($user_avatar) {

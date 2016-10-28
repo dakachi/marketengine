@@ -250,7 +250,7 @@ function marketengine_sidebar() {
 add_action('marketengine_sidebar', 'marketengine_sidebar');
 
 // TODO: tam thoi de day
-function ae_get_option($option, $default = '') {
+function me_get_option($option, $default = '') {
     return get_option($option, $default);
 }
 
@@ -533,7 +533,7 @@ function marketengine_get_search_form($echo = true) {
                 </div>
             </form>';
     }
-        
+
     /**
      * Filters the HTML output of the search form.
      *
