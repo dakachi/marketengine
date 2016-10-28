@@ -27,12 +27,19 @@ $paypal_email = isset($_POST['paypal_email']) ? $_POST['paypal_email'] : $user->
 		<div class="marketengine-profile-info">
 			<?php do_action('marketengine_before_edit_user_avatar', $user); ?>
 			<div class="marketengine-avatar-user">
-				<a class="avatar-user">
-					<?php echo $user->get_avatar(); ?>
-					<span class="change-avatar-user">
-						<i class="icon-uploadprofileimage"></i>
-					</span>
-				</a>
+				<?php
+		        me_get_template('upload-file/upload-form', array(
+		            'id' => 'upload_user_avatar',
+		            'name' => 'user_avatar',
+		            'source' => 802,
+		            'button' => 'change-avatar-user',
+		            'extension' => 'jpg,jpeg,gif,png',
+		            'multi' => false,
+		            'maxsize' => esc_html( '2mb' ),
+		            'maxcount' => 1, 
+		            'close' => false
+		        ));
+		    ?>
 			</div>
 
 			<?php do_action('marketengine_after_edit_user_avatar', $user); ?>
