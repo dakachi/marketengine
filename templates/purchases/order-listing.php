@@ -8,7 +8,7 @@
 		<div class="me-count-purchases-review">
 			<?php // <span>12 Purchase</span><span>30 review</span> ?>
 		</div>
-		<p><?php echo $listing_obj->get_short_description(); ?></p>
+		<p><?php echo $listing_obj->get_short_description(20); ?></p>
 		<div style="display: none"><?php echo $listing_obj->get_description(); ?></div>
 
 		<a class="me-listing-info-view" href="#"><?php _e('view detail', 'enginethemes'); ?></a>
