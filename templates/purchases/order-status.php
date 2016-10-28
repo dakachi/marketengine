@@ -4,12 +4,10 @@
 		<div class="me-orderstatus">
 			<?php
 				me_print_order_status( $order_status );
-				if( 'me-disputed' === $order_status ) :
+				$status_info = me_get_order_status_info( $order_status, 'text' );
 			?>
-			<p class=""><i class="icon-me-status-info"></i><?php _e('This order has been disputed by buyer. Resolve it as soon as possible.', 'enginethemes'); ?></p>
-			<?php
-				endif;
-			?>
+
+			<p class=""><i class="icon-me-status-info"></i><?php echo $status_info; ?></p>
 		</div>
 		<?php
 			$process_index = me_get_order_status_info( $order_status );
