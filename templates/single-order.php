@@ -1,5 +1,11 @@
 <?php
 
+//TODO: tam thoi lam the nay
+if( !current_user_can('edit_posts') ) {
+    $login_url = me_get_auth_url();
+    wp_redirect( $login_url );
+}
+
 $order_id = get_the_ID();
 $order = new ME_Order($order_id);
 $buyer = $order->post_author == get_current_user_id();

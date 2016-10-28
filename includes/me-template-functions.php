@@ -250,7 +250,7 @@ function marketengine_sidebar() {
 add_action('marketengine_sidebar', 'marketengine_sidebar');
 
 // TODO: tam thoi de day
-function ae_get_option($option, $default = '') {
+function me_get_option($option, $default = '') {
     return get_option($option, $default);
 }
 
@@ -350,6 +350,11 @@ function me_post_listing_button_action() {
 }
 add_action('me_post_listing_button', 'me_post_listing_button_action');
 
+function me_search_form_action() {
+    marketengine_get_search_form();
+}
+add_action('me_search_form', 'me_search_form_action');
+
 function me_status_list_action($type = '') {
     me_get_template('global/status-list', array('type' => $type));
 }
@@ -360,41 +365,52 @@ add_action('me_status_list', 'me_status_list_action');
  *  @param: $status
  *  @param: $needed style or index of order process
  */
-function me_get_order_status_info($status, $needed = '') {
+function me_get_order_status_info($status, $info_type = '') {
     $status_list = me_get_order_status_list();
+
     switch ($status) {
     case 'me-pending':
         $style         = 'me-order-pending';
+        $text          = __('Your payment has not been completed yet', 'enginethemes');
         $order_process = 1;
         break;
     // chua co class cho status nay
-    case 'publish':
+    case 'me-active':
         $style         = 'me-order-complete';
+        $text          = __('', 'enginethemes');
         $order_process = 2;
         break;
     case 'me-complete':
         $style         = 'me-order-complete';
+        $text          = __('', 'enginethemes');
         $order_process = 3;
         break;
     case 'me-disputed':
         $style         = 'me-order-disputed';
+        $text          = __('This order has been disputed by the Buyer', 'enginethemes');
         $order_process = 4;
         break;
     case 'me-closed':
         $style         = 'me-order-closed';
+        $text          = __('', 'enginethemes');
         $order_process = 5;
         break;
     case 'me-resolved':
         $style         = 'me-order-resolved';
+        $text          = __('', 'enginethemes');
         $order_process = 5;
         break;
     default:
         $style         = 'me-order-pending';
+        $text          = __('', 'enginethemes');
         $order_process = 1;
         break;
     }
-    if ('style' === $needed) {
+    if ('style' === $info_type) {
         return $style;
+    }
+    if ('text' === $info_type) {
+        return $text;
     }
     return $order_process;
 }
@@ -515,25 +531,39 @@ function marketengine_get_search_form($echo = true) {
     if(is_tax( 'listing_category' )) {
         $url = get_term_link( get_queried_object(), 'listing_category' );
     }
-    
+
     if ('html5' == $format) {
         $form = '<form role="search" method="get" class="search-form" action="' . $url . '">
-                <label>
-                    <span class="screen-reader-text">' . _x('Search for:', 'label') . '</span>
-                    <input type="search" class="search-field" placeholder="' .  esc_attr( __("Search", "enginethemes") ) . '" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" name="keyword" />
-                </label>
-                <input type="submit" class="search-submit" value="' . esc_attr( __("Search", "enginethemes") ) . '" />
-            </form>';
-    } else {
-        $form = '<form role="search" method="get" id="me-searchform" class="searchform" action="' . $url . '">
-                <div>
-                    <label class="screen-reader-text" for="keyword">' . _x('Search for:', 'label') . '</label>
-                    <input type="text" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" name="keyword" id="keyword" />
-                    <input type="submit" id="me-searchsubmit" value="' . esc_attr( __("Search", "enginethemes") ) . '" />
+                <div class="me-search me-hidden-xs">
+                    <input type="search" class="search-field" placeholder="' . esc_attr( __("Type here and hit enter...", "enginethemes") ) . '" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" name="keyword" />
+                    <i id="search-btn" class="icon-me-search me-search-btn"></i>
+                </div>
+            </form>
+            <form method="get" class="mobile-search-form" action="' . $url . '">
+                <span class="me-search-btn-xs me-visible-xs"><i class="icon-me-search me-search-btn"></i></span>
+                <div class="me-search-xs me-visible-xs">
+                    <input type="search" name="s" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" placeholder="' . esc_attr( __("Type here and hit enter...", "enginethemes") ) . '">
+                    <i id="mobile-search-btn" class="icon-me-search me-search-btn"></i>
                 </div>
             </form>';
+    } else {
+        $form = '<form role="search" method="get" class="search-form" action="' . $url . '">
+                <div class="me-search me-hidden-xs">
+                    <input type="text" class="search-field" placeholder="' .  esc_attr( __("Type here and hit enter...", "enginethemes") ) . '" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" name="keyword" />
+                    <i id="search-btn" class="icon-me-search me-search-btn"></i>
+                </div>
+            </form>
+            <form method="get" class="mobile-search-form" action="' . $url . '">
+                <span class="me-search-btn-xs me-visible-xs"><i class="icon-me-search me-search-btn"></i></span>
+                <div class="me-search-xs me-visible-xs">
+                    <input type="text" name="s" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" placeholder="' . esc_attr( __("Type here and hit enter...", "enginethemes") ) . '">
+                    <i id="mobile-search-btn" class="icon-me-search me-search-btn"></i>
+                </div>
+            </form>';
+
+
     }
-        
+
     /**
      * Filters the HTML output of the search form.
      *
