@@ -16,19 +16,12 @@ $author_id = $listing_obj->post_author;
 	</div>
 	<div class="me-row">
 		<div class="me-col-md-9">
+
 			<?php
 				me_get_template( 'purchases/order-listing', array('listing_obj' => $listing_obj, 'transaction' => $transaction) );
-			?>
-			<?php
 				me_get_template( 'user-info', array('class' => 'me-authors-xs me-visible-sm me-visible-xs', 'author_id' => $author_id ) );
+				me_get_template( 'purchases/order-action', array('order' => $transaction) );
 			?>
-
-			<?php if($transaction->post_status != 'me-pending') : ?>
-			<div class="me-transaction-dispute">
-				<p><?php echo __('You have XX days to dispute if the product is not like what seller offers.', 'enginethemes'); ?></p>
-				<a href="<?php echo me_get_page_id('dispute'); ?>" class=""><?php _e('DISPUTE', 'enginethemes'); ?></a>
-			</div>
-			<?php endif; ?>
 
 		</div>
 		<div class="me-col-md-3 me-hidden-sm me-hidden-xs">
