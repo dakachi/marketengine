@@ -1,4 +1,5 @@
 jQuery(document).ready(function($) {
+
 	$('#terms-service').on('click', function() {
 		if($(this).is(':checked')) {
 			$('.submit-signup').find('input').removeClass('disable');

@@ -24,38 +24,41 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-me-quote-left:before {
+  content: "\e929";
+}
 .icon-me-download:before {
-  content: "\e91f";
+  content: "\e928";
 }
 .icon-me-reply:before {
-  content: "\e91c";
+  content: "\e927";
 }
 .icon-me-refresh:before {
-  content: "\e91d";
+  content: "\e926";
 }
 .icon-me-check-circle:before {
-  content: "\e91a";
+  content: "\e925";
 }
 .icon-me-arrow-left:before {
-  content: "\e91b";
+  content: "\e920";
 }
 .icon-me-info-circle:before {
-  content: "\e919";
+  content: "\e91f";
 }
 .icon-me-user:before {
-  content: "\e900";
+  content: "\e91d";
 }
 .icon-me-delete:before {
-  content: "\e901";
+  content: "\e91c";
 }
 .icon-me-edit:before {
-  content: "\e902";
+  content: "\e91b";
 }
 .icon-me-pause:before {
-  content: "\e903";
+  content: "\e919";
 }
 .icon-me-play:before {
-  content: "\e904";
+  content: "\e91a";
 }
 .icon-me-resume:before {
   content: "\e905";
@@ -74,6 +77,12 @@
 }
 .icon-me-cart:before {
   content: "\e90a";
+}
+.icon-me-angle-down:before {
+  content: "\e901";
+}
+.icon-me-angle-up:before {
+  content: "\e900";
 }
 .icon-me-angle-left:before {
   content: "\e91e";
@@ -113,6 +122,9 @@
 }
 .icon-me-star:before {
   content: "\e916";
+}
+.icon-me-star-half-o:before {
+  content: "\e92a";
 }
 .icon-me-check:before {
   content: "\e917";
