@@ -98,6 +98,7 @@ add_action('pre_get_posts', 'me_pre_get_posts');
 
 function me_products_plugin_query_vars($vars) {
     $vars[] = 'order-id';
+    $vars[] = 'keyword';
 
     return $vars;
 }
@@ -248,6 +249,7 @@ function me_filter_listing_query($query) {
     $query = me_sort_listing_query($query);
     $query = me_filter_price_query($query);
     $query = me_filter_listing_type_query($query);
+    $query = me_filter_search_query($query);
 
     return $query;
 }
@@ -293,6 +295,18 @@ function me_filter_listing_type_query($query) {
             'value'   => $_GET['type'],
             'compare' => '=',
         );
+    }
+    return $query;
+}
+
+/**
+ * Filter query listing by keyword
+ * @param object $query The WP_Query Object
+ * @since 1.0
+ */
+function me_filter_search_query($query) {
+    if (!empty($_GET['keyword'])) {
+        $query->query_vars['s'] = $_GET['keyword'];
     }
     return $query;
 }
