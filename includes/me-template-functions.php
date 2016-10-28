@@ -350,6 +350,11 @@ function me_post_listing_button_action() {
 }
 add_action('me_post_listing_button', 'me_post_listing_button_action');
 
+function me_search_form_action() {
+    marketengine_get_search_form();
+}
+add_action('me_search_form', 'me_search_form_action');
+
 function me_status_list_action($type = '') {
     me_get_template('global/status-list', array('type' => $type));
 }
@@ -515,25 +520,39 @@ function marketengine_get_search_form($echo = true) {
     if(is_tax( 'listing_category' )) {
         $url = get_term_link( get_queried_object(), 'listing_category' );
     }
-    
+
     if ('html5' == $format) {
         $form = '<form role="search" method="get" class="search-form" action="' . $url . '">
-                <label>
-                    <span class="screen-reader-text">' . _x('Search for:', 'label') . '</span>
-                    <input type="search" class="search-field" placeholder="' .  esc_attr( __("Search", "enginethemes") ) . '" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" name="keyword" />
-                </label>
-                <input type="submit" class="search-submit" value="' . esc_attr( __("Search", "enginethemes") ) . '" />
-            </form>';
-    } else {
-        $form = '<form role="search" method="get" id="me-searchform" class="searchform" action="' . $url . '">
-                <div>
-                    <label class="screen-reader-text" for="keyword">' . _x('Search for:', 'label') . '</label>
-                    <input type="text" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" name="keyword" id="keyword" />
-                    <input type="submit" id="me-searchsubmit" value="' . esc_attr( __("Search", "enginethemes") ) . '" />
+                <div class="me-search me-hidden-xs">
+                    <input type="search" class="search-field" placeholder="' . esc_attr( __("Type here and hit enter...", "enginethemes") ) . '" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" name="keyword" />
+                    <i id="search-btn" class="icon-me-search me-search-btn"></i>
+                </div>
+            </form>
+            <form method="get" class="mobile-search-form" action="' . $url . '">
+                <span class="me-search-btn-xs me-visible-xs"><i class="icon-me-search me-search-btn"></i></span>
+                <div class="me-search-xs me-visible-xs">
+                    <input type="search" name="s" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" placeholder="' . esc_attr( __("Type here and hit enter...", "enginethemes") ) . '">
+                    <i id="mobile-search-btn" class="icon-me-search me-search-btn"></i>
                 </div>
             </form>';
+    } else {
+        $form = '<form role="search" method="get" class="search-form" action="' . $url . '">
+                <div class="me-search me-hidden-xs">
+                    <input type="text" class="search-field" placeholder="' .  esc_attr( __("Type here and hit enter...", "enginethemes") ) . '" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" name="keyword" />
+                    <i id="search-btn" class="icon-me-search me-search-btn"></i>
+                </div>
+            </form>
+            <form method="get" class="mobile-search-form" action="' . $url . '">
+                <span class="me-search-btn-xs me-visible-xs"><i class="icon-me-search me-search-btn"></i></span>
+                <div class="me-search-xs me-visible-xs">
+                    <input type="text" name="s" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" placeholder="' . esc_attr( __("Type here and hit enter...", "enginethemes") ) . '">
+                    <i id="mobile-search-btn" class="icon-me-search me-search-btn"></i>
+                </div>
+            </form>';
+
+
     }
-        
+
     /**
      * Filters the HTML output of the search form.
      *
