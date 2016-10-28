@@ -192,7 +192,7 @@ class ME_Order {
     }
 
     public function get_order_detail_url() {
-        return me_get_order_url( 'transaction_detail', 'order-id', $this->id);
+        return get_the_permalink($this->id);
     }
 
     public function get_cancel_url() {
