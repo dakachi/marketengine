@@ -63,8 +63,6 @@
                     FilesAdded: function(up, files) {
                         var current = $(preview).find('li').size();
                         var totalfile = files.length + current;
-                        console.log(current);
-                        console.log(files.length);
                         if(options.multi) {
                             if(totalfile > options.maxcount) {
                                 alert(me_globals.limitFile + options.maxcount);

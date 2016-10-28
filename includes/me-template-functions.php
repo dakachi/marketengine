@@ -515,6 +515,7 @@ function marketengine_get_search_form($echo = true) {
     if(is_tax( 'listing_category' )) {
         $url = get_term_link( get_queried_object(), 'listing_category' );
     }
+    
     if ('html5' == $format) {
         $form = '<form role="search" method="get" class="search-form" action="' . $url . '">
                 <label>
@@ -532,7 +533,7 @@ function marketengine_get_search_form($echo = true) {
                 </div>
             </form>';
     }
-
+        
     /**
      * Filters the HTML output of the search form.
      *
