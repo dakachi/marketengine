@@ -15,7 +15,11 @@
 
 	</div>
 
-	<?php if( !me_get_user_rate_listing_score($listing_obj->ID, $transaction->post_author) && !$transaction->has_status('me-pending') ) : ?>
+	<?php
+		$seller = $listing_obj->get_author();
+		$can_rate =  $seller === get_current_user_id();
+	?>
+	<?php if( $can_rate  && !me_get_user_rate_listing_score($listing_obj->ID, $transaction->post_author) && !$transaction->has_status('me-pending') ) : ?>
 		<a class="me-orderlisting-review" href="<?php echo add_query_arg(array('id' => $listing_obj->ID, 'action' => 'review')); ?>">
 			<?php _e('RATE &amp; REVIEW NOW', 'enginethemes'); ?>
 		</a>
