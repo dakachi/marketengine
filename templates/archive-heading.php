@@ -17,6 +17,9 @@ global $wp_query;
 	<?php if(empty($_GET['type']) || $_GET['type'] != 'contact') : ?>
 	<div class="me-sort-listing pull-right">
 		<form method="get">
+
+			<?php do_action('marketengine_before_filter_listing_form'); ?>
+
 			<select name="orderby" id="listing-orderby">
 				<?php /* <option <?php selected( $selected, '') ?> value=""><?php _e("Default Sort", "enginethemes"); ?></option>
 				<option <?php selected( $selected, 'rating') ?> value="rating"><?php _e("Sort by average rating", "enginethemes"); ?></option> */ ?>
@@ -31,6 +34,12 @@ global $wp_query;
 			<?php if(!empty($_GET['price-max'])) : ?>
 				<input type="hidden" name="price-max" value="<?php echo $_GET['price-max'];  ?>" ?>
 			<?php  endif; ?>
+            <?php if (!empty($_GET['keyword'])): ?>
+                <input type="hidden" name="keyword" value="<?php echo esc_html( $_GET['keyword'] ); ?>" ?>
+            <?php endif;?>
+
+            <?php do_action('marketengine_after_filter_listing_form'); ?>
+
 		</form>
 	</div>
 	<?php endif; ?>
