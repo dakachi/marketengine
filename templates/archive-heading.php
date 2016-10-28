@@ -20,7 +20,7 @@ global $wp_query;
 
 			<?php do_action('marketengine_before_filter_listing_form'); ?>
 
-			<select name="orderby" id="listing-orderby">
+			<select class="me-chosen-select" name="orderby" id="listing-orderby">
 				<?php /* <option <?php selected( $selected, '') ?> value=""><?php _e("Default Sort", "enginethemes"); ?></option>
 				<option <?php selected( $selected, 'rating') ?> value="rating"><?php _e("Sort by average rating", "enginethemes"); ?></option> */ ?>
 				<option <?php selected( $selected, 'date') ?> value="date"><?php _e("Sort by Newest", "enginethemes"); ?></option>
