@@ -15,6 +15,7 @@ $first_name = isset($_POST['first_name']) ? $_POST['first_name'] : $user->first_
 $last_name = isset($_POST['last_name']) ? $_POST['last_name'] : $user->last_name;
 $location = isset($_POST['location']) ? $_POST['location'] : $user->location;
 $paypal_email = isset($_POST['paypal_email']) ? $_POST['paypal_email'] : $user->paypal_email;
+$user_avatar = $user->get_user_avatar_id();
 ?>
 
 <?php do_action('marketengine_before_edit_user_profile_form', $user); ?>
@@ -31,7 +32,7 @@ $paypal_email = isset($_POST['paypal_email']) ? $_POST['paypal_email'] : $user->
 		        me_get_template('upload-file/upload-form', array(
 		            'id' => 'upload_user_avatar',
 		            'name' => 'user_avatar',
-		            'source' => 802,
+		            'source' => $user_avatar,
 		            'button' => 'change-avatar-user',
 		            'extension' => 'jpg,jpeg,gif,png',
 		            'multi' => false,
