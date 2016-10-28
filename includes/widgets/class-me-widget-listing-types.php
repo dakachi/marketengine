@@ -71,7 +71,7 @@ class ME_Widget_Listing_Types extends WP_Widget {
 
                 <div class="me-listingtype-filter">
                     <label>
-                        <input type="radio" name="type" value="<?php echo $key; ?>" <?php checked( $key, $current); ?> onclick="window.location.href='<?php esc_attr( $link ); ?>'">
+                        <input type="radio" name="type" value="<?php echo $key; ?>" <?php checked( $key, $current); ?> onclick="window.location.href='<?php echo esc_attr( $link ); ?>'">
                         <a href="<?php echo esc_attr( $link ); ?>"><?php echo $type; ?></a>
                     </label>
                 </div>
