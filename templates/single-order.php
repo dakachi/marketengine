@@ -18,7 +18,7 @@ get_header();
             <?php endif; ?>
             </div>
 
-            <div class="me-breadcrumb">
+            <div class="">
             <?php //TODO: style lai cho nay ?>
             <?php if( $buyer ) : ?>
                 <a href="<?php echo me_get_auth_url('purchases'); ?>"><?php _e('My Transactions'); ?></a>
