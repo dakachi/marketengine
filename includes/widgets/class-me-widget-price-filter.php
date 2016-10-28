@@ -63,6 +63,7 @@ class ME_Widget_Price_Filter extends WP_Widget {
 
         ?>
         <form method="get" action="<?php echo $form_action; ?>">
+            <?php do_action('marketengine_before_price_filter_form'); ?>
             <div class="me-title-sidebar">
                 <h2><?php echo $title; ?></h2>
             </div>
@@ -78,8 +79,12 @@ class ME_Widget_Price_Filter extends WP_Widget {
                 <input class="me-filter-btn" type="submit" value="<?php _e("Filter", "enginethemes");?>">
             </div>
             <?php if (!empty($_GET['orderby'])): ?>
-                <input type="hidden" name="orderby" value="<?php echo $_GET['orderby']; ?>" ?>
+                <input type="hidden" name="orderby" value="<?php echo esc_html( $_GET['orderby'] ); ?>" ?>
             <?php endif;?>
+            <?php if (!empty($_GET['keyword'])): ?>
+                <input type="hidden" name="keyword" value="<?php echo esc_html( $_GET['keyword'] ); ?>" ?>
+            <?php endif;?>
+            <?php do_action('marketengine_after_price_filter_form'); ?>
         </form>
         <?php
 

@@ -65,7 +65,7 @@ $total = 0;
 			<?php wp_nonce_field('me-pay'); ?>
 			<input type="hidden" name="order_id" value="<?php echo $transaction->id; ?>" />
 			<input type="hidden" name="payment_method" value="ppadaptive" />
-			<input class="me-checkout-submit-btn" type="submit" name="checkout" value="<?php _e("MAKE COMPLETED", "enginethemes"); ?>">
+			<input class="me-checkout-submit-btn" type="submit" name="checkout" value="<?php _e("COMPLETE PAYMENT", "enginethemes"); ?>">
 		</form>
 	<?php endif; ?>
 	</div>
