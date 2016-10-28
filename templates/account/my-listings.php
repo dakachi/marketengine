@@ -115,6 +115,6 @@ $query = new WP_Query( $args );
 	<!--// marketengine-content -->
 <?php
 else:
-	me_get_template('loop/content-listing-none');
+	me_get_template('account/my-listing-none');
 endif;
 ?>
