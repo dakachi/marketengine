@@ -9,18 +9,20 @@ $note = $transaction->post_excerpt;
 	<div class="me-row">
 		<div class="me-col-md-7">
 			<div class="me-row">
-				<div class="me-col-md-6 me-col-sm-6">
+				<div class="me-col-md-12 me-col-sm-12">
 					<div class="me-orderbill-info">
 						<h5><?php echo __( 'Billed to:', 'enginethemes' ); ?></h5>
 						<p><?php me_print_buyer_information( $billing_address ); ?></p>
 					</div>
 				</div>
+				<?php /*
 				<div class="me-col-md-6 me-col-sm-6">
 					<div class="me-ordership-info">
 						<h5><?php echo __( 'Shipped to:', 'enginethemes' ); ?></h5>
 						<p><?php me_print_buyer_information( $shipping_address ); ?></p>
 					</div>
 				</div>
+				*/?>
 			</div>
 		</div>
 		<div class="me-col-md-5">
