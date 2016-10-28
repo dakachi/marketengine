@@ -74,9 +74,9 @@ function me_get_user_rate_listing_score($listing_id, $user_id) {
     }
 
     $comments = get_comments($args);
-    
+
     if(!empty($comments)) {
-        return get_comment_meta( $comments[0]->comment_ID, '_me_rating_score', true );    
+        return get_comment_meta( $comments[0]->comment_ID, '_me_rating_score', true );
     }
     return 0;
 }
