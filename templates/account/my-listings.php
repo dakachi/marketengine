@@ -23,6 +23,9 @@ $query = new WP_Query( $args );
 
 ?>
 	<div class="marketengine-content marketengine-snap-column listing-post">
+		
+		<?php if( $query->have_posts() ): ?>
+		
 		<div class="marketengine-filter">
 			<div class="marketengine-filter-listing pull-right">
 				<div class="filter-listing-status">
@@ -41,8 +44,6 @@ $query = new WP_Query( $args );
 				</div>
 			</div>
 		</div>
-
-		<?php if( $query->have_posts() ): ?>
 
 		<div class="marketengine-listing-post">
 			<ul class="me-listing-post me-row">
