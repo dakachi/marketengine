@@ -20,7 +20,7 @@ add_filter('insert_user_meta', 'me_add_user_meta');
 
 
 function me_get_avatar($user_id) {
-	$user_avatar = get_user_meta( $this->id, 'user_avatar', true);
+	$user_avatar = get_user_meta( $user_id, 'user_avatar', true);
     if($user_avatar) {
         $avatar_url = wp_get_attachment_url( $user_avatar );
         return '<img alt="" src="'.$avatar_url.'" class="avatar avartar-{$size} photo" height="{$size}" width="{$size}">';
