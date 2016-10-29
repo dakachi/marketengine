@@ -72,28 +72,5 @@ class ME_Template_Loader {
         return $template;
     }
 
-    public static function comments_template_loader($template) {
-        if (get_post_type() !== 'product') {
-            return $template;
-        }
-
-        $check_dirs = array(
-            trailingslashit(get_stylesheet_directory()) . ME()->template_path(),
-            trailingslashit(get_template_directory()) . ME()->template_path(),
-            trailingslashit(get_stylesheet_directory()),
-            trailingslashit(get_template_directory()),
-            trailingslashit(ME()->plugin_path()) . 'templates/',
-        );
-
-        if (ME_TEMPLATE_DEBUG_MODE) {
-            $check_dirs = array(array_pop($check_dirs));
-        }
-
-        foreach ($check_dirs as $dir) {
-            if (file_exists(trailingslashit($dir) . 'single-product-reviews.php')) {
-                return trailingslashit($dir) . 'single-product-reviews.php';
-            }
-        }
-    }
 }
 ME_Template_Loader::init_hooks();
