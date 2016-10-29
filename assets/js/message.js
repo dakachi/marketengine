@@ -1,5 +1,24 @@
 /* global me_globals.ajaxurl, wpAjax*/
 (function($) {
+
+    $.fn.MEmessage = function(options) {
+        var setting = {
+            type : 'inquiry'
+        };
+
+        var file_limit = 0;
+
+        if (options) {
+            options = $.extend(setting, options);
+        } else {
+            options = $.extend(setting);
+        }
+
+        return $(this).each(function(){
+            
+        });
+    }
+
     var paged = 2;
     var full = false;
     $('#messages-container').scroll(function() {
