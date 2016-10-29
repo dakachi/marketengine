@@ -7,7 +7,6 @@
  * @package 	MarketEngine/Templates
  * @version     1.0.0
  */
-
 $paged = get_query_var('paged') ? get_query_var('paged') : 1;
 $args = array(
 	'post_type'		=> 'inquiry',
