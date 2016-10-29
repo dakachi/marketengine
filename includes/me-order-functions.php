@@ -419,38 +419,63 @@ function me_delete_order_item_meta($order_item_id, $meta_key, $meta_value = '') 
 }
 
 function me_order_table_header( $type ) {
-    if($type == 'order') {
-        return array(
-            __("ORDER ID", "enginethemes"),
-            __("STATUS", "enginethemes"),
-            __("AMOUNT", "enginethemes"),
-            __("DATE OF ORDER", "enginethemes"),
-            __("LISTING", "enginethemes"),
-        );
-    } else {
-        return array(
-            __("TRANSACTION ID", "enginethemes"),
-            __("STATUS", "enginethemes"),
-            __("AMOUNT", "enginethemes"),
-            __("DATE OF ORDER", "enginethemes"),
-            __("LISTING", "enginethemes"),
-        );
+    $table_header = array(
+        __("ORDER ID", "enginethemes"),
+        __("STATUS", "enginethemes"),
+        __("AMOUNT", "enginethemes"),
+        __("DATE OF ORDER", "enginethemes"),
+        __("LISTING", "enginethemes"),
+    );
+
+    if($type === 'transaction') {
+        $table_header[0] = __("TRANSACTION ID", "enginethemes");
     }
+
+    return $table_header;
 }
 
-function me_export_orders( $report_body, $type ) {
-    if( empty($report_body) ) {
-        return;
+function me_report_data_init($query) {
+    $data = array();
+    $orders = new WP_Query($query);
+
+    if( !$orders->have_posts() ) return;
+    while( $orders->have_posts() ) {
+        $orders->the_post();
+
+        $order = new ME_Order( get_the_ID() );
+
+        $order_number = '#'.get_the_ID();
+        $order_status = get_post_status_object( get_post_status( get_the_ID() ) );
+        $order_total = me_price_format( $order->get_total() );
+        $order_date = get_the_date(get_option('date_format'), get_the_ID());
+
+        $listing = $order->get_listing();
+        $listing_title = get_the_title( $listing['_listing_id'][0] );
+
+        $data[] = array(
+            $order_number,
+            $order_status->label,
+            $order_total,
+            $order_date,
+            $listing_title
+        );
     }
+    wp_reset_postdata();
+    return $data;
+}
 
+// TODO: ajax
+function me_export_orders( $query, $type ) {
     $header = me_order_table_header( $type );
-    $report_body = json_decode($report_body);
 
-    // $table_data = array_merge($header, $report_body);
+    $query = json_decode($query);
+
+    $table_data = me_report_data_init($query);
 
     $file = fopen("test_report.csv", "w");
+
     fputcsv($file, $header);
-    foreach( $report_body as $key => $row) {
+    foreach( $table_data as $key => $row) {
         fputcsv($file, $row);
     }
 
