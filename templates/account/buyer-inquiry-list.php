@@ -27,7 +27,7 @@ $query = new ME_Message_Query($args);
 		<span><?php echo __('Filter list', 'enginethemes'); ?></span>
 	</div>
 	<!--/Mobile-->
-	<?php me_get_template('global/inquiry-filter'); ?>
+	<?php me_get_template('global/inquiry-filter', array('page' => 'purchases') ); ?>
 
 	<div class="me-table me-order-inquiries-table">
 
