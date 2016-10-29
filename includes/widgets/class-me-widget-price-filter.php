@@ -51,6 +51,9 @@ class ME_Widget_Price_Filter extends WP_Widget {
         }
 
         $prices = $this->get_filtered_price();
+        echo "<pre>";
+        print_r($prices);
+        echo "</pre>";
 
         $min = $prices->min_price;
         $max = $prices->max_price;
@@ -173,6 +176,8 @@ class ME_Widget_Price_Filter extends WP_Widget {
         }
 
         $sql .= $tax_query_sql['where'] . $meta_query_sql['where'];
+
+        echo $sql;
 
         return $wpdb->get_row($sql);
     }
