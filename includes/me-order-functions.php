@@ -163,8 +163,25 @@ function me_filter_order_query( $query, $type = '') {
     }
 
     if( isset($query['from_date']) || isset($query['to_date']) ){
-        $after = isset($query['from_date']) ? $query['from_date'] : '';
-        $before = isset($query['to_date']) ? $query['to_date'] . ' 23:59:59' : '';
+        $before = $after = '';
+        if( isset($query['from_date']) && !empty($query['from_date']) ){
+            if( preg_match("/^(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])\/[0-9]{4}$/", $query['from_date']) ){
+                $after = $query['from_date'];
+            } else {
+                $args['post__in'][] = -1;
+                return $args;
+            }
+        }
+
+        if( isset($query['to_date']) && !empty($query['to_date']) ){
+            if( preg_match("/^(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])\/[0-9]{4}$/", $query['to_date']) ){
+                $before = $query['to_date'] . ' 23:59:59' ;
+            } else {
+                $args['post__in'][] = -1;
+                return $args;
+            }
+        }
+
         $args['date_query'] = array(
             array(
                 'after'     => $after,

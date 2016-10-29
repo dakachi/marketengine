@@ -18,6 +18,7 @@ $args = array_merge(apply_filters( 'me_filter_order', $_GET, $type ), $args);
 $all_order_args = json_encode( array_merge(apply_filters( 'me_filter_order', $_GET, $type ), array('post_type' => 'me_order', 'posts_per_page' => -1) ) );
 
 query_posts($args);
+
 ?>
 <!--Mobile-->
 <div class="me-orderlist-filter-tabs">
