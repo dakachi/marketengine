@@ -584,3 +584,53 @@ function marketengine_get_search_form($echo = true) {
     }
 
 }
+
+/**
+ * Display the archive title based on the queried object.
+ *
+ * @since 1.0
+ *
+ * @see marketengine_get_the_archive_title()
+ *
+ * @param string $before Optional. Content to prepend to the title. Default empty.
+ * @param string $after  Optional. Content to append to the title. Default empty.
+ */
+function marketengine_the_archive_title( $before = '', $after = '' ) {
+    $title = marketengine_get_the_archive_title();
+
+    if ( ! empty( $title ) ) {
+        echo $before . $title . $after;
+    }
+}
+
+/**
+ * Retrieve the archive listing title based on the queried object.
+ *
+ * @since 1.0
+ *
+ * @return string Archive title.
+ */
+function marketengine_get_the_archive_title() {
+    if ( is_post_type_archive() ) {
+        $title = sprintf( __( 'Archives: %s', 'enginethemes' ), post_type_archive_title( '', false ) );
+        if(get_query_var( 'keyword' )) {
+            $title = sprintf(__("Search result for: %s", "enginethemes"), esc_attr( get_query_var( 'keyword' ) ));
+        }
+
+    } elseif ( is_tax() ) {
+        $tax = get_taxonomy( get_queried_object()->taxonomy );
+        /* translators: 1: Taxonomy singular name, 2: Current taxonomy term */
+        $title = sprintf( __( '%1$s: %2$s' ), $tax->labels->singular_name, single_term_title( '', false ) );
+    } else {
+        $title = __( 'Archives', 'enginethemes' );
+    }
+
+    /**
+     * Filters the archive title.
+     *
+     * @since 4.1.0
+     *
+     * @param string $title Archive title to be displayed.
+     */
+    return apply_filters( 'marketengine_get_the_archive_title', $title );
+}

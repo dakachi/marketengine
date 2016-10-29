@@ -9,7 +9,7 @@ global $wp_query;
 <div class="me-bar-shop">
 	<div class="me-title-shop pull-left">
 		<?php
-			the_archive_title( '<h2>', '</h2>' );
+			marketengine_the_archive_title( '<h2>', '</h2>' );
 			the_archive_description( '<div class="taxonomy-description">', '</div>' );
 		?>
 		<span><?php printf(_n( 'One item in total', "%d items in totals", $wp_query->found_posts, "enginethemes" ), $wp_query->found_posts) ?></span>
