@@ -7,12 +7,17 @@
  * @package 	MarketEngine/Templates
  * @version     1.0.0
  */
-
+global $wp;
+if ('' === get_option('permalink_structure')) {
+    $form_action = remove_query_arg(array('page', 'paged'), add_query_arg($wp->query_string, '', home_url($wp->request)));
+} else {
+    $form_action = preg_replace('%\/page/[0-9]+%', '', home_url(trailingslashit($wp->request)));
+}
 $type = isset($type) ? $type : 'transaction';
 ?>
 
 <div class="me-orderlist-filter">
-	<form id="me-transaction-filter-form" action="#">
+	<form id="me-transaction-filter-form" action="<?php echo $form_action; ?>">
 		<div class="me-row">
 
 			<div class="me-col-md-2">

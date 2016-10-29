@@ -8,7 +8,6 @@
  * @version     1.0.0
  */
 
-
 $args = array(
 	'post_type' => 'me_order',
 	'paged' 	=> get_query_var('paged')
