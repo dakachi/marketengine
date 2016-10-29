@@ -166,8 +166,156 @@ class ME_Widget_Price_Filter extends WP_Widget {
                     AND {$wpdb->posts}.post_status = 'publish'
                     AND price_meta.meta_key IN ('" . implode("','", array_map('esc_sql', array('listing_price'))) . "')
                     AND price_meta.meta_value > '' ";
+
+        if(get_query_var( 'keyword' )) {
+            $search = esc_sql( get_query_var('keyword') );
+            $sql .= $this->parse_search(array('s' => $search ));
+        }
+
         $sql .= $tax_query_sql['where'] . $meta_query_sql['where'];
 
         return $wpdb->get_row($sql);
+    }
+
+    /**
+     * Generate SQL for the WHERE clause based on passed search terms.
+     *
+     * @since 3.7.0
+     *
+     * @global wpdb $wpdb WordPress database abstraction object.
+     *
+     * @param array $q Query variables.
+     * @return string WHERE clause.
+     */
+    protected function parse_search( $q ) {
+        global $wpdb;
+
+        $search = '';
+
+        // added slashes screw with quote grouping when done early, so done later
+        $q['s'] = stripslashes( $q['s'] );
+        
+        $q['s'] = str_replace( array( "\r", "\n" ), '', $q['s'] );
+        $q['search_terms_count'] = 1;
+        if ( ! empty( $q['sentence'] ) ) {
+            $q['search_terms'] = array( $q['s'] );
+        } else {
+            if ( preg_match_all( '/".*?("|$)|((?<=[\t ",+])|^)[^\t ",+]+/', $q['s'], $matches ) ) {
+                $q['search_terms_count'] = count( $matches[0] );
+                $q['search_terms'] = $this->parse_search_terms( $matches[0] );
+                // if the search string has only short terms or stopwords, or is 10+ terms long, match it as sentence
+                if ( empty( $q['search_terms'] ) || count( $q['search_terms'] ) > 9 )
+                    $q['search_terms'] = array( $q['s'] );
+            } else {
+                $q['search_terms'] = array( $q['s'] );
+            }
+        }
+
+        $n = ! empty( $q['exact'] ) ? '' : '%';
+        $searchand = '';
+        $q['search_orderby_title'] = array();
+        foreach ( $q['search_terms'] as $term ) {
+            // Terms prefixed with '-' should be excluded.
+            $include = '-' !== substr( $term, 0, 1 );
+            if ( $include ) {
+                $like_op  = 'LIKE';
+                $andor_op = 'OR';
+            } else {
+                $like_op  = 'NOT LIKE';
+                $andor_op = 'AND';
+                $term     = substr( $term, 1 );
+            }
+
+            if ( $n && $include ) {
+                $like = '%' . $wpdb->esc_like( $term ) . '%';
+                $q['search_orderby_title'][] = $wpdb->prepare( "$wpdb->posts.post_title LIKE %s", $like );
+            }
+
+            $like = $n . $wpdb->esc_like( $term ) . $n;
+            $search .= $wpdb->prepare( "{$searchand}(($wpdb->posts.post_title $like_op %s) $andor_op ($wpdb->posts.post_excerpt $like_op %s) $andor_op ($wpdb->posts.post_content $like_op %s))", $like, $like, $like );
+            $searchand = ' AND ';
+        }
+
+        if ( ! empty( $search ) ) {
+            $search = " AND ({$search}) ";
+            if ( ! is_user_logged_in() )
+                $search .= " AND ($wpdb->posts.post_password = '') ";
+        }
+
+        return $search;
+    }
+
+    /**
+     * Check if the terms are suitable for searching.
+     *
+     * Uses an array of stopwords (terms) that are excluded from the separate
+     * term matching when searching for posts. The list of English stopwords is
+     * the approximate search engines list, and is translatable.
+     *
+     * @since 3.7.0
+     *
+     * @param array $terms Terms to check.
+     * @return array Terms that are not stopwords.
+     */
+    protected function parse_search_terms( $terms ) {
+        $strtolower = function_exists( 'mb_strtolower' ) ? 'mb_strtolower' : 'strtolower';
+        $checked = array();
+
+        $stopwords = $this->get_search_stopwords();
+
+        foreach ( $terms as $term ) {
+            // keep before/after spaces when term is for exact match
+            if ( preg_match( '/^".+"$/', $term ) )
+                $term = trim( $term, "\"'" );
+            else
+                $term = trim( $term, "\"' " );
+
+            // Avoid single A-Z and single dashes.
+            if ( ! $term || ( 1 === strlen( $term ) && preg_match( '/^[a-z\-]$/i', $term ) ) )
+                continue;
+
+            if ( in_array( call_user_func( $strtolower, $term ), $stopwords, true ) )
+                continue;
+
+            $checked[] = $term;
+        }
+
+        return $checked;
+    }
+
+    /**
+     * Retrieve stopwords used when parsing search terms.
+     *
+     * @since 3.7.0
+     *
+     * @return array Stopwords.
+     */
+    protected function get_search_stopwords() {
+        if ( isset( $this->stopwords ) )
+            return $this->stopwords;
+
+        /* translators: This is a comma-separated list of very common words that should be excluded from a search,
+         * like a, an, and the. These are usually called "stopwords". You should not simply translate these individual
+         * words into your language. Instead, look for and provide commonly accepted stopwords in your language.
+         */
+        $words = explode( ',', _x( 'about,an,are,as,at,be,by,com,for,from,how,in,is,it,of,on,or,that,the,this,to,was,what,when,where,who,will,with,www',
+            'Comma-separated list of search stopwords in your language' ) );
+
+        $stopwords = array();
+        foreach ( $words as $word ) {
+            $word = trim( $word, "\r\n\t " );
+            if ( $word )
+                $stopwords[] = $word;
+        }
+
+        /**
+         * Filters stopwords used when parsing search terms.
+         *
+         * @since 3.7.0
+         *
+         * @param array $stopwords Stopwords.
+         */
+        $this->stopwords = apply_filters( 'wp_search_stopwords', $stopwords );
+        return $this->stopwords;
     }
 }
