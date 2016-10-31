@@ -31,7 +31,6 @@
                 multi: <?php echo $multi ? "true" : "false"; ?>,
                 name: <?php echo "'" . esc_js($name) . "'" ?>,
                 extension: 'jpg,jpeg,gif,png',
-                
                 upload_url: '<?php echo admin_url('admin-ajax.php') . '?nonce=' . wp_create_nonce('marketengine') ?>',
                 <?php echo isset($maxsize) ? "maxsize : '$maxsize',\n" : ""; ?>
                 <?php echo isset($maxwidth) ? "maxwidth : $maxwidth,\n" : ""; ?>

@@ -23,8 +23,6 @@
             maxheight: 0
         };
 
-        var file_limit = 0;
-
         if (options) {
             options = $.extend(setting, options);
         } else {
