@@ -169,15 +169,15 @@ class ME_Post_Types {
             'show_in_admin_status_list' => true,
             'label_count'               => _n_noop('Archived <span class="count">(%s)</span>', 'Archived <span class="count">(%s)</span>'),
         ));
-        register_post_status('me-paused', array(
-            'label'                     => _x('Paused', 'listing'),
-            'public'                    => false,
-            'exclude_from_search'       => false,
-            'private'                   => true,
-            'show_in_admin_all_list'    => true,
-            'show_in_admin_status_list' => true,
-            'label_count'               => _n_noop('Paused <span class="count">(%s)</span>', 'Paused <span class="count">(%s)</span>'),
-        ));
+        // register_post_status('me-paused', array(
+        //     'label'                     => _x('Paused', 'listing'),
+        //     'public'                    => false,
+        //     'exclude_from_search'       => false,
+        //     'private'                   => true,
+        //     'show_in_admin_all_list'    => true,
+        //     'show_in_admin_status_list' => true,
+        //     'label_count'               => _n_noop('Paused <span class="count">(%s)</span>', 'Paused <span class="count">(%s)</span>'),
+        // ));
 
         // TODO: tam thoi de day
         register_post_type('me_order', array(
