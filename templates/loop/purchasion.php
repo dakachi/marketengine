@@ -10,6 +10,7 @@ $pricing_unit = $listing->get_pricing_unit();
 		<div class="result-rating" data-score="<?php echo $listing->get_review_score(); ?>"></div>
 	</div>
 </div>
+<?php if(get_current_user_id() != $listing->post_author) : ?>
 <div class="me-buy-now">
 	<form method="post">
 		<input type="hidden" required min="1" value="1" name="qty" />
@@ -21,3 +22,4 @@ $pricing_unit = $listing->get_pricing_unit();
 		<input type="submit" class="me-buy-now-btn" value="<?php _e("BUY NOW", "enginethemes"); ?>">
 	</form>
 </div>
+<?php endif; ?>
