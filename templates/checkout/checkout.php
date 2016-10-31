@@ -28,10 +28,12 @@ $cart_items = me_get_cart_items();
 				?>
 			</div>
 			<div class="me-col-md-3">
-				<?php 
-				// seller information
-				me_get_template('user-info', array('author_id' => $listing->post_author));
-				?>
+				<div class="me-checkout-sidebar">
+					<?php 
+					// seller information
+					me_get_template('user-info', array('author_id' => $listing->post_author));
+					?>
+				</div>
 			</div>
 		</div>
 		
