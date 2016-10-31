@@ -11,9 +11,9 @@
         var full = false;
         return $(this).each(function(e) {
             var $elem = $(this);
-            $elem.find('ul').scroll(function(e) {
-                var $message_container = $(e.currentTarget),
-                    pos = $message_container.scrollTop(),
+            var $message_container = $elem.find('ul');
+            $message_container.scroll(function(e) {
+                var pos = $message_container.scrollTop(),
                     h = $message_container.height();
                 // check scroll and ajax get messsages
                 if (pos == 0 && !full) {
@@ -57,7 +57,12 @@
                             _wpnonce: settings.nonce
                         },
                         beforeSend: function() {},
-                        success: function(response, xhr) {}
+                        success: function(response, xhr) {
+                            if(response.success) {
+                                console.log($message_container);
+                                $message_container.append(response.content);
+                            }
+                        }
                     });
                 }
                 // shift enter new line
