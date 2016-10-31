@@ -19,10 +19,23 @@ $cart_items = me_get_cart_items();
 	}
 	?>
 	<form method="post">
+		<div class="me-row">
+			<div class="me-col-md-9">
+				<?php
+				me_get_template('checkout/billing');
+				// note
+				me_get_template('checkout/note');
+				?>
+			</div>
+			<div class="me-col-md-3">
+				<?php 
+				// seller information
+				me_get_template('user-info', array('author_id' => $listing->post_author));
+				?>
+			</div>
+		</div>
+		
 		<?php
-		me_get_template('checkout/billing');
-		// note
-		me_get_template('checkout/note');
 		// listing details
 		me_get_template('checkout/order-details', array('cart_items' => $cart_items));
 		// payment gateways
