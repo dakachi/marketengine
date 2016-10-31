@@ -1,6 +1,7 @@
 <div class="me-item-contact">
 	<span class="post-price"><?php _e("Contact", "enginethemes"); ?></span>
 </div>
+<?php if(get_current_user_id() != $listing->post_author) : ?>
 <div class="me-contact-now">
 	<form method="post">
 		<?php do_action('marketengine_single_listing_send_inquiry_form_start'); ?>
@@ -14,3 +15,4 @@
 		<?php do_action('marketengine_single_listing_send_inquiry_form_end'); ?>
 	</form>
 </div>
+<?php endif; ?>
