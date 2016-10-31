@@ -56,7 +56,7 @@ function me_listings_status_list() {
         // 'me-pending'  => __("Pending", "enginethemes"),
         'me-archived' => __("Archived", "enginethemes"),
         // 'draft'       => __("Draft", "enginethemes"),
-        'me-paused'   => __("Paused", "enginethemes"),
+        // 'me-paused'   => __("Paused", "enginethemes"),
     );
     return apply_filters('marketengine_listing_status_list', $listing_status);
 }

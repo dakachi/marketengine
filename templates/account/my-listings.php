@@ -9,7 +9,7 @@
  */
 
 $paged = get_query_var('paged') ? get_query_var('paged') : 1;
-$listing_status = isset($_GET['status']) ? $_GET['status'] : 'any';
+$listing_status = isset($_GET['status']) ? $_GET['status'] : 'publish';
 $args = array(
 	'orderby'          => 'date',
 	'order'            => 'DESC',
