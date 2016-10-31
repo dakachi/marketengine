@@ -41,6 +41,27 @@
                     });
                 }
             });
+            // send message
+            $elem.find('textarea').keydown(function(e) {
+                // enter send message
+                if (e.keyCode == '13' && !e.shiftKey) {
+                    e.preventDefault();
+                    $.ajax({
+                        type : 'post',
+                        url: me_globals.ajaxurl,
+                        data: {
+                            action : 'me_send_message',
+                            type : settings.type,
+                            inquiry_id : settings.parent,
+                            content : $(this).val(),
+                            _wpnonce: settings.nonce
+                        },
+                        beforeSend: function() {},
+                        success: function(response, xhr) {}
+                    });
+                }
+                // shift enter new line
+            });
         });
     }
     var contact_paged = 2;
@@ -49,7 +70,6 @@
         var pos = $('#contact-list').scrollTop();
         var h = $('#contact-list').height();
         if (pos >= h && !loading) {
-            console.log(pos + ' ' + h);
             $.ajax({
                 url: me_globals.ajaxurl,
                 type: 'get',

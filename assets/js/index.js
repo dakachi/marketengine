@@ -52,7 +52,7 @@
         }
     });
 
-    $('.me-contact-messages').MEmessage({
+    $('.me-contact-messages-wrap').MEmessage({
         paged : 2,
         nonce : $('#_msg_wpnonce').val(),
         parent : 62,

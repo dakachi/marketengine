@@ -72,7 +72,10 @@ $total = 0;
 		<input class="me-checkout-submit-btn" type="submit" name="checkout" value="<?php _e("MAKE PAYMENT", "enginethemes"); ?>">
 	</div>
 </div>
-
+<?php 
+// seller information
+me_get_template('user-info', array('author_id' => $listing->post_author));
+?>
 <?php do_action( 'marketengine_after_checkout_form' ); ?>
 
 <?php wp_reset_postdata(); ?>
