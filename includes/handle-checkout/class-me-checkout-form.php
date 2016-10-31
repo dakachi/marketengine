@@ -109,7 +109,6 @@ class ME_Checkout_Form {
                 exit;
             }
         }
-        
     }
 
     public static function send_message() {
@@ -119,7 +118,11 @@ class ME_Checkout_Form {
             if (is_wp_error($result)) {
                 wp_send_json( array('success' => 'false', 'msg' => $result->get_error_message()) );
             } else {
-                wp_send_json( array('success' => true, 'content' => esc_html( $_POST['content'] )) );
+                $message = me_get_message($result);
+                ob_start();
+                me_get_template('inquiry/message-item', array('message' => $message));
+                $content = ob_get_clean();
+                wp_send_json( array('success' => true, 'content' => $content ) );
             }
         }
     }
