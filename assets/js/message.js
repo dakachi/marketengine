@@ -11,9 +11,9 @@
         var full = false;
         return $(this).each(function(e) {
             var $elem = $(this);
-            $elem.find('ul').scroll(function(e) {
-                var $message_container = $(e.currentTarget),
-                    pos = $message_container.scrollTop(),
+            var $message_container = $elem.find('ul');
+            $message_container.scroll(function(e) {
+                var pos = $message_container.scrollTop(),
                     h = $message_container.height();
                 // check scroll and ajax get messsages
                 if (pos == 0 && !full) {
@@ -41,12 +41,34 @@
                     });
                 }
             });
-            
-            $elem.find('textarea').on
+            // send message
+            $elem.find('textarea').keydown(function(e) {
+                // enter send message
+                if (e.keyCode == '13' && !e.shiftKey) {
+                    e.preventDefault();
+                    $.ajax({
+                        type : 'post',
+                        url: me_globals.ajaxurl,
+                        data: {
+                            action : 'me_send_message',
+                            type : settings.type,
+                            inquiry_id : settings.parent,
+                            content : $(this).val(),
+                            _wpnonce: settings.nonce
+                        },
+                        beforeSend: function() {},
+                        success: function(response, xhr) {
+                            if(response.success) {
+                                console.log($message_container);
+                                $message_container.append(response.content);
+                            }
+                        }
+                    });
+                }
+                // shift enter new line
+            });
         });
     }
-
-
     var contact_paged = 2;
     var loading = false;
     $('#contact-list').scroll(function() {

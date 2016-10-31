@@ -15,6 +15,8 @@ class ME_Checkout_Form {
 
         add_action('wp_ajax_get_messages', array(__CLASS__, 'fetch_messages'));
         add_action('wp_ajax_get_contact_list', array(__CLASS__, 'fetch_contact_list'));
+        add_action('wp_ajax_me_send_message', array(__CLASS__, 'send_message'));
+        
 
     }
 
@@ -107,17 +109,20 @@ class ME_Checkout_Form {
                 exit;
             }
         }
+    }
 
+    public static function send_message() {
         // send message in an inquiry
         if (isset($_POST['content']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-inquiry-message')) {
             $result = ME_Checkout_Handle::message($_POST);
             if (is_wp_error($result)) {
-                me_wp_error_to_notices($result);
+                wp_send_json( array('success' => 'false', 'msg' => $result->get_error_message()) );
             } else {
-                $redirect = me_get_page_permalink('inquiry');
-                $redirect = add_query_arg(array('inquiry_id' => $_POST['inquiry_id']), $redirect);
-                wp_redirect($redirect);
-                exit;
+                $message = me_get_message($result);
+                ob_start();
+                me_get_template('inquiry/message-item', array('message' => $message));
+                $content = ob_get_clean();
+                wp_send_json( array('success' => true, 'content' => $content ) );
             }
         }
     }

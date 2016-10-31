@@ -184,9 +184,16 @@ class ME_Checkout_Handle {
             'content'    => $content,
             'inquiry_id' => $inquiry_id,
         );
-        return self::insert_message($message_data);
+        $message = self::insert_message($message_data);
+        if(is_wp_error( $message )) {
+            return $message;
+        }
+        return $inquiry_id;
     }
 
+    /**
+     * @return int | WP_Error
+     */
     public static function insert_message($message_data) {
         $inquiry_id = $message_data['inquiry_id'];
         if ($inquiry_id) {
@@ -215,11 +222,11 @@ class ME_Checkout_Handle {
             );
 
             $message_id = me_insert_message($message_data, true);
-            if (is_wp_error($message_id)) {
-                return $message_id;
-            }
+            return $message_id;
+        }else {
+            return new WP_Error('invalid_inquiry', __("Invalid inquiry.", "enginethemes"));
         }
-        return $inquiry_id;
+        
     }
 
     public static function message($data) {
