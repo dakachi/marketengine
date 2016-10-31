@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-global $post;
-$listing = new ME_Listing_Purchasion($post);
 $galleries = $listing->get_galleries();
+
+if(empty($galleries)) return false;
 ?>
 
 <?php do_action('marketengine_before_single_listing_gallery'); ?>

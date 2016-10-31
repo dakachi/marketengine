@@ -87,6 +87,8 @@ class ME_Listing_Handle {
         if (isset($listing_data['listing_gallery'])) {
             //process upload image gallery
             update_post_meta($post, '_me_listing_gallery', $listing_data['listing_gallery']);
+        }else {
+            update_post_meta($post, '_me_listing_gallery', array());
         }
         return $post;
     }

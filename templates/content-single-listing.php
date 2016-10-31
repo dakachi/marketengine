@@ -22,8 +22,8 @@ $listing_status = get_post_status_object($listing->post_status);
 				<?php do_action('marketengine_before_single_listing_details'); ?>
 
 				<div class="marketengine-content-detail">
-					<?php me_get_template('single-listing/gallery');?>
-					<?php me_get_template('single-listing/description');?>
+					<?php me_get_template('single-listing/gallery', array('listing' => $listing));?>
+					<?php me_get_template('single-listing/description', array('listing' => $listing));?>
 					<?php me_get_template('single-listing/rating', array('listing' => $listing));?>
 				</div>
 

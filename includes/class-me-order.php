@@ -144,7 +144,7 @@ class ME_Order {
         }
 
         $post = get_post($order_id);
-        
+
         foreach (get_object_vars($post) as $key => $value) {
             $this->$key = $value;
         }
@@ -192,7 +192,7 @@ class ME_Order {
     }
 
     public function get_order_detail_url() {
-        return me_get_order_url( 'transaction_detail', 'order-id', $this->id);
+        return get_the_permalink($this->id);
     }
 
     public function get_cancel_url() {
@@ -301,7 +301,7 @@ class ME_Order {
                 );
             }
         }
-        return $listing_items; 
+        return $listing_items;
     }
 
     /**
@@ -590,6 +590,22 @@ class ME_Order {
 
     public function get_payment_method() {
         return get_post_meta($this->id, '_me_payment_gateway', true);
+    }
+
+    public function get_dispute_time_limit() {
+        $remaining = 0;
+        if( $this->has_status('me-complete') ) {
+            $completed_date = date(get_option('date_format'), strtotime($this->post_modified));
+            $limit = (int) me_option( 'dispute-time-limit' );
+            $now = date(get_option('date_format'));
+
+            $date = date(get_option('date_format'), strtotime( $completed_date . ' +'. $limit.' days'));
+            $remaining = (strtotime($date) - strtotime($now)) / 86400;
+
+            $remaining = ($remaining < 0) ? 0 : $remaining;
+        }
+
+        return $remaining;
     }
 
 }

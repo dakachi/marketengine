@@ -1,4 +1,5 @@
 jQuery(document).ready(function($) {
+
 	$('#terms-service').on('click', function() {
 		if($(this).is(':checked')) {
 			$('.submit-signup').find('input').removeClass('disable');
@@ -18,7 +19,7 @@ jQuery(document).ready(function($) {
 			$('.me-post-step-'+i).addClass('active');
 		}
 	});
-	
+
 	// me_snap_column < 1140px
 	// me_snap_column < 870px
 	// me_snap_column < 580px
@@ -44,22 +45,22 @@ jQuery(document).ready(function($) {
 	$('.me-fancybox').on('click', function(ev) {
 		ev.preventDefault();
 		var target = ev.currentTarget;
-		var medium_img = $(target).attr('medium-img');  
+		var medium_img = $(target).attr('medium-img');
 		$('.me-large-fancybox').find('img').attr('src', medium_img);
 		magnificItem = $(target).parent('li').index();
 		magnificInstance = false;
 	});
 
-	// $('.me-related-slider').flexslider({
-	// 	slideshow: false,
-	// 	animation: "slide",
-	// 	animationLoop: false,
-	// 	itemWidth: 247,
-	// 	itemMargin: 30,
-	// 	controlNav: false,
-	// 	prevText: '',
-	// 	nextText: ''
-	// });
+	$('.me-related-slider').flexslider({
+		slideshow: false,
+		animation: "slide",
+		animationLoop: false,
+		itemWidth: 247,
+		itemMargin: 30,
+		controlNav: false,
+		prevText: '',
+		nextText: ''
+	});
 
 	/**
 	 * Hover category show/hide
@@ -117,7 +118,7 @@ jQuery(document).ready(function($) {
 		return false;
 	});
 
-	
+
 
 	/**
 	 * Scroll messages inbox
@@ -152,7 +153,7 @@ jQuery(document).ready(function($) {
 	 * Order
 	 * -----------------------------------------------------------------------------------
 	 */
-	$( "#me-inquiries-pick-date-1" ).datepicker({ 
+	$( "#me-inquiries-pick-date-1" ).datepicker({
 		onSelect: function( selectedDate ) {
 			$( "#me-inquiries-pick-date-2" ).datepicker();
 		    $( "#me-inquiries-pick-date-2" ).datepicker("option", "minDate", selectedDate );
@@ -162,7 +163,7 @@ jQuery(document).ready(function($) {
 		}
 	});
 
-	$( "#me-order-pick-date-1" ).datepicker({ 
+	$( "#me-order-pick-date-1" ).datepicker({
 		onSelect: function( selectedDate ) {
 			$( "#me-order-pick-date-2" ).datepicker();
 		    $( "#me-order-pick-date-2" ).datepicker("option", "minDate", selectedDate );
@@ -185,7 +186,7 @@ jQuery(document).ready(function($) {
 	 * Resolution center
 	 * -----------------------------------------------------------------------------------
 	 */
-	$( "#me-pick-date-1" ).datepicker({ 
+	$( "#me-pick-date-1" ).datepicker({
 		onSelect: function( selectedDate ) {
 			$( "#me-pick-date-2" ).datepicker();
 		    $( "#me-pick-date-2" ).datepicker("option", "minDate", selectedDate );
@@ -204,7 +205,7 @@ jQuery(document).ready(function($) {
 		$('body').toggleClass('me-disputed-case-tabs-active').removeClass('me-disputed-action-tabs-active');
 		return false;
 	});
-	
+
 	$('.me-disputed-action-tabs').on('click', function() {
 		$(this).toggleClass('active');
 		$('body').toggleClass('me-disputed-action-tabs-active').removeClass('me-disputed-case-tabs-active');
@@ -218,7 +219,7 @@ jQuery(document).ready(function($) {
 		$(document.getElementById(get_refund_block_id)).addClass('active');
 	});
 
-	
+
 	/**
 	 * [marketengine_snap_column description]
 	 * @return {[type]} [description]

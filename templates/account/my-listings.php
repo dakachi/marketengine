@@ -23,10 +23,13 @@ $query = new WP_Query( $args );
 
 ?>
 	<div class="marketengine-content marketengine-snap-column listing-post">
+
+		<?php if( $query->have_posts() ): ?>
+
 		<div class="marketengine-filter">
 			<div class="marketengine-filter-listing pull-right">
 				<div class="filter-listing-status">
-					<select name="" id="" onchange="window.location.href=this.value;">
+					<select class="me-chosen-select" name="" id="" onchange="window.location.href=this.value;">
 						<option value="<?php echo me_get_auth_url('listings') ?>"><?php _e('All status', 'enginethemes'); ?></option>
 					<?php
 						$filter_options = me_listings_status_list();
@@ -41,8 +44,6 @@ $query = new WP_Query( $args );
 				</div>
 			</div>
 		</div>
-
-		<?php if( $query->have_posts() ): ?>
 
 		<div class="marketengine-listing-post">
 			<ul class="me-listing-post me-row">
@@ -115,6 +116,6 @@ $query = new WP_Query( $args );
 	<!--// marketengine-content -->
 <?php
 else:
-	me_get_template('loop/content-listing-none');
+	me_get_template('account/my-listing-none');
 endif;
 ?>

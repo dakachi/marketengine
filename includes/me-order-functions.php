@@ -157,14 +157,31 @@ function me_filter_order_query( $query, $type = '') {
     if( $type == 'order' && (!isset($query['order_status']) || $query['order_status'] == '' || $query['order_status'] == 'any') ) {
         $statuses = me_get_order_status_list();
         unset($statuses['me-pending']);
-        unset($statuses['me-active']);
+        unset($statuses['publish']);
         $query['order_status'] = array_keys($statuses);
         $args['post_status'] = $query['order_status'];
     }
 
     if( isset($query['from_date']) || isset($query['to_date']) ){
-        $after = isset($query['from_date']) ? $query['from_date'] : '';
-        $before = isset($query['to_date']) ? $query['to_date'] . ' 23:59:59' : '';
+        $before = $after = '';
+        if( isset($query['from_date']) && !empty($query['from_date']) ){
+            if( preg_match("/^(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])\/[0-9]{4}$/", $query['from_date']) ){
+                $after = $query['from_date'];
+            } else {
+                $args['post__in'][] = -1;
+                return $args;
+            }
+        }
+
+        if( isset($query['to_date']) && !empty($query['to_date']) ){
+            if( preg_match("/^(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])\/[0-9]{4}$/", $query['to_date']) ){
+                $before = $query['to_date'] . ' 23:59:59' ;
+            } else {
+                $args['post__in'][] = -1;
+                return $args;
+            }
+        }
+
         $args['date_query'] = array(
             array(
                 'after'     => $after,
@@ -222,6 +239,7 @@ add_filter( 'me_filter_order', 'me_filter_order_query', 1, 2 );
 function me_get_order_status_list() {
     $order_status = array(
         'me-pending'  => __("Pending", "enginethemes"), // mainly intended for technical case, when an error occurs payment, or payment by bank transfer confirmation to admin
+        'publish'     => __("Actived", "enginethemes"), // mainly intended for technical case, when an error occurs payment, or payment by bank transfer confirmation to admin
         // 'me-active'   => __("Finished", "enginethemes"), // Status of payment order was not yet eligible to transfer money to the account Seller.
         'me-complete' => __("Completed", "enginethemes"), // State order has been completed and is paid to the target account Seller & Admin.
         'me-disputed' => __("Disputed", "enginethemes"), // Order status are taken into account when processing complaints occur
@@ -419,38 +437,63 @@ function me_delete_order_item_meta($order_item_id, $meta_key, $meta_value = '') 
 }
 
 function me_order_table_header( $type ) {
-    if($type == 'order') {
-        return array(
-            __("ORDER ID", "enginethemes"),
-            __("STATUS", "enginethemes"),
-            __("AMOUNT", "enginethemes"),
-            __("DATE OF ORDER", "enginethemes"),
-            __("LISTING", "enginethemes"),
-        );
-    } else {
-        return array(
-            __("TRANSACTION ID", "enginethemes"),
-            __("STATUS", "enginethemes"),
-            __("AMOUNT", "enginethemes"),
-            __("DATE OF ORDER", "enginethemes"),
-            __("LISTING", "enginethemes"),
-        );
+    $table_header = array(
+        __("ORDER ID", "enginethemes"),
+        __("STATUS", "enginethemes"),
+        __("AMOUNT", "enginethemes"),
+        __("DATE OF ORDER", "enginethemes"),
+        __("LISTING", "enginethemes"),
+    );
+
+    if($type === 'transaction') {
+        $table_header[0] = __("TRANSACTION ID", "enginethemes");
     }
+
+    return $table_header;
 }
 
-function me_export_orders( $report_body, $type ) {
-    if( empty($report_body) ) {
-        return;
+function me_report_data_init($query) {
+    $data = array();
+    $orders = new WP_Query($query);
+
+    if( !$orders->have_posts() ) return;
+    while( $orders->have_posts() ) {
+        $orders->the_post();
+
+        $order = new ME_Order( get_the_ID() );
+
+        $order_number = '#'.get_the_ID();
+        $order_status = get_post_status_object( get_post_status( get_the_ID() ) );
+        $order_total = me_price_format( $order->get_total() );
+        $order_date = get_the_date(get_option('date_format'), get_the_ID());
+
+        $listing = $order->get_listing();
+        $listing_title = get_the_title( $listing['_listing_id'][0] );
+
+        $data[] = array(
+            $order_number,
+            $order_status->label,
+            $order_total,
+            $order_date,
+            $listing_title
+        );
     }
+    wp_reset_postdata();
+    return $data;
+}
 
+// TODO: ajax
+function me_export_orders( $query, $type ) {
     $header = me_order_table_header( $type );
-    $report_body = json_decode($report_body);
 
-    // $table_data = array_merge($header, $report_body);
+    $query = json_decode($query);
+
+    $table_data = me_report_data_init($query);
 
     $file = fopen("test_report.csv", "w");
+
     fputcsv($file, $header);
-    foreach( $report_body as $key => $row) {
+    foreach( $table_data as $key => $row) {
         fputcsv($file, $row);
     }
 

@@ -52,10 +52,10 @@ function me_get_categories($taxonomy = '') {
  */
 function me_listings_status_list() {
     $listing_status = array(
-        'publish'     => __("Publish", "enginethemes"),
-        'me-pending'  => __("Pending", "enginethemes"),
+        'publish'     => __("Published", "enginethemes"),
+        // 'me-pending'  => __("Pending", "enginethemes"),
         'me-archived' => __("Archived", "enginethemes"),
-        'draft'       => __("Draft", "enginethemes"),
+        // 'draft'       => __("Draft", "enginethemes"),
         'me-paused'   => __("Paused", "enginethemes"),
     );
     return apply_filters('marketengine_listing_status_list', $listing_status);
@@ -74,9 +74,9 @@ function me_get_user_rate_listing_score($listing_id, $user_id) {
     }
 
     $comments = get_comments($args);
-    
+
     if(!empty($comments)) {
-        return get_comment_meta( $comments[0]->comment_ID, '_me_rating_score', true );    
+        return get_comment_meta( $comments[0]->comment_ID, '_me_rating_score', true );
     }
     return 0;
 }

@@ -12,18 +12,18 @@
             $('#me-sub-cat-container').html(r.data);
         });
     });
-    $('.select-category').on('change', function() {
-        var cat = $(this).val();
-        $.get(me_globals.ajaxurl, {
-            'action': 'me-load-listing-type',
-            'parent-cat': cat
-        }, function(r, stat) {
-            if (0 === r || 'success' != stat) {
-                return;
-            }
-            $('#listing-type-container').html(r.data);
-        });
-    });
+    // $('.select-category').on('change', function() {
+    //     var cat = $(this).val();
+    //     $.get(me_globals.ajaxurl, {
+    //         'action': 'me-load-listing-type',
+    //         'parent-cat': cat
+    //     }, function(r, stat) {
+    //         if (0 === r || 'success' != stat) {
+    //             return;
+    //         }
+    //         $('#listing-type-container').html(r.data);
+    //     });
+    // });
     $('#listing-type-select').on('change', function() {
         var type = $(this).val();
         $('.listing-type-info').hide();

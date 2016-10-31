@@ -55,8 +55,8 @@ function me_locate_template($template_names) {
  * @param string $args The array of the varaible.
  */
 function me_get_template($template_name, $args = array()) {
-    if ( ! empty( $args ) && is_array( $args ) ) {
-        extract( $args );
+    if (!empty($args) && is_array($args)) {
+        extract($args);
     }
     /**
      * Fires before the specified template part file is loaded.
@@ -78,7 +78,7 @@ function me_get_template($template_name, $args = array()) {
     }
 
     $located = me_locate_template($templates);
-    include( $located );
+    include $located;
 }
 
 function me_get_sidebar() {
@@ -107,16 +107,15 @@ function me_get_sidebar() {
 }
 
 // TODO: can dat ham nay cho dung vi tri file
-if(! function_exists('me_get_page_permalink') ){
-    function me_get_page_permalink( $page_name ) {
-        $page = me_option('me_'. $page_name .'_page_id');
+if (!function_exists('me_get_page_permalink')) {
+    function me_get_page_permalink($page_name) {
+        $page = me_option('me_' . $page_name . '_page_id');
         if (!$page) {
             return home_url();
         }
         return get_permalink($page);
     }
 }
-
 
 /**
  * Returns the url to the lost password endpoint url.
@@ -195,7 +194,7 @@ function me_post_tags_meta_box($default, $taxonomy) {
             <div class="jaxtag">
             <div class="nojs-tags hide-if-js">
                 <label class="me-field-title" for="tax-input-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_or_remove_items; ?></label>
-                <textarea style="display:none;" name="<?php echo $tax_name; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled(!$user_can_assign_terms);?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace(',', $comma . ' ', $terms_to_edit); // textarea_escaped by esc_attr()    ?></textarea>
+                <textarea style="display:none;" name="<?php echo $tax_name; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled(!$user_can_assign_terms);?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace(',', $comma . ' ', $terms_to_edit); // textarea_escaped by esc_attr()     ?></textarea>
             </div>
 
             <div class="ajaxtag hide-if-no-js">
@@ -216,13 +215,12 @@ function me_post_tags_meta_box($default, $taxonomy) {
  *
  * @since 1.0
  */
-function me_paginate_link( $me_query = array() ) {
+function me_paginate_link($me_query = array()) {
     $max_num_pages = 0;
-    if( $me_query === array() ) {
+    if ($me_query === array()) {
         global $wp_query;
         $max_num_pages = $wp_query->max_num_pages;
-    }
-    else {
+    } else {
         $max_num_pages = $me_query->max_num_pages;
     }
 
@@ -252,11 +250,11 @@ function marketengine_sidebar() {
 add_action('marketengine_sidebar', 'marketengine_sidebar');
 
 // TODO: tam thoi de day
-function ae_get_option($option, $default = '') {
-    return get_option( $option, $default );
+function me_get_option($option, $default = '') {
+    return get_option($option, $default);
 }
 
-function me_option($option){
+function me_option($option) {
     $options = ME_Options::get_instance();
     return $options->get_option($option);
 }
@@ -274,7 +272,7 @@ function me_get_client_ip() {
 }
 
 function me_get_client_agent() {
-    return !empty($_SERVER['HTTP_USER_AGENT'])? strtolower($_SERVER['HTTP_USER_AGENT']) : '';
+    return !empty($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : '';
 }
 
 /**
@@ -286,10 +284,10 @@ function me_get_client_agent() {
  *
  */
 
-function me_get_auth_url( $query_var = '', $value = '' ) {
-    $url = me_get_page_permalink( 'user_account' );
-    if($url){
-        $url = me_get_endpoint_url( $query_var, $value, $url );
+function me_get_auth_url($query_var = '', $value = '') {
+    $url = me_get_page_permalink('user_account');
+    if ($url) {
+        $url = me_get_endpoint_url($query_var, $value, $url);
         return $url;
     }
     return home_url();
@@ -304,18 +302,17 @@ function me_get_auth_url( $query_var = '', $value = '' ) {
  *
  */
 
-function me_get_order_url( $page, $query_var = 'order-id', $value = '' ) {
-    $url           = me_get_page_permalink( $page );
-    $order_endpoint = me_get_endpoint_name( $query_var );
-    $permalink_structure = get_option( 'permalink_structure');
+function me_get_order_url($page, $query_var = 'order-id', $value = '') {
+    $url                 = me_get_page_permalink($page);
+    $order_endpoint      = me_get_endpoint_name($query_var);
+    $permalink_structure = get_option('permalink_structure');
 
-    if($url){
-        $url = me_get_endpoint_url( $query_var, $value, $url );
+    if ($url) {
+        $url = me_get_endpoint_url($query_var, $value, $url);
         return $url;
     }
     return home_url();
 }
-
 
 /**
  * Prints shop categories.
@@ -326,7 +323,7 @@ function me_get_order_url( $page, $query_var = 'order-id', $value = '' ) {
 function me_shop_categories_action() {
     me_get_template('global/shop-categories');
 }
-add_action( 'me_shop_categories', 'me_shop_categories_action' );
+add_action('me_shop_categories', 'me_shop_categories_action');
 
 /**
  * Prints account menu.
@@ -337,7 +334,7 @@ add_action( 'me_shop_categories', 'me_shop_categories_action' );
 function me_account_menu_action() {
     me_get_template('global/account-menu');
 }
-add_action( 'me_account_menu', 'me_account_menu_action' );
+add_action('me_account_menu', 'me_account_menu_action');
 function me_account_menu_flag_filter($flag) {
     $flag = false;
     return $flag;
@@ -351,53 +348,74 @@ add_filter('me_account_menu_flag', 'me_account_menu_flag_filter');
 function me_post_listing_button_action() {
     me_get_template('global/post-listing-button');
 }
-add_action( 'me_post_listing_button', 'me_post_listing_button_action' );
+add_action('me_post_listing_button', 'me_post_listing_button_action');
 
-function me_status_list_action( $type = '' ) {
-    me_get_template('global/status-list', array('type' => $type) );
+function me_search_form_action() {
+    marketengine_get_search_form();
 }
-add_action( 'me_status_list', 'me_status_list_action' );
+add_action('me_search_form', 'me_search_form_action');
+
+function me_status_list_action($type = '') {
+    me_get_template('global/status-list', array('type' => $type));
+}
+add_action('me_status_list', 'me_status_list_action');
 
 /**
  *  Returns css class for each order status
  *  @param: $status
  *  @param: $needed style or index of order process
  */
-function me_get_order_status_info( $status, $needed = '' ) {
+function me_get_order_status_info($status, $info_type = '') {
     $status_list = me_get_order_status_list();
+
     switch ($status) {
         case 'me-pending':
-            $style = 'me-order-pending';
+            $style         = 'me-order-pending';
+            $text          = __('Your payment has not been completed yet', 'enginethemes');
             $order_process = 1;
             break;
-        // chua co class cho status nay
         case 'publish':
-            $style = 'me-order-complete';
+            $style         = 'me-order-complete';
+            $text          = __('', 'enginethemes');
+            $order_process = 2;
+            break;
+        // chua co class cho status nay
+        case 'me-active':
+            $style         = 'me-order-complete';
+            $text          = __('', 'enginethemes');
             $order_process = 2;
             break;
         case 'me-complete':
-            $style = 'me-order-complete';
+            $style         = 'me-order-complete';
+            $text          = __('', 'enginethemes');
             $order_process = 3;
             break;
         case 'me-disputed':
-            $style = 'me-order-disputed';
+            $style         = 'me-order-disputed';
+            $text          = __('This order has been disputed by the Buyer', 'enginethemes');
             $order_process = 4;
             break;
         case 'me-closed':
-            $style = 'me-order-closed';
+            $style         = 'me-order-closed';
+            $text          = __('', 'enginethemes');
             $order_process = 5;
             break;
         case 'me-resolved':
-            $style = 'me-order-resolved';
+            $style         = 'me-order-resolved';
+            $text          = __('', 'enginethemes');
             $order_process = 5;
             break;
         default:
-            $style = 'me-order-pending';
+            $style         = 'me-order-pending';
+            $text          = __('', 'enginethemes');
             $order_process = 1;
             break;
     }
-    if('style' === $needed){
+    if ('style' === $info_type) {
         return $style;
+    }
+    if ('text' === $info_type) {
+        return $text;
     }
     return $order_process;
 }
@@ -405,21 +423,24 @@ function me_get_order_status_info( $status, $needed = '' ) {
 /**
  *  Prints html of order status
  */
-function me_print_order_status( $status ) {
+function me_print_order_status($status) {
     $status_list = me_get_order_status_list();
-    $style = me_get_order_status_info( $status, 'style' );
-    echo '<span class="'.$style.'">'.$status_list[$status].'</span>';
+    $style       = me_get_order_status_info($status, 'style');
+    echo '<span class="' . $style . '">' . $status_list[$status] . '</span>';
 }
 
 /**
  *  Prints buyer's information
  *  @param: $address
  */
-function me_print_buyer_information( $address ) {
+function me_print_buyer_information($address) {
     echo "Name: {$address['first_name']} {$address['last_name']} ";
     foreach ($address as $key => $value) {
-        if($key === 'first_name' || $key === 'last_name') continue;
-        $key = ucfirst( $key );
+        if ($key === 'first_name' || $key === 'last_name') {
+            continue;
+        }
+
+        $key = ucfirst($key);
         echo "<p>{$key}: {$value}</p>";
     }
 }
@@ -428,45 +449,193 @@ function me_print_buyer_information( $address ) {
  *  Returns html of price
  *  @param: $price
  */
-function me_price_html( $price, $currency_sign = '' , $unit = '' ) {
+function me_price_html($price, $currency_sign = '', $unit = '') {
     $currency_sign = me_option('payment-currency-sign');
     $currency_code = me_option('payment-currency-code');
     $sign_position = me_option('currency-sign-postion') ? true : false;
-    $html = '';
+    $html          = '';
 
-    if($sign_position) {
-        $html .= '<b itemprop="priceCurrency" content="' . $currency_code .'">'. $currency_sign .'</b> <b itemprop="price" content="'. $price .'">'. $price .'</b>';
+    if ($sign_position) {
+        $html .= '<b itemprop="priceCurrency" content="' . $currency_code . '">' . $currency_sign . '</b> <b itemprop="price" content="' . $price . '">' . $price . '</b>';
     } else {
-        $html .= '<b itemprop="price" content="'. $price .'">'. $price .'</b> <b itemprop="priceCurrency" content="' . $currency_code .'">'. $currency_sign .'</b>';
+        $html .= '<b itemprop="price" content="' . $price . '">' . $price . '</b> <b itemprop="priceCurrency" content="' . $currency_code . '">' . $currency_sign . '</b>';
     }
 
-    if( !empty($unit) ) {
+    if (!empty($unit)) {
         $html .= " {$unit}";
     }
 
     return $html;
 }
 
+/**
+ * Get the price format with currency
+ *
+ * @param float $price
+ * @param array the array of currency code and sign
+ *
+ * @return string
+ */
 function me_price_format($price, $args = array()) {
     $sign = me_option('payment-currency-sign');
     $code = me_option('payment-currency-code');
 
-    $args = wp_parse_args( $args, array('code' => $code, 'sign' => $sign) );
+    $args = wp_parse_args($args, array('code' => $code, 'sign' => $sign));
     extract($args);
 
     $format = '';
 
     $sign_position_is_align_right = me_option('currency-sign-postion') ? true : false;
 
-    if($sign_position_is_align_right) {
-        $format .= $sign .' '. $price;
+    if ($sign_position_is_align_right) {
+        $format .= $sign . ' ' . $price;
     } else {
-        $format .= $price .' '. $sign;
+        $format .= $price . ' ' . $sign;
     }
 
     return $format;
 }
 
-function marketengine_comments( $comment, $args, $depth ){
+/**
+ * Retrieve listing comment list item
+ */
+function marketengine_comments($comment, $args, $depth) {
     me_get_template('single-listing/review-item', array('comment' => $comment, 'args' => $args, 'depth' => $depth));
+}
+
+/**
+ * Display listing search form.
+ *
+ * @since 1.0
+ *
+ * @param bool $echo Default to echo and not return the form.
+ * @return string|void String when $echo is false.
+ */
+function marketengine_get_search_form($echo = true) {
+    /**
+     * Fires before the search form is retrieved, at the start of get_search_form().
+     *
+     * @since 1.0
+     *
+     */
+    do_action('marketengine_pre_get_search_form');
+
+    $format = current_theme_supports('html5', 'search-form') ? 'html5' : 'xhtml';
+
+    // $format = apply_filters( 'marketengine_search_form_format', $format );
+
+    // $search_form_template = locate_template( 'searchform.php' );
+    // if ( '' != $search_form_template ) {
+    //     ob_start();
+    //     require( $search_form_template );
+    //     $form = ob_get_clean();
+    // } else {
+
+    // }
+    $url = get_post_type_archive_link( 'listing' );
+    if(is_tax( 'listing_category' )) {
+        $url = get_term_link( get_queried_object(), 'listing_category' );
+    }
+
+    if ('html5' == $format) {
+        $form = '<form role="search" method="get" class="search-form" action="' . $url . '">
+                <div class="me-search me-hidden-xs">
+                    <input type="search" class="search-field" placeholder="' . esc_attr( __("Type here and hit enter...", "enginethemes") ) . '" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" name="keyword" />
+                    <i id="search-btn" class="icon-me-search me-search-btn"></i>
+                </div>
+            </form>
+            <form method="get" class="mobile-search-form" action="' . $url . '">
+                <span class="me-search-btn-xs me-visible-xs"><i class="icon-me-search me-search-btn"></i></span>
+                <div class="me-search-xs me-visible-xs">
+                    <input type="search" name="s" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" placeholder="' . esc_attr( __("Type here and hit enter...", "enginethemes") ) . '">
+                    <i id="mobile-search-btn" class="icon-me-search me-search-btn"></i>
+                </div>
+            </form>';
+    } else {
+        $form = '<form role="search" method="get" class="search-form" action="' . $url . '">
+                <div class="me-search me-hidden-xs">
+                    <input type="text" class="search-field" placeholder="' .  esc_attr( __("Type here and hit enter...", "enginethemes") ) . '" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" name="keyword" />
+                    <i id="search-btn" class="icon-me-search me-search-btn"></i>
+                </div>
+            </form>
+            <form method="get" class="mobile-search-form" action="' . $url . '">
+                <span class="me-search-btn-xs me-visible-xs"><i class="icon-me-search me-search-btn"></i></span>
+                <div class="me-search-xs me-visible-xs">
+                    <input type="text" name="s" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" placeholder="' . esc_attr( __("Type here and hit enter...", "enginethemes") ) . '">
+                    <i id="mobile-search-btn" class="icon-me-search me-search-btn"></i>
+                </div>
+            </form>';
+
+
+    }
+
+    /**
+     * Filters the HTML output of the search form.
+     *
+     * @since 1.0
+     *
+     * @param string $form The search form HTML output.
+     */
+    $result = apply_filters('marketengine_get_search_form', $form);
+
+    if (null === $result) {
+        $result = $form;
+    }
+
+    if ($echo) {
+        echo $result;
+    } else {
+        return $result;
+    }
+
+}
+
+/**
+ * Display the archive title based on the queried object.
+ *
+ * @since 1.0
+ *
+ * @see marketengine_get_the_archive_title()
+ *
+ * @param string $before Optional. Content to prepend to the title. Default empty.
+ * @param string $after  Optional. Content to append to the title. Default empty.
+ */
+function marketengine_the_archive_title( $before = '', $after = '' ) {
+    $title = marketengine_get_the_archive_title();
+
+    if ( ! empty( $title ) ) {
+        echo $before . $title . $after;
+    }
+}
+
+/**
+ * Retrieve the archive listing title based on the queried object.
+ *
+ * @since 1.0
+ *
+ * @return string Archive title.
+ */
+function marketengine_get_the_archive_title() {
+    if ( is_post_type_archive() ) {
+        $title = sprintf( __( 'Archives: %s', 'enginethemes' ), post_type_archive_title( '', false ) );
+        if(get_query_var( 'keyword' )) {
+            $title = sprintf(__("Search result for: %s", "enginethemes"), esc_attr( get_query_var( 'keyword' ) ));
+        }
+
+    } elseif ( is_tax() ) {
+        $tax = get_taxonomy( get_queried_object()->taxonomy );
+        /* translators: 1: Taxonomy singular name, 2: Current taxonomy term */
+        $title = sprintf( __( '%1$s: %2$s' ), $tax->labels->singular_name, single_term_title( '', false ) );
+    } else {
+        $title = __( 'Archives', 'enginethemes' );
+    }
+
+    /**
+     * Filters the archive title.
+     *
+     * @since 4.1.0
+     *
+     * @param string $title Archive title to be displayed.
+     */
+    return apply_filters( 'marketengine_get_the_archive_title', $title );
 }

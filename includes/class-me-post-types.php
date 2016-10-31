@@ -199,10 +199,7 @@ class ME_Post_Types {
             'public'             => false,
             'publicly_queryable' => true,
             'rewrite'            => array(
-                'slug' => 'me_order/%post_id%',
-                'with_front' => false,
-                'pages' => true,
-                'ep_mask' => 1
+                'slug' => me_get_endpoint_name('order-id') . '/%post_id%',
             ),
             'has_archive'        => true,
             'show_ui'            => true,
@@ -236,7 +233,7 @@ class ME_Post_Types {
 
         register_post_status('me-complete', array(
             'label'                     => _x('Completed', 'me-order'),
-            'public'                    => false,
+            'public'                    => true,
             'exclude_from_search'       => false,
             'private'                   => true,
             'show_in_admin_all_list'    => true,
@@ -246,7 +243,7 @@ class ME_Post_Types {
 
         register_post_status('me-disputed', array(
             'label'                     => _x('Disputed', 'me-order'),
-            'public'                    => false,
+            'public'                    => true,
             'exclude_from_search'       => false,
             'private'                   => true,
             'show_in_admin_all_list'    => true,
@@ -256,7 +253,7 @@ class ME_Post_Types {
 
         register_post_status('me-closed', array(
             'label'                     => _x('Closed', 'me-order'),
-            'public'                    => false,
+            'public'                    => true,
             'exclude_from_search'       => false,
             'private'                   => true,
             'show_in_admin_all_list'    => true,
@@ -266,7 +263,7 @@ class ME_Post_Types {
 
         register_post_status('me-resolved', array(
             'label'                     => _x('Resolved', 'me-order'),
-            'public'                    => false,
+            'public'                    => true,
             'exclude_from_search'       => false,
             'private'                   => true,
             'show_in_admin_all_list'    => true,

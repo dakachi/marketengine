@@ -1,38 +1,27 @@
 <?php
-$payment_date = date_i18n( get_option( 'date_format' ), strtotime( $transaction->post_date ) );
-// TODO: Replace with transaction id.
-$order_number = '#' . $transaction->get_order_number();
-$order_status = get_post_status( $transaction->id );
 
 $listing_item = $transaction->get_listing();
 $listing_obj = me_get_listing($listing_item['_listing_id'][0]);
 
+$listing_cat = get_the_terms($listing_obj->ID, 'listing_category');
+
 $author_id = $listing_obj->post_author;
-// TODO: tach order details ra 1 template rieng
 ?>
 <div class="marketengine-content">
 	<?php me_print_notices(); ?>
 	<div class="me-order-detail">
 		<?php
-			me_get_template( 'purchases/transaction-info', array( 'order_number' => $order_number, 'payment_date' => $payment_date ) );
-			me_get_template( 'purchases/order-status', array( 'order_status' => $order_status ) );
-			me_get_template( 'purchases/order-item', array( 'listing_item' => $listing_item, 'listing_obj' => $listing_obj, 'transaction' => $transaction ) );
-			me_get_template( 'purchases/order-bill-info', array('transaction' => $transaction) );
+			me_get_template( 'purchases/order-detail', array('transaction' => $transaction) );
 		?>
 	</div>
 	<div class="me-row">
 		<div class="me-col-md-9">
+
 			<?php
 				me_get_template( 'purchases/order-listing', array('listing_obj' => $listing_obj, 'transaction' => $transaction) );
-			?>
-			<?php
 				me_get_template( 'user-info', array('class' => 'me-authors-xs me-visible-sm me-visible-xs', 'author_id' => $author_id ) );
+				me_get_template( 'purchases/order-action', array('order' => $transaction) );
 			?>
-
-			<div class="me-transaction-dispute">
-				<p><?php echo __('In the case you find out something unexpected. Please tell us your problems.', 'enginethemes'); ?></p>
-				<a href="<?php echo me_get_page_id('dispute'); ?>" class=""><?php _e('DISPUTE', 'enginethemes'); ?></a>
-			</div>
 
 		</div>
 		<div class="me-col-md-3 me-hidden-sm me-hidden-xs">
@@ -42,7 +31,7 @@ $author_id = $listing_obj->post_author;
 		</div>
 	</div>
 	<?php
-		//me_get_template( 'purchases/listing-slider' );
+		me_get_template( 'purchases/listing-slider', array('listing_cat' => $listing_cat, 'curr_listing' => $listing_item) );
 	?>
 </div>
 <!--// marketengine-content -->

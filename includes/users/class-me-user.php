@@ -34,7 +34,16 @@ class ME_User {
         return (!get_option('is_required_email_confirmation') || !get_user_meta($this->id, 'user_activate_email_key', true));
     }
 
-    public function get_avatar() {
+    public function get_avatar($size = 96) {
+        $user_avatar = get_user_meta( $this->id, 'user_avatar', true);
+        if($user_avatar) {
+            $avatar_url = wp_get_attachment_url( $user_avatar );
+            return '<img alt="" src="'.$avatar_url.'" class="avatar avartar-{$size} photo" height="{$size}" width="{$size}">';
+        }
         return get_avatar($this->id);
+    }
+
+    public function get_user_avatar_id() {
+        return get_user_meta( $this->id, 'user_avatar', true);
     }
 }

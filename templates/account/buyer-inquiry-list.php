@@ -7,7 +7,6 @@
  * @package 	MarketEngine/Templates
  * @version     1.0.0
  */
-
 $paged = get_query_var('paged') ? get_query_var('paged') : 1;
 $args = array(
 	'post_type'		=> 'inquiry',
@@ -27,7 +26,7 @@ $query = new ME_Message_Query($args);
 		<span><?php echo __('Filter list', 'enginethemes'); ?></span>
 	</div>
 	<!--/Mobile-->
-	<?php me_get_template('global/inquiry-filter'); ?>
+	<?php me_get_template('global/inquiry-filter', array('page' => 'purchases') ); ?>
 
 	<div class="me-table me-order-inquiries-table">
 
