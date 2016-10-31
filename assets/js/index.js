@@ -51,4 +51,11 @@
             return $(this).attr('data-score');
         }
     });
+
+    $('.me-contact-messages').MEmessage({
+        paged : 2,
+        nonce : $('#_msg_wpnonce').val(),
+        parent : 62,
+        type : 'inquiry'
+    });
 })(jQuery);
