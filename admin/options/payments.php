@@ -65,7 +65,18 @@ return array(
                     'min'       => 0,
                 ),
                 'name'        => 'paypal-commission-fee'
-            )
+            ),
+            'dispute-time-limit' => array(
+                'label'       => __("Displute Time Limit", "enginethemes"),
+                'description' => __("", "enginethemes"),
+                'slug'        => 'dispute-time-limit',
+                'type'        => 'number',
+                'class_name'  => 'positive',
+                'attributes'  => array(
+                    'min'       => 0,
+                ),
+                'name'        => 'dispute-time-limit'
+            ),
         ),
     ),
     'paypal'      => array(
