@@ -41,15 +41,18 @@
                     });
                 }
             });
+            
+            $elem.find('textarea').on
         });
     }
+
+
     var contact_paged = 2;
     var loading = false;
     $('#contact-list').scroll(function() {
         var pos = $('#contact-list').scrollTop();
         var h = $('#contact-list').height();
         if (pos >= h && !loading) {
-            console.log(pos + ' ' + h);
             $.ajax({
                 url: me_globals.ajaxurl,
                 type: 'get',
