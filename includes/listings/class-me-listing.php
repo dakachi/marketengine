@@ -357,7 +357,7 @@ class ME_Listing {
 
     public function get_gallery() {
         $gallery      = get_post_meta($this->ID, '_me_listing_gallery', true);
-        return (array) $gallery;
+        return $gallery;
     }
 
     public function get_featured_image(){
@@ -373,10 +373,12 @@ class ME_Listing {
     public function get_galleries() {
         $gallery      = get_post_meta($this->ID, '_me_listing_gallery', true);
         $thumbnail_id = get_post_meta($this->ID, '_thumbnail_id', true);
-        if ($thumbnail_id && $gallery) {
+
+        if ($thumbnail_id) {
             array_unshift($gallery, $thumbnail_id);
         }
-        return (array) $gallery;
+
+        return $gallery;
     }
 
     /**
