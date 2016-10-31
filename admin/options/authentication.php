@@ -19,6 +19,14 @@ return array(
                 'data'        => marketengine_get_list_of_page(),
                 'template'    => array(),
             ),
+            'user-email-confirmation' => array(
+                'label'       => __("Email Confirmation", "enginethemes"),
+                'description' => __("", "enginethemes"),
+                'slug'        => 'user-email-confirmation',
+                'type'        => 'switch',
+                'name'        => 'user-email-confirmation',
+                'template'    => array(),
+            ),
             'user-account-endpoint' => array(
                 'label'       => __("Endpoint Setting", "enginethemes"),
                 'description' => __("Choose a page to display as User Account Page", "enginethemes"),

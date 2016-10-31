@@ -1,9 +1,9 @@
 <?php if($inquiry) :  ?>
 
-<?php 
+<?php
 	$user_id = get_current_user_id();
 	$listing = me_get_listing($inquiry->post_parent);
-	$messages = me_get_messages(array('post_type' => 'message', 'post_parent' => $inquiry->ID, 'showposts' => 10)); 
+	$messages = me_get_messages(array('post_type' => 'message', 'post_parent' => $inquiry->ID, 'showposts' => 10));
 	$messages = array_reverse ($messages);
 ?>
 	<div class="marketengine">

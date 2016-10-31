@@ -13,25 +13,28 @@ $billing_fields = apply_filters('marketengine_billing_fields', $address_fields);
 $shipping_fields = apply_filters('marketengine_shipping_fields', $address_fields);
 ?>
 <div class="me-billing-shipping">
-	<h3 class="me-title-bill-ship"><?php _e("Billing &amp; Shipping Details", "enginethemes"); ?></h3>
+	<h3 class="me-title-bill-ship"><?php _e("Billing Details", "enginethemes"); ?></h3>
 	<div class="me-switch-billing">
+		<?php /*
 		<input id="me-billing-address-input" type="radio" name="me-billing" checked="">
 		<label class="me-switch-bill-label" for="me-billing-address-input">
 			<?php _e("I have billing &amp; shipping addresses", "enginethemes"); ?>
 		</label>
+
+		*/ ?>
 		<!-- billing info -->
 		<div class="me-billing-address">
-			<h4><?php _e("My billing address", "enginethemes"); ?></h4>
+			<?php /* <h4><?php _e("My billing address", "enginethemes"); ?></h4> */ ?>
 			<div class="me-row">
 				<div class="me-col-md-6">
 					<div class="marketengine-input-field">
-						<label class="text"><?php _e("First name", "enginethemes"); ?></label>
+						<label class="me-field-title"><?php _e("First name", "enginethemes"); ?></label>
 						<input type="text" name="billing_info[first_name]" value="<?php if(!empty($_POST['billing_info']['first_name'])) echo $_POST['billing_info']['first_name']; ?>">
 					</div>
 				</div>
 				<div class="me-col-md-6">
 					<div class="marketengine-input-field">
-						<label class="text"><?php _e("Last name", "enginethemes"); ?></label>
+						<label class="me-field-title"><?php _e("Last name", "enginethemes"); ?></label>
 						<input type="text" name="billing_info[last_name]" value="<?php if(!empty($_POST['billing_info']['last_name'])) echo $_POST['billing_info']['last_name']; ?>">
 					</div>
 				</div>
@@ -39,13 +42,13 @@ $shipping_fields = apply_filters('marketengine_shipping_fields', $address_fields
 			<div class="me-row">
 				<div class="me-col-md-6">
 					<div class="marketengine-input-field">
-						<label class="text"><?php _e("Email address", "enginethemes"); ?></label>
+						<label class="me-field-title"><?php _e("Email address", "enginethemes"); ?></label>
 						<input type="text" name="billing_info[email]" value="<?php if(!empty($_POST['billing_info']['email'])) echo $_POST['billing_info']['email']; ?>">
 					</div>
 				</div>
 				<div class="me-col-md-6">
 					<div class="marketengine-input-field">
-						<label class="text"><?php _e("Phone", "enginethemes"); ?></label>
+						<label class="me-field-title"><?php _e("Phone", "enginethemes"); ?></label>
 						<input type="text" name="billing_info[phone]" value="<?php if(!empty($_POST['billing_info']['phone'])) echo $_POST['billing_info']['phone']; ?>">
 					</div>
 				</div>
@@ -53,13 +56,13 @@ $shipping_fields = apply_filters('marketengine_shipping_fields', $address_fields
 			<div class="me-row">
 				<div class="me-col-md-6">
 					<div class="marketengine-input-field">
-						<label class="text"><?php _e("Country", "enginethemes"); ?></label>
+						<label class="me-field-title"><?php _e("Country", "enginethemes"); ?></label>
 						<input type="text" name="billing_info[country]" value="<?php if(!empty($_POST['billing_info']['country'])) echo $_POST['billing_info']['country']; ?>">
 					</div>
 				</div>
 				<div class="me-col-md-6">
 					<div class="marketengine-input-field">
-						<label class="text"><?php _e("Town/City", "enginethemes"); ?></label>
+						<label class="me-field-title"><?php _e("Town/City", "enginethemes"); ?></label>
 						<input type="text" name="billing_info[city]" value="<?php if(!empty($_POST['billing_info']['city'])) echo $_POST['billing_info']['city']; ?>">
 					</div>
 				</div>
@@ -67,13 +70,13 @@ $shipping_fields = apply_filters('marketengine_shipping_fields', $address_fields
 			<div class="me-row">
 				<div class="me-col-md-6">
 					<div class="marketengine-input-field">
-						<label class="text"><?php _e("Street address", "enginethemes"); ?></label>
+						<label class="me-field-title"><?php _e("Street address", "enginethemes"); ?></label>
 						<input type="text" name="billing_info[address]" value="<?php if(!empty($_POST['billing_info']['address'])) echo $_POST['billing_info']['address']; ?>">
 					</div>
 				</div>
 				<div class="me-col-md-6">
 					<div class="marketengine-input-field">
-						<label class="text"><?php _e("Post code", "enginethemes"); ?></label>
+						<label class="me-field-title"><?php _e("Post code", "enginethemes"); ?></label>
 						<input type="text" name="billing_info[postcode]" value="<?php if(!empty($_POST['billing_info']['postcode'])) echo $_POST['billing_info']['postcode']; ?>">
 					</div>
 				</div>
