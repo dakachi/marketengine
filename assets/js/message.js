@@ -12,6 +12,9 @@
         return $(this).each(function(e) {
             var $elem = $(this);
             var $message_container = $elem.find('ul');
+
+            $elem.find('textarea').focus();
+            // scroll to load older messages
             $message_container.scroll(function(e) {
                 var pos = $message_container.scrollTop(),
                     h = $message_container.height();
@@ -46,6 +49,7 @@
                 // enter send message
                 if (e.keyCode == '13' && !e.shiftKey) {
                     e.preventDefault();
+                    var $textarea = $(this);
                     $.ajax({
                         type : 'post',
                         url: me_globals.ajaxurl,
@@ -56,11 +60,14 @@
                             content : $(this).val(),
                             _wpnonce: settings.nonce
                         },
-                        beforeSend: function() {},
+                        beforeSend: function() {
+                            $textarea.val('');
+                        },
                         success: function(response, xhr) {
                             if(response.success) {
                                 console.log($message_container);
                                 $message_container.append(response.content);
+                                $message_container.scrollTop($message_container[0].scrollHeight);
                             }
                         }
                     });
