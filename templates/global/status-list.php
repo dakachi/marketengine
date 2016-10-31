@@ -3,8 +3,8 @@
 	if( !empty($status_list) ) :
 		if( $type == 'order' ) {
 			unset($status_list['me-pending']);
-			unset($status_list['publish']);
 		}
+			unset($status_list['publish']);
 ?>
 	<select name="order_status" id="">
 		<option value="any"><?php _e("Filter order's status", 'enginethemes'); ?></option>

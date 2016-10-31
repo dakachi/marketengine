@@ -369,42 +369,47 @@ function me_get_order_status_info($status, $info_type = '') {
     $status_list = me_get_order_status_list();
 
     switch ($status) {
-    case 'me-pending':
-        $style         = 'me-order-pending';
-        $text          = __('Your payment has not been completed yet', 'enginethemes');
-        $order_process = 1;
-        break;
-    // chua co class cho status nay
-    case 'me-active':
-        $style         = 'me-order-complete';
-        $text          = __('', 'enginethemes');
-        $order_process = 2;
-        break;
-    case 'me-complete':
-        $style         = 'me-order-complete';
-        $text          = __('', 'enginethemes');
-        $order_process = 3;
-        break;
-    case 'me-disputed':
-        $style         = 'me-order-disputed';
-        $text          = __('This order has been disputed by the Buyer', 'enginethemes');
-        $order_process = 4;
-        break;
-    case 'me-closed':
-        $style         = 'me-order-closed';
-        $text          = __('', 'enginethemes');
-        $order_process = 5;
-        break;
-    case 'me-resolved':
-        $style         = 'me-order-resolved';
-        $text          = __('', 'enginethemes');
-        $order_process = 5;
-        break;
-    default:
-        $style         = 'me-order-pending';
-        $text          = __('', 'enginethemes');
-        $order_process = 1;
-        break;
+        case 'me-pending':
+            $style         = 'me-order-pending';
+            $text          = __('Your payment has not been completed yet', 'enginethemes');
+            $order_process = 1;
+            break;
+        case 'publish':
+            $style         = 'me-order-complete';
+            $text          = __('', 'enginethemes');
+            $order_process = 2;
+            break;
+        // chua co class cho status nay
+        case 'me-active':
+            $style         = 'me-order-complete';
+            $text          = __('', 'enginethemes');
+            $order_process = 2;
+            break;
+        case 'me-complete':
+            $style         = 'me-order-complete';
+            $text          = __('', 'enginethemes');
+            $order_process = 3;
+            break;
+        case 'me-disputed':
+            $style         = 'me-order-disputed';
+            $text          = __('This order has been disputed by the Buyer', 'enginethemes');
+            $order_process = 4;
+            break;
+        case 'me-closed':
+            $style         = 'me-order-closed';
+            $text          = __('', 'enginethemes');
+            $order_process = 5;
+            break;
+        case 'me-resolved':
+            $style         = 'me-order-resolved';
+            $text          = __('', 'enginethemes');
+            $order_process = 5;
+            break;
+        default:
+            $style         = 'me-order-pending';
+            $text          = __('', 'enginethemes');
+            $order_process = 1;
+            break;
     }
     if ('style' === $info_type) {
         return $style;

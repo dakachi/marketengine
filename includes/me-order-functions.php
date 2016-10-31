@@ -157,7 +157,7 @@ function me_filter_order_query( $query, $type = '') {
     if( $type == 'order' && (!isset($query['order_status']) || $query['order_status'] == '' || $query['order_status'] == 'any') ) {
         $statuses = me_get_order_status_list();
         unset($statuses['me-pending']);
-        unset($statuses['me-active']);
+        unset($statuses['publish']);
         $query['order_status'] = array_keys($statuses);
         $args['post_status'] = $query['order_status'];
     }
@@ -239,6 +239,7 @@ add_filter( 'me_filter_order', 'me_filter_order_query', 1, 2 );
 function me_get_order_status_list() {
     $order_status = array(
         'me-pending'  => __("Pending", "enginethemes"), // mainly intended for technical case, when an error occurs payment, or payment by bank transfer confirmation to admin
+        'publish'     => __("Actived", "enginethemes"), // mainly intended for technical case, when an error occurs payment, or payment by bank transfer confirmation to admin
         // 'me-active'   => __("Finished", "enginethemes"), // Status of payment order was not yet eligible to transfer money to the account Seller.
         'me-complete' => __("Completed", "enginethemes"), // State order has been completed and is paid to the target account Seller & Admin.
         'me-disputed' => __("Disputed", "enginethemes"), // Order status are taken into account when processing complaints occur
