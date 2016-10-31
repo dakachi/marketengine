@@ -74,7 +74,7 @@ $total = 0;
 </div>
 <?php 
 // seller information
-me_get_template('checkout/user-info', array('author_id' => $listing->post_author));
+me_get_template('user-info', array('author_id' => $listing->post_author));
 ?>
 <?php do_action( 'marketengine_after_checkout_form' ); ?>
 
