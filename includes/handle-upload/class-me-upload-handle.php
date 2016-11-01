@@ -28,7 +28,7 @@ class ME_Upload_Handle extends ME_Form {
             $filename = $_REQUEST['filename'];
             $file = $_FILES[$filename];
             $attachment = self::handle_file($file);
-
+            
             me_get_template('upload-file/multi-file-form', array(
                 'image_id' => $attachment['id'],
                 'filename' => $filename,
@@ -45,11 +45,11 @@ class ME_Upload_Handle extends ME_Form {
             $filename = $_REQUEST['filename'];
             $file = $_FILES[$filename];
             $attachment = self::handle_file($file);
-
+            $close = intval($_REQUEST['removable']);
             me_get_template('upload-file/single-file-form', array(
                 'image_id' => $attachment['id'],
                 'filename' => $filename,
-                'close' => true
+                'close' => $close,
             ));
         }
         exit;
