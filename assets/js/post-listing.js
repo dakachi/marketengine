@@ -1,6 +1,6 @@
 /* global me_globals.ajaxurl, wpAjax*/
 (function($) {
-    $('.parent-category').change(function(e) {
+    $('.me-parent-category').change(function(e) {
         var parent_cat = $(this).val();
         $.get(me_globals.ajaxurl, {
             'action': 'me-load-sub-category',
