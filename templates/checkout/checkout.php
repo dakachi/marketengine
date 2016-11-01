@@ -8,6 +8,7 @@ if (!defined('ABSPATH')) {
 }
 
 $cart_items = me_get_cart_items();
+$listing = me_get_listing(array_keys($cart_items)[0]);
 
 ?>
 <div class="marketengine">
@@ -29,14 +30,14 @@ $cart_items = me_get_cart_items();
 			</div>
 			<div class="me-col-md-3">
 				<div class="me-checkout-sidebar">
-					<?php 
+					<?php
 					// seller information
 					me_get_template('user-info', array('author_id' => $listing->post_author));
 					?>
 				</div>
 			</div>
 		</div>
-		
+
 		<?php
 		// listing details
 		me_get_template('checkout/order-details', array('cart_items' => $cart_items));
