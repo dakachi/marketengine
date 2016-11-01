@@ -5,7 +5,7 @@ $child_categories = get_terms( array('taxonomy' => 'listing_category', 'hide_emp
 if(!$parent_cat || empty($child_categories)) : ?>
 	<div class="marketengine-select-field">
 	    <label class="me-field-title"><?php _e("Sub-category", "enginethemes"); ?></label>
-	    <select class="select-category me-sub-category me-chosen-select" name="sub_cat">
+	    <select disabled="disabled" class="select-category me-sub-category me-chosen-select" name="sub_cat">
 	    	<option value=""><?php _e("Select sub category", "enginethemes"); ?></option>
 	    </select>
 	</div>
