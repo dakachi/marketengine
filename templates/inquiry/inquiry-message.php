@@ -3,8 +3,8 @@
 <?php
 	$user_id = get_current_user_id();
 	$listing = me_get_listing($inquiry->post_parent);
-	$messages = me_get_messages(array('post_type' => 'message', 'post_parent' => $inquiry->ID, 'showposts' => 10));
-	$messages = array_reverse ($messages);
+	$message_query = new ME_Message_Query(array('post_type' => 'message', 'post_parent' => $inquiry->ID, 'showposts' => 10));
+	$messages = array_reverse ($message_query->posts);
 ?>
 	<div class="marketengine">
 		<?php me_print_notices(); ?>
@@ -20,8 +20,15 @@
 								<h2><?php echo get_the_author_meta( 'display_name', $listing->get_author() ); ?></h2>
 							</div>
 							<div class="me-contact-messages" style="max-height: 500px;">
-								<ul id="messages-container" class="me-contact-messages-list" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
 
+								<ul id="messages-container" class="me-contact-messages-list" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
+									<?php if($message_query->max_num_pages > 1) : ?>
+										<li class="load-message">
+											<span id="load-older-message" class="load-message-button">
+												<?php _e("Load older message", "enginethemes"); ?>
+											</span>
+										</li>
+									<?php endif; ?>
 									<?php foreach ($messages  as $key => $message) : ?>
 										<?php me_get_template('inquiry/message-item', array('message' => $message)); ?>
 									<?php endforeach; ?>

@@ -12,35 +12,50 @@
         return $(this).each(function(e) {
             var $elem = $(this);
             var $message_container = $elem.find('ul');
+            var $load_more_button = $(this).find('.load-message-button');
             $elem.find('textarea').focus();
+
+            // fetch message function
+            var fetch_message = function() {
+                $.ajax({
+                    url: me_globals.ajaxurl,
+                    type: 'get',
+                    data: {
+                        action: 'get_messages',
+                        type: settings.type,
+                        parent: settings.parent,
+                        paged: settings.paged,
+                        _wpnonce: settings.nonce
+                    },
+                    beforeSend: function() {
+                        settings.paged++;
+                    },
+                    success: function(res, xhr) {
+                        if (res.data) {
+                            if($load_more_button.length > 0) {
+                                $(res.data).insertAfter('.load-message');    
+                            }else {
+                                $message_container.prepend(res.data);
+                            }
+                            $message_container.scrollTop(600);
+                        } else {
+                            full = true;
+                            $load_more_button.remove();
+                        }
+                    }
+                });
+            }
+                // click to load more message
+            $load_more_button.click(function() {
+                fetch_message();
+            });
             // scroll to load older messages
             $message_container.scroll(function(e) {
                 var pos = $message_container.scrollTop(),
                     h = $message_container.height();
                 // check scroll and ajax get messsages
                 if (pos == 0 && !full) {
-                    $.ajax({
-                        url: me_globals.ajaxurl,
-                        type: 'get',
-                        data: {
-                            action: 'get_messages',
-                            type: settings.type,
-                            parent: settings.parent,
-                            paged: settings.paged,
-                            _wpnonce: settings.nonce
-                        },
-                        beforeSend: function() {
-                            settings.paged++;
-                        },
-                        success: function(res, xhr) {
-                            if (res.data) {
-                                $message_container.prepend(res.data);
-                                $message_container.scrollTop(600);
-                            } else {
-                                full = true;
-                            }
-                        }
-                    });
+                    fetch_message();
                 }
             });
             // send message
