@@ -19,7 +19,7 @@ class ME_Listing_Handle_Form extends ME_Form {
         add_action( 'template_redirect', array(__CLASS__, 'redirect_to_login') );
 
         add_action('wp_loaded', array(__CLASS__, 'process_insert'));
-        add_action('wp_loaded', array(__CLASS__, 'process_update'));               
+        add_action('wp_loaded', array(__CLASS__, 'process_update'));
 
         add_action('wp_loaded', array(__CLASS__, 'process_review_listing'));
         add_action('transition_comment_status', array(__CLASS__, 'approve_review_callback'), 10, 3);
@@ -28,13 +28,13 @@ class ME_Listing_Handle_Form extends ME_Form {
 
         // ajax action
         add_action('wp_ajax_me-load-sub-category', array(__CLASS__, 'load_sub_category'));
-        add_action('wp_ajax_nopriv_me-load-sub-category', array(__CLASS__, 'load_sub_category')); 
+        add_action('wp_ajax_nopriv_me-load-sub-category', array(__CLASS__, 'load_sub_category'));
 
         add_action('wp_ajax_me_load_more_reviews', array(__CLASS__, 'load_more_review'));
         add_action('wp_ajax_nopriv_me_load_more_reviews', array(__CLASS__, 'load_more_review'));
 
     }
-    /** 
+    /**
      * Handle redirect user to page login when not logged in
      */
     public static function redirect_to_login() {
@@ -147,24 +147,29 @@ class ME_Listing_Handle_Form extends ME_Form {
      */
     public static function load_sub_category() {
         if (isset($_REQUEST['parent-cat'])) {
+            $child_categories = get_terms( array('taxonomy' => 'listing_category', 'hide_empty' => false, 'parent' => $_REQUEST['parent-cat']));
             ob_start();
-            me_get_template('post-listing/sub-cat');
+            me_get_template('post-listing/sub-cat', array('child_categories' => $child_categories) );
             $content = ob_get_clean();
-            wp_send_json_success($content);
+
+            wp_send_json_success(array(
+                'content' => $content,
+                'has_child' => !empty($child_categories),
+            ));
         }
     }
 
 
     public static function load_more_review() {
         if(!empty($_GET['post_id']) && !empty($_GET['page'])) {
-            $offset = 2* ($_GET['page']-1); 
+            $offset = 2* ($_GET['page']-1);
             $number = get_option( 'comments_per_page' );
 
             $comments = get_comments(array( 'offset' => $offset, 'type' => 'review', 'post_id' => $_GET['post_id'], 'status' => 'approve', 'number' => $number));
             ob_start();
             wp_list_comments( wp_list_comments( array('callback' => 'marketengine_comments'), $comments ) );
             $content = ob_get_clean();
-            
+
             wp_send_json( array('success' => true, 'data' => $content) );
         }
     }
