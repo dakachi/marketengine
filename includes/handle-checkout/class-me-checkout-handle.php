@@ -145,11 +145,13 @@ class ME_Checkout_Handle {
      */
     public static function inquiry($data) {
 
+        $content = strip_tags(trim($data['content']));
+        
         if (empty($data['inquiry_listing'])) {
             return new WP_Error('empty_listing', __("The listing is required.", "enginethemes"));
         }
 
-        if (empty($data['content'])) {
+        if (empty($content)) {
             return new WP_Error('empty_inquiry_content', __("The inquiry content is required.", "enginethemes"));
         }
         //TODO: validate listing id
@@ -162,7 +164,7 @@ class ME_Checkout_Handle {
 
         $inquiry_id = me_get_current_inquiry($listing_id);
         // strip html tag
-        $content = strip_tags($data['content']);
+        $content = strip_tags(trim($data['content']));
         if (!$inquiry_id) {
             // create inquiry
             $inquiry_id = me_insert_message(
@@ -205,6 +207,12 @@ class ME_Checkout_Handle {
                 return new WP_Error('invalid_inquiry', __("Invalid inquiry.", "enginethemes"));
             }
 
+            $message_data['content'] = strip_tags(trim($message_data['content']));
+
+            if(empty($message_data['content'])) {
+                return new WP_Error('empty_message_content', __("The message content is required.", "enginethemes"));
+            }
+
             if ($inquiry->sender == $current_user) {
                 $receiver = $inquiry->receiver;
             } elseif ($inquiry->receiver == $current_user) {
@@ -233,7 +241,7 @@ class ME_Checkout_Handle {
         $listing_id = $data['inquiry_listing'];
         $inquiry_id = $data['inquiry_id'];
         // strip html tag
-        $content = strip_tags($data['content']);
+        $content = strip_tags(trim($data['content']));
         // add message
         $message_data = array(
             'listing_id' => $listing_id,

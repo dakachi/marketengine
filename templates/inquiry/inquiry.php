@@ -20,7 +20,7 @@
 							</ul>
 						</div>
 						<div class="me-message-typing">
-							<form method="post">
+							<form method="post" id="send-inquiry">
 								<textarea required name="content"></textarea>
 								<span class="me-message-send-btn">
 									<i class="icon-me-attach"></i>

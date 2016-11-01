@@ -96,7 +96,7 @@ function me_insert_message($message_arr, $wp_error = false) {
      */
     if (apply_filters('me_insert_message_empty_content', $maybe_empty, $message_arr)) {
         if ($wp_error) {
-            return new WP_Error('empty_content', __('Content, title, and excerpt are empty.', 'enginethemes'));
+            return new WP_Error('empty_content', __('Content are empty.', 'enginethemes'));
         } else {
             return 0;
         }
