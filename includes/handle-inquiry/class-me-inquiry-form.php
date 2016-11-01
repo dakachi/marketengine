@@ -16,22 +16,22 @@ if (!defined('ABSPATH')) {
 class ME_Inquiry_Form {
     public static function init_hook() {
         // parse_request
-        add_action('wp_loaded', array(__CLASS__, 'process_contact'));
+        add_action('wp_loaded', array(__CLASS__, 'process_start_inquiry'));
         add_action('wp_loaded', array(__CLASS__, 'send_inquiry'));
 
         add_action('wp_ajax_get_messages', array(__CLASS__, 'fetch_messages'));
         add_action('wp_ajax_get_contact_list', array(__CLASS__, 'fetch_contact_list'));
         add_action('wp_ajax_me_send_message', array(__CLASS__, 'send_message'));
-        
-
     }
 
-
-    public static function process_contact() {
+    /**
+     * Buyer start inquiry listing in listiting details
+     */
+    public static function process_start_inquiry() {
         if (isset($_POST['send_inquiry']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-send-inquiry')) {
             // check user login
             $redirect = me_get_page_permalink('inquiry');
-            //TODO: kiem tra giua 2 user da co inquiry chua, tra ve id va dieu huong den trang inquiry
+
             $id = me_get_current_inquiry($_POST['send_inquiry']);
             if (!$id) {
                 $redirect = add_query_arg(array('id' => $_POST['send_inquiry']), $redirect);
@@ -45,6 +45,9 @@ class ME_Inquiry_Form {
         }
     }
 
+    /**
+     * Buyer send a new inquiry to a listing owner
+     */
     public static function send_inquiry() {
         // send inquiry to listing's owner
         if (isset($_POST['content']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-post-inquiry')) {
@@ -60,6 +63,9 @@ class ME_Inquiry_Form {
         }
     }
 
+    /**
+     * User send message in a inquiry conversation
+     */
     public static function send_message() {
         // send message in an inquiry
         if (isset($_POST['content']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-inquiry-message')) {
@@ -76,6 +82,9 @@ class ME_Inquiry_Form {
         }
     }
 
+    /**
+     * User fetch the older messages
+     */
     public static function fetch_messages() {
         if (!empty($_GET['parent']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'me-inquiry-message')) {
             $parent  = me_get_message($_GET['parent']);
@@ -95,6 +104,9 @@ class ME_Inquiry_Form {
         }
     }
 
+    /**
+     * Seller load the inquiry contact list
+     */
     public static function fetch_contact_list() {
         if (!empty($_GET['listing'])) {
             $user_id = get_current_user_id();
