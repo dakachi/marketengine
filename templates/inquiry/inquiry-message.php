@@ -22,13 +22,7 @@
 							<div class="me-contact-messages" style="max-height: 500px;">
 
 								<ul id="messages-container" class="me-contact-messages-list" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
-									<?php if($message_query->max_num_pages > 1) : ?>
-										<li class="load-message">
-											<span id="load-older-message" class="load-message-button">
-												<?php _e("Load older message", "enginethemes"); ?>
-											</span>
-										</li>
-									<?php endif; ?>
+									<?php if($message_query->max_num_pages > 1) { me_get_template('inquiry/load-message-button'); } ?>
 									<?php foreach ($messages  as $key => $message) : ?>
 										<?php me_get_template('inquiry/message-item', array('message' => $message)); ?>
 									<?php endforeach; ?>
