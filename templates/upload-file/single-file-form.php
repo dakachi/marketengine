@@ -1,5 +1,5 @@
 <?php
-$filename_only = wp_get_attachment_url( $image_id );// basename( get_attached_file( $image_id ) );
+$filename_only = wp_get_attachment_url( $image_id );
 ?>
 <li class="me-item-img">
 	<span class="me-gallery-img">

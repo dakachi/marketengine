@@ -48,8 +48,10 @@
             uploader = new plupload.Uploader({
                 container: $(element).get(0),
                 browse_button : options.browse_button,
+                runtimes : options.runtimes,
                 flash_swf_url : options.swf,
                 file_data_name: options.name,
+                multi_selection : options.multi,
                 url: options.upload_url + "&filename=" + options.name + "&action=" + action,
                 filters:  {
                     mime_types : [
