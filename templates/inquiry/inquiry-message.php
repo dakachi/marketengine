@@ -15,7 +15,7 @@
 			<div class="me-contact-listing">
 				<div class="me-row">
 					<div class="me-col-md-9 me-col-sm-8">
-						<div class="me-contact-messages-wrap">
+						<div class="me-contact-messages-wrap inquiry-message-wrapper">
 							<div class="me-contact-message-user">
 								<h2><?php echo get_the_author_meta( 'display_name', $listing->get_author() ); ?></h2>
 							</div>
@@ -29,15 +29,13 @@
 								</ul>
 							</div>
 							<div class="me-message-typing">
-								<form method="post">
+								<form method="post" id="send-message">
 									<textarea required name="content"></textarea>
 									<span class="me-message-send-btn"><i class="icon-me-attach"></i></span>
 
 									<?php wp_nonce_field( 'me-inquiry-message', '_msg_wpnonce' ); ?>
 									<input type="hidden" name="inquiry_listing" value="<?php echo $listing->get_id(); ?>" />
 									<input type="hidden" name="inquiry_id" value="<?php echo $inquiry->ID; ?>" />
-									<input type="submit" value="<?php _e("Send", "enginethemes"); ?>" />
-
 								</form>
 							</div>
 						</div>

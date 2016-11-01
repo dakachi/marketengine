@@ -51,11 +51,16 @@
             return $(this).attr('data-score');
         }
     });
-
-    $('.me-contact-messages-wrap').MEmessage({
-        paged : 2,
-        nonce : $('#_msg_wpnonce').val(),
-        parent : 62,
-        type : 'inquiry'
+    $('.inquiry-message-wrapper').MEmessage({
+        paged: 2,
+        nonce: $('#_msg_wpnonce').val(),
+        parent: $('input[name="inquiry_id"]').val(),
+        type: 'inquiry'
+    });
+    $('#send-inquiry textarea').keydown(function(e) {
+        // enter send message
+        if (e.keyCode == '13' && !e.shiftKey) {
+            $('#send-inquiry').submit();
+        }
     });
 })(jQuery);

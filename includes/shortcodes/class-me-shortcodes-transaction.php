@@ -70,6 +70,10 @@ class ME_Shortcodes_Transaction
                 return __("You can not inquire your self.", "enginethemes");
             }
 
+            if(!ME()->get_current_user()->is_activated()) {
+                return __("You can must confirm your email account to start this conversation.", "enginethemes");
+            }
+
             ob_start();
             me_get_template('inquiry/inquiry', array('listing' => $listing));
             $content = ob_get_clean();
