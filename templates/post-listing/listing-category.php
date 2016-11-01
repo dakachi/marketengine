@@ -26,7 +26,7 @@ $selected_sub_cat = empty($_POST['sub_cat']) ? $selected_sub_cat : $_POST['sub_c
 	<div class="marketengine-group-field" id="me-sub-cat-container">
 		<div class="marketengine-select-field">
 		    <label class="me-field-title"><?php _e("Sub-category", "enginethemes");?></label>
-		    <select <?php disabled( empty($child_cats) ); ?> class="select-category sub-category me-chosen-select" name="sub_cat">
+		    <select <?php disabled( empty($child_cats) ); ?> class="select-category me-sub-category me-chosen-select" name="sub_cat">
 		    	<option value=""><?php _e("Select sub category", "enginethemes");?></option>
 		    	<?php if (!empty($child_cats)) : ?>
 		    	<?php foreach ($child_cats as $key => $sub_cat): ?>

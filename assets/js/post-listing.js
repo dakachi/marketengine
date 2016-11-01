@@ -9,9 +9,11 @@
             if (0 === r || 'success' != stat) {
                 return;
             }
-            $('#me-sub-cat-container').html(r.data);
+            $('.me-sub-category').removeAttr('disabled');
+            $('.me-sub-category').html(r.data);
         });
     });
+
     // $('.select-category').on('change', function() {
     //     var cat = $(this).val();
     //     $.get(me_globals.ajaxurl, {
@@ -24,6 +26,7 @@
     //         $('#listing-type-container').html(r.data);
     //     });
     // });
+
     $('#listing-type-select').on('change', function() {
         var type = $(this).val();
         $('.listing-type-info').hide();
