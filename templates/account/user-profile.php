@@ -17,7 +17,7 @@ $user = ME()->get_current_user();
 
 
 <div class="me-authen-wrap me-authen-profile">
-	
+
 	<?php me_print_notices(); ?>
 
 	<?php do_action('marketengine_user_profile_start', $user); ?>
@@ -67,15 +67,20 @@ $user = ME()->get_current_user();
 			</div>
 
 			<div class="marketengine-text-field">
+				<label class="text">
+					<?php _e("Paypal Email <i>(this email will be used for Paypal payment)</i>", "enginethemes"); ?>
+				</label>
+				<p><?php echo $user->paypal_email ? $user->paypal_email : __('Not yet received info', 'enginethemes'); ?></p>
+			</div>
+
+			<div class="marketengine-text-field">
 				<label class="text"><?php _e("Location", "enginethemes");?></label>
-				<p><?php echo $user->location; ?></p>
+				<p><?php echo $user->location ? $user->location : __('Not yet received info', 'enginethemes'); ?></p>
 			</div>
 
 			<div class="marketengine-text-field me-no-margin-bottom">
-				<label class="text">
-					<?php _e("Paypal Email (this email will be used for Paypal payment)", "enginethemes"); ?>
-				</label>
-				<p><?php echo $user->paypal_email; ?></p>
+				<label class="text"><?php _e("About me", "enginethemes");?></label>
+				<p><?php echo $user->description ? $user->description : __('Not yet received info', 'enginethemes'); ?></p>
 			</div>
 
 			<?php do_action('marketengine_after_user_profile_information', $user); ?>

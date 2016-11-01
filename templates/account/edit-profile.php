@@ -15,6 +15,7 @@ $first_name = isset($_POST['first_name']) ? $_POST['first_name'] : $user->first_
 $last_name = isset($_POST['last_name']) ? $_POST['last_name'] : $user->last_name;
 $location = isset($_POST['location']) ? $_POST['location'] : $user->location;
 $paypal_email = isset($_POST['paypal_email']) ? $_POST['paypal_email'] : $user->paypal_email;
+$about_user = isset($_POST['description']) ? $_POST['description'] : $user->description;
 $user_avatar = $user->get_user_avatar_id();
 ?>
 
@@ -37,14 +38,14 @@ $user_avatar = $user->get_user_avatar_id();
 		            'extension' => 'jpg,jpeg,gif,png',
 		            'multi' => false,
 		            'maxsize' => esc_html( '2mb' ),
-		            'maxcount' => 1, 
+		            'maxcount' => 1,
 		            'close' => false
 		        ));
 		    ?>
 			</div>
 
 			<?php do_action('marketengine_after_edit_user_avatar', $user); ?>
-			
+
 			<?php me_print_notices(); ?>
 
 			<?php do_action('marketengine_before_edit_user_profile', $user); ?>
@@ -96,7 +97,6 @@ $user_avatar = $user->get_user_avatar_id();
 
 						$public_display = array_map('trim', $public_display);
 						$public_display = array_unique($public_display);
-						var_dump($public_display);
 						foreach ($public_display as $id => $item) {
     					?>
 							<option <?php selected($user->display_name, $item);?>><?php echo $item; ?></option>
@@ -111,6 +111,27 @@ $user_avatar = $user->get_user_avatar_id();
 
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
+					<label class="me-field-title"><?php _e("Username", "enginethemes");?></label>
+					<input disabled="disabled" type="text" value="<?php echo $user->user_login; ?>" id="username">
+				</div>
+			</div>
+
+			<div class="marketengine-group-field">
+				<div class="marketengine-input-field">
+					<label class="me-field-title"><?php _e("Email", "enginethemes");?></label>
+					<input disabled="disabled" type="text" value="<?php echo $user->email; ?>" id="email">
+				</div>
+			</div>
+
+			<div class="marketengine-group-field">
+				<div class="marketengine-input-field">
+					<label class="me-field-title"><?php _e("Paypal Email (this email will be used for Paypal payment)", "enginethemes"); ?></label>
+					<input type="text" value="<?php echo $paypal_email; ?>" name="paypal_email" id="paypal_email">
+				</div>
+			</div>
+
+			<div class="marketengine-group-field">
+				<div class="marketengine-input-field">
 					<label class="me-field-title"><?php _e("Location", "enginethemes");?></label>
 					<input type="text" value="<?php echo $location; ?>" name="location" id="location">
 				</div>
@@ -118,8 +139,8 @@ $user_avatar = $user->get_user_avatar_id();
 
 			<div class="marketengine-group-field me-no-margin-bottom">
 				<div class="marketengine-input-field">
-					<label class="me-field-title"><?php _e("Paypal Email (this email will be used for Paypal payment)", "enginethemes"); ?></label>
-					<input type="text" value="<?php echo $paypal_email; ?>" name="paypal_email" id="paypal_email">
+					<label class="me-field-title"><?php _e("About me", "enginethemes");?></label>
+					<textarea name="description" id="description"><?php echo $about_user; ?></textarea>
 				</div>
 			</div>
 
