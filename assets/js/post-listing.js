@@ -9,8 +9,15 @@
             if (0 === r || 'success' != stat) {
                 return;
             }
-            $('.me-sub-category').removeAttr('disabled');
-            $('.me-sub-category').html(r.data);
+            if(r.data.has_child == true) {
+                $('.me-sub-category').removeClass('me-sub-category-empty');
+                $('.me-sub-category').removeAttr('disabled');
+                $('.me-sub-category').html(r.data.content);
+            } else {
+                $('.me-sub-category').attr('disabled', 'disabled');
+                $('.me-sub-category').addClass('me-sub-category-empty');
+                $('.me-sub-category').html(r.data.content);
+            }
         });
     });
 

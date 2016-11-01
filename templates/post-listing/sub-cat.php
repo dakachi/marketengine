@@ -1,7 +1,8 @@
 <?php
 $parent_cat = $_REQUEST['parent-cat'];
 
-$child_categories = get_terms( array('taxonomy' => 'listing_category', 'hide_empty' => false, 'parent' => $parent_cat) );
+// $child_categories = get_terms( array('taxonomy' => 'listing_category', 'hide_empty' => false, 'parent' => $parent_cat) );
+
 if(!$parent_cat || empty($child_categories)) : ?>
 
 	<option value=""><?php _e("Select sub category", "enginethemes"); ?></option>
