@@ -4,7 +4,7 @@ $total = 0;
 ?>
 <?php do_action( 'marketengine_before_checkout_form' ); ?>
 <div class="me-shopping-cart">
-	<h3><?php _e("Your order", "enginethemes"); ?></h3>
+	<h3><?php _e("Your Order", "enginethemes"); ?></h3>
 	<div class="me-table me-cart-table">
 		<div class="me-table-rhead">
 			<div class="me-table-col me-cart-name"><?php _e("Listing", "enginethemes"); ?></div>
