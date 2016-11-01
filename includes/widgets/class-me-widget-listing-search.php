@@ -51,8 +51,12 @@ class ME_Widget_Search extends WP_Widget {
 		}
 
 		// Use current theme search form if it exists
+		echo '<div class="me-blog-sidebar-content">';
+
 		marketengine_get_search_form();
 
+		echo '</div>';
+		
 		echo $args['after_widget'];
 	}
 
