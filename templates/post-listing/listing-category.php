@@ -28,11 +28,13 @@ $selected_sub_cat = empty($_POST['sub_cat']) ? $selected_sub_cat : $_POST['sub_c
 		    <label class="me-field-title"><?php _e("Sub-category", "enginethemes");?></label>
 		    <select <?php disabled( empty($child_cats) ); ?> class="select-category sub-category me-chosen-select" name="sub_cat">
 		    	<option value=""><?php _e("Select sub category", "enginethemes");?></option>
+		    	<?php if (!empty($child_cats)) : ?>
 		    	<?php foreach ($child_cats as $key => $sub_cat): ?>
 			    	<option value="<?php echo $sub_cat->term_id; ?>" <?php selected($selected_sub_cat, $sub_cat->term_id);?> >
 			    		<?php echo $sub_cat->name; ?>
 			    	</option>
 		    	<?php endforeach;?>
+		    	<?php endif; ?>
 		    </select>
 		</div>
 	</div>
