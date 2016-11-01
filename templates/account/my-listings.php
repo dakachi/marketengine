@@ -30,12 +30,12 @@ $query = new WP_Query( $args );
 			<div class="marketengine-filter-listing pull-right">
 				<div class="filter-listing-status">
 					<select class="me-chosen-select" name="" id="" onchange="window.location.href=this.value;">
-						<option value="<?php echo me_get_auth_url('listings') ?>"><?php _e('All status', 'enginethemes'); ?></option>
+						<option value="<?php echo '?status=any'; ?>" <?php selected( $listing_status, 'any'); ?>><?php _e('All status', 'enginethemes'); ?></option>
 					<?php
 						$filter_options = me_listings_status_list();
 						foreach( $filter_options as $key => $label) :
 					?>
-						<option value="<?php echo '?status=' . $key; ?>" <?php echo ($listing_status == $key) ? 'selected' : ''; ?>><?php echo $label; ?></option>
+						<option value="<?php echo '?status=' . $key; ?>" <?php selected( $listing_status, $key); ?>><?php echo $label; ?></option>
 					<?php
 						endforeach;
 					?>

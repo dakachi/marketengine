@@ -9,9 +9,19 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+
+if(me_option('user-email-confirmation')) {
+	$curr_user_id = get_current_user_id();
+	$active_email_key = get_user_meta($curr_user_id, 'activate_email_key');
+
+	$can_post_listing = (current_user_can( 'publish_posts' ) && empty($active_email_key)) || current_user_can('manage_options');
+} else {
+	$can_post_listing = current_user_can( 'publish_posts' );
+}
+
 ?>
 
-<?php if(current_user_can( 'publish_posts' )) : ?>
+<?php if($can_post_listing) : ?>
 
 <?php do_action('marketengine_before_post_listing_form'); ?>
 
@@ -54,6 +64,6 @@ if (!defined('ABSPATH')) {
 
 <?php do_action('marketengine_after_post_listing_form'); ?>
 
-<?php else: 
+<?php else:
 	me_get_template('post-listing/post-listing-none');
 endif; ?>

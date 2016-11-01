@@ -29,7 +29,7 @@ $user_avatar = $user->get_user_avatar_id();
 			<?php do_action('marketengine_before_edit_user_avatar', $user); ?>
 			<div class="marketengine-avatar-user">
 				<?php
-		        me_get_template('upload-file/upload-form', array(
+		        me_get_template('upload-file/avatar-form', array(
 		            'id' => 'upload_user_avatar',
 		            'name' => 'user_avatar',
 		            'source' => $user_avatar,
