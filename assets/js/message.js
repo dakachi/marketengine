@@ -12,7 +12,6 @@
         return $(this).each(function(e) {
             var $elem = $(this);
             var $message_container = $elem.find('ul');
-
             $elem.find('textarea').focus();
             // scroll to load older messages
             $message_container.scroll(function(e) {
@@ -49,30 +48,37 @@
                 // enter send message
                 if (e.keyCode == '13' && !e.shiftKey) {
                     e.preventDefault();
-                    var $textarea = $(this);
-                    $.ajax({
-                        type : 'post',
-                        url: me_globals.ajaxurl,
-                        data: {
-                            action : 'me_send_message',
-                            type : settings.type,
-                            inquiry_id : settings.parent,
-                            content : $(this).val(),
-                            _wpnonce: settings.nonce
-                        },
-                        beforeSend: function() {
-                            $textarea.val('');
-                        },
-                        success: function(response, xhr) {
-                            if(response.success) {
-                                console.log($message_container);
-                                $message_container.append(response.content);
-                                $message_container.scrollTop($message_container[0].scrollHeight);
-                            }
-                        }
-                    });
+                    $(this).parent('form').submit();
                 }
-                // shift enter new line
+            });
+            // message form submit
+            $elem.find('form').submit(function(e) {
+                e.preventDefault();
+                var $textarea = $(this).find('textarea'),
+                    content = $textarea.val();
+                // message content can not empty
+                if (!content) return;
+                // ajax send message
+                $.ajax({
+                    type: 'post',
+                    url: me_globals.ajaxurl,
+                    data: {
+                        action: 'me_send_message',
+                        type: settings.type,
+                        inquiry_id: settings.parent,
+                        content: content,
+                        _wpnonce: settings.nonce
+                    },
+                    beforeSend: function() {
+                        $textarea.val('');
+                    },
+                    success: function(response, xhr) {
+                        if (response.success) {
+                            $message_container.append(response.content);
+                            $message_container.scrollTop($message_container[0].scrollHeight);
+                        }
+                    }
+                });
             });
         });
     }
