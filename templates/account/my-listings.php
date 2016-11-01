@@ -115,6 +115,8 @@ $query = new WP_Query( $args );
 	</div>
 	<!--// marketengine-content -->
 <?php
+elseif(isset($_GET['status'])) :
+	_e('There are no listings here.');
 else:
 	me_get_template('account/my-listing-none');
 endif;
