@@ -6,9 +6,9 @@
 	?>
 
 		<span class="me-price">
-			<?php echo me_price_html( $price, $pricing_unit ); ?>
+			<?php echo me_price_html( $price, '', $pricing_unit ); ?>
 		</span>
-		<span class="me-instock"><?php _e("In Stock", "enginethemes"); ?></span>
+		<?php /* <span class="me-instock"><?php _e("In Stock", "enginethemes"); ?></span> */ ?>
 	<?php endif; ?>
 		<form method="post">
 			<?php me_get_template('account/my-listing-action', array('listing_status' => $listing_status, 'listing_id' => get_the_ID())); ?>
