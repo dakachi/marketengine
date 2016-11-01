@@ -39,47 +39,47 @@ $user = ME()->get_current_user();
 			<div class="me-row">
 				<div class="me-col-md-6">
 					<div class="marketengine-text-field">
-						<label class="text"><?php _e("First name", "enginethemes");?></label>
+						<label class="me-field-title"><?php _e("First name", "enginethemes");?></label>
 						<p><?php echo $user->first_name; ?></p>
 					</div>
 				</div>
 				<div class="me-col-md-6">
 					<div class="marketengine-text-field">
-						<label class="text"><?php _e("Last name", "enginethemes");?></label>
+						<label class="me-field-title"><?php _e("Last name", "enginethemes");?></label>
 						<p><?php echo $user->last_name; ?></p>
 					</div>
 				</div>
 			</div>
 			<div class="marketengine-text-field">
-				<label class="text"><?php _e("Display name", "enginethemes");?></label>
+				<label class="me-field-title"><?php _e("Display name", "enginethemes");?></label>
 				<p><?php echo $user->display_name; ?></p>
 			</div>
 
 			<?php do_action('marketengine_user_profile_information', $user); ?>
 
 			<div class="marketengine-text-field">
-				<label class="text"><?php _e("Username", "enginethemes");?></label>
+				<label class="me-field-title"><?php _e("Username", "enginethemes");?></label>
 				<p><?php echo $user->user_login; ?></p>
 			</div>
 			<div class="marketengine-text-field">
-				<label class="text"><?php _e("Email", "enginethemes");?></label>
+				<label class="me-field-title"><?php _e("Email", "enginethemes");?></label>
 				<p><?php echo $user->user_email; ?></p>
 			</div>
 
 			<div class="marketengine-text-field">
-				<label class="text">
+				<label class="me-field-title">
 					<?php _e("Paypal Email <i>(this email will be used for Paypal payment)</i>", "enginethemes"); ?>
 				</label>
 				<p><?php echo $user->paypal_email ? $user->paypal_email : __('Not yet received info', 'enginethemes'); ?></p>
 			</div>
 
 			<div class="marketengine-text-field">
-				<label class="text"><?php _e("Location", "enginethemes");?></label>
+				<label class="me-field-title"><?php _e("Location", "enginethemes");?></label>
 				<p><?php echo $user->location ? $user->location : __('Not yet received info', 'enginethemes'); ?></p>
 			</div>
 
 			<div class="marketengine-text-field me-no-margin-bottom">
-				<label class="text"><?php _e("About me", "enginethemes");?></label>
+				<label class="me-field-title"><?php _e("About me", "enginethemes");?></label>
 				<p><?php echo $user->description ? $user->description : __('Not yet received info', 'enginethemes'); ?></p>
 			</div>
 
