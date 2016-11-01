@@ -3,7 +3,16 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
+/**
+ * ME_Inquiry_Form
+ *
+ * Handle submit, ajax inquire listing
+ *
+ * @version     1.0
+ * @package     Includes/Handle-inquiry
+ * @author      EngineThemesTeam
+ * @category    Class
+ */
 class ME_Inquiry_Form {
     public static function init_hook() {
         // parse_request

@@ -4,24 +4,30 @@ if (!defined('ABSPATH')) {
     exit;
 }
 /**
- * ME_Order_Handle
+ * ME_Inquiry_Handle
  *
- * Handling buyer order order behavior
+ * Handling buyer inquire listing behavior
  *
- * @class       ME_Order_Handle
+ * @class       ME_Inquiry_Handle
  * @version     1.0
- * @package     Includes/Orders
+ * @package     Includes/Handle-inquiry
  * @author      EngineThemesTeam
  * @category    Class
  */
 class ME_Inquiry_Handle {
     /**
      * Handle buyer inquire a listing
+     * @param array $data 
+     *				- string : content The inquiry message content
+     *				- int : inquiry_listing The inquired listing id
+     * @return Int | WP_Error Return inquiry id if success | WP_Error if false
+     *
+     * @since 1.0
      */
     public static function inquiry($data) {
 
         $content = strip_tags(trim($data['content']));
-        
+
         if (empty($data['inquiry_listing'])) {
             return new WP_Error('empty_listing', __("The listing is required.", "enginethemes"));
         }
@@ -62,14 +68,20 @@ class ME_Inquiry_Handle {
             'inquiry_id' => $inquiry_id,
         );
         $message = self::insert_message($message_data);
-        if(is_wp_error( $message )) {
+        if (is_wp_error($message)) {
             return $message;
         }
         return $inquiry_id;
     }
 
     /**
-     * @return int | WP_Error
+     * Insert a message in a inquiry conversation
+     * @param array $data 
+     *				- string : content The inquiry message content
+     *				- int : inquiry_id The inquiry conversation id
+     * @return Int | WP_Error Return message id if success | WP_Error if false
+     *
+     * @since 1.0
      */
     public static function insert_message($message_data) {
         $inquiry_id = $message_data['inquiry_id'];
@@ -84,7 +96,7 @@ class ME_Inquiry_Handle {
 
             $message_data['content'] = strip_tags(trim($message_data['content']));
 
-            if(empty($message_data['content'])) {
+            if (empty($message_data['content'])) {
                 return new WP_Error('empty_message_content', __("The message content is required.", "enginethemes"));
             }
 
@@ -106,12 +118,23 @@ class ME_Inquiry_Handle {
 
             $message_id = me_insert_message($message_data, true);
             return $message_id;
-        }else {
+        } else {
             return new WP_Error('invalid_inquiry', __("Invalid inquiry.", "enginethemes"));
         }
-        
+
     }
 
+    /**
+     * Send a message to an inquiry conversation
+     *
+     * @param array $data 
+     *				- int : inquiry_listing The inquired listing id
+     *				- string : content The inquiry message content
+     *				- int : inquiry_id The inquiry conversation id
+     * @return Int | WP_Error Return message id if success | WP_Error if false
+     *
+     * @since 1.0
+     */
     public static function message($data) {
         $listing_id = $data['inquiry_listing'];
         $inquiry_id = $data['inquiry_id'];
