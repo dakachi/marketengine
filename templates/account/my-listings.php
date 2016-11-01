@@ -115,7 +115,26 @@ $query = new WP_Query( $args );
 	</div>
 	<!--// marketengine-content -->
 <?php
-elseif(isset($_GET['status'])) :
+elseif(isset($_GET['status'])) : ?>
+		<div class="marketengine-filter">
+			<div class="marketengine-filter-listing pull-right">
+				<div class="filter-listing-status">
+					<select class="me-chosen-select" name="" id="" onchange="window.location.href=this.value;">
+						<option value="<?php echo '?status=any'; ?>" <?php selected( $listing_status, 'any'); ?>><?php _e('All status', 'enginethemes'); ?></option>
+					<?php
+						$filter_options = me_listings_status_list();
+						foreach( $filter_options as $key => $label) :
+					?>
+						<option value="<?php echo '?status=' . $key; ?>" <?php selected( $listing_status, $key); ?>><?php echo $label; ?></option>
+					<?php
+						endforeach;
+					?>
+					</select>
+
+				</div>
+			</div>
+		</div>
+<?php
 	_e('There are no listings here.');
 else:
 	me_get_template('account/my-listing-none');
