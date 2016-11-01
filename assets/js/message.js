@@ -11,40 +11,36 @@
         var full = false;
         return $(this).each(function(e) {
             var $elem = $(this);
-            var $message_container = $elem.find('ul');
+            var $message_container = $elem.find('.me-contact-messages');
             var $load_more_button = $(this).find('.load-message-button');
+            var $ul = $elem.find('ul');
             $elem.find('textarea').focus();
-
             // fetch message function
             var fetch_message = function() {
-                $.ajax({
-                    url: me_globals.ajaxurl,
-                    type: 'get',
-                    data: {
-                        action: 'get_messages',
-                        type: settings.type,
-                        parent: settings.parent,
-                        paged: settings.paged,
-                        _wpnonce: settings.nonce
-                    },
-                    beforeSend: function() {
-                        settings.paged++;
-                    },
-                    success: function(res, xhr) {
-                        if (res.data) {
-                            if($load_more_button.length > 0) {
-                                $(res.data).insertAfter('.load-message');    
-                            }else {
-                                $message_container.prepend(res.data);
+                    $.ajax({
+                        url: me_globals.ajaxurl,
+                        type: 'get',
+                        data: {
+                            action: 'get_messages',
+                            type: settings.type,
+                            parent: settings.parent,
+                            paged: settings.paged,
+                            _wpnonce: settings.nonce
+                        },
+                        beforeSend: function() {
+                            settings.paged++;
+                        },
+                        success: function(res, xhr) {
+                            if (res.data) {
+                                $ul.prepend(res.data);
+                                $message_container.scrollTop(600);
+                            } else {
+                                full = true;
+                                $load_more_button.remove();
                             }
-                            $message_container.scrollTop(600);
-                        } else {
-                            full = true;
-                            $load_more_button.remove();
                         }
-                    }
-                });
-            }
+                    });
+                }
                 // click to load more message
             $load_more_button.click(function() {
                 fetch_message();
