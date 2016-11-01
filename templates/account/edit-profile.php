@@ -138,7 +138,7 @@ $user_avatar = $user->get_user_avatar_id();
 			</div>
 
 			<div class="marketengine-group-field me-no-margin-bottom">
-				<div class="marketengine-input-field">
+				<div class="marketengine-textarea-field">
 					<label class="me-field-title"><?php _e("About me", "enginethemes");?></label>
 					<textarea name="description" id="description"><?php echo $about_user; ?></textarea>
 				</div>
