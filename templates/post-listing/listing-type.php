@@ -15,7 +15,7 @@ if (!empty($_POST['meta_input']['pricing_unit'])) {$unit =  esc_attr($_POST['met
 
 	<div class="marketengine-select-field">
 	    <label class="me-field-title"><?php _e("Listing Type", "enginethemes"); ?></label>
-	    <select class="listing-type" name="listing_type" id="listing-type-select">
+	    <select class="listing-type me-chosen-select" name="listing_type" id="listing-type-select">
 	    	<?php foreach ($listing_types as $key => $name) : ?>
 	    		<option value="<?php echo $key ?>" <?php selected( $selected_listing_type, $key) ?>><?php echo $name; ?></option>
 	    	<?php endforeach; ?>
@@ -46,7 +46,7 @@ if (!empty($_POST['meta_input']['pricing_unit'])) {$unit =  esc_attr($_POST['met
 			<div class="marketengine-group-field">
 				<div class="marketengine-select-field">
 				    <label class="me-field-title"><?php _e("Pricing unit", "enginethemes"); ?></label>
-				    <select class="pricing-unit" name="meta_input[pricing_unit]">
+				    <select class="pricing-unit me-chosen-select" name="meta_input[pricing_unit]">
 				    	<option value="none" <?php if(!$unit) echo 'selected'; ?>><?php _e("None", "enginethemes"); ?></option>
 				    	<option value="per_unit" <?php if($unit == 'per_unit') echo 'selected'; ?> ><?php _e("Per Unit", "enginethemes"); ?></option>
 				    	<option value="per_hour" <?php if($unit == 'per_hour') echo 'selected'; ?> ><?php _e("Per Hour", "enginethemes"); ?></option>
