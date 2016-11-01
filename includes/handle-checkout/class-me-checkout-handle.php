@@ -162,7 +162,7 @@ class ME_Checkout_Handle {
 
         $inquiry_id = me_get_current_inquiry($listing_id);
         // strip html tag
-        $content = strip_tags($data['content']);
+        $content = strip_tags(trim($data['content']));
         if (!$inquiry_id) {
             // create inquiry
             $inquiry_id = me_insert_message(
@@ -233,7 +233,7 @@ class ME_Checkout_Handle {
         $listing_id = $data['inquiry_listing'];
         $inquiry_id = $data['inquiry_id'];
         // strip html tag
-        $content = strip_tags($data['content']);
+        $content = strip_tags(trim($data['content']));
         // add message
         $message_data = array(
             'listing_id' => $listing_id,
