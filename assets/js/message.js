@@ -11,14 +11,12 @@
         var full = false;
         return $(this).each(function(e) {
             var $elem = $(this);
-            var $message_container = $elem.find('ul');
+            var $message_container = $elem.find('.me-contact-messages');
+            var $load_more_button = $(this).find('.load-message-button');
+            var $ul = $elem.find('ul');
             $elem.find('textarea').focus();
-            // scroll to load older messages
-            $message_container.scroll(function(e) {
-                var pos = $message_container.scrollTop(),
-                    h = $message_container.height();
-                // check scroll and ajax get messsages
-                if (pos == 0 && !full) {
+            // fetch message function
+            var fetch_message = function() {
                     $.ajax({
                         url: me_globals.ajaxurl,
                         type: 'get',
@@ -34,13 +32,26 @@
                         },
                         success: function(res, xhr) {
                             if (res.data) {
-                                $message_container.prepend(res.data);
+                                $ul.prepend(res.data);
                                 $message_container.scrollTop(600);
                             } else {
                                 full = true;
+                                $load_more_button.remove();
                             }
                         }
                     });
+                }
+                // click to load more message
+            $load_more_button.click(function() {
+                fetch_message();
+            });
+            // scroll to load older messages
+            $message_container.scroll(function(e) {
+                var pos = $message_container.scrollTop(),
+                    h = $message_container.height();
+                // check scroll and ajax get messsages
+                if (pos == 0 && !full) {
+                    fetch_message();
                 }
             });
             // send message
