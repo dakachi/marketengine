@@ -20,7 +20,8 @@
             maxsize: "10mb",
             maxcount: 8,
             maxwidth: 0,
-            maxheight: 0
+            maxheight: 0,
+            removable : true
         };
 
         if (options) {
@@ -33,6 +34,7 @@
 
             var element = this;
             var action = options.multi ? "upload_multi_file" : "upload_single_file" ;
+            var removable = options.removable ? '1' : '0';
             var preview = $(element).find('.upload_preview_container ul');
             var uploading = null;
             var uploader = null;
@@ -48,9 +50,11 @@
             uploader = new plupload.Uploader({
                 container: $(element).get(0),
                 browse_button : options.browse_button,
+                runtimes : options.runtimes,
                 flash_swf_url : options.swf,
                 file_data_name: options.name,
-                url: options.upload_url + "&filename=" + options.name + "&action=" + action,
+                multi_selection : options.multi,
+                url: options.upload_url + "&filename=" + options.name + "&action=" + action+"&removable=" + removable,
                 filters:  {
                     mime_types : [
                         { title : "extensions", extensions : options.extension }

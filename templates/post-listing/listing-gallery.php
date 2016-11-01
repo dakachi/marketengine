@@ -24,7 +24,8 @@ if (!defined('ABSPATH')) {
             'button' => 'btn-listing-image',
             'multi' => false,
             'maxsize' => esc_html( '2mb' ),
-            'maxcount' => 1
+            'maxcount' => 1,
+            'close' => true
         ));
         ?>
     </div>
@@ -59,7 +60,8 @@ if (!defined('ABSPATH')) {
             'button' => 'me-btn-upload',
             'multi' => true,
             'maxsize' => esc_html( '2mb' ),
-            'maxcount' => 5
+            'maxcount' => 5,
+            'close' => true
         ));
         ?>
     </div>

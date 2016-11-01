@@ -1,6 +1,6 @@
 <li>
 	<span class="me-mgs-author-avatar">
-		<?php echo get_avatar( $message->sender, '36'); ?>
+		<?php echo me_get_avatar( $message->sender, '36'); ?>
 	</span>
 	<div class="me-message-author">
 		<h4 class="me-author"><?php echo get_the_author_meta( 'display_name', $message->sender ); ?></h4>
