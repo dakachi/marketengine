@@ -209,7 +209,9 @@ class ME_Authentication {
         }
 
         $user = new WP_User($user_id);
-        if (get_option('is_required_email_confirmation')) {
+        $is_required_email_confirmation = me_option('user-email-confirmation') ? true : false;
+
+        if ($is_required_email_confirmation) {
             // generate the activation key
             $activate_email_key = wp_hash(md5($user_data['user_email'] . time()));
             // store the activation key to user meta data
