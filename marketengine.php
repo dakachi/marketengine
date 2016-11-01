@@ -145,6 +145,9 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/handle-checkout/class-me-checkout-handle.php';
             require_once ME_PLUGIN_PATH . '/includes/handle-checkout/class-me-checkout-form.php';
 
+            require_once ME_PLUGIN_PATH . '/includes/handle-inquiry/class-me-inquiry-handle.php';
+            require_once ME_PLUGIN_PATH . '/includes/handle-inquiry/class-me-inquiry-form.php';
+
             require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-auth.php';
             require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-listing.php';
             require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-transaction.php';

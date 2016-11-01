@@ -22,11 +22,13 @@
 						<div class="me-message-typing">
 							<form method="post" id="send-inquiry">
 								<textarea required name="content"></textarea>
-								<span class="me-message-send-btn"><i class="icon-me-attach"></i></span>
+								<span class="me-message-send-btn">
+									<i class="icon-me-attach"></i>
+									<input type="submit" value="<?php _e("Send", "enginethemes"); ?>" />
+								</span>
 
 								<?php wp_nonce_field( 'me-post-inquiry' ); ?>
 								<input type="hidden" name="inquiry_listing" value="<?php echo $listing->get_id(); ?>" />
-
 							</form>
 						</div>
 					</div>
