@@ -40,6 +40,9 @@
             var uploading = null;
             var uploader = null;
 
+            var inquiry_id = options.inquiry_id;
+            var listing_id = options.listing_id;
+
             var upload_begin = function(files){
                 $.each(files, function(file){
                     var progress = "<li class='uploading'><div class='uploading-progress'></div></li>";
@@ -55,7 +58,7 @@
                 flash_swf_url : options.swf,
                 file_data_name: options.name,
                 multi_selection : false,
-                url: options.upload_url + "&filename=" + options.name + "&action=" + action+"&removable=" + removable,
+                url: options.upload_url + "&listing_id="+listing_id+"&inquiry_id="+inquiry_id+"&filename=" + options.name + "&action=" + action+"&removable=" + removable,
                 filters:  {
                     mime_types : [
                         { title : "extensions", extensions : options.extension }
