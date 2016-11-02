@@ -83,7 +83,7 @@ class ME_Auth_Form extends ME_Form {
 
             $is_required_email_confirmation = me_option('user-email-confirmation') ? true : false;
             if ($is_required_email_confirmation) {
-                me_add_notice(__("You have registered successfully. Please check your mailbox to activate your account", "enginethemes"));
+                me_add_notice(__("Thank you! Please <b>check your mailbox</b> to activate your account.", "enginethemes"));
             } else {
                 me_add_notice(__("You have registered successfully.", "enginethemes"));
             }

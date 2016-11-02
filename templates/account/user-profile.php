@@ -86,9 +86,14 @@ $user = ME()->get_current_user();
 
 		</div>
 		<div class="marketengine-text-field edit-profile">
-			<a href="<?php echo me_get_endpoint_url('edit-profile'); ?>" class="marketengine-btn"><?php _e("EDIT PROFILE", "enginethemes");?></a>
+			<a href="<?php echo $user->is_activated() ? me_get_endpoint_url('edit-profile') : '#'; ?>" class="marketengine-btn"><?php _e("EDIT PROFILE", "enginethemes");?></a>
 		</div>
+
+		<?php if($user->is_activated()): ?>
 		<a href="<?php echo me_get_endpoint_url('change-password'); ?>" class="back-home-sigin me-backlink"><?php _e("Change Password", "enginethemes");?></a>
+		<?php else : ?>
+		<a href="<?php echo add_query_arg(array( 'resend-confirmation-email' => true, '_wpnonce' => wp_create_nonce('me-resend_confirmation_email') )); ?>" class="back-home-sigin me-backlink"><?php _e("Resend activation email", "enginethemes");?></a>
+		<?php endif; ?>
 
 	<?php do_action('marketengine_user_profile_end', $user); ?>
 </div>
