@@ -17,35 +17,38 @@ if (!defined('ABSPATH')) {
 class ME_Inquiry_Handle {
     /**
      * Handle buyer inquire a listing
-     * @param array $data 
-     *				- string : content The inquiry message content
-     *				- int : inquiry_listing The inquired listing id
+     * @param array $data
+     *                - string : content The inquiry message content
+     *                - int : inquiry_listing The inquired listing id
      * @return Int | WP_Error Return inquiry id if success | WP_Error if false
      *
      * @since 1.0
      */
     public static function inquiry($data) {
+        $current_user_id = get_current_user_id();
 
-        $content = strip_tags(trim($data['content']));
-
-        if (empty($data['inquiry_listing'])) {
+        if (empty($data['send_inquiry'])) {
             return new WP_Error('empty_listing', __("The listing is required.", "enginethemes"));
         }
 
-        if (empty($content)) {
-            return new WP_Error('empty_inquiry_content', __("The inquiry content is required.", "enginethemes"));
-        }
         //TODO: validate listing id
-        $listing_id = $data['inquiry_listing'];
+        $listing_id = $data['send_inquiry'];
         $listing    = get_post($listing_id);
+
+        if ($current_user_id == $listing->post_author) {
+            return __("You can not inquire your self.", "enginethemes");
+        }
+
+        if (!ME()->get_current_user()->is_activated()) {
+            return __("You can must confirm your email account to start this conversation.", "enginethemes");
+        }
 
         if (is_wp_error($listing) || $listing->post_type != 'listing') {
             return new WP_Error('invalid_listing', __("Invalid listing.", "enginethemes"));
         }
 
         $inquiry_id = me_get_current_inquiry($listing_id);
-        // strip html tag
-        $content = strip_tags(trim($data['content']));
+
         if (!$inquiry_id) {
             // create inquiry
             $inquiry_id = me_insert_message(
@@ -62,23 +65,23 @@ class ME_Inquiry_Handle {
             }
         }
 
-        $message_data = array(
-            'listing_id' => $listing_id,
-            'content'    => $content,
-            'inquiry_id' => $inquiry_id,
-        );
-        $message = self::insert_message($message_data);
-        if (is_wp_error($message)) {
-            return $message;
-        }
+        // $message_data = array(
+        //     'listing_id' => $listing_id,
+        //     'content'    => $content,
+        //     'inquiry_id' => $inquiry_id,
+        // );
+        // $message = self::insert_message($message_data);
+        // if (is_wp_error($message)) {
+        //     return $message;
+        // }
         return $inquiry_id;
     }
 
     /**
      * Insert a message in a inquiry conversation
-     * @param array $data 
-     *				- string : content The inquiry message content
-     *				- int : inquiry_id The inquiry conversation id
+     * @param array $data
+     *                - string : content The inquiry message content
+     *                - int : inquiry_id The inquiry conversation id
      * @return Int | WP_Error Return message id if success | WP_Error if false
      *
      * @since 1.0
@@ -127,10 +130,10 @@ class ME_Inquiry_Handle {
     /**
      * Send a message to an inquiry conversation
      *
-     * @param array $data 
-     *				- int : inquiry_listing The inquired listing id
-     *				- string : content The inquiry message content
-     *				- int : inquiry_id The inquiry conversation id
+     * @param array $data
+     *                - int : inquiry_listing The inquired listing id
+     *                - string : content The inquiry message content
+     *                - int : inquiry_id The inquiry conversation id
      * @return Int | WP_Error Return message id if success | WP_Error if false
      *
      * @since 1.0
