@@ -15,10 +15,9 @@ $user = ME()->get_current_user();
 
 <?php do_action('marketengine_before_user_profile', $user); ?>
 
+<?php me_print_notices(); ?>
 
 <div class="me-authen-wrap me-authen-profile">
-
-	<?php me_print_notices(); ?>
 
 	<?php do_action('marketengine_user_profile_start', $user); ?>
 

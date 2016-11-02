@@ -53,6 +53,8 @@ class ME_Listing_Handle {
         if (isset($listing_data['listing_image'])) {
             // process upload featured image
             $listing_data['meta_input']['_thumbnail_id'] = absint(esc_sql( $listing_data['listing_image'] ));
+        } else {
+            $listing_data['meta_input']['_thumbnail_id'] = '';
         }
 
         if (isset($listing_data['ID'])) {
