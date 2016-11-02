@@ -30,7 +30,8 @@
 							</div>
 							<div class="me-message-typing">
 								<form method="post" id="send-message">
-									<textarea class="required" required name="content"></textarea>
+									<div id="me-mc-container"></div>
+									<textarea id="me-message-content" class="required" required name="content"></textarea>
 									<span id="me-message-send-btn" class="me-message-send-btn"><i class="icon-me-attach"></i></span>
 
 									<?php wp_nonce_field( 'me-inquiry-message', '_msg_wpnonce' ); ?>
