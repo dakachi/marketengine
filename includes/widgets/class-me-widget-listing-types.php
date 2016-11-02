@@ -51,7 +51,7 @@ class ME_Widget_Listing_Types extends WP_Widget {
 
         ?>
             <div class="me-title-sidebar">
-                <h2><?php echo __('LISTING TYPES', 'enginethemes'); ?></h2>
+                <h2><?php echo $title  ?></h2>
             </div>
             <div class="me-listingtype-filter">
                 <label>
@@ -95,9 +95,6 @@ class ME_Widget_Listing_Types extends WP_Widget {
 
         $instance = $old_instance;
         $instance['title'] = sanitize_text_field( $new_instance['title'] );
-        $instance['count'] = !empty($new_instance['count']) ? 1 : 0;
-        $instance['hierarchical'] = !empty($new_instance['hierarchical']) ? 1 : 0;
-        $instance['dropdown'] = !empty($new_instance['dropdown']) ? 1 : 0;
 
         return $instance;
     }
@@ -118,15 +115,6 @@ class ME_Widget_Listing_Types extends WP_Widget {
         ?>
         <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e( 'Title:' ); ?></label>
         <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" /></p>
-
-        <p><input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('dropdown'); ?>" name="<?php echo $this->get_field_name('dropdown'); ?>"<?php checked( $dropdown ); ?> />
-        <label for="<?php echo $this->get_field_id('dropdown'); ?>"><?php _e( 'Display as dropdown' ); ?></label><br />
-
-        <input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>"<?php checked( $count ); ?> />
-        <label for="<?php echo $this->get_field_id('count'); ?>"><?php _e( 'Show post counts' ); ?></label><br />
-
-        <input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('hierarchical'); ?>" name="<?php echo $this->get_field_name('hierarchical'); ?>"<?php checked( $hierarchical ); ?> />
-        <label for="<?php echo $this->get_field_id('hierarchical'); ?>"><?php _e( 'Show hierarchy' ); ?></label></p>
     <?php
     }
 }
