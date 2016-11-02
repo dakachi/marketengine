@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 }
 
 $cart_items = me_get_cart_items();
-$listing = me_get_listing(array_keys($cart_items)[0]);
+
 
 ?>
 <div class="marketengine">
@@ -18,6 +18,7 @@ $listing = me_get_listing(array_keys($cart_items)[0]);
 		print_r(__("There is no item selected.", "enginethemes"));
 		return;
 	}
+	$listing = me_get_listing(array_keys($cart_items)[0]);
 	?>
 	<form method="post">
 		<div class="me-row">
