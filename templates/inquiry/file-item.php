@@ -13,7 +13,7 @@ switch ($file_type['ext']) {
 		echo '<i class="fa fa-picture-pdf-o" aria-hidden="true"></i>';
 		?>
 		<a href="<?php echo $url; ?>" class="mess-file-item" title="<?php echo $name; ?>">
-			<img src="<?php echo $url; ?>">
+			<img src="<?php echo $url; ?>" style="width:160px;">
 		</a>
 		<?php
 		return ;
