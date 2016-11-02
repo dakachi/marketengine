@@ -32,3 +32,8 @@ function me_get_avatar($user_id) {
     }
     return get_avatar( $user_id );
 }
+
+function me_is_activated_user() {
+    $current_user = ME()->get_current_user();
+    return $current_user->is_activated();
+}
