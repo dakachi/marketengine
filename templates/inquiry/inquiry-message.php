@@ -14,7 +14,7 @@
 
 			<div class="me-contact-listing">
 				<div class="me-row">
-					<div class="me-col-md-9 me-col-sm-8">
+					<div class="me-col-md-9 me-col-sm-8" id="upload_message_file">
 						<div class="me-contact-messages-wrap inquiry-message-wrapper">
 							<div class="me-contact-message-user">
 								<h2><?php echo get_the_author_meta( 'display_name', $listing->get_author() ); ?></h2>
@@ -31,7 +31,7 @@
 							<div class="me-message-typing">
 								<form method="post" id="send-message">
 									<textarea class="required" required name="content"></textarea>
-									<span class="me-message-send-btn"><i class="icon-me-attach"></i></span>
+									<span id="me-message-send-btn" class="me-message-send-btn"><i class="icon-me-attach"></i></span>
 
 									<?php wp_nonce_field( 'me-inquiry-message', '_msg_wpnonce' ); ?>
 									<input type="hidden" name="inquiry_listing" value="<?php echo $listing->get_id(); ?>" />
@@ -58,5 +58,18 @@
 	<script type="text/javascript">
 		var objDiv = document.getElementById("messages-container");
 		objDiv.scrollTop = objDiv.scrollHeight;
+	</script>
+	<script>
+	    (function ($) {
+	        $(document).ready(function(){
+	            $('#upload_message_file').messageUploader({	                
+	                multi: false,
+	                removable : false,
+	                name: 'message_file',
+	                extension: 'jpg,jpeg,gif,png',
+	                upload_url: '<?php echo admin_url('admin-ajax.php') . '?nonce=' . wp_create_nonce('marketengine') ?>'
+	            });
+	        });
+	    })(jQuery);
 	</script>
 <?php endif; ?>
