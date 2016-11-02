@@ -12,9 +12,10 @@ if (!defined('ABSPATH')) {
 
 if(me_option('user-email-confirmation')) {
 	$curr_user_id = get_current_user_id();
-	$active_email_key = get_user_meta($curr_user_id, 'activate_email_key');
+	$current_user = new ME_User(wp_get_current_user());
+	$is_activated = $current_user->is_activated();
 
-	$can_post_listing = (current_user_can( 'publish_posts' ) && empty($active_email_key)) || current_user_can('manage_options');
+	$can_post_listing = (current_user_can( 'publish_posts' ) && $is_activated ) || current_user_can('manage_options');
 } else {
 	$can_post_listing = current_user_can( 'publish_posts' );
 }
