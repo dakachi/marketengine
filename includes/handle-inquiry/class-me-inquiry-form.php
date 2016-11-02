@@ -36,6 +36,7 @@ class ME_Inquiry_Form {
             $redirect = me_get_page_permalink('inquiry');
 
             $id = me_get_current_inquiry($_POST['send_inquiry']);
+            
             if (!$id) {
                 $result = ME_Inquiry_Handle::inquiry($_POST);
                 if (!is_wp_error($result)) {

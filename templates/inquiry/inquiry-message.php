@@ -66,6 +66,7 @@
 	                multi: false,
 	                removable : false,
 	                name: 'message_file',
+	                maxsize : "2mb",
 	                listing_id : "<?php echo $listing->get_id(); ?>",
 	                inquiry_id : "<?php echo $inquiry->ID; ?>",
 	                extension: 'jpg,jpeg,gif,png,pdf,doc,zip,docx',

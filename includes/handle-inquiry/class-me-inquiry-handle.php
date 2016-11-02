@@ -33,14 +33,18 @@ class ME_Inquiry_Handle {
 
         //TODO: validate listing id
         $listing_id = $data['send_inquiry'];
-        $listing    = get_post($listing_id);
+        $listing    = me_get_listing($listing_id);
+
+        if('contact' != $listing->get_listing_type()) {
+            return new WP_Error('invalid_listing',__("Invalid listing.", "enginethemes") );
+        }
 
         if ($current_user_id == $listing->post_author) {
-            return __("You can not inquire your self.", "enginethemes");
+            return new WP_Error('inquire_yourself', __("You can not inquire your self.", "enginethemes"));
         }
 
         if (!ME()->get_current_user()->is_activated()) {
-            return __("You can must confirm your email account to start this conversation.", "enginethemes");
+            return new WP_Error('not_activation', __("You can must confirm your email account to start this conversation.", "enginethemes"));
         }
 
         if (is_wp_error($listing) || $listing->post_type != 'listing') {
