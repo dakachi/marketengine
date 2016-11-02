@@ -31,7 +31,7 @@ if (!defined('ABSPATH')) {
 		<?php wp_nonce_field( 'me-forgot_pass'); ?>
 
 		<div class="marketengine-group-field submit-forgot">
-			<input type="submit" class="marketengine-btn" name="forgot_pass" value="<?php _e("Submit", "enginethemes"); ?>">
+			<input type="submit" class="marketengine-btn" name="forgot_pass" value="<?php _e("SEND REQUEST", "enginethemes"); ?>">
 		</div>
 		<a href="<?php echo me_get_page_permalink('user_account'); ?>" class="back-home-sigin"><?php _e("&lt; Back to login", "enginethemes"); ?></a>
 
