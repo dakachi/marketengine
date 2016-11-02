@@ -43,6 +43,8 @@
             var inquiry_id = options.inquiry_id;
             var listing_id = options.listing_id;
 
+            var $message_container = $(this).find('.me-contact-messages');
+
             var upload_begin = function(files){
                 $.each(files, function(file){
                     var progress = "<li class='uploading'><div class='uploading-progress'></div></li>";
@@ -93,6 +95,7 @@
                     },
                     FileUploaded: function(up, file, response) {
                         $(uploading).replaceWith(response.response);
+                        $message_container.scrollTop($message_container[0].scrollHeight);
                     }
                 }
             });
