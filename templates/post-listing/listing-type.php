@@ -1,10 +1,11 @@
-<?php 
+<?php
 $listing_types = me_get_listing_types();
 $selected_listing_type = empty($_POST['listing_type']) ? $selected_listing_type : $_POST['listing_type'];
 
 if (!empty($_POST['meta_input']['contact_email'])) {$contact_email = esc_attr($_POST['meta_input']['contact_email']);}
 if (!empty($_POST['meta_input']['listing_price'])) {$price =  esc_attr($_POST['meta_input']['listing_price']);}
 if (!empty($_POST['meta_input']['pricing_unit'])) {$unit =  esc_attr($_POST['meta_input']['pricing_unit']);}
+if (!isset($editing)) $editing = false;
 ?>
 
 <?php do_action('marketengine_before_post_listing_type_form'); ?>
@@ -15,7 +16,7 @@ if (!empty($_POST['meta_input']['pricing_unit'])) {$unit =  esc_attr($_POST['met
 
 	<div class="marketengine-select-field">
 	    <label class="me-field-title"><?php _e("Listing Type", "enginethemes"); ?></label>
-	    <select class="listing-type me-chosen-select" name="listing_type" id="listing-type-select">
+	    <select <?php disabled( $editing); ?> class="listing-type me-chosen-select" name="listing_type" id="listing-type-select">
 	    	<?php foreach ($listing_types as $key => $name) : ?>
 	    		<option value="<?php echo $key ?>" <?php selected( $selected_listing_type, $key) ?>><?php echo $name; ?></option>
 	    	<?php endforeach; ?>
@@ -58,10 +59,14 @@ if (!empty($_POST['meta_input']['pricing_unit'])) {$unit =  esc_attr($_POST['met
 		<?php do_action('marketengine_post_listing_price_form_end'); ?>
 
 	</div>
-	
+
 	<?php do_action('marketengine_post_listing_type_form_fields'); ?>
 
 	<?php do_action('marketengine_post_listing_type_form_fields_end'); ?>
+
+	<?php if($editing) : ?>
+		<input type="hidden" name="listing_type" value="<?php echo $selected_listing_type; ?>">
+	<?php endif; ?>
 
 </div>
 <?php do_action('marketengine_after_post_listing_type_form'); ?>

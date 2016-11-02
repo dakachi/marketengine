@@ -35,8 +35,8 @@ class ME_Inquiry_Handle {
         $listing_id = $data['send_inquiry'];
         $listing    = me_get_listing($listing_id);
 
-        if('contact' != $listing->get_listing_type()) {
-            return new WP_Error('invalid_listing',__("Invalid listing.", "enginethemes") );
+        if ('contact' != $listing->get_listing_type()) {
+            return new WP_Error('invalid_listing', __("Invalid listing.", "enginethemes"));
         }
 
         if ($current_user_id == $listing->post_author) {

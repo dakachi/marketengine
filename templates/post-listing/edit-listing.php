@@ -32,6 +32,7 @@ if($selected_listing_type == 'purchasion') {
 }else {
 	$listing_types =  array('selected_listing_type' => $selected_listing_type, 'contact_email' => $listing->get_contact_info(), 'price' => '', 'unit' => '');
 }
+$listing_types['editing'] = true;
 
 $listing_tag = wp_get_post_terms($listing->ID, 'listing_tag', array('fields' => 'names'));
 ?>
