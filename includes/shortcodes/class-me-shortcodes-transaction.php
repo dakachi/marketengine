@@ -51,30 +51,6 @@ class ME_Shortcodes_Transaction {
             return ME_Shortcodes_Auth::me_login_form();
         }
 
-        if (!empty($_GET['id'])) {
-            $listing_id = $_GET['id'];
-            $listing    = get_post($listing_id);
-
-            if ($listing) {
-                $listing = new ME_Listing_Contact($listing);
-            } else {
-                return __("Invalid listing.", "enginethemes");
-            }
-
-            if ($user_id == $listing->post_author) {
-                return __("You can not inquire your self.", "enginethemes");
-            }
-
-            if (!ME()->get_current_user()->is_activated()) {
-                return __("You can must confirm your email account to start this conversation.", "enginethemes");
-            }
-
-            ob_start();
-            me_get_template('inquiry/inquiry', array('listing' => $listing));
-            $content = ob_get_clean();
-            return $content;
-        }
-
         if (!empty($_GET['inquiry_id'])) {
             $inquiry_id = $_GET['inquiry_id'];
             $inquiry    = me_get_message($inquiry_id);

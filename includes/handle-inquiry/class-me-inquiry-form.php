@@ -17,7 +17,6 @@ class ME_Inquiry_Form {
     public static function init_hook() {
         // parse_request
         add_action('wp_loaded', array(__CLASS__, 'process_start_inquiry'));
-        add_action('wp_loaded', array(__CLASS__, 'send_inquiry'));
 
         add_action('wp_ajax_get_messages', array(__CLASS__, 'fetch_messages'));
         add_action('wp_ajax_get_contact_list', array(__CLASS__, 'fetch_contact_list'));
@@ -38,29 +37,14 @@ class ME_Inquiry_Form {
 
             $id = me_get_current_inquiry($_POST['send_inquiry']);
             if (!$id) {
-                $redirect = add_query_arg(array('id' => $_POST['send_inquiry']), $redirect);
-                wp_redirect($redirect);
-                exit;
+                $result = ME_Inquiry_Handle::inquiry($_POST);
+                if (!is_wp_error($result)) {
+                    $redirect = add_query_arg(array('inquiry_id' => $result), $redirect);
+                    wp_redirect($redirect);
+                    exit;    
+                }
             } else {
                 $redirect = add_query_arg(array('inquiry_id' => $id), $redirect);
-                wp_redirect($redirect);
-                exit;
-            }
-        }
-    }
-
-    /**
-     * Buyer send a new inquiry to a listing owner
-     */
-    public static function send_inquiry() {
-        // send inquiry to listing's owner
-        if (isset($_POST['content']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-post-inquiry')) {
-            $result = ME_Inquiry_Handle::inquiry($_POST);
-            if (is_wp_error($result)) {
-                me_wp_error_to_notices($result);
-            } else {
-                $redirect = me_get_page_permalink('inquiry');
-                $redirect = add_query_arg(array('inquiry_id' => $result), $redirect);
                 wp_redirect($redirect);
                 exit;
             }
