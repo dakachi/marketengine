@@ -19,7 +19,7 @@
 							<div class="me-contact-message-user">
 								<h2><?php echo get_the_author_meta( 'display_name', $listing->get_author() ); ?></h2>
 							</div>
-							<div id="messages-container"  class="me-contact-messages" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
+							<div id="messages-container" class="me-contact-messages" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
 								<?php if($message_query->max_num_pages > 1) { me_get_template('inquiry/load-message-button'); } ?>
 								<ul class="me-contact-messages-list" >
 									<?php foreach ($messages  as $key => $message) : ?>
@@ -66,7 +66,9 @@
 	                multi: false,
 	                removable : false,
 	                name: 'message_file',
-	                extension: 'jpg,jpeg,gif,png',
+	                listing_id : "<?php echo $listing->get_id(); ?>",
+	                inquiry_id : "<?php echo $inquiry->ID; ?>",
+	                extension: 'jpg,jpeg,gif,png,pdf,doc,zip,docx',
 	                upload_url: '<?php echo admin_url('admin-ajax.php') . '?nonce=' . wp_create_nonce('marketengine') ?>'
 	            });
 	        });

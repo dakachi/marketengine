@@ -40,6 +40,11 @@
             var uploading = null;
             var uploader = null;
 
+            var inquiry_id = options.inquiry_id;
+            var listing_id = options.listing_id;
+
+            var $message_container = $(this).find('.me-contact-messages');
+
             var upload_begin = function(files){
                 $.each(files, function(file){
                     var progress = "<li class='uploading'><div class='uploading-progress'></div></li>";
@@ -55,7 +60,7 @@
                 flash_swf_url : options.swf,
                 file_data_name: options.name,
                 multi_selection : false,
-                url: options.upload_url + "&filename=" + options.name + "&action=" + action+"&removable=" + removable,
+                url: options.upload_url + "&listing_id="+listing_id+"&inquiry_id="+inquiry_id+"&filename=" + options.name + "&action=" + action+"&removable=" + removable,
                 filters:  {
                     mime_types : [
                         { title : "extensions", extensions : options.extension }
@@ -90,6 +95,7 @@
                     },
                     FileUploaded: function(up, file, response) {
                         $(uploading).replaceWith(response.response);
+                        $message_container.scrollTop($message_container[0].scrollHeight);
                     }
                 }
             });
@@ -101,6 +107,8 @@
     };
 
 })(jQuery);
+
+
 (function($) {
     $.fn.MEmessage = function(options) {
         var defaults = {
@@ -187,7 +195,7 @@
                     },
                     success: function(response, xhr) {
                         if (response.success) {
-                            $message_container.append(response.content);
+                            $ul.append(response.content);
                             $message_container.scrollTop($message_container[0].scrollHeight);
                         }
                     }
