@@ -9,7 +9,7 @@
 			break;
 		case 'me-archived':
 ?>
-	<span data-status="publish" class="icon-me-resume"></span>
+	<a href="<?php echo me_get_auth_url('listing-id', $listing_id); ?>"><span class="icon-me-resume"></span></a>
 <?php
 			break;
 		case 'me-pending':
