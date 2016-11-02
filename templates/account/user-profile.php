@@ -87,7 +87,7 @@ $user = ME()->get_current_user();
 
 		</div>
 		<div class="marketengine-text-field edit-profile">
-			<a href="<?php echo me_get_endpoint_url('edit-profile'); ?>" class="marketengine-btn"><?php _e("Edit Profile", "enginethemes");?></a>
+			<a href="<?php echo me_get_endpoint_url('edit-profile'); ?>" class="marketengine-btn"><?php _e("EDIT PROFILE", "enginethemes");?></a>
 		</div>
 		<a href="<?php echo me_get_endpoint_url('change-password'); ?>" class="back-home-sigin me-backlink"><?php _e("Change Password", "enginethemes");?></a>
 

@@ -80,7 +80,7 @@ if (get_option('users_can_register')):
 			</div>
 		</div>
 		<div class="marketengine-group-field me-submit-signup">
-			<input class="me-submit-signup-btn" type="submit" name="register" value="<?php _e("Sign up", "enginethemes")?>">
+			<input class="me-submit-signup-btn" type="submit" name="register" value="<?php _e("SIGN UP", "enginethemes")?>">
 		</div>
 		<a href="<?php echo home_url(); ?>" class="back-home-sigin">&lt; <?php _e("Back to Home", "enginethemes");?></a>
 		<?php wp_nonce_field('me-register');?>

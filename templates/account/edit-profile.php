@@ -71,7 +71,7 @@ $user_avatar = $user->get_user_avatar_id();
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
 					<label class="me-field-title"><?php _e("Display name", "enginethemes");?></label>
-					<select name="display_name" id="display_name">
+					<select name="display_name" id="display_name" class="me-chosen-select">
 						<?php
 						$public_display = array();
 						$public_display['display_nickname'] = $user->nickname;
@@ -148,7 +148,7 @@ $user_avatar = $user->get_user_avatar_id();
 			<?php do_action('marketengine_after_edit_user_profile', $user); ?>
 		</div>
 		<div class="marketengine-text-field edit-profile">
-			<input type="submit" class="marketengine-btn" name="update_profile" value="<?php _e("Update Profile", "enginethemes");?>" />
+			<input type="submit" class="marketengine-btn" name="update_profile" value="<?php _e("UPDATE PROFILE", "enginethemes");?>" />
 		</div>
 		<a href="<?php echo me_get_page_permalink('user_account'); ?>" class="back-home-sigin me-backlink"><?php _e("Cancel", "enginethemes");?></a>
 	</div>
