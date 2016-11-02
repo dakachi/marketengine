@@ -33,16 +33,22 @@ class ME_Inquiry_Form {
     public static function process_start_inquiry() {
         if (isset($_POST['send_inquiry']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-send-inquiry')) {
             // check user login
+            if( !is_user_logged_in() ) {
+                $redirect = me_get_page_permalink( 'user_account' );
+                wp_redirect($redirect);
+                exit;
+            }
+
             $redirect = me_get_page_permalink('inquiry');
 
             $id = me_get_current_inquiry($_POST['send_inquiry']);
-            
+
             if (!$id) {
                 $result = ME_Inquiry_Handle::inquiry($_POST);
                 if (!is_wp_error($result)) {
                     $redirect = add_query_arg(array('inquiry_id' => $result), $redirect);
                     wp_redirect($redirect);
-                    exit;    
+                    exit;
                 }
             } else {
                 $redirect = add_query_arg(array('inquiry_id' => $id), $redirect);

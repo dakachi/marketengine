@@ -17,9 +17,9 @@ class ME_Shortcodes_Auth {
     }
     public static function logged_in_template() {
         global $wp;
-        if (isset($wp->query_vars['edit-profile'])) {
+        if (isset($wp->query_vars['edit-profile']) && me_is_activated_user() ) {
             return self::me_user_edit_profile();
-        } elseif (isset($wp->query_vars['change-password'])) {
+        } elseif (isset($wp->query_vars['change-password']) && me_is_activated_user() ) {
             return self::me_change_password();
         } elseif (isset($wp->query_vars['listings'])) {
             return self::me_user_listings();
