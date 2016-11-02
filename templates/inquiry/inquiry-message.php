@@ -66,7 +66,7 @@
 	                multi: false,
 	                removable : false,
 	                name: 'message_file',
-	                extension: 'jpg,jpeg,gif,png',
+	                extension: 'jpg,jpeg,gif,png,pdf,doc,zip,docx',
 	                upload_url: '<?php echo admin_url('admin-ajax.php') . '?nonce=' . wp_create_nonce('marketengine') ?>'
 	            });
 	        });

@@ -28,7 +28,7 @@ class ME_Upload_Handle extends ME_Form {
             $filename = $_REQUEST['filename'];
             $file = $_FILES[$filename];
             $attachment = self::handle_file($file);
-            
+
             me_get_template('upload-file/multi-file-form', array(
                 'image_id' => $attachment['id'],
                 'filename' => $filename,
@@ -46,6 +46,19 @@ class ME_Upload_Handle extends ME_Form {
             $file = $_FILES[$filename];
             $attachment = self::handle_file($file);
             $close = intval($_REQUEST['removable']);
+
+            if($attachment && $filename == 'message_file') {
+                $message_data = array(
+                    'listing_id' => 466,
+                    'content'    => '[me_message_file id='.$attachment['id'].' ]',
+                    'inquiry_id' => 62,
+                );
+                $result = ME_Inquiry_Handle::insert_message($message_data);
+                $message = me_get_message($result);
+                me_get_template('inquiry/message-item', array('message' => $message));
+                exit;
+            }
+
             me_get_template('upload-file/single-file-form', array(
                 'image_id' => $attachment['id'],
                 'filename' => $filename,

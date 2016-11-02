@@ -22,6 +22,10 @@ class ME_Inquiry_Form {
         add_action('wp_ajax_get_messages', array(__CLASS__, 'fetch_messages'));
         add_action('wp_ajax_get_contact_list', array(__CLASS__, 'fetch_contact_list'));
         add_action('wp_ajax_me_send_message', array(__CLASS__, 'send_message'));
+
+
+        add_filter('the_marketengine_message', array(__CLASS__, 'filter_message'));
+
     }
 
     /**
@@ -132,6 +136,13 @@ class ME_Inquiry_Form {
 
             wp_send_json(array('success' => true, 'data' => $content));
         }
+    }
+
+
+    public static function filter_message($content) {
+    	$content = nl2br(esc_html( $content ));
+    	$content = do_shortcode( $content );
+    	return $content;
     }
 
 }

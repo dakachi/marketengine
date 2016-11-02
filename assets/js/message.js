@@ -101,6 +101,8 @@
     };
 
 })(jQuery);
+
+
 (function($) {
     $.fn.MEmessage = function(options) {
         var defaults = {
