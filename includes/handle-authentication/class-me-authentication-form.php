@@ -193,6 +193,7 @@ class ME_Auth_Form extends ME_Form {
         if (!empty($_POST['update_profile']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-update_profile')) {
             $user = ME_Authentication::update_profile($_POST);
             if (!is_wp_error($user)) {
+                me_add_notice(__("Your profile has updated successfully.", "enginethemes"));
                 // set the redirect link after ask confirm email
                 $redirect = self::get_redirect_link();
                 $redirect = apply_filters('marketengine_update_profile_redirect', $redirect, $user);
