@@ -24,7 +24,6 @@
 								<textarea required name="content"></textarea>
 								<span class="me-message-send-btn">
 									<i class="icon-me-attach"></i>
-									<input type="submit" value="<?php _e("Send", "enginethemes"); ?>" />
 								</span>
 
 								<?php wp_nonce_field( 'me-post-inquiry' ); ?>
