@@ -46,7 +46,7 @@ $listing_tag = wp_get_post_terms($listing->ID, 'listing_tag', array('fields' => 
 
 			<?php do_action('marketengine_edit_listing_form_start', $listing); ?>
 
-			<?php me_get_template('post-listing/listing-category', array('selected_cat' => $selected_cat, 'selected_sub_cat' => $selected_sub_cat)); ?>
+			<?php me_get_template('post-listing/listing-category', array('selected_cat' => $selected_cat, 'selected_sub_cat' => $selected_sub_cat, 'editing' => true) ); ?>
 
 			<?php me_get_template('post-listing/listing-type', $listing_types); ?>
 
@@ -67,7 +67,7 @@ $listing_tag = wp_get_post_terms($listing->ID, 'listing_tag', array('fields' => 
 			<div class="marketengine-group-field me-text-center submit-post">
 				<input class="marketengine-post-submit-btn" type="submit" name="update_lisiting" value="<?php _e("SUBMIT", "enginethemes"); ?>">
 			</div>
-			<a href="#" class="back-link-page me-forward-section" data-active="2"><?php _e("&lt; Back to home", "enginethemes"); ?></a>
+			<a href="javascript:void(0)" onclick="history.go(-1)" class="back-link-page me-forward-section" data-active="2"><?php _e("&lt; Back to home", "enginethemes"); ?></a>
 
 			<?php do_action('marketengine_edit_listing_form_end', $listing); ?>
 
