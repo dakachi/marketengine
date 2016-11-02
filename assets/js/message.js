@@ -192,7 +192,7 @@
                     },
                     success: function(response, xhr) {
                         if (response.success) {
-                            $message_container.append(response.content);
+                            $ul.append(response.content);
                             $message_container.scrollTop($message_container[0].scrollHeight);
                         }
                     }
