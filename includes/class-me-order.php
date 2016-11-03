@@ -290,7 +290,7 @@ class ME_Order {
         if($this->has_status('me-pending')) {
             $listing_items = $this->get_listing_items();
             foreach ($listing_items as $key => $item) {
-                // listing gia
+                // update listing item price
                 $listing = me_get_listing($item['ID']);
                 if($listing && $listing->is_available()) {
                     $this->update_listing($item['order_item_id'], array('price' => $listing->get_price() ));    
