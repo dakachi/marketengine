@@ -32,8 +32,8 @@ switch ($file_type['ext']) {
 		$file_icon = '<i class="icon-me-file-xls"></i>';
 		break;
 	default:
-		$file_icon = '<i class="icon-me-file-code"></i>';
+		$file_icon = '<i class="icon-me-file-code" ></i>';
 		break;
 }
 ?>
-<?php echo '<a href="'. $url .'" class="me-mess-file-item">'. $file_icon .'<span class="me-mess-name">'. $name .'</span><span class="me-mess-size">'. me_format_size_units($size) .'</span><span class="me-mess-download"><i class="icon-me-download"></i></span></a>'; ?>
+<?php echo '<a href="'. $url .'" class="me-mess-file-item" download="'.$name.'">'. $file_icon .'<span class="me-mess-name">'. $name .'</span><span class="me-mess-size">'. me_format_size_units($size) .'</span><span class="me-mess-download"><i class="icon-me-download"></i></span></a>'; ?>
