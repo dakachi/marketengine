@@ -25,7 +25,7 @@ class ME_Listing_Handle_Form extends ME_Form {
         add_action('transition_comment_status', array(__CLASS__, 'approve_review_callback'), 10, 3);
         add_action('marketengine_insert_review', array(__CLASS__,'insert_review_callback'), 10, 2);
 
-        add_action('marketengine_complete_order', array(__CLASS__,'update_order_count'));
+        // add_action('marketengine_complete_order', array(__CLASS__,'update_order_count'));
 
 
         // ajax action
@@ -181,7 +181,7 @@ class ME_Listing_Handle_Form extends ME_Form {
     public static function update_order_count( $order_id ) {
         $listing = me_get_order_items($order_id, 'listing_item');
         $listing_id = me_get_order_item_meta($listing_item[0]->order_item_id, '_listing_id', true);
-        ME_Listing_Handle::update_post_rating($listing_id);
+        ME_Listing_Handle::update_order_count($listing_id);
     }
 
 }

@@ -351,6 +351,7 @@ class ME_Listing {
      * @return int
      */
     public function get_order_count() {
+        ME_Listing_Handle::update_order_count($this->ID);
         return absint(get_post_meta($this->ID, '_me_order_count', true));
     }
 
