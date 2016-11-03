@@ -116,7 +116,9 @@ class ME_Listing_Handle_Form extends ME_Form {
             if(is_wp_error( $review )) {
                 me_wp_error_to_notices($review);
             }else {
-
+                $redirect = get_permalink( $_POST['listing_id'] );
+                wp_safe_redirect( $redirect );
+                exit;
             }
         }
     }

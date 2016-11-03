@@ -194,7 +194,7 @@ function me_post_tags_meta_box($default, $taxonomy) {
             <div class="jaxtag">
             <div class="nojs-tags hide-if-js">
                 <label class="me-field-title" for="tax-input-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_or_remove_items; ?></label>
-                <textarea style="display:none;" name="<?php echo $tax_name; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled(!$user_can_assign_terms);?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace(',', $comma . ' ', $terms_to_edit); // textarea_escaped by esc_attr()     ?></textarea>
+                <textarea style="display:none;" name="<?php echo $tax_name; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled(!$user_can_assign_terms);?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace(',', $comma . ' ', $terms_to_edit); // textarea_escaped by esc_attr()      ?></textarea>
             </div>
 
             <div class="ajaxtag hide-if-no-js">
@@ -369,47 +369,47 @@ function me_get_order_status_info($status, $info_type = '') {
     $status_list = me_get_order_status_list();
 
     switch ($status) {
-        case 'me-pending':
-            $style         = 'me-order-pending';
-            $text          = __('Your payment has not been completed yet', 'enginethemes');
-            $order_process = 1;
-            break;
-        case 'publish':
-            $style         = 'me-order-complete';
-            $text          = __('', 'enginethemes');
-            $order_process = 2;
-            break;
-        // chua co class cho status nay
-        case 'me-active':
-            $style         = 'me-order-complete';
-            $text          = __('', 'enginethemes');
-            $order_process = 2;
-            break;
-        case 'me-complete':
-            $style         = 'me-order-complete';
-            $text          = __('', 'enginethemes');
-            $order_process = 3;
-            break;
-        case 'me-disputed':
-            $style         = 'me-order-disputed';
-            $text          = __('This order has been disputed by the Buyer', 'enginethemes');
-            $order_process = 4;
-            break;
-        case 'me-closed':
-            $style         = 'me-order-closed';
-            $text          = __('', 'enginethemes');
-            $order_process = 5;
-            break;
-        case 'me-resolved':
-            $style         = 'me-order-resolved';
-            $text          = __('', 'enginethemes');
-            $order_process = 5;
-            break;
-        default:
-            $style         = 'me-order-pending';
-            $text          = __('', 'enginethemes');
-            $order_process = 1;
-            break;
+    case 'me-pending':
+        $style         = 'me-order-pending';
+        $text          = __('Your payment has not been completed yet', 'enginethemes');
+        $order_process = 1;
+        break;
+    case 'publish':
+        $style         = 'me-order-complete';
+        $text          = __('', 'enginethemes');
+        $order_process = 2;
+        break;
+    // chua co class cho status nay
+    case 'me-active':
+        $style         = 'me-order-complete';
+        $text          = __('', 'enginethemes');
+        $order_process = 2;
+        break;
+    case 'me-complete':
+        $style         = 'me-order-complete';
+        $text          = __('', 'enginethemes');
+        $order_process = 3;
+        break;
+    case 'me-disputed':
+        $style         = 'me-order-disputed';
+        $text          = __('This order has been disputed by the Buyer', 'enginethemes');
+        $order_process = 4;
+        break;
+    case 'me-closed':
+        $style         = 'me-order-closed';
+        $text          = __('', 'enginethemes');
+        $order_process = 5;
+        break;
+    case 'me-resolved':
+        $style         = 'me-order-resolved';
+        $text          = __('', 'enginethemes');
+        $order_process = 5;
+        break;
+    default:
+        $style         = 'me-order-pending';
+        $text          = __('', 'enginethemes');
+        $order_process = 1;
+        break;
     }
     if ('style' === $info_type) {
         return $style;
@@ -532,40 +532,39 @@ function marketengine_get_search_form($echo = true) {
     // } else {
 
     // }
-    $url = get_post_type_archive_link( 'listing' );
-    if(is_tax( 'listing_category' )) {
-        $url = get_term_link( get_queried_object(), 'listing_category' );
+    $url = get_post_type_archive_link('listing');
+    if (is_tax('listing_category')) {
+        $url = get_term_link(get_queried_object(), 'listing_category');
     }
 
     if ('html5' == $format) {
         $form = '<form role="search" method="get" class="search-form" action="' . $url . '">
                 <div class="me-search me-hidden-xs">
-                    <input type="search" class="search-field" placeholder="' . esc_attr( __("Type here and hit enter...", "enginethemes") ) . '" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" name="keyword" />
+                    <input type="search" class="search-field" placeholder="' . esc_attr(__("Type here and hit enter...", "enginethemes")) . '" value="' . esc_attr(get_query_var('keyword')) . '" name="keyword" />
                     <i id="search-btn" class="icon-me-search me-search-btn"></i>
                 </div>
             </form>
             <form method="get" class="mobile-search-form" action="' . $url . '">
                 <span class="me-search-btn-xs me-visible-xs"><i class="icon-me-search me-search-btn"></i></span>
                 <div class="me-search-xs me-visible-xs">
-                    <input type="search" name="s" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" placeholder="' . esc_attr( __("Type here and hit enter...", "enginethemes") ) . '">
+                    <input type="search" name="s" value="' . esc_attr(get_query_var('keyword')) . '" placeholder="' . esc_attr(__("Type here and hit enter...", "enginethemes")) . '">
                     <i id="mobile-search-btn" class="icon-me-search me-search-btn"></i>
                 </div>
             </form>';
     } else {
         $form = '<form role="search" method="get" class="search-form" action="' . $url . '">
                 <div class="me-search me-hidden-xs">
-                    <input type="text" class="search-field" placeholder="' .  esc_attr( __("Type here and hit enter...", "enginethemes") ) . '" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" name="keyword" />
+                    <input type="text" class="search-field" placeholder="' . esc_attr(__("Type here and hit enter...", "enginethemes")) . '" value="' . esc_attr(get_query_var('keyword')) . '" name="keyword" />
                     <i id="search-btn" class="icon-me-search me-search-btn"></i>
                 </div>
             </form>
             <form method="get" class="mobile-search-form" action="' . $url . '">
                 <span class="me-search-btn-xs me-visible-xs"><i class="icon-me-search me-search-btn"></i></span>
                 <div class="me-search-xs me-visible-xs">
-                    <input type="text" name="s" value="' . esc_attr( get_query_var( 'keyword' ) ) . '" placeholder="' . esc_attr( __("Type here and hit enter...", "enginethemes") ) . '">
+                    <input type="text" name="s" value="' . esc_attr(get_query_var('keyword')) . '" placeholder="' . esc_attr(__("Type here and hit enter...", "enginethemes")) . '">
                     <i id="mobile-search-btn" class="icon-me-search me-search-btn"></i>
                 </div>
             </form>';
-
 
     }
 
@@ -600,10 +599,10 @@ function marketengine_get_search_form($echo = true) {
  * @param string $before Optional. Content to prepend to the title. Default empty.
  * @param string $after  Optional. Content to append to the title. Default empty.
  */
-function marketengine_the_archive_title( $before = '', $after = '' ) {
+function marketengine_the_archive_title($before = '', $after = '') {
     $title = marketengine_get_the_archive_title();
 
-    if ( ! empty( $title ) ) {
+    if (!empty($title)) {
         echo $before . $title . $after;
     }
 }
@@ -616,18 +615,18 @@ function marketengine_the_archive_title( $before = '', $after = '' ) {
  * @return string Archive title.
  */
 function marketengine_get_the_archive_title() {
-    if ( is_post_type_archive() ) {
-        $title = sprintf( __( 'Archives: %s', 'enginethemes' ), post_type_archive_title( '', false ) );
-        if(get_query_var( 'keyword' )) {
-            $title = sprintf(__("Search result for: %s", "enginethemes"), esc_attr( get_query_var( 'keyword' ) ));
+    if (is_post_type_archive()) {
+        $title = sprintf(__('Archives: %s', 'enginethemes'), post_type_archive_title('', false));
+        if (get_query_var('keyword')) {
+            $title = sprintf(__("Search result for: %s", "enginethemes"), esc_attr(get_query_var('keyword')));
         }
 
-    } elseif ( is_tax() ) {
-        $tax = get_taxonomy( get_queried_object()->taxonomy );
+    } elseif (is_tax()) {
+        $tax = get_taxonomy(get_queried_object()->taxonomy);
         /* translators: 1: Taxonomy singular name, 2: Current taxonomy term */
-        $title = sprintf( __( '%1$s: %2$s' ), $tax->labels->singular_name, single_term_title( '', false ) );
+        $title = sprintf(__('%1$s: %2$s'), $tax->labels->singular_name, single_term_title('', false));
     } else {
-        $title = __( 'Archives', 'enginethemes' );
+        $title = __('Archives', 'enginethemes');
     }
 
     /**
@@ -637,5 +636,28 @@ function marketengine_get_the_archive_title() {
      *
      * @param string $title Archive title to be displayed.
      */
-    return apply_filters( 'marketengine_get_the_archive_title', $title );
+    return apply_filters('marketengine_get_the_archive_title', $title);
+}
+/**
+ * Format file size Unit
+ * 
+ * @param int $bytes
+ * @return string
+ */
+function me_format_size_units($bytes) {
+    if ($bytes >= 1073741824) {
+        $bytes = number_format($bytes / 1073741824, 2) . ' GB';
+    } elseif ($bytes >= 1048576) {
+        $bytes = number_format($bytes / 1048576, 2) . ' MB';
+    } elseif ($bytes >= 1024) {
+        $bytes = number_format($bytes / 1024, 2) . ' kB';
+    } elseif ($bytes > 1) {
+        $bytes = $bytes . ' bytes';
+    } elseif ($bytes == 1) {
+        $bytes = $bytes . ' byte';
+    } else {
+        $bytes = '0 bytes';
+    }
+
+    return $bytes;
 }
