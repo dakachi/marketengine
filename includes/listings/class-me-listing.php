@@ -393,8 +393,7 @@ class ME_Listing {
      * @return bool
      */
     public function is_available() {
-        // TODO: cap nhat cho nay
-        return 'listing' === $this->post_type;
+        return  apply_filters('marketengine_lisitng_is_available', 'listing' === $this->post_type, $this->ID);
     }
 
     public function get_edit_url(){
