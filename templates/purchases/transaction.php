@@ -33,7 +33,7 @@ $author_id = $listing_obj->post_author;
 		</div>
 	</div>
 	<?php
-		me_get_template( 'purchases/listing-slider', array('listing_cat' => $listing_cat, 'curr_listing' => $listing_item) );
+		me_get_template( 'purchases/listing-slider', array('listing_cat' => $listing_cat, 'curr_listing' => $listing['ID']) );
 	?>
 </div>
 <!--// marketengine-content -->
