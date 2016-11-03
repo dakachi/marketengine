@@ -638,7 +638,9 @@ class ME_Listing_Handle {
         $results = $wpdb->get_results($sql);
         $results = me_filter_order_count_result( $results );
 
-        update_post_meta($listing_id, '_me_order_count', $results['me-complete']);
+        if(!empty($results['me-complete'])) {
+            update_post_meta($listing_id, '_me_order_count', $results['me-complete']);
+        }
     }
 }
 
