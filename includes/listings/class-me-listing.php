@@ -341,7 +341,7 @@ class ME_Listing {
      * @return float
      */
     public function get_review_score() {
-        return get_post_meta($this->ID, '_rating_score', true);   
+        return get_post_meta($this->ID, '_rating_score', true);
     }
 
     /**
@@ -401,7 +401,7 @@ class ME_Listing {
 
     /**
      * Check listing is allowed rating or not
-     * 
+     *
      * @since 1.0
      *
      * @return bool
