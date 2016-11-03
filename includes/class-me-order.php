@@ -263,7 +263,7 @@ class ME_Order {
      *
      * @since 1.0
      */
-    public function update_listing($item_id, $listing, $args) {
+    public function update_listing($item_id, $args) {
         $item_id = absint($item_id);
 
         if (!$item_id) {
@@ -274,10 +274,30 @@ class ME_Order {
             me_update_order_item_meta($item_id, '_qty', $args['qty']);
         }
 
+        if(isset($args['price'])) {
+            me_update_order_item_meta($item_id, '_listing_price', $args['price']);
+        }
+
         $this->caculate_subtotal();
         $this->caculate_total();
 
         return $item_id;
+    }
+    /**
+     * Update order listing when it is pending
+     */
+    public function update_listings() {
+        if($this->has_status('me-pending')) {
+            $listing_items = $this->get_listing_items();
+            foreach ($listing_items as $key => $item) {
+                // update listing item price
+                $listing = me_get_listing($item['ID']);
+                if($listing && $listing->is_available()) {
+                    $this->update_listing($item['order_item_id'], array('price' => $listing->get_price() ));    
+                }
+                // listing da bi xoa hoac ko ban nua
+            }
+        }
     }
 
 
@@ -292,12 +312,13 @@ class ME_Order {
         if(!empty($order_listing_item)) {
             foreach ($order_listing_item as $key => $item) {
                 $id = me_get_order_item_meta($item->order_item_id, '_listing_id', true);
-                $listing_items[$id] = (object)array(
+                $listing_items[$id] = array(
                     'ID' => $id,
                     'title' =>  $item->order_item_name,
                     'qty' => me_get_order_item_meta($item->order_item_id, '_qty', true),
                     'price' => me_get_order_item_meta($item->order_item_id, '_listing_price', true),
-                    'description' => me_get_order_item_meta($item->order_item_id, '_listing_description', true)
+                    'description' => me_get_order_item_meta($item->order_item_id, '_listing_description', true), 
+                    'order_item_id' => $item->order_item_id
                 );
             }
         }

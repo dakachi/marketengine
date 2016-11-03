@@ -60,7 +60,7 @@ $total = 0;
 		</div>
 	</div>
 	<div class="me-checkout-submit">
-	<?php if( $transaction->post_status === 'me-pending' ) : ?>
+	<?php if( $transaction->post_status === 'me-pending' && $listing_obj && $listing_obj->is_available() ) : ?>
 		<form method="post">
 			<?php wp_nonce_field('me-pay'); ?>
 			<input type="hidden" name="order_id" value="<?php echo $transaction->id; ?>" />

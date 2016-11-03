@@ -1,6 +1,8 @@
 <?php
+$transaction->update_listings();
+
 $listing_items = $transaction->get_listing_items();
-$listing = (array)array_pop($listing_items);
+$listing = array_pop($listing_items);
 
 $listing_obj = me_get_listing($listing['ID']);
 $listing_cat = get_the_terms($listing_obj->ID, 'listing_category');
@@ -31,7 +33,7 @@ $author_id = $listing_obj->post_author;
 		</div>
 	</div>
 	<?php
-		me_get_template( 'purchases/listing-slider', array('listing_cat' => $listing_cat, 'curr_listing' => $listing_item) );
+		me_get_template( 'purchases/listing-slider', array('listing_cat' => $listing_cat, 'curr_listing' => $listing['ID']) );
 	?>
 </div>
 <!--// marketengine-content -->
