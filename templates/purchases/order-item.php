@@ -15,8 +15,8 @@ $total = 0;
 		<?php do_action( 'marketengine_before_cart_item_list' ); ?>
 
 		<?php
-			$listing = $listing_item['_listing_id'];
-			$unit = ($listing_item['_qty']) ? $listing_item['_qty'][0] : 1;
+			$listing = $listing_item['ID'];
+			$unit = ($listing_item['qty']) ? $listing_item['qty'][0] : 1;
 		?>
 
 		<div class="me-table-row me-cart-item">
@@ -29,13 +29,13 @@ $total = 0;
 				</div>
 			</div>
 			<div class="me-table-col me-cart-price">
-				<?php echo me_price_html( $listing_item['_listing_price'] ); ?>
+				<?php echo me_price_html( $listing_item['price'] ); ?>
 			</div>
 			<div class="me-table-col me-cart-units">
 				<?php echo $unit ?>
 			</div>
 			<div class="me-table-col me-cart-units-total">
-				<?php echo me_price_html($listing_item['_listing_price'] * $unit); ?>
+				<?php echo me_price_html($listing_item['price'] * $unit); ?>
 			</div>
 
 			<input type="hidden" name="listing_item[<?php echo $key; ?>][id]" value="<?php echo $item['id']; ?>" />
