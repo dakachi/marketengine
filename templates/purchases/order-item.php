@@ -29,13 +29,13 @@ $total = 0;
 				</div>
 			</div>
 			<div class="me-table-col me-cart-price">
-				<?php echo me_price_html( $listing_obj->get_price() ); ?>
+				<?php echo me_price_html( $listing_item['_listing_price'] ); ?>
 			</div>
 			<div class="me-table-col me-cart-units">
 				<?php echo $unit ?>
 			</div>
 			<div class="me-table-col me-cart-units-total">
-				<?php echo me_price_html($listing_obj->get_price() * $unit); ?>
+				<?php echo me_price_html($listing_item['_listing_price'] * $unit); ?>
 			</div>
 
 			<input type="hidden" name="listing_item[<?php echo $key; ?>][id]" value="<?php echo $item['id']; ?>" />
