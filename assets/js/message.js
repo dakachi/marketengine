@@ -146,7 +146,7 @@
                     h = $message_container.height();
                 // check scroll and ajax get messsages
                 if (pos == 0 && !full) {
-                    
+
                     fetch_message();
                 }
             });
@@ -232,5 +232,12 @@
             window.document.querySelector("#me-message-content").style.height = window.document.querySelector("#me-mc-container").scrollHeight + "px";
         }, false);
     }, false);
+
+    $('.me-message-fancybox').magnificPopup({
+        type: 'image',
+        gallery: {
+          enabled: true
+        }
+    });
 
 })(jQuery);
