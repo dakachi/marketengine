@@ -12,7 +12,6 @@ $cart_items = me_get_cart_items();
 
 ?>
 <div class="marketengine">
-	<?php me_print_notices(); ?>
 	<?php
 	if(empty($cart_items)) {
 		print_r(__("There is no item selected.", "enginethemes"));

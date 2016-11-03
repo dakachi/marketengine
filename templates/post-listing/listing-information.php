@@ -18,7 +18,7 @@ if( isset($_POST['listing_description']) && empty($_POST['listing_description'])
 		<label class="me-field-title"><?php _e("Listing description", "enginethemes");?></label>
 		<?php
 			wp_editor(
-			    esc_js( $listing_content ),
+			    ( $listing_content ),
 			    'listing_description',
 			    array(
 			        'quicktags' => false,

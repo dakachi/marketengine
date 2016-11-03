@@ -1,8 +1,8 @@
 <?php
+$listing_items = $transaction->get_listing_items();
+$listing = (array)array_pop($listing_items);
 
-$listing_item = $transaction->get_listing();
-$listing_obj = me_get_listing($listing_item['_listing_id'][0]);
-
+$listing_obj = me_get_listing($listing['ID']);
 $listing_cat = get_the_terms($listing_obj->ID, 'listing_category');
 
 $author_id = $listing_obj->post_author;
@@ -18,9 +18,9 @@ $author_id = $listing_obj->post_author;
 		<div class="me-col-md-9">
 
 			<?php
-				me_get_template( 'purchases/order-listing', array('listing_obj' => $listing_obj, 'transaction' => $transaction) );
-				me_get_template( 'user-info', array('class' => 'me-authors-xs me-visible-sm me-visible-xs', 'author_id' => $author_id ) );
-				me_get_template( 'purchases/order-action', array('order' => $transaction) );
+			me_get_template( 'purchases/order-listing', array('listing_obj' => $listing_obj, 'transaction' => $transaction) );
+			me_get_template( 'user-info', array('class' => 'me-authors-xs me-visible-sm me-visible-xs', 'author_id' => $author_id ) );
+			me_get_template( 'purchases/order-action', array('order' => $transaction) );
 			?>
 
 		</div>

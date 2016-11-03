@@ -38,7 +38,7 @@
             var $message_container = $(this).find('.me-contact-messages');
             var upload_begin = function(files) {
                 $.each(files, function(file) {
-                    var progress = "<li class='uploading'><div class='uploading-progress'></div></li>";
+                    var progress = "<li class='uploading'><div class='uploading-progress'><span></span></div></li>";
                     $(preview).append(progress);
                 });
                 uploader.start();

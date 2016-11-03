@@ -41,6 +41,7 @@ if($selected_listing_type == 'purchasion') {
 $listing_types['editing'] = true;
 
 $listing_tag = wp_get_post_terms($listing->ID, 'listing_tag', array('fields' => 'names'));
+$listing_content = apply_filters('the_content', $listing->post_content);
 ?>
 
 <?php do_action('marketengine_before_edit_listing_form', $listing); ?>
@@ -57,7 +58,7 @@ $listing_tag = wp_get_post_terms($listing->ID, 'listing_tag', array('fields' => 
 
 			<?php me_get_template('post-listing/listing-type', $listing_types); ?>
 
-			<?php me_get_template('post-listing/listing-information', array('listing_content' => $listing->post_content,  'listing_title' => $listing->post_title)); ?>
+			<?php me_get_template('post-listing/listing-information', array('listing_content' => $listing_content,  'listing_title' => $listing->post_title)); ?>
 
 			<?php do_action('marketengine_edit_listing_information_form_fields', $listing); ?>
 
