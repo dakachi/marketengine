@@ -4,7 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-
+$listing_image = !empty($_POST['listing_image']) ? $_POST['listing_image'] : $listing_image;
+$listing_gallery = !empty($_POST['listing_gallery']) ? $_POST['listing_gallery'] : $listing_gallery;
 ?>
 
 <?php do_action('marketengine_before_post_listing_picture_form');?>
