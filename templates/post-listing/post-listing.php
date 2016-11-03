@@ -10,6 +10,12 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+if( !isset($_POST['referer']) ) {
+	$referer = $_SERVER['HTTP_REFERER'];
+} else {
+	$referer = $_POST['referer'];
+}
+
 if(me_option('user-email-confirmation')) {
 	$curr_user_id = get_current_user_id();
 	$current_user = new ME_User(wp_get_current_user());
@@ -54,10 +60,12 @@ if(me_option('user-email-confirmation')) {
 				<input class="marketengine-post-submit-btn" type="submit" name="insert_lisiting" value="<?php _e("SUBMIT", "enginethemes"); ?>">
 			</div>
 			<div id="debug">
-			<a href="<?php echo home_url(); ?>" class="back-link-page"><?php _e("&lt; Cancel", "enginethemes"); ?></a>
+			<a href="<?php echo $referer; ?>" class="back-link-page"><?php _e("&lt; Cancel", "enginethemes"); ?></a>
 			</div>
 
 			<?php do_action('marketengine_post_listing_form_end'); ?>
+
+			<input type="hidden" name="referer" value="<?php echo $referer; ?>" />
 
 		</form>
 	</div>

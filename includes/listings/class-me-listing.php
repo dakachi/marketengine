@@ -375,6 +375,10 @@ class ME_Listing {
         $gallery      = get_post_meta($this->ID, '_me_listing_gallery', true);
         $thumbnail_id = get_post_meta($this->ID, '_thumbnail_id', true);
 
+        if(empty($gallery )) {
+            $gallery = array();
+        }
+
         if ($thumbnail_id) {
             array_unshift($gallery, $thumbnail_id);
         }
@@ -389,8 +393,7 @@ class ME_Listing {
      * @return bool
      */
     public function is_available() {
-        // TODO: cap nhat cho nay
-        return 'listing' === $this->post_type;
+        return  apply_filters('marketengine_lisitng_is_available', 'listing' === $this->post_type, $this->ID);
     }
 
     public function get_edit_url(){

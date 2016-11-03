@@ -46,7 +46,7 @@ class ME_Upload_Handle extends ME_Form {
             $file = $_FILES[$filename];
             $attachment = self::handle_file($file);
             $close = intval($_REQUEST['removable']);
-
+            
             if($attachment && $filename == 'message_file') {
                 $message_data = array(
                     'listing_id' => $_REQUEST['listing_id'],
