@@ -78,7 +78,7 @@ class ME_Shortcodes_Transaction {
             $file_url = wp_get_attachment_url( $file_id );
 
             ob_start();
-            me_get_template('inquiry/file-item', array('name' => $file_name, 'file_type' => $file_type, 'url' => $file_url));
+            me_get_template('inquiry/file-item', array( 'file_id' => $file_id, 'name' => $file_name, 'file_type' => $file_type, 'url' => $file_url));
             $content = ob_get_clean();
             return $content;
         }

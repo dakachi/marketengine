@@ -13,7 +13,7 @@ switch ($file_type['ext']) {
 		echo '<i class="fa fa-picture-pdf-o" aria-hidden="true"></i>';
 		?>
 		<a href="<?php echo $url; ?>" class="mess-file-item" title="<?php echo $name; ?>">
-			<img src="<?php echo $url; ?>" style="width:160px;">
+			<?php echo wp_get_attachment_image( $file_id, 'thumbnail'); ?>
 		</a>
 		<?php
 		return ;
