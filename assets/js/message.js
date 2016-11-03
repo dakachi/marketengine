@@ -177,11 +177,13 @@
                     },
                     beforeSend: function() {
                         $textarea.val('');
+                        $elem.find('.me-message-typing').append('<div class="marketengine-loading"><div class="marketengine-loader"><div class="me-ball-clip-rotate"><div></div></div></div></div>');
                     },
                     success: function(response, xhr) {
                         if (response.success) {
                             $ul.append(response.content);
                             $message_container.scrollTop($message_container[0].scrollHeight);
+                            $elem.find('.marketengine-loading').remove();
                         }
                     }
                 });
