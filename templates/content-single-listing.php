@@ -30,6 +30,13 @@ $listing_status = get_post_status_object($listing->post_status);
 				<?php do_action('marketengine_after_single_listing_details'); ?>
 
 			</div>
+
+			<?php if(!me_is_activated_user()) : ?>
+			<div class="me-col-md-3">
+				<?php _e("Sorry! Only active account can buy listings. Please check mail box to activate your account.", "enginethemes"); ?>
+			</div>
+			<?php endif; ?>
+
 			<div class="me-col-md-3">
 
 				<?php do_action('marketengine_before_single_listing_sidebar'); ?>

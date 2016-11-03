@@ -9,7 +9,9 @@ class ME_Shortcodes_Transaction {
     }
 
     public static function checkout_form() {
-        if (is_user_logged_in()) {
+        if (!me_is_activated_user()) {
+            return __("Sorry! Only active account can buy listings. Please check mail box to activate your account.", "enginethemes");
+        } elseif (is_user_logged_in()) {
             ob_start();
             me_get_template('checkout/checkout');
             $content = ob_get_clean();
