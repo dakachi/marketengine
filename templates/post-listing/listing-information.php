@@ -1,5 +1,10 @@
-<?php 
-if (!empty($_POST['listing_title'])) {$listing_title =  esc_attr($_POST['listing_title']);}
+<?php
+if( isset($_POST['listing_title']) && empty($_POST['listing_title']) ) {
+	$listing_title = '';
+}
+if( isset($_POST['listing_description']) && empty($_POST['listing_description']) ) {
+	$listing_content = '';
+}
 ?>
 <?php do_action('marketengine_before_post_listing_information_form'); ?>
 <div class="marketengine-group-field">
@@ -11,8 +16,7 @@ if (!empty($_POST['listing_title'])) {$listing_title =  esc_attr($_POST['listing
 <div class="marketengine-group-field">
 	<div class="marketengine-textarea-field">
 		<label class="me-field-title"><?php _e("Listing description", "enginethemes");?></label>
-		<?php 
-			$listing_content = !empty($_POST['listing_description']) ? $_POST['listing_description'] : $listing_content;
+		<?php
 			wp_editor(
 			    esc_js( $listing_content ),
 			    'listing_description',
