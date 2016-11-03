@@ -41,7 +41,7 @@
         $(this).closest('form').submit();
     });
     $('.do-rating').raty({
-        // half: true,
+        half: true,
         readOnly: false,
     });
     $('.result-rating').raty({
