@@ -146,6 +146,7 @@
                     h = $message_container.height();
                 // check scroll and ajax get messsages
                 if (pos == 0 && !full) {
+                    
                     fetch_message();
                 }
             });

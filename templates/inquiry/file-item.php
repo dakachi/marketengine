@@ -21,19 +21,19 @@ switch ($file_type['ext']) {
 		return ;
 		break;
 	case 'pdf' :
-		$file_icon  = '<i class="icon-me-pdf"></i>';
+		$file_icon  = '<i class="icon-me-file-pdf"></i>';
 		break;
 	case 'docx' :
 	case 'doc' :
-		$file_icon = '<i class="icon-me-doc"></i>';
+		$file_icon = '<i class="icon-me-file-doc"></i>';
 		break;
 	case 'xls':
 	case 'xlsx' :
 		$file_icon = '<i class="icon-me-xls"></i>';
 		break;
 	default:
-		$file_icon = '<i class="icon-me-code"></i>';
+		$file_icon = '<i class="icon-me-file-code"></i>';
 		break;
 }
 ?>
-<?php echo '<a href="'. $url .'" class="mess-file-item">'. $file_icon .'<span class="me-mess-name">'. $name .'</span><span class="me-mess-size">'. me_format_size_units($size) .'</span><span class="me-mess-download"><i class="icon-me-download"></i></span></a>'; ?>
+<?php echo '<a href="'. $url .'" class="me-mess-file-item">'. $file_icon .'<span class="me-mess-name">'. $name .'</span><span class="me-mess-size">'. me_format_size_units($size) .'</span><span class="me-mess-download"><i class="icon-me-download"></i></span></a>'; ?>
