@@ -38,7 +38,7 @@
             var $message_container = $(this).find('.me-contact-messages');
             var upload_begin = function(files) {
                 $.each(files, function(file) {
-                    var progress = "<li class='uploading'><div class='uploading-progress'></div></li>";
+                    var progress = "<li class='uploading'><div class='uploading-progress'><span></span></div></li>";
                     $(preview).append(progress);
                 });
                 uploader.start();
@@ -73,9 +73,11 @@
                         }
                     },
                     UploadProgress: function(up, file) {
+                        console.log(file.percent);
                         $(uploading).find('.uploading-progress').css({
                             'width': file.percent + "%"
                         });
+                        $message_container.scrollTop($message_container[0].scrollHeight);
                     },
                     Error: function(up, err) {
                         alert("Error : " + err.message);
@@ -223,11 +225,13 @@
     });
     window.addEventListener("load", function() {
         //Don't use keypress event. keypress event doesn't detect backspace and delete keys. 
-        window.document.querySelector("#me-message-content").addEventListener("keydown", function() {
-            var content = window.document.querySelector("#me-message-content").value;
-            window.document.querySelector("#me-mc-container").innerHTML = content;
-            window.document.querySelector("#me-message-content").style.height = window.document.querySelector("#me-mc-container").scrollHeight + "px";
-        }, false);
+        if($('#me-message-content').length) {
+            window.document.querySelector("#me-message-content").addEventListener("keydown", function() {
+                var content = window.document.querySelector("#me-message-content").value;
+                window.document.querySelector("#me-mc-container").innerHTML = content;
+                window.document.querySelector("#me-message-content").style.height = window.document.querySelector("#me-mc-container").scrollHeight + "px";
+            }, false);
+        }
     }, false);
     $('.me-message-fancybox').magnificPopup({
         type: 'image',

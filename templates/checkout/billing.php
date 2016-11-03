@@ -15,6 +15,9 @@ $shipping_fields = apply_filters('marketengine_shipping_fields', $address_fields
 <div class="me-billing-shipping">
 	<h3 class="me-title-bill-ship"><?php _e("Billing Details", "enginethemes"); ?></h3>
 	<div class="me-switch-billing">
+
+		<?php me_print_notices(); ?>
+		
 		<?php /*
 		<input id="me-billing-address-input" type="radio" name="me-billing" checked="">
 		<label class="me-switch-bill-label" for="me-billing-address-input">

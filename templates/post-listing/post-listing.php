@@ -60,7 +60,7 @@ if(me_option('user-email-confirmation')) {
 				<input class="marketengine-post-submit-btn" type="submit" name="insert_lisiting" value="<?php _e("SUBMIT", "enginethemes"); ?>">
 			</div>
 			<div id="debug">
-			<a href="<?php echo $referer; ?>" class="back-link-page"><?php _e("&lt; Cancel", "enginethemes"); ?></a>
+			<a href="<?php echo $referer; ?>" class="back-link-page"><?php _e("Cancel", "enginethemes"); ?></a>
 			</div>
 
 			<?php do_action('marketengine_post_listing_form_end'); ?>

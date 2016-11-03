@@ -16,7 +16,13 @@ $listing_type = $listing->get_listing_type();
 
 	<div class="me-item-wrap">
 		<a href="<?php the_permalink(); ?>" title="<?php printf(__("View %s", "enginethemes"), get_the_title()); ?>" class="me-item-img">
-			<?php the_post_thumbnail( 'thumbnail' ); ?>
+			<?php
+			if(has_post_thumbnail()) :
+				the_post_thumbnail( 'thumbnail' );
+			else :
+				echo 'No images';
+			endif;
+			 ?>
 			<span><?php _e("VIEW DETAILS", "enginethemes"); ?></span>
 		</a>
 		<div class="me-item-content">

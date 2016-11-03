@@ -77,7 +77,7 @@ $content = apply_filters('the_content', $content);
 			<div class="marketengine-group-field me-text-center submit-post">
 				<input class="marketengine-post-submit-btn" type="submit" name="update_lisiting" value="<?php _e("SUBMIT", "enginethemes"); ?>">
 			</div>
-			<a href="<?php echo $referer; ?>" class="back-link-page" data-active="2"><?php _e("&lt; Cancel", "enginethemes"); ?></a>
+			<a href="<?php echo $referer; ?>" class="back-link-page" data-active="2"><?php _e("Cancel", "enginethemes"); ?></a>
 
 			<?php do_action('marketengine_edit_listing_form_end', $listing); ?>
 
