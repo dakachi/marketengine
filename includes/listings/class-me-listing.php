@@ -213,7 +213,7 @@ class ME_Listing {
         } elseif (empty($_listing->filter)) {
             $_listing = sanitize_post($_listing, 'raw');
         }
-
+        
         return new ME_Listing($_listing);
     }
 
@@ -313,7 +313,9 @@ class ME_Listing {
     }
 
     public function get_short_description($length = 40) {
-        return wp_trim_words($this->post_content, $length);
+        $content = get_post_field('post_content', $this->ID, 'display');
+        $content = apply_filters('the_content', $content);
+        return me_trim_words( $content, $length);
     }
 
     public function get_listing_thumbnail($size = 'post-thumbnail', $attr = '' ) {
