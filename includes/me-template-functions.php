@@ -488,9 +488,9 @@ function me_price_format($price, $args = array()) {
     $sign_position_is_align_right = me_option('currency-sign-postion') ? true : false;
 
     if ($sign_position_is_align_right) {
-        $format .= $sign . ' ' . $price;
+        $format .= $sign . $price;
     } else {
-        $format .= $price . ' ' . $sign;
+        $format .= $price . $sign;
     }
 
     return $format;
