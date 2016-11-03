@@ -20,7 +20,7 @@ $listing_type = $listing->get_listing_type();
 	<?php if('purchasion' == $listing_type) : ?>
 		<div class="me-rating-purchases">
 			<span class="me-count-purchases">
-				<?php printf(_n("%d Purchase", "%d Purchases", $review_count,"enginethemes"), $order_count); ?>
+				<?php printf(_n("%d Purchase", "%d Purchases", $order_count,"enginethemes"), $order_count); ?>
 			</span>
 			<span class="me-count-review">
 				<?php printf(_n("%d Review", "%d Reviews", $review_count,"enginethemes"),$review_count ); ?>
