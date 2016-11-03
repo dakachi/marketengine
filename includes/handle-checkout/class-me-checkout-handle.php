@@ -146,7 +146,7 @@ class ME_Checkout_Handle {
     public static function inquiry($data) {
 
         $content = strip_tags(trim($data['content']));
-        
+
         if (empty($data['inquiry_listing'])) {
             return new WP_Error('empty_listing', __("The listing is required.", "enginethemes"));
         }
@@ -234,7 +234,7 @@ class ME_Checkout_Handle {
         }else {
             return new WP_Error('invalid_inquiry', __("Invalid inquiry.", "enginethemes"));
         }
-        
+
     }
 
     public static function message($data) {

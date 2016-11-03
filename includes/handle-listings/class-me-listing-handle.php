@@ -113,7 +113,7 @@ class ME_Listing_Handle {
 
         $listing = me_get_listing($listing_data['ID']);
         $listing_data['post_author'] = $listing->post_author;
-        
+
         // if($listing->post_author != $current_user_id) {
         //     return new WP_Error('permission_denied', __("You are not allowed to edit this listing.", "enginethemes"));
         // }
@@ -585,7 +585,7 @@ class ME_Listing_Handle {
             do_action('marketengine_insert_review', $comment_id,  $comment);
         }
 
-        
+
 
         return $comment_id;
     }
@@ -603,11 +603,11 @@ class ME_Listing_Handle {
         if ($post->post_type == 'listing') {
             // update post rating score
             $sql = "SELECT AVG(M.meta_value)  as rate_point, COUNT(C.comment_ID) as count
-                    FROM    $wpdb->comments as C 
-                        JOIN $wpdb->commentmeta as M 
-                                on C.comment_ID = M.comment_id 
+                    FROM    $wpdb->comments as C
+                        JOIN $wpdb->commentmeta as M
+                                on C.comment_ID = M.comment_id
                     WHERE   M.meta_key = '_me_rating_score'
-                            AND C.comment_post_ID = $post_id 
+                            AND C.comment_post_ID = $post_id
                             AND C.comment_approved = 1";
 
             $results = $wpdb->get_results($sql);
@@ -616,4 +616,29 @@ class ME_Listing_Handle {
             update_post_meta($post_id, '_me_reviews_count', $results[0]->count);
         }
     }
+
+    /**
+     * @param int $listing_id
+     * @author KyNguyen
+     */
+    public static function update_order_count($listing_id) {
+        global $wpdb;
+
+        $listing = me_get_listing($listing_id);
+        $listing_name = $listing->get_title();
+
+        $sql = "SELECT COUNT(OI.order_id) as count, O.post_status as status
+                FROM    $wpdb->marketengine_order_items as OI
+                LEFT JOIN $wpdb->posts as O
+                    ON OI.order_id = O.ID
+                WHERE   OI.order_item_type = 'listing_item'
+                        AND OI.order_item_name = '$listing_name'
+                GROUP BY O.post_status";
+
+        $results = $wpdb->get_results($sql);
+        $results = me_filter_order_count_result( $results );
+
+        update_post_meta($listing_id, '_me_order_count', $results['me-complete']);
+    }
 }
+
