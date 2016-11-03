@@ -16,8 +16,10 @@
 			$time_limit_text = $time_limit . ' days';
 		}
 	?>
+	<?php /*
 	<p><?php echo __('You have '. $time_limit_text.' to dispute this order.', 'enginethemes'); ?></p>
 	<a href="<?php echo me_get_page_id('dispute'); ?>" class=""><?php _e('DISPUTE', 'enginethemes'); ?></a>
+	*/ ?>
 </div>
 
 <?php endif; ?>
