@@ -357,6 +357,11 @@ class ME_Listing {
         return absint(get_post_meta($this->ID, '_me_order_count', true));
     }
 
+    public function get_inquiry_count() {
+        ME_Listing_Handle::update_inquiry_count($this->ID);
+        return absint(get_post_meta($this->ID, '_me_inquiry_count', true));
+    }
+
 
     public function get_gallery() {
         $gallery      = get_post_meta($this->ID, '_me_listing_gallery', true);
