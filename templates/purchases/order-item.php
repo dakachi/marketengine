@@ -56,7 +56,7 @@ $total = 0;
 			<div class="me-table-col me-table-empty"></div>
 			<div class="me-table-col me-table-empty"></div>
 			<div class="me-table-col me-cart-amount"><?php _e("Total amount:", "enginethemes"); ?></div>
-			<div class="me-table-col me-cart-totals"><?php echo me_price_html($listing_obj->get_price() * $unit); ?></div>
+			<div class="me-table-col me-cart-totals"><?php echo me_price_html($listing_item['price'] * $unit); ?></div>
 		</div>
 	</div>
 	<div class="me-checkout-submit">
