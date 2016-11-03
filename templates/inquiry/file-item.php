@@ -10,7 +10,6 @@ switch ($file_type['ext']) {
 	case 'jpeg':
 	case 'jpg' :
 	case 'gif' :
-		echo '<i class="fa fa-picture-pdf-o" aria-hidden="true"></i>';
 		?>
 		<a href="<?php echo $url; ?>" class="mess-file-item" title="<?php echo $name; ?>">
 			<?php echo wp_get_attachment_image( $file_id, 'thumbnail'); ?>
