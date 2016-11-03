@@ -5,6 +5,7 @@ if (!defined('ABSPATH')) {
 }
 $order_count = $listing->get_order_count();
 $review_count = $listing->get_review_count();
+$inquiry_count = $listing->get_inquiry_count();
 $listing_type = $listing->get_listing_type();
 ?>
 
@@ -12,7 +13,7 @@ $listing_type = $listing->get_listing_type();
 	<?php if('contact' === $listing_type) : ?>
 		<div class="me-rating-contact">
 			<span class="me-count-contact">
-			<?php printf(_n("%d Contact", "%d Contacts", $review_count,"enginethemes"),$review_count ); ?>
+			<?php printf(_n("%d Contact", "%d Contacts", $inquiry_count,"enginethemes"),$inquiry_count ); ?>
 		</span>
 		</div>
 	<?php endif; ?>
