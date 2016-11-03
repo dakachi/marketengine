@@ -72,13 +72,23 @@ class ME_Shortcodes_Transaction {
             if (!$file_id) {
                 return;
             }
-
-            $file_name = basename(get_attached_file($file_id));
-            $file_type = wp_check_filetype($file_name);
-            $file_url = wp_get_attachment_url( $file_id );
+            $attached_file = get_attached_file($file_id);
+            $file_name     = basename($attached_file);
+            $file_size     = filesize($attached_file);
+            $file_type     = wp_check_filetype($file_name);
+            $file_url      = wp_get_attachment_url($file_id);
 
             ob_start();
-            me_get_template('inquiry/file-item', array( 'file_id' => $file_id, 'name' => $file_name, 'file_type' => $file_type, 'url' => $file_url));
+            me_get_template(
+                'inquiry/file-item',
+                array(
+                    'file_id'   => $file_id,
+                    'name'      => $file_name,
+                    'size'      => $file_size,
+                    'file_type' => $file_type,
+                    'url'       => $file_url,
+                )
+            );
             $content = ob_get_clean();
             return $content;
         }
