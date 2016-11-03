@@ -27,6 +27,10 @@ switch ($file_type['ext']) {
 	case 'doc' :
 		$file_icon = '<i class="icon-me-file-doc"></i>';
 		break;
+	case 'xls':
+	case 'xlsx' :
+		$file_icon = '<i class="icon-me-xls"></i>';
+		break;
 	default:
 		$file_icon = '<i class="icon-me-file-code"></i>';
 		break;

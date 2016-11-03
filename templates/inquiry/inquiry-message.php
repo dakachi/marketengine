@@ -70,7 +70,7 @@
 	                maxsize : "2mb",
 	                listing_id : "<?php echo $listing->get_id(); ?>",
 	                inquiry_id : "<?php echo $inquiry->ID; ?>",
-	                extension: 'jpg,jpeg,gif,png,pdf,doc,docx,xls,txt',
+	                extension: 'jpg,jpeg,gif,png,pdf,doc,docx,xls,xlsx,txt',
 	                upload_url: '<?php echo admin_url('admin-ajax.php') . '?nonce=' . wp_create_nonce('marketengine') ?>'
 	            });
 	        });
