@@ -12,6 +12,8 @@ $review_count = $listing->get_review_count();
 $review_score = $listing->get_review_score();
 $comments = get_comments(array('type' => 'review', 'post_id' => $listing->ID, 'status' => 'approve'));
 
+$review_count_details = $listing->get_review_count_details();
+
 ?>
 
 <?php do_action('marketengine_before_single_listing_rating', $listing); ?>
@@ -38,13 +40,25 @@ $comments = get_comments(array('type' => 'review', 'post_id' => $listing->ID, 's
 				</div>
 				<div class="me-col-md-9">
 					<div class="me-count-author">
-						<div class="me-rating-author">
+						<div class="me-count-author">
+							<?php for ($i=5; $i > 0 ; $i--) : ?>
+
+							<?php 
 							
+							// echo $review_count_details[$i. '_star'];
+							// echo $review_count;
+							$percent = round(($review_count_details[$i. '_star']/$review_count)*100);
+							?>
+
+							<div class="me-rating-author">
+								<span class="me-star-quantity"><i class="icon-me-star"></i><?php echo $i; ?></span>
+								<div class="me-line-bg">
+									<div class="me-line-range" style="width: <?php echo $percent; ?>%;"></div>
+								</div>
+								<span class="me-star-per"><?php echo $percent; ?>%</span>
+							</div>
+							<?php endfor; ?>
 						</div>
-						<div class="me-rating-author"></div>
-						<div class="me-rating-author"></div>
-						<div class="me-rating-author"></div>
-						<div class="me-rating-author"></div>
 					</div>
 				</div>
 			</div>

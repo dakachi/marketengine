@@ -327,13 +327,24 @@ class ME_Listing {
     }
 
     /**
-     * Retrieve the number of product's reviews
+     * Retrieve the number of listing's reviews
      *
      * @since 1.0
      * @return int
      */
     public function get_review_count() {
         return absint(get_post_meta($this->ID, '_me_reviews_count', true));
+    }
+
+    /**
+     * Retrieve the details of listing's reviews
+     *
+     * @since 1.0
+     * @return int
+     */
+    public function get_review_count_details() {
+        $details = get_post_meta($this->ID, '_me_review_count_details', true);
+        return wp_parse_args( $details, array('1_star' => 0, '2_star' => 0, '3_star' => 0, '4_star' => 0 , '5_star' => 0) );
     }
 
     /**

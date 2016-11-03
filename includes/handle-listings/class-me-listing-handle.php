@@ -614,6 +614,25 @@ class ME_Listing_Handle {
             // update post rating score
             update_post_meta($post_id, '_rating_score', round($results[0]->rate_point, 1));
             update_post_meta($post_id, '_me_reviews_count', $results[0]->count);
+
+            $sql = "SELECT COUNT(C.comment_ID) as count, M.meta_value
+                    FROM    $wpdb->comments as C
+                        JOIN $wpdb->commentmeta as M
+                                on C.comment_ID = M.comment_id
+                    WHERE   M.meta_key = '_me_rating_score'
+                            AND C.comment_post_ID = $post_id
+                            AND C.comment_approved = 1
+                            GROUP BY M.meta_value";
+
+            $results = $wpdb->get_results($sql);
+            $count = array();
+            foreach ($results as $key => $value) {
+                $count[$value->meta_value . '_star'] = $value->count;
+            }
+            echo "<pre>";
+            print_r($count);
+            echo "</pre>";
+            update_post_meta($post_id, '_me_review_count_details', $count);
         }
     }
 
