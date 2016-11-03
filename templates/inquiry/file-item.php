@@ -25,10 +25,10 @@ switch ($file_type['ext']) {
 		break;
 	case 'docx' :
 	case 'doc' :
-		$file_icon = '<i class="icon-me-pdf"></i>';
+		$file_icon = '<i class="icon-me-doc"></i>';
 		break;
 	default:
-		$file_icon = '<i class="icon-me-pdf"></i>';
+		$file_icon = '<i class="icon-me-code"></i>';
 		break;
 }
 ?>

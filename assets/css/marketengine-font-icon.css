@@ -24,6 +24,16 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+
+.icon-me-file-code:before {
+  content: "\e902";
+}
+.icon-me-file-doc:before {
+  content: "\e903";
+}
+.icon-me-file-pdf:before {
+  content: "\e904";
+}
 .icon-me-quote-left:before {
   content: "\e929";
 }
