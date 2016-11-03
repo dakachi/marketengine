@@ -4,6 +4,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+$file_size =  '192 KB';
+$file_icon = '';
+
 switch ($file_type['ext']) {
 	case 'jpeg':
 	case 'png':
@@ -12,22 +15,22 @@ switch ($file_type['ext']) {
 	case 'gif' :
 		echo '<i class="fa fa-picture-pdf-o" aria-hidden="true"></i>';
 		?>
-		<a href="<?php echo $url; ?>" class="mess-file-item" title="<?php echo $name; ?>">
+		<a class="me-message-fancybox" href="<?php echo $url; ?>" class="mess-file-item" title="<?php echo $name; ?>">
 			<img src="<?php echo $url; ?>" style="width:160px;">
 		</a>
 		<?php
 		return ;
 		break;
 	case 'pdf' :
-		echo '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>';
+		$file_icon  = '<i class="icon-me-pdf"></i>';
 		break;
 	case 'docx' :
 	case 'doc' :
-		echo '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>';
+		$file_icon = '<i class="icon-me-pdf"></i>';
 		break;
 	default:
-		echo '<i class="fa fa-file-code-o" aria-hidden="true"></i>';
+		$file_icon = '<i class="icon-me-pdf"></i>';
 		break;
 }
 ?>
-<a href="<?php echo $url; ?>" class="mess-file-item"><?php echo $name ?></a>
+<?php echo '<a href="'. $url .'" class="mess-file-item">'. $file_icon .'<span class="me-mess-name">'. $name .'</span><span class="me-mess-size">'. me_format_size_units($size) .'</span><span class="me-mess-download"><i class="icon-me-download"></i></span></a>'; ?>
