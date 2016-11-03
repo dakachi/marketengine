@@ -6,16 +6,19 @@ if (!defined('ABSPATH')) {
 
 $galleries = $listing->get_galleries();
 
-if(empty($galleries)) return false;
 ?>
 
 <?php do_action('marketengine_before_single_listing_gallery'); ?>
 
 <div class="me-images">
 	<div class="me-image-large">
+	<?php if(!empty($galleries)) : ?>
 		<a class="me-large-fancybox">
 			<img src="<?php echo wp_get_attachment_image_url( $galleries[0], 'large' ); ?>" alt="<?php the_title(); ?>">
 		</a>
+	<?php else : ?>
+			No image
+	<?php endif; ?>
 	</div>
 	<div class="me-image-thumbs">
 		<div class="me-thumbs-slider">
