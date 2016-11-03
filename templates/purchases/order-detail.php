@@ -5,7 +5,7 @@ $order_number = '#' . $transaction->get_order_number();
 $order_status = get_post_status( $transaction->id );
 
 $listing_items = $transaction->get_listing_items();
-$listing = (array)array_pop($listing_items);
+$listing = array_pop($listing_items);
 
 $listing_obj = me_get_listing($listing['ID']);
 

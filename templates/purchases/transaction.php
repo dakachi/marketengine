@@ -1,6 +1,8 @@
 <?php
 $listing_items = $transaction->get_listing_items();
-$listing = (array)array_pop($listing_items);
+$listing = array_pop($listing_items);
+
+$transaction->update_listings();
 
 $listing_obj = me_get_listing($listing['ID']);
 $listing_cat = get_the_terms($listing_obj->ID, 'listing_category');
