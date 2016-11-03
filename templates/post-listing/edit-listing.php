@@ -15,6 +15,12 @@ if (!defined('ABSPATH')) {
 
 <?php
 
+if( !isset($_POST['referer']) ) {
+	$referer = $_SERVER['HTTP_REFERER'];
+} else {
+	$referer = $_POST['referer'];
+}
+
 $selected_cat = '';
 $selected_sub_cat = '';
 $terms = wp_get_post_terms( $listing->ID, 'listing_category');
@@ -68,9 +74,11 @@ $listing_tag = wp_get_post_terms($listing->ID, 'listing_tag', array('fields' => 
 			<div class="marketengine-group-field me-text-center submit-post">
 				<input class="marketengine-post-submit-btn" type="submit" name="update_lisiting" value="<?php _e("SUBMIT", "enginethemes"); ?>">
 			</div>
-			<a href="javascript:void(0)" onclick="history.go(-1)" class="back-link-page me-forward-section" data-active="2"><?php _e("&lt; Cancel", "enginethemes"); ?></a>
+			<a href="<?php echo $referer; ?>" class="back-link-page" data-active="2"><?php _e("&lt; Cancel", "enginethemes"); ?></a>
 
 			<?php do_action('marketengine_edit_listing_form_end', $listing); ?>
+
+			<input type="hidden" name="referer" value="<?php echo $referer; ?>" />
 
 		</form>
 	</div>
