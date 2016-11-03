@@ -13,6 +13,11 @@ function me_template_redirect() {
 }
 add_action('template_redirect', 'me_template_redirect');
 
+function listing_body_classes( $classess ) {
+    $classes[] = 'marketengine-snap-column marketengine-snap-column-4';
+    return $classes;
+}
+
 /**
  *
  */
@@ -58,41 +63,9 @@ function me_pre_get_posts($query) {
     }
 
     // Special check for shops with the listing archive on front
-    // if ($query->is_page() && 'page' === get_option('show_on_front') && absint($query->get('page_id')) === me_get_page_id('listings')) {
-
-    //     // This is a front-page shop
-    //     $query->set('post_type', 'listing');
-    //     $query->set('page_id', '');
-
-    //     if (isset($query->query['paged'])) {
-    //         $query->set('paged', $query->query['paged']);
-    //     }
-
-    //     // Get the actual WP page to avoid errors and let us use is_front_page()
-    //     // This is hacky but works. Awaiting https://core.trac.wordpress.org/ticket/21096
-    //     global $wp_post_types;
-
-    //     $shop_page = get_post(me_get_page_id('listings'));
-
-    //     $wp_post_types['listing']->ID         = $shop_page->ID;
-    //     $wp_post_types['listing']->post_title = $shop_page->post_title;
-    //     $wp_post_types['listing']->post_name  = $shop_page->post_name;
-    //     $wp_post_types['listing']->post_type  = $shop_page->post_type;
-    //     $wp_post_types['listing']->ancestors  = get_ancestors($shop_page->ID, $shop_page->post_type);
-
-    //     // Fix conditional Functions like is_front_page
-    //     $query->is_singular          = false;
-    //     $query->is_post_type_archive = true;
-    //     $query->is_archive           = true;
-    //     $query->is_page              = true;
-
-    //     // Remove post type archive name from front page title tag
-    //     add_filter('post_type_archive_title', '__return_empty_string', 5);
-
-    //     // Only apply to product categories, the product post archive, the shop page, product tags, and product attribute taxonomies
-    // } elseif (!$query->is_post_type_archive('listing') && !$query->is_tax(get_object_taxonomies('listing'))) {
-    //     return;
-    // }
+    if ($query->is_page() && 'page' === get_option('show_on_front') && absint($query->get('page_id')) === me_get_page_id('listings')) {
+        add_filter('body_class', 'listing_body_classes');
+    }
 }
 add_action('pre_get_posts', 'me_pre_get_posts');
 

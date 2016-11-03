@@ -24,7 +24,9 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-
+.icon-me-file-excel:before {
+  content: "\e921";
+}
 .icon-me-file-code:before {
   content: "\e902";
 }
