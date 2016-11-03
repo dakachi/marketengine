@@ -70,3 +70,5 @@ if(!empty($listings)) :
 </div>
 
 <?php endif; ?>
+
+<?php wp_reset_postdata(); ?>
