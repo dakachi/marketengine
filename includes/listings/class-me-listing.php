@@ -375,6 +375,10 @@ class ME_Listing {
         $gallery      = get_post_meta($this->ID, '_me_listing_gallery', true);
         $thumbnail_id = get_post_meta($this->ID, '_thumbnail_id', true);
 
+        if(empty($gallery )) {
+            $gallery = array();
+        }
+
         if ($thumbnail_id) {
             array_unshift($gallery, $thumbnail_id);
         }
