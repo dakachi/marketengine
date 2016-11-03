@@ -3,7 +3,7 @@
 <?php
 	$user_id = get_current_user_id();
 	$listing = me_get_listing($inquiry->post_parent);
-	$message_query = new ME_Message_Query(array('post_type' => 'message', 'post_parent' => $inquiry->ID, 'showposts' => 10));
+	$message_query = new ME_Message_Query(array('post_type' => 'message', 'post_parent' => $inquiry->ID, 'showposts' => get_option( 'posts_per_page' )));
 	$messages = array_reverse ($message_query->posts);
 ?>
 	<div class="marketengine">

@@ -5,6 +5,9 @@ $selected_listing_type = empty($_POST['listing_type']) ? $selected_listing_type 
 if (!empty($_POST['meta_input']['contact_email'])) {$contact_email = esc_attr($_POST['meta_input']['contact_email']);}
 if (!empty($_POST['meta_input']['listing_price'])) {$price =  esc_attr($_POST['meta_input']['listing_price']);}
 if (!empty($_POST['meta_input']['pricing_unit'])) {$unit =  esc_attr($_POST['meta_input']['pricing_unit']);}
+if (isset($_POST['meta_input']['listing_price']) && empty($_POST['meta_input']['listing_price']) ) {
+	$price = '';
+}
 if (!isset($editing)) $editing = false;
 ?>
 
