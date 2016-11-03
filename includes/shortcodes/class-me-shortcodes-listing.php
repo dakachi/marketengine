@@ -17,7 +17,7 @@ class ME_Shortcodes_Listing
     public static function the_listing()
     {
         ob_start();
-        query_posts( array('post_type' => 'listing', 'post_status' => 'publish') );
+        query_posts( array('post_type' => 'listing', 'post_status' => 'publish', 'paged' => get_query_var( 'page' )) );
         me_get_template('listing-list');
         $content = ob_get_clean();
         wp_reset_query();
