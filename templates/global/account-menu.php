@@ -9,7 +9,7 @@
 ?>
 <?php if( is_user_logged_in() ) : ?>
 <nav class="me-menu-account">
-	<select name="" id="" onchange="window.location.href=this.value;">
+	<select class="me-chosen-select" name="" id="" onchange="window.location.href=this.value;">
 		<option disabled selected><?php echo get_the_author_meta('display_name', get_current_user_id()); ?></option>
 		<option value="<?php echo me_get_page_permalink( 'user_account' ); ?>"><?php echo __('Dashboard', 'enginethemes'); ?></option>
 		<option value="<?php echo me_get_auth_url( 'listings' ); ?>"><?php echo __('My Listing', 'enginethemes'); ?></option>
@@ -20,7 +20,7 @@
 </nav>
 <?php else: ?>
 	<nav class="me-menu-account">
-		<select name="" id="" onchange="window.location.href=this.value;">
+		<select class="me-chosen-select" name="" id="" onchange="window.location.href=this.value;">
 			<option disabled selected><?php echo __('MY ACCOUNT', 'enginethemes'); ?></option>
 			<option value="<?php echo me_get_page_permalink('user_account'); ?>"><?php echo __('Login', 'enginethemes'); ?></option>
 			<?php if( get_option('users_can_register') ) : ?>
