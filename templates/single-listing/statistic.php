@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
@@ -25,6 +25,6 @@ $listing_type = $listing->get_listing_type();
 			<span class="me-count-review">
 				<?php printf(_n("%d Review", "%d Reviews", $review_count,"enginethemes"),$review_count ); ?>
 			</span>
-		</div>	
+		</div>
 	<?php endif; ?>
 <?php do_action('marketengine_after_single_listing_statistic'); ?>
