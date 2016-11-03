@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 <li itemprop="review" itemscope itemtype="http://schema.org/Review" class="me-media">	
 	<div class="">
 		<a href="" class="avatar-comment pull-left">
-			<?php echo get_avatar($comment->user_id); ?>
+			<?php echo me_get_avatar($comment->user_id); ?>
 		</a>
 		<div class="me-media-body">
 			<h4 itemprop="author" class="me-media-heading"><?php echo esc_html( get_the_author_meta( 'display_name', $comment->user_id ) );  ?></h4>

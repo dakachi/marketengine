@@ -213,7 +213,7 @@ class ME_Listing {
         } elseif (empty($_listing->filter)) {
             $_listing = sanitize_post($_listing, 'raw');
         }
-
+        
         return new ME_Listing($_listing);
     }
 
@@ -313,7 +313,9 @@ class ME_Listing {
     }
 
     public function get_short_description($length = 40) {
-        return wp_trim_words($this->post_content, $length);
+        $content = get_post_field('post_content', $this->ID, 'display');
+        $content = apply_filters('the_content', $content);
+        return me_trim_words( $content, $length);
     }
 
     public function get_listing_thumbnail($size = 'post-thumbnail', $attr = '' ) {
@@ -355,6 +357,11 @@ class ME_Listing {
         return absint(get_post_meta($this->ID, '_me_order_count', true));
     }
 
+    public function get_inquiry_count() {
+        ME_Listing_Handle::update_inquiry_count($this->ID);
+        return absint(get_post_meta($this->ID, '_me_inquiry_count', true));
+    }
+
 
     public function get_gallery() {
         $gallery      = get_post_meta($this->ID, '_me_listing_gallery', true);
@@ -393,7 +400,8 @@ class ME_Listing {
      * @return bool
      */
     public function is_available() {
-        return  apply_filters('marketengine_lisitng_is_available', 'listing' === $this->post_type, $this->ID);
+        $is_available = ('listing' === $this->post_type && $this->post_status == 'publish' );
+        return  apply_filters('marketengine_lisitng_is_available', $is_available, $this->ID);
     }
 
     public function get_edit_url(){

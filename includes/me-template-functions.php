@@ -638,6 +638,65 @@ function marketengine_get_the_archive_title() {
      */
     return apply_filters('marketengine_get_the_archive_title', $title);
 }
+
+/**
+ * Trims text to a certain number of words.
+ *
+ * This function is localized. For languages that count 'words' by the individual
+ * character (such as East Asian languages), the $num_words argument will apply
+ * to the number of individual characters.
+ *
+ * @since 1.0
+ *
+ * @param string $text      Text to trim.
+ * @param int    $num_words Number of words. Default 55.
+ * @param string $more      Optional. What to append if $text needs to be trimmed. Default '&hellip;'.
+ * @return string Trimmed text.
+ */
+function me_trim_words( $text, $num_words = 55, $more = null ) {
+    if ( null === $more ) {
+        $more = __( '&hellip;' );
+    }
+
+    $original_text = $text;
+    //$text = wp_strip_all_tags( $text );
+
+    /*
+     * translators: If your word count is based on single characters (e.g. East Asian characters),
+     * enter 'characters_excluding_spaces' or 'characters_including_spaces'. Otherwise, enter 'words'.
+     * Do not translate into your own language.
+     */
+    if ( strpos( _x( 'words', 'Word count type. Do not translate!' ), 'characters' ) === 0 && preg_match( '/^utf\-?8$/i', get_option( 'blog_charset' ) ) ) {
+        //$text = trim( preg_replace( "/[\n\r\t ]+/", ' ', $text ), ' ' );
+        //preg_match_all( '/./u', $text, $words_array );
+        $words_array = array_slice( $words_array[0], 0, $num_words + 1 );
+        $sep = '';
+    } else {
+        $words_array = preg_split( "/[\n\r\t ]+/", $text, $num_words + 1, PREG_SPLIT_NO_EMPTY );
+        $sep = ' ';
+    }
+
+    if ( count( $words_array ) > $num_words ) {
+        array_pop( $words_array );
+        $text = implode( $sep, $words_array );
+        $text = $text . $more;
+    } else {
+        $text = implode( $sep, $words_array );
+    }
+
+    /**
+     * Filters the text content after words have been trimmed.
+     *
+     * @since 3.3.0
+     *
+     * @param string $text          The trimmed text.
+     * @param int    $num_words     The number of words to trim the text to. Default 5.
+     * @param string $more          An optional string to append to the end of the trimmed text, e.g. &hellip;.
+     * @param string $original_text The text before it was trimmed.
+     */
+    return apply_filters( 'me_trim_words', $text, $num_words, $more, $original_text );
+}
+
 /**
  * Format file size Unit
  * 

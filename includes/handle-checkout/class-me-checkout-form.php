@@ -60,7 +60,6 @@ class ME_Checkout_Form {
         $result = ME_Checkout_Handle::pay($order);
         if (!$result || is_wp_error($result)) {
             me_wp_error_to_notices($result);
-            // TODO: update link nay
             wp_redirect($order->get_order_detail_url());
             exit;
         } else {

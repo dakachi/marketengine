@@ -8,8 +8,8 @@
 				<?php echo esc_html( $listing->get_title() ); ?>
 			</a>
 		</h2>
-		<p>
-			<?php echo $listing->get_short_description(); ?>
-		</p>
+		
+		<?php echo $listing->get_short_description(); ?>
+		
 	</div>
 </div>

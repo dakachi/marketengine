@@ -642,5 +642,19 @@ class ME_Listing_Handle {
             update_post_meta($listing_id, '_me_order_count', $results['me-complete']);
         }
     }
+
+    public static function update_inquiry_count($listing_id) {
+        global $wpdb;
+        $sql = "SELECT COUNT(M.ID) as count
+            FROM $wpdb->marketengine_message_item as M
+            LEFT JOIN $wpdb->posts as P
+            ON M.post_parent = P.ID
+            WHERE M.post_type = 'inquiry'
+            AND P.ID LIKE '$listing_id'";
+
+        $results = $wpdb->get_results($sql);
+
+        update_post_meta($listing_id, '_me_inquiry_count', $results[0]->count);
+    }
 }
 

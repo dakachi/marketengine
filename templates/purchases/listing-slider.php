@@ -3,7 +3,7 @@
 $args = array(
 	'posts_per_page'	=> 12,
 	'post_type' 		=> 'listing',
-	'exclude'			=> $curr_listing['_listing_id'],
+	'exclude'			=> $curr_listing,
 );
 
 if(!empty($listing_cat)) {
@@ -70,3 +70,5 @@ if(!empty($listings)) :
 </div>
 
 <?php endif; ?>
+
+<?php wp_reset_postdata(); ?>
