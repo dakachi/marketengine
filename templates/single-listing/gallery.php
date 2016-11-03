@@ -17,7 +17,7 @@ $galleries = $listing->get_galleries();
 			<img src="<?php echo wp_get_attachment_image_url( $galleries[0], 'large' ); ?>" alt="<?php the_title(); ?>">
 		</a>
 	<?php else : ?>
-			No image
+			No images
 	<?php endif; ?>
 	</div>
 	<div class="me-image-thumbs">
