@@ -34,7 +34,7 @@ class ME_Template_Loader {
 
         } elseif (is_single() && get_post_type() == 'me_order') {
 
-            $file = 'single-order.php';
+            $file = 'order-detail.php';
             $find[] = $file;
             $find[] = ME()->template_path() . $file;
 

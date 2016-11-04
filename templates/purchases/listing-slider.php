@@ -6,16 +6,22 @@ $args = array(
 	'exclude'			=> $curr_listing,
 );
 
+$listing_cat = wp_get_post_terms($curr_listing, 'listing_category');
+
 if(!empty($listing_cat)) {
 	$args['tax_query'] = array();
 	foreach ($listing_cat as $key => $cat) {
-		$args['tax_query'][] = array(
-			'taxonomy' 	=> 'listing_category',
-			'field' 	=> 'slug',
-			'terms' 	=> $cat,
-		);
+		if(!$cat->parent) {
+			$args['tax_query'][] = array(
+				'taxonomy' 	=> 'listing_category',
+				'field' 	=> 'slug',
+				'terms' 	=> $cat,
+			);
+		}
 	}
 }
+
+$args = apply_filters( 'me_filte_related_listing', $args );
 
 $listings = get_posts( $args );
 

@@ -20,11 +20,6 @@ jQuery(document).ready(function($) {
 		}
 	});
 
-	// me_snap_column < 1140px
-	// me_snap_column < 870px
-	// me_snap_column < 580px
-	marketengine_snap_column();
-	window.addEventListener("resize", marketengine_snap_column);
 	$('.me-list-thumbs').meSliderThumbs();
 
 
@@ -246,5 +241,11 @@ jQuery(document).ready(function($) {
 			$('body').removeClass('marketengine-snap-column-2');
 		}
 	}
+
+	// me_snap_column < 1140px
+	// me_snap_column < 870px
+	// me_snap_column < 580px
+	// marketengine_snap_column();
+	// window.addEventListener("resize", marketengine_snap_column);
 });
 
