@@ -69,21 +69,20 @@ function me_insert_order($order_data) {
  * @return int|WP_Error The post ID on success. The value 0 or WP_Error on failure.
  */
 function me_update_order($order_data) {
-    $order_data              = apply_filters('marketengine_update_order_data', $order_data);
+    $order_data = apply_filters('marketengine_update_order_data', $order_data);
     // First, get all of the original fields.
     $post = get_post($order_data['ID'], ARRAY_A);
 
-    if ( is_null( $post ) || $post->post_type  !== 'me_order' ) {
-        return new WP_Error( 'invalid_order', __( 'Invalid order ID.', 'enginethemes' ) );
+    if (is_null($post) || $post->post_type !== 'me_order') {
+        return new WP_Error('invalid_order', __('Invalid order ID.', 'enginethemes'));
     }
 
     // Escape data pulled from DB.
-    $post = wp_slash($post);
+    $post       = wp_slash($post);
     $order_data = array_merge($post, $order_data);
 
     return me_insert_order($order_data);
 }
-
 
 /**
  * Order completed, fund has been sent to seller
@@ -91,16 +90,25 @@ function me_update_order($order_data) {
  */
 function me_complete_order($order_id) {
 
-    $post_status = get_post_status( $order_id );
+    $post_status = get_post_status($order_id);
 
-    if($post_status == 'me-complete') return ;
+    if ($post_status == 'me-complete') {
+        return;
+    }
 
     $order_id = wp_update_post(array(
         'ID'          => $order_id,
         'post_status' => 'me-complete',
     ));
 
+    if ($order_id) {
+        $current   = date('Y-m-d H:i:s', current_time('timestamp'));
+        update_post_meta($order_id, '_me_order_complete_time', $current);
+    }
+
     do_action('marketengine_complete_order', $order_id);
+
+    return $order_id;
 }
 
 /**
@@ -109,9 +117,11 @@ function me_complete_order($order_id) {
  */
 function me_active_order($order_id) {
 
-    $post_status = get_post_status( $order_id );
+    $post_status = get_post_status($order_id);
 
-    if($post_status == 'publish') return ;
+    if ($post_status == 'publish') {
+        return;
+    }
 
     wp_update_post(array(
         'ID'          => $order_id,
@@ -122,16 +132,59 @@ function me_active_order($order_id) {
 
 function me_dispute_order($order_id) {}
 
+/**
+ * Close order to finish the transaction process
+ *
+ * @param int $order_id The order id
+ *
+ * @return int $order_id
+ */
+function me_close_order($order_id) {
+
+    $post_status = get_post_status($order_id);
+
+    if ('me-close' == $post_status) {
+        return;
+    }
+
+    $order_id = wp_update_post(array(
+        'ID'          => $order_id,
+        'post_status' => 'me-close',
+    ));
+
+    do_action('marketengine_close_order', $order_id);
+
+    return $order_id;
+}
+/**
+ * Run cron job to collection expired order to close
+ * @since 1.0
+ */
+function me_cron_close_order() {
+    global $wpdb;
+    $post_type = $this->post_type;
+    $current   = date('Y-m-d H:i:s', current_time('timestamp'));
+    $sql       = "SELECT DISTINCT ID FROM {$wpdb->posts} as p
+                INNER JOIN {$wpdb->postmeta} as mt ON mt.post_id = p.ID AND mt.meta_key = '_me_order_complete_time'
+                WHERE   (p.post_type = 'me-order')  
+                    AND (p.post_status = 'me-complete')      
+                    AND (mt.meta_value < '{$current}')          
+                    AND (mt.meta_value != '' ) ";
+
+    $archived_ads = $wpdb->get_results($sql);
+}
+add_action('marketengine_cron_execute', 'me_cron_close_order');
+
 function me_get_order() {
 
 }
 
-function me_get_order_ids( $value, $type ) {
+function me_get_order_ids($value, $type) {
     global $wpdb;
     $operator = '=';
-    if( $type == 'listing_item') {
+    if ($type == 'listing_item') {
         $operator = 'LIKE';
-        $value = "%{$value}%";
+        $value    = "%{$value}%";
     }
     $query = "SELECT order_items.order_id
             FROM $wpdb->marketengine_order_items as order_items
@@ -147,25 +200,25 @@ function me_get_order_ids( $value, $type ) {
  *  @param: $query
  *  @return: $args - query args
  */
-function me_filter_order_query( $query, $type = '') {
+function me_filter_order_query($query, $type = '') {
     $args['post__in'] = array();
 
-    if( isset($query['order_status']) && $query['order_status'] !== '' && $query['order_status'] !== 'any' ){
+    if (isset($query['order_status']) && $query['order_status'] !== '' && $query['order_status'] !== 'any') {
         $args['post_status'] = $query['order_status'];
     }
 
-    if( $type == 'order' && (!isset($query['order_status']) || $query['order_status'] == '' || $query['order_status'] == 'any') ) {
+    if ($type == 'order' && (!isset($query['order_status']) || $query['order_status'] == '' || $query['order_status'] == 'any')) {
         $statuses = me_get_order_status_list();
         unset($statuses['me-pending']);
         unset($statuses['publish']);
         $query['order_status'] = array_keys($statuses);
-        $args['post_status'] = $query['order_status'];
+        $args['post_status']   = $query['order_status'];
     }
 
-    if( isset($query['from_date']) || isset($query['to_date']) ){
+    if (isset($query['from_date']) || isset($query['to_date'])) {
         $before = $after = '';
-        if( isset($query['from_date']) && !empty($query['from_date']) ){
-            if( preg_match("/^(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])\/[0-9]{4}$/", $query['from_date']) ){
+        if (isset($query['from_date']) && !empty($query['from_date'])) {
+            if (preg_match("/^(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])\/[0-9]{4}$/", $query['from_date'])) {
                 $after = $query['from_date'];
             } else {
                 $args['post__in'][] = -1;
@@ -173,9 +226,9 @@ function me_filter_order_query( $query, $type = '') {
             }
         }
 
-        if( isset($query['to_date']) && !empty($query['to_date']) ){
-            if( preg_match("/^(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])\/[0-9]{4}$/", $query['to_date']) ){
-                $before = $query['to_date'] . ' 23:59:59' ;
+        if (isset($query['to_date']) && !empty($query['to_date'])) {
+            if (preg_match("/^(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])\/[0-9]{4}$/", $query['to_date'])) {
+                $before = $query['to_date'] . ' 23:59:59';
             } else {
                 $args['post__in'][] = -1;
                 return $args;
@@ -184,16 +237,16 @@ function me_filter_order_query( $query, $type = '') {
 
         $args['date_query'] = array(
             array(
-                'after'     => $after,
-                'before'    => $before,
+                'after'  => $after,
+                'before' => $before,
             ),
         );
     }
 
-    if( $type == 'order' ) {
-        $user_data = get_userdata( get_current_user_id() );
-        $order_ids = me_get_order_ids( $user_data->user_login, 'receiver_item' );
-        if( empty($order_ids) ) {
+    if ($type == 'order') {
+        $user_data = get_userdata(get_current_user_id());
+        $order_ids = me_get_order_ids($user_data->user_login, 'receiver_item');
+        if (empty($order_ids)) {
             $args['post__in'] = array(-1);
             return $args;
         } else {
@@ -204,29 +257,29 @@ function me_filter_order_query( $query, $type = '') {
     }
 
     $keyword_result = array();
-    if( isset($query['keyword']) && !empty($query['keyword']) ) {
-        $id_by_listing = me_get_order_ids( $query['keyword'], 'listing_item' );
+    if (isset($query['keyword']) && !empty($query['keyword'])) {
+        $id_by_listing = me_get_order_ids($query['keyword'], 'listing_item');
 
         $id_by_keyword = array();
-        if( is_numeric($query['keyword']) ) {
-            $id_by_keyword = array( $query['keyword'] );
+        if (is_numeric($query['keyword'])) {
+            $id_by_keyword = array($query['keyword']);
         }
         $keyword_result = array_merge($id_by_keyword, $id_by_listing);
 
-        if( $type == 'order') {
+        if ($type == 'order') {
             $args['post__in'] = array_intersect($keyword_result, $args['post__in']);
         } else {
             $args['post__in'] = $keyword_result;
         }
 
-        if( empty($args['post__in']) ) {
+        if (empty($args['post__in'])) {
             $args['post__in'] = array(-1);
         }
     }
 
     return $args;
 }
-add_filter( 'me_filter_order', 'me_filter_order_query', 1, 2 );
+add_filter('me_filter_order', 'me_filter_order_query', 1, 2);
 
 /**
  * MarketEngine Get Order Status Listing
@@ -436,7 +489,7 @@ function me_delete_order_item_meta($order_item_id, $meta_key, $meta_value = '') 
     return delete_metadata('marketengine_order_item', $order_item_id, $meta_key, $meta_value);
 }
 
-function me_order_table_header( $type ) {
+function me_order_table_header($type) {
     $table_header = array(
         __("ORDER ID", "enginethemes"),
         __("STATUS", "enginethemes"),
@@ -445,7 +498,7 @@ function me_order_table_header( $type ) {
         __("LISTING", "enginethemes"),
     );
 
-    if($type === 'transaction') {
+    if ($type === 'transaction') {
         $table_header[0] = __("TRANSACTION ID", "enginethemes");
     }
 
@@ -453,29 +506,32 @@ function me_order_table_header( $type ) {
 }
 
 function me_report_data_init($query) {
-    $data = array();
+    $data   = array();
     $orders = new WP_Query($query);
 
-    if( !$orders->have_posts() ) return;
-    while( $orders->have_posts() ) {
+    if (!$orders->have_posts()) {
+        return;
+    }
+
+    while ($orders->have_posts()) {
         $orders->the_post();
 
-        $order = new ME_Order( get_the_ID() );
+        $order = new ME_Order(get_the_ID());
 
-        $order_number = '#'.get_the_ID();
-        $order_status = get_post_status_object( get_post_status( get_the_ID() ) );
-        $order_total = me_price_format( $order->get_total() );
-        $order_date = get_the_date(get_option('date_format'), get_the_ID());
+        $order_number = '#' . get_the_ID();
+        $order_status = get_post_status_object(get_post_status(get_the_ID()));
+        $order_total  = me_price_format($order->get_total());
+        $order_date   = get_the_date(get_option('date_format'), get_the_ID());
 
-        $listing = $order->get_listing();
-        $listing_title = get_the_title( $listing['_listing_id'][0] );
+        $listing       = $order->get_listing();
+        $listing_title = get_the_title($listing['_listing_id'][0]);
 
         $data[] = array(
             $order_number,
             $order_status->label,
             $order_total,
             $order_date,
-            $listing_title
+            $listing_title,
         );
     }
     wp_reset_postdata();
@@ -483,8 +539,8 @@ function me_report_data_init($query) {
 }
 
 // TODO: ajax
-function me_export_orders( $query, $type ) {
-    $header = me_order_table_header( $type );
+function me_export_orders($query, $type) {
+    $header = me_order_table_header($type);
 
     $query = json_decode($query);
 
@@ -493,23 +549,9 @@ function me_export_orders( $query, $type ) {
     $file = fopen("test_report.csv", "w");
 
     fputcsv($file, $header);
-    foreach( $table_data as $key => $row) {
+    foreach ($table_data as $key => $row) {
         fputcsv($file, $row);
     }
 
     fclose($file);
-}
-
-/**
- * Retrieve current user transactions
- */
-function me_my_transactions($args) {
-
-}
-
-/**
- * Retrieve current user orders
- */
-function me_my_orders() {
-
 }
