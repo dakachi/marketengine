@@ -50,9 +50,10 @@ jQuery(document).ready(function($) {
 		slideshow: false,
 		animation: "slide",
 		animationLoop: false,
-		itemWidth: 247,
+		itemWidth: 248,
 		itemMargin: 30,
 		controlNav: false,
+		directionNav: true,
 		prevText: '',
 		nextText: ''
 	});

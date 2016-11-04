@@ -112,7 +112,7 @@ $query = new WP_Query( $args );
 				<?php me_paginate_link ($query); ?>
 			</div>
 		</div>
-	</div>
+	
 	<!--// marketengine-content -->
 <?php
 elseif(isset($_GET['status'])) : ?>
@@ -140,3 +140,4 @@ else:
 	me_get_template('account/my-listing-none');
 endif;
 ?>
+</div>
