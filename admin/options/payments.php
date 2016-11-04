@@ -73,7 +73,7 @@ return array(
                 'type'        => 'number',
                 'class_name'  => 'number_only',
                 'attributes'  => array(
-                    'min'       => 0,
+                    'min'       => 1,
                 ),
                 'name'        => 'dispute-time-limit'
             ),

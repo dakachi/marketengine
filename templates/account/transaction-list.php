@@ -87,6 +87,7 @@ query_posts( $args );
 			<span><?php _e('There are no transactions yet.', 'enginethemes'); ?></span>
 		</div>
 	</div>
+</div>
 <?php
 	endif;
 	wp_reset_query();

@@ -67,6 +67,7 @@ query_posts($args);
 <div class="marketengine-paginations">
 	<?php me_paginate_link(); ?>
 </div>
+
 <div class="marketengine-loadmore">
 	<a href="" class="me-loadmore me-loadmore-order"><?php _e("Load more", "enginethemes"); ?></a>
 </div>
@@ -85,11 +86,11 @@ query_posts($args);
 			<span><?php _e('There are no orders yet.', 'enginethemes'); ?></span>
 		</div>
 	</div>
+</div>
 <?php
 	endif;
 	wp_reset_query();
 ?>
-
 <script type="text/json" id="all_order_query">
 	<?php echo $all_order_args; ?>
 </script>

@@ -69,17 +69,47 @@ $user = ME()->get_current_user();
 				<label class="me-field-title">
 					<?php _e("Paypal Email <i>(this email will be used for Paypal payment)</i>", "enginethemes"); ?>
 				</label>
-				<p><?php echo $user->paypal_email ? $user->paypal_email : __('Not yet received info', 'enginethemes'); ?></p>
+				<p>
+					<?php 
+						if($user->paypal_email){
+							echo $user->paypal_email;
+						}else{
+							echo '<span class="me-not-yet-info">';
+							_e('Not yet received info', 'enginethemes');
+							echo '</span>';
+						}
+					?>
+				</p>
 			</div>
 
 			<div class="marketengine-text-field">
 				<label class="me-field-title"><?php _e("Location", "enginethemes");?></label>
-				<p><?php echo $user->location ? $user->location : __('Not yet received info', 'enginethemes'); ?></p>
+				<p>
+					<?php 
+						if($user->location){
+							echo $user->location;
+						}else{
+							echo '<span class="me-not-yet-info">';
+							_e('Not yet received info', 'enginethemes');
+							echo '</span>';
+						}
+					?>
+				</p>
 			</div>
 
 			<div class="marketengine-text-field me-no-margin-bottom">
 				<label class="me-field-title"><?php _e("About me", "enginethemes");?></label>
-				<p><?php echo $user->description ? $user->description : __('Not yet received info', 'enginethemes'); ?></p>
+				<p>
+					<?php 
+						if($user->description){
+							echo $user->description;
+						}else{
+							echo '<span class="me-not-yet-info">';
+							_e('Not yet received info', 'enginethemes');
+							echo '</span>';
+						}
+					?>
+				</p>
 			</div>
 
 			<?php do_action('marketengine_after_user_profile_information', $user); ?>
