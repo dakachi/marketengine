@@ -166,8 +166,15 @@ _.templateSettings = {
             });
         },
         preventNegativeNumber: function(e) {
+            var $target = $(e.currentTarget),
+                view = this,
+                allowedKey = [46, 8, 9, 27, 13, 110, 190];
+            if($target.hasClass('no-zero')) {
+                allowedKey = [46, 8, 9, 27, 13];
+                $target.val($target.val().replace(/^0/, ''));
+            }
             // Allow: backspace, delete, tab, escape, enter and .
-            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+            if ($.inArray(e.keyCode, allowedKey) !== -1 ||
                 // Allow: Ctrl+A
                 (e.keyCode == 65 && e.ctrlKey === true) ||
                 // Allow: Ctrl+C

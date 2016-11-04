@@ -63,4 +63,7 @@
             $('#send-inquiry').submit();
         }
     });
+    $('.me-listing-info-view').on('click', function() {
+        $('.me-listing-desc').toggleClass('active'); 
+    });
 })(jQuery);
