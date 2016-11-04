@@ -515,11 +515,17 @@ class ME_Authentication {
      * @return bool | WP_Error
      */
     public static function send_activation_email($user) {
+        $profile_link = me_get_page_permalink('user-profile');
         $user_activate_email_key = get_user_meta($user->ID, 'activate_email_key', true);
+        $activate_email_link = add_query_arg(array(
+            'key' => $user_activate_email_key,
+            'user_email' => $user->user_email,
+            'action' => 'confirm-email',
+        ), $profile_link);
         if ($user_activate_email_key) {
             // get activation mail content from template
             ob_start();
-            me_get_template('emails/activation');
+            me_get_template('emails/activation', array('activate_email_link' => $activate_email_link));
             $activation_mail_content = ob_get_clean();
             /**
              * Filter user activation email subject
@@ -530,12 +536,11 @@ class ME_Authentication {
              * @since 1.0
              */
             $activation_mail_subject = apply_filters('marketengine_activation_mail_subject', __("Activate Email", "enginethemes"), $user);
-            $profile_link = me_get_page_permalink('user-profile');
-            $activate_email_link = add_query_arg(array(
-                'key' => $user_activate_email_key,
-                'user_email' => $user->user_email,
-                'action' => 'confirm-email',
-            ), $profile_link);
+            // $activate_email_link = add_query_arg(array(
+            //     'key' => $user_activate_email_key,
+            //     'user_email' => $user->user_email,
+            //     'action' => 'confirm-email',
+            // ), $profile_link);
 
             $activation_mail_content = str_replace('[activate_email_link]', $activate_email_link, $activation_mail_content);
             /**

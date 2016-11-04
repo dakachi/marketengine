@@ -179,6 +179,7 @@ class ME_Auth_Form extends ME_Form {
             global $current_user;
             $is_send_success = ME_Authentication::send_activation_email($current_user);
             if (!is_wp_error($is_send_success)) {
+                me_add_notice(__("<p>Thank you! Please <span>check your mailbox</span> to activate your account.</p>", "enginethemes"));
                 // set the redirect link after ask confirm email
                 $redirect = self::get_redirect_link();
                 $redirect = apply_filters('marketengine_resend_confirm_email_redirect', $redirect, $current_user);
