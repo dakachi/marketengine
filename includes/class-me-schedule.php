@@ -57,7 +57,6 @@ class ME_Schedule {
 	*/
 	public  function cron () {
 		do_action( 'marketengine_cron_execute' );
-		update_option( 'marketengine_cron', time()  );
 	}
 }
 
