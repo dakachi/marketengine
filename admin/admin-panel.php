@@ -39,6 +39,15 @@ function marketengine_option_view() {
             'template' => include (dirname(__FILE__). '/options/inquiries.php'),
         ),
     );
+
+    /**
+     * Filter admin settings table
+     *
+     * @param array $tabs The admin settings tabs
+     * @since 1.0
+     */
+    $tabs = apply_filters('marketengine_settings_tab', $tabs);
+
     echo '<div class="marketengine-tabs">';
 
     echo '<ul class="me-nav me-tabs-nav">';
@@ -69,6 +78,10 @@ function marketengine_option_view() {
     marketengine_option_footer();
 }
 
+function marketengine_report_view() {
+    echo 'report';
+}
+
 /**
  * Add marketengine admin menu
  */
@@ -78,15 +91,24 @@ function marketengine_option_menu() {
         __("EngineThemes", "enginethemes"),
         'manage_options',
         'marketengine',
-        'marketengine_option_view',
+        'marketengine_report_view',
         '',
         null
+    );
+
+    add_submenu_page( 
+        'marketengine', 
+        __("Settings", "enginethemes"), 
+        __("Settings", "enginethemes"), 
+        'manage_options', 
+        'me-settings', 
+        'marketengine_option_view'
     );
 }
 add_action('admin_menu', 'marketengine_option_menu');
 
 function marketengine_load_admin_option_script_css() {
-    if(!empty($_REQUEST['page']) && 'marketengine' == $_REQUEST['page']) {
+    if(!empty($_REQUEST['page']) && 'me-settings' == $_REQUEST['page']) {
         wp_register_style('marketengine-font-icon', ME_PLUGIN_URL . 'assets/admin/jquery.mCustomScrollbar.min.css', array(), '1.0');
         wp_enqueue_style('me-option-css', ME_PLUGIN_URL . 'assets/admin/marketengine-admin.css');
 

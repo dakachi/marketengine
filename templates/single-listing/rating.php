@@ -66,7 +66,7 @@ $review_count_details = $listing->get_review_count_details();
             <?php if ( get_comment_pages_count($comments) > 1 ) : ?>
             	
 				<div class="comment-pagination">
-                	<a href="#" class="read-more-review" id="read-more-review" data-page="<?php echo get_comment_pages_count($comments); ?>" data-loading-text="<?php _e("Loading ...", "enginethemes"); ?>">
+                	<a href="#" class="read-more-review" id="read-more-review" data-post-id="<?php the_ID(); ?>" data-page="<?php echo get_comment_pages_count($comments); ?>" data-loading-text="<?php _e("Loading ...", "enginethemes"); ?>">
                 		<?php _e("Read more", "enginethemes") ?>
                 	</a>
                 </div>
