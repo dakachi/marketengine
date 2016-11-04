@@ -7,7 +7,7 @@ $note = $transaction->post_excerpt;
 
 <div class="me-order-detail-block">
 	<div class="me-row">
-		<div class="me-col-md-7">
+		<div class="me-col-md-5">
 			<div class="me-row">
 				<div class="me-col-md-12 me-col-sm-12">
 					<div class="me-orderbill-info">
@@ -25,7 +25,7 @@ $note = $transaction->post_excerpt;
 				*/?>
 			</div>
 		</div>
-		<div class="me-col-md-5">
+		<div class="me-col-md-7">
 			<div class="me-ordernotes-info">
 				<h5><?php echo __( 'Order Notes:', 'enginethemes' ); ?></h5>
 				<p class=""><?php echo esc_attr($note) ?></p>
