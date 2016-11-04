@@ -1,5 +1,12 @@
 <?php
-// TODO: sua ten lai file thanh user info.php
+/**
+ * 	The Template for displaying information of user.
+ * 	This template can be overridden by copying it to yourtheme/marketengine/user-info.php.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ * @version     1.0.0
+ */
 
 $display_name = get_the_author_meta('display_name', $author_id);
 $location = get_the_author_meta('location', $author_id);

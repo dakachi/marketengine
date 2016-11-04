@@ -71,7 +71,7 @@ return array(
                 'description' => __("", "enginethemes"),
                 'slug'        => 'dispute-time-limit',
                 'type'        => 'number',
-                'class_name'  => 'positive',
+                'class_name'  => 'number_only',
                 'attributes'  => array(
                     'min'       => 0,
                 ),

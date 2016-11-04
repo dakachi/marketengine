@@ -1,5 +1,12 @@
 <?php
-
+/**
+ *  The Template for displaying details of a order.
+ *  This template can be overridden by copying it to yourtheme/marketengine/order-detail.php.
+ *
+ * @author      EngineThemes
+ * @package     MarketEngine/Templates
+ * @version     1.0.0
+ */
 //TODO: tam thoi lam the nay
 if( !current_user_can('edit_posts') ) {
     $login_url = me_get_auth_url();
