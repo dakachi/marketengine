@@ -26,13 +26,13 @@ get_header();
     <div class="me-container">
         <div class="marketengine-content-wrap">
 
-            <div class="marketengine-page-title">
-                <p><?php echo strtoupper($title); ?></p>
-            </div>
-
-            <?php //TODO: style lai cho nay ?>
-            <div class="">
-                <a href="<?php echo $url; ?>"><?php echo $title; ?></a><span><?php printf( ' > #%s', $order->id ); ?>
+            <div class="marketengine-page-title me-have-breadcrumb">
+                <h2><?php echo strtoupper($title); ?></h2>
+                <a href="<?php echo $url; ?>"><?php echo strtoupper($title); ?></a>
+                <ol class="me-breadcrumb">
+                    <li><a href="<?php echo $url; ?>"><?php echo $title; ?></a></li>
+                    <li><a href="#"><?php printf( '#%s', $order->id ); ?></a></li>
+                </ol>
             </div>
 
             <?php
