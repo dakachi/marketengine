@@ -241,7 +241,7 @@ function me_paginate_link($me_query = array()) {
         'add_args'  => false,
     );
 
-    echo paginate_links($args);
+    echo paginate_links($args) ? '<div>'.paginate_links($args).'</div>' : '';
 }
 
 function marketengine_sidebar() {
