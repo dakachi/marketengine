@@ -104,6 +104,10 @@ function me_complete_order($order_id) {
     if ($order_id) {
         $current   = date('Y-m-d H:i:s', current_time('timestamp'));
         update_post_meta($order_id, '_me_order_complete_time', $current);
+
+        $dispute_time_limit = me_option('dispute-time-limit', 1);
+        $closed_date = date('Y-m-d h:i:s', strtotime("+{$dispute_time_limit} days"));
+        update_post_meta($order_id, '_me_order_closed_time', $closed_date);
     }
 
     do_action('marketengine_complete_order', $order_id);
@@ -143,35 +147,43 @@ function me_close_order($order_id) {
 
     $post_status = get_post_status($order_id);
 
-    if ('me-close' == $post_status) {
+    if ('me-closed' == $post_status) {
         return;
     }
 
     $order_id = wp_update_post(array(
         'ID'          => $order_id,
-        'post_status' => 'me-close',
+        'post_status' => 'me-closed',
     ));
 
     do_action('marketengine_close_order', $order_id);
 
     return $order_id;
 }
+
 /**
  * Run cron job to collection expired order to close
  * @since 1.0
  */
 function me_cron_close_order() {
     global $wpdb;
-    $post_type = $this->post_type;
     $current   = date('Y-m-d H:i:s', current_time('timestamp'));
+
+    $dispute_time_limit = me_option('dispute-time-limit', 1);
+    $closed_date = date('Y-m-d h:i:s', strtotime("-{$dispute_time_limit} days"));
+
     $sql       = "SELECT DISTINCT ID FROM {$wpdb->posts} as p
                 INNER JOIN {$wpdb->postmeta} as mt ON mt.post_id = p.ID AND mt.meta_key = '_me_order_complete_time'
-                WHERE   (p.post_type = 'me-order')  
+                WHERE   (p.post_type = 'me_order')  
                     AND (p.post_status = 'me-complete')      
-                    AND (mt.meta_value < '{$current}')          
+                    AND (mt.meta_value < '{$closed_date}')  
                     AND (mt.meta_value != '' ) ";
 
-    $archived_ads = $wpdb->get_results($sql);
+    $on_closing_order = $wpdb->get_results($sql);
+    foreach ($on_closing_order as $key =>  $order) {
+        me_close_order( $order->ID );
+    }
+
 }
 add_action('marketengine_cron_execute', 'me_cron_close_order');
 
