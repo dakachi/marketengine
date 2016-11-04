@@ -40,13 +40,13 @@ $query = new ME_Message_Query($args);
 			</div>
 		<?php
 			foreach( $query->posts as $inquiry ) :
-			$listing = me_get_listing($inquiry->post_parent);
+				$listing = me_get_listing($inquiry->post_parent);
 		?>
 
 		<div class="me-table-row">
 			<div class="me-table-col me-order-listing">
 				<div class="me-order-listing-info">
-					<p><a href="<?php echo me_inquiry_permalink($inquiry->ID); ?>"><?php echo esc_html($listing->get_title()); ?></a></p>
+					<p><a href="<?php echo me_inquiry_permalink($inquiry->ID); ?>"><?php echo $listing ? esc_html($listing->get_title()) : __('Deleted listing'); ?></a></p>
 				</div>
 			</div>
 			<div class="me-table-col me-order-status me-read">read</div>
