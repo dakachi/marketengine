@@ -13,10 +13,10 @@ if(!empty($listing_cat)) {
 	foreach ($listing_cat as $key => $cat) {
 		if(!$cat->parent) {
 			$args['tax_query'][] = array(
-				'taxonomy' 	=> 'listing_category',
-				'field' 	=> 'slug',
-				'terms' 	=> $cat,
-			);
+					'taxonomy' 	=> 'listing_category',
+					'field' 	=> 'slug',
+					'terms' 	=> $cat,
+				);
 		}
 	}
 }
@@ -43,7 +43,7 @@ if(!empty($listings)) :
 				<div class="me-item-wrap">
 
 					<a href="#" class="me-item-img">
-						<img src="<?php echo $listing->get_listing_thumbnail(); ?>" alt="">
+						<img src="<?php echo $listing->get_listing_thumbnail(); ?>" alt="<?php $listing->get_title(); ?>">
 						<span><?php _e('VIEW DETAILS', 'enginethemes'); ?></span>
 					</a>
 

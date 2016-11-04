@@ -487,7 +487,7 @@ class ME_Listing_Handle {
      * @author Dakachi
      */
     public static function update_post_rating($comment_id, $comment) {
-        global $wpdb;
+        
         $post_id = $comment->comment_post_ID;
         $post    = get_post($post_id);
         if ($post->post_type == 'listing') {
@@ -498,6 +498,7 @@ class ME_Listing_Handle {
     }
 
     public static function update_post_rating_score($post_id) {
+        global $wpdb;
         $sql = "SELECT AVG(M.meta_value)  as rate_point, COUNT(C.comment_ID) as count
                     FROM    $wpdb->comments as C
                         JOIN $wpdb->commentmeta as M
@@ -513,6 +514,7 @@ class ME_Listing_Handle {
     }
 
     public static function update_post_review_count($post_id) {
+        global $wpdb;
         $sql = "SELECT COUNT(C.comment_ID) as count, M.meta_value
                     FROM    $wpdb->comments as C
                         JOIN $wpdb->commentmeta as M

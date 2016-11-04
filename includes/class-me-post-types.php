@@ -212,7 +212,7 @@ class ME_Post_Types {
         ));
 
         register_post_status('me-pending', array(
-            'label'                     => _x('Pending', 'me-order'),
+            'label'                     => _x('Pending', 'me_order'),
             'public'                    => false,
             'exclude_from_search'       => false,
             'private'                   => true,
@@ -222,7 +222,7 @@ class ME_Post_Types {
         ));
 
         register_post_status('me-active', array(
-            'label'                     => _x('Finished', 'me-order'),
+            'label'                     => _x('Finished', 'me_order'),
             'public'                    => false,
             'exclude_from_search'       => false,
             'private'                   => true,
@@ -232,7 +232,7 @@ class ME_Post_Types {
         ));
 
         register_post_status('me-complete', array(
-            'label'                     => _x('Completed', 'me-order'),
+            'label'                     => _x('Completed', 'me_order'),
             'public'                    => true,
             'exclude_from_search'       => false,
             'private'                   => true,
@@ -242,33 +242,33 @@ class ME_Post_Types {
         ));
 
         register_post_status('me-disputed', array(
-            'label'                     => _x('Disputed', 'me-order'),
+            'label'                     => _x('Disputed', 'me_order'),
             'public'                    => true,
             'exclude_from_search'       => false,
             'private'                   => true,
             'show_in_admin_all_list'    => true,
             'show_in_admin_status_list' => true,
-            'label_count'               => _n_noop('Completed <span class="count">(%s)</span>', 'Disputed <span class="count">(%s)</span>'),
+            'label_count'               => _n_noop('Disputed <span class="count">(%s)</span>', 'Disputed <span class="count">(%s)</span>'),
         ));
 
         register_post_status('me-closed', array(
-            'label'                     => _x('Closed', 'me-order'),
+            'label'                     => _x('Closed', 'me_order'),
             'public'                    => true,
             'exclude_from_search'       => false,
             'private'                   => true,
             'show_in_admin_all_list'    => true,
             'show_in_admin_status_list' => true,
-            'label_count'               => _n_noop('Completed <span class="count">(%s)</span>', 'Closed <span class="count">(%s)</span>'),
+            'label_count'               => _n_noop('Closed <span class="count">(%s)</span>', 'Closed <span class="count">(%s)</span>'),
         ));
 
         register_post_status('me-resolved', array(
-            'label'                     => _x('Resolved', 'me-order'),
+            'label'                     => _x('Resolved', 'me_order'),
             'public'                    => true,
             'exclude_from_search'       => false,
             'private'                   => true,
             'show_in_admin_all_list'    => true,
             'show_in_admin_status_list' => true,
-            'label_count'               => _n_noop('Completed <span class="count">(%s)</span>', 'Resolved <span class="count">(%s)</span>'),
+            'label_count'               => _n_noop('Resolved <span class="count">(%s)</span>', 'Resolved <span class="count">(%s)</span>'),
         ));
     }
 }
