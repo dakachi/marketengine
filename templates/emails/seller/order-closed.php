@@ -5,24 +5,23 @@ if (!defined('ABSPATH')) {
 }
 /**
  * This is an email template
- * Email content send to seller when buyer order a listing successfull
+ * Email content send to seller when the order closed
  * 
  * You can modify the email by copy it to {your theme}/templates/emails
  * @since 1.0
  */
 ?>
 <p><?php printf(__("Dear %s", "enginethemes"), $display_name); ?>,</p>
-<p><?php printf(__("You've got a new order for the listing %s on %s", "enginethemes"), $listing_link, get_bloginfo('blogname') ); ?></p>
-<p><?php _e("Here are the order details:", "enginethemes"); ?></p>
+<p><?php printf(__("Your order for the listing  %s on %s has been closed.", "enginethemes"), $listing_link, get_bloginfo('blogname') ); ?></p>
+<p><?php _e("Order details:", "enginethemes"); ?></p>
 <ol>
+	<li><?php printf(__("Listing: %s", "enginethemes"), $listing_link) ?></li>
 	<li><?php printf(__("Buyer: %s", "enginethemes"), $buyer_name) ?></li>
-	<li><?php printf(__("Price: %s", "enginethemes"), $listing_price) ?></li>
-	<li><?php printf(__("Unit: %s", "enginethemes"), $unit) ?></li>
-	<li><?php printf(__("Total: %s", "enginethemes"), $total) ?></li>
-	<li><?php printf(__("Earnings (commission deducted): %s", "enginethemes"), $earning) ?></li>
+	<li><?php printf(__("Date of order: %s", "enginethemes"), $order_date) ?></li>
+	<li><?php printf(__("Total earnings (commission deducted): %s", "enginethemes"), $earning) ?></li>
 </ol>
 <p>
-<?php printf(__("For this order, %s commission fee has been deducted from your total earnings of %s. <br/>View your order details here: %s.", "enginethemes"), $commission, $total, $order_link) ?>
+<?php printf(__("View your order details here: %s.", "enginethemes"), $order_link); ?>
 </p>
 <p><?php _e("Sincerely", "enginethemes"); ?>,
 <br><?php echo get_bloginfo('blogname'); ?></p>

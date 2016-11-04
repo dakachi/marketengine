@@ -214,3 +214,79 @@ function me_complete_order_email($order_id) {
     wp_mail(get_option('admin_email'), $subject, $admin_message);
 }
 add_action('marketengine_complete_order', 'me_complete_order_email');
+
+/**
+ * Send email to buyer and seller when close order
+ */
+function me_close_order_email($order_id) {
+    if (!$order_id) {
+        return false;
+    }
+
+    $order      = new ME_Order($order_id);
+    $commission = 0;
+
+    $receiver_item  = me_get_order_items($order_id, 'receiver_item');
+    $commision_item = me_get_order_items($order_id, 'commission_item');
+
+    if (empty($receiver_item)) {
+        return false;
+    }
+
+    if (!empty($commision_item)) {
+        $commission = me_get_order_item_meta($commision_item[0]->order_item_id, '_amount', true);
+    }
+
+    $user_name = $receiver_item[0]->order_item_name;
+
+    $seller = get_user_by('login', $user_name);
+    if (!$seller) {
+        return false;
+    }
+
+    $listing_item  = me_get_order_items($order_id, 'listing_item');
+    $listing_id    = me_get_order_item_meta($listing_item[0]->order_item_id, '_listing_id', true);
+    $listing_price = me_get_order_item_meta($listing_item[0]->order_item_id, '_listing_price', true);
+
+    $subject  = sprintf(__("You have a new order on %s.", "enginethemes"), get_bloginfo('blogname'));
+    $currency = $order->get_currency();
+    $total    = $order->get_total();
+
+    $order_details = array(
+        'listing_link'  => '<a href="' . get_permalink($listing_id) . '" >' . get_the_title($listing_id) . '</a>',
+        'listing_price' => me_price_format($listing_price, $currency),
+        'unit'          => me_get_order_item_meta($listing_item[0]->order_item_id, '_qty', true),
+        'total'         => me_price_format($total, $currency),
+        'commission'    => me_price_format($commission, $currency),
+        'earning'       => me_price_format(($total - $commission), $currency),
+        'order_link'    => '<a href="' . $order->get_order_detail_url() . '" >' . $order->ID . '</a>',
+        'currency'      => $currency,
+        'order_date' => date_i18n( get_option('date_format'), strtotime($order->post_date) )
+    );
+
+    $subject = sprintf(__("Your order on %s has been closed", "enginethemes"), get_bloginfo('blogname'));
+    ob_start();
+    me_get_template('emails/seller/order-closed',
+        array_merge(array(
+            'display_name' => get_the_author_meta('display_name', $seller->ID),
+            'buyer_name'   => get_the_author_meta('display_name', $order->post_author),
+        ), $order_details)
+    );
+    $seller_message = ob_get_clean();
+    wp_mail($seller->user_email, $subject, $seller_message);
+
+    $subject = sprintf(__("Your transaction on %s has been closed", "enginethemes"), get_bloginfo('blogname'));
+    $buyer   = get_userdata($order->post_author);
+    ob_start();
+    me_get_template('emails/buyer/order-closed',
+        array_merge(array(
+            'display_name' => get_the_author_meta('display_name', $order->post_author),
+            'seller_name' => get_the_author_meta('display_name', $seller->ID),
+        ), $order_details)
+    );
+    $buyer_message = ob_get_clean();
+
+    wp_mail($buyer->user_email, $subject, $buyer_message);
+
+}
+add_action('marketengine_close_order', 'me_close_order_email');
