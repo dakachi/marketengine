@@ -46,13 +46,13 @@ class ME_Listing_Handle {
             }
 
             foreach ($listing_data['listing_gallery'] as $key => $value) {
-                $listing_data['listing_gallery'][$key] = esc_sql( $value );
+                $listing_data['listing_gallery'][$key] = esc_sql($value);
             }
         }
 
         if (isset($listing_data['listing_image'])) {
             // process upload featured image
-            $listing_data['meta_input']['_thumbnail_id'] = absint(esc_sql( $listing_data['listing_image'] ));
+            $listing_data['meta_input']['_thumbnail_id'] = absint(esc_sql($listing_data['listing_image']));
         } else {
             $listing_data['meta_input']['_thumbnail_id'] = '';
         }
@@ -89,7 +89,7 @@ class ME_Listing_Handle {
         if (isset($listing_data['listing_gallery'])) {
             //process upload image gallery
             update_post_meta($post, '_me_listing_gallery', $listing_data['listing_gallery']);
-        }else {
+        } else {
             update_post_meta($post, '_me_listing_gallery', array());
         }
         return $post;
@@ -108,10 +108,10 @@ class ME_Listing_Handle {
      * @return WP_Error| WP_Post
      */
     public static function update($listing_data, $attachment = array()) {
-        $current_user_id = get_current_user_id();
+        $current_user_id    = get_current_user_id();
         $listing_data['ID'] = $listing_data['edit'];
 
-        $listing = me_get_listing($listing_data['ID']);
+        $listing                     = me_get_listing($listing_data['ID']);
         $listing_data['post_author'] = $listing->post_author;
 
         // if($listing->post_author != $current_user_id) {
@@ -141,7 +141,7 @@ class ME_Listing_Handle {
         $listing_data['tax_input']['listing_category'] = array($listing_data['parent_cat'], $listing_data['sub_cat']);
         if (!empty($listing_data['listing_tag'])) {
             $listing_data['tax_input']['listing_tag'] = $listing_data['listing_tag'];
-        }else {
+        } else {
             $listing_data['tax_input']['listing_tag'] = '';
         }
         // set listing status
@@ -581,11 +581,9 @@ class ME_Listing_Handle {
         if (!is_wp_error($comment_id)) {
             update_comment_meta($comment_id, '_me_rating_score', $data['score']);
 
-            $comment = get_comment( $comment_id );
-            do_action('marketengine_insert_review', $comment_id,  $comment);
+            $comment = get_comment($comment_id);
+            do_action('marketengine_insert_review', $comment_id, $comment);
         }
-
-
 
         return $comment_id;
     }
@@ -599,10 +597,16 @@ class ME_Listing_Handle {
     public static function update_post_rating($comment_id, $comment) {
         global $wpdb;
         $post_id = $comment->comment_post_ID;
-        $post = get_post($post_id);
+        $post    = get_post($post_id);
         if ($post->post_type == 'listing') {
             // update post rating score
-            $sql = "SELECT AVG(M.meta_value)  as rate_point, COUNT(C.comment_ID) as count
+            self::update_post_rating_score($post_id);
+            self::update_post_review_count($post_id);
+        }
+    }
+
+    public static function update_post_rating_score($post_id) {
+        $sql = "SELECT AVG(M.meta_value)  as rate_point, COUNT(C.comment_ID) as count
                     FROM    $wpdb->comments as C
                         JOIN $wpdb->commentmeta as M
                                 on C.comment_ID = M.comment_id
@@ -610,12 +614,14 @@ class ME_Listing_Handle {
                             AND C.comment_post_ID = $post_id
                             AND C.comment_approved = 1";
 
-            $results = $wpdb->get_results($sql);
-            // update post rating score
-            update_post_meta($post_id, '_rating_score', round($results[0]->rate_point, 1));
-            update_post_meta($post_id, '_me_reviews_count', $results[0]->count);
+        $results = $wpdb->get_results($sql);
+        // update post rating score
+        update_post_meta($post_id, '_rating_score', round($results[0]->rate_point, 1));
+        update_post_meta($post_id, '_me_reviews_count', $results[0]->count);
+    }
 
-            $sql = "SELECT COUNT(C.comment_ID) as count, M.meta_value
+    public static function update_post_review_count($post_id) {
+        $sql = "SELECT COUNT(C.comment_ID) as count, M.meta_value
                     FROM    $wpdb->comments as C
                         JOIN $wpdb->commentmeta as M
                                 on C.comment_ID = M.comment_id
@@ -624,16 +630,12 @@ class ME_Listing_Handle {
                             AND C.comment_approved = 1
                             GROUP BY M.meta_value";
 
-            $results = $wpdb->get_results($sql);
-            $count = array();
-            foreach ($results as $key => $value) {
-                $count[$value->meta_value . '_star'] = $value->count;
-            }
-            echo "<pre>";
-            print_r($count);
-            echo "</pre>";
-            update_post_meta($post_id, '_me_review_count_details', $count);
+        $results = $wpdb->get_results($sql);
+        $count   = array();
+        foreach ($results as $key => $value) {
+            $count[$value->meta_value . '_star'] = $value->count;
         }
+        update_post_meta($post_id, '_me_review_count_details', $count);
     }
 
     /**
@@ -643,7 +645,7 @@ class ME_Listing_Handle {
     public static function update_order_count($listing_id) {
         global $wpdb;
 
-        $listing = me_get_listing($listing_id);
+        $listing      = me_get_listing($listing_id);
         $listing_name = $listing->get_title();
 
         $sql = "SELECT COUNT(OI.order_id) as count, O.post_status as status
@@ -655,9 +657,9 @@ class ME_Listing_Handle {
                 GROUP BY O.post_status";
 
         $results = $wpdb->get_results($sql);
-        $results = me_filter_order_count_result( $results );
+        $results = me_filter_order_count_result($results);
 
-        if(isset($results['me-complete'])) {
+        if (isset($results['me-complete'])) {
             update_post_meta($listing_id, '_me_order_count', $results['me-complete']);
         }
     }
@@ -676,4 +678,3 @@ class ME_Listing_Handle {
         update_post_meta($listing_id, '_me_inquiry_count', $results[0]->count);
     }
 }
-

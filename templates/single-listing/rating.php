@@ -44,10 +44,7 @@ $review_count_details = $listing->get_review_count_details();
 							<?php for ($i=5; $i > 0 ; $i--) : ?>
 
 							<?php 
-							
-							// echo $review_count_details[$i. '_star'];
-							// echo $review_count;
-							$percent = round(($review_count_details[$i. '_star']/$review_count)*100);
+								$percent = round(($review_count_details[$i. '_star']/$review_count)*100);
 							?>
 
 							<div class="me-rating-author">
