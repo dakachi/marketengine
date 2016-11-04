@@ -45,7 +45,8 @@ class ME_Shortcodes_Auth {
         return self::me_login_form();
     }
     public static function me_user_profile() {
-        if(me_is_activated_user()) {
+        if(!me_is_activated_user()) {
+            me_empty_notices();
             me_add_notice(__("<p>Thank you! Please <span>check your mailbox</span> to activate your account.</p>", "enginethemes"));
         }
         ob_start();
