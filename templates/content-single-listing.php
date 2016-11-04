@@ -1,4 +1,13 @@
 <?php
+/**
+ * 	The Template for displaying content of listing detail.
+ * 	This template can be overridden by copying it to yourtheme/marketengine/content-single-listing.php.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ * @version     1.0.0
+ */
+
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
