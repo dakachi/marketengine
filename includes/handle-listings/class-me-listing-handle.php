@@ -50,11 +50,15 @@ class ME_Listing_Handle {
             }
         }
 
-        if (isset($listing_data['listing_image'])) {
+        if (isset($listing_data['listing_image']) && !empty($listing_data['listing_image'])) {
             // process upload featured image
             $listing_data['meta_input']['_thumbnail_id'] = absint(esc_sql($listing_data['listing_image']));
         } else {
-            $listing_data['meta_input']['_thumbnail_id'] = '';
+            if(!empty($listing_data['listing_gallery'])) {
+                $listing_data['meta_input']['_thumbnail_id'] = $listing_data['listing_gallery'][0];
+            }else {
+                $listing_data['meta_input']['_thumbnail_id'] = '';
+            }
         }
 
         if (isset($listing_data['ID'])) {
