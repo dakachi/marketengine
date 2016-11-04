@@ -13,7 +13,7 @@ $galleries = $listing->get_galleries();
 <div class="me-images">
 	<div class="me-image-large">
 	<?php if(!empty($galleries)) : ?>
-		<a class="me-large-fancybox" >
+		<a class="me-large-fancybox">
 			<img src="<?php echo wp_get_attachment_image_url( $galleries[0], 'medium' ); ?>" alt="<?php the_title(); ?>">
 		</a>
 	<?php else : ?>
