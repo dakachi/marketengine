@@ -13,7 +13,10 @@ $listing_gallery = !empty($_POST['listing_gallery']) ? $_POST['listing_gallery']
     <?php do_action('marketengine_before_post_listing_gallery_form');?>
 
     <div class="marketengine-upload-field">
-        <label class="me-field-title" for="upload_company_gallery"><?php _e('Gallery', 'enginethemes'); ?></label>
+        <label class="me-field-title" for="upload_company_gallery">
+            <?php _e('Gallery', 'enginethemes'); ?>
+            <span><?php _e("(optional, max 5 files)", "enginethemes"); ?></span>
+        </label>
         <?php
 
         ob_start();
