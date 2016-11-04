@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
 }
 
 if( !isset($_POST['referer']) ) {
-	$referer = $_SERVER['HTTP_REFERER'];
+	$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
 } else {
 	$referer = $_POST['referer'];
 }
