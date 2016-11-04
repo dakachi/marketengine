@@ -169,14 +169,11 @@ function me_cron_close_order() {
     global $wpdb;
     $current = date('Y-m-d H:i:s', current_time('timestamp'));
 
-    $dispute_time_limit = me_option('dispute-time-limit', 1);
-    $closed_date        = date('Y-m-d h:i:s', strtotime("-{$dispute_time_limit} days"));
-
     $sql = "SELECT DISTINCT ID FROM {$wpdb->posts} as p
-                INNER JOIN {$wpdb->postmeta} as mt ON mt.post_id = p.ID AND mt.meta_key = '_me_order_complete_time'
+                INNER JOIN {$wpdb->postmeta} as mt ON mt.post_id = p.ID AND mt.meta_key = '_me_order_closed_time'
                 WHERE   (p.post_type = 'me_order')
                     AND (p.post_status = 'me-complete')
-                    AND (mt.meta_value < '{$closed_date}')
+                    AND (mt.meta_value < '{$current}')
                     AND (mt.meta_value != '' ) ";
 
     $on_closing_order = $wpdb->get_results($sql);
