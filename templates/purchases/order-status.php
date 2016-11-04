@@ -7,7 +7,7 @@
 				$status_info = me_get_order_status_info( $order_status, 'text' );
 			?>
 
-			<p class=""><i class="icon-me-info-circle"></i><?php echo $status_info; ?></p>
+			<p class="me-orderstatus-notifi"><i class="icon-me-info-circle"></i><?php echo $status_info; ?></p>
 		</div>
 		<?php
 			$process_index = me_get_order_status_info( $order_status );
