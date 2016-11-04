@@ -10,14 +10,9 @@
 <div class="me-transaction-dispute">
 	<?php
 		$time_limit = $order->get_dispute_time_limit();
-		if($time_limit == 1) {
-			$time_limit_text = $time_limit . ' day';
-		} else {
-			$time_limit_text = $time_limit . ' days';
-		}
 	?>
 	<?php /*
-	<p><?php echo __('You have '. $time_limit_text.' to dispute this order.', 'enginethemes'); ?></p>
+	<p><?php printf( __('You have %s to dispute this order.', 'enginethemes'), sprintf(_n('%d day', '%d days', $time_limit, 'enginethemes'), $time_limit) ); ?></p>
 	<a href="<?php echo me_get_page_id('dispute'); ?>" class=""><?php _e('DISPUTE', 'enginethemes'); ?></a>
 	*/ ?>
 </div>

@@ -10,6 +10,9 @@ $order_id = get_the_ID();
 $order = new ME_Order($order_id);
 $buyer = $order->post_author == get_current_user_id();
 
+$title = $buyer ? __('My Transactions') : __('My Orders');
+$url = $buyer ? me_get_auth_url('purchases') : me_get_auth_url('orders');
+
 get_header();
 ?>
 <div id="marketengine-page">
@@ -17,21 +20,12 @@ get_header();
         <div class="marketengine-content-wrap">
 
             <div class="marketengine-page-title">
-            <?php if($buyer) : ?>
-                <p><?php _e('MY TRANSACTIONS'); ?></p>
-            <?php else : ?>
-                <p><?php _e('MY ORDERS'); ?></p>
-            <?php endif; ?>
+                <p><?php echo strtoupper($title); ?></p>
             </div>
 
-            <div class="">
             <?php //TODO: style lai cho nay ?>
-            <?php if( $buyer ) : ?>
-                <a href="<?php echo me_get_auth_url('purchases'); ?>"><?php _e('My Transactions'); ?></a>
-            <?php else: ?>
-                <a href="<?php echo me_get_auth_url('orders'); ?>"><?php _e('My Orders'); ?></a>
-            <?php endif; ?>
-                <span><?php echo ' > #' . $order->id; ?></span>
+            <div class="">
+                <a href="<?php echo $url; ?>"><?php echo $title; ?></a><span><?php printf( ' > #%s', $order->id ); ?>
             </div>
 
             <?php

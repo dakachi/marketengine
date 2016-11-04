@@ -1,15 +1,4 @@
-<style type="text/css">
-    .single-image .uploading {
-        position: absolute !important;
-        border : none !important;
-        z-index: 2;
-        opacity: 0.9;
-    }
-    .me-upload-wrapper .avatar {
-        border-radius:  0;
-    }
-</style>
-<div id="<?php echo esc_attr($id); ?>" class="me-upload-wrapper <?php if(!$multi) { echo 'single-image';} ?>">
+<div id="<?php echo esc_attr($id); ?>" class="me-upload-wrapper <?php if(!$multi) { echo 'me-single-image';} ?>">
     <div class="upload_preview_container">
         <ul class="marketengine-gallery-img">
             <?php
