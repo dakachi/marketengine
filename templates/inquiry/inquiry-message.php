@@ -50,7 +50,9 @@
 
 							<?php else: ?>
 
-								<p><?php _e('This listing was deleted! You cannot send message!'); ?></p>
+								<p style="padding: 20px;font-size: 14px; line-height: 22px;">
+									<?php _e('This listing was deleted! You cannot send message!'); ?>
+								</p>
 
 							<?php endif; ?>
 							</div>
