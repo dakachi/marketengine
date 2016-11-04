@@ -245,7 +245,7 @@ jQuery(document).ready(function($) {
 	// me_snap_column < 1140px
 	// me_snap_column < 870px
 	// me_snap_column < 580px
-	// marketengine_snap_column();
-	// window.addEventListener("resize", marketengine_snap_column);
+	marketengine_snap_column();
+	window.addEventListener("resize", marketengine_snap_column);
 });
 
