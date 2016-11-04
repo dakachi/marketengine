@@ -138,12 +138,17 @@ _.templateSettings = {
             view.option.set('value', $target.val());
             view.option.save('', '', {
                 success: function(result, status, jqXHR) {
+                    console.log(result);
+                    if( $target.hasClass('no-zero') && $target.val() == 0) {
+                        status.success = false;
+                    }
+
                     if (status.success) {
-                        // do something
+                        $target.next().remove();
+                        $target.parent().append('<span class="me-success-icon"></span>');
                     } else {
-                        if (typeof status.msg != 'undefined') {
-                            alert(status.msg);
-                        }
+                        $target.next().remove();
+                        $target.parent().append('<span class="me-warning-icon"></span>');
                     }
                 },
             });
@@ -158,9 +163,9 @@ _.templateSettings = {
                     if (status.success) {
                         // do something
                     } else {
-                        if (typeof status.msg != 'undefined') {
-                            alert(status.msg);
-                        }
+                        // if (typeof status.msg != 'undefined') {
+                        //     alert(status.msg);
+                        // }
                     }
                 },
             });
@@ -168,11 +173,17 @@ _.templateSettings = {
         preventNegativeNumber: function(e) {
             var $target = $(e.currentTarget),
                 view = this,
-                allowedKey = [46, 8, 9, 27, 13, 110, 190];
+                allowedKey = [46, 8, 9, 27, 13, 110, 190],
+                reg = /^0+/gi;
             if($target.hasClass('no-zero')) {
                 allowedKey = [46, 8, 9, 27, 13];
-                $target.val($target.val().replace(/^0/, ''));
             }
+
+            // delete leading zero
+            if ($target.val().match(reg)) {
+                $target.val($target.val().replace(reg, ''));
+            }
+
             // Allow: backspace, delete, tab, escape, enter and .
             if ($.inArray(e.keyCode, allowedKey) !== -1 ||
                 // Allow: Ctrl+A
