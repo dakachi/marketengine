@@ -68,16 +68,7 @@ class ME_Inquiry_Handle {
                 return $inquiry_id;
             }
         }
-
-        // $message_data = array(
-        //     'listing_id' => $listing_id,
-        //     'content'    => $content,
-        //     'inquiry_id' => $inquiry_id,
-        // );
-        // $message = self::insert_message($message_data);
-        // if (is_wp_error($message)) {
-        //     return $message;
-        // }
+        
         return $inquiry_id;
     }
 
