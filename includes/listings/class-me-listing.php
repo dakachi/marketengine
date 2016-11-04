@@ -397,7 +397,7 @@ class ME_Listing {
             $gallery = array();
         }
 
-        if ($thumbnail_id) {
+        if ($thumbnail_id && !in_array($thumbnail_id, $gallery)) {
             array_unshift($gallery, $thumbnail_id);
         }
 
