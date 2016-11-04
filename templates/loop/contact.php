@@ -6,7 +6,12 @@
 	<form method="post">
 		<?php do_action('marketengine_single_listing_send_inquiry_form_start'); ?>
 		<div class="me-contact">
+
+			<?php if(me_is_activated_user()) : ?>
 			<input type="submit" class="me-buy-now-btn" value="<?php _e("CONTACT NOW", "enginethemes"); ?>">
+			<?php else : ?>
+			<a href="<?php the_permalink(); ?>" class="me-buy-now-btn"><?php _e("CONTACT NOW", "enginethemes"); ?></a>
+			<?php endif; ?>
 		</div>
 
 		<?php wp_nonce_field('me-send-inquiry'); ?>
