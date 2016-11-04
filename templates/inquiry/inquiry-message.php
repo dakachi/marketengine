@@ -46,13 +46,13 @@
 						</div>
 					</div>
 					<div class="me-col-md-3 me-col-sm-4 ">
-					<?php if($messages[0]->receiver == $user_id) : ?>
+					<?php if($inquiry->receiver == $user_id) : ?>
 
 						<?php me_get_template('inquiry/contact-list', array('listing' => $listing)); ?>
 
 					<?php else : ?>
 
-						<?php me_get_template('user-info', array('author_id' => $messages[0]->receiver)); ?>
+						<?php me_get_template('user-info', array('author_id' => $inquiry->receiver)); ?>
 
 					<?php endif; ?>
 					</div>
