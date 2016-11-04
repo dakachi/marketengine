@@ -24,9 +24,7 @@ class ME_Listing_Handle_Form extends ME_Form {
         add_action('wp_loaded', array(__CLASS__, 'process_review_listing'));
         add_action('transition_comment_status', array(__CLASS__, 'approve_review_callback'), 10, 3);
         add_action('marketengine_insert_review', array(__CLASS__,'insert_review_callback'), 10, 2);
-
-        // add_action('marketengine_complete_order', array(__CLASS__,'update_order_count'));
-
+        
 
         // ajax action
         add_action('wp_ajax_me-load-sub-category', array(__CLASS__, 'load_sub_category'));

@@ -16,7 +16,7 @@
                 data: {
                     action: action,
                     page: page,
-                    post_id: 308
+                    post_id: options.post_id
                 },
                 beforeSend: function() {
                     // loading
@@ -40,5 +40,7 @@
             });
         });
     };
-    $('.comment-pagination #read-more-review').me_load_review();
+    $('.comment-pagination #read-more-review').me_load_review({
+        post_id : $('#read-more-review').attr('data-post-id')
+    });
 })(jQuery);
