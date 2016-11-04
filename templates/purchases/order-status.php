@@ -7,7 +7,7 @@
 				$status_info = me_get_order_status_info( $order_status, 'text' );
 			?>
 
-			<p class=""><i class="icon-me-status-info"></i><?php echo $status_info; ?></p>
+			<p class=""><i class="icon-me-info-circle"></i><?php echo $status_info; ?></p>
 		</div>
 		<?php
 			$process_index = me_get_order_status_info( $order_status );
@@ -16,13 +16,15 @@
 			<div class="me-line-step-order <?php echo $process_index >= 1 ? 'active' : '' ?>">
 				<span><?php _e('Check payment', 'enginethemes'); ?></span>
 			</div>
-			<div class="me-line-step-order <?php echo $process_index >= 2 ? 'active' : '' ?>">
+			<?php /*<div class="me-line-step-order <?php echo $process_index >= 2 ? 'active' : '' ?>">
 				<span><?php _e('Active order', 'enginethemes'); ?></span>
-			</div>
-			<div class="me-line-step-order <?php echo $process_index >= 3 ? 'active' : '' ?>">
+				</div>
+			*/ ?>
+			
+			<div class="me-line-step-order <?php echo $process_index >= 2 ? 'active' : '' ?>">
 				<span><?php _e('Mark completed', 'enginethemes'); ?></span>
 			</div>
-			<div class="me-line-step-order <?php echo $process_index >= 4 ? 'active' : '' ?>">
+			<div class="me-line-step-order <?php echo $process_index >= 3 ? 'active' : '' ?>">
 				<span><?php _e('Closed order', 'enginethemes'); ?></span>
 			</div>
 		</div>
