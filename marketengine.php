@@ -30,7 +30,7 @@ if (!class_exists('MarketEngine')):
          * @var version
          * @since 1.0
          */
-        public $version = '1.0';
+        public $version = '0.9';
         /**
          * The object of current user data
          *
