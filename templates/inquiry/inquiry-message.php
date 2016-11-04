@@ -17,7 +17,7 @@
 					<div class="me-col-md-9 me-col-sm-8" id="upload_message_file">
 						<div class="me-contact-messages-wrap inquiry-message-wrapper">
 							<div class="me-contact-message-user">
-								<h2><?php echo get_the_author_meta( 'display_name', $messages[0]->receiver ); ?></h2>
+								<h2><?php echo get_the_author_meta( 'display_name', $inquiry->receiver ); ?></h2>
 							</div>
 							<div id="messages-container" class="me-contact-messages" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
 								<?php if($message_query->max_num_pages > 1) { me_get_template('inquiry/load-message-button'); } ?>
