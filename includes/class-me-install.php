@@ -155,14 +155,16 @@ class ME_Install {
 
         CREATE TABLE {$wpdb->prefix}marketengine_message_itemmeta (
                     meta_id bigint(20) NOT NULL auto_increment,
-                    marketengine_message_id bigint(20) NOT NULL,
+                    marketengine_message_item_id bigint(20) NOT NULL,
                     meta_key varchar(255) NULL,
                     meta_value longtext NULL,
                     PRIMARY KEY  (meta_id),
-                    KEY marketengine_message_id (marketengine_message_id),
+                    KEY marketengine_message_item_id (marketengine_message_item_id),
                     KEY meta_key (meta_key)
                 ) $collate;
         ";
+        // ALTER TABLE {$wpdb->prefix}marketengine_message_itemmeta RENAME COLUMN marketengine_message_id TO marketengine_message_item_id;
+        // ALTER TABLE {$wpdb->prefix}marketengine_message_itemmeta DROP COLUMN marketengine_message_id;
 
         dbDelta($schemas);
     }

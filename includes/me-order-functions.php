@@ -105,7 +105,7 @@ function me_complete_order($order_id) {
         $current = date('Y-m-d H:i:s', current_time('timestamp'));
         update_post_meta($order_id, '_me_order_complete_time', $current);
 
-        $dispute_time_limit = me_option('dispute-time-limit', 1);
+        $dispute_time_limit = me_get_dispute_time_limit();
         $closed_date        = date('Y-m-d h:i:s', strtotime("+{$dispute_time_limit} days"));
         update_post_meta($order_id, '_me_order_closed_time', $closed_date);
     }
@@ -496,6 +496,17 @@ function me_update_order_item_meta($order_item_id, $meta_key, $meta_value, $prev
  */
 function me_delete_order_item_meta($order_item_id, $meta_key, $meta_value = '') {
     return delete_metadata('marketengine_order_item', $order_item_id, $meta_key, $meta_value);
+}
+
+/**
+ * Returns dispute time limit
+ *
+ * @since 1.0
+ *
+ * @return int dispute time limit or 3
+ */
+function me_get_dispute_time_limit() {
+    return absint( me_option( 'dispute-time-limit', 3 ) );
 }
 
 function me_order_table_header($type) {

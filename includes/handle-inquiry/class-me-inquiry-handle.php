@@ -114,8 +114,8 @@ class ME_Inquiry_Handle {
                 'post_parent'  => $message_data['inquiry_id'],
             );
 
-            $message_id = me_insert_message($message_data, true);
-            return $message_id;
+            return  me_insert_message($message_data, true);
+            
         } else {
             return new WP_Error('invalid_inquiry', __("Invalid inquiry.", "enginethemes"));
         }

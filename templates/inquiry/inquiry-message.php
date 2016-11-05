@@ -1,6 +1,9 @@
 <?php if($inquiry) :  ?>
 
 <?php
+	
+	do_action('marketengine_before_inquiry_form', $inquiry);
+
 	$user_id = get_current_user_id();
 	$listing = me_get_listing($inquiry->post_parent);
 	$message_query = new ME_Message_Query(array('post_type' => 'message', 'post_parent' => $inquiry->ID, 'showposts' => 12));
@@ -93,4 +96,9 @@
 	        });
 	    })(jQuery);
 	</script>
+
+<?php 
+do_action('marketengine_after_inquiry_form', $inquiry);
+ ?>
+
 <?php endif; ?>

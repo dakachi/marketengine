@@ -146,8 +146,10 @@ function me_insert_message($message_arr, $wp_error = false) {
 
     // These variables are needed by compact() later.
     $post_content_filtered = $message_arr['post_content_filtered'];
-    $sender                = $user_id;
-    $receiver              = $message_arr['receiver'];
+    if(!$update) {
+        $sender                = $user_id;
+        $receiver              = $message_arr['receiver'];    
+    }    
 
     if (isset($message_arr['post_parent'])) {
         $post_parent = (int) $message_arr['post_parent'];
@@ -507,7 +509,7 @@ function me_get_message_field($field, $message, $context = 'display') {
  *                           Default false.
  * @return mixed Will be an array if $single is false. Will be value of meta data field if $single is true.
  */
-function me_get_message_meta($mesage_id, $key = '', $single = false) {
+function me_get_message_meta($message_id, $key = '', $single = false) {
     return get_metadata('marketengine_message_item', $message_id, $key, $single);
 }
 
@@ -524,7 +526,7 @@ function me_get_message_meta($mesage_id, $key = '', $single = false) {
  * @return int|false Meta ID on success, false on failure.
  */
 function me_add_message_meta($message_id, $meta_key, $meta_value, $unique = true) {
-    return add_metadata('marketengine_message_item', $mesage_id, $meta_key, $meta_value, $unique);
+    return add_metadata('marketengine_message_item', $message_id, $meta_key, $meta_value, $unique);
 }
 
 /**
@@ -539,7 +541,7 @@ function me_add_message_meta($message_id, $meta_key, $meta_value, $unique = true
  *                           Default empty.
  * @return int|false Meta ID if the key didn't exist, true on successful update, false on failure.
  */
-function me_update_message_meta($mesage_id, $meta_key, $meta_value, $prev_value = '') {
+function me_update_message_meta($message_id, $meta_key, $meta_value, $prev_value = '') {
     return update_metadata('marketengine_message_item', $message_id, $meta_key, $meta_value, $prev_value);
 }
 
@@ -554,7 +556,7 @@ function me_update_message_meta($mesage_id, $meta_key, $meta_value, $prev_value 
  *
  * @return bool True on success, false on failure.
  */
-function me_delete_message_meta($mesage_id, $meta_key, $meta_value = '') {
+function me_delete_message_meta($message_id, $meta_key, $meta_value = '') {
     return delete_metadata('marketengine_message_item', $message_id, $meta_key, $meta_value);
 }
 
