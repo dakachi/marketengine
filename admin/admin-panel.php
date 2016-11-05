@@ -64,7 +64,7 @@ function marketengine_option_view() {
         if ($requested_tab == $key) {
             $class = 'class="active"';
         }
-        echo '<li ' . $class . '><a href="?page=marketengine&tab=' . $tab['slug'] . '">' . $tab['title'] . '</a></li>';
+        echo '<li ' . $class . '><a href="?page=me-settings&tab=' . $tab['slug'] . '">' . $tab['title'] . '</a></li>';
     }
     echo '</ul>';
     echo '<div class="me-tabs-container">';
