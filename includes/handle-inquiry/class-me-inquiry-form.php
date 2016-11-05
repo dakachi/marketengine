@@ -87,7 +87,7 @@ class ME_Inquiry_Form {
             if ($parent->receiver != $user_id && $parent->sender != $user_id) {
                 wp_send_json(array('success' => false));
             }
-            $messages = me_get_messages(array('post_type' => 'message', 'post_parent' => $_GET['parent'], 'paged' => $_GET['paged']));
+            $messages = me_get_messages(array('post_type' => 'message', 'showposts' => 12, 'post_parent' => $_GET['parent'], 'paged' => $_GET['paged']));
             $messages = array_reverse($messages);
             ob_start();
             foreach ($messages as $key => $message) {
