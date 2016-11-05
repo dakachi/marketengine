@@ -617,7 +617,7 @@ class ME_Order {
         $remaining = 0;
         if( $this->has_status('me-complete') ) {
             $completed_date = date(get_option('date_format'), strtotime($this->post_modified));
-            $limit = (int) me_option( 'dispute-time-limit' );
+            $limit = me_get_dispute_time_limit();
             $now = date(get_option('date_format'));
 
             $date = date(get_option('date_format'), strtotime( $completed_date . ' +'. $limit.' days'));

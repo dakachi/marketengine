@@ -136,9 +136,11 @@ _.templateSettings = {
                 view = this;
             view.option.set('name', $target.attr('name'));
             view.option.set('value', $target.val());
+
+            this.filterOptionValue($target);
+
             view.option.save('', '', {
                 success: function(result, status, jqXHR) {
-                    console.log(result);
                     if( $target.hasClass('no-zero') && $target.val() == 0) {
                         status.success = false;
                     }
@@ -205,6 +207,13 @@ _.templateSettings = {
             // Ensure that it is a number and stop the keypress
             if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
                 e.preventDefault();
+            }
+        },
+        filterOptionValue: function($target) {
+            if($target.attr('name') === 'dispute-time-limit') {
+                if($target.val() === '' || $target.val() == '0') {
+                    this.option.set('value', 3);
+                }
             }
         }
     });
