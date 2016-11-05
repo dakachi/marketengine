@@ -42,7 +42,12 @@ $listing_status = get_post_status_object($listing->post_status);
 
 			<?php if(!me_is_activated_user()) : ?>
 			<div class="me-col-md-3">
-				<?php _e("Sorry! Only active account can buy listings. Please check mail box to activate your account.", "enginethemes"); ?>
+				<p><?php _e("Sorry! Only active account can buy listings. Please check mail box to activate your account.", "enginethemes"); ?></p>
+			<?php
+				$profile_link = me_get_page_permalink('user_account');
+                $activate_email_link = add_query_arg(array( 'resend-confirmation-email' => true, '_wpnonce' => wp_create_nonce('me-resend_confirmation_email') ), $profile_link);
+            ?>
+                <p><?php _e('<a href="'.$activate_email_link.'">' . sprintf( __("Resend activation email.", "enginethemes") ) . '</a>'); ?></p>
 			</div>
 			<?php endif; ?>
 

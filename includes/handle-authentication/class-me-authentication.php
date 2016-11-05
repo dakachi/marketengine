@@ -537,7 +537,7 @@ class ME_Authentication {
                 'action' => 'confirm-email',
             ), $profile_link);
 
-            $activation_mail_content = str_replace('[activate_email_link]', $activate_email_link, $activation_mail_content);
+            $activation_mail_content = str_replace('[activate_email_link]', '<a href="'.$activate_email_link.'" >'.$activate_email_link.'</a>', $activation_mail_content);
             /**
              * Filter user activation email content
              *
