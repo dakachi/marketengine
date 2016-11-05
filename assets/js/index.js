@@ -57,6 +57,14 @@
         parent: $('input[name="inquiry_id"]').val(),
         type: 'inquiry'
     });
+    
+    $('.me-message-fancybox').magnificPopup({
+        type: 'image',
+        gallery: {
+            enabled: true
+        }
+    });
+
     $('form#send-inquiry textarea').keydown(function(e) {
         // enter send message
         if (e.keyCode == '13' && !e.shiftKey) {

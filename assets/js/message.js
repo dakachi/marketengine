@@ -223,6 +223,7 @@
             });
         }
     });
+    
     window.addEventListener("load", function() {
         //Don't use keypress event. keypress event doesn't detect backspace and delete keys. 
         if($('#me-message-content').length) {
@@ -233,10 +234,5 @@
             }, false);
         }
     }, false);
-    $('.me-message-fancybox').magnificPopup({
-        type: 'image',
-        gallery: {
-            enabled: true
-        }
-    });
+    
 })(jQuery);
