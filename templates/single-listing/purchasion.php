@@ -18,26 +18,24 @@ $pricing_unit = $listing->get_pricing_unit();
 	<div class="me-addtocart">
 		<form method="post">
 
-			<?php do_action('marketengine_single_listing_add_to_cart_form_start'); ?>
+		<?php do_action('marketengine_single_listing_add_to_cart_form_start'); ?>
 
-			<?php if('' !== $pricing_unit) : ?>
-				<div class="me-quantily">
-					<input type="number" required min="1" value="1" name="qty" />
-				</div>
-			<?php else : ?>
-				<input type="hidden" required min="1" value="1" name="qty" />
-			<?php endif; ?>
+		<?php if('' !== $pricing_unit) : ?>
+			<div class="me-quantily">
+				<input type="number" required min="1" value="1" name="qty" />
+			</div>
+		<?php else : ?>
+			<input type="hidden" required min="1" value="1" name="qty" />
+		<?php endif; ?>
 
-			<?php wp_nonce_field('me-add-to-cart'); ?>
+		<?php wp_nonce_field('me-add-to-cart'); ?>
 
-			<?php do_action('marketengine_single_listing_add_to_cart_form_field'); ?>
+		<?php do_action('marketengine_single_listing_add_to_cart_form_field'); ?>
 
-			<?php if(me_is_activated_user()) : ?>
-			<input type="hidden" name="add_to_cart" value="<?php echo $listing->ID; ?>" />
-			<input type="submit" class="me-buy-now-btn" value="<?php _e("BUY NOW", "enginethemes"); ?>">
-			<?php endif; ?>
+		<input type="hidden" name="add_to_cart" value="<?php echo $listing->ID; ?>" />
+		<input <?php disabled( !me_is_activated_user() ); ?> type="submit" class="me-buy-now-btn" value="<?php _e("BUY NOW", "enginethemes"); ?>">
 
-			<?php do_action('marketengine_single_listing_add_to_cart_form_end'); ?>
+		<?php do_action('marketengine_single_listing_add_to_cart_form_end'); ?>
 
 		</form>
 	</div>

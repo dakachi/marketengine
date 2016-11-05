@@ -169,7 +169,10 @@ class ME_Auth_Form extends ME_Form {
                 wp_redirect($redirect, 302);
                 exit;
             } else {
-                me_wp_error_to_notices($user);
+                $redirect = me_get_page_permalink('user_account');
+                me_add_notice(__("Invalid key. Please check your activation email again.", "enginethemes"));
+                wp_redirect( $redirect, 302 );
+                exit;
             }
         }
     }
