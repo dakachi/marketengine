@@ -13,6 +13,7 @@ $args = array(
 	'post_type'		=> 'inquiry',
 	'paged'			=> $paged,
 	'receiver'		=> get_current_user_id(),
+	'orderby' => 'modified'
 );
 
 $role = 'receiver';
@@ -53,7 +54,7 @@ $query = new ME_Message_Query($args);
 			</div>
 			<div class="me-table-col me-order-status me-read">read</div>
 			<div class="me-table-col me-order-listing"><?php echo $listing ? esc_html($listing->get_title()) : __('Deleted listing', 'enginethemes'); ?></div>
-			<div class="me-table-col me-order-date-contact"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $inquiry->post_date ) ); ?></div>
+			<div class="me-table-col me-order-date-contact"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $inquiry->post_modified ) ); ?></div>
 		</div>
 
 		<?php

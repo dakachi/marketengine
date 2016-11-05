@@ -12,6 +12,8 @@ $args = array(
 	'post_type'		=> 'inquiry',
 	'paged'			=> $paged,
 	'sender'		=> get_current_user_id(),
+	'orderby' 		=> 'modified',
+	'order' => 'DESC'
 );
 
 $role = 'sender';
@@ -51,7 +53,7 @@ $query = new ME_Message_Query($args);
 			</div>
 			<div class="me-table-col me-order-status me-read">read</div>
 			<div class="me-table-col me-order-buyer"><?php echo get_the_author_meta( 'display_name', $inquiry->receiver ); ?></div>
-			<div class="me-table-col me-order-date-contact"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $inquiry->post_date ) ); ?></div>
+			<div class="me-table-col me-order-date-contact"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $inquiry->post_modified ) ); ?></div>
 		</div>
 
 		<?php

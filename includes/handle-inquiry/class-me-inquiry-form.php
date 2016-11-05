@@ -22,8 +22,39 @@ class ME_Inquiry_Form {
         add_action('wp_ajax_get_contact_list', array(__CLASS__, 'fetch_contact_list'));
         add_action('wp_ajax_me_send_message', array(__CLASS__, 'send_message'));
 
-
         add_filter('the_marketengine_message', array(__CLASS__, 'filter_message'));
+
+        add_action('save_message_message', array(__CLASS__, 'new_message_in_inquiry'), 10, 2);
+
+    }
+
+    public static function new_message_in_inquiry($message_ID, $message) {
+        if (!$message_ID) {
+            return;
+        }
+
+        $inquiry_id = $message->post_parent;
+
+        $inquiry         = me_get_message($inquiry_id);
+        $current_user_id = get_current_user_id();
+        if (!$inquiry || $inquiry->post_type != 'inquiry') {
+            return;
+        }
+
+        
+        $message_count = me_get_message_field('message_count', $inquiry_id);
+        me_update_message(array('post_type' => 'inquiry', 'message_count' => 10, 'ID' => $inquiry_id), true);
+
+        // update message meta
+        if ($current_user_id == $inquiry->receiver) {
+            $new_message = me_get_message_meta($inquiry_id, '_me_sender_new_message', true);
+            me_update_message_meta($inquiry_id, '_me_sender_new_message', absint($new_message)+1);
+        }
+
+        if ($current_user_id == $inquiry->sender) {
+            $new_message = me_get_message_meta($inquiry_id, '_me_recevier_new_message', true);
+            me_update_message_meta($inquiry_id, '_me_recevier_new_message', absint($new_message)+1);
+        }
 
     }
 
@@ -33,8 +64,8 @@ class ME_Inquiry_Form {
     public static function process_start_inquiry() {
         if (isset($_POST['send_inquiry']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-send-inquiry')) {
             // check user login
-            if( !is_user_logged_in() ) {
-                $redirect = me_get_page_permalink( 'user_account' );
+            if (!is_user_logged_in()) {
+                $redirect = me_get_page_permalink('user_account');
                 wp_redirect($redirect);
                 exit;
             }
@@ -66,13 +97,13 @@ class ME_Inquiry_Form {
         if (isset($_POST['content']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-inquiry-message')) {
             $result = ME_Inquiry_Handle::message($_POST);
             if (is_wp_error($result)) {
-                wp_send_json( array('success' => 'false', 'msg' => $result->get_error_message()) );
+                wp_send_json(array('success' => 'false', 'msg' => $result->get_error_message()));
             } else {
                 $message = me_get_message($result);
                 ob_start();
                 me_get_template('inquiry/message-item', array('message' => $message));
                 $content = ob_get_clean();
-                wp_send_json( array('success' => true, 'content' => $content ) );
+                wp_send_json(array('success' => true, 'content' => $content));
             }
         }
     }
@@ -116,7 +147,7 @@ class ME_Inquiry_Form {
                 'paged'       => $paged,
                 'post_parent' => $listing->ID,
                 'post_type'   => 'inquiry',
-                'showposts' => 12
+                'showposts'   => 12,
             );
             $messages = new ME_Message_Query($args);
 
@@ -130,15 +161,14 @@ class ME_Inquiry_Form {
         }
     }
 
-
     public static function filter_message($content) {
-    	$content = nl2br(esc_html( $content ));
-        
-        $url = '~(?:(https?)://([^\s<]+)|(www\.[^\s<]+?\.[^\s<]+))(?<![\.,:])~i'; 
+        $content = nl2br(esc_html($content));
+
+        $url     = '~(?:(https?)://([^\s<]+)|(www\.[^\s<]+?\.[^\s<]+))(?<![\.,:])~i';
         $content = preg_replace($url, '<a href="$0" rel="noopener noreferrer" target="_blank"  title="$0">$0</a>', $content);
 
-    	$content = do_shortcode( $content );
-    	return $content;
+        $content = do_shortcode($content);
+        return $content;
     }
 
 }

@@ -146,8 +146,10 @@ function me_insert_message($message_arr, $wp_error = false) {
 
     // These variables are needed by compact() later.
     $post_content_filtered = $message_arr['post_content_filtered'];
-    $sender                = $user_id;
-    $receiver              = $message_arr['receiver'];
+    if(!$update) {
+        $sender                = $user_id;
+        $receiver              = $message_arr['receiver'];    
+    }    
 
     if (isset($message_arr['post_parent'])) {
         $post_parent = (int) $message_arr['post_parent'];
