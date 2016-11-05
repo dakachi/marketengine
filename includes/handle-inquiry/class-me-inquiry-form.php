@@ -25,6 +25,7 @@ class ME_Inquiry_Form {
         add_filter('the_marketengine_message', array(__CLASS__, 'filter_message'));
 
         add_action('save_message_message', array(__CLASS__, 'new_message_in_inquiry'), 10, 2);
+        add_action( 'marketengine_after_inquiry_form', array(__CLASS__, 'clear_unread_message_count') );
 
     }
 
@@ -56,6 +57,19 @@ class ME_Inquiry_Form {
             me_update_message_meta($inquiry_id, '_me_recevier_new_message', absint($new_message)+1);
         }
 
+    }
+
+    public static function clear_unread_message_count($inquiry) {
+        $current_user_id = get_current_user_id();
+        $inquiry_id = $inquiry->ID;
+        // update message meta
+        if ($current_user_id == $inquiry->receiver) {
+            me_update_message_meta($inquiry_id, '_me_recevier_new_message', 0);
+        }
+
+        if ($current_user_id == $inquiry->sender) {
+            me_update_message_meta($inquiry_id, '_me_sender_new_message', 0);
+        }
     }
 
     /**

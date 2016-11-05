@@ -163,6 +163,8 @@ class ME_Install {
                     KEY meta_key (meta_key)
                 ) $collate;
         ";
+        // ALTER TABLE {$wpdb->prefix}marketengine_message_itemmeta RENAME COLUMN marketengine_message_id TO marketengine_message_item_id;
+        // ALTER TABLE {$wpdb->prefix}marketengine_message_itemmeta DROP COLUMN marketengine_message_id;
 
         dbDelta($schemas);
     }
