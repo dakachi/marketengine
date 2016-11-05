@@ -17,7 +17,7 @@ $messages = new ME_Message_Query(array('post_parent' => $listing->ID, 'post_type
 			<?php endwhile; ?>
 		</ul>
 		<?php if($messages->max_num_pages > 1) { ?>
-			<span id="load-more-contact"></span>
+		
 		<?php } ?>
 	</div>
 </div>

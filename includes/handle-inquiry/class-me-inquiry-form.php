@@ -115,7 +115,8 @@ class ME_Inquiry_Form {
             $args = array(
                 'paged'       => $paged,
                 'post_parent' => $listing->ID,
-                'post_type'   => 'inquiry'
+                'post_type'   => 'inquiry',
+                'showposts' => 12
             );
             $messages = new ME_Message_Query($args);
 
