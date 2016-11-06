@@ -200,10 +200,9 @@
     $('#contact-list').scroll(function() {
         var pos = $('#contact-list').scrollTop();
         var scroll_height = $(this)[0].scrollHeight;
-        var inner_height = $(this)[0].innerHeight();
-        console.log(pos); console.log('h' + h);
-        console.log('innerHeight' + inner_height);
-        if (pos >= h && !loading) {
+        var inner_height = $(this).innerHeight();
+
+        if (pos + inner_height >= scroll_height && !loading) {
             $.ajax({
                 url: me_globals.ajaxurl,
                 type: 'get',
