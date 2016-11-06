@@ -206,7 +206,7 @@
                 type: 'get',
                 data: {
                     action: 'get_contact_list',
-                    listing: 466,
+                    listing: $('#contact-list').attr('data-id'),
                     paged: contact_paged,
                     _wpnonce: $('#_wpnonce').val()
                 },
