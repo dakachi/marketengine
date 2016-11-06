@@ -200,8 +200,7 @@
     $('#contact-list').scroll(function() {
         var pos = $('#contact-list').scrollTop();
         var h = $('#contact-list').height();
-        if (pos >= (h - 100) && !loading) {
-            console.log(contact_paged);
+        if (pos >= h && !loading) {
             $.ajax({
                 url: me_globals.ajaxurl,
                 type: 'get',
@@ -218,7 +217,7 @@
                 success: function(res, xhr) {
                     loading = false;
                     if (res.data) {
-                        $('#contact-list ul').append(res.data);
+                        $('#contact-list').append(res.data);
                     }
                 }
             });
