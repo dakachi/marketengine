@@ -201,6 +201,7 @@
         var pos = $('#contact-list').scrollTop();
         var h = $('#contact-list').height();
         if (pos >= h && !loading) {
+            console.log(contact_paged);
             $.ajax({
                 url: me_globals.ajaxurl,
                 type: 'get',
