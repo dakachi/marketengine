@@ -144,7 +144,7 @@
                 });
                 // scroll to load older messages
                 $message_container.scroll(function(e) {
-                    var pos = $message_container.scrollTop(),
+                    var pos = $message_container.scrollTop();
                     // check scroll and ajax get messsages
                     if (pos == 0 && !full) {
                         fetch_message();
