@@ -199,7 +199,7 @@
     var loading = false;
     $('#contact-list').scroll(function() {
         var pos = $('#contact-list').scrollTop();
-        var h = $('#contact-list').innerHeight();
+        var h = $(this)[0].scrollHeight;
         console.log(pos); console.log('h' + h);
         if (pos >= h && !loading) {
             $.ajax({
