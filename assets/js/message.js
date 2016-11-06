@@ -217,7 +217,7 @@
                 success: function(res, xhr) {
                     loading = false;
                     if (res.data) {
-                        $('#contact-list').append(res.data);
+                        $('#contact-list ul').append(res.data);
                     }
                 }
             });
