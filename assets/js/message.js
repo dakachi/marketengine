@@ -144,7 +144,8 @@
                 });
                 // scroll to load older messages
                 $message_container.scroll(function(e) {
-                    var pos = $message_container.scrollTop();
+                    var pos = $message_container.scrollTop(),
+                        h = $message_container.height();
                     // check scroll and ajax get messsages
                     if (pos == 0 && !full) {
                         fetch_message();
@@ -197,7 +198,10 @@
     var contact_paged = 2;
     var loading = false;
     $('#contact-list').scroll(function() {
-        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+        var pos = $('#contact-list').scrollTop();
+        var h = $('#contact-list').innerHeight();
+        console.log(pos); console.log('h' + h);
+        if (pos >= h && !loading) {
             $.ajax({
                 url: me_globals.ajaxurl,
                 type: 'get',
