@@ -52,13 +52,14 @@
                 return $(this).attr('data-score');
             }
         });
+
+        // init message box
         $('.inquiry-message-wrapper').MEmessage({
             paged: 2,
             nonce: $('#_msg_wpnonce').val(),
             parent: $('input[name="inquiry_id"]').val(),
             type: 'inquiry'
         });
-        $('#me-message-content').autoResize();
 
 
         $('.me-message-fancybox').magnificPopup({
