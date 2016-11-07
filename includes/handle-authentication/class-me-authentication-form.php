@@ -83,7 +83,13 @@ class ME_Auth_Form extends ME_Form {
 
             $is_required_email_confirmation = me_option('user-email-confirmation') ? true : false;
             if ($is_required_email_confirmation) {
-                me_add_notice(__("<p>Thank you! Please <span>check your mailbox</span> to activate your account.</p>", "enginethemes"));
+               $message = "<p>" . __("Thank you! Please <span>check your mailbox</span> to activate your account.", "enginethemes") . "</p>";
+                $message .= "<p>" . __("Inactive account cannot do following actions:", "enginethemes") . "</p>";
+                $message .= "<p>" . __("- Edit user profile", "enginethemes") . "</p>";
+                $message .= "<p>" . __("- Post listings", "enginethemes") . "</p>";
+                $message .= "<p>" . __("- Order listings", "enginethemes") . "</p>";
+
+                me_add_notice( $message );
             } else {
                 me_add_notice(__("<p>You have registered successfully.</p>", "enginethemes"));
             }
@@ -186,7 +192,7 @@ class ME_Auth_Form extends ME_Form {
 
             $is_send_success = ME_Authentication::send_activation_email($current_user);
             if (!is_wp_error($is_send_success)) {
-                me_add_notice(__("<p>The activation email was successfully re-sent. Please check your email account.</p>", "enginethemes"));
+                me_add_notice(__("<p>Please <span>check your mailbox</span> to activate your account.</p>", "enginethemes"));
                 // set the redirect link after ask confirm email
                 $redirect = self::get_redirect_link();
                 $redirect = apply_filters('marketengine_resend_confirm_email_redirect', $redirect, $current_user);
