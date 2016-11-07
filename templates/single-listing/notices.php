@@ -4,8 +4,7 @@
 
 	<?php if( me_get_notices() ) : ?>
 
-		<p><?php _e("The activation email was successfully re-sent. Please check your email account.", "enginethemes"); ?></p>
-		<?php me_empty_notices(); ?>
+		<?php me_print_notices(); ?>
 
 	<?php else: ?>
 
