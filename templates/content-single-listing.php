@@ -43,16 +43,7 @@ $listing_status = get_post_status_object($listing->post_status);
 
 				</div>
 
-				<?php if(!me_is_activated_user()) : ?>
-				<div class="me-col-md-3">
-					<p><?php _e("You need to active your account via email before buy listings.", "enginethemes"); ?></p>
-				<?php
-					$profile_link = me_get_page_permalink('user_account');
-	                $activate_email_link = add_query_arg(array( 'resend-confirmation-email' => true, '_wpnonce' => wp_create_nonce('me-resend_confirmation_email') ), $profile_link);
-	            ?>
-	                <p><a href="<?php echo $activate_email_link; ?>"><?php _e("Resend activation email.", "enginethemes"); ?></a></p>
-				</div>
-				<?php endif; ?>
+				<?php me_get_template('single-listing/notices'); ?>
 
 				<div class="me-col-md-3">
 
