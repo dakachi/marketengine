@@ -8,28 +8,8 @@
 
 		<div class="me-section-content">
 			<div class="me-revenue-section">
-				<h3>Report 4 fields members</h3>
-				<div class="me-report-filter">
-					<label>
-						<span class="me-pick-date-box">
-							<form action="#">
-								<span class="me-report-start-date">From</span>
-								<span class="me-pick-date">
-									<input id="me-pick-date-1" type="text" name="">
-								</span>
-								<span class="me-report-end-date">To</span>
-								<span class="me-pick-date">
-									<input id="me-pick-date-2" type="text">
-								</span>
-								<input type="submit" class="me-report-submit-btn" value="Filter">
-							</form>
-						</span>
-						<span class="me-export-report">
-							<a href="#">Print Report</a>
-							<a href="#">Export Excel</a>
-						</span>
-					</label>
-				</div>
+				<h3>Report 4 fields listing</h3>
+				<?php me_get_template('admin/filter'); ?>
 				<div class="me-table me-report-table">
 					<div class="me-table-rhead">
 						<div class="me-table-col">

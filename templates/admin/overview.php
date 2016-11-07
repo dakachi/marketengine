@@ -6,7 +6,7 @@
 	</ul>
 	<div class="me-tabs-container">
 		<?php me_get_template('admin/listings'); ?>
-		<?php me_get_template('admin/listings'); ?>
-		<?php me_get_template('admin/listings'); ?>
+		<?php me_get_template('admin/members'); ?>
+		<?php me_get_template('admin/orders'); ?>
 	</div>
 </div>
