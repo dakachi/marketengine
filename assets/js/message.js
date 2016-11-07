@@ -199,14 +199,16 @@
     var loading = false;
     $('#contact-list').scroll(function() {
         var pos = $('#contact-list').scrollTop();
-        var h = $('#contact-list').height();
-        if (pos >= h && !loading) {
+        var scroll_height = $(this)[0].scrollHeight;
+        var inner_height = $(this).innerHeight();
+
+        if (pos + inner_height >= scroll_height && !loading) {
             $.ajax({
                 url: me_globals.ajaxurl,
                 type: 'get',
                 data: {
                     action: 'get_contact_list',
-                    listing: 466,
+                    listing: $('#contact-list').attr('data-id'),
                     paged: contact_paged,
                     _wpnonce: $('#_wpnonce').val()
                 },

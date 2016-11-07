@@ -30,5 +30,13 @@
                 });
             });
         }
+
+        var flag = false;
+        $('#resend-confirmation-email').on('click', function(e) {
+            if( flag ) {
+                e.preventDefault();
+            }
+            flag = true;
+        })
     });
 })(jQuery);
