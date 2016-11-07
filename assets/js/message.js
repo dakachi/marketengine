@@ -192,16 +192,16 @@
                 });
             });
         }
-        // window.addEventListener("load", function() {
-        //         //Don't use keypress event. keypress event doesn't detect backspace and delete keys. 
-        //         if($('.me-message-content').length) {
-        //             window.document.querySelector(".me-message-content").addEventListener("keydown", function() {
-        //                 var content = window.document.querySelector(".me-message-content").value;
-        //                 window.document.querySelector(".me-mc-container").innerHTML = content;
-        //                 window.document.querySelector(".me-message-content").style.height = window.document.querySelector(".me-mc-container").scrollHeight + "px";
-        //             }, false);
-        //         }
-        //     }, false);
+        window.addEventListener("load", function() {
+                //Don't use keypress event. keypress event doesn't detect backspace and delete keys. 
+                if($('.me-message-content').length) {
+                    window.document.querySelector(".me-message-content").addEventListener("keydown", function() {
+                        var content = window.document.querySelector(".me-message-content").value;
+                        window.document.querySelector(".me-mc-container").innerHTML = content;
+                        window.document.querySelector(".me-message-content").style.height = window.document.querySelector(".me-mc-container").scrollHeight + "px";
+                    }, false);
+                }
+            }, false);
         /**
          * Inquiry contacts list
          */
@@ -211,7 +211,6 @@
         var pos = $('#contact-list').scrollTop();
         var scroll_height = $(this)[0].scrollHeight;
         var inner_height = $(this).innerHeight();
-
         if (pos + inner_height >= scroll_height && !loading) {
             $.ajax({
                 url: me_globals.ajaxurl,
