@@ -89,6 +89,7 @@ $query = new ME_Message_Query($args);
 				<span><?php _e('There are no conversations yet.', 'enginethemes'); ?></span>
 			</div>
 		</div>
+	</div>
 	<?php
 	endif;
 	?>
