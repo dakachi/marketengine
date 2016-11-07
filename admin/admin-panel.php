@@ -1,19 +1,21 @@
 <?php
-function marketengine_get_list_of_page() {
+function marketengine_get_list_of_page()
+{
     $args = array(
-        'post_type' => 'page',
-        'post_status' => 'publish'
+        'post_type'   => 'page',
+        'post_status' => 'publish',
     );
 
-    $pages = get_pages( $args );
+    $pages        = get_pages($args);
     $list_of_page = array();
-    foreach($pages as $page){
+    foreach ($pages as $page) {
         $list_of_page[$page->ID] = $page->post_title;
     }
     return $list_of_page;
 }
 
-function marketengine_option_view() {
+function marketengine_option_view()
+{
 
     marketengine_option_header();
     //include 'option-view.php';
@@ -21,22 +23,22 @@ function marketengine_option_view() {
         'authenticate-settings' => array(
             'title'    => __("Authentication", "enginethemes"),
             'slug'     => 'authenticate-settings',
-            'template' => include (dirname(__FILE__). '/options/authentication.php'),
+            'template' => include (dirname(__FILE__) . '/options/authentication.php'),
         ),
-        'listings-settings' => array(
+        'listings-settings'     => array(
             'title'    => __("Listings", "enginethemes"),
             'slug'     => 'listings-settings',
-            'template' => include (dirname(__FILE__). '/options/listings.php'),
+            'template' => include (dirname(__FILE__) . '/options/listings.php'),
         ),
-        'me-payment' => array(
+        'me-payment'            => array(
             'title'    => __("Payment", "enginethemes"),
             'slug'     => 'me-payment',
-            'template' => include (dirname(__FILE__). '/options/payments.php'),
+            'template' => include (dirname(__FILE__) . '/options/payments.php'),
         ),
-        'me-inquiry' => array(
+        'me-inquiry'            => array(
             'title'    => __("Inquiry", "enginethemes"),
             'slug'     => 'me-inquiry',
-            'template' => include (dirname(__FILE__). '/options/inquiries.php'),
+            'template' => include (dirname(__FILE__) . '/options/inquiries.php'),
         ),
     );
 
@@ -78,14 +80,18 @@ function marketengine_option_view() {
     marketengine_option_footer();
 }
 
-function marketengine_report_view() {
-    echo 'report';
+function marketengine_report_view()
+{
+    marketengine_option_header();
+    me_get_template('admin/overview', $_REQUEST);
+    marketengine_option_footer();
 }
 
 /**
  * Add marketengine admin menu
  */
-function marketengine_option_menu() {
+function marketengine_option_menu()
+{
     add_menu_page(
         __("MarketEngine Dashboard", "enginethemes"),
         __("EngineThemes", "enginethemes"),
@@ -96,19 +102,29 @@ function marketengine_option_menu() {
         null
     );
 
-    add_submenu_page( 
-        'marketengine', 
-        __("Settings", "enginethemes"), 
-        __("Settings", "enginethemes"), 
-        'manage_options', 
-        'me-settings', 
+    add_submenu_page(
+        'marketengine',
+        __("Report", "enginethemes"),
+        __("Report", "enginethemes"),
+        'manage_options',
+        'marketengine',
+        'marketengine_report_view'
+    );
+
+    add_submenu_page(
+        'marketengine',
+        __("Settings", "enginethemes"),
+        __("Settings", "enginethemes"),
+        'manage_options',
+        'me-settings',
         'marketengine_option_view'
     );
 }
 add_action('admin_menu', 'marketengine_option_menu');
 
-function marketengine_load_admin_option_script_css() {
-    if(!empty($_REQUEST['page']) && 'me-settings' == $_REQUEST['page']) {
+function marketengine_load_admin_option_script_css()
+{
+    if (!empty($_REQUEST['page']) && ( 'me-settings' == $_REQUEST['page'] || 'marketengine' == $_REQUEST['page'] ) ) {
         wp_register_style('marketengine-font-icon', ME_PLUGIN_URL . 'assets/admin/jquery.mCustomScrollbar.min.css', array(), '1.0');
         wp_enqueue_style('me-option-css', ME_PLUGIN_URL . 'assets/admin/marketengine-admin.css');
 
@@ -131,7 +147,8 @@ add_action('admin_enqueue_scripts', 'marketengine_load_admin_option_script_css')
  * Render marketengine admin option header
  * @since 1.0
  */
-function marketengine_option_header() {
+function marketengine_option_header()
+{
     ?>
 
 <div class="marketengine-admin">
@@ -147,7 +164,8 @@ function marketengine_option_header() {
  * Render marketengine admin option footer
  * @since 1.0
  */
-function marketengine_option_footer() {
+function marketengine_option_footer()
+{
     ?>
     </div>
 </div>

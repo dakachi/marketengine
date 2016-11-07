@@ -190,6 +190,16 @@
                         }
                     });
                 });
+                // window.addEventListener("load", function() {
+                //     //Don't use keypress event. keypress event doesn't detect backspace and delete keys. 
+                //     if($elem.find('textarea').length) {
+                //         window.document.querySelector("#me-message-content").addEventListener("keydown", function() {
+                //             var content = window.document.querySelector("#me-message-content").value;
+                //             window.document.querySelector("#me-mc-container").innerHTML = content;
+                //             window.document.querySelector("#me-message-content").style.height = window.document.querySelector("#me-mc-container").scrollHeight + "px";
+                //         }, false);
+                //     }
+                // }, false);
             });
         }
         /**
@@ -225,16 +235,4 @@
             });
         }
     });
-    
-    window.addEventListener("load", function() {
-        //Don't use keypress event. keypress event doesn't detect backspace and delete keys. 
-        if($('#me-message-content').length) {
-            window.document.querySelector("#me-message-content").addEventListener("keydown", function() {
-                var content = window.document.querySelector("#me-message-content").value;
-                window.document.querySelector("#me-mc-container").innerHTML = content;
-                window.document.querySelector("#me-message-content").style.height = window.document.querySelector("#me-mc-container").scrollHeight + "px";
-            }, false);
-        }
-    }, false);
-    
 })(jQuery);
