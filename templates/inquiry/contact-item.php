@@ -12,7 +12,7 @@ $new_message = me_get_message_meta($message->ID, '_me_recevier_new_message', tru
 			<span><?php echo get_the_author_meta( 'display_name', $message->sender ); ?></span>
 
 			<?php if($new_message) : ?>
-				<span class="me-message-count"><?php echo $new_message; ?>+</span>
+				<span class="me-message-count"><?php echo $new_message; ?></span>
 			<?php endif; ?>
 
 		</span>

@@ -13,53 +13,29 @@
 				<div class="me-table me-report-table">
 					<div class="me-table-rhead">
 						<div class="me-table-col">
-							<a href="#" class="me-sort-asc">No.</a>
+							<a href="#" class="me-sort-asc"><?php _e("No.", "enginethemes"); ?></a>
 						</div>
 						<div class="me-table-col">
-							<a href="#" class="me-sort-desc">Date</a>
+							<a href="#" class="me-sort-desc"><?php _e("Date", "enginethemes"); ?></a>
 						</div>
 						<div class="me-table-col">
-							<a href="#" class="">Income</a>
+							<a href="#" class=""><?php _e("Date", "enginethemes"); ?></a>
 						</div>
 						<div class="me-table-col">
-							<a href="#" class="me-sort-asc">Total Orders</a>
+							<a href="#" class="me-sort-asc"><?php _e("Total Orders", "enginethemes"); ?></a>
 						</div>
 					</div>
+					<?php for ($i=0; $i < 10; $i++) { 
+					?>
 					<div class="me-table-row">
 						<div class="me-table-col">1</div>
 						<div class="me-table-col">21/12/2012</div>
 						<div class="me-table-col">$21254</div>
 						<div class="me-table-col">21</div>
 					</div>
-					<div class="me-table-row">
-						<div class="me-table-col">1</div>
-						<div class="me-table-col">21/12/2012</div>
-						<div class="me-table-col">$21254</div>
-						<div class="me-table-col">21</div>
-					</div>
-					<div class="me-table-row">
-						<div class="me-table-col">1</div>
-						<div class="me-table-col">21/12/2012</div>
-						<div class="me-table-col">$21254</div>
-						<div class="me-table-col">21</div>
-					</div>
-					<div class="me-table-row">
-						<div class="me-table-col">1</div>
-						<div class="me-table-col">21/12/2012</div>
-						<div class="me-table-col">$21254</div>
-						<div class="me-table-col">21</div>
-					</div>
+					<?php } ?>
 				</div>
-				<div class="me-pagination-wrap">
-					<span class="me-pagination-result">10 of 124 results</span>
-					<span class="me-paginations">
-						<a class="prev page-numbers" href="#">&lt;</a>
-						<a class="page-numbers" href="#">1</a>
-						<span class="page-numbers current">2</span>
-						<a class="page-numbers" href="#">3</a>
-						<a class="next page-numbers" href="">&gt;</a>
-					</span>
-				</div>
+				<?php me_get_template('admin/pagination'); ?>
 			</div>
 		</div>
 	</div>

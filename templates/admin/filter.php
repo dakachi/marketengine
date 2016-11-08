@@ -13,11 +13,11 @@
 
 				<span class="me-report-start-date"><?php _e("From", "enginethemes"); ?></span>
 				<span class="me-pick-date">
-					<input id="me-pick-date-1" type="text" name="from_date">
+					<input id="me-pick-date-1" type="text" name="from_date" value="2016-04-22">
 				</span>
 				<span class="me-report-end-date"><?php _e("To", "enginethemes"); ?></span>
 				<span class="me-pick-date">
-					<input id="me-pick-date-2" type="text" name="to_date">
+					<input id="me-pick-date-2" type="text" name="to_date" value="2016-12-22">
 				</span>
 
 				<input type="submit" class="me-report-submit-btn" value="Filter">
