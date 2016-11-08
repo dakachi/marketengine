@@ -1,7 +1,8 @@
 <div class="marketengine-content">
-<?php me_print_notices(); ?>
+
 <form method="post" >
 	<div class="me-review-listing">
+		<?php me_print_notices(); ?>
 		<h3><?php echo esc_html( get_the_title( $listing_id ) ); ?></h3>
 		<div class="me-rating">
 			<div class="do-rating" data-score=""></div>
