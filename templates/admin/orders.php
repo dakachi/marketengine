@@ -4,10 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$listings = marketengine_listing_report($_REQUEST);
-echo "<pre>";
-print_r($listings);
-echo "</pre>";
+$orders = marketengine_orders_report($_REQUEST);
 if(empty($_REQUEST['paged'])) {
 	$i = 1;	
 }else {
@@ -44,21 +41,21 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 							<a href="#" class="me-sort-asc"><?php _e("Total Orders", "enginethemes"); ?></a>
 						</div>
 					</div>
-					<?php foreach ($listings['posts'] as $key => $listing) : ?>
+					<?php foreach ($orders['posts'] as $key => $order) : ?>
 						
 						<div class="me-table-row">
 							<div class="me-table-col"><?php echo $i ?></div>
 							<div class="me-table-col">
-								<?php echo marketengine_get_start_and_end_date($quant, $listing->quant, $listing->year); ?>
+								<?php echo marketengine_get_start_and_end_date($quant, $order->quant, $order->year); ?>
 							</div>
-							<div class="me-table-col"><?php echo $listing->count; ?></div>
+							<div class="me-table-col"><?php echo $order->count; ?></div>
 						</div>
 
 						<?php $i++; ?>
 
 					<?php endforeach; ?>
 				</div>
-				<?php me_get_template('admin/pagination', array('query' => $listings)); ?>
+				<?php me_get_template('admin/pagination', array('query' => $orders)); ?>
 			</div>
 		</div>
 	</div>

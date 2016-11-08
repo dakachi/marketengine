@@ -155,11 +155,83 @@ function marketengine_members_report($args) {
 // group by year
 
 function marketengine_orders_report($args) {
+	global $wpdb;
+    $defaults = array(
+        'quant'     => 'day',
+        'from_date' => '2016-04-22',
+        'to_date'   => '2016-12-22',
+        'orderby'   => 'quant',
+        'order'     => 'DESC',
+        'paged'     => 1,
+        'showposts' => get_option('posts_per_page'),
+    );
+    $args = wp_parse_args($args, $defaults);
+    
+    extract($args);
 
+    $pgstrt = absint(($paged - 1) * $showposts) . ', ';
+
+    $field = $wpdb->posts . '.post_date';
+    $time  = marketengine_get_quantity_report($field, $quant);
+
+    $select  = "SELECT SQL_CALC_FOUND_ROWS {$time} , count({$wpdb->posts}.ID) as count FROM {$wpdb->posts}";
+    $where   = " WHERE post_type = 'me_order'  AND post_date BETWEEN '{$from_date}' AND '{$to_date}'";
+    $groupby = " GROUP BY `quant` ,`year` ";
+    $orderby = " ORDER BY {$orderby} ";
+    $order   = " ORDER {$order} ";
+    $limits  = ' LIMIT ' . $pgstrt . $showposts;
+
+    $sql = $select . $where . $groupby . $orderby . $limits;
+
+    $result = $wpdb->get_results($sql);
+
+    $found_rows     = $wpdb->get_var('SELECT FOUND_ROWS() as row');
+    $max_numb_pages = ceil($found_rows / $showposts);
+    return array(
+        'found_posts'    => $found_rows,
+        'max_numb_pages' => $max_numb_pages,
+        'posts'          => $result,
+    );
 }
 
 function marketengine_inquiries_report($args) {
+	global $wpdb;
+    $defaults = array(
+        'quant'     => 'day',
+        'from_date' => '2016-04-22',
+        'to_date'   => '2016-12-22',
+        'orderby'   => 'quant',
+        'order'     => 'DESC',
+        'paged'     => 1,
+        'showposts' => get_option('posts_per_page'),
+    );
+    $args = wp_parse_args($args, $defaults);
+    
+    extract($args);
 
+    $pgstrt = absint(($paged - 1) * $showposts) . ', ';
+
+    $field = $wpdb->marketengine_message_item . '.post_date';
+    $time  = marketengine_get_quantity_report($field, $quant);
+
+    $select  = "SELECT SQL_CALC_FOUND_ROWS {$time}, count({$wpdb->marketengine_message_item}.ID) as count FROM {$wpdb->marketengine_message_item}";
+    $where   = " WHERE post_type = 'inquiry'  AND post_date BETWEEN '{$from_date}' AND '{$to_date}'";
+    $groupby = " GROUP BY `quant` ,`year` ";
+    $orderby = " ORDER BY {$orderby} ";
+    $order   = " ORDER {$order} ";
+    $limits  = ' LIMIT ' . $pgstrt . $showposts;
+
+    $sql = $select . $where . $groupby . $orderby . $limits;
+
+    $result = $wpdb->get_results($sql);
+
+    $found_rows     = $wpdb->get_var('SELECT FOUND_ROWS() as row');
+    $max_numb_pages = ceil($found_rows / $showposts);
+    return array(
+        'found_posts'    => $found_rows,
+        'max_numb_pages' => $max_numb_pages,
+        'posts'          => $result,
+    );
 }
 
 // tinh toan start date va end date
