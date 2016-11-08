@@ -1,3 +1,18 @@
+<?php
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+$members = marketengine_members_report($_REQUEST);
+if(empty($_REQUEST['paged'])) {
+	$i = 1;	
+}else {
+	$i = ($_REQUEST['paged'] - 1) * get_option( 'posts_per_page' ) + 1;
+}
+
+$quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
+?>
 <div class="me-tabs-content">
 	<!-- <ul class="me-nav me-section-nav">
 		<li class="active"><span>Revenue</span></li>
@@ -8,58 +23,40 @@
 
 		<div class="me-section-content">
 			<div class="me-revenue-section">
+
 				<h3>Report 4 fields listing</h3>
+
 				<?php me_get_template('admin/filter'); ?>
+
 				<div class="me-table me-report-table">
 					<div class="me-table-rhead">
 						<div class="me-table-col">
-							<a href="#" class="me-sort-asc">No.</a>
+							<a href="#"><?php _e("No.", "enginethemes"); ?></a>
 						</div>
 						<div class="me-table-col">
-							<a href="#" class="me-sort-desc">Date</a>
+							<a href="#" class="me-sort-desc"><?php _e("Date", "enginethemes"); ?></a>
 						</div>
 						<div class="me-table-col">
-							<a href="#" class="">Income</a>
-						</div>
-						<div class="me-table-col">
-							<a href="#" class="me-sort-asc">Total Orders</a>
+							<a href="#" class="me-sort-asc"><?php _e("Total Members", "enginethemes"); ?></a>
 						</div>
 					</div>
-					<div class="me-table-row">
-						<div class="me-table-col">1</div>
-						<div class="me-table-col">21/12/2012</div>
-						<div class="me-table-col">$21254</div>
-						<div class="me-table-col">21</div>
-					</div>
-					<div class="me-table-row">
-						<div class="me-table-col">1</div>
-						<div class="me-table-col">21/12/2012</div>
-						<div class="me-table-col">$21254</div>
-						<div class="me-table-col">21</div>
-					</div>
-					<div class="me-table-row">
-						<div class="me-table-col">1</div>
-						<div class="me-table-col">21/12/2012</div>
-						<div class="me-table-col">$21254</div>
-						<div class="me-table-col">21</div>
-					</div>
-					<div class="me-table-row">
-						<div class="me-table-col">1</div>
-						<div class="me-table-col">21/12/2012</div>
-						<div class="me-table-col">$21254</div>
-						<div class="me-table-col">21</div>
-					</div>
+					<?php foreach ($members['posts'] as $key => $member) : ?>
+						
+						<div class="me-table-row">
+							<div class="me-table-col"><?php echo $i ?></div>
+							<div class="me-table-col">
+								<?php echo marketengine_get_start_and_end_date($quant, $member->quant, $member->year); ?>
+							</div>
+							<div class="me-table-col"><?php echo $member->count; ?></div>
+						</div>
+
+						<?php $i++; ?>
+
+					<?php endforeach; ?>
 				</div>
-				<div class="me-pagination-wrap">
-					<span class="me-pagination-result">10 of 124 results</span>
-					<span class="me-paginations">
-						<a class="prev page-numbers" href="#">&lt;</a>
-						<a class="page-numbers" href="#">1</a>
-						<span class="page-numbers current">2</span>
-						<a class="page-numbers" href="#">3</a>
-						<a class="next page-numbers" href="">&gt;</a>
-					</span>
-				</div>
+				
+				<?php me_get_template('admin/pagination', array('query' => $members)); ?>
+				
 			</div>
 		</div>
 	</div>
