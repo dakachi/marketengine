@@ -1,6 +1,5 @@
 /* global me_globals.ajaxurl, wpAjax*/
 (function($) {
-    $(document).ready(function() {
         $('.me-list-thumbs').meSliderThumbs();
         var magnificInstance = true;
         var magnificItem = 0;
@@ -78,5 +77,4 @@
         $('.me-listing-info-view').on('click', function() {
             $('.me-listing-desc').toggleClass('active'); 
         });
-    });
 })(jQuery);
