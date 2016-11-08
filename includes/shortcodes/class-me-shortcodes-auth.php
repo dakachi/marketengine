@@ -138,9 +138,9 @@ class ME_Shortcodes_Auth {
     }
 
     public static function me_seller_profile() {
-        $user_id = get_query_var('user-id');
+        $seller_id = get_query_var('seller-id');
         ob_start();
-        me_get_template('seller-profile/seller-profile', array( 'user_id' => $user_id) );
+        me_get_template('seller-profile/seller-profile', array( 'user_id' => $seller_id) );
         $content = ob_get_clean();
         return $content;
     }
