@@ -152,7 +152,7 @@
                     }
                 });
                 // send message
-                $elem.find('textarea').keydown(function(e) {
+                $elem.find('.me-message-content').keydown(function(e) {
                     // enter send message
                     if (e.keyCode == '13' && !e.shiftKey) {
                         e.preventDefault();

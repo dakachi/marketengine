@@ -1,9 +1,4 @@
 <div class="me-tabs-content">
-	<!-- <ul class="me-nav me-section-nav">
-		<li class="active"><span>Revenue</span></li>
-		<li><span>Members</span></li>
-		<li><span>Orders &amp; Inquiries</span></li>
-	</ul> -->
 	<div class="me-section-container">
 
 		<div class="me-section-content">
