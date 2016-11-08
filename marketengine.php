@@ -158,6 +158,7 @@ if (!class_exists('MarketEngine')):
         private function init_hooks() {
             add_action('init', array($this, 'init'));
             add_action('wp_enqueue_scripts', array($this, 'add_scripts'));
+            add_action('admin_enqueue_scripts', array($this, 'add_admin_scripts'));
 
             add_action('init', array($this, 'wpdb_table_fix'), 0);
         }
@@ -251,9 +252,20 @@ if (!class_exists('MarketEngine')):
                     ),
                     'runtimes'            => 'html5,gears,flash,silverlight,browserplus,html4',
                     'multipart_params'    => $post_params,
-                    
                 )
             );
+        }
+
+        public function add_admin_scripts() {
+            $develop_src = true;
+
+            if (!defined('ME_SCRIPT_DEBUG')) {
+                define('ME_SCRIPT_DEBUG', $develop_src);
+            }
+
+            $suffix     = ME_SCRIPT_DEBUG ? '' : '.min';
+            $dev_suffix = $develop_src ? '' : '.min';
+            wp_enqueue_script('jquery-ui', $this->plugin_url() . "/assets/js/jquery-ui$suffix.js", array('jquery'), $this->version, true);
         }
 
         public function add_ajax(){
