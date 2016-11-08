@@ -39,7 +39,7 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 						</div>
 					</div>
 					<?php foreach ($inquiries['posts'] as $key => $inquiry) : ?>
-						
+
 						<div class="me-table-row">
 							<div class="me-table-col"><?php echo $i ?></div>
 							<div class="me-table-col">
