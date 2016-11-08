@@ -68,7 +68,43 @@ function marketengine_get_start_and_end_date($quant, $week, $year) {
 }
 
 function marketengine_listing_report($args) {
+	global $wpdb;
+    $defaults = array(
+        'quant'     => 'day',
+        'from_date' => '2016-04-22',
+        'to_date'   => '2016-12-22',
+        'orderby'   => 'quant',
+        'order'     => 'DESC',
+        'paged'     => 1,
+        'showposts' => get_option('posts_per_page'),
+    );
+    $args = wp_parse_args($args, $defaults);
+    
+    extract($args);
 
+    $pgstrt = absint(($paged - 1) * $showposts) . ', ';
+
+    $field = $wpdb->posts . '.post_date';
+    $time  = marketengine_get_quantity_report($field, $quant);
+
+    $select  = "SELECT SQL_CALC_FOUND_ROWS {$time} , count({$wpdb->posts}.ID) as count FROM {$wpdb->posts}";
+    $where   = " WHERE post_type = 'listing'  AND post_date BETWEEN '{$from_date}' AND '{$to_date}'";
+    $groupby = " GROUP BY `quant` ,`year` ";
+    $orderby = " ORDER BY {$orderby} ";
+    $order   = " ORDER {$order} ";
+    $limits  = ' LIMIT ' . $pgstrt . $showposts;
+
+    $sql = $select . $where . $groupby . $orderby . $limits;
+
+    $result = $wpdb->get_results($sql);
+
+    $found_rows     = $wpdb->get_var('SELECT FOUND_ROWS() as row');
+    $max_numb_pages = ceil($found_rows / $showposts);
+    return array(
+        'found_posts'    => $found_rows,
+        'max_numb_pages' => $max_numb_pages,
+        'posts'          => $result,
+    );
 }
 
 function marketengine_members_report($args) {

@@ -1,3 +1,19 @@
+<?php 
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+$listings = marketengine_listing_report($_REQUEST);
+if(empty($_REQUEST['paged'])) {
+	$i = 1;	
+}else {
+	$i = ($_REQUEST['paged'] - 1) * get_option( 'posts_per_page' ) + 1;
+}
+
+$quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
+?>
+
 <div class="me-tabs-content">
 	<!-- <ul class="me-nav me-section-nav">
 		<li class="active"><span>Revenue</span></li>
@@ -19,23 +35,24 @@
 							<a href="#" class="me-sort-desc"><?php _e("Date", "enginethemes"); ?></a>
 						</div>
 						<div class="me-table-col">
-							<a href="#" class=""><?php _e("Date", "enginethemes"); ?></a>
-						</div>
-						<div class="me-table-col">
-							<a href="#" class="me-sort-asc"><?php _e("Total Orders", "enginethemes"); ?></a>
+							<a href="#" class="me-sort-asc"><?php _e("Total Listings", "enginethemes"); ?></a>
 						</div>
 					</div>
-					<?php for ($i=0; $i < 10; $i++) { 
-					?>
-					<div class="me-table-row">
-						<div class="me-table-col">1</div>
-						<div class="me-table-col">21/12/2012</div>
-						<div class="me-table-col">$21254</div>
-						<div class="me-table-col">21</div>
-					</div>
-					<?php } ?>
+					<?php foreach ($listings['posts'] as $key => $listing) : ?>
+						
+						<div class="me-table-row">
+							<div class="me-table-col"><?php echo $i ?></div>
+							<div class="me-table-col">
+								<?php echo marketengine_get_start_and_end_date($quant, $listing->quant, $listing->year); ?>
+							</div>
+							<div class="me-table-col"><?php echo $listing->count; ?></div>
+						</div>
+
+						<?php $i++; ?>
+
+					<?php endforeach; ?>
 				</div>
-				<?php me_get_template('admin/pagination'); ?>
+				<?php me_get_template('admin/pagination', array('query' => $listings)); ?>
 			</div>
 		</div>
 	</div>
