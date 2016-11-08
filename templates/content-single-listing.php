@@ -43,13 +43,15 @@ $listing_status = get_post_status_object($listing->post_status);
 
 				</div>
 
-				<?php me_get_template('single-listing/notices'); ?>
+				
 
 				<div class="me-col-md-3">
 
 					<?php do_action('marketengine_before_single_listing_sidebar'); ?>
 
 					<div class="marketengine-sidebar-detail">
+					
+						<?php me_get_template('single-listing/notices'); ?>
 
 						<?php
 						if($listing_type) :

@@ -135,7 +135,9 @@ elseif(isset($_GET['status'])) : ?>
 			</div>
 		</div>
 <?php
-	_e('There are no listings here.');
+	echo '<div class="me-listing-filter-none"><p>';
+	_e('Sorry! There are no listings matching your filter.');
+	echo '</p></div>';
 else:
 	me_get_template('account/my-listing-none');
 endif;

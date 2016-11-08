@@ -42,7 +42,7 @@ if(!empty($listings)) :
 
 				<div class="me-item-wrap">
 
-					<a href="#" class="me-item-img">
+					<a href="<?php echo $listing->get_permalink(); ?>" class="me-item-img">
 						<img src="<?php echo $listing->get_listing_thumbnail(); ?>" alt="<?php $listing->get_title(); ?>">
 						<span><?php _e('VIEW DETAILS', 'enginethemes'); ?></span>
 					</a>
