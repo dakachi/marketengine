@@ -12,6 +12,7 @@ if( !isset($user_id) || !$user_id ) {
 	return;
 }
 
+$redirect = add_query_arg(array('seller-id' => $user_id), me_get_page_permalink('seller_profile'));;
 ?>
 <div class="marketengine-content">
 	<div class="me-row">
@@ -23,10 +24,22 @@ if( !isset($user_id) || !$user_id ) {
 		<div class="me-col-md-9">
 			<div class="me-content-profile">
 				<div class="marketengine-tabs">
+
 					<ul class="me-tabs">
-						<li class="active"><span><?php _e('About Seller', 'enginethemes'); ?></span></li>
-						<li><span><?php _e('Listing of Seller', 'enginethemes'); ?></span></li>
+						<li <?php echo (!isset($_GET['tab']) || $_GET['tab'] == 'about') ? 'class="active"' : ''; ?>>
+						<?php $redirect = add_query_arg(array( 'tab' => 'about' ), $redirect); ?>
+							<a href="<?php echo $redirect ?>">
+								<span><?php _e('About Seller', 'enginethemes'); ?></span>
+							</a>
+						</li>
+						<li <?php echo (isset($_GET['tab']) && $_GET['tab'] == 'listing') ? 'class="active"' : ''; ?>>
+						<?php $redirect = add_query_arg(array( 'tab' => 'listing' ), $redirect); ?>
+							<a href="<?php echo $redirect ?>">
+								<span><?php _e('Listing of Seller', 'enginethemes'); ?></span>
+							</a>
+						</li>
 					</ul>
+
 					<div class="me-tabs-container">
 						<?php me_get_template('seller-profile/content-seller-profile', array ('user_id' => $user_id) ); ?>
 					</div>
