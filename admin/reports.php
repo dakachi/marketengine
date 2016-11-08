@@ -163,13 +163,6 @@ function marketengine_members_report($args) {
     );
 }
 
-// report listing
-// group by day
-// group by week
-// group by month
-// group by quarter
-// group by year
-
 function marketengine_orders_report($args) {
     global $wpdb;
     $defaults = array(
@@ -198,14 +191,22 @@ function marketengine_orders_report($args) {
     $field = $wpdb->posts . '.post_date';
     $time  = marketengine_get_quantity_report($field, $quant);
 
-    $select  = "SELECT SQL_CALC_FOUND_ROWS {$time} , count({$wpdb->posts}.ID) as count FROM {$wpdb->posts}";
+    $select  = "SELECT SQL_CALC_FOUND_ROWS {$time} ,
+                count({$wpdb->posts}.ID) as count,
+                sum({$wpdb->postmeta}.meta_value) as total
+            ";
+
+    $from = " FROM {$wpdb->posts}";
+
+    $join = " INNER JOIN  $wpdb->postmeta ON  {$wpdb->postmeta}.post_id = {$wpdb->posts}.ID ";
+
     $where   = " WHERE post_type = 'me_order'  AND post_date BETWEEN '{$from_date}' AND '{$to_date}'";
     $groupby = " GROUP BY `quant` ,`year` ";
     $orderby = " ORDER BY {$orderby} ";
     $order   = " ORDER {$order} ";
     $limits  = ' LIMIT ' . $pgstrt . $showposts;
 
-    $sql = $select . $where . $groupby . $orderby . $limits;
+    $sql = $select . $from . $join . $where . $groupby . $orderby . $limits;
 
     $result = $wpdb->get_results($sql);
 

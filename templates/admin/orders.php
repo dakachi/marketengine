@@ -35,20 +35,21 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 							<a href="#" class="me-sort-desc"><?php _e("Date", "enginethemes"); ?></a>
 						</div>
 						<div class="me-table-col">
-							<a href="#" class=""><?php _e("Date", "enginethemes"); ?></a>
+							<a href="#" class=""><?php _e("Total Orders", "enginethemes"); ?></a>
 						</div>
 						<div class="me-table-col">
-							<a href="#" class="me-sort-asc"><?php _e("Total Orders", "enginethemes"); ?></a>
+							<a href="#" class="me-sort-asc"><?php _e("Income", "enginethemes"); ?></a>
 						</div>
 					</div>
 					<?php foreach ($orders['posts'] as $key => $order) : ?>
-						
+
 						<div class="me-table-row">
 							<div class="me-table-col"><?php echo $i ?></div>
 							<div class="me-table-col">
 								<?php echo marketengine_get_start_and_end_date($quant, $order->quant, $order->year); ?>
 							</div>
 							<div class="me-table-col"><?php echo $order->count; ?></div>
+							<div class="me-table-col"><?php echo $order->total; ?></div>
 						</div>
 
 						<?php $i++; ?>

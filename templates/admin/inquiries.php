@@ -35,7 +35,7 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 							<a href="#" class="me-sort-desc"><?php _e("Date", "enginethemes"); ?></a>
 						</div>
 						<div class="me-table-col">
-							<a href="#" class="me-sort-asc"><?php _e("Total Listings", "enginethemes"); ?></a>
+							<a href="#" class="me-sort-asc"><?php _e("Total Inquiries", "enginethemes"); ?></a>
 						</div>
 					</div>
 					<?php foreach ($inquiries['posts'] as $key => $inquiry) : ?>

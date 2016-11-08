@@ -14,11 +14,11 @@
 
 				<span class="me-report-start-date"><?php _e("From", "enginethemes"); ?></span>
 				<span class="me-pick-date">
-					<input id="me-pick-date-1" type="text" name="from_date" value="<?php echo empty($_REQUEST['from_date']) ? 'listing' : $_REQUEST['from_date']; ?>">
+					<input id="me-pick-date-1" type="text" name="from_date" value="<?php echo empty($_REQUEST['from_date']) ? '' : $_REQUEST['from_date']; ?>">
 				</span>
 				<span class="me-report-end-date"><?php _e("To", "enginethemes"); ?></span>
 				<span class="me-pick-date">
-					<input id="me-pick-date-2" type="text" name="to_date" value="<?php echo empty($_REQUEST['to_date']) ? 'listing' : $_REQUEST['to_date']; ?>">
+					<input id="me-pick-date-2" type="text" name="to_date" value="<?php echo empty($_REQUEST['to_date']) ? '' : $_REQUEST['to_date']; ?>">
 				</span>
 
 				<input type="submit" class="me-report-submit-btn" value="Filter">
