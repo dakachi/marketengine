@@ -121,6 +121,7 @@ function me_get_default_endpoints() {
         'purchases'       => 'purchases',
         'pay'             => 'pay',
         'listing_id'      => 'edit-listing',
+        'user_id'         => 'user-id',
     );
     return $endpoint_arr;
 }
@@ -194,6 +195,11 @@ function me_init_endpoint() {
     foreach ($endpoints as $endpoint) {
         add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
     }
+
+    $seller_profile_page_id = me_get_page_id('seller_profile');
+    $seller_profile_page = get_post($seller_profile_page_id);
+    $seller_endpoint = me_get_endpoint_name('user-id');
+    add_rewrite_rule( $seller_profile_page->post_name . '/'.$seller_endpoint.'/?([0-9]{1,})/page/?([0-9]{1,})/?$', 'index.php?page_id=' . $seller_profile_page_id . '&user-id=$matches[1]&paged=$matches[2]', 'top');
 
     rewrite_order_url();
 }

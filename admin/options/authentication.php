@@ -19,6 +19,15 @@ return array(
                 'data'        => marketengine_get_list_of_page(),
                 'template'    => array(),
             ),
+            'seller-profile-page' => array(
+                'label'       => __("Seller Profile Page", "enginethemes"),
+                'description' => __("Choose a page to display as Seller Profile Page", "enginethemes"),
+                'slug'        => 'seller-profile-page',
+                'type'        => 'select',
+                'name'        => 'me_seller_profile_page_id',
+                'data'        => marketengine_get_list_of_page(),
+                'template'    => array(),
+            ),
             'user-email-confirmation' => array(
                 'label'       => __("Email Confirmation", "enginethemes"),
                 'description' => __("", "enginethemes"),

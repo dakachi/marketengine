@@ -138,10 +138,17 @@ class ME_Shortcodes_Auth {
     }
 
     public static function me_seller_profile() {
+        $user_id = get_query_var('user-id');
         ob_start();
-        me_get_template('global/seller-profile');
+        me_get_template('seller-profile/seller-profile', array( 'user_id' => $user_id) );
         $content = ob_get_clean();
         return $content;
     }
 }
 ME_Shortcodes_Auth::init_shortcodes();
+
+function print_var( $var ) {
+    echo '<pre>';
+    var_dump($var);
+    echo '</pre>';
+}
