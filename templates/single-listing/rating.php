@@ -34,7 +34,7 @@ $review_count_details = $listing->get_review_count_details();
 							<div class="result-rating" data-score="<?php echo $review_score; ?>"></div>
 						</div>
 						<span class="me-base-review">
-							<?php printf(_n('Based on <b itemprop="reviewCount">%d<b> review', 'Based on <b itemprop="reviewCount">%d<b> reviews', $review_count,"enginethemes"),$review_count ); ?>
+							<?php printf(_n('Based on <b itemprop="reviewCount">%d</b> review', 'Based on <span itemprop="reviewCount">%d</span> reviews', $review_count,"enginethemes"),$review_count ); ?>
 						</span>
 					</div>
 				</div>

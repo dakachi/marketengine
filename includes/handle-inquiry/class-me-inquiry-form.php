@@ -29,6 +29,9 @@ class ME_Inquiry_Form {
 
     }
 
+    /**
+     * Update inquiry message count
+     */
     public static function new_message_in_inquiry($message_ID, $message) {
         if (!$message_ID) {
             return;
@@ -44,7 +47,7 @@ class ME_Inquiry_Form {
 
         
         $message_count = me_get_message_field('message_count', $inquiry_id);
-        me_update_message(array('post_type' => 'inquiry', 'message_count' => 10, 'ID' => $inquiry_id), true);
+        me_update_message(array('post_type' => 'inquiry', 'message_count' => ($message_count + 1), 'ID' => $inquiry_id), true);
 
         // update message meta
         if ($current_user_id == $inquiry->receiver) {

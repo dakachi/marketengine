@@ -1,6 +1,6 @@
 jQuery(document).ready(function($){
 
-	$('.icon-me-delete').on('click', function(e){
+	$('.me-icon-delete').on('click', function(e){
 		var form = $(this).parents('form'),
 			_status = $(this).data('status'),
 			_lising_id = form.children('#listing_id').val();
