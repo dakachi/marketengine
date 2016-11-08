@@ -68,7 +68,7 @@ function marketengine_get_start_and_end_date($quant, $week, $year) {
 }
 
 function marketengine_listing_report($args) {
-	global $wpdb;
+    global $wpdb;
     $defaults = array(
         'quant'     => 'day',
         'from_date' => '2016-04-22',
@@ -79,8 +79,16 @@ function marketengine_listing_report($args) {
         'showposts' => get_option('posts_per_page'),
     );
     $args = wp_parse_args($args, $defaults);
-    
+
     extract($args);
+
+    if (empty($from_date)) {
+        $from_date = '1970-1-1';
+    }
+
+    if (empty($to_date)) {
+        $to_date = date('Y-m-d', time());
+    }
 
     $pgstrt = absint(($paged - 1) * $showposts) . ', ';
 
@@ -119,8 +127,16 @@ function marketengine_members_report($args) {
         'showposts' => get_option('posts_per_page'),
     );
     $args = wp_parse_args($args, $defaults);
-    
+
     extract($args);
+
+    if (empty($from_date)) {
+        $from_date = '1970-1-1';
+    }
+
+    if (empty($to_date)) {
+        $to_date = date('Y-m-d', time());
+    }
 
     $pgstrt = absint(($paged - 1) * $showposts) . ', ';
 
@@ -155,7 +171,7 @@ function marketengine_members_report($args) {
 // group by year
 
 function marketengine_orders_report($args) {
-	global $wpdb;
+    global $wpdb;
     $defaults = array(
         'quant'     => 'day',
         'from_date' => '2016-04-22',
@@ -166,8 +182,16 @@ function marketengine_orders_report($args) {
         'showposts' => get_option('posts_per_page'),
     );
     $args = wp_parse_args($args, $defaults);
-    
+
     extract($args);
+
+    if (empty($from_date)) {
+        $from_date = '1970-1-1';
+    }
+
+    if (empty($to_date)) {
+        $to_date = date('Y-m-d', time());
+    }
 
     $pgstrt = absint(($paged - 1) * $showposts) . ', ';
 
@@ -195,19 +219,26 @@ function marketengine_orders_report($args) {
 }
 
 function marketengine_inquiries_report($args) {
-	global $wpdb;
+    global $wpdb;
     $defaults = array(
         'quant'     => 'day',
-        'from_date' => '2016-04-22',
-        'to_date'   => '2016-12-22',
+        'from_date' => '',
+        'to_date'   => '',
         'orderby'   => 'quant',
         'order'     => 'DESC',
         'paged'     => 1,
         'showposts' => get_option('posts_per_page'),
     );
     $args = wp_parse_args($args, $defaults);
-    
     extract($args);
+
+    if (empty($from_date)) {
+        $from_date = '1970-1-1';
+    }
+
+    if (empty($to_date)) {
+        $to_date = date('Y-m-d', time());
+    }
 
     $pgstrt = absint(($paged - 1) * $showposts) . ', ';
 

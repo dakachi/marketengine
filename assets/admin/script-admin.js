@@ -13,9 +13,10 @@ $(document).ready(function() {
 		setHeight:340
 	});
 	$( "#me-pick-date-1" ).datepicker({
+		dateFormat : 'yy-mm-dd',
 		onSelect: function( selectedDate ) {
-			$( "#me-pick-date-2" ).datepicker();
-		    $( "#me-pick-date-2" ).datepicker("option", "minDate", selectedDate );
+			$( "#me-pick-date-2" ).datepicker({dateFormat : 'yy-mm-dd'});
+		    $( "#me-pick-date-2" ).datepicker( { minDate : selectedDate, dateFormat : 'yy-mm-dd' } );
 		    setTimeout(function(){
 	            $( "#me-pick-date-2" ).datepicker('show');
 	        }, 16);
