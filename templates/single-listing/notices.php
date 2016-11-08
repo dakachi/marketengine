@@ -1,13 +1,13 @@
 <?php if(!me_is_activated_user()) : ?>
 
-<div class="me-authen-active">
-
+<div class="me-inactive">
+	
 	<?php if( me_get_notices() ) : ?>
 
 		<?php me_print_notices(); ?>
 
 	<?php else: ?>
-
+		<div class="me-authen-inactive">
 		<p><?php _e("You need to active your account before buy listings.", "enginethemes"); ?></p>
 
 	<?php
@@ -16,7 +16,7 @@
     ?>
 
         <p><a id="resend-confirmation-email" href="<?php echo $activate_email_link; ?>"><?php _e("Resend activation email.", "enginethemes"); ?></a></p>
-
+		</div>
 	<?php endif; ?>
 
 </div>
