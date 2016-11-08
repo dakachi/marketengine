@@ -22,10 +22,12 @@ $member_sinced = date_i18n( get_option( 'date_format' ), strtotime(get_the_autho
 			<span class="pull-left"><?php echo __('From:', 'enginethemes'); ?></span>
 			<b class="pull-right"><?php echo $location ?></b>
 		</li>
+		<?php /*
 		<li>
 			<span class="pull-left"><?php echo __('Language:', 'enginethemes'); ?></span>
 			<b class="pull-right">Vietnam</b>
 		</li>
+		*/ ?>
 		<li>
 			<span class="pull-left"><?php echo __('Member Sinced:', 'enginethemes'); ?></span>
 			<b class="pull-right"><?php echo $member_sinced; ?></b>
