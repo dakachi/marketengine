@@ -1,6 +1,6 @@
 <?php if(!me_is_activated_user()) : ?>
 
-<div class="me-col-md-3">
+<div class="me-authen-active">
 
 	<?php if( me_get_notices() ) : ?>
 
