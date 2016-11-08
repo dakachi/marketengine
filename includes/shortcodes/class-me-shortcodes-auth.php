@@ -46,7 +46,13 @@ class ME_Shortcodes_Auth {
     }
     public static function me_user_profile() {
         if(!me_is_activated_user() && !me_get_notices()) {
-            me_add_notice(__("<p>Thank you! Please <span>check your mailbox</span> to activate your account.</p>", "enginethemes"));
+            $message = "<p>" . __("Thank you! Please <span>check your mailbox</span> to activate your account.", "enginethemes") . "</p>";
+            $message .= "<p>" . __("Inactive account cannot do following actions:", "enginethemes") . "</p>";
+            $message .= "<p>" . __("- Edit user profile", "enginethemes") . "</p>";
+            $message .= "<p>" . __("- Post listings", "enginethemes") . "</p>";
+            $message .= "<p>" . __("- Order listings", "enginethemes") . "</p>";
+
+            me_add_notice( $message );
         }
         ob_start();
         me_get_template('account/user-profile');

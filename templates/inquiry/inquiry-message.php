@@ -19,15 +19,15 @@
 				<div class="me-row">
 					<div class="me-col-md-9 me-col-sm-8" id="upload_message_file">
 						<div class="me-contact-messages-wrap inquiry-message-wrapper">
-							
+
 							<div class="me-contact-message-user">
 								<h2><?php echo get_the_author_meta( 'display_name', $inquiry->receiver ); ?></h2>
 							</div>
 
 							<div id="messages-container" class="me-contact-messages" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
-								
+
 								<?php if($message_query->max_num_pages > 1) { me_get_template('inquiry/load-message-button'); } ?>
-								
+
 								<ul class="me-contact-messages-list" >
 									<?php foreach ($messages  as $key => $message) : ?>
 										<?php me_get_template('inquiry/message-item', array('message' => $message)); ?>
@@ -42,8 +42,8 @@
 							<?php if($listing) : ?>
 
 								<form method="post" id="send-message">
-									<div id="me-mc-container"></div>
-									<textarea id="me-message-content" class="required" required name="content" placeholder="<?php _e("Type your message here", "enginethemes"); ?>"></textarea>
+									<div class="me-mc-container" id="me-mc-container"></div>
+									<textarea id="me-message-content" class="required me-message-content" required name="content" placeholder="<?php _e("Type your message here", "enginethemes"); ?>"></textarea>
 									<span id="me-message-send-btn" class="me-message-send-btn"><i class="icon-me-attach"></i></span>
 
 									<?php wp_nonce_field( 'me-inquiry-message', '_msg_wpnonce' ); ?>

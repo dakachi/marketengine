@@ -1,7 +1,7 @@
 <?php if($listing) : ?>
 
 <?php
-$messages = new ME_Message_Query(array('post_parent' => $listing->ID, 'post_type' => 'inquiry', 'showposts' => -1, 'orderby' => 'modified'));
+$messages = new ME_Message_Query(array('post_parent' => $listing->ID, 'post_type' => 'inquiry', 'showposts' => 12, 'orderby' => 'modified'));
 ?>
 
 <div class="me-sidebar-contact">

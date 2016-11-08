@@ -8,7 +8,7 @@
 
 	<?php else: ?>
 
-		<p><?php _e("You need to active your account via email before buy listings.", "enginethemes"); ?></p>
+		<p><?php _e("You need to active your account before buy listings.", "enginethemes"); ?></p>
 
 	<?php
 		$profile_link = me_get_page_permalink('user_account');
