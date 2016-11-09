@@ -121,8 +121,8 @@ function marketengine_listing_report($args) {
 
     $from = " FROM {$wpdb->posts}";
 
-    $join = " LEFT JOIN  $wpdb->postmeta as A ON  A .post_id = {$wpdb->posts}.ID AND A.meta_value = 'contact' ";
-    $join .= " LEFT JOIN  $wpdb->postmeta as B ON  B.post_id = {$wpdb->posts}.ID AND B.meta_value = 'purchasion' ";
+    $join = " LEFT JOIN  $wpdb->postmeta as A ON  A .post_id = {$wpdb->posts}.ID AND A.meta_key = '_me_listing_type' AND A.meta_value = 'contact' ";
+    $join .= " LEFT JOIN  $wpdb->postmeta as B ON  B.post_id = {$wpdb->posts}.ID AND B.meta_key = '_me_listing_type' AND B.meta_value = 'purchasion' ";
 
     $where   = " WHERE post_type = 'listing'  AND post_date BETWEEN '{$from_date}' AND '{$to_date}'";
     $groupby = " GROUP BY `quant` ,`year`";

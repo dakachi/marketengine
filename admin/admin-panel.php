@@ -88,23 +88,20 @@ function marketengine_report_view() {
  * Add marketengine admin menu
  */
 function marketengine_option_menu() {
-    // add_menu_page(
-    //     __("MarketEngine Dashboard", "enginethemes"),
-    //     __("EngineThemes", "enginethemes"),
-    //     'manage_options',
-    //     'marketengine',
-    //     'edit.php?post_type=page',
-    //     '',
-    //     28
-    // );
     global $submenu;
     unset($submenu['edit.php?post_type=me_order'][10]);
-
+    unset($submenu['edit.php?post_type=listing'][10]);
     // Hide link on listing page
     if (isset($_GET['post_type']) && $_GET['post_type'] == 'me_order') {
         echo '<style type="text/css">
-    #favorite-actions, .add-new-h2, .tablenav, .page-title-action { display:none; }
-    </style>';
+            #favorite-actions, .add-new-h2, .tablenav, .page-title-action { display:none; }
+        </style>';
+    }
+
+    if (isset($_GET['post_type']) && $_GET['post_type'] == 'listing') {
+        echo '<style type="text/css">
+            #favorite-actions, .add-new-h2, .tablenav, .page-title-action { display:none; }
+        </style>';
     }
 
     add_submenu_page(
