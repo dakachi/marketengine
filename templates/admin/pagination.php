@@ -28,8 +28,8 @@
 		$big = 999999999;
 		$current_page = empty($_REQUEST['page_num']) ? 1 : $_REQUEST['page_num'];
 		echo paginate_links( array(
-			//'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
-			'format' => '?page_num=%#%',
+			'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+			'format' => '?paged=%#%',
 			'current' => max( 1, $current_page ),
 			'total' => $query['max_numb_pages']
 		) );
