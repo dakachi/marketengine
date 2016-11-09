@@ -198,7 +198,7 @@ function me_post_tags_meta_box($default, $taxonomy) {
             </div>
 
             <div class="ajaxtag hide-if-no-js">
-                <p><input type="text" id="new-tag-<?php echo $tax_name; ?>" name="newtag[<?php echo $tax_name; ?>]" class="newtag form-input-tip" size="16" autocomplete="off" aria-describedby="new-tag-<?php echo $tax_name; ?>-desc" placeholder="Type here and press enter to create listing tags." value="" />
+                <p><input type="text" id="new-tag-<?php echo $tax_name; ?>" name="newtag[<?php echo $tax_name; ?>]" class="newtag form-input-tip" size="16" autocomplete="off" aria-describedby="new-tag-<?php echo $tax_name; ?>-desc" value="" />
             </div>
 
             </div>
