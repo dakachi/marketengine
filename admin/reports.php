@@ -218,19 +218,19 @@ function marketengine_orders_report($args) {
     $field = $wpdb->posts . '.post_date';
     $time  = marketengine_get_quantity_report($field, $quant);
 
-    $select = "SELECT SQL_CALC_FOUND_ROWS {$time} ,
-                count({$wpdb->posts}.ID) as count,
-                sum({$wpdb->postmeta}.meta_value) as total
+    $select = "SELECT SQL_CALC_FOUND_ROWS ({$wpdb->posts}.ID), {$time} ,
+                count( DISTINCT  {$wpdb->posts}.ID) as count,
+                SUM(  {$wpdb->postmeta}.meta_value) as total
             ";
 
     $from = " FROM {$wpdb->posts}";
 
-    $join = " INNER JOIN  $wpdb->postmeta ON  {$wpdb->postmeta}.post_id = {$wpdb->posts}.ID ";
+    $join = " LEFT JOIN  $wpdb->postmeta ON  {$wpdb->postmeta}.post_id = {$wpdb->posts}.ID AND {$wpdb->postmeta}.meta_key = '_order_subtotal' ";
 
-    $where   = " WHERE post_type = 'me_order'  AND post_date BETWEEN '{$from_date}' AND '{$to_date}'";
+    $where   = " WHERE post_type = 'me_order' AND post_status != 'me-pending' AND post_date BETWEEN '{$from_date}' AND '{$to_date}'";
     $groupby = " GROUP BY `quant` ,`year` ";
     $orderby = " ORDER BY {$orderby} {$order} ";
-    $limits  = ' LIMIT ' . $pgstrt . $showposts;
+    $limits  = " LIMIT " . $pgstrt . $showposts;
 
     $sql = $select . $from . $join . $where . $groupby . $orderby . $limits;
 
