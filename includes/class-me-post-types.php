@@ -48,15 +48,15 @@ class ME_Post_Types {
             'search_items'          => __('Search Category', "enginethemes"),
             'popular_items'         => __('Popular Category', "enginethemes"),
             'all_items'             => __('All Category', "enginethemes"),
-            'parent_item'           => __('Parent listing category', "enginethemes"),
-            'parent_item_colon'     => __('Parent listing category', "enginethemes"),
-            'edit_item'             => __('Edit listing category', "enginethemes"),
-            'update_item'           => __('Update listing category', "enginethemes"),
-            'add_new_item'          => __('Add New listing category', "enginethemes"),
-            'new_item_name'         => __('New listing category Name', "enginethemes"),
+            'parent_item'           => __('Parent Listing Category', "enginethemes"),
+            'parent_item_colon'     => __('Parent Listing Category', "enginethemes"),
+            'edit_item'             => __('Edit Listing Category', "enginethemes"),
+            'update_item'           => __('Update Listing Category', "enginethemes"),
+            'add_new_item'          => __('Add New Listing Category', "enginethemes"),
+            'new_item_name'         => __('New Listing Category Name', "enginethemes"),
             'add_or_remove_items'   => __('Add or remove Category', "enginethemes"),
             'choose_from_most_used' => __('Choose from most used enginetheme ', "enginethemes"),
-            'menu_name'             => __('Category', "enginethemes"),
+            'menu_name'             => __('Categories', "enginethemes"),
         );
         //TODO: setup listing category permarlink
         $permalinks = get_option('me_permalinks');
@@ -98,7 +98,7 @@ class ME_Post_Types {
             'new_item_name'         => __('New listing tag Name', "enginethemes"),
             'add_or_remove_items'   => __('Tags (Add or remove tag)', "enginethemes"),
             'choose_from_most_used' => __('Choose from most used enginetheme ', "enginethemes"),
-            'menu_name'             => __('Listing Tag', "enginethemes"),
+            'menu_name'             => __('Tags', "enginethemes"),
         );
         //TODO: setup listing category permarlink
         $permalinks = get_option('me_permalinks');
@@ -156,7 +156,7 @@ class ME_Post_Types {
             'capability_type'    => 'post',
             'has_archive'        => 'listings',
             'hierarchical'       => false,
-            'menu_position'      => 25,
+            'menu_position'      => 30,
             'supports'           => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'custom-fields'),
         ));
 
@@ -184,17 +184,17 @@ class ME_Post_Types {
             'labels'             => array(
                 'name'               => __('Order', "enginethemes"),
                 'singular_name'      => __('Order', "enginethemes"),
-                'add_new'            => __('Add New', "enginethemes"),
+                'add_new'            => false,
                 'add_new_item'       => __('Add New Order', "enginethemes"),
                 'edit_item'          => __('Edit Order', "enginethemes"),
                 'new_item'           => __('New Order', "enginethemes"),
-                'all_items'          => __('All Orders', "enginethemes"),
+                'all_items'          => __('Orders', "enginethemes"),
                 'view_item'          => __('View Order', "enginethemes"),
                 'search_items'       => __('Search Order', "enginethemes"),
                 'not_found'          => __('No Orders found', "enginethemes"),
                 'not_found_in_trash' => __('No Orders found in Trash', "enginethemes"),
                 'parent_item_colon'  => '',
-                'menu_name'          => __('Order', "enginethemes"),
+                'menu_name'          => __('MarketEngine', "enginethemes"),
             ),
             'public'             => false,
             'publicly_queryable' => true,
@@ -207,7 +207,7 @@ class ME_Post_Types {
             'query_var'          => true,
             'capability_type'    => 'post',
             'hierarchical'       => false,
-            'menu_position'      => 25,
+            'menu_position'      => 28,
             'supports'           => array('title', 'editor', 'author', 'excerpt', 'custom-fields'),
         ));
 
