@@ -14,12 +14,6 @@ $nonce = wp_create_nonce( 'me-export' );
 		<form action="" method="get">
 			<input name="page" value="marketengine" type="hidden" />
 			<input name="tab" value="<?php echo empty($_REQUEST['tab']) ? 'listing' : $_REQUEST['tab']; ?>" type="hidden" />
-			<select name="quant" >
-				<?php foreach ($quants as $key => $quant) : ?>
-					<option value="<?php echo $key ?>" <?php  selected( $selected_quant, $key ) ?>><?php echo $quant; ?></option>
-				<?php endforeach; ?>
-			</select>
-
 			<span class="me-report-start-date"><?php _e("From", "enginethemes"); ?></span>
 			<span class="me-pick-date">
 				<input id="me-pick-date-1" type="text" name="from_date" value="<?php echo empty($_REQUEST['from_date']) ? '' : $_REQUEST['from_date']; ?>">
@@ -28,7 +22,14 @@ $nonce = wp_create_nonce( 'me-export' );
 			<span class="me-pick-date">
 				<input id="me-pick-date-2" type="text" name="to_date" value="<?php echo empty($_REQUEST['to_date']) ? '' : $_REQUEST['to_date']; ?>">
 			</span>
-
+			<span class="me-report-quantity">Quantity</span>
+				<span class="me-quantity-day">
+					<select name="quant" >
+						<?php foreach ($quants as $key => $quant) : ?>
+							<option value="<?php echo $key ?>" <?php  selected( $selected_quant, $key ) ?>><?php echo $quant; ?></option>
+						<?php endforeach; ?>
+					</select>
+				</span>
 			<input type="submit" class="me-report-submit-btn" value="<?php _e("Filter", "enginethemes"); ?>">
 
 		</form>
