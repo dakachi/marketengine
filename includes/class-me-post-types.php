@@ -203,7 +203,7 @@ class ME_Post_Types {
             ),
             'has_archive'        => true,
             'show_ui'            => true,
-            'show_in_menu'       => true,
+            'show_in_menu'       => current_user_can ('manage_options') ? 'marketengine' : false,
             'query_var'          => true,
             'capability_type'    => 'post',
             'hierarchical'       => false,
