@@ -98,11 +98,11 @@ function marketengine_option_menu() {
         </style>';
     }
 
-    // if (isset($_GET['post_type']) && $_GET['post_type'] == 'listing') {
-    //     echo '<style type="text/css">
-    //         #favorite-actions, .add-new-h2, .tablenav, .page-title-action { display:none; }
-    //     </style>';
-    // }
+    if (isset($_GET['post_type']) && $_GET['post_type'] == 'listing') {
+        echo '<style type="text/css">
+            #favorite-actions, .add-new-h2, .tablenav, .page-title-action { display:none; }
+        </style>';
+    }
 
     add_submenu_page(
         'edit.php?post_type=me_order',

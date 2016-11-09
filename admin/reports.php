@@ -114,7 +114,7 @@ function marketengine_listing_report($args) {
     $time  = marketengine_get_quantity_report($field, $quant);
 
     $select = "SELECT SQL_CALC_FOUND_ROWS {$time} ,
-                count({$wpdb->posts}.ID) as count,
+                count( DISTINCT {$wpdb->posts}.ID) as count,
                 count(A.meta_value) as contact_type ,
                 count(B.meta_value) as purchase_type
             ";
