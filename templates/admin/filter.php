@@ -6,7 +6,8 @@ $quants = array(
 	'quarter' => __( "Quarter" , "enginethemes" ),
 	'year' => __( "Year" , "enginethemes" ),
 );
-$selected_quant = !empty($_REQUEST['quant']) ? $_REQUEST['quant'] : 'day'
+$selected_quant = !empty($_REQUEST['quant']) ? $_REQUEST['quant'] : 'day';
+$nonce = wp_create_nonce( 'me-export' );
 ?>
 <div class="me-report-filter">
 	<span class="me-pick-date-box">
@@ -33,6 +34,6 @@ $selected_quant = !empty($_REQUEST['quant']) ? $_REQUEST['quant'] : 'day'
 		</form>
 	</span>
 	<span class="me-export-report">
-		<a href="<?php echo add_query_arg('export', 'csv'); ?>"><?php _e("Export", "enginethemes"); ?></a>
+		<a href="<?php echo add_query_arg( array('export' => 'csv', '_wpnonce' => $nonce)); ?>" target="_blank"><?php _e("Export", "enginethemes"); ?></a>
 	</span>
 </div>
