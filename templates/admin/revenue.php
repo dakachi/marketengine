@@ -50,16 +50,7 @@
 						<div class="me-table-col">21</div>
 					</div>
 				</div>
-				<div class="me-pagination-wrap">
-					<span class="me-pagination-result">10 of 124 results</span>
-					<span class="me-paginations">
-						<a class="prev page-numbers" href="#">&lt;</a>
-						<a class="page-numbers" href="#">1</a>
-						<span class="page-numbers current">2</span>
-						<a class="page-numbers" href="#">3</a>
-						<a class="next page-numbers" href="">&gt;</a>
-					</span>
-				</div>
+				<?php me_get_template('admin/pagination'); ?>
 			</div>
 		</div>
 	</div>

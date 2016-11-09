@@ -197,9 +197,11 @@ function me_init_endpoint() {
     }
 
     $seller_profile_page_id = me_get_page_id('seller_profile');
-    $seller_profile_page = get_post($seller_profile_page_id);
-    $seller_endpoint = me_get_endpoint_name('seller-id');
-    add_rewrite_rule( $seller_profile_page->post_name . '/'.$seller_endpoint.'/?([0-9]{1,})/page/?([0-9]{1,})/?$', 'index.php?page_id=' . $seller_profile_page_id . '&seller-id=$matches[1]&paged=$matches[2]', 'top');
+    if($seller_profile_page_id > -1) {
+        $seller_profile_page = get_post($seller_profile_page_id);
+        $seller_endpoint = me_get_endpoint_name('seller-id');
+        add_rewrite_rule( $seller_profile_page->post_name . '/'.$seller_endpoint.'/?([0-9]{1,})/page/?([0-9]{1,})/?$', 'index.php?page_id=' . $seller_profile_page_id . '&seller-id=$matches[1]&paged=$matches[2]', 'top');
+    }
 
     rewrite_order_url();
 }

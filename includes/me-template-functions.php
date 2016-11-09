@@ -315,6 +315,28 @@ function me_get_order_url($page, $query_var = 'order-id', $value = '') {
 }
 
 /**
+ * Returns url of seller profile
+ *
+ * @param $query_var
+ * @return $url if user_account page is existed
+ *          $home_url if no user_account page
+ *
+ */
+
+function me_get_seller_profile_url( $seller_id ) {
+    if(!$seller_id) return;
+
+    $url                 = me_get_page_permalink('seller_profile');
+    $order_endpoint      = me_get_endpoint_name('seller_id');
+
+    if ($url) {
+        $url = me_get_endpoint_url('seller_id', $seller_id, $url);
+        return $url;
+    }
+    return home_url();
+}
+
+/**
  * Prints shop categories.
  *
  * Adds an action to get shop categories selectbox template.
@@ -699,7 +721,7 @@ function me_trim_words( $text, $num_words = 55, $more = null ) {
 
 /**
  * Format file size Unit
- * 
+ *
  * @param int $bytes
  * @return string
  */
