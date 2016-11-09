@@ -97,7 +97,7 @@ function marketengine_option_menu()
     // Hide link on listing page
     if (isset($_GET['post_type']) && $_GET['post_type'] == 'me_order') {
         echo '<style type="text/css">
-            #favorite-actions, .add-new-h2, .tablenav, .page-title-action { display:none; }
+            #favorite-actions, .add-new-h2, .page-title-action { display:none; }
         </style>';
     }
 
