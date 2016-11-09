@@ -1,5 +1,6 @@
 <?php
-function marketengine_get_list_of_page() {
+function marketengine_get_list_of_page()
+{
     $args = array(
         'post_type'   => 'page',
         'post_status' => 'publish',
@@ -13,7 +14,8 @@ function marketengine_get_list_of_page() {
     return $list_of_page;
 }
 
-function marketengine_option_view() {
+function marketengine_option_view()
+{
 
     marketengine_option_header();
     //include 'option-view.php';
@@ -78,7 +80,8 @@ function marketengine_option_view() {
     marketengine_option_footer();
 }
 
-function marketengine_report_view() {
+function marketengine_report_view()
+{
     marketengine_option_header();
     me_get_template('admin/overview', $_REQUEST);
     marketengine_option_footer();
@@ -87,9 +90,9 @@ function marketengine_report_view() {
 /**
  * Add marketengine admin menu
  */
-function marketengine_option_menu() {
+function marketengine_option_menu()
+{   
     global $submenu;
-    unset($submenu['edit.php?post_type=me_order'][10]);
     unset($submenu['edit.php?post_type=listing'][10]);
     // Hide link on listing page
     if (isset($_GET['post_type']) && $_GET['post_type'] == 'me_order') {
@@ -104,17 +107,27 @@ function marketengine_option_menu() {
         </style>';
     }
 
+    add_menu_page(
+        __("MarketEngine Dashboard", "enginethemes"),
+        __("EngineThemes", "enginethemes"),
+        'manage_options',
+        'marketengine',
+        null,
+        null,
+        28
+    );
+
     add_submenu_page(
-        'edit.php?post_type=me_order',
+        'marketengine',
         __("Reports", "enginethemes"),
         __("Reports", "enginethemes"),
         'manage_options',
-        'marketengine',
+        'me-reports',
         'marketengine_report_view'
     );
 
     add_submenu_page(
-        'edit.php?post_type=me_order',
+        'marketengine',
         __("Settings", "enginethemes"),
         __("Settings", "enginethemes"),
         'manage_options',
@@ -124,8 +137,9 @@ function marketengine_option_menu() {
 }
 add_action('admin_menu', 'marketengine_option_menu');
 
-function marketengine_load_admin_option_script_css() {
-    if (!empty($_REQUEST['page']) && ('me-settings' == $_REQUEST['page'] || 'marketengine' == $_REQUEST['page'])) {
+function marketengine_load_admin_option_script_css()
+{
+    if (!empty($_REQUEST['page']) && ( strpos( $_REQUEST['page'], 'me') !== false ) ) {
         wp_register_style('marketengine-font-icon', ME_PLUGIN_URL . 'assets/admin/jquery.mCustomScrollbar.min.css', array(), '1.0');
         wp_enqueue_style('me-option-css', ME_PLUGIN_URL . 'assets/admin/marketengine-admin.css');
 
@@ -156,7 +170,8 @@ add_action('admin_enqueue_scripts', 'marketengine_load_admin_option_script_css')
  * Render marketengine admin option header
  * @since 1.0
  */
-function marketengine_option_header() {
+function marketengine_option_header()
+{
     ?>
 
 <div class="marketengine-admin">
@@ -172,7 +187,8 @@ function marketengine_option_header() {
  * Render marketengine admin option footer
  * @since 1.0
  */
-function marketengine_option_footer() {
+function marketengine_option_footer()
+{
     ?>
     </div>
 </div>
