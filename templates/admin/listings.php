@@ -12,19 +12,32 @@ if(empty($_REQUEST['paged'])) {
 }
 
 $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
+$active_section = empty($_REQUEST['section']) ? '' : $_REQUEST['section'];
 ?>
 
 <div class="me-tabs-content">
-	<!-- <ul class="me-nav me-section-nav">
-		<li class="active"><span>Revenue</span></li>
-		<li><span>Members</span></li>
-		<li><span>Orders &amp; Inquiries</span></li>
-	</ul> -->
+	<ul class="me-nav me-section-nav">
+		<li class="<?php if($active_section == '') {echo 'active';} ?>">
+			<a href="?page=marketengine&tab=listings">
+				<?php _e("All", "enginethemes"); ?>
+			</a>
+		</li>
+		<li class="<?php if($active_section == 'purchase') {echo 'active';} ?>">
+			<a href="?page=marketengine&tab=listings&section=purchase">
+				<?php _e("Purchase", "enginethemes"); ?>
+			</a>
+		</li>
+		<li class="<?php if($active_section == 'contact') {echo 'active';} ?>">
+			<a href="?page=marketengine&tab=listings&section=contact">
+				<?php _e("Contact", "enginethemes"); ?>
+			</a>
+		</li>
+	</ul>
 	<div class="me-section-container">
 
 		<div class="me-section-content">
 			<div class="me-revenue-section">
-				<h3>Report 4 fields listing</h3>
+				<h3><?php _e("Report Listings", "enginethemes"); ?></h3>
 				<?php me_get_template('admin/filter'); ?>
 				<div class="me-table me-report-table">
 					<div class="me-table-rhead">
@@ -32,9 +45,23 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 							<span><?php _e("No.", "enginethemes"); ?></span>
 						</div>
 						<?php marketengine_report_heading('quant', __("Date", "enginethemes")) ?>
-						<?php marketengine_report_heading('count', __("Total Listings", "enginethemes")) ?>
-						<?php marketengine_report_heading('purchase_type', __("Purchase", "enginethemes")) ?>
-						<?php marketengine_report_heading('contact_type', __("Contact", "enginethemes")) ?>
+						
+						<?php 
+							if($active_section == '') {
+								marketengine_report_heading('count', __("Total Listings", "enginethemes"));
+							}
+						?>
+						<?php 
+							if($active_section == '' || $active_section =='purchase') {
+								marketengine_report_heading('purchase_type', __("Purchase", "enginethemes"));
+							}
+						?>
+
+						<?php 
+							if($active_section == '' || $active_section =='contact') {
+								marketengine_report_heading('contact_type', __("Contact", "enginethemes"));
+							}
+						?>
 					</div>
 					<?php foreach ($listings['posts'] as $key => $listing) : ?>
 
@@ -43,9 +70,19 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 							<div class="me-table-col">
 								<?php echo marketengine_get_start_and_end_date($quant, $listing->quant, $listing->year); ?>
 							</div>
-							<div class="me-table-col"><?php echo $listing->count; ?></div>
-							<div class="me-table-col"><?php echo $listing->purchase_type; ?></div>
-							<div class="me-table-col"><?php echo $listing->contact_type; ?></div>
+
+							<?php if($active_section == '') : ?>
+								<div class="me-table-col"><?php echo $listing->count; ?></div>
+							<?php endif; ?>
+							
+							<?php if($active_section == '' || $active_section =='purchase') : ?>
+								<div class="me-table-col"><?php echo $listing->purchase_type; ?></div>
+							<?php endif; ?>
+
+							<?php if($active_section == '' || $active_section =='contact') : ?>
+								<div class="me-table-col"><?php echo $listing->contact_type; ?></div>
+							<?php endif; ?>
+
 						</div>
 
 						<?php $i++; ?>

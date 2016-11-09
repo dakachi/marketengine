@@ -95,7 +95,7 @@ function marketengine_listing_report($args) {
         'orderby'   => 'quant',
         'order'     => 'DESC',
         'paged'     => 1,
-        'showposts' => get_option('posts_per_page'),
+        'showposts' => get_option('posts_per_page')
     );
     $args = wp_parse_args($args, $defaults);
     extract($args);
