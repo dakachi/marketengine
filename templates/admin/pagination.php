@@ -5,10 +5,10 @@
 <div class="me-pagination-wrap">
 	<span class="me-pagination-result">
 	<?php 
-	if(empty($_REQUEST['page_num'])) {
+	if(empty($_REQUEST['paged'])) {
 		$current = 0;
 	}else {
-		$current = (($_REQUEST['page_num'] - 1) * $posts_per_page);
+		$current = (($_REQUEST['paged'] - 1) * $posts_per_page);
 	}
 
 	$final = $posts_per_page + $current;
@@ -26,7 +26,7 @@
 	<span class="me-paginations">
 		<?php 
 		$big = 999999999;
-		$current_page = empty($_REQUEST['page_num']) ? 1 : $_REQUEST['page_num'];
+		$current_page = empty($_REQUEST['paged']) ? 1 : $_REQUEST['paged'];
 		echo paginate_links( array(
 			'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
 			'format' => '?paged=%#%',
