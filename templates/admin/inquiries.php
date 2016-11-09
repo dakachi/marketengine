@@ -29,14 +29,10 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 				<div class="me-table me-report-table">
 					<div class="me-table-rhead">
 						<div class="me-table-col">
-							<a href="#" class="me-sort-asc"><?php _e("No.", "enginethemes"); ?></a>
+							<span><?php _e("No.", "enginethemes"); ?></span>
 						</div>
-						<div class="me-table-col">
-							<a href="#" class="me-sort-desc"><?php _e("Date", "enginethemes"); ?></a>
-						</div>
-						<div class="me-table-col">
-							<a href="#" class="me-sort-asc"><?php _e("Total Inquiries", "enginethemes"); ?></a>
-						</div>
+						<?php marketengine_report_heading('quant', __("Date", "enginethemes")) ?>
+						<?php marketengine_report_heading('count', __("Total Inquiries", "enginethemes")) ?>
 					</div>
 					<?php foreach ($inquiries['posts'] as $key => $inquiry) : ?>
 

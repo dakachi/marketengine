@@ -229,8 +229,7 @@ function marketengine_orders_report($args) {
 
     $where   = " WHERE post_type = 'me_order'  AND post_date BETWEEN '{$from_date}' AND '{$to_date}'";
     $groupby = " GROUP BY `quant` ,`year` ";
-    $orderby = " ORDER BY {$orderby} ";
-    $order   = " ORDER {$order} ";
+    $orderby = " ORDER BY {$orderby} {$order} ";
     $limits  = ' LIMIT ' . $pgstrt . $showposts;
 
     $sql = $select . $from . $join . $where . $groupby . $orderby . $limits;
