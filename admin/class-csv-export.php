@@ -66,7 +66,7 @@ class CSVExport
 		foreach ($listings as $key => $listing) {
 			$time = marketengine_get_start_and_end_date($quant, $listing->quant, $listing->year);
 			$csv_output .= str_replace( ',', '-', $time).",";
-			$csv_output .= $listing->count.",";
+			$csv_output .= $listing->purchase_type + $listing->contact_type.",";
 			$csv_output .= $listing->purchase_type.",";
 			$csv_output .= $listing->contact_type.",";	
 			$csv_output .= "\n";
