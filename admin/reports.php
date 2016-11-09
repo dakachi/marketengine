@@ -4,6 +4,25 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+function marketengine_report_heading($name, $lable) {
+    $class = '';
+    $link = add_query_arg('orderby', $name);
+    if (!empty($_REQUEST['orderby']) && $_REQUEST['orderby'] == $name) {
+        if (!empty($_REQUEST['order']) && $_REQUEST['order'] == 'desc') {
+            $class = 'me-sort-asc';
+            $link = add_query_arg('order', 'asc', $link);
+        }else {
+            $class = 'me-sort-desc';
+            $link = add_query_arg('order', 'desc', $link);
+        }
+    }
+    ?>
+    <div class="me-table-col">
+        <a href="<?php echo $link; ?>" class="<?php echo $class; ?>"><?php echo $lable;?></a>
+    </div>
+<?php
+}
+
 function marketengine_get_quantity_report($col_name, $quant, $name = 'quant') {
     switch ($quant) {
     case 'week':
@@ -79,7 +98,6 @@ function marketengine_listing_report($args) {
         'showposts' => get_option('posts_per_page'),
     );
     $args = wp_parse_args($args, $defaults);
-
     extract($args);
 
     if (empty($from_date)) {
@@ -95,7 +113,7 @@ function marketengine_listing_report($args) {
     $field = $wpdb->posts . '.post_date';
     $time  = marketengine_get_quantity_report($field, $quant);
 
-    $select  = "SELECT SQL_CALC_FOUND_ROWS {$time} ,
+    $select = "SELECT SQL_CALC_FOUND_ROWS {$time} ,
                 count({$wpdb->posts}.ID) as count,
                 count(A.meta_value) as contact_type ,
                 count(B.meta_value) as purchase_type
@@ -108,8 +126,8 @@ function marketengine_listing_report($args) {
 
     $where   = " WHERE post_type = 'listing'  AND post_date BETWEEN '{$from_date}' AND '{$to_date}'";
     $groupby = " GROUP BY `quant` ,`year`";
-    $orderby = " ORDER BY {$orderby} ";
-    $order   = " ORDER {$order} ";
+    $orderby = " ORDER BY {$orderby} {$order}";
+
     $limits  = ' LIMIT ' . $pgstrt . $showposts;
 
     $sql = $select . $from . $join . $where . $groupby . $orderby . $limits;
@@ -156,8 +174,7 @@ function marketengine_members_report($args) {
     $select  = "SELECT SQL_CALC_FOUND_ROWS {$time} , count({$wpdb->users}.ID) as count FROM {$wpdb->users}";
     $where   = " WHERE user_registered BETWEEN '{$from_date}' AND '{$to_date}' ";
     $groupby = " GROUP BY `quant` ,`year` ";
-    $orderby = " ORDER BY {$orderby} ";
-    $order   = " ORDER {$order} ";
+    $orderby = " ORDER BY {$orderby} {$order}";
     $limits  = ' LIMIT ' . $pgstrt . $showposts;
 
     $sql = $select . $where . $groupby . $orderby . $limits;
@@ -201,7 +218,7 @@ function marketengine_orders_report($args) {
     $field = $wpdb->posts . '.post_date';
     $time  = marketengine_get_quantity_report($field, $quant);
 
-    $select  = "SELECT SQL_CALC_FOUND_ROWS {$time} ,
+    $select = "SELECT SQL_CALC_FOUND_ROWS {$time} ,
                 count({$wpdb->posts}.ID) as count,
                 sum({$wpdb->postmeta}.meta_value) as total
             ";

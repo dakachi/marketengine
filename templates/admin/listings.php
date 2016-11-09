@@ -29,20 +29,12 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 				<div class="me-table me-report-table">
 					<div class="me-table-rhead">
 						<div class="me-table-col">
-							<a href="#" class="me-sort-asc"><?php _e("No.", "enginethemes"); ?></a>
+							<span><?php _e("No.", "enginethemes"); ?></span>
 						</div>
-						<div class="me-table-col">
-							<a href="#" class="me-sort-desc"><?php _e("Date", "enginethemes"); ?></a>
-						</div>
-						<div class="me-table-col">
-							<a href="#" class="me-sort-asc"><?php _e("Total Listings", "enginethemes"); ?></a>
-						</div>
-						<div class="me-table-col">
-							<a href="#" class="me-sort-asc"><?php _e("Contact", "enginethemes"); ?></a>
-						</div>
-						<div class="me-table-col">
-							<a href="#" class="me-sort-asc"><?php _e("Purchasion", "enginethemes"); ?></a>
-						</div>
+						<?php marketengine_report_heading('quant', __("Date", "enginethemes")) ?>
+						<?php marketengine_report_heading('count', __("Total Listings", "enginethemes")) ?>
+						<?php marketengine_report_heading('purchase_type', __("Purchase", "enginethemes")) ?>
+						<?php marketengine_report_heading('contact_type', __("Contact", "enginethemes")) ?>
 					</div>
 					<?php foreach ($listings['posts'] as $key => $listing) : ?>
 
@@ -52,8 +44,8 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 								<?php echo marketengine_get_start_and_end_date($quant, $listing->quant, $listing->year); ?>
 							</div>
 							<div class="me-table-col"><?php echo $listing->count; ?></div>
-							<div class="me-table-col"><?php echo $listing->contact_type; ?></div>
 							<div class="me-table-col"><?php echo $listing->purchase_type; ?></div>
+							<div class="me-table-col"><?php echo $listing->contact_type; ?></div>
 						</div>
 
 						<?php $i++; ?>
