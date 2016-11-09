@@ -94,7 +94,7 @@ function marketengine_listing_report($args) {
         'to_date'   => '2016-12-22',
         'orderby'   => 'quant',
         'order'     => 'DESC',
-        'paged'     => 1,
+        'page_num'     => 1,
         'showposts' => get_option('posts_per_page')
     );
     $args = wp_parse_args($args, $defaults);
@@ -108,7 +108,7 @@ function marketengine_listing_report($args) {
         $to_date = date('Y-m-d', time());
     }
 
-    $pgstrt = absint(($paged - 1) * $showposts) . ', ';
+    $pgstrt = absint(($page_num - 1) * $showposts) . ', ';
 
     $field = $wpdb->posts . '.post_date';
     $time  = marketengine_get_quantity_report($field, $quant);
@@ -151,7 +151,7 @@ function marketengine_members_report($args) {
         'to_date'   => '2016-12-22',
         'orderby'   => 'quant',
         'order'     => 'DESC',
-        'paged'     => 1,
+        'page_num'     => 1,
         'showposts' => get_option('posts_per_page'),
     );
     $args = wp_parse_args($args, $defaults);
@@ -166,7 +166,7 @@ function marketengine_members_report($args) {
         $to_date = date('Y-m-d', time());
     }
 
-    $pgstrt = absint(($paged - 1) * $showposts) . ', ';
+    $pgstrt = absint(($page_num - 1) * $showposts) . ', ';
 
     $field = $wpdb->users . '.user_registered';
     $time  = marketengine_get_quantity_report($field, $quant);
@@ -198,7 +198,7 @@ function marketengine_orders_report($args) {
         'to_date'   => '2016-12-22',
         'orderby'   => 'quant',
         'order'     => 'DESC',
-        'paged'     => 1,
+        'page_num'     => 1,
         'showposts' => get_option('posts_per_page'),
     );
     $args = wp_parse_args($args, $defaults);
@@ -213,7 +213,7 @@ function marketengine_orders_report($args) {
         $to_date = date('Y-m-d', time());
     }
 
-    $pgstrt = absint(($paged - 1) * $showposts) . ', ';
+    $pgstrt = absint(($page_num - 1) * $showposts) . ', ';
 
     $field = $wpdb->posts . '.post_date';
     $time  = marketengine_get_quantity_report($field, $quant);
@@ -253,7 +253,7 @@ function marketengine_inquiries_report($args) {
         'to_date'   => '',
         'orderby'   => 'quant',
         'order'     => 'DESC',
-        'paged'     => 1,
+        'page_num'     => 1,
         'showposts' => get_option('posts_per_page'),
     );
     $args = wp_parse_args($args, $defaults);
@@ -267,7 +267,7 @@ function marketengine_inquiries_report($args) {
         $to_date = date('Y-m-d', time());
     }
 
-    $pgstrt = absint(($paged - 1) * $showposts) . ', ';
+    $pgstrt = absint(($page_num - 1) * $showposts) . ', ';
 
     $field = $wpdb->marketengine_message_item . '.post_date';
     $time  = marketengine_get_quantity_report($field, $quant);

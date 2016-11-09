@@ -160,7 +160,6 @@ function marketengine_load_admin_option_script_css()
     .toplevel_page_marketengine, #menu-posts-listing {
         margin-top: 10px;
     }
-
     </style>
     <?php
 }
