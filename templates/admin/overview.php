@@ -19,7 +19,7 @@ if(empty($_REQUEST['tab'])) {
 	<ul class="me-nav me-tabs-nav">
 		<?php 
 		foreach ($admin_report_tabs as $key => $tab) : ?>
-			<li <?php if($_REQUEST['tab'] == $key ) {echo 'class="active"';} ?>><a href="?page=marketengine&tab=<?php echo $key; ?>"><?php echo $tab; ?></a></li>
+			<li <?php if($_REQUEST['tab'] == $key ) {echo 'class="active"';} ?>><a href="?page=me-reports&tab=<?php echo $key; ?>"><?php echo $tab; ?></a></li>
 		<?php endforeach; ?>
 	</ul>
 	<div class="me-tabs-container">

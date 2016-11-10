@@ -30,7 +30,7 @@ $nonce = wp_create_nonce( 'me-export' );
 						<?php endforeach; ?>
 					</select>
 				</span>
-			<input type="submit" class="me-report-submit-btn" value="<?php _e("Filter", "enginethemes"); ?>">
+			<input type="submit" class="me-report-submit-btn" value="<?php _e("Run Report", "enginethemes"); ?>">
 
 		</form>
 	</span>

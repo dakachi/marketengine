@@ -21,12 +21,16 @@ class ME_Template_Loader {
     public static function template_include($template) {
         $find = array();
         $file = '';
-
         if (is_embed()) {
             return $template;
         }
 
-        if (is_single() && get_post_type() == 'listing') {
+        if (is_author()) {
+
+            $file = 'seller-profile/seller-profile.php';
+            $find[] = $file;
+            $find[] = ME()->template_path() . $file;
+        } elseif (is_single() && get_post_type() == 'listing') {
 
             $file = 'single-listing.php';
             $find[] = $file;

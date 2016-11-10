@@ -18,17 +18,17 @@ $active_section = empty($_REQUEST['section']) ? '' : $_REQUEST['section'];
 <div class="me-tabs-content">
 	<ul class="me-nav me-section-nav">
 		<li class="<?php if($active_section == '') {echo 'active';} ?>">
-			<a href="?page=marketengine&tab=listings">
+			<a href="?page=me-reports&tab=listings">
 				<?php _e("All", "enginethemes"); ?>
 			</a>
 		</li>
 		<li class="<?php if($active_section == 'purchase') {echo 'active';} ?>">
-			<a href="?page=marketengine&tab=listings&section=purchase">
+			<a href="?page=me-reports&tab=listings&section=purchase">
 				<?php _e("Purchase", "enginethemes"); ?>
 			</a>
 		</li>
 		<li class="<?php if($active_section == 'contact') {echo 'active';} ?>">
-			<a href="?page=marketengine&tab=listings&section=contact">
+			<a href="?page=me-reports&tab=listings&section=contact">
 				<?php _e("Contact", "enginethemes"); ?>
 			</a>
 		</li>
@@ -72,7 +72,7 @@ $active_section = empty($_REQUEST['section']) ? '' : $_REQUEST['section'];
 							</div>
 
 							<?php if($active_section == '') : ?>
-								<div class="me-table-col"><?php echo $listing->count; ?></div>
+								<div class="me-table-col"><?php echo $listing->purchase_type + $listing->contact_type; ?></div>
 							<?php endif; ?>
 							
 							<?php if($active_section == '' || $active_section =='purchase') : ?>

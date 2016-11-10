@@ -46,7 +46,43 @@ class CSVExport
 
 	}
 
+	/**
+	 * Generate CSV row
+	 * @param array $headings
+	 * @param array $data
+	 */
+	public function generate_rows($headings, $data, $quant) {
+		$csv_output = '';
+		foreach ($headings as $key => $heading) {
+			$csv_output = $csv_output . $heading . ',';
+		}
+		$csv_output .= "\n";
+
+		foreach ($data as $key => $item) {
+			foreach ($headings as $key => $heading) {
+				if($key == 'quant') {
+					$time = marketengine_get_start_and_end_date($quant, $item->quant, $item->year);
+					$csv_output .= str_replace( ',', '-', $time).",";
+				}else {
+					$csv_output .= $item->$key.",";
+				}
+			}
+			$csv_output .= "\n";
+		}
+		return $csv_output;
+	}
+
 	public function generate_listings() {
+
+		$args = $_REQUEST;
+		$args['showposts'] = 300000;
+		$args['paged'] = 1;
+		$query = marketengine_listing_report($args);
+		
+		$quant = empty($args['quant']) ? 'day' : $args['quant'];
+
+		$listings = $query['posts'];
+
 		$csv_output = '';
 		
 		$csv_output = $csv_output ." Date,";
@@ -55,18 +91,10 @@ class CSVExport
 		$csv_output = $csv_output ." Purchase,";
 		$csv_output .= "\n";
 
-		$args = $_REQUEST;
-		$args['showposts'] = 300000;
-		$query = marketengine_listing_report($args);
-		
-		$quant = empty($args['quant']) ? 'day' : $args['quant'];
-
-		$listings = $query['posts'];
-
 		foreach ($listings as $key => $listing) {
 			$time = marketengine_get_start_and_end_date($quant, $listing->quant, $listing->year);
 			$csv_output .= str_replace( ',', '-', $time).",";
-			$csv_output .= $listing->count.",";
+			$csv_output .= $listing->purchase_type + $listing->contact_type.",";
 			$csv_output .= $listing->purchase_type.",";
 			$csv_output .= $listing->contact_type.",";	
 			$csv_output .= "\n";
@@ -75,77 +103,63 @@ class CSVExport
 	}
 
 	public function generate_orders() {
-		$csv_output = '';
-		
-		$csv_output = $csv_output ." Date,";
-		$csv_output = $csv_output ." Total Orders,";
-		$csv_output = $csv_output ." Income,";
-		$csv_output .= "\n";
 
 		$args = $_REQUEST;
 		$args['showposts'] = 300000;
+		$args['paged'] = 1;
 		$query = marketengine_orders_report($args);
 		
 		$quant = empty($args['quant']) ? 'day' : $args['quant'];
 
 		$orders = $query['posts'];
 
-		foreach ($orders as $key => $order) {
-			$time = marketengine_get_start_and_end_date($quant, $order->quant, $order->year);
-			$csv_output .= str_replace( ',', '-', $time).",";
-			$csv_output .= $order->count.",";
-			$csv_output .= $order->total.",";
-			$csv_output .= "\n";
-		}
-		return $csv_output;
+		$headings = array(
+			'quant' => __("Date", "enginethemes"),
+			'count' => __("Total Orders", "enginethemes"),
+			'total' => __("Income", "enginethemes") . '(' . me_option('payment-currency-sign') . ')'
+		);
+
+		return $this->generate_rows($headings, $orders, $quant);
 	}
 
 	public function generate_inquiries() {
-		$csv_output = '';
-		
-		$csv_output = $csv_output ." Date,";
-		$csv_output = $csv_output ." Total Inquiries,";
-		$csv_output .= "\n";
 
 		$args = $_REQUEST;
 		$args['showposts'] = 300000;
+		$args['paged'] = 1;
 		$query = marketengine_inquiries_report($args);
 		
 		$quant = empty($args['quant']) ? 'day' : $args['quant'];
 
 		$inquiries = $query['posts'];
 
-		foreach ($inquiries as $key => $inquiry) {
-			$time = marketengine_get_start_and_end_date($quant, $inquiry->quant, $inquiry->year);
-			$csv_output .= str_replace( ',', '-', $time).",";
-			$csv_output .= $inquiry->count.",";
-			$csv_output .= "\n";
-		}
-		return $csv_output;
+		$headings = array(
+			'quant' => __("Date", "enginethemes"),
+			'count' => __("Total Inquiries", "enginethemes")
+		);
+
+		return $this->generate_rows($headings, $inquiries, $quant);
+
 	}
 
 	public function generate_members() {
-		$csv_output = '';
-		
-		$csv_output = $csv_output ." Date,";
-		$csv_output = $csv_output ." Total Members,";
-		$csv_output .= "\n";
 
 		$args = $_REQUEST;
 		$args['showposts'] = 300000;
+		$args['paged'] = 1;
 		$query = marketengine_members_report($args);
 		
 		$quant = empty($args['quant']) ? 'day' : $args['quant'];
 
 		$members = $query['posts'];
 
-		foreach ($members as $key => $member) {
-			$time = marketengine_get_start_and_end_date($quant, $member->quant, $member->year);
-			$csv_output .= str_replace( ',', '-', $time).",";
-			$csv_output .= $member->count.",";
-			$csv_output .= "\n";
-		}
-		return $csv_output;
+		$headings = array(
+			'quant' => __("Registration Date", "enginethemes"),
+			'count' => __("Total Members", "enginethemes")
+		);
+
+		return $this->generate_rows($headings, $members, $quant);
+		
 	}
 
 }
