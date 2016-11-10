@@ -31,6 +31,18 @@ return apply_filters('marketengine_marketplace_options',
                     'name'        => 'paypal-commission-fee',
                 ),
 
+                'dispute-time-limit' => array(
+                    'label'       => __("Displute Time Limit", "enginethemes"),
+                    'description' => __("", "enginethemes"),
+                    'slug'        => 'dispute-time-limit',
+                    'type'        => 'number',
+                    'class_name'  => 'no-zero positive',
+                    'attributes'  => array(
+                        'min' => 1,
+                    ),
+                    'name'        => 'dispute-time-limit',
+                ),
+
                 'currency'               => array(
                     'label'              => __("Currency Options", "enginethemes"),
                     'description'        => __("Setup the current market currency for the listing price", "enginethemes"),
@@ -91,17 +103,6 @@ return apply_filters('marketengine_marketplace_options',
                         // )
                     ),
 					// limit time to close order
-                    'dispute-time-limit' => array(
-                        'label'       => __("Displute Time Limit", "enginethemes"),
-                        'description' => __("", "enginethemes"),
-                        'slug'        => 'dispute-time-limit',
-                        'type'        => 'number',
-                        'class_name'  => 'no-zero positive',
-                        'attributes'  => array(
-                            'min' => 1,
-                        ),
-                        'name'        => 'dispute-time-limit',
-                    ),
                 ),
             ),
 		),
