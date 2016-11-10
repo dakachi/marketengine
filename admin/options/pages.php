@@ -5,8 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 return array(
-    'authentication' =>
-array
+    'authentication' => array
     (
         'title'    => __("Authentication", "enginethemes"),
         'slug'     => 'authentication',
@@ -14,7 +13,7 @@ array
         'template' => array(
             'user-account-page' => array(
                 'label'       => __("User Account Page", "enginethemes"),
-                'description' => __("Choose a page to display as User Account Page", "enginethemes"),
+                'description' => __("Choose a page to display as User Account Page, page content [me_user_account]", "enginethemes"),
                 'slug'        => 'user-account-page',
                 'type'        => 'select',
                 'name'        => 'me_user_account_page_id',
@@ -115,7 +114,7 @@ array
         'template' => array(
             'post-listings-page' => array(
                 'label'         => __("Post Listing Page", "enginethemes"),
-                'description'   => '',
+                'description'   => __("Choose a page to display as Post Listing Page", "enginethemes"),
                 'slug'          => 'me_post_listing_form',
                 'name'          => 'me_post_listing_page_id',
                 'type'          => 'select',
@@ -124,7 +123,7 @@ array
             ),
             'listings-page' => array(
                 'label'         => __("Edit Listing Page", "enginethemes"),
-                'description'   => '',
+                'description'   => __("Choose a page to display as Edit Listing Page", "enginethemes"),
                 'slug'          => 'me_listings',
                 'name'          => 'me_edit_listing_page_id',
                 'type'          => 'select',
