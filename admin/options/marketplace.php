@@ -30,6 +30,18 @@ return apply_filters('marketengine_marketplace_options',
                     ),
                     'name'        => 'paypal-commission-fee',
                 ),
+                // limit time to close order
+                'dispute-time-limit' => array(
+                    'label'       => __("Displute Time Limit", "enginethemes"),
+                    'description' => __("The duration to close completed order (by day)", "enginethemes"),
+                    'slug'        => 'dispute-time-limit',
+                    'type'        => 'number',
+                    'class_name'  => 'no-zero positive',
+                    'attributes'  => array(
+                        'min' => 1,
+                    ),
+                    'name'        => 'dispute-time-limit',
+                ),
 
                 'currency'               => array(
                     'label'              => __("Currency Options", "enginethemes"),
@@ -90,36 +102,23 @@ return apply_filters('marketengine_marketplace_options',
                         //     'name'        => 'number-of-sep',
                         // )
                     ),
-					// limit time to close order
-                    'dispute-time-limit' => array(
-                        'label'       => __("Displute Time Limit", "enginethemes"),
-                        'description' => __("", "enginethemes"),
-                        'slug'        => 'dispute-time-limit',
-                        'type'        => 'number',
-                        'class_name'  => 'no-zero positive',
-                        'attributes'  => array(
-                            'min' => 1,
-                        ),
-                        'name'        => 'dispute-time-limit',
-                    ),
                 ),
             ),
+		),
+        'listing-type' => array(
+            'title'    => __("Listing Type", "enginethemes"),
+            'slug'     => 'listing-type-section',
+            'type'     => 'section',
+            'template' => array(
 
-            'listing-type' => array(
-                'title'    => __("Listing Type", "enginethemes"),
-                'slug'     => 'listing-type-section',
-                'type'     => 'section',
-                'template' => array(
-
-                ),
             ),
-            'sample-data'  => array(
-                'title'    => __("Sample Data", "enginethemes"),
-                'slug'     => 'sample-data-section',
-                'type'     => 'section',
-                'template' => array(
+        ),
+        'sample-data'  => array(
+            'title'    => __("Sample Data", "enginethemes"),
+            'slug'     => 'sample-data-section',
+            'type'     => 'section',
+            'template' => array(
 
-                ),
             ),
         ),
     )

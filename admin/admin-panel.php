@@ -100,7 +100,7 @@ function marketengine_option_menu() {
 
     add_menu_page(
         __("MarketEngine Dashboard", "enginethemes"),
-        __("EngineThemes", "enginethemes"),
+        __("MarketEngine", "enginethemes"),
         'manage_options',
         'marketengine',
         null,
