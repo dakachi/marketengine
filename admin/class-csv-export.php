@@ -1,4 +1,4 @@
-<?php 
+<?php
 class CSVExport
 {
 	/**
@@ -78,13 +78,13 @@ class CSVExport
 		$args['showposts'] = 300000;
 		$args['paged'] = 1;
 		$query = marketengine_listing_report($args);
-		
+
 		$quant = empty($args['quant']) ? 'day' : $args['quant'];
 
 		$listings = $query['posts'];
 
 		$csv_output = '';
-		
+
 		$csv_output = $csv_output ." Date,";
 		$csv_output = $csv_output ." Total Listings,";
 		$csv_output = $csv_output ." Contact,";
@@ -96,7 +96,7 @@ class CSVExport
 			$csv_output .= str_replace( ',', '-', $time).",";
 			$csv_output .= $listing->purchase_type + $listing->contact_type.",";
 			$csv_output .= $listing->purchase_type.",";
-			$csv_output .= $listing->contact_type.",";	
+			$csv_output .= $listing->contact_type.",";
 			$csv_output .= "\n";
 		}
 		return $csv_output;
@@ -108,7 +108,7 @@ class CSVExport
 		$args['showposts'] = 300000;
 		$args['paged'] = 1;
 		$query = marketengine_orders_report($args);
-		
+
 		$quant = empty($args['quant']) ? 'day' : $args['quant'];
 
 		$orders = $query['posts'];
@@ -128,7 +128,7 @@ class CSVExport
 		$args['showposts'] = 300000;
 		$args['paged'] = 1;
 		$query = marketengine_inquiries_report($args);
-		
+
 		$quant = empty($args['quant']) ? 'day' : $args['quant'];
 
 		$inquiries = $query['posts'];
@@ -148,7 +148,7 @@ class CSVExport
 		$args['showposts'] = 300000;
 		$args['paged'] = 1;
 		$query = marketengine_members_report($args);
-		
+
 		$quant = empty($args['quant']) ? 'day' : $args['quant'];
 
 		$members = $query['posts'];
@@ -159,12 +159,12 @@ class CSVExport
 		);
 
 		return $this->generate_rows($headings, $members, $quant);
-		
+
 	}
 
 }
 add_action( 'admin_init', 'me_export_reports' );
 function me_export_reports() {
 	// Instantiate a singleton of this plugin
-	$csvExport = new CSVExport();	
+	$csvExport = new CSVExport();
 }

@@ -16,8 +16,7 @@ $about_seller = get_user_meta( $user_id, 'description' , true );
 
 <div id="me-tabs-section">
 	<div class="me-section-about">
-		<h4><?php _e('About seller', 'enginethemes'); ?></h4>
-		<p><?php echo nl2br($about_seller); ?></p>
+		<p><?php echo $about_seller ? nl2br($about_seller) : 'No information'; ?></p>
 	</div>
 </div>
 

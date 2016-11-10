@@ -526,52 +526,5 @@ function me_order_table_header($type) {
 }
 
 function me_report_data_init($query) {
-    $data   = array();
-    $orders = new WP_Query($query);
-
-    if (!$orders->have_posts()) {
-        return;
-    }
-
-    while ($orders->have_posts()) {
-        $orders->the_post();
-
-        $order = new ME_Order(get_the_ID());
-
-        $order_number = '#' . get_the_ID();
-        $order_status = get_post_status_object(get_post_status(get_the_ID()));
-        $order_total  = me_price_format($order->get_total());
-        $order_date   = get_the_date(get_option('date_format'), get_the_ID());
-
-        $listing       = $order->get_listing();
-        $listing_title = get_the_title($listing['_listing_id'][0]);
-
-        $data[] = array(
-            $order_number,
-            $order_status->label,
-            $order_total,
-            $order_date,
-            $listing_title,
-        );
-    }
-    wp_reset_postdata();
-    return $data;
-}
-
-// TODO: ajax
-function me_export_orders($query, $type) {
-    $header = me_order_table_header($type);
-
-    $query = json_decode($query);
-
-    $table_data = me_report_data_init($query);
-
-    $file = fopen("test_report.csv", "w");
-
-    fputcsv($file, $header);
-    foreach ($table_data as $key => $row) {
-        fputcsv($file, $row);
-    }
-
-    fclose($file);
+    
 }

@@ -21,7 +21,7 @@ $review_score = $listing->get_review_score();
 		</a>
 
 		<div class="me-item-content">
-			<h2><?php the_title(); ?></h2>
+			<a href="<?php the_permalink(); ?>"><h2><?php the_title(); ?></h2></a>
 			<p><?php echo get_the_excerpt(); ?></p>
 		</div>
 
