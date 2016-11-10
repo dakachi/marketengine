@@ -34,7 +34,7 @@ $query = new WP_Query( $args );
 <?php
 		wp_reset_postdata();
 	else:
-		_e('..', 'enginethemes');
+		_e('No listings to display', 'enginethemes');
 	endif;
 ?>
 
