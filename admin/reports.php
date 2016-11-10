@@ -144,10 +144,13 @@ function marketengine_listing_report($args) {
         }
     }
 
-    $sql = $select . $from . $join . $where . $groupby . $orderby . $limits;
+    $select = "SELECT *";
+    $sql = $select . $from . $join . $where . /*$groupby .*//* $orderby . */$limits;
 
     $result = $wpdb->get_results($sql);
-
+    echo "<pre>";
+    print_r($result);
+    echo "</pre>";
     $found_rows     = $wpdb->get_var('SELECT FOUND_ROWS() as row');
     $max_numb_pages = ceil($found_rows / $showposts);
     return array(
