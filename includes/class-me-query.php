@@ -27,6 +27,10 @@ function me_pre_get_posts($query) {
         return;
     }
 
+    if($query->is_author()) {
+        $query->set( 'post_type', 'listing');
+    }
+
     if ($GLOBALS['wp_rewrite']->use_verbose_page_rules && isset($query->queried_object->ID) && $query->queried_object->ID === me_get_page_id('listings')) {
         $query->set('post_type', 'listing');
         $query->set('page', '');
@@ -194,13 +198,6 @@ function me_init_endpoint() {
     $endpoints = array('orders', 'purchases', 'listings');
     foreach ($endpoints as $endpoint) {
         add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
-    }
-
-    $seller_profile_page_id = me_get_page_id('seller_profile');
-    if($seller_profile_page_id > -1) {
-        $seller_profile_page = get_post($seller_profile_page_id);
-        $seller_endpoint = me_get_endpoint_name('seller-id');
-        add_rewrite_rule( $seller_profile_page->post_name . '/'.$seller_endpoint.'/?([0-9]{1,})/page/?([0-9]{1,})/?$', 'index.php?page_id=' . $seller_profile_page_id . '&seller-id=$matches[1]&paged=$matches[2]', 'top');
     }
 
     rewrite_order_url();

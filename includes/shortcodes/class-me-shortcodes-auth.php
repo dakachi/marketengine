@@ -4,8 +4,6 @@ class ME_Shortcodes_Auth {
         add_shortcode('me_user_account', array(__CLASS__, 'me_user_account'));
         add_shortcode('me_user_register', array(__CLASS__, 'me_register_form'));
         add_shortcode('me_user_login', array(__CLASS__, 'me_login_form'));
-        // Prepare html
-        add_shortcode('me_seller_profile', array(__CLASS__, 'me_seller_profile'));
     }
     public static function me_user_account() {
         global $wp;
@@ -137,14 +135,6 @@ class ME_Shortcodes_Auth {
     public static function me_confirm_email() {
         ob_start();
         me_get_template('account/confirm-email');
-        $content = ob_get_clean();
-        return $content;
-    }
-
-    public static function me_seller_profile() {
-        $seller_id = get_query_var('seller-id');
-        ob_start();
-        me_get_template('seller-profile/seller-profile', array( 'user_id' => $seller_id) );
         $content = ob_get_clean();
         return $content;
     }
