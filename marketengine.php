@@ -115,6 +115,7 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/me-notices-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-template-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-email-functions.php';
+            require_once ME_PLUGIN_PATH . '/includes/me-report-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-listing-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-order-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-payment-functions.php';

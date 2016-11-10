@@ -17,7 +17,7 @@ $args = array_merge(apply_filters( 'me_filter_order', $_GET, $type ), $args);
 
 $all_order_args = json_encode( array_merge(apply_filters( 'me_filter_order', $_GET, $type ), array('post_type' => 'me_order', 'posts_per_page' => -1) ) );
 
-query_posts($args);
+$query = new WP_Query($args);
 
 ?>
 <!--Mobile-->
@@ -29,7 +29,7 @@ query_posts($args);
 <?php me_get_template('global/order-filter', array('type' => $type)); ?>
 
 <div class="me-table me-orderlist-table">
-<?php if( have_posts() ) : ?>
+<?php if( $query->have_posts() ) : ?>
 		<div class="me-table-rhead">
 			<div class="me-table-col me-order-id"><?php _e("ORDER ID", "enginethemes"); ?></div>
 			<div class="me-table-col me-order-status"><?php _e("STATUS", "enginethemes"); ?></div>
@@ -38,7 +38,7 @@ query_posts($args);
 			<div class="me-table-col me-order-listing"><?php _e("LISTING", "enginethemes"); ?></div>
 		</div>
 	<?php
-		while(have_posts()) : the_post(); ?>
+		while($query->have_posts()) : $query->the_post(); ?>
 
 	<?php
 		$order = new ME_Order( get_the_ID() );
@@ -65,7 +65,7 @@ query_posts($args);
 </div>
 
 <div class="marketengine-paginations">
-	<?php me_paginate_link(); ?>
+	<?php me_paginate_link( $query ); ?>
 </div>
 
 <div class="marketengine-loadmore">
@@ -89,7 +89,7 @@ query_posts($args);
 </div>
 <?php
 	endif;
-	wp_reset_query();
+	wp_reset_postdata();
 ?>
 <script type="text/json" id="all_order_query">
 	<?php echo $all_order_args; ?>
