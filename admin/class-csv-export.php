@@ -76,6 +76,7 @@ class CSVExport
 
 		$args = $_REQUEST;
 		$args['showposts'] = 300000;
+		$args['paged'] = 1;
 		$query = marketengine_listing_report($args);
 		
 		$quant = empty($args['quant']) ? 'day' : $args['quant'];
@@ -105,6 +106,7 @@ class CSVExport
 
 		$args = $_REQUEST;
 		$args['showposts'] = 300000;
+		$args['paged'] = 1;
 		$query = marketengine_orders_report($args);
 		
 		$quant = empty($args['quant']) ? 'day' : $args['quant'];
@@ -124,6 +126,7 @@ class CSVExport
 
 		$args = $_REQUEST;
 		$args['showposts'] = 300000;
+		$args['paged'] = 1;
 		$query = marketengine_inquiries_report($args);
 		
 		$quant = empty($args['quant']) ? 'day' : $args['quant'];
@@ -143,6 +146,7 @@ class CSVExport
 
 		$args = $_REQUEST;
 		$args['showposts'] = 300000;
+		$args['paged'] = 1;
 		$query = marketengine_members_report($args);
 		
 		$quant = empty($args['quant']) ? 'day' : $args['quant'];
