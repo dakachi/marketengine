@@ -24,12 +24,12 @@ class CSVExport {
                 }
             }
 
-            if(isset($_GET['from_date'])) {
-            	$filename .= '_' . $_GET['from_date'];
+            if (isset($_GET['from_date'])) {
+                $filename .= '_' . $_GET['from_date'];
             }
 
-            if(isset($_GET['to_date'])) {
-            	$filename .= '_' . $_GET['to_date'];
+            if (isset($_GET['to_date'])) {
+                $filename .= '_' . $_GET['to_date'];
             }
 
             header("Pragma: public");
@@ -100,24 +100,41 @@ class CSVExport {
         $args['paged']     = 1;
         $query             = marketengine_listing_report($args);
 
-        $quant = empty($args['quant']) ? 'day' : $args['quant'];
-
-        $listings = $query['posts'];
+        $quant          = empty($args['quant']) ? 'day' : $args['quant'];
+        $active_section = empty($_REQUEST['section']) ? '' : $_REQUEST['section'];
+        $listings       = $query['posts'];
 
         $csv_output = '';
 
         $csv_output = $csv_output . " Date,";
-        $csv_output = $csv_output . " Total Listings,";
-        $csv_output = $csv_output . " Contact,";
-        $csv_output = $csv_output . " Purchase,";
+
+        if ($active_section == '') {
+            $csv_output = $csv_output . " Total Listings,";
+        }
+
+        if ($active_section == '' || $active_section == 'purchase') {
+            $csv_output = $csv_output . " Purchase,";
+        }
+
+        if ($active_section == '' || $active_section == 'contact') {
+            $csv_output = $csv_output . " Contact,";
+        }
+
         $csv_output .= "\n";
 
         foreach ($listings as $key => $listing) {
             $time = marketengine_get_start_and_end_date($quant, $listing->quant, $listing->year);
             $csv_output .= str_replace(',', '-', $time) . ",";
-            $csv_output .= $listing->purchase_type + $listing->contact_type . ",";
-            $csv_output .= $listing->purchase_type . ",";
-            $csv_output .= $listing->contact_type . ",";
+            if ($active_section == '') {
+                $csv_output .= $listing->purchase_type + $listing->contact_type . ",";
+            }
+            if ($active_section == '' || $active_section == 'purchase') {
+                $csv_output .= $listing->purchase_type . ",";
+            }
+            if ($active_section == '' || $active_section == 'contact') {
+                $csv_output .= $listing->contact_type . ",";
+            }
+
             $csv_output .= "\n";
         }
         return $csv_output;
