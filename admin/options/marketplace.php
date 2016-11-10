@@ -104,22 +104,21 @@ return apply_filters('marketengine_marketplace_options',
                     ),
                 ),
             ),
+		),
+        'listing-type' => array(
+            'title'    => __("Listing Type", "enginethemes"),
+            'slug'     => 'listing-type-section',
+            'type'     => 'section',
+            'template' => array(
 
-            'listing-type' => array(
-                'title'    => __("Listing Type", "enginethemes"),
-                'slug'     => 'listing-type-section',
-                'type'     => 'section',
-                'template' => array(
-
-                ),
             ),
-            'sample-data'  => array(
-                'title'    => __("Sample Data", "enginethemes"),
-                'slug'     => 'sample-data-section',
-                'type'     => 'section',
-                'template' => array(
+        ),
+        'sample-data'  => array(
+            'title'    => __("Sample Data", "enginethemes"),
+            'slug'     => 'sample-data-section',
+            'type'     => 'section',
+            'template' => array(
 
-                ),
             ),
         ),
     )
