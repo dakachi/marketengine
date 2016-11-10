@@ -93,7 +93,7 @@ function marketengine_listing_report($args) {
         'from_date' => '2016-04-22',
         'to_date'   => '2016-12-22',
         'orderby'   => 'quant',
-        'order'     => 'DESC',
+        'order'     => 'ASC',
         'paged'     => 1,
         'showposts' => get_option('posts_per_page'),
     );
@@ -145,8 +145,6 @@ function marketengine_listing_report($args) {
     }
 
     $sql = $select . $from . $join . $where . $groupby . $orderby . $limits;
-
-    echo $sql;
 
     $result = $wpdb->get_results($sql);
 
