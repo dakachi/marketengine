@@ -24,6 +24,14 @@ class CSVExport {
                 }
             }
 
+            if(isset($_GET['from_date'])) {
+            	$filename .= '_' . $_GET['from_date'];
+            }
+
+            if(isset($_GET['to_date'])) {
+            	$filename .= '_' . $_GET['to_date'];
+            }
+
             header("Pragma: public");
             header("Expires: 0");
             header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
