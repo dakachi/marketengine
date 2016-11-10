@@ -30,10 +30,10 @@ return apply_filters('marketengine_marketplace_options',
                     ),
                     'name'        => 'paypal-commission-fee',
                 ),
-
+                // limit time to close order
                 'dispute-time-limit' => array(
                     'label'       => __("Displute Time Limit", "enginethemes"),
-                    'description' => __("", "enginethemes"),
+                    'description' => __("The duration to close completed order (by day)", "enginethemes"),
                     'slug'        => 'dispute-time-limit',
                     'type'        => 'number',
                     'class_name'  => 'no-zero positive',
@@ -102,7 +102,6 @@ return apply_filters('marketengine_marketplace_options',
                         //     'name'        => 'number-of-sep',
                         // )
                     ),
-					// limit time to close order
                 ),
             ),
 		),
