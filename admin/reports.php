@@ -132,6 +132,7 @@ function marketengine_listing_report($args) {
     if(!isset($section)) {
         $select = $select . $select_contact . $select_purchase;
         $join = $join . $join_contact . $join_purchase;
+        $where .= "AND  ( A.meta_key = '_me_listing_type OR  B.meta_key = '_me_listing_type ) ";
     }else {
         if($section == 'contact') {
             $select = $select . $select_contact ;
@@ -144,13 +145,10 @@ function marketengine_listing_report($args) {
         }
     }
 
-    $select = "SELECT *";
-    $sql = $select . $from . $join . $where . /*$groupby .*//* $orderby . */$limits;
+    $sql = $select . $from . $join . $where . $groupby . $orderby . $limits;
 
     $result = $wpdb->get_results($sql);
-    echo "<pre>";
-    print_r($result);
-    echo "</pre>";
+
     $found_rows     = $wpdb->get_var('SELECT FOUND_ROWS() as row');
     $max_numb_pages = ceil($found_rows / $showposts);
     return array(

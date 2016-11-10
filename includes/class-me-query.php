@@ -225,7 +225,7 @@ function me_filter_listing_query($query) {
 
     return $query;
 }
-// add_filter('pre_get_posts', 'me_filter_listing_query');
+add_filter('pre_get_posts', 'me_filter_listing_query');
 
 /**
  * Filter query listing by price
