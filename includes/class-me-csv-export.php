@@ -90,7 +90,13 @@ class ME_CSV_Export {
 
 		foreach ($data as $key => $item) {
 			foreach ($headings as $key => $heading) {
-				$csv_output .= $item->$key.",";
+				$csv_output .= $key == 'transaction_id' ? '#' : '';
+				if( $key == 'status') {
+					$status_arr = me_get_order_status_list();
+					$csv_output .= $status_arr[$item->$key] .",";
+				} else {
+					$csv_output .= $item->$key.",";
+				}
 			}
 			$csv_output .= "\n";
 		}
