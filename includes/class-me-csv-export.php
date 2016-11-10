@@ -1,5 +1,5 @@
 <?php
-class ME_CSV_Export extends CSVExport {
+class ME_CSV_Export {
 	/**
 	* Constructor
 	*/
@@ -43,42 +43,64 @@ class ME_CSV_Export extends CSVExport {
 	}
 
 	public function generate_orders() {
+
 		$args = $_REQUEST;
 		$args['showposts'] = -1;
-		// $args['paged'] = 1;
-		$query = marketengine_orders_report($args);
-
-		$quant = empty($args['quant']) ? 'day' : $args['quant'];
-
-		$orders = $query['posts'];
+		$data = me_order_report_data($args);
 
 		$headings = array(
-			'quant' => __("Date", "enginethemes"),
-			'count' => __("Total Orders", "enginethemes"),
-			'total' => __("Income", "enginethemes") . '(' . me_option('payment-currency-sign') . ')'
+			'order_id' 		=> __("Order ID", "enginethemes"),
+			'status' 		=> __("Status", "enginethemes"),
+			'amount' 		=> __("Amount", "enginethemes"),
+			'date'			=> __("Date Of Order", "enginethemes"),
+			'listing_title'	=> __("Listing", "enginethemes"),
 		);
 
-		return $this->generate_rows($headings, $orders, $quant);
+		return $this->generate_rows($headings, $data);
 	}
 
 	public function generate_transactions() {
-
 		$args = $_REQUEST;
-		$args['showposts'] = 300000;
-		$args['paged'] = 1;
-		$query = marketengine_inquiries_report($args);
 
-		$quant = empty($args['quant']) ? 'day' : $args['quant'];
-
-		$inquiries = $query['posts'];
+		$data = me_transaction_report_data($args);
 
 		$headings = array(
-			'quant' => __("Date", "enginethemes"),
-			'count' => __("Total Inquiries", "enginethemes")
+			'transaction_id'=> __("Transaction ID", "enginethemes"),
+			'status' 		=> __("Status", "enginethemes"),
+			'amount' 		=> __("Amount", "enginethemes"),
+			'date_of_order'	=> __("Date Of Order", "enginethemes"),
+			'listing_title'	=> __("Listing", "enginethemes"),
 		);
 
-		return $this->generate_rows($headings, $inquiries, $quant);
+		return $this->generate_rows($headings, $data);
 
+	}
+
+	/**
+	 * Generate CSV row
+	 * @param array $headings
+	 * @param array $data
+	 */
+	public function generate_rows($headings, $data) {
+		$csv_output = '';
+		foreach ($headings as $key => $heading) {
+			$csv_output = $csv_output . $heading . ',';
+		}
+		$csv_output .= "\n";
+
+		foreach ($data as $key => $item) {
+			foreach ($headings as $key => $heading) {
+				$csv_output .= $key == 'transaction_id' ? '#' : '';
+				if( $key == 'status') {
+					$status_arr = me_get_order_status_list();
+					$csv_output .= $status_arr[$item->$key] .",";
+				} else {
+					$csv_output .= $item->$key.",";
+				}
+			}
+			$csv_output .= "\n";
+		}
+		return $csv_output;
 	}
 
 }
