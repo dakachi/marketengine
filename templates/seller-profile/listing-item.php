@@ -17,7 +17,7 @@ $review_score = $listing->get_review_score();
 	<div class="me-item-listing-wrap">
 
 		<a href="<?php the_permalink(); ?>" class="me-item-img">
-			<?php has_post_thumbnail() ? the_post_thumbnail( array(260, 190) ) : _e('No images', 'enginethemes') ; ?>
+			<?php has_post_thumbnail() ? the_post_thumbnail( array(260, 190) ) : _e('<i class="icon-me-image"></i>', 'enginethemes') ; ?>
 		</a>
 
 		<div class="me-item-content">
