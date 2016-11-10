@@ -14,6 +14,7 @@ $nonce = wp_create_nonce( 'me-export' );
 		<form action="" method="get">
 			<input name="page" value="me-reports" type="hidden" />
 			<input name="tab" value="<?php echo empty($_REQUEST['tab']) ? 'listing' : $_REQUEST['tab']; ?>" type="hidden" />
+			<input name="section" value="<?php echo empty($_REQUEST['section']) ? '' : $_REQUEST['section']; ?>" type="hidden" />
 			<span class="me-report-start-date"><?php _e("From", "enginethemes"); ?></span>
 			<span class="me-pick-date">
 				<input id="me-pick-date-1" type="text" name="from_date" value="<?php echo empty($_REQUEST['from_date']) ? '' : $_REQUEST['from_date']; ?>">
