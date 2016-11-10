@@ -24,6 +24,11 @@ function me_get_listing_types() {
     return apply_filters('me_get_listing_types', $listing_types);
 }
 
+function me_get_listing_type_lable($type) {
+    $types = me_get_listing_types();
+    return $types[$type];
+}
+
 function get_listing_type_by_cat($cat_id) {
     $default_listing_types = me_get_listing_types();
     $type                  = array_rand($default_listing_types);
