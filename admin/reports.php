@@ -132,7 +132,6 @@ function marketengine_listing_report($args) {
     if(!isset($section)) {
         $select = $select . $select_contact . $select_purchase;
         $join = $join . $join_contact . $join_purchase;
-        $where .= "AND  ( A.meta_key = '_me_listing_type OR  B.meta_key = '_me_listing_type ) ";
     }else {
         if($section == 'contact') {
             $select = $select . $select_contact ;
