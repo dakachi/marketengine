@@ -10,7 +10,7 @@ $admin_report_tabs = array(
 	'inquiries' => __("Inquiries", "enginethemes"),
 );
 
-if(empty($_REQUEST['tab'])) {
+if(empty($_REQUEST['tab']) || !isset($admin_report_tabs[$_REQUEST['tab']])) {
 	$_REQUEST['tab'] = 'listings'; 
 }
 ?>

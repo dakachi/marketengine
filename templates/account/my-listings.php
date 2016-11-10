@@ -62,6 +62,7 @@ $query = new WP_Query( $args );
 							<div class="me-label-<?php echo str_replace('me-', '', $listing_status->name); ?>">
 								<span><?php echo ucfirst($listing_status->label); ?></span>
 							</div>
+							<?php //echo '<i class="icon-me-image"></i>' ?>
 						</a>
 						<div class="me-item-content">
 							<h2><a href="<?php the_permalink(); ?>"><?php the_excerpt(); ?></a></h2>

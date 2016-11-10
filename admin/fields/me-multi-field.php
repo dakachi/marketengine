@@ -21,7 +21,7 @@ class ME_Multi_Field extends ME_Input{
     }
 
     function render() {
-        echo '<div '.$this->get_id().' >';
+        echo '<div '.$this->get_id().' class="me-group">';
         echo '<div  class="me-group-field '.$this->_class.'">';
         $this->label();
         $this->description();

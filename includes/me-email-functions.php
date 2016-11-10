@@ -129,6 +129,7 @@ function me_filter_post_placeholder($content, $post = '') {
 
 /**
  * Send complete order email to seller
+ * @param int $order_id
  */
 function me_complete_order_email($order_id) {
     if (!$order_id) {
@@ -217,6 +218,7 @@ add_action('marketengine_complete_order', 'me_complete_order_email');
 
 /**
  * Send email to buyer and seller when close order
+ * @param int $order_id
  */
 function me_close_order_email($order_id) {
     if (!$order_id) {

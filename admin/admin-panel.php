@@ -28,12 +28,6 @@ function marketengine_option_view() {
             'slug'     => 'payment-gateways',
             'template' => include (dirname(__FILE__) . '/options/payment-gateways.php'),
         ),
-
-        // 'authenticate-settings' => array(
-        //     'title'    => __("Authentication", "enginethemes"),
-        //     'slug'     => 'authenticate-settings',
-        //     'template' => include (dirname(__FILE__) . '/options/authentication.php'),
-        // ),
         'pages-settings'     => array(
             'title'    => __("Pages", "enginethemes"),
             'slug'     => 'pages-settings',
@@ -54,7 +48,7 @@ function marketengine_option_view() {
     echo '<ul class="me-nav me-tabs-nav">';
 
     if (empty($_REQUEST['tab'])) {
-        $requested_tab = 'authenticate-settings';
+        $requested_tab = 'marketplace-settings';
     } else {
         $requested_tab = $_REQUEST['tab'];
     }
@@ -101,12 +95,13 @@ function marketengine_option_menu() {
     if (isset($_GET['post_type']) && $_GET['post_type'] == 'listing') {
         echo '<style type="text/css">
             #favorite-actions, .add-new-h2, .page-title-action { display:none; }
+            .sign {font-weight: bold;}
         </style>';
     }
 
     add_menu_page(
         __("MarketEngine Dashboard", "enginethemes"),
-        __("EngineThemes", "enginethemes"),
+        __("MarketEngine", "enginethemes"),
         'manage_options',
         'marketengine',
         null,

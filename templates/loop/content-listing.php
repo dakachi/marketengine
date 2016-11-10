@@ -20,7 +20,7 @@ $listing_type = $listing->get_listing_type();
 			if(has_post_thumbnail()) :
 				the_post_thumbnail( 'medium' );
 			else :
-				echo 'No images';
+				echo '<i class="icon-me-image"></i>';
 			endif;
 			 ?>
 			<span><?php _e("VIEW DETAILS", "enginethemes"); ?></span>

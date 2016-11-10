@@ -254,9 +254,9 @@ function me_get_option($option, $default = '') {
     return get_option($option, $default);
 }
 
-function me_option($option) {
+function me_option($option, $default = '') {
     $options = ME_Options::get_instance();
-    return $options->get_option($option);
+    return $options->get_option($option, $default);
 }
 
 // TODO: noi bo ham nay
@@ -478,9 +478,9 @@ function me_price_html($price, $currency_sign = '', $unit = '') {
     $html          = '';
 
     if ($sign_position) {
-        $html .= '<span itemprop="priceCurrency" content="' . $currency_code . '">' . $currency_sign . '</span> <span itemprop="price" content="' . $price . '">' . $price . '</span>';
+        $html .= '<span class="sign" itemprop="priceCurrency" content="' . $currency_code . '">' . $currency_sign . '</span> <span itemprop="price" content="' . $price . '">' . $price . '</span>';
     } else {
-        $html .= '<span itemprop="price" content="' . $price . '">' . $price . '</span> <span itemprop="priceCurrency" content="' . $currency_code . '">' . $currency_sign . '</span>';
+        $html .= '<span itemprop="price" content="' . $price . '">' . $price . '</span> <span class="sign"  itemprop="priceCurrency" content="' . $currency_code . '">' . $currency_sign . '</span>';
     }
 
     if (!empty($unit)) {
