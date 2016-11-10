@@ -146,6 +146,8 @@ function marketengine_listing_report($args) {
 
     $sql = $select . $from . $join . $where . $groupby . $orderby . $limits;
 
+    echo $sql;
+
     $result = $wpdb->get_results($sql);
 
     $found_rows     = $wpdb->get_var('SELECT FOUND_ROWS() as row');
