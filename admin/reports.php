@@ -6,19 +6,19 @@ if (!defined('ABSPATH')) {
 
 function marketengine_report_heading($name, $lable) {
     $class = '';
-    $link = add_query_arg('orderby', $name);
+    $link  = add_query_arg('orderby', $name);
     if (!empty($_REQUEST['orderby']) && $_REQUEST['orderby'] == $name) {
         if (!empty($_REQUEST['order']) && $_REQUEST['order'] == 'desc') {
             $class = 'me-sort-asc';
-            $link = add_query_arg('order', 'asc', $link);
-        }else {
+            $link  = add_query_arg('order', 'asc', $link);
+        } else {
             $class = 'me-sort-desc';
-            $link = add_query_arg('order', 'desc', $link);
+            $link  = add_query_arg('order', 'desc', $link);
         }
     }
     ?>
     <div class="me-table-col">
-        <a href="<?php echo $link; ?>" class="<?php echo $class; ?>"><?php echo $lable;?></a>
+        <a href="<?php echo $link; ?>" class="<?php echo $class; ?>"><?php echo $lable; ?></a>
     </div>
 <?php
 }
@@ -95,7 +95,7 @@ function marketengine_listing_report($args) {
         'orderby'   => 'quant',
         'order'     => 'DESC',
         'paged'     => 1,
-        'showposts' => get_option('posts_per_page')
+        'showposts' => get_option('posts_per_page'),
     );
     $args = wp_parse_args($args, $defaults);
     extract($args);
@@ -113,24 +113,40 @@ function marketengine_listing_report($args) {
     $field = $wpdb->posts . '.post_date';
     $time  = marketengine_get_quantity_report($field, $quant);
 
-    $select = "SELECT SQL_CALC_FOUND_ROWS {$time} ,
-                count( DISTINCT {$wpdb->posts}.ID) as count,
-                count(A.meta_value) as contact_type ,
-                count(B.meta_value) as purchase_type
-            ";
+    $select          = "SELECT SQL_CALC_FOUND_ROWS {$time} ,count( {$wpdb->posts}.ID) as count";
+    $select_contact  = ", count(A.meta_value) as contact_type ";
+    $select_purchase = ", count(B.meta_value) as purchase_type ";
 
     $from = " FROM {$wpdb->posts}";
 
-    $join = " LEFT JOIN  $wpdb->postmeta as A ON  A .post_id = {$wpdb->posts}.ID AND A.meta_key = '_me_listing_type' AND A.meta_value = 'contact' ";
-    $join .= " LEFT JOIN  $wpdb->postmeta as B ON  B.post_id = {$wpdb->posts}.ID AND B.meta_key = '_me_listing_type' AND B.meta_value = 'purchasion' ";
+    $join = '';
+    $join_contact  = " LEFT JOIN  $wpdb->postmeta as A ON  A .post_id = {$wpdb->posts}.ID AND A.meta_key = '_me_listing_type' AND A.meta_value = 'contact' ";
+    $join_purchase = " LEFT JOIN  $wpdb->postmeta as B ON  B.post_id = {$wpdb->posts}.ID AND B.meta_key = '_me_listing_type' AND B.meta_value = 'purchasion' ";
 
     $where   = " WHERE post_type = 'listing' AND post_date BETWEEN '{$from_date}' AND '{$to_date}'";
     $groupby = " GROUP BY `quant` ,`year`";
     $orderby = " ORDER BY {$orderby} {$order}";
 
-    $limits  = ' LIMIT ' . $pgstrt . $showposts;
+    $limits = ' LIMIT ' . $pgstrt . $showposts;
+
+    if(!isset($section)) {
+        $select = $select . $select_contact . $select_purchase;
+        $join = $join . $join_contact . $join_purchase;
+    }else {
+        if($section == 'contact') {
+            $select = $select . $select_contact ;
+            $join = $join . $join_contact ;
+            $where .=  "AND A.meta_key = '_me_listing_type'";
+        }else {
+            $select = $select  . $select_purchase;
+            $join = $join . $join_purchase;
+            $where .=  "AND B.meta_key = '_me_listing_type'";
+        }
+    }
 
     $sql = $select . $from . $join . $where . $groupby . $orderby . $limits;
+
+    echo $sql;
 
     $result = $wpdb->get_results($sql);
 
