@@ -123,10 +123,10 @@ array
                 'template'      => array(),
             ),
             'listings-page' => array(
-                'label'         => __("Listings Page", "enginethemes"),
+                'label'         => __("Edit Listing Page", "enginethemes"),
                 'description'   => '',
                 'slug'          => 'me_listings',
-                'name'          => 'me_listings_page_id',
+                'name'          => 'me_edit_listing_page_id',
                 'type'          => 'select',
                 'data'          => marketengine_get_list_of_page(),
                 'template'      => array(),
