@@ -28,7 +28,7 @@ function me_me_order_columns($existing_columns) {
     $columns['listing'] = 'Listing';
     $columns['total']   = 'Total';
     $columns['commission']  = 'Commission';
-    $columns['date']        = 'Created';
+    $columns['date']        = 'Date';
 
     return array_merge($existing_columns, $columns);
 }
@@ -57,6 +57,15 @@ function me_render_me_order_columns($column) {
             }
         }
         break;
+    case 'total':
+        $currency = get_post_meta( $post->ID, '_order_currency', true );
+        $commission_items = me_get_order_items($post->ID, 'commission_item');
+        if(!empty($commission_items)) {
+            $item_id = $commission_items[0]->order_item_id;
+            echo me_price_html(me_get_order_item_meta($item_id, '_amount', true), $currency);
+        }
+        break;
+
     case 'total':
         $currency = get_post_meta( $post->ID, '_order_currency', true );
         echo me_price_html(get_post_meta($post->ID, '_order_total', true), $currency);
