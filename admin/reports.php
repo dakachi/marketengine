@@ -50,7 +50,7 @@ function marketengine_get_quantity_report($col_name, $quant, $name = 'quant') {
 }
 
 function marketengine_get_start_and_end_date($quant, $week, $year) {
-    $date_format = get_option('date_format');
+    $date_format = get_option( 'date_format' );
     if ($quant == 'week') {
         $time = strtotime("1 January $year", time());
         $day  = date('w', $time);
@@ -74,7 +74,7 @@ function marketengine_get_start_and_end_date($quant, $week, $year) {
         $ts         = strtotime("20-{$week}-{$year}");
         $ts         = date('t', $ts);
         $end_date   = date_i18n($date_format, strtotime("{$ts}-{$week}-{$year}"));
-        echo $start_date . ' - ' . $end_date;
+        return $start_date . ' - ' . $end_date;
     }
 
     if ($quant == 'quarter') {
@@ -86,7 +86,7 @@ function marketengine_get_start_and_end_date($quant, $week, $year) {
         $ts       = strtotime("20-{$week}-{$year}");
         $ts       = date('t', $ts);
         $end_date = date_i18n($date_format, strtotime("{$ts}-{$week}-{$year}"));
-        echo $start_date . ' - ' . $end_date;
+        return $start_date . ' - ' . $end_date;
     }
 }
 
