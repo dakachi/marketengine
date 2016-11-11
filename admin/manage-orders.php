@@ -57,7 +57,7 @@ function me_render_me_order_columns($column) {
             }
         }
         break;
-    case 'total':
+    case 'commission':
         $currency = get_post_meta( $post->ID, '_order_currency', true );
         $commission_items = me_get_order_items($post->ID, 'commission_item');
         if(!empty($commission_items)) {
