@@ -8,15 +8,15 @@ function marketengine_report_heading($name, $lable) {
     $class = '';
     $link  = add_query_arg('orderby', $name);
     if($name == 'quant' && empty($_REQUEST['orderby'])) {
-        $class = 'me-sort-desc';
+        $class = 'me-sort-asc';
         $link  = add_query_arg('order', 'desc', $link);
     }
     if (!empty($_REQUEST['orderby']) && $_REQUEST['orderby'] == $name) {
         if (!empty($_REQUEST['order']) && $_REQUEST['order'] == 'desc') {
-            $class = 'me-sort-asc';
+            $class = 'me-sort-desc';
             $link  = add_query_arg('order', 'asc', $link);
         } else {
-            $class = 'me-sort-desc';
+            $class = 'me-sort-asc';
             $link  = add_query_arg('order', 'desc', $link);
         }
     }
@@ -50,7 +50,7 @@ function marketengine_get_quantity_report($col_name, $quant, $name = 'quant') {
 }
 
 function marketengine_get_start_and_end_date($quant, $week, $year) {
-    $date_format = get_option('date_format');
+    $date_format = get_option( 'date_format' );
     if ($quant == 'week') {
         $time = strtotime("1 January $year", time());
         $day  = date('w', $time);
@@ -74,7 +74,7 @@ function marketengine_get_start_and_end_date($quant, $week, $year) {
         $ts         = strtotime("20-{$week}-{$year}");
         $ts         = date('t', $ts);
         $end_date   = date_i18n($date_format, strtotime("{$ts}-{$week}-{$year}"));
-        echo $start_date . ' - ' . $end_date;
+        return $start_date . ' - ' . $end_date;
     }
 
     if ($quant == 'quarter') {
@@ -86,7 +86,7 @@ function marketengine_get_start_and_end_date($quant, $week, $year) {
         $ts       = strtotime("20-{$week}-{$year}");
         $ts       = date('t', $ts);
         $end_date = date_i18n($date_format, strtotime("{$ts}-{$week}-{$year}"));
-        echo $start_date . ' - ' . $end_date;
+        return $start_date . ' - ' . $end_date;
     }
 }
 
