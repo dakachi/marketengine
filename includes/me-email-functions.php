@@ -321,4 +321,5 @@ function me_filter_receive_comment_email_content( $notify_message, $comment_ID )
         return $notify_message;
     }
 }
-add_filter( 'comment_moderation_text', 'me_filter_receive_comment_email_content', 1, 2 );
+// add_filter( 'comment_moderation_text', 'me_filter_receive_comment_email_content', 1, 2 );
+add_filter( 'comment_notification_text', 'me_filter_receive_comment_email_content', 1, 2 );
