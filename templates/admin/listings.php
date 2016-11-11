@@ -72,7 +72,7 @@ $active_section = empty($_REQUEST['section']) ? '' : $_REQUEST['section'];
 							</div>
 
 							<?php if($active_section == '') : ?>
-								<div class="me-table-col"><?php echo $listing->purchase_type + $listing->contact_type; ?></div>
+								<div class="me-table-col"><?php echo $listing->count; ?></div>
 							<?php endif; ?>
 							
 							<?php if($active_section == '' || $active_section =='purchase') : ?>

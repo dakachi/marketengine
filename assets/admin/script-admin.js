@@ -15,11 +15,9 @@ $(document).ready(function() {
 	$( "#me-pick-date-1" ).datepicker({
 		dateFormat : 'yy-mm-dd',
 		onSelect: function( selectedDate ) {
-			$( "#me-pick-date-2" ).datepicker({dateFormat : 'yy-mm-dd'});
-		    $( "#me-pick-date-2" ).datepicker( { minDate : selectedDate, dateFormat : 'yy-mm-dd' } );
-		    setTimeout(function(){
-	            $( "#me-pick-date-2" ).datepicker('show');
-	        }, 16);
+			var date = new Date(selectedDate);
+			date.setDate(date.getDate() + 1);
+		    $( "#me-pick-date-2" ).datepicker( { minDate : date, dateFormat : 'yy-mm-dd' } );
 		}
 	});
 });

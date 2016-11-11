@@ -16,7 +16,8 @@ $args = array(
 
 $args = array_merge(apply_filters( 'me_filter_order', $_GET ), $args);
 
-query_posts( $args );
+$query = new WP_Query( $args );
+
 ?>
 <!--Mobile-->
 <div class="me-orderlist-filter-tabs">
@@ -28,7 +29,7 @@ query_posts( $args );
 
 <div class="me-table me-orderlist-table">
 	<?php
-	if( have_posts() ) : ?>
+	if( $query->have_posts() ) : ?>
 		<div class="me-table-rhead">
 			<div class="me-table-col me-order-id"><?php _e("TRANSACTION ID", "enginethemes"); ?></div>
 			<div class="me-table-col me-order-status"><?php _e("STATUS", "enginethemes"); ?></div>
@@ -37,7 +38,7 @@ query_posts( $args );
 			<div class="me-table-col me-order-listing"><?php _e("LISTING", "enginethemes"); ?></div>
 		</div>
 	<?php
-		while( have_posts() ) : the_post();
+		while( $query->have_posts() ) : $query->the_post();
 
 			$order = new ME_Order( get_the_ID() );
 			$order_total = $order->get_total();
@@ -66,7 +67,7 @@ query_posts( $args );
 </div>
 
 <div class="marketengine-paginations">
-	<?php me_paginate_link(); ?>
+	<?php me_paginate_link( $query ); ?>
 </div>
 <div class="marketengine-loadmore">
 	<a href="" class="me-loadmore me-loadmore-order"><?php _e("Load more", "enginethemes"); ?></a>
@@ -90,5 +91,5 @@ query_posts( $args );
 </div>
 <?php
 	endif;
-	wp_reset_query();
+	wp_reset_postdata();
 ?>

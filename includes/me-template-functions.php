@@ -478,9 +478,9 @@ function me_price_html($price, $currency_sign = '', $unit = '') {
     $html          = '';
 
     if ($sign_position) {
-        $html .= '<span itemprop="priceCurrency" content="' . $currency_code . '">' . $currency_sign . '</span> <span itemprop="price" content="' . $price . '">' . $price . '</span>';
+        $html .= '<span class="sign" itemprop="priceCurrency" content="' . $currency_code . '">' . $currency_sign . '</span> <span itemprop="price" content="' . $price . '">' . $price . '</span>';
     } else {
-        $html .= '<span itemprop="price" content="' . $price . '">' . $price . '</span> <span itemprop="priceCurrency" content="' . $currency_code . '">' . $currency_sign . '</span>';
+        $html .= '<span itemprop="price" content="' . $price . '">' . $price . '</span> <span class="sign"  itemprop="priceCurrency" content="' . $currency_code . '">' . $currency_sign . '</span>';
     }
 
     if (!empty($unit)) {

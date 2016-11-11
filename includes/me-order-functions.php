@@ -524,7 +524,3 @@ function me_order_table_header($type) {
 
     return $table_header;
 }
-
-function me_report_data_init($query) {
-    
-}

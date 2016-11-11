@@ -126,7 +126,7 @@ class CSVExport {
             $time = marketengine_get_start_and_end_date($quant, $listing->quant, $listing->year);
             $csv_output .= str_replace(',', '-', $time) . ",";
             if ($active_section == '') {
-                $csv_output .= $listing->purchase_type + $listing->contact_type . ",";
+                $csv_output .= $listing->count . ",";
             }
             if ($active_section == '' || $active_section == 'purchase') {
                 $csv_output .= $listing->purchase_type . ",";
