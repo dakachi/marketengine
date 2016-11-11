@@ -471,16 +471,21 @@ function me_print_buyer_information($address) {
  *  Returns html of price
  *  @param: $price
  */
-function me_price_html($price, $currency_sign = '', $unit = '') {
-    $currency_sign = me_option('payment-currency-sign');
-    $currency_code = me_option('payment-currency-code');
+function me_price_html($price, $args = array(), $unit = '') {
+    $sign = me_option('payment-currency-sign');
+    $code = me_option('payment-currency-code');
+
+    $args = wp_parse_args($args, array('code' => $code, 'sign' => $sign));
+
+    extract($args);
+
     $sign_position = me_option('currency-sign-postion') ? true : false;
     $html          = '';
 
     if ($sign_position) {
-        $html .= '<span class="sign" itemprop="priceCurrency" content="' . $currency_code . '">' . $currency_sign . '</span> <span itemprop="price" content="' . $price . '">' . $price . '</span>';
+        $html .= '<span class="sign" itemprop="priceCurrency" content="' . $code . '">' . $sign . '</span><span itemprop="price" content="' . $price . '">' . $price . '</span>';
     } else {
-        $html .= '<span itemprop="price" content="' . $price . '">' . $price . '</span> <span class="sign"  itemprop="priceCurrency" content="' . $currency_code . '">' . $currency_sign . '</span>';
+        $html .= '<span itemprop="price" content="' . $price . '">' . $price . '</span><span class="sign"  itemprop="priceCurrency" content="' . $code . '">' . $sign . '</span>';
     }
 
     if (!empty($unit)) {

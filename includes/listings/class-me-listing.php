@@ -411,7 +411,7 @@ class ME_Listing {
      * @return bool
      */
     public function is_available() {
-        $is_available = ('listing' === $this->post_type && $this->post_status == 'publish' );
+        $is_available = ('listing' == $this->post_type && $this->post_status == 'publish' );
         return  apply_filters('marketengine_lisitng_is_available', $is_available, $this->ID);
     }
 
