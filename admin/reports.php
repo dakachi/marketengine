@@ -8,15 +8,15 @@ function marketengine_report_heading($name, $lable) {
     $class = '';
     $link  = add_query_arg('orderby', $name);
     if($name == 'quant' && empty($_REQUEST['orderby'])) {
-        $class = 'me-sort-desc';
+        $class = 'me-sort-asc';
         $link  = add_query_arg('order', 'desc', $link);
     }
     if (!empty($_REQUEST['orderby']) && $_REQUEST['orderby'] == $name) {
         if (!empty($_REQUEST['order']) && $_REQUEST['order'] == 'desc') {
-            $class = 'me-sort-asc';
+            $class = 'me-sort-desc';
             $link  = add_query_arg('order', 'asc', $link);
         } else {
-            $class = 'me-sort-desc';
+            $class = 'me-sort-asc';
             $link  = add_query_arg('order', 'desc', $link);
         }
     }

@@ -9,6 +9,17 @@ $quants = array(
 $selected_quant = !empty($_REQUEST['quant']) ? $_REQUEST['quant'] : 'day';
 $nonce = wp_create_nonce( 'me-export' );
 ?>
+<style type="text/css">
+	.me-table-rhead .me-table-col:hover a.me-sort-asc:before, 
+	.me-table-rhead .me-table-col:hover a.me-sort-desc:after {
+		display: none;
+	}
+
+	.me-table-rhead .me-table-col:hover a.me-sort-asc:after, 
+	.me-table-rhead .me-table-col:hover a.me-sort-desc:before {
+		display: block;
+	}
+</style>
 <div class="me-report-filter">
 	<span class="me-pick-date-box">
 		<form action="" method="get">
