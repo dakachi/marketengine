@@ -16,7 +16,6 @@ $(document).ready(function() {
 		dateFormat : 'yy-mm-dd',
 		onSelect: function( selectedDate ) {
 			var date = new Date(selectedDate);
-			date.setDate(date.getDate() + 1);
 		    $( "#me-pick-date-2" ).datepicker( { minDate : date, dateFormat : 'yy-mm-dd' } );
 		}
 	});
