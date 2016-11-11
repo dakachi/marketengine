@@ -10,7 +10,9 @@
 <li><?php _e('Author:', 'enginethemes'); ?> <?php echo $comment->comment_author; ?></li>
 <li><?php _e('Email:', 'enginethemes'); ?> <?php echo $comment->comment_author_email; ?></li>
 <li><?php _e('URL:', 'enginethemes'); ?> <?php echo $comment->comment_author_url; ?></li>
-<li><?php _e('Comment:', 'enginethemes'); ?> <?php echo $comment->comment_content; ?></li>
+<li><?php _e('Comment:', 'enginethemes'); ?>
+	<p><?php echo nl2br($comment->comment_content); ?></p>
+</li>
 </ul>
 
 <p><?php _e('You can see all comments on this post here:', 'enginethemes'); ?></p>
