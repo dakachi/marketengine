@@ -82,7 +82,7 @@ class CSVExport {
         foreach ($data as $key => $item) {
             foreach ($headings as $key => $heading) {
                 if ($key == 'quant') {
-                    $time = marketengine_get_start_and_end_date($quant, $item->quant, $item->year);
+                    $time = marketengine_get_start_and_end_date($quant, $item->quant, $item->year, 'Y/m/d');
                     $csv_output .= str_replace(',', '-', $time) . ",";
                 } else {
                     $csv_output .= $item->$key . ",";
@@ -123,7 +123,7 @@ class CSVExport {
         $csv_output .= "\n";
 
         foreach ($listings as $key => $listing) {
-            $time = marketengine_get_start_and_end_date($quant, $listing->quant, $listing->year);
+            $time = marketengine_get_start_and_end_date($quant, $listing->quant, $listing->year, 'Y/m/d');
             $csv_output .= str_replace(',', '-', $time) . ",";
             if ($active_section == '') {
                 $csv_output .= $listing->count . ",";
