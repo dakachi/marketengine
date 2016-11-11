@@ -52,7 +52,7 @@ class ME_CSV_Export {
 			'order_id' 		=> __("Order ID", "enginethemes"),
 			'status' 		=> __("Status", "enginethemes"),
 			'amount' 		=> __("Amount", "enginethemes"),
-			'date'			=> __("Date Of Order", "enginethemes"),
+			'date_of_order'			=> __("Date Of Order", "enginethemes"),
 			'listing_title'	=> __("Listing", "enginethemes"),
 		);
 

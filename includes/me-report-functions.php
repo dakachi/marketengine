@@ -7,8 +7,8 @@ if (!defined('ABSPATH')) {
 function me_order_report_data( $args ) {
 	global $wpdb;
 	$defaults = array(
-        'from_date' => '2016-04-22',
-        'to_date'   => '2016-12-22',
+        'from_date' => '2016-1-1',
+        'to_date'   => date('Y-m-d', time()),
         'orderby'   => 'post_date',
         'order'     => 'DESC',
         'order_status' => 'any',
@@ -19,17 +19,16 @@ function me_order_report_data( $args ) {
 
     extract($args);
 
+    if( empty($from_date) ) {
+    	$from_date = '1970-1-1';
+    }
+    if( empty($to_date) ) {
+    	$to_date = date('Y-m-d', time());
+    }
+
     $user_info = get_userdata(get_current_user_id());
 
-    if (empty($from_date)) {
-        $from_date = '1970-1-1';
-    }
-
-    if (empty($to_date)) {
-        $to_date = date('Y-m-d', time());
-    }
-
-	$query = "SELECT DISTINCT(P.ID) as transaction_id,
+	$query = "SELECT DISTINCT(P.ID) as order_id,
 			P.post_status as status,
 			PM.meta_value as amount,
 			P.post_date as date_of_order,
@@ -40,7 +39,7 @@ function me_order_report_data( $args ) {
 	 			ON P.ID = O.order_id
 	 		LEFT JOIN  $wpdb->postmeta as PM ON  PM.post_id = P.ID AND PM.meta_key = '_order_subtotal'
 	 		WHERE P.post_type = 'me_order'
-	 		    AND P.post_author IN (
+	 		    AND P.ID IN (
 	 		        SELECT order_items.order_id
 	 		        FROM $wpdb->marketengine_order_items as order_items
 	 		        WHERE order_items.order_item_type = 'receiver_item'
@@ -78,7 +77,6 @@ function me_order_report_data( $args ) {
 	}
 
 	$query .= " GROUP BY P.ID";
-	var_dump($query);exit;
 
     $result = $wpdb->get_results($query);
 
@@ -88,8 +86,8 @@ function me_order_report_data( $args ) {
 function me_transaction_report_data( $args ) {
 	global $wpdb;
 	$defaults = array(
-        'from_date' => '2016-04-22',
-        'to_date'   => '2016-12-22',
+        'from_date' => '1970-1-1',
+        'to_date'   => date('Y-m-d', time()),
         'orderby'   => 'post_date',
         'order'     => 'DESC',
         'order_status' => 'any',
@@ -100,12 +98,11 @@ function me_transaction_report_data( $args ) {
 
     extract($args);
 
-    if (empty($from_date)) {
-        $from_date = '1970-1-1';
+    if( empty($from_date) ) {
+    	$from_date = '1970-1-1';
     }
-
-    if (empty($to_date)) {
-        $to_date = date('Y-m-d', time());
+    if( empty($to_date) ) {
+    	$to_date = date('Y-m-d', time());
     }
 
 	$user = get_current_user_id();
