@@ -24,11 +24,11 @@ class CSVExport {
                 }
             }
 
-            if (isset($_GET['from_date'])) {
+            if (!empty($_GET['from_date'])) {
                 $filename .= '_' . $_GET['from_date'];
             }
 
-            if (isset($_GET['to_date'])) {
+            if (!empty($_GET['to_date'])) {
                 $filename .= '_' . $_GET['to_date'];
             }
 
