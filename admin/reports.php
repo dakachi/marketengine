@@ -7,6 +7,10 @@ if (!defined('ABSPATH')) {
 function marketengine_report_heading($name, $lable) {
     $class = '';
     $link  = add_query_arg('orderby', $name);
+    if($name == 'quant' && empty($_REQUEST['orderby'])) {
+        $class = 'me-sort-desc';
+        $link  = add_query_arg('order', 'desc', $link);
+    }
     if (!empty($_REQUEST['orderby']) && $_REQUEST['orderby'] == $name) {
         if (!empty($_REQUEST['order']) && $_REQUEST['order'] == 'desc') {
             $class = 'me-sort-asc';
@@ -102,10 +106,14 @@ function marketengine_listing_report($args) {
 
     if (empty($from_date)) {
         $from_date = '1970-1-1';
+    }else {
+        $from_date = date('Y-m-d 00:00:00', strtotime($from_date));
     }
-
+    
     if (empty($to_date)) {
-        $to_date = date('Y-m-d', time());
+        $to_date = date('Y-m-d  H:i:s', time());
+    }else {
+        $to_date = date('Y-m-d 12:00:00 PM', strtotime($to_date));
     }
 
     $pgstrt = absint(($paged - 1) * $showposts) . ', ';
@@ -129,7 +137,7 @@ function marketengine_listing_report($args) {
 
     $limits = ' LIMIT ' . $pgstrt . $showposts;
 
-    if(!isset($section)) {
+    if(!isset($section) || empty($section)) {
         $select = $select . $select_contact . $select_purchase;
         $join = $join . $join_contact . $join_purchase;
     }else {
@@ -174,10 +182,14 @@ function marketengine_members_report($args) {
 
     if (empty($from_date)) {
         $from_date = '1970-1-1';
+    }else {
+        $from_date = date('Y-m-d 00:00:00', strtotime($from_date));
     }
-
+    
     if (empty($to_date)) {
-        $to_date = date('Y-m-d', time());
+        $to_date = date('Y-m-d  H:i:s', time());
+    }else {
+        $to_date = date('Y-m-d 12:00:00 PM', strtotime($to_date));
     }
 
     $pgstrt = absint(($paged - 1) * $showposts) . ', ';
@@ -221,10 +233,14 @@ function marketengine_orders_report($args) {
 
     if (empty($from_date)) {
         $from_date = '1970-1-1';
+    }else {
+        $from_date = date('Y-m-d 00:00:00', strtotime($from_date));
     }
-
+    
     if (empty($to_date)) {
-        $to_date = date('Y-m-d', time());
+        $to_date = date('Y-m-d  H:i:s', time());
+    }else {
+        $to_date = date('Y-m-d 12:00:00 PM', strtotime($to_date));
     }
 
     $pgstrt = absint(($paged - 1) * $showposts) . ', ';
@@ -275,10 +291,14 @@ function marketengine_inquiries_report($args) {
 
     if (empty($from_date)) {
         $from_date = '1970-1-1';
+    }else {
+        $from_date = date('Y-m-d 00:00:00', strtotime($from_date));
     }
-
+    
     if (empty($to_date)) {
-        $to_date = date('Y-m-d', time());
+        $to_date = date('Y-m-d  H:i:s', time());
+    }else {
+        $to_date = date('Y-m-d 12:00:00 PM', strtotime($to_date));
     }
 
     $pgstrt = absint(($paged - 1) * $showposts) . ', ';

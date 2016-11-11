@@ -138,12 +138,15 @@ class ME_Order {
      *
      */
     public function __construct($order_id = 0) {
-        $order_id = (int) $order_id;
-        if (!$order_id) {
-            return false;
+
+        if(is_numeric($order_id)) {
+            $order_id = (int) $order_id;    
+            $post = get_post($order_id);
+        }else {
+            $post = $order_id;
         }
 
-        $post = get_post($order_id);
+        if(!$post || $post->post_type != 'me_order') return false;
 
         foreach (get_object_vars($post) as $key => $value) {
             $this->$key = $value;

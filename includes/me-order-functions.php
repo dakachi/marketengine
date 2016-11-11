@@ -184,8 +184,8 @@ function me_cron_close_order() {
 }
 add_action('marketengine_cron_execute', 'me_cron_close_order');
 
-function me_get_order() {
-
+function me_get_order($order) {
+    return new ME_Order($order);
 }
 
 function me_get_order_ids($value, $type) {
