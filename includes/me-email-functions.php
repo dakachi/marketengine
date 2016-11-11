@@ -292,3 +292,33 @@ function me_close_order_email($order_id) {
 
 }
 add_action('marketengine_close_order', 'me_close_order_email');
+
+/**
+ * Override default email header of WP
+ * @param int $message_headers, $comment_ID
+ */
+function me_filter_receive_comment_email_header( $message_headers, $comment_ID ) {
+    ob_start();
+    me_get_template('emails/email-header');
+    $header = ob_get_clean();
+    return $header;
+}
+// add_filter('comment_notification_headers', 'me_filter_receive_comment_email_header');
+
+/**
+ * Override default email content of WP
+ * @param int $notify_message, $comment_ID
+ */
+function me_filter_receive_comment_email_content( $notify_message, $comment_ID ) {
+    $comment = get_comment($comment_ID);
+
+    if( empty($comment->comment_type) ) {
+        ob_start();
+        me_get_template('emails/receive-comment', array( 'notify_message' => $notify_message, 'comment' => $comment) );
+        $notify_message = ob_get_clean();
+    }
+
+    return $notify_message;
+}
+add_filter( 'comment_moderation_text', 'me_filter_receive_comment_email_content', 1, 2 );
+add_filter( 'comment_notification_text', 'me_filter_receive_comment_email_content', 1, 2 );
