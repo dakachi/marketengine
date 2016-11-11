@@ -208,7 +208,7 @@ class ME_Post_Types {
             'capability_type'    => 'post',
             'hierarchical'       => false,
             'menu_position'      => 28,
-            'supports'           => array('title', 'comment', 'custom-fields'),
+            'supports'           => array('comment', 'custom-fields'),
         ));
 
         register_post_status('me-pending', array(

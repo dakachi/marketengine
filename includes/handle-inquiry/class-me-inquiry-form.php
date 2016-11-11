@@ -170,7 +170,7 @@ class ME_Inquiry_Form {
 
             ob_start();
             while ($messages->have_posts()): $messages->the_post();
-                me_get_template('inquiry/contact-item');
+                me_get_template('inquiry/contact-item', array('inquiry' => $_GET['inquiry_id']));
             endwhile;
             $content = ob_get_clean();
 

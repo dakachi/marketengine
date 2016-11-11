@@ -9,7 +9,7 @@ function me_order_meta_box()
 }
 add_action('add_meta_boxes', 'me_order_meta_box');
 
-
+// order info
 function me_order_payment_details() {
 	global $post;
 	$post_id = $post->ID;
@@ -19,3 +19,11 @@ function me_order_payment_details() {
 	// print_r($response);
 	// echo "</pre>";
 }
+
+// item list
+
+// buyer
+
+// receiver
+
+// 

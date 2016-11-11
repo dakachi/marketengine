@@ -218,6 +218,7 @@
                 data: {
                     action: 'get_contact_list',
                     listing: $('#contact-list').attr('data-id'),
+                    inquiry_id : $('input[name="inquiry_id"]').val(),
                     paged: contact_paged,
                     _wpnonce: $('#_wpnonce').val()
                 },
