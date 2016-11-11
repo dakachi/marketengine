@@ -51,8 +51,8 @@ class ME_CSV_Export {
 		$headings = array(
 			'order_id' 		=> __("Order ID", "enginethemes"),
 			'status' 		=> __("Status", "enginethemes"),
-			'amount' 		=> __("Amount", "enginethemes"),
-			'date_of_order'			=> __("Date Of Order", "enginethemes"),
+			'amount' 		=> __("Amount", "enginethemes") . '(' .me_option('payment-currency-sign') .')',
+			'date_of_order'	=> __("Date Of Order", "enginethemes"),
 			'listing_title'	=> __("Listing", "enginethemes"),
 		);
 
@@ -67,7 +67,7 @@ class ME_CSV_Export {
 		$headings = array(
 			'transaction_id'=> __("Transaction ID", "enginethemes"),
 			'status' 		=> __("Status", "enginethemes"),
-			'amount' 		=> __("Amount", "enginethemes"),
+			'amount' 		=> __("Amount", "enginethemes") . '(' .me_option('payment-currency-sign') .')',
 			'date_of_order'	=> __("Date Of Order", "enginethemes"),
 			'listing_title'	=> __("Listing", "enginethemes"),
 		);
@@ -90,7 +90,7 @@ class ME_CSV_Export {
 
 		foreach ($data as $key => $item) {
 			foreach ($headings as $key => $heading) {
-				$csv_output .= $key == 'transaction_id' ? '#' : '';
+				$csv_output .= ($key == 'transaction_id' || $key == 'order_id') ? '#' : '';
 				if( $key == 'status') {
 					$status_arr = me_get_order_status_list();
 					$csv_output .= $status_arr[$item->$key] .",";
