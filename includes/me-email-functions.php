@@ -316,10 +316,9 @@ function me_filter_receive_comment_email_content( $notify_message, $comment_ID )
         ob_start();
         me_get_template('emails/receive-comment', array( 'notify_message' => $notify_message, 'comment' => $comment) );
         $notify_message = ob_get_clean();
-        return $notify_message;
-    } else {
-        return $notify_message;
     }
+
+    return $notify_message;
 }
-// add_filter( 'comment_moderation_text', 'me_filter_receive_comment_email_content', 1, 2 );
+add_filter( 'comment_moderation_text', 'me_filter_receive_comment_email_content', 1, 2 );
 add_filter( 'comment_notification_text', 'me_filter_receive_comment_email_content', 1, 2 );
