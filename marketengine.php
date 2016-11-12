@@ -170,7 +170,6 @@ if (!class_exists('MarketEngine')):
 
             ME_Post_Types::register_post_type();
             ME_Post_Types::register_taxonomies();
-
         }
 
         public function wpdb_table_fix() {
