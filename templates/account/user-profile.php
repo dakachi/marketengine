@@ -102,7 +102,7 @@ $user = ME()->get_current_user();
 				<p>
 					<?php
 						if($user->description){
-							echo $user->description;
+							echo nl2br($user->description);
 						}else{
 							echo '<span class="me-not-yet-info">';
 							_e('Not yet received info', 'enginethemes');

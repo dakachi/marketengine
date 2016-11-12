@@ -28,7 +28,7 @@ $note = $transaction->post_excerpt;
 		<div class="me-col-md-7">
 			<div class="me-ordernotes-info">
 				<h5><?php echo __( 'Order Notes:', 'enginethemes' ); ?></h5>
-				<p class=""><?php echo esc_attr($note) ?></p>
+				<p class=""><?php echo nl2br(esc_attr($note)); ?></p>
 			</div>
 		</div>
 	</div>
