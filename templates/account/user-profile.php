@@ -21,11 +21,11 @@ $user = ME()->get_current_user();
 
 	<?php do_action('marketengine_user_profile_start', $user); ?>
 
-		<div class="marketengine-profile-info">
+		<div class="me-profile-info">
 
 			<?php do_action('marketengine_before_user_profile_avatar', $user); ?>
 
-			<div class="marketengine-avatar-user">
+			<div class="me-avatar-user">
 				<a class="avatar-user">
 					<?php echo $user->get_avatar(); ?>
 				</a>
