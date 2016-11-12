@@ -4,10 +4,11 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function marketengine_report_heading($name, $lable) {
+function marketengine_report_heading($name, $lable)
+{
     $class = '';
     $link  = add_query_arg('orderby', $name);
-    if($name == 'quant' && empty($_REQUEST['orderby'])) {
+    if ($name == 'quant' && empty($_REQUEST['orderby'])) {
         $class = 'me-sort-asc';
         $link  = add_query_arg('order', 'desc', $link);
     }
@@ -27,30 +28,35 @@ function marketengine_report_heading($name, $lable) {
 <?php
 }
 
-function marketengine_get_quantity_report($col_name, $quant, $name = 'quant') {
+function marketengine_get_quantity_report($col_name, $quant, $name = 'quant')
+{
     switch ($quant) {
-    case 'week':
-        $time = "WEEK({$col_name}) as `{$name}`, YEAR({$col_name}) as `year`";
-        break;
-    case 'quarter':
-        $time = "QUARTER({$col_name}) as `{$name}` , YEAR({$col_name}) as `year`";
-        break;
-    case 'month':
-        $time = "MONTH({$col_name}) as `{$name}` , YEAR({$col_name}) as `year`";
-        break;
-    case 'year':
-        $time = "YEAR({$col_name}) as `{$name}` , YEAR({$col_name}) as `year`";
-        break;
-    default:
-        $time = "date({$col_name}) as `{$name}` , YEAR({$col_name}) as `year`";
-        break;
+        case 'week':
+            $time = "WEEK({$col_name}) as `{$name}`, YEAR({$col_name}) as `year`";
+            break;
+        case 'quarter':
+            $time = "QUARTER({$col_name}) as `{$name}` , YEAR({$col_name}) as `year`";
+            break;
+        case 'month':
+            $time = "MONTH({$col_name}) as `{$name}` , YEAR({$col_name}) as `year`";
+            break;
+        case 'year':
+            $time = "YEAR({$col_name}) as `{$name}` , YEAR({$col_name}) as `year`";
+            break;
+        default:
+            $time = "date({$col_name}) as `{$name}` , YEAR({$col_name}) as `year`";
+            break;
     }
 
     return $time;
 }
 
-function marketengine_get_start_and_end_date($quant, $week, $year) {
-    $date_format = get_option( 'date_format' );
+function marketengine_get_start_and_end_date($quant, $week, $year, $date_format = '')
+{
+    if (!$date_format) {
+        $date_format = get_option('date_format');
+    }
+
     if ($quant == 'week') {
         $time = strtotime("1 January $year", time());
         $day  = date('w', $time);
@@ -90,7 +96,8 @@ function marketengine_get_start_and_end_date($quant, $week, $year) {
     }
 }
 
-function marketengine_listing_report($args) {
+function marketengine_listing_report($args)
+{
     global $wpdb;
     $defaults = array(
         'quant'     => 'day',
@@ -106,13 +113,13 @@ function marketengine_listing_report($args) {
 
     if (empty($from_date)) {
         $from_date = '1970-1-1';
-    }else {
+    } else {
         $from_date = date('Y-m-d 00:00:00', strtotime($from_date));
     }
-    
+
     if (empty($to_date)) {
         $to_date = date('Y-m-d  H:i:s', time());
-    }else {
+    } else {
         $to_date = date('Y-m-d 12:00:00 PM', strtotime($to_date));
     }
 
@@ -127,7 +134,7 @@ function marketengine_listing_report($args) {
 
     $from = " FROM {$wpdb->posts}";
 
-    $join = '';
+    $join          = '';
     $join_contact  = " LEFT JOIN  $wpdb->postmeta as A ON  A .post_id = {$wpdb->posts}.ID AND A.meta_key = '_me_listing_type' AND A.meta_value = 'contact' ";
     $join_purchase = " LEFT JOIN  $wpdb->postmeta as B ON  B.post_id = {$wpdb->posts}.ID AND B.meta_key = '_me_listing_type' AND B.meta_value = 'purchasion' ";
 
@@ -137,18 +144,18 @@ function marketengine_listing_report($args) {
 
     $limits = ' LIMIT ' . $pgstrt . $showposts;
 
-    if(!isset($section) || empty($section)) {
+    if (!isset($section) || empty($section)) {
         $select = $select . $select_contact . $select_purchase;
-        $join = $join . $join_contact . $join_purchase;
-    }else {
-        if($section == 'contact') {
-            $select = $select . $select_contact ;
-            $join = $join . $join_contact ;
-            $where .=  "AND A.meta_key = '_me_listing_type'";
-        }else {
-            $select = $select  . $select_purchase;
-            $join = $join . $join_purchase;
-            $where .=  "AND B.meta_key = '_me_listing_type'";
+        $join   = $join . $join_contact . $join_purchase;
+    } else {
+        if ($section == 'contact') {
+            $select = $select . $select_contact;
+            $join   = $join . $join_contact;
+            $where .= "AND A.meta_key = '_me_listing_type'";
+        } else {
+            $select = $select . $select_purchase;
+            $join   = $join . $join_purchase;
+            $where .= "AND B.meta_key = '_me_listing_type'";
         }
     }
 
@@ -165,7 +172,8 @@ function marketengine_listing_report($args) {
     );
 }
 
-function marketengine_members_report($args) {
+function marketengine_members_report($args)
+{
     global $wpdb;
     $defaults = array(
         'quant'     => 'day',
@@ -182,13 +190,13 @@ function marketengine_members_report($args) {
 
     if (empty($from_date)) {
         $from_date = '1970-1-1';
-    }else {
+    } else {
         $from_date = date('Y-m-d 00:00:00', strtotime($from_date));
     }
-    
+
     if (empty($to_date)) {
         $to_date = date('Y-m-d  H:i:s', time());
-    }else {
+    } else {
         $to_date = date('Y-m-d 12:00:00 PM', strtotime($to_date));
     }
 
@@ -216,7 +224,8 @@ function marketengine_members_report($args) {
     );
 }
 
-function marketengine_orders_report($args) {
+function marketengine_orders_report($args)
+{
     global $wpdb;
     $defaults = array(
         'quant'     => 'day',
@@ -233,13 +242,13 @@ function marketengine_orders_report($args) {
 
     if (empty($from_date)) {
         $from_date = '1970-1-1';
-    }else {
+    } else {
         $from_date = date('Y-m-d 00:00:00', strtotime($from_date));
     }
-    
+
     if (empty($to_date)) {
         $to_date = date('Y-m-d  H:i:s', time());
-    }else {
+    } else {
         $to_date = date('Y-m-d 12:00:00 PM', strtotime($to_date));
     }
 
@@ -275,7 +284,8 @@ function marketengine_orders_report($args) {
     );
 }
 
-function marketengine_inquiries_report($args) {
+function marketengine_inquiries_report($args)
+{
     global $wpdb;
     $defaults = array(
         'quant'     => 'day',
@@ -291,13 +301,13 @@ function marketengine_inquiries_report($args) {
 
     if (empty($from_date)) {
         $from_date = '1970-1-1';
-    }else {
+    } else {
         $from_date = date('Y-m-d 00:00:00', strtotime($from_date));
     }
-    
+
     if (empty($to_date)) {
         $to_date = date('Y-m-d  H:i:s', time());
-    }else {
+    } else {
         $to_date = date('Y-m-d 12:00:00 PM', strtotime($to_date));
     }
 

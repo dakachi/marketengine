@@ -1,9 +1,11 @@
 <?php
-class CSVExport {
+class CSVExport
+{
     /**
      * Constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
         if (isset($_GET['export']) && isset($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'me-export')) {
             $csv = $this->generate_csv();
 
@@ -11,16 +13,16 @@ class CSVExport {
                 $filename = __("Report Listings", "enginethemes");
             } else {
                 switch ($_GET['tab']) {
-                case 'orders':
-                    $filename = __("Report Orders", "enginethemes");
-                    break;
-                case 'inquiries':
-                    $filename = __("Report Inquiries", "enginethemes");
-                    break;
-                default:
-                    $filename = __("Report Members", "enginethemes");
-                    break;
-                    break;
+                    case 'orders':
+                        $filename = __("Report Orders", "enginethemes");
+                        break;
+                    case 'inquiries':
+                        $filename = __("Report Inquiries", "enginethemes");
+                        break;
+                    default:
+                        $filename = __("Report Members", "enginethemes");
+                        break;
+                        break;
                 }
             }
 
@@ -48,21 +50,22 @@ class CSVExport {
     /**
      * Converting data to CSV
      */
-    public function generate_csv() {
+    public function generate_csv()
+    {
         if (empty($_GET['tab']) || $_GET['tab'] == 'listings') {
             return $this->generate_listings();
         }
 
         switch ($_GET['tab']) {
-        case 'orders':
-            return $this->generate_orders();
-            break;
-        case 'inquiries':
-            return $this->generate_inquiries();
-            break;
-        default:
-            return $this->generate_members();
-            break;
+            case 'orders':
+                return $this->generate_orders();
+                break;
+            case 'inquiries':
+                return $this->generate_inquiries();
+                break;
+            default:
+                return $this->generate_members();
+                break;
         }
 
     }
@@ -72,18 +75,29 @@ class CSVExport {
      * @param array $headings
      * @param array $data
      */
-    public function generate_rows($headings, $data, $quant) {
+    public function generate_rows($headings, $data, $quant)
+    {
         $csv_output = '';
         foreach ($headings as $key => $heading) {
-            $csv_output = $csv_output . $heading . ',';
+            if($key == 'quant' && $quant != 'day') {
+                $csv_output = $csv_output . __("From Date", "enginethemes") . ",";
+                $csv_output = $csv_output . __("To Date", "enginethemes") . ",";
+            }else {
+                $csv_output = $csv_output . $heading . ',';    
+            }
+            
         }
         $csv_output .= "\n";
 
         foreach ($data as $key => $item) {
             foreach ($headings as $key => $heading) {
                 if ($key == 'quant') {
-                    $time = marketengine_get_start_and_end_date($quant, $item->quant, $item->year);
-                    $csv_output .= str_replace(',', '-', $time) . ",";
+                    $time = marketengine_get_start_and_end_date($quant, $item->quant, $item->year, 'Y/m/d');
+                    $time = explode('-', $time);
+
+                    foreach ($time as $value) {
+                        $csv_output .= str_replace(',', '-', trim($value)) . ",";
+                    }
                 } else {
                     $csv_output .= $item->$key . ",";
                 }
@@ -93,7 +107,8 @@ class CSVExport {
         return $csv_output;
     }
 
-    public function generate_listings() {
+    public function generate_listings()
+    {
 
         $args              = $_REQUEST;
         $args['showposts'] = 300000;
@@ -105,26 +120,35 @@ class CSVExport {
         $listings       = $query['posts'];
 
         $csv_output = '';
-
-        $csv_output = $csv_output . " Date,";
+        if ($quant == 'day') {
+            $csv_output = $csv_output . __("Date", "enginethemes") . ",";
+        }else {
+            $csv_output = $csv_output . __("From Date", "enginethemes") . ",";
+            $csv_output = $csv_output . __("To Date", "enginethemes") . ",";
+        }
 
         if ($active_section == '') {
-            $csv_output = $csv_output . " Total Listings,";
+            $csv_output = $csv_output . __("Total Listings", "enginethemes") . ",";
         }
 
         if ($active_section == '' || $active_section == 'purchase') {
-            $csv_output = $csv_output . " Purchase,";
+            $csv_output = $csv_output . __("Purchase", "enginethemes") . ",";
         }
 
         if ($active_section == '' || $active_section == 'contact') {
-            $csv_output = $csv_output . " Contact,";
+            $csv_output = $csv_output . __("Contact", "enginethemes") . ",";
         }
 
         $csv_output .= "\n";
 
         foreach ($listings as $key => $listing) {
-            $time = marketengine_get_start_and_end_date($quant, $listing->quant, $listing->year);
-            $csv_output .= str_replace(',', '-', $time) . ",";
+            $time = marketengine_get_start_and_end_date($quant, $listing->quant, $listing->year, 'Y/m/d');
+            $time = explode('-', $time);
+
+            foreach ($time as $value) {
+                $csv_output .= str_replace(',', '-', trim($value)) . ",";
+            }
+            
             if ($active_section == '') {
                 $csv_output .= $listing->count . ",";
             }
@@ -140,7 +164,8 @@ class CSVExport {
         return $csv_output;
     }
 
-    public function generate_orders() {
+    public function generate_orders()
+    {
 
         $args              = $_REQUEST;
         $args['showposts'] = 300000;
@@ -160,7 +185,8 @@ class CSVExport {
         return $this->generate_rows($headings, $orders, $quant);
     }
 
-    public function generate_inquiries() {
+    public function generate_inquiries()
+    {
 
         $args              = $_REQUEST;
         $args['showposts'] = 300000;
@@ -180,7 +206,8 @@ class CSVExport {
 
     }
 
-    public function generate_members() {
+    public function generate_members()
+    {
 
         $args              = $_REQUEST;
         $args['showposts'] = 300000;
@@ -202,7 +229,8 @@ class CSVExport {
 
 }
 add_action('admin_init', 'me_export_reports');
-function me_export_reports() {
+function me_export_reports()
+{
     // Instantiate a singleton of this plugin
     $csvExport = new CSVExport();
 }
