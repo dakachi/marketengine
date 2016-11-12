@@ -869,6 +869,7 @@ function me_filter_inquiry_query( $query, $role ) {
 
         $args['date_query'] = array(
             array(
+                'column' => 'post_modified',
                 'after'     => $after,
                 'before'    => $before,
             ),
