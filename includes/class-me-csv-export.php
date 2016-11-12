@@ -9,15 +9,36 @@ class ME_CSV_Export {
 		{
 			$csv = $this->generate_csv();
 
+			if(empty($_GET['tab']) || $_GET['tab'] == 'order') {
+                $filename = __("Report Orders", "enginethemes");
+			}
+
+			switch ($_GET['tab']) {
+				case 'order':
+                	$filename = __("Report Orders", "enginethemes");
+					break;
+				case 'transaction':
+                	$filename = __("Report Transactions", "enginethemes");
+					break;
+			}
+
+            if (!empty($_GET['from_date'])) {
+                $filename .= '_' . $_GET['from_date'];
+            }
+
+            if (!empty($_GET['to_date'])) {
+                $filename .= '_' . $_GET['to_date'];
+            }
+
 			header("Pragma: public");
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Cache-Control: private", false);
-			header("Content-Type: application/octet-stream");
-			header("Content-Disposition: attachment; filename=\"report.csv\";" );
+			header("Content-Type: application/octet-stream; charset=utf-8");
+			header("Content-Disposition: attachment; filename=\"{$filename}.csv\";" );
 			header("Content-Transfer-Encoding: binary");
 
-			echo $csv;
+			echo mb_convert_encoding($csv, 'utf-8');
 			exit;
 		}
 	}
