@@ -28,7 +28,7 @@ $query = new WP_Query( $args );
 			me_get_template('seller-profile/listing-item');
 		endwhile;
 ?>
-	<div class="marketengine-paginations">
+	<div class="me-paginations">
 		<?php me_paginate_link($query); ?>
 	</div>
 <?php
