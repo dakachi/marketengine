@@ -61,7 +61,7 @@ jQuery(document).ready(function($) {
 	/**
 	 * Hover category show/hide
 	 */
-	$('.me-shopcategories > li').hover(
+	$('.me-has-category > li').hover(
 		function() {
 			$('body').addClass('marketengine-categories');
 		},
