@@ -65,7 +65,7 @@ $query = new WP_Query( $args );
 							<?php //echo '<i class="icon-me-image"></i>' ?>
 						</a>
 						<div class="me-item-content">
-							<h2><a href="<?php the_permalink(); ?>"><?php the_excerpt(); ?></a></h2>
+							<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 							<div class="me-item-price">
 							<?php
 							if( $listing_type ) :
