@@ -44,8 +44,8 @@ $query = new WP_Query($args);
 		$order = new ME_Order( get_the_ID() );
 		$order_total = $order->get_total();
 
+		$order_listing = me_get_order_items( get_the_ID() );
 		$listing_item = me_get_order_items(get_the_ID(), 'listing_item');
-		$item_id = me_get_order_item_meta($listing_item[0]->order_item_id, '_listing_id', true);
 	?>
 		<div class="me-table-row">
 			<div class="me-table-col me-order-id"><a href="<?php the_permalink(); ?>">#<?php the_ID(); ?></a></div>
@@ -56,7 +56,7 @@ $query = new WP_Query($args);
 			<div class="me-table-col me-order-date"><?php echo get_the_date(get_option('date_format'), get_the_ID()); ?></div>
 			<div class="me-table-col me-order-listing">
 				<div class="me-order-listing-info">
-					<p><?php echo esc_html( get_the_title($item_id) ); ?></p>
+					<p><?php echo isset($order_listing[0]) ? esc_html($order_listing[0]->order_item_name) : '' ?></p>
 				</div>
 			</div>
 		</div>
