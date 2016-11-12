@@ -8,6 +8,6 @@
  * @version     1.0.0
  */
 ?>
-<div class="marketengine-paginations">
+<div class="me-paginations">
 	<?php me_paginate_link (); ?>
 </div>

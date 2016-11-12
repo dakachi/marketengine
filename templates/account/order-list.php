@@ -64,7 +64,7 @@ $query = new WP_Query($args);
 	<?php endwhile; ?>
 </div>
 
-<div class="marketengine-paginations">
+<div class="me-paginations">
 	<?php me_paginate_link( $query ); ?>
 </div>
 

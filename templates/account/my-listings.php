@@ -109,7 +109,7 @@ $query = new WP_Query( $args );
 				wp_reset_postdata();
 			?>
 			</ul>
-			<div class="marketengine-paginations">
+			<div class="me-paginations">
 				<?php me_paginate_link ($query); ?>
 			</div>
 		</div>
