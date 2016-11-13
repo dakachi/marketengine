@@ -36,23 +36,29 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 						<?php marketengine_report_heading('quant', __("Registration Date", "enginethemes")) ?>
 						<?php marketengine_report_heading('count', __("Total Members", "enginethemes")) ?>
 					</div>
-					<?php foreach ($members['posts'] as $key => $member) : ?>
-						
-						<div class="me-table-row">
-							<div class="me-table-col"><?php echo $i ?></div>
-							<div class="me-table-col">
-								<?php echo marketengine_get_start_and_end_date($quant, $member->quant, $member->year); ?>
+					<?php
+
+					if(!empty($members['posts']) {
+
+						foreach ($members['posts'] as $key => $member) : ?>
+							<div class="me-table-row">
+								<div class="me-table-col"><?php echo $i ?></div>
+								<div class="me-table-col">
+									<?php echo marketengine_get_start_and_end_date($quant, $member->quant, $member->year); ?>
+								</div>
+								<div class="me-table-col"><?php echo $member->count; ?></div>
 							</div>
-							<div class="me-table-col"><?php echo $member->count; ?></div>
-						</div>
 
-						<?php $i++; ?>
+							<?php $i++; ?>
 
-					<?php endforeach; ?>
+						<?php endforeach; ?>
+					<?php }else { 
+						me_get_template('report-none');
+					 } ?>
 				</div>
-				
+
 				<?php me_get_template('admin/pagination', array('query' => $members)); ?>
-				
+
 			</div>
 		</div>
 	</div>
