@@ -35,8 +35,9 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 						<?php marketengine_report_heading('count', __("Total Orders", "enginethemes")) ?>
 						<?php marketengine_report_heading('total', __("Income", "enginethemes")) ?>
 					</div>
-					<?php 
-					if(!empty($members['posts']) {
+					<?php
+
+					if(!empty($orders['posts'])) {
 
 						foreach ($orders['posts'] as $key => $order) : ?>
 

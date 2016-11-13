@@ -38,7 +38,7 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 					</div>
 					<?php
 
-					if(!empty($members['posts']) {
+					if(!empty($members['posts'])) {
 
 						foreach ($members['posts'] as $key => $member) : ?>
 							<div class="me-table-row">
