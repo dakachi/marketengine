@@ -312,6 +312,21 @@ function me_get_order_status_list() {
 }
 
 /**
+ * MarketEngine Get Order Status Label
+ *
+ * Retrieve marketengine order status display label
+ *
+ * @param string $status
+ *
+ * @since 1.0
+ * @return string
+ */
+function me_get_order_status_label($status) {
+    $order_status = me_get_order_status_list();
+    return $order_status[$status];
+}
+
+/**
  * Retrieve order items
  *
  * @param int $order_id The order id
