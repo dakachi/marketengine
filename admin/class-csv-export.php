@@ -1,5 +1,5 @@
 <?php
-class CSVExport
+class ME_Report_CSVExport
 {
     /**
      * Constructor
@@ -79,7 +79,7 @@ class CSVExport
     {
         $csv_output = '';
         foreach ($headings as $key => $heading) {
-            if($key == 'quant' && $quant != 'day') {
+            if($key == 'quant' && $quant != 'day' && $quant != 'year') {
                 $csv_output = $csv_output . __("From Date", "enginethemes") . ",";
                 $csv_output = $csv_output . __("To Date", "enginethemes") . ",";
             }else {
@@ -120,7 +120,7 @@ class CSVExport
         $listings       = $query['posts'];
 
         $csv_output = '';
-        if ($quant == 'day') {
+        if ($quant == 'day' || $quant == 'year') {
             $csv_output = $csv_output . __("Date", "enginethemes") . ",";
         }else {
             $csv_output = $csv_output . __("From Date", "enginethemes") . ",";
@@ -232,5 +232,5 @@ add_action('admin_init', 'me_export_reports');
 function me_export_reports()
 {
     // Instantiate a singleton of this plugin
-    $csvExport = new CSVExport();
+    $csvExport = new ME_Report_CSVExport();
 }
