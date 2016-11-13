@@ -319,8 +319,7 @@ function marketengine_inquiries_report($args)
     $select  = "SELECT SQL_CALC_FOUND_ROWS {$time}, count({$wpdb->marketengine_message_item}.ID) as count FROM {$wpdb->marketengine_message_item}";
     $where   = " WHERE post_type = 'inquiry'  AND post_date BETWEEN '{$from_date}' AND '{$to_date}'";
     $groupby = " GROUP BY `quant` ,`year` ";
-    $orderby = " ORDER BY {$orderby} ";
-    $order   = " ORDER {$order} ";
+    $orderby = " ORDER BY {$orderby} {$order}";
     $limits  = ' LIMIT ' . $pgstrt . $showposts;
 
     $sql = $select . $where . $groupby . $orderby . $limits;
