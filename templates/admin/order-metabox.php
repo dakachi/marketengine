@@ -14,6 +14,12 @@ $note = esc_html( $order->post_excerpt );
 $listing_items = $order->get_listing_items();
 $listing_item = array_pop($listing_items);
 $listing_obj = me_get_listing($listing_item['ID']);
+
+$receiver_items = me_get_order_items($post->ID, 'receiver_item');
+$receiver_item = array_pop($receiver_items);
+
+$commission_items = me_get_order_items($post->ID, 'commission_item');
+$commission_item = array_pop($commission_items);
 ?>
 
 <h2><?php printf(__( "Order #%d details" , "enginethemes" ), $order->ID); ?></h2>
@@ -43,7 +49,7 @@ $listing_obj = me_get_listing($listing_item['ID']);
 	<?php endif;?>
 </div>
 
-<div class="me-shopping-cart">
+<div class="me-order-items">
 	<h5><?php _e("Order Item", "enginethemes"); ?></h5>
 	<div class="me-table me-cart-table">
 		<div class="me-table-rhead">
@@ -86,5 +92,41 @@ $listing_obj = me_get_listing($listing_item['ID']);
 			<div class="me-table-col me-cart-amount"><?php _e("Total amount:", "enginethemes"); ?></div>
 			<div class="me-table-col me-cart-totals"><?php echo me_price_html($listing_item['price'] * $unit); ?></div>
 		</div>
+	</div>
+</div>
+
+<div class="me-receiver-item">
+	<?php if(!empty($receiver_item)) : ?>
+	<div class="me-seller-item">
+	<?php
+		$receiver_name = $receiver_item->order_item_name;
+		$receiver = get_user_by( 'login', $receiver_name );
+		echo '<p>';
+		_e("Name: ", "enginethemes");
+		echo get_the_author_meta( 'display_name', $receiver->ID );
+		echo '</p>';
+		echo '<p>';
+		_e("Paypal email: ", "enginethemes");
+		echo me_get_order_item_meta($receiver_item->order_item_id, '_receive_email', true);
+		echo '</p>';
+		echo '<p>';
+		_e("Amount: ", "enginethemes");
+		echo me_get_order_item_meta($receiver_item->order_item_id, '_amount', true);
+		echo '</p>';
+	?>
+	</div>
+	<?php endif; ?>
+	<div class="me-commision-item">
+	<?php
+		_e("Commision", "enginethemes");
+		echo '<p>';
+		_e("Paypal email: ", "enginethemes");
+		echo me_get_order_item_meta($commission_item->order_item_id, '_receive_email', true);
+		echo '</p>';
+		echo '<p>';
+		_e("Amount: ", "enginethemes");
+		echo me_get_order_item_meta($commission_item->order_item_id, '_amount', true);
+		echo '</p>';
+	?>
 	</div>
 </div>
