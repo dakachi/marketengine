@@ -54,7 +54,7 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 
 						<?php endforeach; ?>
 					<?php }else { 
-						me_get_template('admin/eport-none');
+						me_get_template('admin/report-none');
 					 } ?>
 				</div>
 				<?php me_get_template('admin/pagination', array('query' => $orders)); ?>

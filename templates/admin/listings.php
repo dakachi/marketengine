@@ -94,7 +94,7 @@ $active_section = empty($_REQUEST['section']) ? '' : $_REQUEST['section'];
 						<?php endforeach; ?>
 
 					<?php }else { 
-						me_get_template('admin/eport-none');
+						me_get_template('admin/report-none');
 					 } ?>
 
 				</div>
