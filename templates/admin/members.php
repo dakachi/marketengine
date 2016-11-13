@@ -53,7 +53,7 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 
 						<?php endforeach; ?>
 					<?php }else { 
-						me_get_template('report-none');
+						me_get_template('admin/eport-none');
 					 } ?>
 				</div>
 
