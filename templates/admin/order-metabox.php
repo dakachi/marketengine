@@ -21,11 +21,52 @@ $receiver_item = array_pop($receiver_items);
 $commission_items = me_get_order_items($post->ID, 'commission_item');
 $commission_item = array_pop($commission_items);
 ?>
-
+<style type="text/css">
+	.hndle  {
+		display: none;
+	}
+	#poststuff h2 {
+		font-size: 20px;
+	}
+	.order-details, .me-orderbill-info, .me-ordernotes-info, .me-order-items, .me-receiver-item {
+		padding-left: 12px;
+	}
+	.order-details label {
+	    cursor: pointer;
+	    font-weight: bold;
+	    min-width: 100px;
+	    display: inline-block;
+	}
+	.pull-left {
+		float: left;
+	}
+	.clearfix {
+		clear : both;
+	}
+	.me-order-items th, .me-receiver-item th {
+		text-align: left;
+		width: 30%;
+		line-height: 28px;
+	}
+	.me-receiver-item th {
+	 	width: 25%;
+	}
+	.me-order-items img {
+		width: 50px;
+		height: 50px;
+	}
+	.me-order-items a {
+		width: 200px;
+	}
+	.page-title-action {
+		display: none;
+	}
+</style>
 <h2><?php printf(__( "Order #%d details" , "enginethemes" ), $order->ID); ?></h2>
 <div class="order-details">
 	<p>
-		<label><?php _e("Order date:", "enginethemes"); ?></label><?php echo get_the_date(); ?>
+		<label><?php _e("Order date:", "enginethemes"); ?></label>
+		<?php echo get_the_date(); ?>
 	</p>
 	<p>
 		<label><?php _e("Order status", "enginethemes"); ?></label>
@@ -35,98 +76,85 @@ $commission_item = array_pop($commission_items);
 		<label><?php _e("Buyer:", "enginethemes"); ?></label>
 		<?php echo get_the_author_meta( 'display_name', $order->post_author ); ?>
 	</p>
-	<div class="me-orderbill-info">
-		<h5><?php echo __( 'Billed to:', 'enginethemes' ); ?></h5>
-		<p><?php me_print_buyer_information( $billing_address ); ?></p>
-	</div>
-	<?php if($note) : ?>
-
-	<div class="me-ordernotes-info">
-		<h5><?php echo __( 'Order Notes:', 'enginethemes' ); ?></h5>
-		<p class=""><?php echo nl2br(esc_attr($note)); ?></p>
-	</div>
-
-	<?php endif;?>
 </div>
 
+<h2><?php _e( 'Billed to:', 'enginethemes' ); ?></h2>
+<div class="me-orderbill-info">
+	
+	<p><?php me_print_buyer_information( $billing_address ); ?></p>
+</div>
+
+<?php if($note) : ?>
+<h2><?php echo __( 'Order Notes:', 'enginethemes' ); ?></h2>
+<div class="me-ordernotes-info">
+	
+	<p class=""><?php echo nl2br(esc_attr($note)); ?></p>
+</div>
+
+<?php endif;?>
+
+<h2><?php _e("Order Item", "enginethemes"); ?></h2>
 <div class="me-order-items">
-	<h5><?php _e("Order Item", "enginethemes"); ?></h5>
-	<div class="me-table me-cart-table">
-		<div class="me-table-rhead">
-			<div class="me-table-col me-cart-name"><?php _e("Listing", "enginethemes"); ?></div>
-			<div class="me-table-col me-cart-price"><?php _e("Price", "enginethemes"); ?></div>
-			<div class="me-table-col me-cart-units"><?php _e("Units", "enginethemes"); ?></div>
-			<div class="me-table-col me-cart-units-total"><?php _e("Total price", "enginethemes"); ?></div>
-		</div>
-
-		<?php do_action( 'marketengine_before_cart_item_list' ); ?>
-
+	
+	<table>
+		<tr>
+			<th><?php _e("Listing", "enginethemes"); ?></th>
+			<th><?php _e("Price", "enginethemes"); ?></th>
+			<th><?php _e("Units", "enginethemes"); ?></th>
+			<th><?php _e("Total price", "enginethemes"); ?></th>
+		</tr>
 		<?php
 			$listing = $listing_item['ID'];
 			$unit = ($listing_item['qty']) ? $listing_item['qty'][0] : 1;
 		?>
-
-		<div class="me-table-row me-cart-item">
-			<div class="me-table-col me-cart-name">
-				<div class="me-cart-listing">
-					<a href="<?php echo get_permalink( $listing_obj->ID ); ?>">
-						<?php echo get_the_post_thumbnail($listing_obj->ID); ?>
-						<span><?php echo esc_html(get_the_title($listing_obj->ID)); ?></span>
-					</a>
-				</div>
-			</div>
-			<div class="me-table-col me-cart-price">
-				<?php echo me_price_html( $listing_item['price'] ); ?>
-			</div>
-			<div class="me-table-col me-cart-units">
-				<?php echo $unit ?>
-			</div>
-			<div class="me-table-col me-cart-units-total">
-				<?php echo me_price_html($listing_item['price'] * $unit); ?>
-			</div>
-		</div>
-
-		<div class="me-table-row me-cart-rtotals">
-			<div class="me-table-col me-table-empty"></div>
-			<div class="me-table-col me-table-empty"></div>
-			<div class="me-table-col me-cart-amount"><?php _e("Total amount:", "enginethemes"); ?></div>
-			<div class="me-table-col me-cart-totals"><?php echo me_price_html($listing_item['price'] * $unit); ?></div>
-		</div>
-	</div>
+		<tr>
+			<td>
+				<a href="<?php echo get_permalink( $listing_obj->ID ); ?>">
+					<?php echo get_the_post_thumbnail($listing_obj->ID); ?>
+					<div><?php echo esc_html(get_the_title($listing_obj->ID)); ?></div>
+				</a>
+			</td>
+			<td><?php echo me_price_html( $listing_item['price'] ); ?></td>
+			<td><?php echo $unit ?></td>
+			<td><?php echo me_price_html($listing_item['price'] * $unit); ?></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td><?php _e("Total amount:", "enginethemes"); ?></td>
+			<td><?php echo me_price_html($listing_item['price'] * $unit); ?></td>
+		</tr>
+	</table>
 </div>
 
+<h2><?php _e("Payment Info", "enginethemes"); ?></h2>
 <div class="me-receiver-item">
-	<?php if(!empty($receiver_item)) : ?>
-	<div class="me-seller-item">
-	<?php
-		$receiver_name = $receiver_item->order_item_name;
-		$receiver = get_user_by( 'login', $receiver_name );
-		echo '<p>';
-		_e("Name: ", "enginethemes");
-		echo get_the_author_meta( 'display_name', $receiver->ID );
-		echo '</p>';
-		echo '<p>';
-		_e("Paypal email: ", "enginethemes");
-		echo me_get_order_item_meta($receiver_item->order_item_id, '_receive_email', true);
-		echo '</p>';
-		echo '<p>';
-		_e("Amount: ", "enginethemes");
-		echo me_get_order_item_meta($receiver_item->order_item_id, '_amount', true);
-		echo '</p>';
-	?>
-	</div>
-	<?php endif; ?>
-	<div class="me-commision-item">
-	<?php
-		_e("Commision", "enginethemes");
-		echo '<p>';
-		_e("Paypal email: ", "enginethemes");
-		echo me_get_order_item_meta($commission_item->order_item_id, '_receive_email', true);
-		echo '</p>';
-		echo '<p>';
-		_e("Amount: ", "enginethemes");
-		echo me_get_order_item_meta($commission_item->order_item_id, '_amount', true);
-		echo '</p>';
-	?>
-	</div>
+	<table>
+		<tr>
+			<th><?php _e("Receiver Name", "enginethemes"); ?></th>
+			<th><?php _e("Paypal Email", "enginethemes"); ?></th>
+			<th><?php _e("Amount", "enginethemes"); ?></th>
+		</tr>
+	  	<?php if(!empty($receiver_item)) : ?>
+		  	<?php
+				$receiver_name = $receiver_item->order_item_name;
+				$receiver = get_user_by( 'login', $receiver_name );
+			?>
+		<tr>
+			<td><?php echo get_the_author_meta( 'display_name', $receiver->ID ); ?></td>
+			<td><?php echo me_get_order_item_meta($receiver_item->order_item_id, '_receive_email', true); ?></td>
+			<td><?php echo me_price_html(me_get_order_item_meta($receiver_item->order_item_id, '_amount', true)); ?></td>
+		</tr>
+	  	<?php endif; ?>
+
+	  	<?php if(!empty($commission_item)) : ?>
+	  	<tr>
+		    <td><?php _e("Commision", "enginethemes"); ?></td>
+		    <td><?php echo me_get_order_item_meta($commission_item->order_item_id, '_receive_email', true); ?></td>
+		    <td><?php echo me_price_html(me_get_order_item_meta($commission_item->order_item_id, '_amount', true)); ?></td>
+	  	</tr>
+	  	<?php endif; ?>
+
+	</table>
+
 </div>

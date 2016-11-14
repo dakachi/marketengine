@@ -101,8 +101,8 @@ function marketengine_listing_report($args)
     global $wpdb;
     $defaults = array(
         'quant'     => 'day',
-        'from_date' => '2016-04-22',
-        'to_date'   => '2016-12-22',
+        'from_date' => '',
+        'to_date'   => '',
         'orderby'   => 'quant',
         'order'     => 'ASC',
         'paged'     => 1,
@@ -177,8 +177,8 @@ function marketengine_members_report($args)
     global $wpdb;
     $defaults = array(
         'quant'     => 'day',
-        'from_date' => '2016-04-22',
-        'to_date'   => '2016-12-22',
+        'from_date' => '',
+        'to_date'   => '',
         'orderby'   => 'quant',
         'order'     => 'ASC',
         'paged'     => 1,
@@ -211,8 +211,16 @@ function marketengine_members_report($args)
     $orderby = " ORDER BY {$orderby} {$order}";
     $limits  = ' LIMIT ' . $pgstrt . $showposts;
 
-    $sql = $select . $where . $groupby . $orderby . $limits;
+    $join = '';
+    if(is_multisite()) {
+        $blog_id = $GLOBALS['blog_id'];
+        $key = $wpdb->get_blog_prefix( $blog_id ) . 'capabilities';
+        $compare = 'EXISTS';
+        $join = " LEFT JOIN {$wpdb->usermeta} as M ON M.user_id = ID AND meta_key = '{$key}' " ;
+        $where .= " AND M.meta_value != '' ";
+    }
 
+    $sql = $select . $join .  $where . $groupby . $orderby . $limits;
     $result = $wpdb->get_results($sql);
 
     $found_rows     = $wpdb->get_var('SELECT FOUND_ROWS() as row');
@@ -229,8 +237,8 @@ function marketengine_orders_report($args)
     global $wpdb;
     $defaults = array(
         'quant'     => 'day',
-        'from_date' => '2016-04-22',
-        'to_date'   => '2016-12-22',
+        'from_date' => '',
+        'to_date'   => '',
         'orderby'   => 'quant',
         'order'     => 'ASC',
         'paged'     => 1,

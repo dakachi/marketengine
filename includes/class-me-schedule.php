@@ -45,7 +45,7 @@ class ME_Schedule {
      * Schedule event
      */
 	function schedule_events () {
-		//wp_clear_scheduled_hook($this->cron_hook);
+		// wp_clear_scheduled_hook($this->cron_hook);
 		if ( !wp_next_scheduled( $this->cron_hook ) ){
 			strtotime( date( 'Y-m-d 00:00:00', strtotime('now')) );
 			wp_schedule_event( time() , self::$cron_name, $this->cron_hook );
