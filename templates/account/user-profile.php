@@ -116,7 +116,7 @@ $user = ME()->get_current_user();
 
 		</div>
 		<div class="marketengine-text-field edit-profile">
-			<a href="<?php echo $user->is_activated() ? me_get_endpoint_url('edit-profile') : '#'; ?>" class="marketengine-btn <?php echo $user->is_activated() ? '' : 'me-disable-btn'; ?>"><?php _e("EDIT PROFILE", "enginethemes");?></a>
+			<a href="<?php echo $user->is_activated() ? me_get_endpoint_url('edit-profile') : 'javascript:void(0)'; ?>" class="marketengine-btn <?php echo $user->is_activated() ? '' : 'me-disable-btn'; ?>"><?php _e("EDIT PROFILE", "enginethemes");?></a>
 		</div>
 
 		<?php if($user->is_activated()): ?>
