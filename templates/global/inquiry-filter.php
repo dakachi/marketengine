@@ -33,8 +33,9 @@ if ('' === get_option('permalink_structure')) {
 					<input class="me-inquiries-keyword" type="text" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>" placeholder="<?php _e('Listing name, seller name...', 'enginethemes'); ?>">
 
 					<?php //TODO style lai cho nay ?>
+				</div>
+				<div class="me-inquiries-clear-filter">
 					<a href="<?php echo me_get_auth_url($page).'?tab=inquiry'; ?>"><?php _e('Clear Filter'); ?></a>
-
 					<input class="me-inquiries-filter-btn" type="submit" value="<?php _e('FILTER', 'enginethemes'); ?>">
 				</div>
 			</div>
