@@ -45,11 +45,11 @@ function me_order_report_data( $args ) {
 	 		        WHERE order_items.order_item_type = 'receiver_item'
 	 		        AND order_items.order_item_name = '{$user_info->user_login}'
 	 		    )
-	 		    AND P.post_date BETWEEN '{$from_date}' AND '{$to_date}'";
+	 		    AND P.post_date BETWEEN '{$from_date} 0:0:1' AND '{$to_date} 23:59:59'";
 
 	if( empty($order_status) || $order_status == 'any' ) {
 		$query .= " AND (";
-		$order_status = array( 'me-complete', 'me-closed' );
+		$order_status = array( 'me-complete', 'me-closed', 'publish' );
 		$order_status = apply_filters( 'me_export-order_status', $order_status );
 		foreach($order_status as $key => $status) {
 			if($key != 0) {
@@ -119,11 +119,11 @@ function me_transaction_report_data( $args ) {
 	 		LEFT JOIN  $wpdb->postmeta as PM ON  PM.post_id = P.ID AND PM.meta_key = '_order_subtotal'
 	 		WHERE P.post_type = 'me_order'
 	 		    AND P.post_author = {$user}
-	 		    AND P.post_date BETWEEN '{$from_date}' AND '{$to_date}'";
+	 		    AND P.post_date BETWEEN '{$from_date} 0:0:1' AND '{$to_date} 23:59:59'";
 
 	if( empty($order_status) || $order_status == 'any' ) {
 		$query .= " AND (";
-		$order_status = array( 'me-complete', 'me-pending', 'me-closed' );
+		$order_status = array( 'me-complete', 'me-pending', 'me-closed', 'publish' );
 		$order_status = apply_filters( 'me_export-order_status', $order_status );
 		foreach($order_status as $key => $status) {
 			if($key != 0) {

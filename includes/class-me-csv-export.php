@@ -34,11 +34,12 @@ class ME_CSV_Export {
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Cache-Control: private", false);
-			header("Content-Type: application/octet-stream; charset=utf-8");
+			header("Content-Type: application/octet-stream;");
 			header("Content-Disposition: attachment; filename=\"{$filename}.csv\";" );
 			header("Content-Transfer-Encoding: binary");
 
-			echo mb_convert_encoding($csv, 'utf-8');
+			echo "\xEF\xBB\xBF";
+			echo $csv;
 			exit;
 		}
 	}
@@ -66,7 +67,7 @@ class ME_CSV_Export {
 	public function generate_orders() {
 
 		$args = $_REQUEST;
-		$args['showposts'] = -1;
+
 		$data = me_order_report_data($args);
 
 		$headings = array(
