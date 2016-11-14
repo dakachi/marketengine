@@ -44,16 +44,17 @@ $type = isset($type) ? $type : 'transaction';
 
 					<?php //TODO style lai cho nay ?>
 					<?php $page = ($type === 'order') ? 'orders' : 'purchases'; ?>
+				</div>
+				<div class="me-order-clear-filter">
 					<a href="<?php echo me_get_auth_url($page); ?>"><?php _e('Clear Filter'); ?></a>
-
 					<input class="me-order-filter-btn" type="submit" value="<?php _e('FILTER', 'enginethemes'); ?>">
 				</div>
 			</div>
-
 		</div>
-
 		<input name="tab" type="hidden" value="<?php echo isset($type) ? $type : 'transaction'; ?>">
 	</form>
 </div>
-<?php $nonce = wp_create_nonce('me-export_report'); ?>
-<a href="<?php echo add_query_arg( array('export' => 'csv', '_wpnonce' => $nonce, 'tab' => $type)); ?>" target="_blank" rel="noopener noreferrer" class="me-order-export"><i class="icon-me-download"></i><?php _e('Export report', 'enginethemes'); ?></a>
+<?php //$nonce = wp_create_nonce('me-export_report'); ?>
+<!--
+<a href="<?php //echo add_query_arg( array('export' => 'csv', '_wpnonce' => $nonce, 'tab' => $type)); ?>" target="_blank" rel="noopener noreferrer" class="me-order-export"><i class="icon-me-download"></i><?php //_e('Export report', 'enginethemes'); ?></a>
+-->
