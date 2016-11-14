@@ -163,7 +163,7 @@ class ME_Auth_Form extends ME_Form {
         if (!empty($_GET['action']) && 'confirm-email' === $_GET['action']) {
             $user = ME_Authentication::confirm_email($_GET);
             if (!is_wp_error($user)) {
-                me_add_notice(__("Your account has been confirmed successfully!.", "enginethemes"));
+                me_add_notice(__("<div><p>Your account has been confirmed successfully!.</p></div>", "enginethemes"));
                 // set the redirect link after confirm email
                 $redirect = self::get_redirect_link();
                 /**
