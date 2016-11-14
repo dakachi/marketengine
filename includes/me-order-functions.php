@@ -227,8 +227,8 @@ function me_filter_order_query($query, $type = '') {
     if (isset($query['from_date']) || isset($query['to_date'])) {
         $before = $after = '';
         if (isset($query['from_date']) && !empty($query['from_date'])) {
-            if (preg_match("/^(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])\/[0-9]{4}$/", $query['from_date'])) {
-                $after = $query['from_date'];
+            if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $query['from_date'])) {
+                $after = $query['from_date'] . ' 0:0:1';
             } else {
                 $args['post__in'][] = -1;
                 return $args;
@@ -236,7 +236,7 @@ function me_filter_order_query($query, $type = '') {
         }
 
         if (isset($query['to_date']) && !empty($query['to_date'])) {
-            if (preg_match("/^(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])\/[0-9]{4}$/", $query['to_date'])) {
+            if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $query['to_date'])) {
                 $before = $query['to_date'] . ' 23:59:59';
             } else {
                 $args['post__in'][] = -1;
@@ -309,6 +309,21 @@ function me_get_order_status_list() {
         'me-resolved' => __("Resolved", "enginethemes"), // Similar "closed", the end point of the first order, after the complaint was handled.
     );
     return apply_filters('marketengine_get_order_status_list', $order_status);
+}
+
+/**
+ * MarketEngine Get Order Status Label
+ *
+ * Retrieve marketengine order status display label
+ *
+ * @param string $status
+ *
+ * @since 1.0
+ * @return string
+ */
+function me_get_order_status_label($status) {
+    $order_status = me_get_order_status_list();
+    return $order_status[$status];
 }
 
 /**

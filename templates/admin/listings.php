@@ -63,31 +63,40 @@ $active_section = empty($_REQUEST['section']) ? '' : $_REQUEST['section'];
 							}
 						?>
 					</div>
-					<?php foreach ($listings['posts'] as $key => $listing) : ?>
+					<?php 
 
-						<div class="me-table-row">
-							<div class="me-table-col"><?php echo $i ?></div>
-							<div class="me-table-col">
-								<?php echo marketengine_get_start_and_end_date($quant, $listing->quant, $listing->year); ?>
+					if(!empty($listings['posts'])) {
+
+						foreach ($listings['posts'] as $key => $listing) : ?>
+
+							<div class="me-table-row">
+								<div class="me-table-col"><?php echo $i ?></div>
+								<div class="me-table-col">
+									<?php echo marketengine_get_start_and_end_date($quant, $listing->quant, $listing->year); ?>
+								</div>
+
+								<?php if($active_section == '') : ?>
+									<div class="me-table-col"><?php echo $listing->count; ?></div>
+								<?php endif; ?>
+								
+								<?php if($active_section == '' || $active_section =='purchase') : ?>
+									<div class="me-table-col"><?php echo $listing->purchase_type; ?></div>
+								<?php endif; ?>
+
+								<?php if($active_section == '' || $active_section =='contact') : ?>
+									<div class="me-table-col"><?php echo $listing->contact_type; ?></div>
+								<?php endif; ?>
+
 							</div>
 
-							<?php if($active_section == '') : ?>
-								<div class="me-table-col"><?php echo $listing->count; ?></div>
-							<?php endif; ?>
-							
-							<?php if($active_section == '' || $active_section =='purchase') : ?>
-								<div class="me-table-col"><?php echo $listing->purchase_type; ?></div>
-							<?php endif; ?>
+							<?php $i++; ?>
 
-							<?php if($active_section == '' || $active_section =='contact') : ?>
-								<div class="me-table-col"><?php echo $listing->contact_type; ?></div>
-							<?php endif; ?>
+						<?php endforeach; ?>
 
-						</div>
+					<?php }else { 
+						me_get_template('admin/report-none');
+					 } ?>
 
-						<?php $i++; ?>
-
-					<?php endforeach; ?>
 				</div>
 				<?php me_get_template('admin/pagination', array('query' => $listings)); ?>
 			</div>

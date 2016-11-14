@@ -10,16 +10,17 @@ $galleries = $listing->get_galleries();
 
 <?php do_action('marketengine_before_single_listing_gallery'); ?>
 
+<?php if(!empty($galleries)) : ?>
+
 <div class="me-images">
 	<div class="me-image-large">
-	<?php if(!empty($galleries)) : ?>
+
 		<a class="me-large-fancybox">
 			<img src="<?php echo wp_get_attachment_image_url( $galleries[0], 'medium' ); ?>" alt="<?php the_title(); ?>">
 		</a>
-	<?php else : ?>
-			<?php _e("No images", "enginethemes"); ?>
-	<?php endif; ?>
+
 	</div>
+
 	<div class="me-image-thumbs">
 		<div class="me-thumbs-slider">
 			<ul class="me-list-thumbs">
@@ -33,5 +34,7 @@ $galleries = $listing->get_galleries();
 		</div>
 	</div>
 </div>
+
+<?php endif; ?>
 
 <?php do_action('marketengine_after_single_listing_gallery'); ?>

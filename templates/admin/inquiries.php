@@ -34,19 +34,26 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 						<?php marketengine_report_heading('quant', __("Date", "enginethemes")) ?>
 						<?php marketengine_report_heading('count', __("Total Inquiries", "enginethemes")) ?>
 					</div>
-					<?php foreach ($inquiries['posts'] as $key => $inquiry) : ?>
+					<?php 
 
-						<div class="me-table-row">
-							<div class="me-table-col"><?php echo $i ?></div>
-							<div class="me-table-col">
-								<?php echo marketengine_get_start_and_end_date($quant, $inquiry->quant, $inquiry->year); ?>
+					if(!empty($inquiries['posts'])) {
+
+						foreach ($inquiries['posts'] as $key => $inquiry) : ?>
+
+							<div class="me-table-row">
+								<div class="me-table-col"><?php echo $i ?></div>
+								<div class="me-table-col">
+									<?php echo marketengine_get_start_and_end_date($quant, $inquiry->quant, $inquiry->year); ?>
+								</div>
+								<div class="me-table-col"><?php echo $inquiry->count; ?></div>
 							</div>
-							<div class="me-table-col"><?php echo $inquiry->count; ?></div>
-						</div>
 
-						<?php $i++; ?>
+							<?php $i++; ?>
 
-					<?php endforeach; ?>
+						<?php endforeach; ?>
+					<?php }else { 
+						me_get_template('admin/report-none');
+					 } ?>
 				</div>
 				<?php me_get_template('admin/pagination', array('query' => $inquiries)); ?>
 			</div>

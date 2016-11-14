@@ -35,20 +35,27 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 						<?php marketengine_report_heading('count', __("Total Orders", "enginethemes")) ?>
 						<?php marketengine_report_heading('total', __("Income", "enginethemes")) ?>
 					</div>
-					<?php foreach ($orders['posts'] as $key => $order) : ?>
+					<?php
 
-						<div class="me-table-row">
-							<div class="me-table-col"><?php echo $i ?></div>
-							<div class="me-table-col">
-								<?php echo marketengine_get_start_and_end_date($quant, $order->quant, $order->year); ?>
+					if(!empty($orders['posts'])) {
+
+						foreach ($orders['posts'] as $key => $order) : ?>
+
+							<div class="me-table-row">
+								<div class="me-table-col"><?php echo $i ?></div>
+								<div class="me-table-col">
+									<?php echo marketengine_get_start_and_end_date($quant, $order->quant, $order->year); ?>
+								</div>
+								<div class="me-table-col"><?php echo $order->count; ?></div>
+								<div class="me-table-col"><?php echo $order->total; ?></div>
 							</div>
-							<div class="me-table-col"><?php echo $order->count; ?></div>
-							<div class="me-table-col"><?php echo $order->total; ?></div>
-						</div>
 
-						<?php $i++; ?>
+							<?php $i++; ?>
 
-					<?php endforeach; ?>
+						<?php endforeach; ?>
+					<?php }else { 
+						me_get_template('admin/report-none');
+					 } ?>
 				</div>
 				<?php me_get_template('admin/pagination', array('query' => $orders)); ?>
 			</div>

@@ -70,6 +70,11 @@ function me_pre_get_posts($query) {
     if ($query->is_page() && 'page' === get_option('show_on_front') && absint($query->get('page_id')) === me_get_page_id('listings')) {
         add_filter('body_class', 'listing_body_classes');
     }
+
+    global $wp_post_types;
+    if( is_search() ) {
+        $wp_post_types['listing']->exclude_from_search = true;
+    }
 }
 add_action('pre_get_posts', 'me_pre_get_posts');
 

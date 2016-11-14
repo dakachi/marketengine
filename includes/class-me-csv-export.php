@@ -9,14 +9,36 @@ class ME_CSV_Export {
 		{
 			$csv = $this->generate_csv();
 
+			if(empty($_GET['tab']) || $_GET['tab'] == 'order') {
+                $filename = __("Report Orders", "enginethemes");
+			}
+
+			switch ($_GET['tab']) {
+				case 'order':
+                	$filename = __("Report Orders", "enginethemes");
+					break;
+				case 'transaction':
+                	$filename = __("Report Transactions", "enginethemes");
+					break;
+			}
+
+            if (!empty($_GET['from_date'])) {
+                $filename .= '_' . $_GET['from_date'];
+            }
+
+            if (!empty($_GET['to_date'])) {
+                $filename .= '_' . $_GET['to_date'];
+            }
+
 			header("Pragma: public");
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Cache-Control: private", false);
-			header("Content-Type: application/octet-stream");
-			header("Content-Disposition: attachment; filename=\"report.csv\";" );
+			header("Content-Type: application/octet-stream;");
+			header("Content-Disposition: attachment; filename=\"{$filename}.csv\";" );
 			header("Content-Transfer-Encoding: binary");
 
+			echo "\xEF\xBB\xBF";
 			echo $csv;
 			exit;
 		}
@@ -45,7 +67,7 @@ class ME_CSV_Export {
 	public function generate_orders() {
 
 		$args = $_REQUEST;
-		$args['showposts'] = -1;
+
 		$data = me_order_report_data($args);
 
 		$headings = array(
@@ -95,7 +117,7 @@ class ME_CSV_Export {
 					$status_arr = me_get_order_status_list();
 					$csv_output .= $status_arr[$item->$key] .",";
 				} else {
-					$csv_output .= $item->$key.",";
+					$csv_output .= "\"" . $item->$key."\",";
 				}
 			}
 			$csv_output .= "\n";
