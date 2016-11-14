@@ -211,7 +211,16 @@ function marketengine_members_report($args)
     $orderby = " ORDER BY {$orderby} {$order}";
     $limits  = ' LIMIT ' . $pgstrt . $showposts;
 
-    $sql = $select . $where . $groupby . $orderby . $limits;
+    $join = '';
+    if(is_multisite()) {
+        $blog_id = $GLOBALS['blog_id'];
+        $key = $wpdb->get_blog_prefix( $blog_id ) . 'capabilities';
+        $compare = 'EXISTS';
+        $join = "LEFT JOIN {$wpdb->usermeta} as M ON M.user_id = ID AND meta_key = {$key} " ;
+        $where .= " meta_value != NULL ";
+    }
+
+    $sql = $select . $join .  $where . $groupby . $orderby . $limits;
 
     $result = $wpdb->get_results($sql);
 
