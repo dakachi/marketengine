@@ -128,15 +128,19 @@ class ME_Setup_Wizard
 				<h2><?php _e("Page Setup", "enginethemes"); ?></h2>
 				<p><?php _e("To run your marketplace properly, MarketEngine needs to create some specific pages. This step will automatically generate these needed pages if they don,t exist:", "enginethemes"); ?></p>
 				<div class="me-spage-group">
-					<h3>Listing page</h3>
+					<h3>Account</h3>
 					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy </p>
 				</div>
 				<div class="me-spage-group">
-					<h3>Post a listing</h3>
+					<h3>Listing</h3>
 					<p>consectetuer adipiscing elit, sed diam nonummy consectetuer adipiscing elit, sed diam nonummy Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy </p>
 				</div>
 				<div class="me-spage-group">
-					<h3>Check out page</h3>
+					<h3>Payment Flow</h3>
+					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy </p>
+				</div>
+				<div class="me-spage-group">
+					<h3>Inquiry</h3>
 					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy </p>
 				</div>
 				<div class="me-setup-control">
@@ -149,15 +153,15 @@ class ME_Setup_Wizard
 				<h2>Personalize</h2>
 				<div class="me-sfield-group">
 					<label for="me-setup-listing">1- How should people understand “listings” in your marketplace?</label>
-					<input id="me-setup-listing" type="text">
+					<input id="me-setup-listing" type="text" name="listing_label">
 				</div>
 				<div class="me-sfield-group">
 					<label for="me-setup-seller">2- What should we call the Seller role in your marketplace?</label>
-					<input id="me-setup-seller" type="text">
+					<input id="me-setup-seller" type="text" name="seller_label">
 				</div>
 				<div class="me-sfield-group">
 					<label for="me-setup-buyer">3- What should we call the Buyer role in your marketplace?</label>
-					<input id="me-setup-buyer" type="text">
+					<input id="me-setup-buyer" type="text" name="buyer_label">
 				</div>
 				<div class="me-setup-control">
 					<a href="" class="me-sprevious-btn">PREVIOUS</a>
@@ -167,7 +171,7 @@ class ME_Setup_Wizard
 
 			<!-- More Settings -->
 			<div class="me-setup-container me-setup-more-settings" data-step="3">
-				<h2>More Settings</h2>
+				<h2><?php _e("More Settings", "enginethemes"); ?></h2>
 				<div class="me-sfield-group">
 					<label for="">1- Create some listing categories for your marketplace</label>
 					<input type="text"> <span class="me-setup-add-cat"><i class="icon-me-add"></i>Add more</span>
@@ -179,9 +183,10 @@ class ME_Setup_Wizard
 				</div>
 				<div class="me-sfield-group">
 					<label for="">3- Define the currency in your marketplace ?</label>
-					<select name="" id="">
-						<option value="">US Dollar ($) (USD)</option>
-						<option value="">Australian Dollar ($) (AUD)</option>
+					<select name="currency" id="">
+						<option value="usd">US Dollar ($) (USD)</option>
+						<option value="aud">Australian Dollar ($) (AUD)</option>
+						<option value="eur">Euro (EUR) (EUR)</option>
 					</select>
 				</div>
 				<div class="me-setup-control">
@@ -200,8 +205,7 @@ class ME_Setup_Wizard
 					<div class="me-setup-sample">
 						<p>You can add some sample data to grasp some clearer ideas of how your marketplace will look like.<br/>4 sample listings will be generated in each of your categories, together with a few users &amp; orders to demonstrate the checkout flows.<br/>You will be able to remove those samples with another click later.</p>
 						<label class="me-setup-data-btn" for="me-setup-sample-data">
-							<span>ADD SAMPLE DATA</span>
-							<input id="me-setup-sample-data" type="file">
+							<span><?php _e("ADD SAMPLE DATA", "enginethemes"); ?></span>
 						</label>
 					</div>
 					<div class="me-setup-sample-finish">
@@ -229,11 +233,6 @@ class ME_Setup_Wizard
 					<div class="me-setup-mailing-finish">
 						<p>Thank you for joining the mailing list.</p>
 					</div>
-				</div>
-				<div class="me-setup-wrap">
-					<h3>Review</h3>
-					<p>Lastly, if you enjoy the process, we would be super excited if you leave your review here.</p>
-					<textarea name="" id=""></textarea>
 				</div>
 				<div class="me-setup-wrap">
 					<div class="me-setup-control">
