@@ -101,8 +101,8 @@ function marketengine_listing_report($args)
     global $wpdb;
     $defaults = array(
         'quant'     => 'day',
-        'from_date' => '2016-04-22',
-        'to_date'   => '2016-12-22',
+        'from_date' => '',
+        'to_date'   => '',
         'orderby'   => 'quant',
         'order'     => 'ASC',
         'paged'     => 1,
@@ -177,8 +177,8 @@ function marketengine_members_report($args)
     global $wpdb;
     $defaults = array(
         'quant'     => 'day',
-        'from_date' => '2016-04-22',
-        'to_date'   => '2016-12-22',
+        'from_date' => '',
+        'to_date'   => '',
         'orderby'   => 'quant',
         'order'     => 'ASC',
         'paged'     => 1,
@@ -237,8 +237,8 @@ function marketengine_orders_report($args)
     global $wpdb;
     $defaults = array(
         'quant'     => 'day',
-        'from_date' => '2016-04-22',
-        'to_date'   => '2016-12-22',
+        'from_date' => '',
+        'to_date'   => '',
         'orderby'   => 'quant',
         'order'     => 'ASC',
         'paged'     => 1,
