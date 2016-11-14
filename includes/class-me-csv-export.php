@@ -117,7 +117,7 @@ class ME_CSV_Export {
 					$status_arr = me_get_order_status_list();
 					$csv_output .= $status_arr[$item->$key] .",";
 				} else {
-					$csv_output .= $item->$key.",";
+					$csv_output .= "\"" . $item->$key."\",";
 				}
 			}
 			$csv_output .= "\n";
