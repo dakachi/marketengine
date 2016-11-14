@@ -489,6 +489,9 @@ class ME_PPAdaptive_Request {
                     $order->add_commission($receiver_1);
                 }
 
+                // update receiver item
+                me_update_order_item_meta($order_item_id, '_amount', $amount);
+
             } else {
                 $receiver_list = array(
                     'receiverList.receiver(0).amount' => $amount,
