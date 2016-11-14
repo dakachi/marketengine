@@ -216,12 +216,11 @@ function marketengine_members_report($args)
         $blog_id = $GLOBALS['blog_id'];
         $key = $wpdb->get_blog_prefix( $blog_id ) . 'capabilities';
         $compare = 'EXISTS';
-        $join = "LEFT JOIN {$wpdb->usermeta} as M ON M.user_id = ID AND meta_key = {$key} " ;
-        $where .= " M.meta_value != '' ";
+        $join = " LEFT JOIN {$wpdb->usermeta} as M ON M.user_id = ID AND meta_key = '{$key}' " ;
+        $where .= " AND M.meta_value != '' ";
     }
 
     $sql = $select . $join .  $where . $groupby . $orderby . $limits;
-
     $result = $wpdb->get_results($sql);
 
     $found_rows     = $wpdb->get_var('SELECT FOUND_ROWS() as row');
