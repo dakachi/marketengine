@@ -160,8 +160,9 @@ jQuery(document).ready(function($) {
 	});
 
 	$( "#me-order-pick-date-1" ).datepicker({
+		dateFormat: 'yy-mm-dd',
 		onSelect: function( selectedDate ) {
-			$( "#me-order-pick-date-2" ).datepicker();
+			$( "#me-order-pick-date-2" ).datepicker({dateFormat: 'yy-mm-dd'});
 		    $( "#me-order-pick-date-2" ).datepicker("option", "minDate", selectedDate );
 		    setTimeout(function(){
 	            $( "#me-order-pick-date-2" ).datepicker('show');
