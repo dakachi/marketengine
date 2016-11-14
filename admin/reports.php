@@ -217,7 +217,7 @@ function marketengine_members_report($args)
         $key = $wpdb->get_blog_prefix( $blog_id ) . 'capabilities';
         $compare = 'EXISTS';
         $join = "LEFT JOIN {$wpdb->usermeta} as M ON M.user_id = ID AND meta_key = {$key} " ;
-        $where .= " meta_value != NULL ";
+        $where .= " M.meta_value != '' ";
     }
 
     $sql = $select . $join .  $where . $groupby . $orderby . $limits;
