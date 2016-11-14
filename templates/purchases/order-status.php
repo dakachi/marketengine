@@ -7,7 +7,9 @@
 				$status_info = me_get_order_status_info( $order_status, 'text' );
 			?>
 
+			<?php if($status_info) : ?>
 			<p class="me-orderstatus-notifi"><i class="icon-me-info-circle"></i><?php echo $status_info; ?></p>
+			<?php endif; ?>
 		</div>
 		<?php
 			$process_index = me_get_order_status_info( $order_status );
@@ -20,7 +22,7 @@
 				<span><?php _e('Active order', 'enginethemes'); ?></span>
 				</div>
 			*/ ?>
-			
+
 			<div class="me-line-step-order <?php echo $process_index >= 2 ? 'active' : '' ?>">
 				<span><?php _e('Mark completed', 'enginethemes'); ?></span>
 			</div>
