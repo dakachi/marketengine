@@ -30,18 +30,6 @@ return apply_filters('marketengine_marketplace_options',
                     ),
                     'name'        => 'paypal-commission-fee',
                 ),
-                // limit time to close order
-                'dispute-time-limit' => array(
-                    'label'       => __("Displute Time Limit", "enginethemes"),
-                    'description' => __("The duration to close completed order (by day)", "enginethemes"),
-                    'slug'        => 'dispute-time-limit',
-                    'type'        => 'number',
-                    'class_name'  => 'no-zero positive',
-                    'attributes'  => array(
-                        'min' => 1,
-                    ),
-                    'name'        => 'dispute-time-limit',
-                ),
 
                 'currency'               => array(
                     'label'              => __("Currency Options", "enginethemes"),
@@ -50,6 +38,13 @@ return apply_filters('marketengine_marketplace_options',
                     'type'               => 'multi_field',
                     'name'               => 'user-account-endpoint',
                     'template'           => array(
+                        'currency-code'         => array(
+                            'label'       => __("Currency Code", "enginethemes"),
+                            'description' => __("The International Standard for currency code supported by Paypal Adaptive", "enginethemes"),
+                            'slug'        => 'payment-currency-code',
+                            'type'        => 'textbox',
+                            'name'        => 'payment-currency-code',
+                        ),
                         'currency-sign'         => array(
                             'label'       => __("Currency Sign", "enginethemes"),
                             'description' => __("The currency symbol display beside the listing price", "enginethemes"),
@@ -73,13 +68,7 @@ return apply_filters('marketengine_marketplace_options',
                             'type'        => 'textbox',
                             'name'        => 'payment-currency-lable',
                         ),
-                        'currency-code'         => array(
-                            'label'       => __("Currency Code", "enginethemes"),
-                            'description' => __("The International Standard for currency code supported by Paypal Adaptive", "enginethemes"),
-                            'slug'        => 'payment-currency-code',
-                            'type'        => 'textbox',
-                            'name'        => 'payment-currency-code',
-                        ),
+
                         // 'thousand-sep' =>  array(
                         // 	'label' => __("Thousand Separator", "enginethemes"),
                         // 	'description' => __("The thousand seperator of displayed price", "enginethemes"),
@@ -100,7 +89,18 @@ return apply_filters('marketengine_marketplace_options',
                         //     'slug'        => 'number-of-sep',
                         //     'type'        => 'textbox',
                         //     'name'        => 'number-of-sep',
-                        // )
+                        // ),
+                        'dispute-time-limit' => array(
+                            'label'       => __("Auto complete order - After XX days", "enginethemes"),
+                            'description' => __("The duration to close completed order (by day)", "enginethemes"),
+                            'slug'        => 'dispute-time-limit',
+                            'type'        => 'number',
+                            'class_name'  => 'no-zero positive',
+                            'attributes'  => array(
+                                'min' => 1,
+                            ),
+                            'name'        => 'dispute-time-limit',
+                        ),
                     ),
                 ),
             ),
