@@ -29,7 +29,7 @@ $query = new WP_Query( $args );
 		<div class="marketengine-filter">
 			<div class="marketengine-filter-listing pull-right">
 				<div class="filter-listing-status">
-					<select class="me-chosen-select" name="" id="" onchange="window.location.href=this.value;">
+					<select class="me-chosen-select" name="" id="" onchange="window.location.href='<?php echo me_get_auth_url('listings'); ?>' + this.value;">
 						<option value="<?php echo '?status=any'; ?>" <?php selected( $listing_status, 'any'); ?>><?php _e('All status', 'enginethemes'); ?></option>
 					<?php
 						$filter_options = me_listings_status_list();
