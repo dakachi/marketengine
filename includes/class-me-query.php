@@ -95,7 +95,8 @@ add_filter('query_vars', 'me_products_plugin_query_vars');
  */
 function me_get_page_id($page) {
     $page_id = me_option('me_' . $page . '_page_id');
-    return $page_id ? absint($page_id) : -1;
+    $page_obj = get_post($page_id);
+    return $page_id && isset($page_obj) ? absint($page_id) : -1;
 }
 
 /**
