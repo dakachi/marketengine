@@ -256,10 +256,12 @@ function me_get_option($option, $default = '') {
 
 function me_option($option, $default = '') {
     $options = ME_Options::get_instance();
-    if($default) {
-        $options->$option = $default;
-    }
-    return $options->get_option($option);
+    return $options->get_option($option, $default);
+}
+
+function me_update_option($option, $value) {
+    $options = ME_Options::get_instance();
+    return $options->$option = $value;
 }
 
 // TODO: noi bo ham nay
