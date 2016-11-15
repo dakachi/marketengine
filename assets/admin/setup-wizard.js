@@ -52,7 +52,10 @@
                 }
             });
         });
-        $('#me-add-sample-data').on('click', function(e) {
+        $('#me-add-sample-data').on('click', function(event) {
+            var $target = $(event.currentTarget);
+            var $parent_section = $target.parents('.me-setup-section');
+            var $parent_container = $target.parents('.me-setup-container');
             $.ajax({
                 type: 'post',
                 url: me_globals.ajaxurl,
@@ -65,6 +68,7 @@
                 },
                 success: function(res, xhr) {
                     $parent_section.removeClass('me-setup-section-loading');
+                    $target.parents('.me-setup-wrap').addClass('active');
                 }
             });
         });

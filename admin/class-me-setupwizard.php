@@ -51,7 +51,9 @@ class ME_Setup_Wizard
 
     public function setup_personalize($content) {
     	parse_str($content);
-
+    	me_update_option('listing-label', $listing_label);
+    	me_update_option('seller-label', $seller_label);
+    	me_update_option('buyer-label', $buyer_label);
     }
 
     public function setup_payment($content) {
@@ -269,12 +271,12 @@ class ME_Setup_Wizard
 						</div>
 					</div>
 					<div class="me-sfield-group">
-						<label for=""><?php _e("2- What is your commission fee ?", "enginethemes");?></label>
+						<label for=""><?php _e("2- What is your commission fee?", "enginethemes");?></label>
 						<input id="me-setup-commission" class="me-input-price" name="commission" type="number" min="0">
 						<span>%</span>
 					</div>
 					<div class="me-sfield-group">
-						<label for="">3- Define the currency in your marketplace ?</label>
+						<label for=""><?php _e("3- Define the currency in your marketplace?", "enginethemes"); ?></label>
 						<select name="currency" id="">
 						<?php foreach ($currencies as $key => $currency) : ?>
 							<option value="<?php echo $key ?>"><?php echo $currency['label'] ?> (<?php echo $currency['sign'] ?>) (<?php echo $currency['code'] ?>)</option>
@@ -298,13 +300,13 @@ class ME_Setup_Wizard
 					<form>
 						<h3><?php _e("Sample Data", "enginethemes");?></h3>
 						<div class="me-setup-sample">
-							<p><?php _e("You can add some sample data to grasp some clearer ideas of how your marketplace will look like.<br/>4 sample listings will be generated in each of your categories, together with a few users &amp; orders to demonstrate the checkout flows.<br/>You will be able to remove those samples with another click later.", "enginethemes");?></p>
+							<p><?php _e("You can add some sample data to grasp some clearer ideas of how your marketplace will look like.<br/>Some sample listings will be generated in each of your categories, together with a few users &amp; orders to demonstrate the checkout flows.<br/>You will be able to remove those samples with another click later.", "enginethemes");?></p>
 							<label class="me-setup-data-btn" id="me-add-sample-data" for="me-setup-sample-data">
 								<span id="me-setup-sample-data"><?php _e("ADD SAMPLE DATA", "enginethemes");?></span>
 							</label>
 						</div>
 						<div class="me-setup-sample-finish">
-							<p><?php _e("Few users, orders and 4 sample listings have already been generated in each of your categories.", "enginethemes");?></p>
+							<p><?php _e("Few users, orders and some sample listings have already been generated in each of your categories.", "enginethemes");?></p>
 							<p><?php _e("You will be able to remove those samples with another click later.", "enginethemes");?></p>
 						</div>
 					</form>

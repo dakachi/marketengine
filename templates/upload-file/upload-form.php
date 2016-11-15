@@ -17,11 +17,11 @@
 
         </ul>
     </div>
-
-    <span id="<?php echo esc_attr($button); ?>" class="<?php echo esc_attr($button); ?> me-gallery-add-img">
-        <?php _e("Choose image", "enginethemes"); ?>
-    </span>
-
+    <div class="upload-container">
+        <span id="<?php echo esc_attr($button); ?>" class="<?php echo esc_attr($button); ?> me-gallery-add-img">
+            <?php _e("Choose image", "enginethemes"); ?>
+        </span>
+    </div>
 </div>
 <script>
     (function ($) {
