@@ -51,10 +51,41 @@ class ME_Setup_Wizard
 
     public function setup_personalize($content) {
     	parse_str($content);
+
     }
 
     public function setup_payment($content) {
     	parse_str($content);
+		$currencies = $this->get_currency_list();
+
+		if(!empty($cats)) {
+    		foreach ($cats as $cat) {
+    			if($cat) {
+    				wp_insert_term( $cat, 'listing_category' );
+    			}
+    		}
+    	}
+
+    	if(!empty($commission) && is_numeric($commission)) {
+    		me_update_option('paypal-commission-fee', absint( $commission ));
+    	}
+
+    	$currency = $currencies[$currency];
+    	me_update_option('payment-currency-code', $currency['code']);
+    	me_update_option('payment-currency-sign', $currency['sign']);
+    	me_update_option('payment-currency-label', $currency['label']);
+		
+    }
+
+    private function get_currency_list() {
+    	$currencies = array(
+			'usd' => array('label' => 'U.S. Dollar', 'code' => 'USD', 'sign' => '$'),
+			'aud' => array('label' => 'Australian Dollar', 'code' => 'AUD', 'sign' => '$'),
+			'cad' => array('label' => 'Canadian Dollar', 'code' => 'CAD', 'sign' => '$'),
+			'eur' => array('label' => 'Euro', 'code' => 'EUR', 'sign' => '€'),
+			'sgd' => array('label' => 'Singapore Dollar', 'code' => 'SGD', 'sign' => '$'),
+		);
+		return $currencies;
     }
 
     public function admin_menus()
@@ -137,7 +168,7 @@ class ME_Setup_Wizard
 					</div>
 				</div>
 		<?php
-}
+	}
 
     /**
      * Setup Wizard Footer.
@@ -153,11 +184,12 @@ class ME_Setup_Wizard
 			</body>
 		</html>
 		<?php
-exit;
+		exit;
     }
 
     public function body()
     {
+    	$currencies = $this->get_currency_list();	
         ?>
     	<div class="me-setup-section">
     		<?php wp_nonce_field('marketengine-setup');?>
@@ -231,22 +263,22 @@ exit;
 					<h2><?php _e("More Settings", "enginethemes");?></h2>
 					<div class="me-sfield-group">
 						<label for=""><?php _e("1- Create some listing categories for your marketplace", "enginethemes");?></label>
-						<input type="text" name="cat[]"> <span class="me-setup-add-cat"><i class="icon-me-add"></i><?php _e("Add more", "enginethemes");?></span>
+						<input type="text" name="cats[]"> <span class="me-setup-add-cat"><i class="icon-me-add"></i><?php _e("Add more", "enginethemes");?></span>
 						<div class="more-cat" style="display:none">
-							<input type="text" name="cat[]" /> <input type="text" name="cat[]" /><small><?php _e("More categories can be added later in MarketEngine settings", "enginethemes");?></small>
+							<input type="text" name="cats[]" /> <input type="text" name="cats[]" /><small><?php _e("More categories can be added later in MarketEngine settings", "enginethemes");?></small>
 						</div>
 					</div>
 					<div class="me-sfield-group">
 						<label for=""><?php _e("2- What is your commission fee ?", "enginethemes");?></label>
-						<input id="me-setup-commission" name="commission" type="number">
+						<input id="me-setup-commission" class="me-input-price" name="commission" type="number" min="0">
 						<span>%</span>
 					</div>
 					<div class="me-sfield-group">
 						<label for="">3- Define the currency in your marketplace ?</label>
 						<select name="currency" id="">
-							<option value="usd">US Dollar ($) (USD)</option>
-							<option value="aud">Australian Dollar ($) (AUD)</option>
-							<option value="eur">Euro (EUR) (EUR)</option>
+						<?php foreach ($currencies as $key => $currency) : ?>
+							<option value="<?php echo $key ?>"><?php echo $currency['label'] ?> (<?php echo $currency['sign'] ?>) (<?php echo $currency['code'] ?>)</option>
+						<?php endforeach; ?>
 						</select>
 					</div>
 					<div class="me-setup-control">

@@ -150,9 +150,9 @@ return array(
             'currency-lable' => array(
                 'label'       => __("Currency Lable", "enginethemes"),
                 'description' => __("", "enginethemes"),
-                'slug'        => 'payment-currency-lable',
+                'slug'        => 'payment-currency-label',
                 'type'        => 'textbox',
-                'name'        => 'payment-currency-lable',
+                'name'        => 'payment-currency-label',
             ),
             'currency-code' => array(
                 'label'       => __("Currency Code", "enginethemes"),

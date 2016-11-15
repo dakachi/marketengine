@@ -38,7 +38,7 @@ function get_marketengine_currency() {
 	$sign = me_option('payment-currency-sign', '$');
     $code = me_option('payment-currency-code', 'USD');
     $is_align_right = me_option('currency-sign-postion') ? true : false;
-    $label = me_option('payment-currency-lable', 'USD');
+    $label = me_option('payment-currency-label', 'USD');
     return compact('sign', 'code', 'is_align_right', 'label');
 }
 

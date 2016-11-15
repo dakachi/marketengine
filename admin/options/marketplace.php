@@ -64,9 +64,9 @@ return apply_filters('marketengine_marketplace_options',
                         'currency-lable'        => array(
                             'label'       => __("Currency Lable", "enginethemes"),
                             'description' => __("The lable of currency", "enginethemes"),
-                            'slug'        => 'payment-currency-lable',
+                            'slug'        => 'payment-currency-label',
                             'type'        => 'textbox',
-                            'name'        => 'payment-currency-lable',
+                            'name'        => 'payment-currency-label',
                         ),
 
                         // 'thousand-sep' =>  array(
