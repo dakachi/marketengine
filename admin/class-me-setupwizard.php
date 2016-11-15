@@ -137,24 +137,24 @@ class ME_Setup_Wizard
 					<h2><?php _e("Page Setup", "enginethemes"); ?></h2>
 					<p><?php _e("To run your marketplace properly, MarketEngine needs to create some specific pages. This step will automatically generate these needed pages if they don,t exist:", "enginethemes"); ?></p>
 					<div class="me-spage-group">
-						<h3>Account</h3>
+						<h3><?php _e("Account", "enginethemes"); ?></h3>
 						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy </p>
 					</div>
 					<div class="me-spage-group">
-						<h3>Listing</h3>
+						<h3><?php _e("Listing", "enginethemes"); ?></h3>
 						<p>consectetuer adipiscing elit, sed diam nonummy consectetuer adipiscing elit, sed diam nonummy Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy </p>
 					</div>
 					<div class="me-spage-group">
-						<h3>Payment Flow</h3>
+						<h3><?php _e("Payment Flow", "enginethemes"); ?></h3>
 						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy </p>
 					</div>
 					<div class="me-spage-group">
-						<h3>Inquiry</h3>
+						<h3><?php _e("Inquiry", "enginethemes"); ?></h3>
 						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy </p>
 					</div>
 					<div class="me-setup-control">
-						<a href="#intro" class="me-sprevious-btn me-skip-btn">Skip this step</a>
-						<a href="#page" class="me-scontinue-btn me-next">CONTINUE</a>
+						<a href="#intro" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes"); ?></a>
+						<a href="#page" class="me-scontinue-btn me-next"><?php _e("CONTINUE", "enginethemes"); ?></a>
 					</div>
 					<input type="hidden" name="step" value="page" />
 
@@ -163,22 +163,22 @@ class ME_Setup_Wizard
 			<!-- Personalize -->
 			<div class="me-setup-container me-setup-personalize" id="personalize" data-step="2">
 				<form>
-					<h2>Personalize</h2>
+					<h2><?php _e("Personalize", "enginethemes"); ?></h2>
 					<div class="me-sfield-group">
-						<label for="me-setup-listing">1- How should people understand “listings” in your marketplace?</label>
+						<label for="me-setup-listing"><?php _e("1- How should people understand “listings” in your marketplace?", "enginethemes"); ?></label>
 						<input id="me-setup-listing" type="text" name="listing_label">
 					</div>
 					<div class="me-sfield-group">
-						<label for="me-setup-seller">2- What should we call the Seller role in your marketplace?</label>
+						<label for="me-setup-seller"><?php _e("2- What should we call the Seller role in your marketplace?", "enginethemes"); ?></label>
 						<input id="me-setup-seller" type="text" name="seller_label">
 					</div>
 					<div class="me-sfield-group">
-						<label for="me-setup-buyer">3- What should we call the Buyer role in your marketplace?</label>
+						<label for="me-setup-buyer"><?php _e("3- What should we call the Buyer role in your marketplace?", "enginethemes"); ?></label>
 						<input id="me-setup-buyer" type="text" name="buyer_label">
 					</div>
 					<div class="me-setup-control">
-						<a href="#payment" class="me-sprevious-btn me-skip-btn">Skip this step</a>
-						<a href="#payment" class="me-scontinue-btn me-next">CONTINUE</a>
+						<a href="#payment" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes"); ?></a>
+						<a href="#payment" class="me-scontinue-btn me-next"><?php _e("CONTINUE", "enginethemes"); ?></a>
 					</div>
 					<input type="hidden" name="step" value="personalize" />
 				</form>
@@ -189,15 +189,15 @@ class ME_Setup_Wizard
 				<form>
 					<h2><?php _e("More Settings", "enginethemes"); ?></h2>
 					<div class="me-sfield-group">
-						<label for="">1- Create some listing categories for your marketplace</label>
-						<input type="text"> <span class="me-setup-add-cat"><i class="icon-me-add"></i>Add more</span>
+						<label for=""><?php _e("1- Create some listing categories for your marketplace", "enginethemes"); ?></label>
+						<input type="text" name="cat[]"> <span class="me-setup-add-cat"><i class="icon-me-add"></i><?php _e("Add more", "enginethemes"); ?></span>
 						<div class="more-cat" style="display:none">
-							<input type="text" /> <input type="text" /><small>More categories can be added later in MarketEngine settings</small>
+							<input type="text" name="cat[]" /> <input type="text" name="cat[]" /><small><?php _e("More categories can be added later in MarketEngine settings", "enginethemes"); ?></small>
 						</div>
 					</div>
 					<div class="me-sfield-group">
-						<label for="">2- What is your commission fee ?</label>
-						<input id="me-setup-commission" type="number">
+						<label for=""><?php _e("2- What is your commission fee ?", "enginethemes"); ?></label>
+						<input id="me-setup-commission" name="commission" type="number">
 						<span>%</span>
 					</div>
 					<div class="me-sfield-group">
@@ -209,8 +209,8 @@ class ME_Setup_Wizard
 						</select>
 					</div>
 					<div class="me-setup-control">
-						<a href="#finish" class="me-sprevious-btn me-skip-btn">Skip this step</a>
-						<a href="#finish" class="me-scontinue-btn me-next">CONTINUE</a>
+						<a href="#finish" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes"); ?></a>
+						<a href="#finish" class="me-scontinue-btn me-next"><?php _e("CONTINUE", "enginethemes"); ?></a>
 					</div>
 					<input type="hidden" name="step" value="payment" />
 				</form>
