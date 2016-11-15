@@ -9,7 +9,7 @@
 	$message_query = new ME_Message_Query(array('post_type' => 'message', 'post_parent' => $inquiry->ID, 'showposts' => 12));
 	$messages = array_reverse ($message_query->posts);
 ?>
-	<div class="marketengine">
+	<div class="marketengine marketengine-contact">
 		<?php me_print_notices(); ?>
 		<div class="me-contact-listing-wrap">
 
@@ -17,60 +17,69 @@
 
 			<div class="me-contact-listing">
 				<div class="me-row">
-					<div class="me-col-md-9 me-col-sm-8" id="upload_message_file">
-						<div class="me-contact-messages-wrap inquiry-message-wrapper">
+					<div class="me-col-md-3 me-col-md-pull-9 me-col-sm-4 me-col-sm-pull-8">
+						<?php if($inquiry->receiver == $user_id) : ?>
+
+							<?php me_get_template('inquiry/contact-list', array('listing' => $listing)); ?>
+
+						<?php else : ?>
+
+							<?php me_get_template('user-info', array('author_id' => $inquiry->receiver)); ?>
+
+						<?php endif; ?>
+					</div>
+					<div class="me-col-md-9 me-col-md-push-3 me-col-sm-8 me-col-sm-push-4" id="upload_message_file">
+						<div class="me-contact-messages-wrap">
 
 							<div class="me-contact-message-user">
 								<h2><?php echo get_the_author_meta( 'display_name', $inquiry->receiver ); ?></h2>
 							</div>
 
-							<div id="messages-container" class="me-contact-messages" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
-
-								<?php if($message_query->max_num_pages > 1) { me_get_template('inquiry/load-message-button'); } ?>
-
-								<ul class="me-contact-messages-list" >
-									<?php foreach ($messages  as $key => $message) : ?>
-										<?php me_get_template('inquiry/message-item', array('message' => $message)); ?>
-									<?php endforeach; ?>
-
+							<div class="me-contact-header">
+								<ul class="me-contact-tabs">
+									<li class="me-contact-listing-tabs"><span>Listing info</span></li>
+									<li class="me-contact-user-tabs"><span>Seller info</span></li>
 								</ul>
-
 							</div>
+							
+							<div class="inquiry-message-wrapper">
+								<div id="messages-container" class="me-contact-messages" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
 
-							<div class="me-message-typing">
+									<?php if($message_query->max_num_pages > 1) { me_get_template('inquiry/load-message-button'); } ?>
 
-							<?php if($listing) : ?>
+									<ul class="me-contact-messages-list" >
+										<?php foreach ($messages  as $key => $message) : ?>
+											<?php me_get_template('inquiry/message-item', array('message' => $message)); ?>
+										<?php endforeach; ?>
 
-								<form method="post" id="send-message">
-									<div class="me-mc-container" id="me-mc-container"></div>
-									<textarea id="me-message-content" class="required me-message-content" required name="content" placeholder="<?php _e("Type your message here", "enginethemes"); ?>"></textarea>
-									<span id="me-message-send-btn" class="me-message-send-btn"><i class="icon-me-attach"></i></span>
+									</ul>
 
-									<?php wp_nonce_field( 'me-inquiry-message', '_msg_wpnonce' ); ?>
-									<input type="hidden" name="inquiry_listing" value="<?php $listing->get_id(); ?>" />
-									<input type="hidden" name="inquiry_id" value="<?php echo $inquiry->ID; ?>" />
-								</form>
+								</div>
 
-							<?php else: ?>
+								<div class="me-message-typing">
 
-								<p style="padding: 20px;font-size: 14px; line-height: 22px;">
-									<?php _e('This listing was deleted! You cannot send message!'); ?>
-								</p>
+								<?php if($listing) : ?>
 
-							<?php endif; ?>
+									<form method="post" id="send-message">
+										<div class="me-mc-container" id="me-mc-container"></div>
+										<textarea id="me-message-content" class="required me-message-content" required name="content" placeholder="<?php _e("Type your message here", "enginethemes"); ?>"></textarea>
+										<span id="me-message-send-btn" class="me-message-send-btn"><i class="icon-me-attach"></i></span>
+
+										<?php wp_nonce_field( 'me-inquiry-message', '_msg_wpnonce' ); ?>
+										<input type="hidden" name="inquiry_listing" value="<?php $listing->get_id(); ?>" />
+										<input type="hidden" name="inquiry_id" value="<?php echo $inquiry->ID; ?>" />
+									</form>
+
+								<?php else: ?>
+
+									<p style="padding: 20px;font-size: 14px; line-height: 22px;">
+										<?php _e('This listing was deleted! You cannot send message!'); ?>
+									</p>
+
+								<?php endif; ?>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="me-col-md-3 me-col-sm-4 ">
-					<?php if($inquiry->receiver == $user_id) : ?>
-
-						<?php me_get_template('inquiry/contact-list', array('listing' => $listing)); ?>
-
-					<?php else : ?>
-
-						<?php me_get_template('user-info', array('author_id' => $inquiry->receiver)); ?>
-
-					<?php endif; ?>
 					</div>
 				</div>
 			</div>
