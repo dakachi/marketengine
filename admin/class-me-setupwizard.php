@@ -46,7 +46,7 @@ class ME_Setup_Wizard
     }
 
     public function setup_page($content) {
-    	
+    	me_create_page();
     }
 
     public function setup_personalize($content) {
