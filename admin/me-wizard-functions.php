@@ -15,7 +15,7 @@ function me_create_page() {
 			$page_id = wp_insert_post( $args);
 
 			if(!is_wp_error($page_id)) {
-				me_option( 'me_'.$key.'_page_id', $page_id  );
+				me_update_option( 'me_'.$key.'_page_id', $page_id  );
 			}
 		}
 
