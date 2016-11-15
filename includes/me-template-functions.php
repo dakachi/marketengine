@@ -273,7 +273,7 @@ function me_option($option, $default = '')
 function me_update_option($option, $value)
 {
     $options = ME_Options::get_instance();
-    return $options->get_option($option, $value);
+    return $options->update_option($option, $value);
 }
 
 // TODO: noi bo ham nay
