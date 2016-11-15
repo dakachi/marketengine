@@ -46,7 +46,7 @@ class ME_Setup_Wizard
     }
 
     public function setup_page($content) {
-    	me_create_page();
+    	me_create_functional_pages();
     }
 
     public function setup_personalize($content) {
@@ -101,9 +101,9 @@ class ME_Setup_Wizard
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 			<title><?php _e('MarketEngine &rsaquo; Setup Wizard', 'enginethemes');?></title>
 			<?php
-wp_print_scripts('setup-wizard.js');
-        wp_enqueue_style('setup-wizard.css', ME_PLUGIN_URL . 'assets/admin/setup-wizard.css');
-        ?>
+				wp_print_scripts('setup-wizard.js');
+        		wp_enqueue_style('setup-wizard.css', ME_PLUGIN_URL . 'assets/admin/setup-wizard.css');
+        	?>
 			<?php do_action('admin_print_styles');?>
 			<?php do_action('admin_head');?>
 
@@ -194,8 +194,8 @@ exit;
 						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy </p>
 					</div>
 					<div class="me-setup-control">
-						<a href="#intro" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes");?></a>
-						<a href="#page" class="me-scontinue-btn me-next"><?php _e("CONTINUE", "enginethemes");?></a>
+						<a href="#personalize" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes");?></a>
+						<a href="#personalize" class="me-scontinue-btn me-next"><?php _e("CONTINUE", "enginethemes");?></a>
 					</div>
 					<input type="hidden" name="step" value="page" />
 

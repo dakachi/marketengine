@@ -13,7 +13,8 @@
  *
  * @return string The template filename if one is located.
  */
-function me_locate_template($template_names) {
+function me_locate_template($template_names)
+{
     $located          = '';
     $me_template_path = ME()->template_path();
     foreach ((array) $template_names as $template_name) {
@@ -54,7 +55,8 @@ function me_locate_template($template_names) {
  * @param string $slug The slug name for the generic template.
  * @param string $args The array of the varaible.
  */
-function me_get_template($template_name, $args = array()) {
+function me_get_template($template_name, $args = array())
+{
     if (!empty($args) && is_array($args)) {
         extract($args);
     }
@@ -81,7 +83,8 @@ function me_get_template($template_name, $args = array()) {
     include $located;
 }
 
-function me_get_sidebar() {
+function me_get_sidebar()
+{
     /**
      * Fires before the sidebar template file is loaded.
      *
@@ -108,7 +111,8 @@ function me_get_sidebar() {
 
 // TODO: can dat ham nay cho dung vi tri file
 if (!function_exists('me_get_page_permalink')) {
-    function me_get_page_permalink($page_name) {
+    function me_get_page_permalink($page_name)
+    {
         $page = me_option('me_' . $page_name . '_page_id');
         if (!$page = get_post($page)) {
             return home_url();
@@ -124,7 +128,8 @@ if (!function_exists('me_get_page_permalink')) {
  * @param  string $default_url
  * @return string
  */
-function me_lostpassword_url($default_url = '') {
+function me_lostpassword_url($default_url = '')
+{
     $profile_link       = me_get_page_permalink('user_account');
     $password_reset_url = me_get_endpoint_url('forgot-password', '', $profile_link);
     if (false !== $password_reset_url) {
@@ -146,7 +151,8 @@ add_filter('lostpassword_url', 'me_lostpassword_url', 10, 1);
  *
  * @return string
  */
-function me_get_endpoint_url($ep_query_var, $value = '', $permalink = '') {
+function me_get_endpoint_url($ep_query_var, $value = '', $permalink = '')
+{
     if (!$permalink) {
         $permalink = get_permalink();
     }
@@ -180,7 +186,8 @@ function me_get_endpoint_url($ep_query_var, $value = '', $permalink = '') {
  *     Tags meta box arguments.
  * }
  */
-function me_post_tags_meta_box($default, $taxonomy) {
+function me_post_tags_meta_box($default, $taxonomy)
+{
     $tax_name              = esc_attr($taxonomy);
     $taxonomy              = get_taxonomy($taxonomy);
     $user_can_assign_terms = current_user_can($taxonomy->cap->assign_terms);
@@ -194,7 +201,7 @@ function me_post_tags_meta_box($default, $taxonomy) {
             <div class="jaxtag">
             <div class="nojs-tags hide-if-js">
                 <label class="me-field-title" for="tax-input-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_or_remove_items; ?></label>
-                <textarea style="display:none;" name="<?php echo $tax_name; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled(!$user_can_assign_terms);?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace(',', $comma . ' ', $terms_to_edit); // textarea_escaped by esc_attr()      ?></textarea>
+                <textarea style="display:none;" name="<?php echo $tax_name; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled(!$user_can_assign_terms);?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace(',', $comma . ' ', $terms_to_edit); // textarea_escaped by esc_attr()       ?></textarea>
             </div>
 
             <div class="ajaxtag hide-if-no-js">
@@ -215,7 +222,8 @@ function me_post_tags_meta_box($default, $taxonomy) {
  *
  * @since 1.0
  */
-function me_paginate_link($me_query = array()) {
+function me_paginate_link($me_query = array())
+{
     $max_num_pages = 0;
     if ($me_query === array()) {
         global $wp_query;
@@ -241,31 +249,36 @@ function me_paginate_link($me_query = array()) {
         'add_args'  => false,
     );
 
-    echo paginate_links($args) ? '<div>'.paginate_links($args).'</div>' : '';
+    echo paginate_links($args) ? '<div>' . paginate_links($args) . '</div>' : '';
 }
 
-function marketengine_sidebar() {
+function marketengine_sidebar()
+{
     me_get_template('global/sidebar');
 }
 add_action('marketengine_sidebar', 'marketengine_sidebar');
 
 // TODO: tam thoi de day
-function me_get_option($option, $default = '') {
+function me_get_option($option, $default = '')
+{
     return get_option($option, $default);
 }
 
-function me_option($option, $default = '') {
+function me_option($option, $default = '')
+{
     $options = ME_Options::get_instance();
     return $options->get_option($option, $default);
 }
 
-function me_update_option($option, $value) {
+function me_update_option($option, $value)
+{
     $options = ME_Options::get_instance();
-    return $options->$option = $value;
+    return $options->update_option($option, $value);
 }
 
 // TODO: noi bo ham nay
-function me_get_client_ip() {
+function me_get_client_ip()
+{
     if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
         $ip = $_SERVER['HTTP_CLIENT_IP'];
     } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -276,7 +289,8 @@ function me_get_client_ip() {
     return $ip;
 }
 
-function me_get_client_agent() {
+function me_get_client_agent()
+{
     return !empty($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : '';
 }
 
@@ -289,7 +303,8 @@ function me_get_client_agent() {
  *
  */
 
-function me_get_auth_url($query_var = '', $value = '') {
+function me_get_auth_url($query_var = '', $value = '')
+{
     $url = me_get_page_permalink('user_account');
     if ($url) {
         $url = me_get_endpoint_url($query_var, $value, $url);
@@ -307,7 +322,8 @@ function me_get_auth_url($query_var = '', $value = '') {
  *
  */
 
-function me_get_order_url($page, $query_var = 'order-id', $value = '') {
+function me_get_order_url($page, $query_var = 'order-id', $value = '')
+{
     $url                 = me_get_page_permalink($page);
     $order_endpoint      = me_get_endpoint_name($query_var);
     $permalink_structure = get_option('permalink_structure');
@@ -328,11 +344,14 @@ function me_get_order_url($page, $query_var = 'order-id', $value = '') {
  *
  */
 
-function me_get_seller_profile_url( $seller_id ) {
-    if(!$seller_id) return;
+function me_get_seller_profile_url($seller_id)
+{
+    if (!$seller_id) {
+        return;
+    }
 
-    $url                 = me_get_page_permalink('seller_profile');
-    $order_endpoint      = me_get_endpoint_name('seller_id');
+    $url            = me_get_page_permalink('seller_profile');
+    $order_endpoint = me_get_endpoint_name('seller_id');
 
     if ($url) {
         $url = me_get_endpoint_url('seller_id', $seller_id, $url);
@@ -347,7 +366,8 @@ function me_get_seller_profile_url( $seller_id ) {
  * Adds an action to get shop categories selectbox template.
  *
  */
-function me_shop_categories_action() {
+function me_shop_categories_action()
+{
     me_get_template('global/shop-categories');
 }
 add_action('me_shop_categories', 'me_shop_categories_action');
@@ -358,11 +378,13 @@ add_action('me_shop_categories', 'me_shop_categories_action');
  * Adds an action to get account menu selectbox template.
  *
  */
-function me_account_menu_action() {
+function me_account_menu_action()
+{
     me_get_template('global/account-menu');
 }
 add_action('me_account_menu', 'me_account_menu_action');
-function me_account_menu_flag_filter($flag) {
+function me_account_menu_flag_filter($flag)
+{
     $flag = false;
     return $flag;
 }
@@ -372,17 +394,20 @@ add_filter('me_account_menu_flag', 'me_account_menu_flag_filter');
  * Prints post listing button.
  *
  */
-function me_post_listing_button_action() {
+function me_post_listing_button_action()
+{
     me_get_template('global/post-listing-button');
 }
 add_action('me_post_listing_button', 'me_post_listing_button_action');
 
-function me_search_form_action() {
+function me_search_form_action()
+{
     marketengine_get_search_form();
 }
 add_action('me_search_form', 'me_search_form_action');
 
-function me_status_list_action($type = '') {
+function me_status_list_action($type = '')
+{
     me_get_template('global/status-list', array('type' => $type));
 }
 add_action('me_status_list', 'me_status_list_action');
@@ -392,51 +417,52 @@ add_action('me_status_list', 'me_status_list_action');
  *  @param: $status
  *  @param: $needed style or index of order process
  */
-function me_get_order_status_info($status, $info_type = '') {
+function me_get_order_status_info($status, $info_type = '')
+{
     $status_list = me_get_order_status_list();
 
     switch ($status) {
-    case 'me-pending':
-        $style         = 'me-order-pending';
-        $text          = __('Your payment has not been completed yet', 'enginethemes');
-        $order_process = 1;
-        break;
-    case 'publish':
-        $style         = 'me-order-complete';
-        $text          = __('', 'enginethemes');
-        $order_process = 2;
-        break;
-    // chua co class cho status nay
-    case 'me-active':
-        $style         = 'me-order-complete';
-        $text          = __('', 'enginethemes');
-        $order_process = 2;
-        break;
-    case 'me-complete':
-        $style         = 'me-order-complete';
-        $text          = __('', 'enginethemes');
-        $order_process = 3;
-        break;
-    case 'me-disputed':
-        $style         = 'me-order-disputed';
-        $text          = __('This order has been disputed by the Buyer', 'enginethemes');
-        $order_process = 4;
-        break;
-    case 'me-closed':
-        $style         = 'me-order-closed';
-        $text          = __('', 'enginethemes');
-        $order_process = 5;
-        break;
-    case 'me-resolved':
-        $style         = 'me-order-resolved';
-        $text          = __('', 'enginethemes');
-        $order_process = 5;
-        break;
-    default:
-        $style         = 'me-order-pending';
-        $text          = __('', 'enginethemes');
-        $order_process = 1;
-        break;
+        case 'me-pending':
+            $style         = 'me-order-pending';
+            $text          = __('Your payment has not been completed yet', 'enginethemes');
+            $order_process = 1;
+            break;
+        case 'publish':
+            $style         = 'me-order-complete';
+            $text          = __('', 'enginethemes');
+            $order_process = 2;
+            break;
+        // chua co class cho status nay
+        case 'me-active':
+            $style         = 'me-order-complete';
+            $text          = __('', 'enginethemes');
+            $order_process = 2;
+            break;
+        case 'me-complete':
+            $style         = 'me-order-complete';
+            $text          = __('', 'enginethemes');
+            $order_process = 3;
+            break;
+        case 'me-disputed':
+            $style         = 'me-order-disputed';
+            $text          = __('This order has been disputed by the Buyer', 'enginethemes');
+            $order_process = 4;
+            break;
+        case 'me-closed':
+            $style         = 'me-order-closed';
+            $text          = __('', 'enginethemes');
+            $order_process = 5;
+            break;
+        case 'me-resolved':
+            $style         = 'me-order-resolved';
+            $text          = __('', 'enginethemes');
+            $order_process = 5;
+            break;
+        default:
+            $style         = 'me-order-pending';
+            $text          = __('', 'enginethemes');
+            $order_process = 1;
+            break;
     }
     if ('style' === $info_type) {
         return $style;
@@ -450,7 +476,8 @@ function me_get_order_status_info($status, $info_type = '') {
 /**
  *  Prints html of order status
  */
-function me_print_order_status($status) {
+function me_print_order_status($status)
+{
     $status_list = me_get_order_status_list();
     $style       = me_get_order_status_info($status, 'style');
     echo '<span class="' . $style . '">' . $status_list[$status] . '</span>';
@@ -460,7 +487,8 @@ function me_print_order_status($status) {
  *  Prints buyer's information
  *  @param: $address
  */
-function me_print_buyer_information($address) {
+function me_print_buyer_information($address)
+{
     echo "Name: {$address['first_name']} {$address['last_name']} ";
     foreach ($address as $key => $value) {
         if ($key === 'first_name' || $key === 'last_name') {
@@ -476,7 +504,8 @@ function me_print_buyer_information($address) {
  *  Returns html of price
  *  @param: $price
  */
-function me_price_html($price, $args = array(), $unit = '') {
+function me_price_html($price, $args = array(), $unit = '')
+{
     $sign = me_option('payment-currency-sign');
     $code = me_option('payment-currency-code');
 
@@ -508,7 +537,8 @@ function me_price_html($price, $args = array(), $unit = '') {
  *
  * @return string
  */
-function me_price_format($price, $args = array()) {
+function me_price_format($price, $args = array())
+{
     $sign = me_option('payment-currency-sign');
     $code = me_option('payment-currency-code');
 
@@ -531,7 +561,8 @@ function me_price_format($price, $args = array()) {
 /**
  * Retrieve listing comment list item
  */
-function marketengine_comments($comment, $args, $depth) {
+function marketengine_comments($comment, $args, $depth)
+{
     me_get_template('single-listing/review-item', array('comment' => $comment, 'args' => $args, 'depth' => $depth));
 }
 
@@ -543,7 +574,8 @@ function marketengine_comments($comment, $args, $depth) {
  * @param bool $echo Default to echo and not return the form.
  * @return string|void String when $echo is false.
  */
-function marketengine_get_search_form($echo = true) {
+function marketengine_get_search_form($echo = true)
+{
     /**
      * Fires before the search form is retrieved, at the start of get_search_form().
      *
@@ -631,7 +663,8 @@ function marketengine_get_search_form($echo = true) {
  * @param string $before Optional. Content to prepend to the title. Default empty.
  * @param string $after  Optional. Content to append to the title. Default empty.
  */
-function marketengine_the_archive_title($before = '', $after = '') {
+function marketengine_the_archive_title($before = '', $after = '')
+{
     $title = marketengine_get_the_archive_title();
 
     if (!empty($title)) {
@@ -646,7 +679,8 @@ function marketengine_the_archive_title($before = '', $after = '') {
  *
  * @return string Archive title.
  */
-function marketengine_get_the_archive_title() {
+function marketengine_get_the_archive_title()
+{
     if (is_post_type_archive()) {
         $title = sprintf(__('Archives: %s', 'enginethemes'), post_type_archive_title('', false));
         if (get_query_var('keyword')) {
@@ -685,9 +719,10 @@ function marketengine_get_the_archive_title() {
  * @param string $more      Optional. What to append if $text needs to be trimmed. Default '&hellip;'.
  * @return string Trimmed text.
  */
-function me_trim_words( $text, $num_words = 55, $more = null ) {
-    if ( null === $more ) {
-        $more = __( '&hellip;' );
+function me_trim_words($text, $num_words = 55, $more = null)
+{
+    if (null === $more) {
+        $more = __('&hellip;');
     }
 
     $original_text = $text;
@@ -698,22 +733,22 @@ function me_trim_words( $text, $num_words = 55, $more = null ) {
      * enter 'characters_excluding_spaces' or 'characters_including_spaces'. Otherwise, enter 'words'.
      * Do not translate into your own language.
      */
-    if ( strpos( _x( 'words', 'Word count type. Do not translate!' ), 'characters' ) === 0 && preg_match( '/^utf\-?8$/i', get_option( 'blog_charset' ) ) ) {
+    if (strpos(_x('words', 'Word count type. Do not translate!'), 'characters') === 0 && preg_match('/^utf\-?8$/i', get_option('blog_charset'))) {
         //$text = trim( preg_replace( "/[\n\r\t ]+/", ' ', $text ), ' ' );
         //preg_match_all( '/./u', $text, $words_array );
-        $words_array = array_slice( $words_array[0], 0, $num_words + 1 );
-        $sep = '';
+        $words_array = array_slice($words_array[0], 0, $num_words + 1);
+        $sep         = '';
     } else {
-        $words_array = preg_split( "/[\n\r\t ]+/", $text, $num_words + 1, PREG_SPLIT_NO_EMPTY );
-        $sep = ' ';
+        $words_array = preg_split("/[\n\r\t ]+/", $text, $num_words + 1, PREG_SPLIT_NO_EMPTY);
+        $sep         = ' ';
     }
 
-    if ( count( $words_array ) > $num_words ) {
-        array_pop( $words_array );
-        $text = implode( $sep, $words_array );
+    if (count($words_array) > $num_words) {
+        array_pop($words_array);
+        $text = implode($sep, $words_array);
         $text = $text . $more;
     } else {
-        $text = implode( $sep, $words_array );
+        $text = implode($sep, $words_array);
     }
 
     /**
@@ -726,7 +761,7 @@ function me_trim_words( $text, $num_words = 55, $more = null ) {
      * @param string $more          An optional string to append to the end of the trimmed text, e.g. &hellip;.
      * @param string $original_text The text before it was trimmed.
      */
-    return apply_filters( 'me_trim_words', $text, $num_words, $more, $original_text );
+    return apply_filters('me_trim_words', $text, $num_words, $more, $original_text);
 }
 
 /**
@@ -735,7 +770,8 @@ function me_trim_words( $text, $num_words = 55, $more = null ) {
  * @param int $bytes
  * @return string
  */
-function me_format_size_units($bytes) {
+function me_format_size_units($bytes)
+{
     if ($bytes >= 1073741824) {
         $bytes = number_format($bytes / 1073741824, 2) . ' GB';
     } elseif ($bytes >= 1048576) {

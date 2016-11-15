@@ -36,7 +36,7 @@ $register_link = me_get_endpoint_url('register');
 
 		<?php do_action('marketengine_user_login_form');?>
 
-		<div class="marketengine-group-field submit-sigin">
+		<div class="marketengine-group-field me-submit-sigin">
 			<input type="submit" class="marketengine-btn" name="login" value="<?php _e("LOGIN", "enginethemes");?>">
 		</div>
 		<div class="marketengine-group-field forgot-sigin">
