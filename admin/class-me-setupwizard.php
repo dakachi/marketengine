@@ -177,7 +177,7 @@ class ME_Setup_Wizard
 						<input id="me-setup-buyer" type="text" name="buyer_label">
 					</div>
 					<div class="me-setup-control">
-						<a href="#page" class="me-sprevious-btn me-skip-btn">Skip this step</a>
+						<a href="#payment" class="me-sprevious-btn me-skip-btn">Skip this step</a>
 						<a href="#payment" class="me-scontinue-btn me-next">CONTINUE</a>
 					</div>
 					<input type="hidden" name="step" value="personalize" />
@@ -209,7 +209,7 @@ class ME_Setup_Wizard
 						</select>
 					</div>
 					<div class="me-setup-control">
-						<a href="#personalize" class="me-sprevious-btn me-skip-btn">Skip this step</a>
+						<a href="#finish" class="me-sprevious-btn me-skip-btn">Skip this step</a>
 						<a href="#finish" class="me-scontinue-btn me-next">CONTINUE</a>
 					</div>
 					<input type="hidden" name="step" value="payment" />
@@ -226,15 +226,14 @@ class ME_Setup_Wizard
 						<h3><?php _e("Sample Data", "enginethemes"); ?></h3>
 						<div class="me-setup-sample">
 							<p><?php _e("You can add some sample data to grasp some clearer ideas of how your marketplace will look like.<br/>4 sample listings will be generated in each of your categories, together with a few users &amp; orders to demonstrate the checkout flows.<br/>You will be able to remove those samples with another click later.", "enginethemes"); ?></p>
-							<label class="me-setup-data-btn" for="me-setup-sample-data">
-								<span><?php _e("ADD SAMPLE DATA", "enginethemes"); ?></span>
+							<label class="me-setup-data-btn" id="me-add-sample-data" for="me-setup-sample-data">
+								<span id="me-setup-sample-data"><?php _e("ADD SAMPLE DATA", "enginethemes"); ?></span>
 							</label>
 						</div>
 						<div class="me-setup-sample-finish">
 							<p><?php _e("Few users, orders and 4 sample listings have already been generated in each of your categories.", "enginethemes"); ?></p>
 							<p><?php _e("You will be able to remove those samples with another click later.", "enginethemes"); ?></p>
 						</div>
-						<input type="hidden" name="step" value="sample_data" />
 					</form>
 				</div>
 

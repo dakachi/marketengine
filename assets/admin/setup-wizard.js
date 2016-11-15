@@ -1,5 +1,17 @@
 (function($) {
     $(document).ready(function() {
+        if (window.location.hash) {
+            if ($(window.location.hash).length > 0) {
+                var step = $(window.location.hash).attr('data-step');
+                $('.me-setup-container').removeClass('active');
+                $('.me-setup-line-step').removeClass('active');
+
+                $(window.location.hash).addClass('active');
+                for (var i = 0; i <= parseInt(step); i++) {
+                    $('.me-setup-line-step').eq(i).addClass('active');
+                };
+            }
+        }
         $('.wizard-start').on('click', function(event) {
             //event.preventDefault();
             var target = event.currentTarget;
@@ -25,9 +37,9 @@
                 type: 'post',
                 url: me_globals.ajaxurl,
                 data: {
-                    action : 'me-do-setup',
+                    action: 'me-do-setup',
                     _wpnonce: $('#_wpnonce').val(),
-                    step: $parent_container.find('input[name="step"]').val()
+                    content: $parent_container.find('form').serialize()
                 },
                 beforeSend: function() {
                     $parent_section.addClass('me-setup-section-loading');
@@ -40,7 +52,22 @@
                 }
             });
         });
-
+        $('#me-add-sample-data').on('click', function(e) {
+            $.ajax({
+                type: 'post',
+                url: me_globals.ajaxurl,
+                data: {
+                    action: 'me-add-sample-data',
+                    _wpnonce: $('#_wpnonce').val()
+                },
+                beforeSend: function() {
+                    $parent_section.addClass('me-setup-section-loading');
+                },
+                success: function(res, xhr) {
+                    $parent_section.removeClass('me-setup-section-loading');
+                }
+            });
+        });
         //=== Click skip button
         $('.me-skip-btn').on('click', function(event) {
             //event.preventDefault();
