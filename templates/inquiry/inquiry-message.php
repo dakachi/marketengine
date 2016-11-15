@@ -63,8 +63,9 @@
 									<form method="post" id="send-message">
 										<div class="me-mc-container" id="me-mc-container"></div>
 										<textarea id="me-message-content" class="required me-message-content" required name="content" placeholder="<?php _e("Type your message here", "enginethemes"); ?>"></textarea>
-										<span id="me-message-send-btn" class="me-message-send-btn"><i class="icon-me-attach"></i></span>
-
+										<div class="upload-container">
+											<span id="me-message-send-btn" class="me-message-send-btn"><i class="icon-me-attach"></i></span>
+										</div>
 										<?php wp_nonce_field( 'me-inquiry-message', '_msg_wpnonce' ); ?>
 										<input type="hidden" name="inquiry_listing" value="<?php $listing->get_id(); ?>" />
 										<input type="hidden" name="inquiry_id" value="<?php echo $inquiry->ID; ?>" />

@@ -28,6 +28,7 @@
         }
         return $(this).each(function() {
             var element = this;
+            var upload_container = $(element).find('.upload-container');
             var action = options.multi ? "upload_multi_file" : "upload_single_file";
             var removable = options.removable ? '1' : '0';
             var preview = $(element).find('ul');
@@ -44,7 +45,7 @@
                 uploader.start();
             };
             uploader = new plupload.Uploader({
-                container: $(element).get(0),
+                container: upload_container.get(0),
                 browse_button: options.browse_button,
                 runtimes: options.runtimes,
                 flash_swf_url: options.swf,
