@@ -39,6 +39,7 @@
                 data: {
                     action: 'me-do-setup',
                     _wpnonce: $('#_wpnonce').val(),
+                    step : $parent_container.find('input[name="step"]').val(),
                     content: $parent_container.find('form').serialize()
                 },
                 beforeSend: function() {

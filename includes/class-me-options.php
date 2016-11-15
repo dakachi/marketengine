@@ -55,9 +55,6 @@ if (!class_exists('ME_Options')) {
          */
         public function __set($option_name, $option_value) {
             return $this->options_arr[$option_name] = ($option_value);
-
-            //$this->save ();
-
         }
 
         /**
