@@ -35,7 +35,7 @@ if(me_option('user-email-confirmation')) {
 <div id="marketengine-wrapper" class="marketengine">
 	<div class="marketengine-post-listing-wrap">
 		<form  id="post-listing-form" class="post-listing-form" method="post" accept-charset="utf-8" enctype="multipart/form-data">
-
+			<h3>Post Listing</h3>
 			<?php me_print_notices(); ?>
 
 			<?php do_action('marketengine_post_listing_form_start'); ?>
@@ -60,7 +60,7 @@ if(me_option('user-email-confirmation')) {
 				<input class="marketengine-post-submit-btn" type="submit" name="insert_lisiting" value="<?php _e("SUBMIT", "enginethemes"); ?>">
 			</div>
 			<div id="debug">
-			<a href="<?php echo $referer; ?>" class="back-link-page"><?php _e("Cancel", "enginethemes"); ?></a>
+				<a href="<?php echo $referer; ?>" class="back-link-page"><?php _e("Cancel", "enginethemes"); ?></a>
 			</div>
 
 			<?php do_action('marketengine_post_listing_form_end'); ?>
