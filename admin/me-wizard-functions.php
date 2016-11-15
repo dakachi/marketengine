@@ -1,7 +1,6 @@
 <?php
-add_action('me_create_page','me_create_page');
 function me_create_page() {
-	if( !did_action('me_create_page') && is_admin() ) {
+	if( is_admin() ) {
 		$default_pages = me_default_pages();
 
 		foreach( $default_pages as $key => $page){
