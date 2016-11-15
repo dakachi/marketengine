@@ -26,6 +26,7 @@ function me_create_functional_pages()
         if ($page_id) {
             me_update_option('me_' . $key . '_page_id', $page_id);
         }
+        flush_rewrite_rules();
     }
 }
 
@@ -43,7 +44,7 @@ function me_get_functional_pages()
     return array(
         'user_account'  => array(
             'post_title'   => __("User Account", "enginethemes"),
-            'post_content' => '[me_user_account_page]',
+            'post_content' => '[me_user_account]',
         ),
         'post_listing'  => array(
             'post_title'   => __("Post Listing", "enginethemes"),
