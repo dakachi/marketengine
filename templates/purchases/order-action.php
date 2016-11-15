@@ -6,7 +6,7 @@
 </div>
 
 <?php elseif ('me-pending' !== $order->post_status ) : ?>
-
+<!--
 <div class="me-transaction-dispute">
 	<?php
 		$time_limit = $order->get_dispute_time_limit();
@@ -16,5 +16,5 @@
 	<a href="<?php echo me_get_page_id('dispute'); ?>" class=""><?php _e('DISPUTE', 'enginethemes'); ?></a>
 	*/ ?>
 </div>
-
+-->
 <?php endif; ?>
