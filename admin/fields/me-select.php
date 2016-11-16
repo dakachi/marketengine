@@ -26,6 +26,7 @@ class ME_Select extends ME_Input{
         echo '<div class="me-group-field" '.$id.'>';
         $this->label();
         $this->description();
+        echo '<span class="me-select-control">';
         echo '<select class="select-field" name="'. $this->_name .'">';
         echo '<option value="">Select a page...</option>';
         foreach ($this->_data as $key => $value) {
@@ -33,6 +34,7 @@ class ME_Select extends ME_Input{
             $selected = '';
         }
         echo '</select>';
+        echo '</span>';
         echo '</div>';
     }
 

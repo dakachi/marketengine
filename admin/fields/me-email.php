@@ -26,7 +26,7 @@ class ME_Email extends ME_Input {
         echo '<div class="me-group-field" '.$id.'>';
         $this->label();
         $this->description();
-        echo '<input type="email" name="'.$this->_name.'" class="me-input-field" value="' . $this->get_value() . '" placeholder="'.$this->_placeholder.'" />';
+        echo '<span class="me-field-control"><input type="email" name="'.$this->_name.'" class="me-input-field" value="' . $this->get_value() . '" placeholder="'.$this->_placeholder.'" /></span>';
         echo '</div>';
     }
 }
