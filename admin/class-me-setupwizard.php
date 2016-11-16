@@ -17,6 +17,7 @@ class ME_Setup_Wizard
         add_action('admin_init', array($this, 'setup_wizard'));
 
         add_action('wp_ajax_me-do-setup', array($this, 'handle_setup'));
+        add_action('wp_ajax_me-add-sample-data', array($this, 'add_sample_data'));
 
     }
 
@@ -88,6 +89,12 @@ class ME_Setup_Wizard
 			'sgd' => array('label' => 'Singapore Dollar', 'code' => 'SGD', 'sign' => '$'),
 		);
 		return $currencies;
+    }
+
+    public function add_sample_data() {
+    	if(!empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'marketengine-setup')) {
+    		marketengine_add_sample_listing();
+    	}
     }
 
     public function admin_menus()
@@ -334,7 +341,7 @@ class ME_Setup_Wizard
 				</div>
 				<div class="me-setup-wrap">
 					<div class="me-setup-control">
-						<a href="" class="me-sfinish-btn"><?php _e("FINISH", "enginethemes");?></a>
+						<a href="<?php echo esc_url( admin_url() ); ?>" class="me-sfinish-btn"><?php _e("FINISH", "enginethemes");?></a>
 					</div>
 				</div>
 			</div>
