@@ -27,7 +27,7 @@ class ME_Textbox extends ME_Input {
         echo '<div class="me-group-field" '.$id.'>';
         $this->label();
         $this->description();
-        echo '<input type="text" name="'.$this->_name.'" class="me-input-field ' .$this->_class. '" value="' . $this->get_value() . '" placeholder="'.$this->_placeholder.'" />';
+        echo '<span class="me-field-control"><input type="text" name="'.$this->_name.'" class="me-input-field ' .$this->_class. '" value="' . $this->get_value() . '" placeholder="'.$this->_placeholder.'" /></span>';
         echo '</div>';
     }
 }
