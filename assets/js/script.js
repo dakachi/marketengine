@@ -70,6 +70,15 @@ jQuery(document).ready(function($) {
 		}
 	);
 
+	$('.me-overlay').hover(
+		function() {
+			$('body').removeClass('marketengine-categories');
+		},
+		function() {
+			
+		}
+	);
+
 	/**
 	 * [description ME tabs]
 	 */
