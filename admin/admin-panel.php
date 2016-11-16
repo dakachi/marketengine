@@ -188,6 +188,5 @@ function marketengine_option_footer() {
 function me_admin_menu_class() {
     global $menu;
     $menu[28][6] .= '-enginethemes-icon';
-    // print_r($menu);
 }
 add_action( 'admin_menu', 'me_admin_menu_class', 10 );
