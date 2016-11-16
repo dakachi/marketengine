@@ -163,6 +163,7 @@ if (!class_exists('MarketEngine')):
             add_action('admin_enqueue_scripts', array($this, 'add_admin_scripts'));
 
             add_action('init', array($this, 'wpdb_table_fix'), 0);
+            // add_action( 'admin_init', 'me_admin_menu_class' );
         }
 
         public function init() {
