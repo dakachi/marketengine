@@ -24,6 +24,12 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-me-listing:before {
+  content: "\e924";
+}
+.icon-me-logo:before {
+  content: "\e92a";
+}
 .icon-me-image:before {
   content: "\e922";
 }
@@ -135,11 +141,11 @@
 .icon-me-star-o:before {
   content: "\e915";
 }
+.icon-me-star-half:before {
+  content: "\e923";
+}
 .icon-me-star:before {
   content: "\e916";
-}
-.icon-me-star-half:before {
-  content: "\e92a";
 }
 .icon-me-check:before {
   content: "\e917";

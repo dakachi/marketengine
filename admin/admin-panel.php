@@ -131,7 +131,8 @@ add_action('admin_menu', 'marketengine_option_menu');
 
 function marketengine_load_admin_option_script_css() {
     if (!empty($_REQUEST['page']) && (strpos($_REQUEST['page'], 'me') !== false)) {
-        wp_register_style('marketengine-font-icon', ME_PLUGIN_URL . 'assets/admin/jquery.mCustomScrollbar.min.css', array(), '1.0');
+        wp_register_style('scrollbar-css', ME_PLUGIN_URL . 'assets/admin/jquery.mCustomScrollbar.min.css', array(), '1.0');
+        wp_enqueue_style('marketengine-font-icon', ME_PLUGIN_URL . 'assets/css/marketengine-font-icon.css', array(), '1.0');
         wp_enqueue_style('me-option-css', ME_PLUGIN_URL . 'assets/admin/marketengine-admin.css');
 
         wp_enqueue_script('backbone');
@@ -166,7 +167,7 @@ function marketengine_option_header() {
 <div class="marketengine-admin">
     <div class="me-header">
         <span class="pull-left"><?php _e("MARKETENGINE", "enginethemes");?></span>
-        <span class="pull-right"><?php _e("Power by", "enginethemes");?> <a href="https://www.enginethemes.com/">EngineThemes</a></span>
+        <span class="pull-right"><?php _e("Power by", "enginethemes");?><a href="https://www.enginethemes.com/"><i class="icon-me-logo"></i></a></span>
     </div>
     <div class="me-body">
 <?php
