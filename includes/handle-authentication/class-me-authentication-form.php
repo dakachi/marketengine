@@ -117,7 +117,7 @@ class ME_Auth_Form extends ME_Form {
         if (!empty($_POST['forgot_pass']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-forgot_pass')) {
             $password_retrieve = ME_Authentication::retrieve_password($_POST);
             if (!is_wp_error($password_retrieve)) {
-                me_add_notice(__("The reset password email aldready send to your email account.", "enginethemes"));
+                me_add_notice(__("<div><p>The reset password email aldready send to your email account.</p></div>", "enginethemes"));
                 // set the redirect link after forgot pass
                 $redirect = self::get_redirect_link();
                 /**
@@ -140,7 +140,7 @@ class ME_Auth_Form extends ME_Form {
         if (!empty($_POST['reset_password']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-reset_password')) {
             $user = ME_Authentication::reset_pass($_POST);
             if (!is_wp_error($user)) {
-                me_add_notice(__("You have reset your password. Now you can login by your new password.", "enginethemes"));
+                me_add_notice(__("<div><p>You have reset your password. Now you can login by your new password.</p></div>", "enginethemes"));
                 // set the redirect link after reset pass
                 $redirect = self::get_redirect_link();
                 /**
@@ -210,7 +210,7 @@ class ME_Auth_Form extends ME_Form {
         if (!empty($_POST['update_profile']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-update_profile')) {
             $user = ME_Authentication::update_profile($_POST);
             if (!is_wp_error($user)) {
-                me_add_notice(__("Your profile has updated successfully.", "enginethemes"));
+                me_add_notice(__("<div><p>Your profile has updated successfully.</p></div>", "enginethemes"));
                 // set the redirect link after ask confirm email
                 $redirect = self::get_redirect_link();
                 $redirect = apply_filters('marketengine_update_profile_redirect', $redirect, $user);
@@ -226,7 +226,7 @@ class ME_Auth_Form extends ME_Form {
         if (!empty($_POST['change_password']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me_change-password')) {
             $user = ME_Authentication::change_password($_POST);
             if (!is_wp_error($user)) {
-                me_add_notice(__("Your password has been changed successfully.", "enginethemes"));
+                me_add_notice(__("<div><p>Your password has been changed successfully.</p></div>", "enginethemes"));
                 // set the redirect link after ask confirm email
                 $redirect = self::get_redirect_link();
                 $redirect = apply_filters('marketengine_update_profile_redirect', $redirect, $user);
