@@ -87,6 +87,9 @@ if (get_option('users_can_register')):
 		<?php do_action('marketengine_user_register_form_end');?>
 	</form>
 </div>
+<?php do_action('marketengine_before_user_register_form'); ?>
 <?php
+else :
+_e("The register function is disabled.", "enginethemes");
 endif;
-	do_action('marketengine_before_user_register_form');
+	
