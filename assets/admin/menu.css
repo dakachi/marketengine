@@ -27,6 +27,7 @@
 .dashicons-icon-me-listing:before {
 	content: "\e924";
 	font-family: 'icomoon' !important;
+	font-size: 18px;
     speak: none;
     font-style: normal;
     font-weight: normal;
