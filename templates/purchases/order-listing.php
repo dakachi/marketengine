@@ -13,7 +13,7 @@
 				<?php echo $listing_obj->get_short_description(20); ?>
 			</div>
 			<div class="me-listing-desc-more">
-				<?php echo $listing_obj->get_description(); ?>
+				<p><?php echo $listing_obj->get_description(); ?></p>
 			</div>
 		</div>
 		<a class="me-listing-info-view"><span><?php _e('view more', 'enginethemes'); ?></span><span><?php _e('view less', 'enginethemes'); ?></span></a>
