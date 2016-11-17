@@ -60,7 +60,10 @@ function me_render_listing_columns($column) {
         break;
     
     case 'price':
-        echo me_price_html(get_post_meta($post->ID, 'listing_price', true));
+        $price = get_post_meta($post->ID, 'listing_price', true);
+        if($price) {
+            echo me_price_html($price);    
+        }
         break;
     }
 }
