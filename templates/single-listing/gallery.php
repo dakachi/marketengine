@@ -10,14 +10,7 @@ $galleries = $listing->get_galleries();
 
 <?php do_action('marketengine_before_single_listing_gallery'); ?>
 
-<?php if(!empty($galleries)) : ?>
-<?php
-$title = get_the_title();
-	if( $title == 'fawefwea') {
-		var_dump($galleries);
-	}
-
-?>
+<?php if(!empty($galleries) || is_null($galleries[0])) : ?>
 <div class="me-images">
 	<div class="me-image-large">
 
