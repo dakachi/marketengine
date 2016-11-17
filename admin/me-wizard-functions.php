@@ -210,7 +210,7 @@ function marketengine_handle_sample_image($image, $filename)
 function marketengine_add_sample_listing()
 {
 
-    $listing_number = 1;//$_POST['number'];
+    $listing_number = $_POST['number'];
     $listing                = include ME_PLUGIN_PATH . '/sample-data/listing/listing-' . $listing_number . '.php';
     $user_id                = marketengine_add_sample_user($listing['post_author']);
     $listing['post_author'] = $user_id;
@@ -262,9 +262,4 @@ function marketengine_add_sample_listing()
     if (!empty($listing['inquiry'])) {
         marketengine_add_sample_inquiry($listing['inquiry'], $result);
     }
-}
-add_action( 'admin_init', 'install_sample_data' );
-function install_sample_data()
-{
-    marketengine_add_sample_listing();
 }
