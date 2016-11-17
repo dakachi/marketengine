@@ -79,7 +79,7 @@ $shipping_fields = apply_filters('marketengine_shipping_fields', $address_fields
 				</div>
 				<div class="me-col-md-6">
 					<div class="marketengine-input-field">
-						<label class="me-field-title"><?php _e("Post code", "enginethemes"); ?></label>
+						<label class="me-field-title"><?php _e("Post code", "enginethemes"); ?><small><?php _e("(optional)", "enginethemes"); ?></small></label>
 						<input type="text" name="billing_info[postcode]" value="<?php if(!empty($_POST['billing_info']['postcode'])) echo $_POST['billing_info']['postcode']; ?>">
 					</div>
 				</div>
