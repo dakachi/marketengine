@@ -33,8 +33,8 @@ $listing_status = get_post_status_object($listing->post_status);
 
 					<div class="marketengine-content-detail">
 						<?php me_get_template('single-listing/gallery', array('listing' => $listing));?>
-						
-						
+
+
 						<!-- Add code for mobile @KuKy fix here -->
 						<div class="me-visible-sm me-visible-xs">
 							<?php me_get_template('single-listing/notices'); ?>
@@ -75,7 +75,7 @@ $listing_status = get_post_status_object($listing->post_status);
 					<?php do_action('marketengine_before_single_listing_sidebar'); ?>
 
 					<div class="marketengine-sidebar-detail">
-					
+
 						<?php me_get_template('single-listing/notices'); ?>
 
 						<?php
@@ -92,7 +92,7 @@ $listing_status = get_post_status_object($listing->post_status);
 						<?php
 						if( !$is_owner ) :
 							me_get_template('user-info', array('author_id' => $listing->post_author));
-							me_get_template('single-listing/report');
+							// me_get_template('single-listing/report');
 						endif;
 						?>
 

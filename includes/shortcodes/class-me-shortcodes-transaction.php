@@ -58,7 +58,7 @@ class ME_Shortcodes_Transaction {
             $inquiry    = me_get_message($inquiry_id);
 
             if ($user_id != $inquiry->sender && $user_id != $inquiry->receiver) {
-                return __("You do not have permision to view this inquiry details.", "enginethemes");
+                return load_template(get_404_template());
             }
             ob_start();
             me_get_template('inquiry/inquiry-message', array('inquiry' => $inquiry));
