@@ -81,6 +81,10 @@
                     }
                 });
             };
+            setTimeout(function(){
+                $parent_section.removeClass('me-setup-section-loading');
+                $target.parents('.me-setup-wrap').addClass('active');
+            }, 45000);
         });
         //=== Click skip button
         $('.me-skip-btn').on('click', function(event) {

@@ -5,8 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 return array(
-    'post_author'      =>
-array(
+    'post_author'      => array(
         'user_login'   => 'henrywilson',
         'first_name'   => 'Henry',
         'last_name'    => 'Wilson',
@@ -26,7 +25,7 @@ array(
     'post_name'        => 'marketengine-sample-listing-5',
     'post_title'       => 'iPhone 7 Plus Screen Protector, Yootech [2-Pack] iPhone 7 Plus Tempered Glass Screen Protector Only for Apple iphone 7 Plus',
     'post_content'     =>
-        "
+    "
 <p>
    Ultra-clear with 99.9% transparency to allow an optimal, natural viewing experience
 </p>
@@ -59,5 +58,21 @@ sensor NFC Quick charging Bluetooth 4.0 LE WiFi A/B/G/N/AC
     'listing_tag'      => 'selling tag',
     'post_type'        => 'listing',
 
-    'post_status'      => 'publish'
+    'post_status'      => 'publish',
+    'order'            => array(
+        array(
+            'user_login'   => 'shindaiki',
+            'first_name'   => 'Shin',
+            'last_name'    => 'Daiki',
+            'user_email'   => 'shindaiki@mailinator.com',
+            'location'     => 'Japan',
+            'user_pass'    => '123',
+            'avatar'       => 'avatar-2.jpg',
+            'paypal_email' => 'dinhle1987-per@yahoo.com',
+            'review'       => array(
+                'content' => 'It is a great laptop but the back light bleed kills it. It is only a small portion in the upper left-hand panel but that is unacceptable for a laptop that costs $2000. I am thinking of returning it for this reason',
+                'rate'    => 3,
+            ),
+        ),
+    ),
 );
