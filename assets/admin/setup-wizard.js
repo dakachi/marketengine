@@ -56,21 +56,35 @@
             var $target = $(event.currentTarget);
             var $parent_section = $target.parents('.me-setup-section');
             var $parent_container = $target.parents('.me-setup-container');
-            $.ajax({
-                type: 'post',
-                url: me_globals.ajaxurl,
-                data: {
-                    action: 'me-add-sample-data',
-                    _wpnonce: $('#_wpnonce').val()
-                },
-                beforeSend: function() {
-                    $parent_section.addClass('me-setup-section-loading');
-                },
-                success: function(res, xhr) {
-                    $parent_section.removeClass('me-setup-section-loading');
-                    $target.parents('.me-setup-wrap').addClass('active');
-                }
-            });
+            var count = 1;
+            for (var i = 1; i <= 12; i++) {
+                $.ajax({
+                    type: 'post',
+                    url: me_globals.ajaxurl,
+                    data: {
+                        action: 'me-add-sample-data',
+                        number : i,
+                        _wpnonce: $('#_wpnonce').val()
+                    },
+                    beforeSend: function() {
+                        $parent_section.addClass('me-setup-section-loading');
+                    },
+                    success: function(res, xhr) {
+                        
+                        count ++;
+                        console.log(count);
+                        console.log(i);
+                        if(count == i) {
+                            $parent_section.removeClass('me-setup-section-loading');
+                            $target.parents('.me-setup-wrap').addClass('active');
+                        }
+                    }
+                });
+            };
+            setTimeout(function(){
+                $parent_section.removeClass('me-setup-section-loading');
+                $target.parents('.me-setup-wrap').addClass('active');
+            }, 45000);
         });
         //=== Click skip button
         $('.me-skip-btn').on('click', function(event) {

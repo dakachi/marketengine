@@ -157,7 +157,7 @@ class ME_Post_Types {
             'has_archive'        => 'listings',
             'hierarchical'       => false,
             'menu_position'      => 30,
-            'menu_icon'          => 'dashicons-listing-icon',
+            'menu_icon'          => 'dashicons-icon-me-listing',
             'supports'           => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'custom-fields'),
         ));
 

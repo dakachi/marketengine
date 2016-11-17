@@ -1,7 +1,7 @@
 <?php
 /**
  * Create functional pages supported by MarketEngine
- * 
+ *
  * @package Admin/Setupwizard
  * @category Function
  *
@@ -9,7 +9,7 @@
  */
 function me_create_functional_pages()
 {
-    
+
     $default_pages = me_get_functional_pages();
 
     foreach ($default_pages as $key => $page) {
@@ -32,10 +32,10 @@ function me_create_functional_pages()
 
 /**
  * Retrieve list of name and content of functional pages supported by MarketEngine
- * 
+ *
  * @package Admin/Setupwizard
  * @category Function
- * 
+ *
  * @return array
  * @since 1.0
  */
@@ -72,25 +72,196 @@ function me_get_functional_pages()
         ),
     );
 }
+function marketengine_sample_filter_order_status($status)
+{
+    return 'me-complete';
+}
+function marketengine_add_sample_order($orders, $listing_id)
+{
+    foreach ($orders as $key => $order_data) {
+        $order_data['post_author'] = marketengine_add_sample_user($order_data);
 
-function marketengine_add_sample_user() {
+        add_filter('marketengine_create_order_status', 'marketengine_sample_filter_order_status');
+        $order = me_insert_order($order_data);
+        remove_filter('marketengine_create_order_status', 'marketengine_sample_filter_order_status');
 
+        $me_order   = new ME_Order($order);
+        $listing = me_get_listing($listing_id);
+
+        $me_order->add_listing($listing);
+
+        $receiver_1 = (object) array(
+            'user_name'  => 'admin',
+            'email'      => 'dinhle1987-per2@yahoo.com',
+            'amount'     => 5,
+            'is_primary' => false,
+        );
+        $me_order->add_commission($receiver_1);
+
+        $commentdata = array(
+            'comment_post_ID'      => $listing_id,
+            'comment_author'       => get_the_author_meta('display_name', $order_data['post_author']),
+            'comment_author_email' => $order_data['user_email'],
+            'comment_content'      => $order_data['review']['content'],
+            'comment_type'         => 'review',
+            'comment_parent'       => 0,
+            'user_id'              => $order_data['post_author'],
+            'comment_author_IP'    => $_SERVER['REMOTE_ADDR'],
+            'comment_approved'     => 1,
+        );
+
+        $comment_id = wp_insert_comment($commentdata);
+        if (!is_wp_error($comment_id)) {
+            update_comment_meta($comment_id, '_me_rating_score', $order_data['review']['rate']);
+
+            $comment = get_comment($comment_id);
+            do_action('marketengine_insert_review', $comment_id, $comment);
+        }
+    }
 }
 
-function marketengine_add_sample_listing() {
-	// insert listing
-	// insert order | inquiry
-	// order
+function marketengine_add_sample_inquiry($inquiries, $listing_id)
+{
+    foreach ($inquiries as $key => $inquiry_data) {
+        $inquiry_data['post_author'] = marketengine_add_sample_user($inquiry_data);
+        $receiver = get_post_field('post_author', $listing_id);
+        $inquiry_id = me_insert_message(
+            array(
+                'sender' => $inquiry_data['post_author'],
+                'post_content' => 'Inquiry listing #' . $listing_id,
+                'post_title'   => 'Inquiry listing #' . $listing_id,
+                'post_type'    => 'inquiry',
+                'receiver'     => $receiver,
+                'post_parent'  => $listing_id,
+            ), true
+        );
+
+        foreach ($inquiry_data['messages'] as $key => $message) {
+            $message_data = array(
+                'post_content' => $message,
+                'post_title'   => 'Message listing #' . $listing_id,
+                'post_type'    => 'message',
+                'receiver'     => $receiver,
+                'post_parent'  => $inquiry_id,
+            );
+            if(($key % 2) == 0) {
+                $message_data['receiver'] = $receiver;
+                $message_data['sender'] = $inquiry_data['post_author'];
+            }else {
+                $message_data['receiver'] = $inquiry_data['post_author'];
+                $message_data['sender'] = $receiver;
+            }
+            me_insert_message($message_data, true);    
+        }
+        
+    }
 }
 
-function marketengine_add_sample_order(){
-
+function marketengine_add_sample_user($user_data)
+{
+    // add user
+    $defaults = array(
+        'user_login'   => 'henrywilson',
+        'first_name'   => 'Henry',
+        'last_name'    => 'Wilson',
+        'user_email'   => 'henrywilson@mailinator.com',
+        'location'     => 'UK',
+        'user_pass'    => '123',
+        'avatar'       => 'http://lorempixel.com/150/150/business/',
+        'paypal_email' => 'dinhle1987-buyer@yahoo.com',
+    );
+    $user_data = wp_parse_args($user_data, $defaults);
+    $user      = get_user_by('login', $user_data['user_login']);
+    if (!$user) {
+        $user_id = wp_insert_user($user_data);
+        update_user_meta($user_id, 'paypal_email', $user_data['paypal_email']);
+        update_user_meta($user_id, 'location', $user_data['location']);
+    }
+    return $user->ID;
 }
 
-function marketengine_add_sample_inquiry(){
+function marketengine_handle_sample_image($image, $filename)
+{
+    $upload_dir = wp_upload_dir();
+    $image_data = file_get_contents($image);
+    $filename .= '.jpg';
+    if (wp_mkdir_p($upload_dir['path'])) {
+        $file = $upload_dir['path'] . '/' . $filename;
+    } else {
+        $file = $upload_dir['basedir'] . '/' . $filename;
+    }
 
+    file_put_contents($file, $image_data);
+    $wp_filetype = wp_check_filetype($filename, null);
+    $attachment  = array(
+        'post_mime_type' => $wp_filetype['type'],
+        'post_title'     => sanitize_file_name($filename),
+        'post_status'    => 'auto',
+        'post_content'   => '',
+        'post_status'    => 'inherit',
+    );
+    $attach_id = wp_insert_attachment($attachment, $file);
+    require_once ABSPATH . '/wp-admin/includes/image.php';
+    $attach_data = wp_generate_attachment_metadata($attach_id, $file);
+    wp_update_attachment_metadata($attach_id, $attach_data);
+    return $attach_id;
 }
 
-function marketengine_add_sample_message(){
-    
+function marketengine_add_sample_listing()
+{
+
+    $listing_number = $_POST['number'];
+    $listing                = include ME_PLUGIN_PATH . '/sample-data/listing/listing-' . $listing_number . '.php';
+    $user_id                = marketengine_add_sample_user($listing['post_author']);
+    $listing['post_author'] = $user_id;
+
+    $cats = $listing['listing_category'];
+
+    $cat_1 = wp_insert_term($cats[0], 'listing_category');
+    if (!is_wp_error($cat_1)) {
+        $cat_id_1 = $cat_1['term_id'];
+    } else {
+        $cat_id_1 = $cat_1->error_data['term_exists'];
+    }
+
+    $cat_2 = wp_insert_term($cats[1], 'listing_category', array('parent' => $cat_id_1));
+    if (!is_wp_error($cat_2)) {
+        $cat_id_2 = $cat_2['term_id'];
+    } else {
+        $cat_id_2 = $cat_2->error_data['term_exists'];
+    }
+
+    $listing['tax_input'] = array(
+        'listing_tag'      => $listing['listing_tag'],
+        'listing_category' => array($cat_id_1, $cat_id_2),
+    );
+
+    $img_1 = marketengine_handle_sample_image(ME_PLUGIN_URL . 'sample-data/images/dell.jpg', $listing['post_name'] . '-1');
+    $img_2 = marketengine_handle_sample_image(ME_PLUGIN_URL . 'sample-data/images/macbook.jpg', $listing['post_name'] . '-2');
+    $img_3 = marketengine_handle_sample_image(ME_PLUGIN_URL . 'sample-data/images/samsung.jpg', $listing['post_name'] . '-3');
+
+    $listing_gallery = array(
+        $img_1,
+        $img_2,
+        $img_3,
+    );
+
+    shuffle($listing_gallery);
+    $listing['listing_gallery'] = $listing_gallery;
+
+    $listing['meta_input']['_thumbnail_id'] = $listing['listing_gallery'][0];
+
+    $result = wp_insert_post($listing);
+
+    update_post_meta($result, '_me_listing_gallery', $listing['listing_gallery']);
+
+    if (!empty($listing['order'])) {
+        marketengine_add_sample_order($listing['order'], $result);
+    }
+
+    if (!empty($listing['inquiry'])) {
+        marketengine_add_sample_inquiry($listing['inquiry'], $result);
+    }
+    echo 1;
+    exit;
 }

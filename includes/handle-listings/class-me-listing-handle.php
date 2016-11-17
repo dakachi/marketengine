@@ -78,7 +78,6 @@ class ME_Listing_Handle {
             if (!self::current_user_can_create_listing()) {
                 return new WP_Error('create_posts', __("You are not allowed to create posts as this user.", "enginethemes"));
             }
-
             $post = wp_insert_post($listing_data);
             /**
              * Do action after insert listing

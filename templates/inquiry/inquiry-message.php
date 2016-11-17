@@ -32,7 +32,7 @@
 						<div class="me-contact-messages-wrap">
 
 							<div class="me-contact-message-user">
-								<h2><?php echo get_the_author_meta( 'display_name', $inquiry->receiver ); ?></h2>
+								<p><?php echo get_the_author_meta( 'display_name', $inquiry->receiver ); ?></p>
 							</div>
 
 							<div class="me-contact-header">
