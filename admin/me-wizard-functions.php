@@ -262,4 +262,6 @@ function marketengine_add_sample_listing()
     if (!empty($listing['inquiry'])) {
         marketengine_add_sample_inquiry($listing['inquiry'], $result);
     }
+    echo 1;
+    exit;
 }
