@@ -302,4 +302,5 @@ function marketengine_delete_sample_data() {
     $wpdb->query("DELETE from $wpdb->usermeta as A WHERE A.user_id IN ( SElECT user_id FROM $wpdb->usermeta as B WHERE B.meta_key = 'is_sample_data' )");
     
     delete_option( 'me-added-sample-data' );
+    wp_delete_comment( '1' );
 }
