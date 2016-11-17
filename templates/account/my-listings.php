@@ -54,7 +54,7 @@ $query = new WP_Query( $args );
 					$listing_type = $listing->get_listing_type();
 					$listing_status = get_post_status_object(get_post_status());
 			?>
-				<li class="me-item-post me-col-md-3">
+				<li class="me-item-post me-col-md-3 me-col-sm-6">
 					<div class="me-item-wrap">
 						<a href="<?php the_permalink(); ?>" class="me-item-img">
 							<?php the_post_thumbnail( 'thumbnail' ); ?>
