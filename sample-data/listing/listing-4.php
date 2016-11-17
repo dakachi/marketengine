@@ -5,15 +5,14 @@ if (!defined('ABSPATH')) {
 }
 
 return array(
-    'post_author'      =>
-array(
-        'user_login'   => 'henrywilson',
-        'first_name'   => 'Henry',
-        'last_name'    => 'Wilson',
-        'user_email'   => 'henrywilson@mailinator.com',
-        'location'     => 'UK',
-        'user_pass'    => '123',
-        'avatar'       => 'avatar-1.jpg',
+    'post_author'      => array(
+        'user_login' => 'henrywilson',
+        'first_name' => 'Henry',
+        'last_name'  => 'Wilson',
+        'user_email' => 'henrywilson@mailinator.com',
+        'location'   => 'UK',
+        'user_pass'  => '123',
+        'avatar'     => 'avatar-1.jpg',
         'paypal_email' => 'dinhle1987-buyer@yahoo.com',
     ),
     'meta_input'       => array
@@ -26,7 +25,7 @@ array(
     'post_name'        => 'marketengine-sample-listing-4',
     'post_title'       => 'Nextbit Robin Factory Unlocked Phone - Midnight (U.S. Warranty)',
     'post_content'     =>
-        "
+    "
 <p>
     GSM Version (for AT&T; and TMobile networks in the US; best choice for all international backers including Canada)
 </p>
@@ -59,5 +58,21 @@ sensor NFC Quick charging Bluetooth 4.0 LE WiFi A/B/G/N/AC
     'listing_tag'      => 'selling tag',
     'post_type'        => 'listing',
 
-    'post_status'      => 'publish'
+    'post_status'      => 'publish',
+    'order' => array(
+        array(
+            'user_login'   => 'karlabertha',
+            'first_name'   => 'Karla',
+            'last_name'    => 'Bertha',
+            'user_email'   => 'karlabertha@mailinator.com',
+            'location'     => 'German',
+            'user_pass'    => '123',
+            'avatar'       => 'avatar-2.jpg',
+            'paypal_email' => 'dinhle1987-per@yahoo.com',
+            'review'       => array(
+                'content' => 'Great machine but bright and loud.',
+                'rate'    => 4,
+            ),
+        ),
+    )
 );

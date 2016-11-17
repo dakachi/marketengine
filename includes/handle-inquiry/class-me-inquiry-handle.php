@@ -62,6 +62,7 @@ class ME_Inquiry_Handle {
                     'post_type'    => 'inquiry',
                     'receiver'     => get_post_field('post_author', $listing_id),
                     'post_parent'  => $listing_id,
+                    'sender' => $current_user_id
                 ), true
             );
             if (is_wp_error($inquiry_id)) {
@@ -107,6 +108,7 @@ class ME_Inquiry_Handle {
             }
 
             $message_data = array(
+                'sender' => $current_user,
                 'post_content' => $message_data['content'],
                 'post_title'   => 'Message listing #' . $message_data['listing_id'],
                 'post_type'    => 'message',

@@ -86,7 +86,7 @@ return array(
             'paypal_email' => 'dinhle1987-per@yahoo.com',
             'review'       => array(
                 'content' => 'It is a great laptop but the back light bleed kills it. It is only a small portion in the upper left-hand panel but that is unacceptable for a laptop that costs $2000. I am thinking of returning it for this reason',
-                'rate'    => 5,
+                'rate'    => 3,
             ),
         ),
         array(
@@ -104,20 +104,6 @@ return array(
             ),
         ),
 
-        array(
-            'user_login'   => 'alanroger',
-            'first_name'   => 'Alan',
-            'last_name'    => 'Roger',
-            'user_email'   => 'alanroger@mailinator.com',
-            'location'     => 'France',
-            'user_pass'    => '123',
-            'avatar'       => 'avatar-2.jpg',
-            'paypal_email' => 'dinhle1987-per@yahoo.com',
-            'review'       => array(
-                'content' => 'Received the wrong color.',
-                'rate'    => 3,
-            ),
-        ),
         array(
             'user_login'   => 'katelinharper',
             'first_name'   => 'Katelin',
