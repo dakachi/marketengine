@@ -72,20 +72,89 @@ function me_get_functional_pages()
         ),
     );
 }
-
-function marketengine_add_sample_order()
+function marketengine_sample_filter_order_status($status)
 {
+    return 'me-complete';
+}
+function marketengine_add_sample_order($orders, $listing_id)
+{
+    foreach ($orders as $key => $order_data) {
+        $order_data['post_author'] = marketengine_add_sample_user($order_data);
 
+        add_filter('marketengine_create_order_status', 'marketengine_sample_filter_order_status');
+        $order = me_insert_order($order_data);
+        remove_filter('marketengine_create_order_status', 'marketengine_sample_filter_order_status');
+
+        $me_order   = new ME_Order($order);
+        $listing = me_get_listing($listing_id);
+
+        $me_order->add_listing($listing);
+
+        $receiver_1 = (object) array(
+            'user_name'  => 'admin',
+            'email'      => 'dinhle1987-per2@yahoo.com',
+            'amount'     => 5,
+            'is_primary' => false,
+        );
+        $me_order->add_commission($receiver_1);
+
+        $commentdata = array(
+            'comment_post_ID'      => $listing_id,
+            'comment_author'       => get_the_author_meta('display_name', $order_data['post_author']),
+            'comment_author_email' => $order_data['user_email'],
+            'comment_content'      => $order_data['review']['content'],
+            'comment_type'         => 'review',
+            'comment_parent'       => 0,
+            'user_id'              => $order_data['post_author'],
+            'comment_author_IP'    => $_SERVER['REMOTE_ADDR'],
+            'comment_approved'     => 1,
+        );
+
+        $comment_id = wp_insert_comment($commentdata);
+        if (!is_wp_error($comment_id)) {
+            update_comment_meta($comment_id, '_me_rating_score', $order_data['review']['rate']);
+
+            $comment = get_comment($comment_id);
+            do_action('marketengine_insert_review', $comment_id, $comment);
+        }
+    }
 }
 
-function marketengine_add_sample_inquiry()
+function marketengine_add_sample_inquiry($inquiries, $listing_id)
 {
+    foreach ($inquiries as $key => $inquiry_data) {
+        $inquiry_data['post_author'] = marketengine_add_sample_user($inquiry_data);
+        $receiver = get_post_field('post_author', $listing_id);
+        $inquiry_id = me_insert_message(
+            array(
+                'sender' => $inquiry_data['post_author'],
+                'post_content' => 'Inquiry listing #' . $listing_id,
+                'post_title'   => 'Inquiry listing #' . $listing_id,
+                'post_type'    => 'inquiry',
+                'receiver'     => $receiver,
+                'post_parent'  => $listing_id,
+            ), true
+        );
 
-}
-
-function marketengine_add_sample_review()
-{
-
+        foreach ($inquiry_data['messages'] as $key => $message) {
+            $message_data = array(
+                'post_content' => $message,
+                'post_title'   => 'Message listing #' . $listing_id,
+                'post_type'    => 'message',
+                'receiver'     => $receiver,
+                'post_parent'  => $inquiry_id,
+            );
+            if(($key % 2) == 0) {
+                $message_data['receiver'] = $receiver;
+                $message_data['sender'] = $inquiry_data['post_author'];
+            }else {
+                $message_data['receiver'] = $inquiry_data['post_author'];
+                $message_data['sender'] = $receiver;
+            }
+            me_insert_message($message_data, true);    
+        }
+        
+    }
 }
 
 function marketengine_add_sample_user($user_data)
@@ -131,7 +200,7 @@ function marketengine_handle_sample_image($image, $filename)
         'post_content'   => '',
         'post_status'    => 'inherit',
     );
-    $attach_id = wp_insert_attachment($attachment, $file, $post_id);
+    $attach_id = wp_insert_attachment($attachment, $file);
     require_once ABSPATH . '/wp-admin/includes/image.php';
     $attach_data = wp_generate_attachment_metadata($attach_id, $file);
     wp_update_attachment_metadata($attach_id, $attach_data);
@@ -142,7 +211,6 @@ function marketengine_add_sample_listing()
 {
 
     $listing_number = $_POST['number'];
-
     $listing                = include ME_PLUGIN_PATH . '/sample-data/listing/listing-' . $listing_number . '.php';
     $user_id                = marketengine_add_sample_user($listing['post_author']);
     $listing['post_author'] = $user_id;
@@ -168,26 +236,32 @@ function marketengine_add_sample_listing()
         'listing_category' => array($cat_id_1, $cat_id_2),
     );
 
-    $img_1 = marketengine_handle_sample_image('http://lorempixel.com/800/600/technics/', $listing['post_name'] . '-1');
-    $img_2 = marketengine_handle_sample_image('http://lorempixel.com/800/600/transport/', $listing['post_name'] . '-2');
-    $img_3 = marketengine_handle_sample_image('http://lorempixel.com/800/600/food/', $listing['post_name'] . '-2');
-    $listing['listing_gallery'] = array(
+    $img_1 = marketengine_handle_sample_image(ME_PLUGIN_URL . 'sample-data/images/dell.jpg', $listing['post_name'] . '-1');
+    $img_2 = marketengine_handle_sample_image(ME_PLUGIN_URL . 'sample-data/images/macbook.jpg', $listing['post_name'] . '-2');
+    $img_3 = marketengine_handle_sample_image(ME_PLUGIN_URL . 'sample-data/images/samsung.jpg', $listing['post_name'] . '-3');
+
+    $listing_gallery = array(
         $img_1,
         $img_2,
-        $img_3
+        $img_3,
     );
-    
-    $listing['meta_input']['_thumbnail_id'] = $img_1;
+
+    shuffle($listing_gallery);
+    $listing['listing_gallery'] = $listing_gallery;
+
+    $listing['meta_input']['_thumbnail_id'] = $listing['listing_gallery'][0];
+
     $result = wp_insert_post($listing);
 
     update_post_meta($result, '_me_listing_gallery', $listing['listing_gallery']);
 
     if (!empty($listing['order'])) {
-        marketengine_add_sample_order($listing['order']);
+        marketengine_add_sample_order($listing['order'], $result);
     }
 
     if (!empty($listing['inquiry'])) {
-        marketengine_add_sample_inquiry($listing['inquiry']);
+        marketengine_add_sample_inquiry($listing['inquiry'], $result);
     }
+    echo 1;
+    exit;
 }
-

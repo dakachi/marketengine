@@ -93,6 +93,7 @@ class ME_Setup_Wizard
 
     public function add_sample_data() {
     	if(!empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'marketengine-setup')) {
+    		update_option( 'me-added-sample-data', 1 );
     		marketengine_add_sample_listing();
     	}
     }
@@ -303,7 +304,7 @@ class ME_Setup_Wizard
 					<h2><?php _e("That's It", "enginethemes");?></h2>
 					<p><?php _e("Congragulations! You have successfully made some steps on building your marketplace.", "enginethemes");?><br/><?php _e("What's next?", "enginethemes");?></p>
 				</div>
-				<div class="me-setup-wrap">
+				<div class="me-setup-wrap <?php if(get_option('me-added-sample-data')) {echo "active";} ?>">
 					<form>
 						<h3><?php _e("Sample Data", "enginethemes");?></h3>
 						<div class="me-setup-sample">

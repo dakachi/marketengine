@@ -30,7 +30,7 @@ if (!class_exists('MarketEngine')):
          * @var version
          * @since 1.0
          */
-        public $version = '0.9';
+        public $version = '1.0';
         /**
          * The object of current user data
          *
@@ -91,6 +91,7 @@ if (!class_exists('MarketEngine')):
 
         private function include_files() {
             require_once ME_PLUGIN_PATH .'/includes/class-me-autoloader.php';
+            require_once ME_PLUGIN_PATH .'/update.php';
 
             require_once ME_PLUGIN_PATH .'/admin/index.php';
 
@@ -163,7 +164,6 @@ if (!class_exists('MarketEngine')):
             add_action('admin_enqueue_scripts', array($this, 'add_admin_scripts'));
 
             add_action('init', array($this, 'wpdb_table_fix'), 0);
-            // add_action( 'admin_init', 'me_admin_menu_class' );
         }
 
         public function init() {
@@ -171,6 +171,8 @@ if (!class_exists('MarketEngine')):
 
             ME_Post_Types::register_post_type();
             ME_Post_Types::register_taxonomies();
+
+            // ME_Auto_Update::get_instance( $this->version, 'update_path', plugin_basename(__FILE__) );
         }
 
         public function wpdb_table_fix() {

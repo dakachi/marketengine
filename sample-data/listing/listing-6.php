@@ -5,15 +5,14 @@ if (!defined('ABSPATH')) {
 }
 
 return array(
-    'post_author'      =>
-array(
-        'user_login'   => 'henrywilson',
-        'first_name'   => 'Henry',
-        'last_name'    => 'Wilson',
-        'user_email'   => 'henrywilson@mailinator.com',
-        'location'     => 'UK',
-        'user_pass'    => '123',
-        'avatar'       => 'avatar-1.jpg',
+    'post_author'      => array(
+        'user_login' => 'henrywilson',
+        'first_name' => 'Henry',
+        'last_name'  => 'Wilson',
+        'user_email' => 'henrywilson@mailinator.com',
+        'location'   => 'UK',
+        'user_pass'  => '123',
+        'avatar'     => 'avatar-1.jpg',
         'paypal_email' => 'dinhle1987-buyer@yahoo.com',
     ),
     'meta_input'       => array
@@ -26,7 +25,7 @@ array(
     'post_name'        => 'marketengine-sample-listing-6',
     'post_title'       => '7 TheiaPro App Enabled EyeGlasses Camera(Black)',
     'post_content'     =>
-        "
+    "
 <p>
     TheiaPro is equipped with a state of the art HD Camera. No more pulling out a device, opening app and focusing on camera to capture an image. Just look and capture with a press of a button.
 </p>
@@ -40,7 +39,7 @@ array(
     Ergonomic Design and easy DIY installation with your existing glasses or shades
 </p>
 "
-,
+    ,
 
     'listing_gallery'  => array
     (
@@ -55,5 +54,21 @@ array(
     'listing_tag'      => 'selling tag',
     'post_type'        => 'listing',
 
-    'post_status'      => 'publish'
+    'post_status'      => 'publish',
+    'order' => array(
+        array(
+            'user_login'   => 'alanroger',
+            'first_name'   => 'Alan',
+            'last_name'    => 'Roger',
+            'user_email'   => 'alanroger@mailinator.com',
+            'location'     => 'France',
+            'user_pass'    => '123',
+            'avatar'       => 'avatar-2.jpg',
+            'paypal_email' => 'dinhle1987-per@yahoo.com',
+            'review'       => array(
+                'content' => 'Received the wrong color.',
+                'rate'    => 3,
+            ),
+        ),
+    )
 );
