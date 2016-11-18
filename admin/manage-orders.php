@@ -82,7 +82,7 @@ function me_render_me_order_columns($column)
             foreach ($listing_items as $key => $listing) {
                 $listing = get_post($listing['ID']);
                 if ($listing) {
-                    echo edit_post_link(esc_html(get_the_title($listing->ID)), '', '', $listing->ID);
+                    echo '<a href="' . get_permalink($listing->ID) . '" target="_blank" >' . esc_html(get_the_title($listing->ID)) . '</a>';
                 } else {
                     echo $listing['title'];
                 }
