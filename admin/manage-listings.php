@@ -111,3 +111,10 @@ function me_listing_meta_box()
     remove_meta_box('authordiv', 'listing', 'normal');
 }
 add_action('add_meta_boxes', 'me_listing_meta_box');
+
+add_filter( 'views_edit-me_order', 'me_remove_filter_mine' );
+add_filter( 'views_edit-listing', 'me_remove_filter_mine' );
+function me_remove_filter_mine($views) {
+    unset($views['mine']);
+    return $views;
+}
