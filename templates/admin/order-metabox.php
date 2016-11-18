@@ -78,7 +78,7 @@ $commission_item = array_pop($commission_items);
 		/* border-top: 1px solid #ededed; */
 	}	
 	.order-details label {
-	    /* cursor: pointer; */
+	    cursor: default;
 	    font-size: 14px;
 	    font-weight: bold;
 	    min-width: 100px;
