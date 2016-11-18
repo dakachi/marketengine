@@ -1,4 +1,10 @@
 <?php
+/**
+ * Retrieve list of page
+ * 
+ * @since 1.0
+ * @return array
+ */
 function marketengine_get_list_of_page() {
     $args = array(
         'post_type'   => 'page',
@@ -13,6 +19,11 @@ function marketengine_get_list_of_page() {
     return $list_of_page;
 }
 
+/**
+ * Render admin menu option view
+ * @category Admin/Options
+ * @since 1.0
+ */
 function marketengine_option_view() {
 
     marketengine_option_header();
@@ -73,6 +84,11 @@ function marketengine_option_view() {
     marketengine_option_footer();
 }
 
+/**
+ * Render admin menu reports view
+ * @category Admin/Reports
+ * @since 1.0
+ */
 function marketengine_report_view() {
     marketengine_option_header();
     me_get_template('admin/overview', $_REQUEST);
@@ -81,6 +97,7 @@ function marketengine_report_view() {
 
 /**
  * Add marketengine admin menu
+ * @category Admin
  */
 function marketengine_option_menu() {
     global $submenu;
@@ -129,6 +146,11 @@ function marketengine_option_menu() {
 }
 add_action('admin_menu', 'marketengine_option_menu');
 
+
+/**
+ * Add marketengine admin menu
+ * @category Admin/External
+ */
 function marketengine_load_admin_option_script_css() {
     if (!empty($_REQUEST['page']) && (strpos($_REQUEST['page'], 'me') !== false)) {
         wp_register_style('scrollbar-css', ME_PLUGIN_URL . 'assets/admin/jquery.mCustomScrollbar.min.css', array(), '1.0');
@@ -159,6 +181,7 @@ add_action('admin_enqueue_scripts', 'marketengine_load_admin_option_script_css')
 
 /**
  * Render marketengine admin option header
+ * @category Admin
  * @since 1.0
  */
 function marketengine_option_header() {
@@ -175,6 +198,7 @@ function marketengine_option_header() {
 
 /**
  * Render marketengine admin option footer
+ * @category Admin
  * @since 1.0
  */
 function marketengine_option_footer() {
@@ -185,6 +209,11 @@ function marketengine_option_footer() {
 <?php
 }
 
+/**
+ * Add custom class to marketengine admin menu
+ * @category Admin
+ * @since 1.0
+ */
 function me_admin_menu_class() {
     global $menu;
     $menu[28][6] .= '-icon-me-logo';

@@ -10,12 +10,13 @@ if (!defined('ABSPATH')) {
 
 /**
  * Remove edit post row action
+ * @category Admin/Manage
  * @since 1.0
  */
 function me_order_row_actions($actions, $post)
 {
     if ($post && 'me_order' == $post->post_type) {
-        return false;
+        return array();
     }
     return $actions;
 }
@@ -24,6 +25,8 @@ add_filter('post_row_actions', 'me_order_row_actions', 10, 2);
 /**
  * Hook to action manage_me_order_posts_columns
  * Add order columns: ID, Listing Items, Tota, Commission, Date
+ *
+ * @category Admin/Manage
  *
  * @param array $existing_columns WP default post column
  * @since 1.0
@@ -34,7 +37,7 @@ function me_me_order_columns($existing_columns)
         $existing_columns = array();
     }
 
-    unset($existing_columns['comments'], $existing_columns['title'], $existing_columns['author'], $existing_columns['date'], $existing_columns['author']);
+    unset($existing_columns['comments'], $existing_columns['title'], $existing_columns['date'], $existing_columns['author']);
 
     $columns = array();
 
@@ -51,6 +54,8 @@ add_filter('manage_me_order_posts_columns', 'me_me_order_columns');
 
 /**
  * Hook to manage_me_order_posts_custom_column render order column data
+ *
+ * @category Admin/Manage
  *
  * @param string $column
  * @since 1.0
@@ -99,10 +104,20 @@ function me_render_me_order_columns($column)
 }
 add_action('manage_me_order_posts_custom_column', 'me_render_me_order_columns', 2);
 
+/**
+ * Load metabox details
+ * @category Admin/Manage
+ * @since 1.0
+ */
 function me_order_payment_details() {
     me_get_template('admin/order-metabox');
 }
 
+/**
+ * Add order metabox, remove submitdiv
+ * @category Admin/Manage
+ * @since 1.0
+ */
 function me_order_meta_box()
 {
     add_meta_box('order_meta', __('Order Payment Info'), 'me_order_payment_details', 'me_order', 'normal', 'high');

@@ -324,14 +324,14 @@ class ME_Setup_Wizard
 					<h3><?php _e("Mailing List", "enginethemes");?></h3>
 					<div class="me-setup-mailing">
 						<p><?php _e("Join the mailing list to get latest news, tips &amp; updates about the plugin.", "enginethemes");?></p>
-							<form id="me-setup-mailing-form" action="">
+							<form id="me-setup-mailing-form" action="//enginethemes.us9.list-manage.com/subscribe/post?u=ba195a10aeadb30c31dd8e509&id=8e5611c859" method="post" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
 								<div class="me-smail-control">
 									<label for="me-smail-name"><?php _e("Name", "enginethemes");?></label>
-									<input id="me-smail-name" type="text">
+									<input type="text" value="" name="FNAME" class="" id="mce-FNAME">
 								</div>
 								<div class="me-smail-control">
 									<label for="me-smail-email"><?php _e("Email address", "enginethemes");?></label>
-									<input id="me-smail-email" type="text">
+									<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
 								</div>
 								<input class="me-smail-submit-btn" type="submit" value="SUBMIT">
 							</form>
