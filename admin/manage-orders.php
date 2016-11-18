@@ -94,6 +94,8 @@ function me_render_me_order_columns($column)
             if (!empty($commission_items)) {
                 $item_id = $commission_items[0]->order_item_id;
                 echo me_price_html(me_get_order_item_meta($item_id, '_amount', true), $currency);
+            }else{
+                echo '0';
             }
             break;
 
