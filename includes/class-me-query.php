@@ -130,7 +130,7 @@ function me_get_default_endpoints() {
         'order_id'        => 'order',
         'purchases'       => 'purchases',
         'pay'             => 'pay',
-        'listing_id'      => 'listing',
+        'listing_id'      => 'listing-id',
         'seller_id'       => 'seller',
     );
     return $endpoint_arr;
@@ -204,7 +204,7 @@ function me_init_endpoint() {
     $edit_listing_page = me_get_page_id('edit_listing');
     if( $edit_listing_page > -1) {
         $page = get_post($edit_listing_page);
-        add_rewrite_rule('^/' . $page->post_name . '/'. me_get_endpoint_name('listing_id') .'/?([0-9]{1,})/?$', 'index.php?page_id='.$edit_listing_page.'&listing-id=$matches[1]', 'top');
+        add_rewrite_rule('^/' . $page->post_name . '/'. me_get_endpoint_name('listing_id') .'/?([0-9]{1,})/?$', 'index.php?page_id='.$edit_listing_page.'&listing_id'.'=$matches[1]', 'top');
     }
 
     rewrite_order_url();
