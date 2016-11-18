@@ -40,7 +40,7 @@ $type = isset($type) ? $type : 'transaction';
 			<div class="me-col-md-7">
 				<div class="me-order-keyword-filter">
 					<label><?php _e('Keyword', 'enginethemes'); ?></label>
-					<input type="text" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>" placeholder="<?php _e('Order ID, listing name...', 'enginethemes'); ?>">
+					<input type="text" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>" placeholder="<?php _e('Order ID, listing name, etc.', 'enginethemes'); ?>">
 
 					<?php //TODO style lai cho nay ?>
 					<?php $page = ($type === 'order') ? 'orders' : 'purchases'; ?>

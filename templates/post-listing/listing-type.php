@@ -49,7 +49,7 @@ if (!isset($editing)) $editing = false;
 		<div class="me-col-md-6">
 			<div class="marketengine-group-field">
 				<div class="marketengine-select-field">
-				    <label class="me-field-title"><?php _e("Pricing unit", "enginethemes"); ?></label>
+				    <label class="me-field-title"><?php _e("Pricing Unit", "enginethemes"); ?></label>
 				    <select class="pricing-unit me-chosen-select" name="meta_input[pricing_unit]">
 				    	<option value="none" <?php if(!$unit) echo 'selected'; ?>><?php _e("None", "enginethemes"); ?></option>
 				    	<option value="per_unit" <?php if($unit == 'per_unit') echo 'selected'; ?> ><?php _e("Per Unit", "enginethemes"); ?></option>
