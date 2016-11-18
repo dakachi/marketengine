@@ -34,7 +34,7 @@ function me_me_order_columns($existing_columns)
         $existing_columns = array();
     }
 
-    unset($existing_columns['comments'], $existing_columns['title'], $existing_columns['author'], $existing_columns['date'], $existing_columns['author']);
+    unset($existing_columns['comments'], $existing_columns['title'], $existing_columns['date'], $existing_columns['author']);
 
     $columns = array();
 
