@@ -29,8 +29,11 @@ class ME_Setup_Wizard
     	?>
 		<div id="message" class="updated marketengine-message me-setup-notices">
 			<p>Welcome to <strong>MarketEngine</strong>  – You‘re almost ready to start your market :)</p>
-			<a href="<?php echo admin_url("?page=marketengine-setup") ?>" class="run-setup"><?php _e("Run the setup wizard", "enginethemes"); ?></a>
-			<a href="<?php echo admin_url("?skip-setup=1&nonce=".$skip_setup_nonce) ?>" class="skip-setup"><?php _e("Skip setup", "enginethemes"); ?></a>
+			<p>
+				<a href="<?php echo admin_url("?page=marketengine-setup") ?>" class="run-setup"><?php _e("Run the setup wizard", "enginethemes"); ?></a>
+				<a href="<?php echo admin_url("?skip-setup=1&nonce=".$skip_setup_nonce) ?>" class="skip-setup"><?php _e("Skip setup", "enginethemes"); ?></a>
+			</p>
+			
 		</div>
     	<?php 
     	} 
