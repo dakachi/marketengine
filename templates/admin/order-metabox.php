@@ -135,16 +135,19 @@ $commission_item = array_pop($commission_items);
 		display: none;
 	}
 </style>
-<<<<<<< HEAD
 <div class="me-order-preview">
 	<h2><?php printf(__( "Order #%d details" , "enginethemes" ), $order->ID); ?></h2>
 	<div class="order-details">
+		<p>
+			<label><?php _e("ID:", "enginethemes"); ?></label>
+			<?php printf(__( "#%d" , "enginethemes" ), $order->ID) ?>
+		</p>
 		<p>
 			<label><?php _e("Order date:", "enginethemes"); ?></label>
 			<?php echo get_the_date(); ?>
 		</p>
 		<p>
-			<label><?php _e("Order status:", "enginethemes"); ?></label>
+			<label><?php _e("Order status", "enginethemes"); ?></label>
 			<?php echo me_get_order_status_label($order->post_status); ?>
 		</p>
 		<p>
@@ -152,25 +155,6 @@ $commission_item = array_pop($commission_items);
 			<?php echo get_the_author_meta( 'display_name', $order->post_author ); ?>
 		</p>
 	</div>
-=======
-<div class="order-details">
-	<p>
-		<label><?php _e("ID:", "enginethemes"); ?></label>
-		<?php printf(__( "#%d" , "enginethemes" ), $order->ID) ?>
-	</p>
-	<p>
-		<label><?php _e("Order date:", "enginethemes"); ?></label>
-		<?php echo get_the_date(); ?>
-	</p>
-	<p>
-		<label><?php _e("Order status", "enginethemes"); ?></label>
-		<?php echo me_get_order_status_label($order->post_status); ?>
-	</p>
-	<p>
-		<label><?php _e("Buyer:", "enginethemes"); ?></label>
-		<?php echo get_the_author_meta( 'display_name', $order->post_author ); ?>
-	</p>
->>>>>>> 396961455ae198df8a9db639df5001e28039bf49
 </div>
 
 <div class="me-order-preview">
