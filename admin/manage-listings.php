@@ -33,7 +33,7 @@ function me_listing_columns($existing_columns)
         $existing_columns = array();
     }
 
-    unset($existing_columns['comments'], $existing_columns['date'], $existing_columns['title']);
+    unset($existing_columns['comments'], $existing_columns['date'], $existing_columns['title'], $existing_columns['cb']);
 
     $columns = array();
 
@@ -111,3 +111,11 @@ function me_listing_meta_box()
     remove_meta_box('authordiv', 'listing', 'normal');
 }
 add_action('add_meta_boxes', 'me_listing_meta_box');
+
+
+
+function me_remove_filter_listing_mine($views) {
+    unset($views['mine']);
+    return $views;
+}
+add_filter( 'views_edit-listing', 'me_remove_filter_listing_mine' );

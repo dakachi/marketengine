@@ -37,7 +37,7 @@ function me_me_order_columns($existing_columns)
         $existing_columns = array();
     }
 
-    unset($existing_columns['comments'], $existing_columns['title'], $existing_columns['date'], $existing_columns['author']);
+    unset($existing_columns['comments'], $existing_columns['title'], $existing_columns['date'], $existing_columns['author'], $existing_columns['cb']);
 
     $columns = array();
 
@@ -82,7 +82,7 @@ function me_render_me_order_columns($column)
             foreach ($listing_items as $key => $listing) {
                 $listing = get_post($listing['ID']);
                 if ($listing) {
-                    echo edit_post_link(esc_html(get_the_title($listing->ID)), '', '', $listing->ID);
+                    echo '<a href="' . get_permalink($listing->ID) . '" target="_blank" >' . esc_html(get_the_title($listing->ID)) . '</a>';
                 } else {
                     echo $listing['title'];
                 }
@@ -125,6 +125,14 @@ function me_order_meta_box()
 {
     add_meta_box('order_meta', __('Order Payment Info'), 'me_order_payment_details', 'me_order', 'normal', 'high');
     remove_meta_box('submitdiv', 'me_order', 'side');
+    remove_meta_box('postcustom', 'me_order', 'normal');
 }
 add_action('add_meta_boxes', 'me_order_meta_box');
 
+
+
+function me_remove_filter_order_mine($views) {
+    unset($views['mine']);
+    return $views;
+}
+add_filter( 'views_edit-me_order', 'me_remove_filter_order_mine' );
