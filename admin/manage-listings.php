@@ -33,7 +33,7 @@ function me_listing_columns($existing_columns)
         $existing_columns = array();
     }
 
-    unset($existing_columns['comments'], $existing_columns['date'], $existing_columns['title']);
+    unset($existing_columns['comments'], $existing_columns['date'], $existing_columns['title'], $existing_columns['cb']);
 
     $columns = array();
 
