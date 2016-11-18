@@ -489,14 +489,14 @@ function me_print_order_status($status)
  */
 function me_print_buyer_information($address)
 {
-    echo "Name: {$address['first_name']} {$address['last_name']} ";
+    echo "<span>Name:</span> {$address['first_name']} {$address['last_name']} ";
     foreach ($address as $key => $value) {
         if ($key === 'first_name' || $key === 'last_name') {
             continue;
         }
 
         $key = ucfirst($key);
-        echo "<p>{$key}: {$value}</p>";
+        echo "<p><span>{$key}:</span> {$value}</p>";
     }
 }
 

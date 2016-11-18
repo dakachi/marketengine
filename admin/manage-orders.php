@@ -122,6 +122,7 @@ function me_order_meta_box()
 {
     add_meta_box('order_meta', __('Order Payment Info'), 'me_order_payment_details', 'me_order', 'normal', 'high');
     remove_meta_box('submitdiv', 'me_order', 'side');
+    remove_meta_box('postcustom', 'me_order', 'normal');
 }
 add_action('add_meta_boxes', 'me_order_meta_box');
 
