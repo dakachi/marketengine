@@ -523,19 +523,3 @@ function me_delete_order_item_meta($order_item_id, $meta_key, $meta_value = '') 
 function me_get_dispute_time_limit() {
     return absint( me_option( 'dispute-time-limit', 3 ) );
 }
-
-function me_order_table_header($type) {
-    $table_header = array(
-        __("ORDER ID", "enginethemes"),
-        __("STATUS", "enginethemes"),
-        __("AMOUNT", "enginethemes"),
-        __("DATE OF ORDER", "enginethemes"),
-        __("LISTING", "enginethemes"),
-    );
-
-    if ($type === 'transaction') {
-        $table_header[0] = __("TRANSACTION ID", "enginethemes");
-    }
-
-    return $table_header;
-}
