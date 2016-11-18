@@ -15,11 +15,7 @@ if (!defined('ABSPATH')) {
 function me_order_row_actions($actions, $post)
 {
     if ($post && 'me_order' == $post->post_type) {
-        if (isset($actions['edit'])) {
-            unset($actions['edit']);
-        }
-
-        return $actions;
+        return false;
     }
     return $actions;
 }
@@ -42,6 +38,7 @@ function me_me_order_columns($existing_columns)
 
     $columns = array();
 
+    $columns['status']   = 'Status';
     $columns['order_id']   = 'ID';
     $columns['listing']    = 'Listing';
     $columns['total']      = 'Total';
@@ -64,6 +61,10 @@ function me_render_me_order_columns($column)
     $order = me_get_order($post);
 
     switch ($column) {
+        case 'status':
+            echo me_get_order_status_label($post->post_status);
+            break;
+
         case 'order_id':
             $edit_post_link = edit_post_link("#" . $post->ID);
             $edit_user_link = '<a href="' . get_edit_user_link($post->post_author) . '">' . get_the_author_meta('display_name', $post->post_author) . '</a>';
