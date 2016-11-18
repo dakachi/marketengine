@@ -13,12 +13,27 @@ class ME_Setup_Wizard
     public function __construct()
     {
 
+    	add_action( 'admin_notices', array( $this, 'notices' ) );
+
         add_action('admin_menu', array($this, 'admin_menus'));
         add_action('admin_init', array($this, 'setup_wizard'));
 
         add_action('wp_ajax_me-do-setup', array($this, 'handle_setup'));
         add_action('wp_ajax_me-add-sample-data', array($this, 'add_sample_data'));
 
+    }
+
+    public function notices() {
+    	if(!me_option('finish_wizard')) {
+    		$skip_setup_nonce = wp_create_nonce('skip_setup_wizard');
+    	?>
+		<div id="message" class="updated marketengine-message me-setup-notices">
+			<p>Welcome to <strong>MarketEngine</strong>.</p>
+			<a href="<?php echo admin_url("?page=marketengine-setup") ?>" class="run-setup"><?php _e("Run the setup wizard", "enginethemes"); ?></a>
+			<a href="<?php echo admin_url("?skip-setup=1&nonce=".$skip_setup_nonce) ?>" class="skip-setup"><?php _e("Skip setup", "enginethemes"); ?></a>
+		</div>
+    	<?php 
+    	} 
     }
 
     public function handle_setup()
@@ -111,6 +126,11 @@ class ME_Setup_Wizard
 
     public function setup_wizard()
     {
+        
+        if(!empty($_GET['skip-setup']) && !empty($_GET['nonce']) && wp_verify_nonce($_GET['nonce'], 'skip_setup_wizard')) {
+        	me_update_option('finish_wizard', 1);
+        }
+
         if (empty($_GET['page']) || 'marketengine-setup' !== $_GET['page']) {
             return;
         }
@@ -200,6 +220,7 @@ class ME_Setup_Wizard
     public function body()
     {
     	$currencies = $this->get_currency_list();	
+    	$skip_setup_nonce = wp_create_nonce('skip_setup_wizard');
         ?>
     	<div class="me-setup-section">
     		<?php wp_nonce_field('marketengine-setup');?>
@@ -324,14 +345,14 @@ class ME_Setup_Wizard
 					<h3><?php _e("Mailing List", "enginethemes");?></h3>
 					<div class="me-setup-mailing">
 						<p><?php _e("Join the mailing list to get latest news, tips &amp; updates about the plugin.", "enginethemes");?></p>
-							<form id="me-setup-mailing-form" action="">
+							<form id="me-setup-mailing-form" action="//enginethemes.us9.list-manage.com/subscribe/post?u=ba195a10aeadb30c31dd8e509&id=8e5611c859" method="post" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
 								<div class="me-smail-control">
 									<label for="me-smail-name"><?php _e("Name", "enginethemes");?></label>
-									<input id="me-smail-name" type="text">
+									<input type="text" value="" name="FNAME" class="" id="mce-FNAME">
 								</div>
 								<div class="me-smail-control">
 									<label for="me-smail-email"><?php _e("Email address", "enginethemes");?></label>
-									<input id="me-smail-email" type="text">
+									<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
 								</div>
 								<input class="me-smail-submit-btn" type="submit" value="SUBMIT">
 							</form>
@@ -342,7 +363,7 @@ class ME_Setup_Wizard
 				</div>
 				<div class="me-setup-wrap">
 					<div class="me-setup-control">
-						<a href="<?php echo esc_url( admin_url() ); ?>" class="me-sfinish-btn"><?php _e("FINISH", "enginethemes");?></a>
+						<a href="<?php echo admin_url("?skip-setup=1&nonce=".$skip_setup_nonce) ?>" class="me-sfinish-btn"><?php _e("FINISH", "enginethemes");?></a>
 					</div>
 				</div>
 			</div>
