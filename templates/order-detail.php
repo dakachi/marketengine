@@ -13,9 +13,19 @@ if( !current_user_can('edit_posts') ) {
     wp_redirect( $login_url );
 }
 
+$user_id = get_current_user_id();
+$user_data = get_userdata($user_id);
+
 $order_id = get_the_ID();
 $order = new ME_Order($order_id);
-$buyer = $order->post_author == get_current_user_id();
+
+$buyer = $order->post_author == $user_id;
+
+$seller = me_get_order_items($order_id)[1]->order_item_name;
+
+if( !$buyer && !($seller == $user_data->user_login) ) {
+    return load_template(get_404_template());
+}
 
 $title = $buyer ? __('My Transactions') : __('My Orders');
 $url = $buyer ? me_get_auth_url('purchases') : me_get_auth_url('orders');
