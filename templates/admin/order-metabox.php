@@ -62,8 +62,11 @@ $commission_item = array_pop($commission_items);
 		display: none;
 	}
 </style>
-<h2><?php printf(__( "Order #%d details" , "enginethemes" ), $order->ID); ?></h2>
 <div class="order-details">
+	<p>
+		<label><?php _e("ID:", "enginethemes"); ?></label>
+		<?php printf(__( "#%d" , "enginethemes" ), $order->ID) ?>
+	</p>
 	<p>
 		<label><?php _e("Order date:", "enginethemes"); ?></label>
 		<?php echo get_the_date(); ?>
