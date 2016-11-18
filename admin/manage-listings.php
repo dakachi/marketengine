@@ -8,6 +8,11 @@ if (!defined('ABSPATH')) {
  * Manage listings in WP post screen
  */
 
+/**
+ * Remove post row action to prevent admin edit listing
+ * @category Admin/Manage
+ * @since 1.0
+ */
 function post_row_actions($actions, $post)
 {
     if ($post && 'listing' == $post->post_type) {
@@ -17,6 +22,11 @@ function post_row_actions($actions, $post)
 }
 add_filter('post_row_actions', 'post_row_actions', 10, 2);
 
+/**
+ * Add and modify listing post column
+ * @category Admin/Manage
+ * @since 1.0
+ */
 function me_listing_columns($existing_columns)
 {
     if (empty($existing_columns) && !is_array($existing_columns)) {
@@ -38,6 +48,11 @@ function me_listing_columns($existing_columns)
 }
 add_filter('manage_listing_posts_columns', 'me_listing_columns');
 
+/**
+ * Render listing column value
+ * @category Admin/Manage
+ * @since 1.0
+ */
 function me_render_listing_columns($column)
 {
     global $post, $wpdb;
@@ -86,6 +101,11 @@ function me_render_listing_columns($column)
 }
 add_action('manage_listing_posts_custom_column', 'me_render_listing_columns', 2);
 
+/**
+ * Add listing metabox, remove authordiv
+ * @category Admin/Manage
+ * @since 1.0
+ */
 function me_listing_meta_box()
 {
     remove_meta_box('authordiv', 'listing', 'normal');
