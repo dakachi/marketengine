@@ -188,7 +188,7 @@ class ME_Post_Types {
                 'singular_name'      => __('Order', "enginethemes"),
                 'add_new'            => false,
                 'add_new_item'       => __('Add New Order', "enginethemes"),
-                'edit_item'          => __('Edit Order', "enginethemes"),
+                'edit_item'          => __('Order Details', "enginethemes"),
                 'new_item'           => __('New Order', "enginethemes"),
                 'all_items'          => __('Orders', "enginethemes"),
                 'view_item'          => __('View Order', "enginethemes"),
@@ -214,13 +214,13 @@ class ME_Post_Types {
         ));
 
         register_post_status('me-pending', array(
-            'label'                     => _x('Pending', 'me_order'),
+            'label'                     => _x('Check Payment', 'me_order'),
             'public'                    => false,
             'exclude_from_search'       => false,
             'private'                   => true,
             'show_in_admin_all_list'    => true,
             'show_in_admin_status_list' => true,
-            'label_count'               => _n_noop('Pending <span class="count">(%s)</span>', 'Pending <span class="count">(%s)</span>'),
+            'label_count'               => _n_noop('Check Payment <span class="count">(%s)</span>', 'Check Payment <span class="count">(%s)</span>'),
         ));
 
         register_post_status('me-active', array(
