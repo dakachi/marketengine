@@ -82,7 +82,10 @@ function marketengine_add_sample_order($orders, $listing_id)
         $order_data['post_author'] = marketengine_add_sample_user($order_data);
 
         add_filter('marketengine_create_order_status', 'marketengine_sample_filter_order_status');
+
         $order = me_insert_order($order_data);
+        update_post_meta($order, 'is_sample_data', 'sample-data');
+
         remove_filter('marketengine_create_order_status', 'marketengine_sample_filter_order_status');
 
         $me_order   = new ME_Order($order);
@@ -112,7 +115,9 @@ function marketengine_add_sample_order($orders, $listing_id)
 
         $comment_id = wp_insert_comment($commentdata);
         if (!is_wp_error($comment_id)) {
+
             update_comment_meta($comment_id, '_me_rating_score', $order_data['review']['rate']);
+            update_comment_meta($comment_id, 'is_sample_data', 'sample-data');
 
             $comment = get_comment($comment_id);
             do_action('marketengine_insert_review', $comment_id, $comment);
@@ -133,8 +138,10 @@ function marketengine_add_sample_inquiry($inquiries, $listing_id)
                 'post_type'    => 'inquiry',
                 'receiver'     => $receiver,
                 'post_parent'  => $listing_id,
-            ), true
+            )
         );
+
+        me_update_message_meta($inquiry_id,'is_sample_data', 'sample-data'  );
 
         foreach ($inquiry_data['messages'] as $key => $message) {
             $message_data = array(
@@ -151,7 +158,8 @@ function marketengine_add_sample_inquiry($inquiries, $listing_id)
                 $message_data['receiver'] = $inquiry_data['post_author'];
                 $message_data['sender'] = $receiver;
             }
-            me_insert_message($message_data, true);    
+            $message_id = me_insert_message($message_data);
+            me_update_message_meta($message_id,'is_sample_data', 'sample-data'  );
         }
         
     }
@@ -169,6 +177,7 @@ function marketengine_add_sample_user($user_data)
         'user_pass'    => '123',
         'avatar'       => 'http://lorempixel.com/150/150/business/',
         'paypal_email' => 'dinhle1987-buyer@yahoo.com',
+        'role' => 'author'
     );
     $user_data = wp_parse_args($user_data, $defaults);
     $user      = get_user_by('login', $user_data['user_login']);
@@ -176,6 +185,14 @@ function marketengine_add_sample_user($user_data)
         $user_id = wp_insert_user($user_data);
         update_user_meta($user_id, 'paypal_email', $user_data['paypal_email']);
         update_user_meta($user_id, 'location', $user_data['location']);
+        update_user_meta( $user_id, 'is_sample_data', 'sample-data' );
+
+        $number = rand(1, 5);
+        $img_1 = marketengine_handle_sample_image(ME_PLUGIN_URL . 'sample-data/images/'.$number.'.png', $user_data['user_login']);
+
+        update_user_meta( $user_id, 'user_avatar', $img_1 );
+
+        return $user_id;
     }
     return $user->ID;
 }
@@ -254,6 +271,7 @@ function marketengine_add_sample_listing()
     $result = wp_insert_post($listing);
 
     update_post_meta($result, '_me_listing_gallery', $listing['listing_gallery']);
+    update_post_meta($result, 'is_sample_data', 'sample-data');
 
     if (!empty($listing['order'])) {
         marketengine_add_sample_order($listing['order'], $result);
@@ -264,4 +282,39 @@ function marketengine_add_sample_listing()
     }
     echo 1;
     exit;
+}
+
+
+function marketengine_delete_sample_data() {
+    global $wpdb;
+    $author_id = "SELECT Distinct ID FROM $wpdb->users JOIN $wpdb->usermeta as M ON ID = user_id WHERE meta_key = 'is_sample_data'";
+
+    $message_table = $wpdb->prefix . 'marketengine_message_item';
+    $wpdb->query("DELETE from $message_table WHERE ( sender IN ( $author_id ) OR receiver IN ( $author_id ) )");
+
+
+    $post_id = "SELECT Distinct ID from $wpdb->posts WHERE post_author IN ( $author_id )";
+    $wpdb->query("DELETE from $wpdb->postmeta WHERE post_id IN ( $post_id )"); 
+    $wpdb->query("DELETE from $wpdb->posts WHERE post_author IN ( $author_id )");
+
+    $wpdb->query("DELETE from $wpdb->comments WHERE user_id IN ( $author_id )");    
+    $comment_ids = $wpdb->get_results("SElECT comment_id FROM $wpdb->commentmeta as B WHERE B.meta_key = 'is_sample_data'", ARRAY_A);
+    $comment_list = '0';
+    foreach ($comment_ids as $key => $value) {
+        $comment_list .= ', ' . $value['comment_id'];
+    }
+    $wpdb->query("DELETE from $wpdb->commentmeta  WHERE comment_id IN ( ".$comment_list." )");
+
+
+    $wpdb->query("DELETE from $wpdb->users WHERE ID IN ( SElECT user_id FROM $wpdb->usermeta WHERE meta_key = 'is_sample_data')");
+
+    $user_id = $wpdb->get_results("SElECT user_id FROM $wpdb->usermeta as B WHERE B.meta_key = 'is_sample_data'", ARRAY_A);
+    $user_list = '0';
+    foreach ($user_id as $key => $value) {
+        $user_list .= ', ' . $value['user_id'];
+    }
+    $wpdb->query("DELETE from $wpdb->usermeta  WHERE user_id IN ( ".$user_list." )");
+    
+    delete_option( 'me-added-sample-data' );
+    wp_delete_comment( '1' );
 }

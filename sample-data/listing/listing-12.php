@@ -13,7 +13,7 @@ array(
             'user_email'   => 'karlabertha@mailinator.com',
             'location'     => 'German',
             'user_pass'    => '123',
-            'avatar'       => 'avatar-2.jpg',
+            'avatar'       => 'avatar-1.png',
             'paypal_email' => 'dinhle1987-per@yahoo.com',
         ),
     'meta_input'       => array

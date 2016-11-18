@@ -12,7 +12,7 @@ return array(
         'user_email' => 'henrywilson@mailinator.com',
         'location'   => 'UK',
         'user_pass'  => '123',
-        'avatar'     => 'avatar-1.jpg',
+        'avatar'     => 'avatar-1.png',
         'paypal_email' => 'dinhle1987-buyer@yahoo.com',
     ),
     'meta_input'       => array
