@@ -67,7 +67,8 @@ function me_render_me_order_columns($column)
 
     switch ($column) {
         case 'status':
-            echo me_get_order_status_label($post->post_status);
+            $status = get_post_status_object($post->post_status);
+            echo $status->label;
             break;
 
         case 'order_id':
