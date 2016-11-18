@@ -67,7 +67,8 @@ function me_render_me_order_columns($column)
 
     switch ($column) {
         case 'status':
-            echo me_get_order_status_label($post->post_status);
+            $status = get_post_status_object($post->post_status);
+            echo $status->label;
             break;
 
         case 'order_id':
@@ -93,6 +94,8 @@ function me_render_me_order_columns($column)
             if (!empty($commission_items)) {
                 $item_id = $commission_items[0]->order_item_id;
                 echo me_price_html(me_get_order_item_meta($item_id, '_amount', true), $currency);
+            }else{
+                echo '0';
             }
             break;
 

@@ -33,7 +33,7 @@ function me_listing_columns($existing_columns)
         $existing_columns = array();
     }
 
-    unset($existing_columns['comments'], $existing_columns['date'], $existing_columns['title'], $existing_columns['author']);
+    unset($existing_columns['comments'], $existing_columns['date'], $existing_columns['title']);
 
     $columns = array();
 
@@ -41,7 +41,7 @@ function me_listing_columns($existing_columns)
     $columns['type']             = 'Type';
     $columns['listing_category'] = 'Categories';
     $columns['price']            = 'Price';
-    $columns['author_profile']   = 'Author';
+    $columns['author']   = 'Author';
     $columns['date']             = 'Posted';
 
     return array_merge($existing_columns, $columns);
