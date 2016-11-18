@@ -128,3 +128,10 @@ function me_order_meta_box()
 }
 add_action('add_meta_boxes', 'me_order_meta_box');
 
+
+
+function me_remove_filter_order_mine($views) {
+    unset($views['mine']);
+    return $views;
+}
+add_filter( 'views_edit-me_order', 'me_remove_filter_order_mine' );
