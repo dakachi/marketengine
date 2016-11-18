@@ -131,21 +131,23 @@ class ME_Post_Types {
      */
     public static function register_post_type() {
         $permalinks = get_option('me_permalinks', 'listing');
+        $listing_label = me_option('listing-label', __('Listing', "enginethemes"));
+
         register_post_type('listing', array(
             'labels'             => array(
-                'name'               => __('Listing', "enginethemes"),
-                'singular_name'      => __('Listing', "enginethemes"),
+                'name'               => $listing_label,
+                'singular_name'      => $listing_label,
                 'add_new'            => __('Add New', "enginethemes"),
-                'add_new_item'       => __('Add New Listing', "enginethemes"),
+                'add_new_item'       => sprintf(__("Add New %s", "enginethemes"), $listing_label),
                 'edit_item'          => __('Edit Listing', "enginethemes"),
                 'new_item'           => __('New Listing', "enginethemes"),
-                'all_items'          => __('All Listings', "enginethemes"),
+                'all_items'          => sprintf(__('All %s', "enginethemes"), $listing_label),
                 'view_item'          => __('View Listing', "enginethemes"),
-                'search_items'       => __('Search Listings', "enginethemes"),
-                'not_found'          => __('No Listing found', "enginethemes"),
-                'not_found_in_trash' => __('No Listings found in Trash', "enginethemes"),
+                'search_items'       => sprintf(__("Search %s", "enginethemes"), $listing_label),
+                'not_found'          => sprintf(__("No %s Found", "enginethemes"), $listing_label),
+                'not_found_in_trash' => sprintf(__('No %s found in Trash', "enginethemes"), $listing_label),
                 'parent_item_colon'  => '',
-                'menu_name'          => __('Listings', "enginethemes"),
+                'menu_name'          => $listing_label,
             ),
             'public'             => true,
             'publicly_queryable' => true,
