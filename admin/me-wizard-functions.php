@@ -298,8 +298,22 @@ function marketengine_delete_sample_data() {
     $wpdb->query("DELETE from $wpdb->posts WHERE post_author IN ( $author_id )");
 
     $wpdb->query("DELETE from $wpdb->comments WHERE user_id IN ( $author_id )");    
+    $comment_ids = $wpdb->get_results("SElECT comment_id FROM $wpdb->commentmeta as B WHERE B.meta_key = 'is_sample_data'", ARRAY_A);
+    $comment_list = '0';
+    foreach ($comment_ids as $key => $value) {
+        $comment_list .= ', ' . $value['comment_id'];
+    }
+    $wpdb->query("DELETE from $wpdb->commentmeta  WHERE comment_id IN ( ".$comment_list." )");
+
+
     $wpdb->query("DELETE from $wpdb->users WHERE ID IN ( SElECT user_id FROM $wpdb->usermeta WHERE meta_key = 'is_sample_data')");
-    $wpdb->query("DELETE from $wpdb->usermeta as A WHERE A.user_id IN ( SElECT user_id FROM $wpdb->usermeta as B WHERE B.meta_key = 'is_sample_data' )");
+
+    $user_id = $wpdb->get_results("SElECT user_id FROM $wpdb->usermeta as B WHERE B.meta_key = 'is_sample_data'", ARRAY_A);
+    $user_list = '0';
+    foreach ($user_id as $key => $value) {
+        $user_list .= ', ' . $value['user_id'];
+    }
+    $wpdb->query("DELETE from $wpdb->usermeta  WHERE user_id IN ( ".$user_list." )");
     
     delete_option( 'me-added-sample-data' );
     wp_delete_comment( '1' );
