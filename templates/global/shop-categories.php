@@ -11,7 +11,7 @@ $listing_categories = me_get_categories('listing_category');
 ?>
     <ul class="me-shopcategories <?php if( $listing_categories ) echo 'me-has-category'; ?>">
         <li>
-            <span class="marketengine-bar-title"><i class="icon-me-list"></i><?php echo __('SHOP CATEGORIES', 'enginethemes'); ?></span>
+            <span class="marketengine-bar-title"><i class="icon-me-list"></i><span><?php echo __('SHOP CATEGORIES', 'enginethemes'); ?></span></span>
             <?php if( $listing_categories ) : ?>
                 <nav class="me-nav-category">
                     <div class="me-container">
