@@ -140,9 +140,3 @@ class ME_Shortcodes_Auth {
     }
 }
 ME_Shortcodes_Auth::init_shortcodes();
-
-function print_var( $var ) {
-    echo '<pre>';
-    var_dump($var);
-    echo '</pre>';
-}
