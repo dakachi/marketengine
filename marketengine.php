@@ -173,6 +173,8 @@ if (!class_exists('MarketEngine')):
             ME_Post_Types::register_taxonomies();
 
             // ME_Auto_Update::get_instance( $this->version, 'update_path', plugin_basename(__FILE__) );
+
+            register_nav_menu( 'category-menu', __( 'Category Menu', 'enginethemes' ) );
         }
 
         public function wpdb_table_fix() {
