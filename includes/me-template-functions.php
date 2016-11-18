@@ -604,28 +604,28 @@ function marketengine_get_search_form($echo = true)
     if ('html5' == $format) {
         $form = '<form role="search" method="get" class="search-form" action="' . $url . '">
                 <div class="me-search me-hidden-xs">
-                    <input type="search" class="search-field" placeholder="' . esc_attr(__("Type here and hit enter...", "enginethemes")) . '" value="' . esc_attr(get_query_var('keyword')) . '" name="keyword" />
+                    <input type="search" class="search-field" placeholder="' . esc_attr(__("Type here and hit enter to search", "enginethemes")) . '" value="' . esc_attr(get_query_var('keyword')) . '" name="keyword" />
                     <i id="search-btn" class="icon-me-search me-search-btn"></i>
                 </div>
             </form>
             <form method="get" class="mobile-search-form" action="' . $url . '">
                 <span class="me-search-btn-xs me-visible-xs"><i class="icon-me-search me-search-btn"></i></span>
                 <div class="me-search-xs me-visible-xs">
-                    <input type="search" name="s" value="' . esc_attr(get_query_var('keyword')) . '" placeholder="' . esc_attr(__("Type here and hit enter...", "enginethemes")) . '">
+                    <input type="search" name="s" value="' . esc_attr(get_query_var('keyword')) . '" placeholder="' . esc_attr(__("Type here and hit enter to search", "enginethemes")) . '">
                     <i id="mobile-search-btn" class="icon-me-search me-search-btn"></i>
                 </div>
             </form>';
     } else {
         $form = '<form role="search" method="get" class="search-form" action="' . $url . '">
                 <div class="me-search me-hidden-xs">
-                    <input type="text" class="search-field" placeholder="' . esc_attr(__("Type here and hit enter...", "enginethemes")) . '" value="' . esc_attr(get_query_var('keyword')) . '" name="keyword" />
+                    <input type="text" class="search-field" placeholder="' . esc_attr(__("Type here and hit enter to search", "enginethemes")) . '" value="' . esc_attr(get_query_var('keyword')) . '" name="keyword" />
                     <i id="search-btn" class="icon-me-search me-search-btn"></i>
                 </div>
             </form>
             <form method="get" class="mobile-search-form" action="' . $url . '">
                 <span class="me-search-btn-xs me-visible-xs"><i class="icon-me-search me-search-btn"></i></span>
                 <div class="me-search-xs me-visible-xs">
-                    <input type="text" name="s" value="' . esc_attr(get_query_var('keyword')) . '" placeholder="' . esc_attr(__("Type here and hit enter...", "enginethemes")) . '">
+                    <input type="text" name="s" value="' . esc_attr(get_query_var('keyword')) . '" placeholder="' . esc_attr(__("Type here and hit enter to search", "enginethemes")) . '">
                     <i id="mobile-search-btn" class="icon-me-search me-search-btn"></i>
                 </div>
             </form>';

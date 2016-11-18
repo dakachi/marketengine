@@ -38,19 +38,19 @@ $user = ME()->get_current_user();
 			<div class="me-row">
 				<div class="me-col-md-6">
 					<div class="marketengine-text-field">
-						<label class="me-field-title"><?php _e("First name", "enginethemes");?></label>
+						<label class="me-field-title"><?php _e("First Name", "enginethemes");?></label>
 						<p><?php echo $user->first_name; ?></p>
 					</div>
 				</div>
 				<div class="me-col-md-6">
 					<div class="marketengine-text-field">
-						<label class="me-field-title"><?php _e("Last name", "enginethemes");?></label>
+						<label class="me-field-title"><?php _e("Last Name", "enginethemes");?></label>
 						<p><?php echo $user->last_name; ?></p>
 					</div>
 				</div>
 			</div>
 			<div class="marketengine-text-field">
-				<label class="me-field-title"><?php _e("Display name", "enginethemes");?></label>
+				<label class="me-field-title"><?php _e("Display Name", "enginethemes");?></label>
 				<p><?php echo $user->display_name; ?></p>
 			</div>
 
@@ -98,7 +98,7 @@ $user = ME()->get_current_user();
 			</div>
 
 			<div class="marketengine-text-field me-no-margin-bottom">
-				<label class="me-field-title"><?php _e("About me", "enginethemes");?></label>
+				<label class="me-field-title"><?php _e("About Me", "enginethemes");?></label>
 				<p>
 					<?php
 						if($user->description){

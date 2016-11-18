@@ -54,7 +54,7 @@ $user_avatar = $user->get_user_avatar_id();
 				<div class="me-col-md-6">
 					<div class="marketengine-group-field">
 						<div class="marketengine-input-field">
-							<label class="me-field-title"><?php _e("First name", "enginethemes");?></label>
+							<label class="me-field-title"><?php _e("First Name", "enginethemes");?></label>
 							<input type="text" value="<?php echo $first_name; ?>" name="first_name" id="first_name" />
 						</div>
 					</div>
@@ -62,7 +62,7 @@ $user_avatar = $user->get_user_avatar_id();
 				<div class="me-col-md-6">
 					<div class="marketengine-group-field">
 						<div class="marketengine-input-field">
-							<label class="me-field-title"><?php _e("Last name", "enginethemes");?></label>
+							<label class="me-field-title"><?php _e("Last Name", "enginethemes");?></label>
 							<input type="text" value="<?php echo $last_name; ?>" name="last_name" id="last_name">
 						</div>
 					</div>
@@ -70,7 +70,7 @@ $user_avatar = $user->get_user_avatar_id();
 			</div>
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
-					<label class="me-field-title"><?php _e("Display name", "enginethemes");?></label>
+					<label class="me-field-title"><?php _e("Display Name", "enginethemes");?></label>
 					<select name="display_name" id="display_name" class="me-chosen-select">
 						<?php
 						$public_display = array();
@@ -139,7 +139,7 @@ $user_avatar = $user->get_user_avatar_id();
 
 			<div class="marketengine-group-field me-no-margin-bottom">
 				<div class="marketengine-textarea-field">
-					<label class="me-field-title"><?php _e("About me", "enginethemes");?></label>
+					<label class="me-field-title"><?php _e("About Me", "enginethemes");?></label>
 					<textarea name="description" id="description"><?php echo $about_user; ?></textarea>
 				</div>
 			</div>

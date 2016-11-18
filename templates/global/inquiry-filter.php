@@ -30,7 +30,7 @@ if ('' === get_option('permalink_structure')) {
 			<div class="me-col-md-9">
 				<div class="me-inquiries-filter">
 					<label><?php _e('Keyword', 'enginethemes'); ?></label>
-					<input class="me-inquiries-keyword" type="text" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>" placeholder="<?php _e('Listing name, seller name...', 'enginethemes'); ?>">
+					<input class="me-inquiries-keyword" type="text" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>" placeholder="<?php _e('Listing name, seller name, etc.', 'enginethemes'); ?>">
 
 					<?php //TODO style lai cho nay ?>
 				</div>
