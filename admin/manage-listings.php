@@ -85,3 +85,9 @@ function me_render_listing_columns($column)
     }
 }
 add_action('manage_listing_posts_custom_column', 'me_render_listing_columns', 2);
+
+function me_listing_meta_box()
+{
+    remove_meta_box('authordiv', 'listing', 'normal');
+}
+add_action('add_meta_boxes', 'me_listing_meta_box');

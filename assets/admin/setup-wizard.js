@@ -86,6 +86,11 @@
                 $target.parents('.me-setup-wrap').addClass('active');
             }, 45000);
         });
+
+        $('.me-smail-submit-btn').click(function(event){
+            var $target = $(event.currentTarget);
+            $target.parents('.me-setup-wrap').addClass('active');
+        });
         //=== Click skip button
         $('.me-skip-btn').on('click', function(event) {
             //event.preventDefault();
