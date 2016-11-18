@@ -16,7 +16,6 @@ $args = array(
 $args = apply_filters( 'filter_listing_query', $args );
 
 $query = new WP_Query( $args );
-// print_var($query);
 
 ?>
 

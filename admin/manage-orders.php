@@ -37,7 +37,7 @@ function me_me_order_columns($existing_columns)
         $existing_columns = array();
     }
 
-    unset($existing_columns['comments'], $existing_columns['title'], $existing_columns['date'], $existing_columns['author']);
+    unset($existing_columns['comments'], $existing_columns['title'], $existing_columns['date'], $existing_columns['author'], $existing_columns['cb']);
 
     $columns = array();
 
@@ -67,7 +67,8 @@ function me_render_me_order_columns($column)
 
     switch ($column) {
         case 'status':
-            echo me_get_order_status_label($post->post_status);
+            $status = get_post_status_object($post->post_status);
+            echo $status->label;
             break;
 
         case 'order_id':
@@ -81,7 +82,7 @@ function me_render_me_order_columns($column)
             foreach ($listing_items as $key => $listing) {
                 $listing = get_post($listing['ID']);
                 if ($listing) {
-                    echo edit_post_link(esc_html(get_the_title($listing->ID)), '', '', $listing->ID);
+                    echo '<a href="' . get_permalink($listing->ID) . '" target="_blank" >' . esc_html(get_the_title($listing->ID)) . '</a>';
                 } else {
                     echo $listing['title'];
                 }
@@ -93,6 +94,8 @@ function me_render_me_order_columns($column)
             if (!empty($commission_items)) {
                 $item_id = $commission_items[0]->order_item_id;
                 echo me_price_html(me_get_order_item_meta($item_id, '_amount', true), $currency);
+            }else{
+                echo '0';
             }
             break;
 
@@ -126,3 +129,10 @@ function me_order_meta_box()
 }
 add_action('add_meta_boxes', 'me_order_meta_box');
 
+
+
+function me_remove_filter_order_mine($views) {
+    unset($views['mine']);
+    return $views;
+}
+add_filter( 'views_edit-me_order', 'me_remove_filter_order_mine' );

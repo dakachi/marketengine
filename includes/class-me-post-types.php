@@ -131,9 +131,10 @@ class ME_Post_Types {
      */
     public static function register_post_type() {
         $permalinks = get_option('me_permalinks', 'listing');
+        $listing_label = me_option('listing-label', 'lisitng');
         register_post_type('listing', array(
             'labels'             => array(
-                'name'               => __('Listing', "enginethemes"),
+                'name'               => __('Listings', "enginethemes"),
                 'singular_name'      => __('Listing', "enginethemes"),
                 'add_new'            => __('Add New', "enginethemes"),
                 'add_new_item'       => __('Add New Listing', "enginethemes"),
@@ -187,7 +188,7 @@ class ME_Post_Types {
                 'singular_name'      => __('Order', "enginethemes"),
                 'add_new'            => false,
                 'add_new_item'       => __('Add New Order', "enginethemes"),
-                'edit_item'          => __('Edit Order', "enginethemes"),
+                'edit_item'          => __('Order Details', "enginethemes"),
                 'new_item'           => __('New Order', "enginethemes"),
                 'all_items'          => __('Orders', "enginethemes"),
                 'view_item'          => __('View Order', "enginethemes"),

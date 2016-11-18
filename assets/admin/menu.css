@@ -40,3 +40,30 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.marketengine-message.me-setup-notices{
+    border-left-color : #e84a5f !important;
+}
+
+.marketengine-message.me-setup-notices a.run-setup {
+    background: #e84a5f;
+    border-radius: 4px;
+    border: 1px solid #e84a5f;
+    display: inline-block;
+    padding: 0 15px;
+    width: auto;
+    color: #FFF;
+    text-decoration: none;
+    box-shadow: 0 2px 0 0 #d04759;
+}
+.marketengine-message.me-setup-notices a.skip-setup {
+
+    background: #FFF;
+    border-radius: 4px;
+    border: 1px solid #ededed;
+    display: inline-block;
+    padding: 0 10px;
+    width: auto;
+    color: #444;
+    text-decoration: none;
+    box-shadow: 0 2px 0 0 #f8f8f8;
+}

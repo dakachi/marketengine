@@ -13,12 +13,27 @@ class ME_Setup_Wizard
     public function __construct()
     {
 
+    	add_action( 'admin_notices', array( $this, 'notices' ) );
+
         add_action('admin_menu', array($this, 'admin_menus'));
         add_action('admin_init', array($this, 'setup_wizard'));
 
         add_action('wp_ajax_me-do-setup', array($this, 'handle_setup'));
         add_action('wp_ajax_me-add-sample-data', array($this, 'add_sample_data'));
 
+    }
+
+    public function notices() {
+    	if(!me_option('finish_wizard')) {
+    		$skip_setup_nonce = wp_create_nonce('skip_setup_wizard');
+    	?>
+		<div id="message" class="updated marketengine-message me-setup-notices">
+			<p>Welcome to <strong>MarketEngine</strong>  – You‘re almost ready to start your market :)</p>
+			<a href="<?php echo admin_url("?page=marketengine-setup") ?>" class="run-setup"><?php _e("Run the setup wizard", "enginethemes"); ?></a>
+			<a href="<?php echo admin_url("?skip-setup=1&nonce=".$skip_setup_nonce) ?>" class="skip-setup"><?php _e("Skip setup", "enginethemes"); ?></a>
+		</div>
+    	<?php 
+    	} 
     }
 
     public function handle_setup()
@@ -111,6 +126,11 @@ class ME_Setup_Wizard
 
     public function setup_wizard()
     {
+        
+        if(!empty($_GET['skip-setup']) && !empty($_GET['nonce']) && wp_verify_nonce($_GET['nonce'], 'skip_setup_wizard')) {
+        	me_update_option('finish_wizard', 1);
+        }
+
         if (empty($_GET['page']) || 'marketengine-setup' !== $_GET['page']) {
             return;
         }
@@ -200,6 +220,7 @@ class ME_Setup_Wizard
     public function body()
     {
     	$currencies = $this->get_currency_list();	
+    	$skip_setup_nonce = wp_create_nonce('skip_setup_wizard');
         ?>
     	<div class="me-setup-section">
     		<?php wp_nonce_field('marketengine-setup');?>
@@ -249,15 +270,15 @@ class ME_Setup_Wizard
 					<h2><?php _e("Personalize", "enginethemes");?></h2>
 					<div class="me-sfield-group">
 						<label for="me-setup-listing"><?php _e("1- How should people understand “listings” in your marketplace?", "enginethemes");?></label>
-						<input id="me-setup-listing" type="text" name="listing_label">
+						<input id="me-setup-listing" type="text" name="listing_label" value="<?php echo me_option('listing-label', 'Listing') ?>">
 					</div>
 					<div class="me-sfield-group">
 						<label for="me-setup-seller"><?php _e("2- What should we call the Seller role in your marketplace?", "enginethemes");?></label>
-						<input id="me-setup-seller" type="text" name="seller_label">
+						<input id="me-setup-seller" type="text" name="seller_label" value="<?php echo me_option('seller-label', 'Seller') ?>">
 					</div>
 					<div class="me-sfield-group">
 						<label for="me-setup-buyer"><?php _e("3- What should we call the Buyer role in your marketplace?", "enginethemes");?></label>
-						<input id="me-setup-buyer" type="text" name="buyer_label">
+						<input id="me-setup-buyer" type="text" name="buyer_label" value="<?php echo me_option('buyer-label', 'Buyer') ?>">
 					</div>
 					<div class="me-setup-control">
 						<a href="#payment" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes");?></a>
@@ -342,7 +363,7 @@ class ME_Setup_Wizard
 				</div>
 				<div class="me-setup-wrap">
 					<div class="me-setup-control">
-						<a href="<?php echo esc_url( admin_url() ); ?>" class="me-sfinish-btn"><?php _e("FINISH", "enginethemes");?></a>
+						<a href="<?php echo admin_url("?skip-setup=1&nonce=".$skip_setup_nonce) ?>" class="me-sfinish-btn"><?php _e("FINISH", "enginethemes");?></a>
 					</div>
 				</div>
 			</div>

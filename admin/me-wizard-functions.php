@@ -9,7 +9,7 @@
  */
 function me_create_functional_pages()
 {
-
+    global $wpdb;
     $default_pages = me_get_functional_pages();
 
     foreach ($default_pages as $key => $page) {
@@ -19,13 +19,18 @@ function me_create_functional_pages()
             'post_type'   => 'page',
         );
 
-        $args = wp_parse_args($args, $page);
-
-        $page_id = wp_insert_post($args);
+        $pages= $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE post_status = 'publish' AND post_type='page' AND post_content='".$page['post_content']."'" );
+        if(!empty($pages)){
+            $page_id = array_pop($pages);
+        }else {
+            $args = wp_parse_args($args, $page);
+            $page_id = wp_insert_post($args);
+        }
 
         if ($page_id) {
             me_update_option('me_' . $key . '_page_id', $page_id);
         }
+
         flush_rewrite_rules();
     }
 }
