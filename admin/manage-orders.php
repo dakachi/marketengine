@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
 function me_order_row_actions($actions, $post)
 {
     if ($post && 'me_order' == $post->post_type) {
-        return false;
+        return array();
     }
     return $actions;
 }
