@@ -54,10 +54,16 @@ $query = new WP_Query( $args );
 					$listing_type = $listing->get_listing_type();
 					$listing_status = get_post_status_object(get_post_status());
 			?>
-				<li class="me-item-post me-col-md-3">
+				<li class="me-item-post me-col-md-3 me-col-sm-6">
 					<div class="me-item-wrap">
 						<a href="<?php the_permalink(); ?>" class="me-item-img">
+
+							<?php if( has_post_thumbnail() ) : ?>
 							<?php the_post_thumbnail( 'thumbnail' ); ?>
+							<?php else : ?>
+							<i class="icon-me-image"></i>
+							<?php endif; ?>
+
 							<span><?php echo __('VIEW DETAILS', 'enginethemes'); ?></span>
 							<div class="me-label-<?php echo str_replace('me-', '', $listing_status->name); ?>">
 								<span><?php echo ucfirst($listing_status->label); ?></span>
@@ -113,7 +119,7 @@ $query = new WP_Query( $args );
 				<?php me_paginate_link ($query); ?>
 			</div>
 		</div>
-	
+
 	<!--// marketengine-content -->
 <?php
 elseif(isset($_GET['status'])) : ?>

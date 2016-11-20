@@ -10,16 +10,13 @@ if (!defined('ABSPATH')) {
 
 /**
  * Remove edit post row action
+ * @category Admin/Manage
  * @since 1.0
  */
 function me_order_row_actions($actions, $post)
 {
     if ($post && 'me_order' == $post->post_type) {
-        if (isset($actions['edit'])) {
-            unset($actions['edit']);
-        }
-
-        return $actions;
+        return array();
     }
     return $actions;
 }
@@ -28,6 +25,8 @@ add_filter('post_row_actions', 'me_order_row_actions', 10, 2);
 /**
  * Hook to action manage_me_order_posts_columns
  * Add order columns: ID, Listing Items, Tota, Commission, Date
+ *
+ * @category Admin/Manage
  *
  * @param array $existing_columns WP default post column
  * @since 1.0
@@ -38,10 +37,11 @@ function me_me_order_columns($existing_columns)
         $existing_columns = array();
     }
 
-    unset($existing_columns['comments'], $existing_columns['title'], $existing_columns['author'], $existing_columns['date'], $existing_columns['author']);
+    unset($existing_columns['comments'], $existing_columns['title'], $existing_columns['date'], $existing_columns['author'], $existing_columns['cb']);
 
     $columns = array();
 
+    $columns['status']   = 'Status';
     $columns['order_id']   = 'ID';
     $columns['listing']    = 'Listing';
     $columns['total']      = 'Total';
@@ -55,6 +55,8 @@ add_filter('manage_me_order_posts_columns', 'me_me_order_columns');
 /**
  * Hook to manage_me_order_posts_custom_column render order column data
  *
+ * @category Admin/Manage
+ *
  * @param string $column
  * @since 1.0
  */
@@ -64,6 +66,11 @@ function me_render_me_order_columns($column)
     $order = me_get_order($post);
 
     switch ($column) {
+        case 'status':
+            $status = get_post_status_object($post->post_status);
+            echo $status->label;
+            break;
+
         case 'order_id':
             $edit_post_link = edit_post_link("#" . $post->ID);
             $edit_user_link = '<a href="' . get_edit_user_link($post->post_author) . '">' . get_the_author_meta('display_name', $post->post_author) . '</a>';
@@ -75,7 +82,7 @@ function me_render_me_order_columns($column)
             foreach ($listing_items as $key => $listing) {
                 $listing = get_post($listing['ID']);
                 if ($listing) {
-                    echo edit_post_link(esc_html(get_the_title($listing->ID)), '', '', $listing->ID);
+                    echo '<a href="' . get_permalink($listing->ID) . '" target="_blank" >' . esc_html(get_the_title($listing->ID)) . '</a>';
                 } else {
                     echo $listing['title'];
                 }
@@ -87,6 +94,8 @@ function me_render_me_order_columns($column)
             if (!empty($commission_items)) {
                 $item_id = $commission_items[0]->order_item_id;
                 echo me_price_html(me_get_order_item_meta($item_id, '_amount', true), $currency);
+            }else{
+                echo '0';
             }
             break;
 
@@ -98,14 +107,32 @@ function me_render_me_order_columns($column)
 }
 add_action('manage_me_order_posts_custom_column', 'me_render_me_order_columns', 2);
 
+/**
+ * Load metabox details
+ * @category Admin/Manage
+ * @since 1.0
+ */
 function me_order_payment_details() {
     me_get_template('admin/order-metabox');
 }
 
+/**
+ * Add order metabox, remove submitdiv
+ * @category Admin/Manage
+ * @since 1.0
+ */
 function me_order_meta_box()
 {
     add_meta_box('order_meta', __('Order Payment Info'), 'me_order_payment_details', 'me_order', 'normal', 'high');
     remove_meta_box('submitdiv', 'me_order', 'side');
+    remove_meta_box('postcustom', 'me_order', 'normal');
 }
 add_action('add_meta_boxes', 'me_order_meta_box');
 
+
+
+function me_remove_filter_order_mine($views) {
+    unset($views['mine']);
+    return $views;
+}
+add_filter( 'views_edit-me_order', 'me_remove_filter_order_mine' );

@@ -32,13 +32,13 @@
 						<div class="me-contact-messages-wrap">
 
 							<div class="me-contact-message-user">
-								<h2><?php echo get_the_author_meta( 'display_name', $inquiry->receiver ); ?></h2>
+								<p><?php echo get_the_author_meta( 'display_name', $inquiry->receiver ); ?></p>
 							</div>
 
 							<div class="me-contact-header">
 								<ul class="me-contact-tabs">
-									<li class="me-contact-listing-tabs"><span>Listing info</span></li>
-									<li class="me-contact-user-tabs"><span>Seller info</span></li>
+									<li class="me-contact-listing-tabs"><span><?php _e("Listing info", "enginethemes"); ?></span></li>
+									<li class="me-contact-user-tabs"><span><?php _e("Seller info", "enginethemes"); ?></span></li>
 								</ul>
 							</div>
 							
@@ -74,7 +74,7 @@
 								<?php else: ?>
 
 									<p style="padding: 20px;font-size: 14px; line-height: 22px;">
-										<?php _e('This listing was deleted! You cannot send message!'); ?>
+										<?php _e('This listing was deleted! You cannot send message!', "enginethemes"); ?>
 									</p>
 
 								<?php endif; ?>

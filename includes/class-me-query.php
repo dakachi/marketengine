@@ -130,7 +130,7 @@ function me_get_default_endpoints() {
         'order_id'        => 'order',
         'purchases'       => 'purchases',
         'pay'             => 'pay',
-        'listing_id'      => 'edit-listing',
+        'listing_id'      => 'listing-id',
         'seller_id'       => 'seller',
     );
     return $endpoint_arr;
@@ -192,18 +192,19 @@ function me_init_endpoint() {
             'page_id'       => me_get_page_id('me_checkout'),
             'endpoint_name' => me_get_endpoint_name('pay'),
             'query_var'     => 'pay',
-        ),
-        array(
-            'page_id'       => me_get_page_id('user_account'),
-            'endpoint_name' => me_get_endpoint_name('listing-id'),
-            'query_var'     => 'listing-id',
-        ),
+        )
     );
     me_page_rewrite_rule($rewrite_args);
 
     $endpoints = array('orders', 'purchases', 'listings');
     foreach ($endpoints as $endpoint) {
         add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
+    }
+
+    $edit_listing_page = me_get_page_id('edit_listing');
+    if( $edit_listing_page > -1) {
+        $page = get_post($edit_listing_page);
+        add_rewrite_rule('^/' . $page->post_name . '/'. me_get_endpoint_name('listing_id') .'/?([0-9]{1,})/?$', 'index.php?page_id='.$edit_listing_page.'&listing_id'.'=$matches[1]', 'top');
     }
 
     rewrite_order_url();

@@ -10,7 +10,7 @@ $listing_type = $listing->get_listing_type();
 
 <?php do_action('marketengine_before_listing_item', $listing); ?>
 
-<li class="me-item-post me-col-md-3" itemscope itemtype="http://schema.org/Product">
+<li class="me-item-post me-col-md-4 me-col-sm-6" itemscope itemtype="http://schema.org/Product">
 
 	<?php do_action('marketengine_listing_item_start', $listing); ?>
 

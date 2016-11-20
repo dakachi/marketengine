@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 function me_insert_message($message_arr, $wp_error = false) {
     global $wpdb;
 
-    $user_id = get_current_user_id();
+    $user_id = empty($message_arr['sender']) ? get_current_user_id() : $message_arr['sender'];
 
     if (empty($user_id)) {
         if ($wp_error) {
@@ -28,7 +28,7 @@ function me_insert_message($message_arr, $wp_error = false) {
     }
 
     $defaults = array(
-        'sender'                => $user_id,
+        'sender'                => '',
         'receiver'              => '',
         'post_content'          => '',
         'post_content_filtered' => '',

@@ -30,7 +30,7 @@ if (!class_exists('MarketEngine')):
          * @var version
          * @since 1.0
          */
-        public $version = '0.9';
+        public $version = '1.0';
         /**
          * The object of current user data
          *
@@ -91,6 +91,7 @@ if (!class_exists('MarketEngine')):
 
         private function include_files() {
             require_once ME_PLUGIN_PATH .'/includes/class-me-autoloader.php';
+            require_once ME_PLUGIN_PATH .'/update.php';
 
             require_once ME_PLUGIN_PATH .'/admin/index.php';
             require_once ME_PLUGIN_PATH .'/sample-data/index.php';
@@ -164,7 +165,6 @@ if (!class_exists('MarketEngine')):
             add_action('admin_enqueue_scripts', array($this, 'add_admin_scripts'));
 
             add_action('init', array($this, 'wpdb_table_fix'), 0);
-            // add_action( 'admin_init', 'me_admin_menu_class' );
         }
 
         public function init() {
@@ -172,6 +172,10 @@ if (!class_exists('MarketEngine')):
 
             ME_Post_Types::register_post_type();
             ME_Post_Types::register_taxonomies();
+
+            // ME_Auto_Update::get_instance( $this->version, 'update_path', plugin_basename(__FILE__) );
+
+            register_nav_menu( 'category-menu', __( 'Category Menu', 'enginethemes' ) );
         }
 
         public function wpdb_table_fix() {
@@ -214,6 +218,7 @@ if (!class_exists('MarketEngine')):
             wp_enqueue_script('jquery.slider', $this->plugin_url() . "/assets/js/jquery.slider$suffix.js", array('jquery', 'jquery-ui'), $this->version, true);
 
             wp_enqueue_script('magnific_popup', $this->plugin_url() . "/assets/js/jquery.magnific-popup.min$suffix.js", array('jquery'), $this->version, true);
+            wp_enqueue_script('flexslider-js', $this->plugin_url() . "/assets/js/jquery.flexslider-min$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('me.sliderthumbs', $this->plugin_url() . "/assets/js/me.sliderthumbs$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('script.js', $this->plugin_url() . "/assets/js/script$suffix.js", array('jquery', 'jquery-ui'), $this->version, true);
             wp_enqueue_script('message.js', $this->plugin_url() . "/assets/js/message$suffix.js", array('jquery'), $this->version, true);
@@ -268,6 +273,7 @@ if (!class_exists('MarketEngine')):
 
             $suffix     = ME_SCRIPT_DEBUG ? '' : '.min';
             $dev_suffix = $develop_src ? '' : '.min';
+            wp_enqueue_style('me-option-css', ME_PLUGIN_URL . 'assets/admin/menu.css');
             wp_enqueue_script('jquery-ui', $this->plugin_url() . "/assets/js/jquery-ui$suffix.js", array('jquery'), $this->version, true);
         }
 

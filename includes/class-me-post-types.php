@@ -97,7 +97,7 @@ class ME_Post_Types {
             'add_new_item'          => __('Add New listing tag', "enginethemes"),
             'new_item_name'         => __('New listing tag Name', "enginethemes"),
             'add_or_remove_items'   => __('Tags', "enginethemes"),
-            'choose_from_most_used' => __('Choose from most used enginetheme ', "enginethemes"),
+            'choose_from_most_used' => __('Choose from most used tags', "enginethemes"),
             'menu_name'             => __('Tags', "enginethemes"),
         );
         //TODO: setup listing category permarlink
@@ -131,9 +131,10 @@ class ME_Post_Types {
      */
     public static function register_post_type() {
         $permalinks = get_option('me_permalinks', 'listing');
+        $listing_label = me_option('listing-label', 'lisitng');
         register_post_type('listing', array(
             'labels'             => array(
-                'name'               => __('Listing', "enginethemes"),
+                'name'               => __('Listings', "enginethemes"),
                 'singular_name'      => __('Listing', "enginethemes"),
                 'add_new'            => __('Add New', "enginethemes"),
                 'add_new_item'       => __('Add New Listing', "enginethemes"),
@@ -157,6 +158,7 @@ class ME_Post_Types {
             'has_archive'        => 'listings',
             'hierarchical'       => false,
             'menu_position'      => 30,
+            'menu_icon'          => 'dashicons-icon-me-listing',
             'supports'           => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'custom-fields'),
         ));
 
@@ -186,7 +188,7 @@ class ME_Post_Types {
                 'singular_name'      => __('Order', "enginethemes"),
                 'add_new'            => false,
                 'add_new_item'       => __('Add New Order', "enginethemes"),
-                'edit_item'          => __('Edit Order', "enginethemes"),
+                'edit_item'          => __('Order Details', "enginethemes"),
                 'new_item'           => __('New Order', "enginethemes"),
                 'all_items'          => __('Orders', "enginethemes"),
                 'view_item'          => __('View Order', "enginethemes"),

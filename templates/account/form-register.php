@@ -25,7 +25,7 @@ if (get_option('users_can_register')):
 
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
-			    <label class="me-field-title" for="username"><?php _e("User Login", "enginethemes");?></label>
+			    <label class="me-field-title" for="username"><?php _e("Username", "enginethemes");?></label>
 			    <input type="text" name="user_login" class="required" id="username" value="<?php if (!empty($_POST['user_login'])) {echo esc_attr($_POST['user_login']);}?>">
 			</div>
 		</div>
@@ -87,6 +87,9 @@ if (get_option('users_can_register')):
 		<?php do_action('marketengine_user_register_form_end');?>
 	</form>
 </div>
+<?php do_action('marketengine_before_user_register_form'); ?>
 <?php
+else :
+_e("The register function is disabled.", "enginethemes");
 endif;
-	do_action('marketengine_before_user_register_form');
+	

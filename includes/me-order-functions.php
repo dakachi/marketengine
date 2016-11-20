@@ -300,6 +300,7 @@ add_filter('me_filter_order', 'me_filter_order_query', 1, 2);
  */
 function me_get_order_status_list() {
     $order_status = array(
+        'pending' => __("Pending", "enginethemes"),
         'me-pending'  => __("Pending", "enginethemes"), // mainly intended for technical case, when an error occurs payment, or payment by bank transfer confirmation to admin
         'publish'     => __("Actived", "enginethemes"), // mainly intended for technical case, when an error occurs payment, or payment by bank transfer confirmation to admin
         // 'me-active'   => __("Finished", "enginethemes"), // Status of payment order was not yet eligible to transfer money to the account Seller.
@@ -522,20 +523,4 @@ function me_delete_order_item_meta($order_item_id, $meta_key, $meta_value = '') 
  */
 function me_get_dispute_time_limit() {
     return absint( me_option( 'dispute-time-limit', 3 ) );
-}
-
-function me_order_table_header($type) {
-    $table_header = array(
-        __("ORDER ID", "enginethemes"),
-        __("STATUS", "enginethemes"),
-        __("AMOUNT", "enginethemes"),
-        __("DATE OF ORDER", "enginethemes"),
-        __("LISTING", "enginethemes"),
-    );
-
-    if ($type === 'transaction') {
-        $table_header[0] = __("TRANSACTION ID", "enginethemes");
-    }
-
-    return $table_header;
 }
