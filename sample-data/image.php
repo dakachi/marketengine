@@ -2,11 +2,11 @@
 /**
  * Depends on image generation from http://lorempixel.com/
  */
-class Image extends Base
+class ME_Image extends Base
 {
     protected static $categories = array(
         'abstract', 'animals', 'business', 'cats', 'city', 'food', 'nightlife',
-        'fashion', 'people', 'nature', 'sports', 'technics', 'transport'
+        'fashion', 'people', 'nature', 'sports', 'technics', 'transport',
     );
 
     /**
@@ -19,12 +19,12 @@ class Image extends Base
     public static function imageUrl($width = 640, $height = 480, $category = null, $randomize = true, $word = null, $gray = false)
     {
         $baseUrl = "http://lorempixel.com/";
-        $url = "{$width}/{$height}/";
-        
+        $url     = "{$width}/{$height}/";
+
         if ($gray) {
             $url = "gray/" . $url;
         }
-        
+
         if ($category) {
             if (!in_array($category, static::$categories)) {
                 throw new Exception(sprintf('Unknown image category "%s"', $category));
@@ -59,8 +59,8 @@ class Image extends Base
 
         // Generate a random filename. Use the server address so that a file
         // generated at the same time on a different server won't have a collision.
-        $name = md5(uniqid(empty($_SERVER['SERVER_ADDR']) ? '' : $_SERVER['SERVER_ADDR'], true));
-        $filename = $name .'.jpg';
+        $name     = md5(uniqid(empty($_SERVER['SERVER_ADDR']) ? '' : $_SERVER['SERVER_ADDR'], true));
+        $filename = $name . '.jpg';
         $filepath = $dir . DIRECTORY_SEPARATOR . $filename;
 
         $url = static::imageUrl($width, $height, $category, $randomize, $word);
