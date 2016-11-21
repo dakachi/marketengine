@@ -26,7 +26,6 @@ class ME_Checkout_Form {
             // kiem tra san pham co con duoc ban ko
             $listing_id = $_POST['add_to_cart'];
             $listing    = me_get_listing($listing_id);            
-
             // kiem tra san pham co ton tai hay ko
             if(!$listing || !$listing->is_available() || $current_user_id == $listing->post_author) {
                 return false;

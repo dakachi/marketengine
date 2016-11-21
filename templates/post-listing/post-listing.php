@@ -18,8 +18,7 @@ if( !isset($_POST['referer']) ) {
 
 if(me_option('user-email-confirmation')) {
 	$curr_user_id = get_current_user_id();
-	$current_user = new ME_User(wp_get_current_user());
-	$is_activated = $current_user->is_activated();
+	$is_activated = ME()->get_current_user()->is_activated();
 
 	$can_post_listing = (current_user_can( 'publish_posts' ) && $is_activated ) || current_user_can('manage_options');
 } else {
@@ -35,7 +34,7 @@ if(me_option('user-email-confirmation')) {
 <div id="marketengine-wrapper" class="marketengine">
 	<div class="marketengine-post-listing-wrap">
 		<form  id="post-listing-form" class="post-listing-form" method="post" accept-charset="utf-8" enctype="multipart/form-data">
-			<h3>Post Listing</h3>
+			<h3><?php _e("Post a Listing", "enginethemes"); ?></h3>
 			<?php me_print_notices(); ?>
 
 			<?php do_action('marketengine_post_listing_form_start'); ?>
