@@ -93,7 +93,7 @@ class ME_Auth_Form extends ME_Form {
 
                 me_add_notice( $message );
             } else {
-                me_add_notice(__("<div><p>You have registered successfully.</p></div>", "enginethemes"));
+                me_add_notice(__("<div class='me-authen-inactive'><p>You have registered successfully.</p></div>", "enginethemes"));
             }
             // login in
             $_POST['user_password'] = $_POST['user_pass'];
