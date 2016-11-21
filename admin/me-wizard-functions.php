@@ -326,35 +326,40 @@ function marketengine_add_sample_listing()
 
 
 function marketengine_delete_sample_data() {
-    global $wpdb;
-    $author_id = "SELECT Distinct ID FROM $wpdb->users JOIN $wpdb->usermeta as M ON ID = user_id WHERE meta_key = 'is_sample_data'";
+    if(!empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'marketengine-setup')) {
+        global $wpdb;
+        $author_id = "SELECT Distinct ID FROM $wpdb->users JOIN $wpdb->usermeta as M ON ID = user_id WHERE meta_key = 'is_sample_data'";
 
-    $message_table = $wpdb->prefix . 'marketengine_message_item';
-    $wpdb->query("DELETE from $message_table WHERE ( sender IN ( $author_id ) OR receiver IN ( $author_id ) )");
+        $message_table = $wpdb->prefix . 'marketengine_message_item';
+        $wpdb->query("DELETE from $message_table WHERE ( sender IN ( $author_id ) OR receiver IN ( $author_id ) )");
 
 
-    $post_id = "SELECT Distinct ID from $wpdb->posts WHERE post_author IN ( $author_id )";
-    $wpdb->query("DELETE from $wpdb->postmeta WHERE post_id IN ( $post_id )"); 
-    $wpdb->query("DELETE from $wpdb->posts WHERE post_author IN ( $author_id )");
+        $post_id = "SELECT Distinct ID from $wpdb->posts WHERE post_author IN ( $author_id )";
+        $wpdb->query("DELETE from $wpdb->postmeta WHERE post_id IN ( $post_id )"); 
+        $wpdb->query("DELETE from $wpdb->posts WHERE post_author IN ( $author_id )");
 
-    $wpdb->query("DELETE from $wpdb->comments WHERE user_id IN ( $author_id )");    
-    $comment_ids = $wpdb->get_results("SElECT comment_id FROM $wpdb->commentmeta as B WHERE B.meta_key = 'is_sample_data'", ARRAY_A);
-    $comment_list = '0';
-    foreach ($comment_ids as $key => $value) {
-        $comment_list .= ', ' . $value['comment_id'];
+        $wpdb->query("DELETE from $wpdb->comments WHERE user_id IN ( $author_id )");    
+        $comment_ids = $wpdb->get_results("SElECT comment_id FROM $wpdb->commentmeta as B WHERE B.meta_key = 'is_sample_data'", ARRAY_A);
+        $comment_list = '0';
+        foreach ($comment_ids as $key => $value) {
+            $comment_list .= ', ' . $value['comment_id'];
+        }
+        $wpdb->query("DELETE from $wpdb->commentmeta  WHERE comment_id IN ( ".$comment_list." )");
+
+
+        $wpdb->query("DELETE from $wpdb->users WHERE ID IN ( SElECT user_id FROM $wpdb->usermeta WHERE meta_key = 'is_sample_data')");
+
+        $user_id = $wpdb->get_results("SElECT user_id FROM $wpdb->usermeta as B WHERE B.meta_key = 'is_sample_data'", ARRAY_A);
+        $user_list = '0';
+        foreach ($user_id as $key => $value) {
+            $user_list .= ', ' . $value['user_id'];
+        }
+        $wpdb->query("DELETE from $wpdb->usermeta  WHERE user_id IN ( ".$user_list." )");
+        
+        delete_option( 'me-added-sample-data' );
+        wp_delete_comment( '1' );
+        echo 1;
+        exit;
     }
-    $wpdb->query("DELETE from $wpdb->commentmeta  WHERE comment_id IN ( ".$comment_list." )");
-
-
-    $wpdb->query("DELETE from $wpdb->users WHERE ID IN ( SElECT user_id FROM $wpdb->usermeta WHERE meta_key = 'is_sample_data')");
-
-    $user_id = $wpdb->get_results("SElECT user_id FROM $wpdb->usermeta as B WHERE B.meta_key = 'is_sample_data'", ARRAY_A);
-    $user_list = '0';
-    foreach ($user_id as $key => $value) {
-        $user_list .= ', ' . $value['user_id'];
-    }
-    $wpdb->query("DELETE from $wpdb->usermeta  WHERE user_id IN ( ".$user_list." )");
-    
-    delete_option( 'me-added-sample-data' );
-    wp_delete_comment( '1' );
 }
+add_action( 'wp_ajax_me-remove-sample-data', 'marketengine_delete_sample_data' );
