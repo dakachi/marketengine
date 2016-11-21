@@ -336,9 +336,9 @@ function marketengine_delete_sample_data()
 
         // delte sample listing
         $post_id = "SELECT Distinct ID from $wpdb->posts WHERE post_author IN ( $author_id )";
-        $wpdb->query("DELETE from $wpdb->postmeta WHERE post_id IN ( $post_id )");
         $wpdb->query("DELETE from $wpdb->posts WHERE post_author IN ( $author_id )");
-
+        $wpdb->query("DELETE from $wpdb->postmeta WHERE post_id IN ( $post_id )");
+        echo "DELETE from $wpdb->posts WHERE post_author IN ( $author_id )";
 
         // delete sample review
         $wpdb->query("DELETE from $wpdb->comments WHERE user_id IN ( $author_id )");
