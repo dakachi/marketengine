@@ -441,7 +441,7 @@ function me_get_order_status_info($status, $info_type = '')
         case 'me-complete':
             $style         = 'me-order-complete';
             $text          = __('', 'enginethemes');
-            $order_process = 3;
+            $order_process = 2;
             break;
         case 'me-disputed':
             $style         = 'me-order-disputed';

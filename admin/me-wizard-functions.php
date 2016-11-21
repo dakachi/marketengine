@@ -334,10 +334,13 @@ function marketengine_delete_sample_data()
         $message_table = $wpdb->prefix . 'marketengine_message_item';
         $wpdb->query("DELETE from $message_table WHERE ( sender IN ( $author_id ) OR receiver IN ( $author_id ) )");
 
+        // delte sample listing
         $post_id = "SELECT Distinct ID from $wpdb->posts WHERE post_author IN ( $author_id )";
         $wpdb->query("DELETE from $wpdb->postmeta WHERE post_id IN ( $post_id )");
         $wpdb->query("DELETE from $wpdb->posts WHERE post_author IN ( $author_id )");
 
+
+        // delete sample review
         $wpdb->query("DELETE from $wpdb->comments WHERE user_id IN ( $author_id )");
         $comment_ids  = $wpdb->get_results("SElECT comment_id FROM $wpdb->commentmeta as B WHERE B.meta_key = 'is_sample_data'", ARRAY_A);
         $comment_list = '0';
@@ -346,6 +349,8 @@ function marketengine_delete_sample_data()
         }
         $wpdb->query("DELETE from $wpdb->commentmeta  WHERE comment_id IN ( " . $comment_list . " )");
 
+
+        // delete sample user
         $wpdb->query("DELETE from $wpdb->users WHERE ID IN ( SElECT user_id FROM $wpdb->usermeta WHERE meta_key = 'is_sample_data')");
 
         $user_id   = $wpdb->get_results("SElECT user_id FROM $wpdb->usermeta as B WHERE B.meta_key = 'is_sample_data'", ARRAY_A);
