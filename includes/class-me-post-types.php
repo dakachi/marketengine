@@ -73,7 +73,7 @@ class ME_Post_Types
             'show_ui'           => true,
             'query_var'         => true,
             'rewrite'           => array(
-                'slug'         => 'listing_category',
+                'slug'         => apply_filters('marketengine_listing_category_slug', 'listing_category'),
                 'hierarchical' => true,
             ),
             'capabilities'      => array(
@@ -115,7 +115,7 @@ class ME_Post_Types
             'show_ui'           => true,
             'query_var'         => true,
             'rewrite'           => array(
-                'slug' => 'listing_tag',
+                'slug' => apply_filters('marketengine_listing_tag_slug', 'listing_tag'),
             ),
             'capabilities'      => array(
                 'manage_terms',
@@ -134,7 +134,6 @@ class ME_Post_Types
      */
     public static function register_post_type()
     {
-        $permalinks    = get_option('me_permalinks', 'listing');
         $listing_label = me_option('listing-label');
         if($listing_label) {
             $labels        = array(
@@ -177,7 +176,7 @@ class ME_Post_Types
             'show_ui'            => true,
             'show_in_menu'       => true,
             'query_var'          => true,
-            'rewrite'            => $permalinks ? array('slug' => $permalinks, 'with_front' => false, 'feed' => true) : false,
+            'rewrite'            => apply_filters('marketengine_listing_rewrite', array('slug' => 'listing', 'with_front' => false, 'feed' => true)),
             'capability_type'    => 'post',
             'has_archive'        => 'listings',
             'hierarchical'       => false,
