@@ -13,7 +13,7 @@ return array(
         'template' => array(
             'user-account-page' => array(
                 'label'       => __("User Account Page", "enginethemes"),
-                'description' => __("Choose a page to display as User Account Page, page content [me_user_account]", "enginethemes"),
+                'description' => __("Choose a page displaying as User Account Page (only pages having shortcode [me_user_account] are displayed here)", "enginethemes"),
                 'slug'        => 'user-account-page',
                 'type'        => 'select',
                 'name'        => 'me_user_account_page_id',
@@ -114,7 +114,7 @@ return array(
         'template' => array(
             'post-listings-page' => array(
                 'label'         => __("Post Listing Page", "enginethemes"),
-                'description'   => __("Choose a page to display as Post Listing Page", "enginethemes"),
+                'description'   => __("Choose a page displaying as Post Listing Page", "enginethemes"),
                 'slug'          => 'me_post_listing_form',
                 'name'          => 'me_post_listing_page_id',
                 'type'          => 'select',
@@ -123,7 +123,7 @@ return array(
             ),
             'listings-page' => array(
                 'label'         => __("Edit Listing Page", "enginethemes"),
-                'description'   => __("Choose a page to display as Edit Listing Page", "enginethemes"),
+                'description'   => __("Choose a page displaying as Edit Listing Page", "enginethemes"),
                 'slug'          => 'me_listings',
                 'name'          => 'me_edit_listing_page_id',
                 'type'          => 'select',
@@ -138,8 +138,8 @@ return array(
         'type'     => 'section',
         'template' => array(
             'checkout-page' => array(
-                'label'       => __("Checkout Page", "enginethemes"),
-                'description' => __("Choose a page to display as Checkout Page", "enginethemes"),
+                'label'       => __("Check Out Page", "enginethemes"),
+                'description' => __("Choose a page displaying as Check Out Page", "enginethemes"),
                 'slug'        => 'me_checkout_form',
                 'type'        => 'select',
                 'name'        => 'me_checkout_page_id',
@@ -148,7 +148,7 @@ return array(
             ),
             'confirm-order-page' => array(
                 'label'       => __("Confirm Order Page", "enginethemes"),
-                'description' => __("Choose a page to display as Confirm Order Page", "enginethemes"),
+                'description' => __("Choose a page displaying as Confirm Order Page", "enginethemes"),
                 'slug'        => 'me_confirm_order',
                 'type'        => 'select',
                 'name'        => 'me_confirm_order_page_id',
@@ -158,7 +158,7 @@ return array(
 
             'cancel-order-page' => array(
                 'label'       => __("Cancel Order Page", "enginethemes"),
-                'description' => __("Choose a page to display as Cancel Order Page", "enginethemes"),
+                'description' => __("Choose a page displaying as Cancel Order Page", "enginethemes"),
                 'slug'        => 'me_cancel_order',
                 'type'        => 'select',
                 'name'        => 'me_cancel_order_page_id',
@@ -174,8 +174,8 @@ return array(
                 'data'        => marketengine_get_list_of_page(),
                 'template'    => array(
                     'ep-order' => array(
-                        'label'       => __("Confirm Order", "enginethemes"),
-                        'description' => __("Endpoint for the Confirm Order -> Order id page", "enginethemes"),
+                        'label'       => __("Order Confirmation", "enginethemes"),
+                        'description' => __("Endpoint for the Order Confirmation page -> Order ID page", "enginethemes"),
                         'slug'        => 'ep-orderid',
                         'type'        => 'textbox',
                         'name'        => 'ep_orderid',
@@ -187,13 +187,13 @@ return array(
         ),
     ),
     'other' => array(
-        'title'    => __("Other", "enginethemes"),
+        'title'    => __("Others", "enginethemes"),
         'slug'     => 'other',
         'type'     => 'section',
         'template' => array(
             'inquiry-page' => array(
                 'label'       => __("Inquiry Page", "enginethemes"),
-                'description' => __("Choose a page to display as Inquiry Page", "enginethemes"),
+                'description' => __("Choose a page displaying as Inquiry Page", "enginethemes"),
                 'slug'        => 'me_inquiry_form',
                 'type'        => 'select',
                 'name'        => 'me_inquiry_page_id',

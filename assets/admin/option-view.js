@@ -154,6 +154,11 @@ _.templateSettings = {
                     if (status.success) {
                         $target.next().remove();
                         $target.parent().append('<span class="me-success-icon"></span>');
+
+                        setTimeout(function() {
+                            $target.parent().find('.me-success-icon').remove();
+                        }, 1000);
+
                     } else {
                         $target.next().remove();
                         $target.parent().append('<span class="me-warning-icon"></span>');
