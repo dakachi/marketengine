@@ -166,6 +166,7 @@ class ME_Setup_Wizard
 			<title><?php _e('MarketEngine &rsaquo; Setup Wizard', 'enginethemes');?></title>
 			<?php
 				wp_print_scripts('setup-wizard.js');
+        		wp_enqueue_style('me_font_icon', ME_PLUGIN_URL . 'assets/css/marketengine-font-icon.css');
         		wp_enqueue_style('setup-wizard.css', ME_PLUGIN_URL . 'assets/admin/setup-wizard.css');
         	?>
 			<?php do_action('admin_print_styles');?>
