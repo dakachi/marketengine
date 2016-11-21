@@ -13,6 +13,8 @@ class ME_Select extends ME_Input{
         $this->_label       = $args['label'];
         $this->_description = $args['description'];
         $this->_slug        = $args['slug'];
+        $this->_is_multiple = isset($args['is_multiple']) ? 'multiple="multiple"' : '';
+        $this->_placeholder = isset($args['placeholder']) ? $args['placeholder'] : __('Select...', 'enginethemes');
         $this->_data        = isset($args['data']) ? $args['data'] : array();
         $this->_container   = $options;
 
@@ -27,8 +29,8 @@ class ME_Select extends ME_Input{
         $this->label();
         $this->description();
         echo '<span class="me-select-control">';
-        echo '<select class="select-field" name="'. $this->_name .'">';
-        echo '<option value="">Select a page...</option>';
+        echo '<select class="select-field" name="'. $this->_name .'" '. $this->_is_multiple .'>';
+        echo '<option value="">'. $this->_placeholder .'</option>';
         foreach ($this->_data as $key => $value) {
             echo '<option '.selected($option_value, $key, false).' value="'. $key .'">' . $value . '</option>';
             $selected = '';
