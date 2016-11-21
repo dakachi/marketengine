@@ -19,11 +19,11 @@ function me_create_functional_pages()
             'post_type'   => 'page',
         );
 
-        $pages= $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE post_status = 'publish' AND post_type='page' AND post_content='".$page['post_content']."'" );
-        if(!empty($pages)){
+        $pages = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_status = 'publish' AND post_type='page' AND post_content='" . $page['post_content'] . "'");
+        if (!empty($pages)) {
             $page_id = array_pop($pages);
-        }else {
-            $args = wp_parse_args($args, $page);
+        } else {
+            $args    = wp_parse_args($args, $page);
             $page_id = wp_insert_post($args);
         }
 
@@ -93,8 +93,8 @@ function marketengine_add_sample_order($orders, $listing_id)
 
         remove_filter('marketengine_create_order_status', 'marketengine_sample_filter_order_status');
 
-        $me_order   = new ME_Order($order);
-        $listing = me_get_listing($listing_id);
+        $me_order = new ME_Order($order);
+        $listing  = me_get_listing($listing_id);
 
         $me_order->add_listing($listing);
 
@@ -134,10 +134,10 @@ function marketengine_add_sample_inquiry($inquiries, $listing_id)
 {
     foreach ($inquiries as $key => $inquiry_data) {
         $inquiry_data['post_author'] = marketengine_add_sample_user($inquiry_data);
-        $receiver = get_post_field('post_author', $listing_id);
-        $inquiry_id = me_insert_message(
+        $receiver                    = get_post_field('post_author', $listing_id);
+        $inquiry_id                  = me_insert_message(
             array(
-                'sender' => $inquiry_data['post_author'],
+                'sender'       => $inquiry_data['post_author'],
                 'post_content' => 'Inquiry listing #' . $listing_id,
                 'post_title'   => 'Inquiry listing #' . $listing_id,
                 'post_type'    => 'inquiry',
@@ -146,7 +146,7 @@ function marketengine_add_sample_inquiry($inquiries, $listing_id)
             )
         );
 
-        me_update_message_meta($inquiry_id,'is_sample_data', 'sample-data'  );
+        me_update_message_meta($inquiry_id, 'is_sample_data', 'sample-data');
 
         foreach ($inquiry_data['messages'] as $key => $message) {
             $message_data = array(
@@ -156,17 +156,17 @@ function marketengine_add_sample_inquiry($inquiries, $listing_id)
                 'receiver'     => $receiver,
                 'post_parent'  => $inquiry_id,
             );
-            if(($key % 2) == 0) {
+            if (($key % 2) == 0) {
                 $message_data['receiver'] = $receiver;
-                $message_data['sender'] = $inquiry_data['post_author'];
-            }else {
+                $message_data['sender']   = $inquiry_data['post_author'];
+            } else {
                 $message_data['receiver'] = $inquiry_data['post_author'];
-                $message_data['sender'] = $receiver;
+                $message_data['sender']   = $receiver;
             }
             $message_id = me_insert_message($message_data);
-            me_update_message_meta($message_id,'is_sample_data', 'sample-data'  );
+            me_update_message_meta($message_id, 'is_sample_data', 'sample-data');
         }
-        
+
     }
 }
 
@@ -182,7 +182,7 @@ function marketengine_add_sample_user($user_data)
         'user_pass'    => '123',
         'avatar'       => 'http://lorempixel.com/150/150/business/',
         'paypal_email' => 'dinhle1987-buyer@yahoo.com',
-        'role' => 'author'
+        'role'         => 'author',
     );
     $user_data = wp_parse_args($user_data, $defaults);
     $user      = get_user_by('login', $user_data['user_login']);
@@ -190,23 +190,23 @@ function marketengine_add_sample_user($user_data)
         $user_id = wp_insert_user($user_data);
         update_user_meta($user_id, 'paypal_email', $user_data['paypal_email']);
         update_user_meta($user_id, 'location', $user_data['location']);
-        update_user_meta( $user_id, 'is_sample_data', 'sample-data' );
+        update_user_meta($user_id, 'is_sample_data', 'sample-data');
 
         $number = rand(1, 5);
-        $img_1 = marketengine_handle_sample_image(ME_PLUGIN_URL . 'sample-data/images/'.$user_data['avatar'], $user_data['user_login']);
+        $img_1  = marketengine_handle_sample_image(ME_PLUGIN_URL . 'sample-data/images/' . $user_data['avatar'], $user_data['user_login']);
 
-        update_user_meta( $user_id, 'user_avatar', $img_1 );
+        update_user_meta($user_id, 'user_avatar', $img_1);
 
         return $user_id;
     }
     return $user->ID;
 }
 
-function me_setup_sample_data_post_where( $where, &$wp_query )
+function me_setup_sample_data_post_where($where, &$wp_query)
 {
     global $wpdb;
-    if ( $search_keyword = $wp_query->get( 's' ) ) {
-        $where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'' . esc_sql( $wpdb->esc_like( $search_keyword ) ) . '%\'';
+    if ($search_keyword = $wp_query->get('s')) {
+        $where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'' . esc_sql($wpdb->esc_like($search_keyword)) . '%\'';
     }
     return $where;
 }
@@ -216,17 +216,17 @@ function marketengine_handle_sample_image($image_url, $filename)
     $upload_dir = wp_upload_dir();
     $image_data = file_get_contents($image_url);
 
-    $filename = basename( $image_url );
-    $title = preg_replace('/\.[^.]+$/', '', basename($filename));
+    $filename = basename($image_url);
+    $title    = preg_replace('/\.[^.]+$/', '', basename($filename));
 
-    add_filter( 'posts_where',  'me_setup_sample_data_post_where', 10, 2 );
+    add_filter('posts_where', 'me_setup_sample_data_post_where', 10, 2);
     $query = new WP_Query(array(
-        'post_status' => array('inherit','publish'),
-        'post_type' => 'attachment',
-        's' => $title
+        'post_status' => array('inherit', 'publish'),
+        'post_type'   => 'attachment',
+        's'           => $title,
     ));
 
-    if($query->have_posts()){
+    if ($query->have_posts()) {
         return $query->post->ID;
     }
 
@@ -256,16 +256,17 @@ function marketengine_add_sample_listing()
 {
 
     $listing_number = $_POST['number'];
-    $listing                = include ME_PLUGIN_PATH . '/sample-data/listing/listing-' . $listing_number . '.php';
 
-    add_filter( 'posts_where',  'me_setup_post_where', 10, 2 );
+    $listing = include ME_PLUGIN_PATH . '/sample-data/listing/listing-' . $listing_number . '.php';
+
+    add_filter('posts_where', 'me_setup_sample_data_post_where', 10, 2);
     $query = new WP_Query(array(
-        'post_status' => array('inherit','publish'),
-        'post_type' => 'listing',
-        's' => $listing['post_title']
+        'post_status' => array('inherit', 'publish'),
+        'post_type'   => 'listing',
+        's'           => $listing['post_title'],
     ));
 
-    if($query->have_posts()){
+    if ($query->have_posts()) {
         return array('id' => $query->post->ID);
     }
 
@@ -324,42 +325,40 @@ function marketengine_add_sample_listing()
     exit;
 }
 
-
-function marketengine_delete_sample_data() {
-    if(!empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'marketengine-setup')) {
+function marketengine_delete_sample_data()
+{
+    if (!empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'marketengine-setup')) {
         global $wpdb;
         $author_id = "SELECT Distinct ID FROM $wpdb->users JOIN $wpdb->usermeta as M ON ID = user_id WHERE meta_key = 'is_sample_data'";
 
         $message_table = $wpdb->prefix . 'marketengine_message_item';
         $wpdb->query("DELETE from $message_table WHERE ( sender IN ( $author_id ) OR receiver IN ( $author_id ) )");
 
-
         $post_id = "SELECT Distinct ID from $wpdb->posts WHERE post_author IN ( $author_id )";
-        $wpdb->query("DELETE from $wpdb->postmeta WHERE post_id IN ( $post_id )"); 
+        $wpdb->query("DELETE from $wpdb->postmeta WHERE post_id IN ( $post_id )");
         $wpdb->query("DELETE from $wpdb->posts WHERE post_author IN ( $author_id )");
 
-        $wpdb->query("DELETE from $wpdb->comments WHERE user_id IN ( $author_id )");    
-        $comment_ids = $wpdb->get_results("SElECT comment_id FROM $wpdb->commentmeta as B WHERE B.meta_key = 'is_sample_data'", ARRAY_A);
+        $wpdb->query("DELETE from $wpdb->comments WHERE user_id IN ( $author_id )");
+        $comment_ids  = $wpdb->get_results("SElECT comment_id FROM $wpdb->commentmeta as B WHERE B.meta_key = 'is_sample_data'", ARRAY_A);
         $comment_list = '0';
         foreach ($comment_ids as $key => $value) {
             $comment_list .= ', ' . $value['comment_id'];
         }
-        $wpdb->query("DELETE from $wpdb->commentmeta  WHERE comment_id IN ( ".$comment_list." )");
-
+        $wpdb->query("DELETE from $wpdb->commentmeta  WHERE comment_id IN ( " . $comment_list . " )");
 
         $wpdb->query("DELETE from $wpdb->users WHERE ID IN ( SElECT user_id FROM $wpdb->usermeta WHERE meta_key = 'is_sample_data')");
 
-        $user_id = $wpdb->get_results("SElECT user_id FROM $wpdb->usermeta as B WHERE B.meta_key = 'is_sample_data'", ARRAY_A);
+        $user_id   = $wpdb->get_results("SElECT user_id FROM $wpdb->usermeta as B WHERE B.meta_key = 'is_sample_data'", ARRAY_A);
         $user_list = '0';
         foreach ($user_id as $key => $value) {
             $user_list .= ', ' . $value['user_id'];
         }
-        $wpdb->query("DELETE from $wpdb->usermeta  WHERE user_id IN ( ".$user_list." )");
-        
-        delete_option( 'me-added-sample-data' );
-        wp_delete_comment( '1' );
+        $wpdb->query("DELETE from $wpdb->usermeta  WHERE user_id IN ( " . $user_list . " )");
+
+        delete_option('me-added-sample-data');
+        wp_delete_comment('1');
         echo 1;
         exit;
     }
 }
-add_action( 'wp_ajax_me-remove-sample-data', 'marketengine_delete_sample_data' );
+add_action('wp_ajax_me-remove-sample-data', 'marketengine_delete_sample_data');
