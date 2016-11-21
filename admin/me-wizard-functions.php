@@ -52,7 +52,7 @@ function me_get_functional_pages()
             'post_content' => '[me_user_account]',
         ),
         'post_listing'  => array(
-            'post_title'   => __("Post Listing", "enginethemes"),
+            'post_title'   => __("Post A Listing", "enginethemes"),
             'post_content' => '[me_post_listing_form]',
         ),
         'edit_listing'  => array(
@@ -199,6 +199,11 @@ function marketengine_add_sample_user($user_data)
 
         return $user_id;
     }
+
+    if(is_multisite()) {
+        $blog_id = get_current_blog_id();
+    }
+
     return $user->ID;
 }
 
@@ -324,24 +329,36 @@ function marketengine_add_sample_listing()
     echo 1;
     exit;
 }
-
+marketengine_delete_sample_data();
 function marketengine_delete_sample_data()
 {
-    if (!empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'marketengine-setup')) {
+    //if (!empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'marketengine-setup')) {
         global $wpdb;
-        $author_id = "SELECT Distinct ID FROM $wpdb->users JOIN $wpdb->usermeta as M ON ID = user_id WHERE meta_key = 'is_sample_data'";
 
+        // delete message
         $message_table = $wpdb->prefix . 'marketengine_message_item';
-        $wpdb->query("DELETE from $message_table WHERE ( sender IN ( $author_id ) OR receiver IN ( $author_id ) )");
+        $message_meta_table = $wpdb->prefix . 'marketengine_message_itemmeta';
+        $wpdb->query("DELETE from $message_table WHERE ID IN ( SElECT marketengine_message_item_id FROM $message_meta_table WHERE meta_key = 'is_sample_data' )");
+        
+        $post_ids  = $wpdb->get_results("SElECT marketengine_message_item_id FROM $message_meta_table WHERE meta_key = 'is_sample_data'", ARRAY_A);
+        $post_list = '0';
+        foreach ($post_ids as $key => $value) {
+            $post_list .= ', ' . $value['marketengine_message_item_id'];
+        }
+        $wpdb->query("DELETE from $message_meta_table  WHERE marketengine_message_item_id IN ( " . $post_list . " )");
 
         // delte sample listing
-        $post_id = "SELECT Distinct ID from $wpdb->posts WHERE post_author IN ( $author_id )";
-        $wpdb->query("DELETE from $wpdb->posts WHERE post_author IN ( $author_id )");
-        $wpdb->query("DELETE from $wpdb->postmeta WHERE post_id IN ( $post_id )");
-        echo "DELETE from $wpdb->posts WHERE post_author IN ( $author_id )";
+        $wpdb->query("DELETE from $wpdb->posts WHERE ID IN ( SElECT post_id FROM $wpdb->postmeta WHERE meta_key = 'is_sample_data' )");
+        $post_ids  = $wpdb->get_results("SElECT post_id FROM $wpdb->postmeta WHERE meta_key = 'is_sample_data'", ARRAY_A);
+        $post_list = '0';
+        foreach ($post_ids as $key => $value) {
+            $post_list .= ', ' . $value['post_id'];
+        }
+        $wpdb->query("DELETE from $wpdb->postmeta  WHERE post_id IN ( " . $post_list . " )");
+
 
         // delete sample review
-        $wpdb->query("DELETE from $wpdb->comments WHERE user_id IN ( $author_id )");
+        $wpdb->query("DELETE from $wpdb->comments WHERE comment_ID IN ( SElECT comment_id FROM $wpdb->commentmeta as B WHERE B.meta_key = 'is_sample_data' )");
         $comment_ids  = $wpdb->get_results("SElECT comment_id FROM $wpdb->commentmeta as B WHERE B.meta_key = 'is_sample_data'", ARRAY_A);
         $comment_list = '0';
         foreach ($comment_ids as $key => $value) {
@@ -361,9 +378,9 @@ function marketengine_delete_sample_data()
         $wpdb->query("DELETE from $wpdb->usermeta  WHERE user_id IN ( " . $user_list . " )");
 
         delete_option('me-added-sample-data');
-        wp_delete_comment('1');
-        echo 1;
-        exit;
-    }
+        wp_delete_comment( 1 );
+        //echo 1;
+        //exit;
+    //}
 }
 add_action('wp_ajax_me-remove-sample-data', 'marketengine_delete_sample_data');

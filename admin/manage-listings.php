@@ -7,7 +7,6 @@ if (!defined('ABSPATH')) {
 /**
  * Manage listings in WP post screen
  */
-
 /**
  * Remove post row action to prevent admin edit listing
  * @category Admin/Manage
@@ -33,7 +32,7 @@ function me_listing_columns($existing_columns)
         $existing_columns = array();
     }
 
-    unset($existing_columns['comments'], $existing_columns['date'], $existing_columns['title'], $existing_columns['cb']);
+    unset($existing_columns['comments'], $existing_columns['date'], $existing_columns['title']);
 
     $columns = array();
 
