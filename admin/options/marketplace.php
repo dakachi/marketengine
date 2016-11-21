@@ -106,11 +106,74 @@ return apply_filters('marketengine_marketplace_options',
             ),
 		),
         'listing-type' => array(
-            'title'    => __("Listing Type", "enginethemes"),
+            'title'    => __("Listing Types", "enginethemes"),
             'slug'     => 'listing-type-section',
             'type'     => 'section',
             'template' => array(
-
+                'purchase'               => array(
+                    'label'              => __("Purchase", "enginethemes"),
+                    'description'        => __("", "enginethemes"),
+                    'slug'               => 'purchase-type',
+                    'type'               => 'multi_field',
+                    'name'               => 'purchase-type',
+                    'template'           => array(
+                        'purchase-title'         => array(
+                            'label'       => __("Title", "enginethemes"),
+                            'description' => __("The International Standard for currency code supported by Paypal Adaptive", "enginethemes"),
+                            'slug'        => 'purchase-title',
+                            'type'        => 'textbox',
+                            'name'        => 'purchase-title',
+                        ),
+                        'purchase-action'         => array(
+                            'label'       => __("Action", "enginethemes"),
+                            'description' => __("The currency symbol display beside the listing price", "enginethemes"),
+                            'slug'        => 'purchase-action',
+                            'type'        => 'textbox',
+                            'name'        => 'purchase-action',
+                        ),
+                        'purchase-available' => array(
+                            'label'       => __("Available", "enginethemes"),
+                            'description' => __("The position of the currency sign", "enginethemes"),
+                            'slug'        => 'purchase-available',
+                            'type'        => 'switch',
+                            'name'        => 'purchase-available',
+                            'text'        => array(__('Yes', 'enginethemes'), __('No', 'enginethemes')),
+                            'default' => 1
+                        ),
+                    ),
+                ),
+                'contact'               => array(
+                    'label'              => __("Contact", "enginethemes"),
+                    'description'        => __("", "enginethemes"),
+                    'slug'               => 'purchase-type',
+                    'type'               => 'multi_field',
+                    'name'               => 'purchase-type',
+                    'template'           => array(
+                        'purchase-title'         => array(
+                            'label'       => __("Title", "enginethemes"),
+                            'description' => __("The International Standard for currency code supported by Paypal Adaptive", "enginethemes"),
+                            'slug'        => 'purchase-title',
+                            'type'        => 'textbox',
+                            'name'        => 'purchase-title',
+                        ),
+                        'purchase-action'         => array(
+                            'label'       => __("Action", "enginethemes"),
+                            'description' => __("The currency symbol display beside the listing price", "enginethemes"),
+                            'slug'        => 'purchase-action',
+                            'type'        => 'textbox',
+                            'name'        => 'purchase-action',
+                        ),
+                        'purchase-available' => array(
+                            'label'       => __("Available", "enginethemes"),
+                            'description' => __("The position of the currency sign", "enginethemes"),
+                            'slug'        => 'purchase-available',
+                            'type'        => 'switch',
+                            'name'        => 'purchase-available',
+                            'text'        => array(__('Yes', 'enginethemes'), __('No', 'enginethemes')),
+                            'default' => 1
+                        ),
+                    ),
+                ),
             ),
         ),
         'sample-data'  => array(
