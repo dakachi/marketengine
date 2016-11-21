@@ -81,8 +81,8 @@ return array(
 
     'listing_gallery'  => array
     (
-        '0' => 'listing-2.jpg',
-        '1' => 'listing-1.jpg',
+        '0' => 'macbook.jpg',
+        '1' => 'dell.jpg',
     ),
 
     'listing_category' => array(
@@ -101,7 +101,7 @@ return array(
             'user_email'   => 'malenesara@mailinator.com',
             'location'     => 'Danish',
             'user_pass'    => '123',
-            'avatar'       => 'avatar-2.jpg',
+            'avatar'       => 'avatar-3.jpg',
             'paypal_email' => 'dinhle1987-per@yahoo.com',
             'messages'     => array(
                 "Hi, This laptop is sound great. However, I wonder if I could install windows 10 instead of Chromebook?",
@@ -118,7 +118,7 @@ return array(
             'user_email'   => 'shindaiki@mailinator.com',
             'location'     => 'Japan',
             'user_pass'    => '123',
-            'avatar'       => 'avatar-2.jpg',
+            'avatar'       => 'avatar-4.jpg',
             'paypal_email' => 'dinhle1987-per@yahoo.com',
             'messages'     => array(
                 "Hi, I'm a student and I'm looking for a laption with a well-design model and high configured one. I'm very impressive with your item. However, what is the difference between the NEW and old version?",
@@ -137,7 +137,7 @@ return array(
             'user_email'   => 'alanroger@mailinator.com',
             'location'     => 'France',
             'user_pass'    => '123',
-            'avatar'       => 'avatar-2.jpg',
+            'avatar'       => 'avatar-5.jpg',
             'paypal_email' => 'dinhle1987-per@yahoo.com',
             'messages'     => array(
                 "Hi,
@@ -158,7 +158,7 @@ I'm a student and I'm looking for a laption with a well-design model and high co
             'user_email'   => 'alanroger@mailinator.com',
             'location'     => 'France',
             'user_pass'    => '123',
-            'avatar'       => 'avatar-2.jpg',
+            'avatar'       => 'avatar-5.jpg',
             'paypal_email' => 'dinhle1987-per@yahoo.com',
             'messages'     => array(
                 "Hi,

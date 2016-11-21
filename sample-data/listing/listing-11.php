@@ -40,8 +40,8 @@ array(
 
     'listing_gallery'  => array
     (
-        '0' => 'listing-2.jpg',
-        '1' => 'listing-1.jpg',
+        '0' => 'samsung.jpg',
+        '1' => 'dell.jpg',
     ),
 
     'listing_category' => array(

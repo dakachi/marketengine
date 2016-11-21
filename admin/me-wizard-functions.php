@@ -193,7 +193,7 @@ function marketengine_add_sample_user($user_data)
         update_user_meta( $user_id, 'is_sample_data', 'sample-data' );
 
         $number = rand(1, 5);
-        $img_1 = marketengine_handle_sample_image(ME_PLUGIN_URL . 'sample-data/images/'.$number.'.png', $user_data['user_login']);
+        $img_1 = marketengine_handle_sample_image(ME_PLUGIN_URL . 'sample-data/images/'.$user_data['avatar'], $user_data['user_login']);
 
         update_user_meta( $user_id, 'user_avatar', $img_1 );
 
@@ -202,11 +202,34 @@ function marketengine_add_sample_user($user_data)
     return $user->ID;
 }
 
-function marketengine_handle_sample_image($image, $filename)
+function me_setup_sample_data_post_where( $where, &$wp_query )
+{
+    global $wpdb;
+    if ( $search_keyword = $wp_query->get( 's' ) ) {
+        $where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'' . esc_sql( $wpdb->esc_like( $search_keyword ) ) . '%\'';
+    }
+    return $where;
+}
+
+function marketengine_handle_sample_image($image_url, $filename)
 {
     $upload_dir = wp_upload_dir();
-    $image_data = file_get_contents($image);
-    $filename .= '.jpg';
+    $image_data = file_get_contents($image_url);
+
+    $filename = basename( $image_url );
+    $title = preg_replace('/\.[^.]+$/', '', basename($filename));
+
+    add_filter( 'posts_where',  'me_setup_sample_data_post_where', 10, 2 );
+    $query = new WP_Query(array(
+        'post_status' => array('inherit','publish'),
+        'post_type' => 'attachment',
+        's' => $title
+    ));
+
+    if($query->have_posts()){
+        return $query->post->ID;
+    }
+
     if (wp_mkdir_p($upload_dir['path'])) {
         $file = $upload_dir['path'] . '/' . $filename;
     } else {
@@ -234,6 +257,18 @@ function marketengine_add_sample_listing()
 
     $listing_number = $_POST['number'];
     $listing                = include ME_PLUGIN_PATH . '/sample-data/listing/listing-' . $listing_number . '.php';
+
+    add_filter( 'posts_where',  'me_setup_post_where', 10, 2 );
+    $query = new WP_Query(array(
+        'post_status' => array('inherit','publish'),
+        'post_type' => 'listing',
+        's' => $listing['post_title']
+    ));
+
+    if($query->have_posts()){
+        return array('id' => $query->post->ID);
+    }
+
     $user_id                = marketengine_add_sample_user($listing['post_author']);
     $listing['post_author'] = $user_id;
 
