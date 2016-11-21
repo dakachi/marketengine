@@ -136,11 +136,11 @@ _.templateSettings = {
                 view = this;
             view.option.set('name', $target.attr('name'));
             view.option.set('value', $target.val());
+
             view.option.save('', '', {
                 success: function(result, status, jqXHR) {
-
                     if( $target.hasClass('no-zero') && $target.val() == 0) {
-                        return;
+                        status.success = false;
                     }
 
                     if (status.success) {
