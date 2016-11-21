@@ -11,17 +11,13 @@ class ME_Sampledata {
         wp_nonce_field('marketengine-setup');
         $is_added_sample_data  = get_option('me-added-sample-data')
     ?>
+        <h3><?php _e("Sample Data", "enginethemes"); ?></h3>
         <form id="add-sample-data" <?php if($is_added_sample_data) echo 'style="display:none;"' ?>>
-            <h3><?php _e("Sample Data", "enginethemes"); ?></h3>
             <div class="me-setup-sample">
                 <p><?php _e("You can add some sample data to grasp some clearer ideas of how your marketplace will look like.<br>Some sample listings will be generated in each of your categories, together with a few users &amp; orders to demonstrate the checkout flows.<br>You will be able to remove those samples with another click later.", "enginethemes"); ?></p>
                 <label class="me-setup-data-btn" id="me-add-sample-data" for="me-setup-sample-data">
                     <span id="me-setup-sample-data"><?php _e("ADD SAMPLE DATA", "enginethemes"); ?></span>
                 </label>
-            </div>
-            <div class="me-setup-sample-finish">
-                <p>Few users, orders and some sample listings have already been generated in each of your categories.</p>
-                <p>You will be able to remove those samples with another click later.</p>
             </div>
         </form>
         <script type="text/javascript">
@@ -60,12 +56,11 @@ class ME_Sampledata {
             })(jQuery)
         </script>
         <form id="remove-sample-data" <?php if(!$is_added_sample_data) echo 'style="display:none;"' ?>>
-            <h3>Sample Data</h3>
             <div class="me-setup-sample-finish">
-                <p>Few users, orders and some sample listings have already been generated in each of your categories.</p>
-                <p>You will be able to remove those samples with another click later.</p>
-                <label class="me-setup-data-btn" id="me-add-sample-data" for="me-setup-sample-data">
-                    <span id="me-remove-sample-data">REMOVE SAMPLE DATA</span>
+                <p><?php _e("Few users, orders and some sample listings have already been generated in each of your categories.", "enginethemes"); ?></p>
+                <p><?php _e("You will be able to remove those samples with another click later.", "enginethemes"); ?></p>
+                <label class="me-setup-data-btn" id="me-add-sample-data" for="me-remove-sample-data">
+                    <span id="me-remove-sample-data"><?php _e("REMOVE SAMPLE DATA", "enginethemes"); ?></span>
                 </label>
             </div>
         </form>
