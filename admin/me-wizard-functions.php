@@ -329,17 +329,17 @@ function marketengine_add_sample_listing()
     echo 1;
     exit;
 }
-marketengine_delete_sample_data();
+
 function marketengine_delete_sample_data()
 {
-    //if (!empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'marketengine-setup')) {
+    if (!empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'marketengine-setup')) {
         global $wpdb;
 
         // delete message
         $message_table = $wpdb->prefix . 'marketengine_message_item';
         $message_meta_table = $wpdb->prefix . 'marketengine_message_itemmeta';
         $wpdb->query("DELETE from $message_table WHERE ID IN ( SElECT marketengine_message_item_id FROM $message_meta_table WHERE meta_key = 'is_sample_data' )");
-        
+
         $post_ids  = $wpdb->get_results("SElECT marketengine_message_item_id FROM $message_meta_table WHERE meta_key = 'is_sample_data'", ARRAY_A);
         $post_list = '0';
         foreach ($post_ids as $key => $value) {
@@ -356,6 +356,18 @@ function marketengine_delete_sample_data()
         }
         $wpdb->query("DELETE from $wpdb->postmeta  WHERE post_id IN ( " . $post_list . " )");
 
+        // delete order item
+        $order_item = $wpdb->prefix . 'marketengine_order_items';
+        $order_item_meta = $wpdb->prefix . 'marketengine_order_itemmeta';
+        $order_item_ids  = $wpdb->get_results("SElECT order_item_id FROM $order_item WHERE order_id IN ( " . $post_list . " )", ARRAY_A);
+        $order_item_list = '0';
+        foreach ($order_item_ids as $key => $value) {
+            $order_item_list .= ', ' . $value['order_item_id'];
+        }
+        // delete order itemmeta
+        $wpdb->query("DELETE from $order_item_meta  WHERE marketengine_order_item_id IN ( " . $order_item_list . " )");
+        // delete order item
+        $wpdb->query("DELETE from $order_item  WHERE order_id IN ( " . $post_list . " )");
 
         // delete sample review
         $wpdb->query("DELETE from $wpdb->comments WHERE comment_ID IN ( SElECT comment_id FROM $wpdb->commentmeta as B WHERE B.meta_key = 'is_sample_data' )");
@@ -379,8 +391,8 @@ function marketengine_delete_sample_data()
 
         delete_option('me-added-sample-data');
         wp_delete_comment( 1 );
-        //echo 1;
-        //exit;
-    //}
+        echo 1;
+        exit;
+    }
 }
 add_action('wp_ajax_me-remove-sample-data', 'marketengine_delete_sample_data');

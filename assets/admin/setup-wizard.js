@@ -63,31 +63,51 @@
                     url: me_globals.ajaxurl,
                     data: {
                         action: 'me-add-sample-data',
-                        number : i,
+                        number: i,
                         _wpnonce: $('#_wpnonce').val()
                     },
                     beforeSend: function() {
                         $parent_section.addClass('me-setup-section-loading');
                     },
                     success: function(res, xhr) {
-                        
-                        count ++;
+                        count++;
                         console.log(count);
                         console.log(i);
-                        if(count == i) {
+                        if (count == i) {
                             $parent_section.removeClass('me-setup-section-loading');
                             $target.parents('.me-setup-wrap').addClass('active');
                         }
                     }
                 });
             };
-            setTimeout(function(){
+            setTimeout(function() {
                 $parent_section.removeClass('me-setup-section-loading');
                 $target.parents('.me-setup-wrap').addClass('active');
             }, 45000);
         });
-
-        $('.me-smail-submit-btn').click(function(event){
+        // remove sample data
+        $('#me-remove-sample-data').on('click', function(event) {
+            var $target = $(event.currentTarget);
+            var $parent_section = $target.parents('.me-setup-section');
+            var $parent_container = $target.parents('.me-setup-container');
+            var count = 1;
+            $.ajax({
+                type: 'post',
+                url: me_globals.ajaxurl,
+                data: {
+                    action: 'me-remove-sample-data',
+                    _wpnonce: $('#_wpnonce').val()
+                },
+                beforeSend: function() {
+                    $parent_section.addClass('me-setup-section-loading');
+                },
+                success: function(res, xhr) {
+                    $parent_section.removeClass('me-setup-section-loading');
+                            $target.parents('.me-setup-wrap').removeClass('active');
+                }
+            });
+        });
+        $('.me-smail-submit-btn').click(function(event) {
             var $target = $(event.currentTarget);
             $target.parents('.me-setup-wrap').addClass('active');
         });

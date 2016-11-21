@@ -340,6 +340,9 @@ class ME_Setup_Wizard
 						<div class="me-setup-sample-finish">
 							<p><?php _e("Few users, orders and some sample listings have already been generated in each of your categories.", "enginethemes");?></p>
 							<p><?php _e("You will be able to remove those samples with another click later.", "enginethemes");?></p>
+							<label class="me-setup-data-btn" id="me-add-sample-data" for="me-setup-sample-data">
+								<span id="me-remove-sample-data"><?php _e("REMOVE SAMPLE DATA", "enginethemes");?></span>
+							</label>
 						</div>
 					</form>
 				</div>
