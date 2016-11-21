@@ -118,7 +118,11 @@ return apply_filters('marketengine_marketplace_options',
             'slug'     => 'sample-data-section',
             'type'     => 'section',
             'template' => array(
-
+                'dispute-time-limit' => array(
+                    'label'       => __("Sample Data", "enginethemes"),
+                    'type'        => 'sampledata',
+                    'class_name'  => 'no-zero positive',
+                ),
             ),
         ),
     )
