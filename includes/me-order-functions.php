@@ -300,7 +300,6 @@ add_filter('me_filter_order', 'me_filter_order_query', 1, 2);
  */
 function me_get_order_status_list() {
     $order_status = array(
-        'pending' => __("Pending", "enginethemes"),
         'me-pending'  => __("Pending", "enginethemes"), // mainly intended for technical case, when an error occurs payment, or payment by bank transfer confirmation to admin
         'publish'     => __("Actived", "enginethemes"), // mainly intended for technical case, when an error occurs payment, or payment by bank transfer confirmation to admin
         // 'me-active'   => __("Finished", "enginethemes"), // Status of payment order was not yet eligible to transfer money to the account Seller.
