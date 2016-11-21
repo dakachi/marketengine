@@ -114,6 +114,7 @@ class ME_Setup_Wizard
     		update_option( 'me-added-sample-data', 1 );
     		marketengine_add_sample_listing();
     	}
+    	echo 1111;
     }
 
     public function admin_menus()
