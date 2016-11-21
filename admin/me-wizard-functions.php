@@ -48,7 +48,7 @@ function me_get_functional_pages()
 {
     return array(
         'user_account'  => array(
-            'post_title'   => __("User Account", "enginethemes"),
+            'post_title'   => __("My Account", "enginethemes"),
             'post_content' => '[me_user_account]',
         ),
         'post_listing'  => array(
@@ -56,11 +56,11 @@ function me_get_functional_pages()
             'post_content' => '[me_post_listing_form]',
         ),
         'edit_listing'  => array(
-            'post_title'   => __("Edit a Listing", "enginethemes"),
+            'post_title'   => __("Edit the Listing", "enginethemes"),
             'post_content' => '[me_edit_listing_form]',
         ),
         'checkout'      => array(
-            'post_title'   => __("Checkout Page", "enginethemes"),
+            'post_title'   => __("Checkout", "enginethemes"),
             'post_content' => '[me_checkout_form]',
         ),
         'confirm_order' => array(
@@ -68,7 +68,7 @@ function me_get_functional_pages()
             'post_content' => '[me_confirm_order]',
         ),
         'cancel_order'  => array(
-            'post_title'   => __("Cancel Order", "enginethemes"),
+            'post_title'   => __("Order Cancellation", "enginethemes"),
             'post_content' => '[me_cancel_payment]',
         ),
         'inquiry'       => array(

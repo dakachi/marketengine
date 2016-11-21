@@ -18,7 +18,7 @@ if (get_option('users_can_register')):
 
 	<form id="register-form" action="" method="post">
 
-		<h3><?php _e("Register", "enginethemes"); ?></h3>
+		<h3><?php _e("Become our Member", "enginethemes"); ?></h3>
 
 		<?php me_print_notices(); ?>
 		<?php do_action('marketengine_user_register_form_start');?>

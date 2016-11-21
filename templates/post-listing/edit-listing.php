@@ -49,7 +49,7 @@ $listing_content = apply_filters('the_content', $listing->post_content);
 <div id="marketengine-wrapper" class="marketengine">
 	<div class="marketengine-post-listing-wrap">
 		<form  id="post-listing-form" class="post-listing-form me-edit-listing" method="post" accept-charset="utf-8" enctype="multipart/form-data">
-			<h3>Edit Listing</h3>
+			<h3><?php _e('Edit the Listing', 'enginethemes'); ?></h3>
 			<?php me_print_notices(); ?>
 
 			<?php do_action('marketengine_edit_listing_form_start', $listing); ?>
