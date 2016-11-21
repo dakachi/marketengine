@@ -24,7 +24,7 @@ $total = 0;
 				<div class="me-cart-listing">
 					<a href="<?php echo get_permalink( $listing_obj->ID ); ?>">
 						<?php echo get_the_post_thumbnail($listing_obj->ID); ?>
-						<span><?php echo esc_html(get_the_title($listing_obj->ID)); ?></span>
+						<span><?php echo esc_html($listing_item['title']); ?></span>
 					</a>
 				</div>
 			</div>
