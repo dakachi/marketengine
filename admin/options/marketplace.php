@@ -182,7 +182,7 @@ return apply_filters('marketengine_marketplace_options',
                 'dispute-time-limit' => array(
                     'label'       => __("Sample Data", "enginethemes"),
                     'type'        => 'sampledata',
-                    'class_name'  => 'no-zero positive',
+                    'class_name'  => 'me-sample-data',
                 ),
             ),
         ),
