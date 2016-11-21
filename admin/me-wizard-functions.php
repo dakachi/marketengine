@@ -202,6 +202,7 @@ function marketengine_add_sample_user($user_data)
 
     if(is_multisite()) {
         $blog_id = get_current_blog_id();
+        add_user_to_blog( $blog_id, $user->ID, 'author' );
     }
 
     return $user->ID;
