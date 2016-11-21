@@ -1,5 +1,9 @@
 /* global me_globals.ajaxurl, wpAjax*/
 (function($) {
+    $(document).ready(function() {
+        $('.me-parent-category').change();
+    });
+    
     $('.me-parent-category').change(function(e) {
         var parent_cat = $(this).val();
         $.get(me_globals.ajaxurl, {
@@ -10,21 +14,21 @@
                 return;
             }
 
-            // $('.listing-type option').removeAttr('disabled');
-            // if(!r.data.support_contact) {
-            //     $('.listing-type option[value="contact"]').attr('disabled','disabled');
-            //     $('select.listing-type').val('purchasion').change();
-            // }
+            $('.listing-type option').removeAttr('disabled');
+            if(!r.data.support_contact) {
+                $('.listing-type option[value="contact"]').attr('disabled','disabled');
+                $('select.listing-type').val('purchasion').change();
+            }
 
-            // if(!r.data.support_purchase) {
-            //     $('.listing-type option[value="purchasion"]').attr('disabled','disabled');
-            //     $('select.listing-type').val('contact').change();
-            // }
+            if(!r.data.support_purchase) {
+                $('.listing-type option[value="purchasion"]').attr('disabled','disabled');
+                $('select.listing-type').val('contact').change();
+            }
 
-            // if(!r.data.support_contact && !r.data.support_purchase) {
-            //     $('select.listing-type').val('purchasion').change();
-            //     $('.listing-type option').removeAttr('disabled');
-            // }
+            if(!r.data.support_contact && !r.data.support_purchase) {
+                $('select.listing-type').val('purchasion').change();
+                $('.listing-type option').removeAttr('disabled');
+            }
 
             if(r.data.has_child == true) {
                 $('.me-sub-category').removeClass('me-sub-category-empty');
