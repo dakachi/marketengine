@@ -143,6 +143,15 @@ function marketengine_option_menu() {
         'me-settings',
         'marketengine_option_view'
     );
+
+    add_submenu_page(
+        'marketengine',
+        __("Setup Wizard", "enginethemes"),
+        __("Setup Wizard", "enginethemes"),
+        'manage_options',
+        '?page=marketengine-setup',
+        null
+    );
 }
 add_action('admin_menu', 'marketengine_option_menu');
 

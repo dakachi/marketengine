@@ -66,7 +66,7 @@ return array(
             'user_email'   => 'alanroger@mailinator.com',
             'location'     => 'France',
             'user_pass'    => '123',
-            'avatar'       => 'avatar-2.jpg',
+            'avatar'       => 'avatar-5.jpg',
             'paypal_email' => 'dinhle1987-per@yahoo.com',
             'review'       => array(
                 'content' => 'Received the wrong color.',
