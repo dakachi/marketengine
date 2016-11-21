@@ -28,12 +28,12 @@ class ME_Listing_Handle
      *
      * @return WP_Error| WP_Post
      */
-    public static function insert($listing_data, $attachment = array())
+    public static function insert($listing_data, $is_update = false)
     {
 
         $user_ID = get_current_user_id();
         // validate data
-        $is_valid = self::validate($listing_data);
+        $is_valid = self::validate($listing_data, $is_update);
         if (is_wp_error($is_valid)) {
             return $is_valid;
         }
@@ -112,7 +112,7 @@ class ME_Listing_Handle
      *
      * @return WP_Error| WP_Post
      */
-    public static function update($listing_data, $attachment = array())
+    public static function update($listing_data)
     {
         $current_user_id    = get_current_user_id();
         $listing_data['ID'] = $listing_data['edit'];
@@ -134,7 +134,7 @@ class ME_Listing_Handle
             return new WP_Error('permission_denied', __("You can not change the listing category.", "enginethemes"));
         }
 
-        return self::insert($listing_data, $attachment);
+        return self::insert($listing_data, true);
     }
 
     /**
@@ -263,7 +263,7 @@ class ME_Listing_Handle
      * @return True|WP_Error True if success, WP_Error if false
      *
      */
-    public static function validate($listing_data)
+    public static function validate($listing_data, $is_update =false)
     {
         $current_user_id = get_current_user_id();
         $invalid_data    = array();
@@ -335,7 +335,7 @@ class ME_Listing_Handle
         // check supported listing type
         $purchase_cats = me_option('purchasion-available');
         $contact_cats  = me_option('contact-available');
-        if (in_array($listing_data['parent_cat'], $purchase_cats) || in_array($listing_data['parent_cat'], $contact_cats)) {
+        if (!$is_update && (in_array($listing_data['parent_cat'], $purchase_cats) || in_array($listing_data['parent_cat'], $contact_cats))) {
             if (!in_array($listing_data['parent_cat'], me_option($listing_data['listing_type'] . '-available'))) {
                 $term                             = get_term($listing_data['parent_cat']);
                 $invalid_data['unsupported_type'] = sprintf(
