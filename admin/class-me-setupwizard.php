@@ -242,7 +242,7 @@ class ME_Setup_Wizard
 			<div class="me-setup-container me-setup-page" id="page" data-step="1">
 				<form>
 					<h2><?php _e("Page Setup", "enginethemes");?></h2>
-					<p><?php _e("To run your marketplace properly, MarketEngine needs to create some specific pages. This step will automatically generate these needed pages if they don,t exist:", "enginethemes");?></p>
+					<p><?php _e("To run your marketplace properly, MarketEngine needs to create some specific pages. This step will automatically generate these needed pages if they don't exist:", "enginethemes");?></p>
 					<div class="me-spage-group">
 						<h3><?php _e("User Account", "enginethemes");?></h3>
 						<p><?php _e("The main page for your users, with many endpoints to handle account information, password, listing management, order and purchase management...
@@ -250,7 +250,7 @@ class ME_Setup_Wizard
 					</div>
 					<div class="me-spage-group">
 						<h3><?php _e("Listing", "enginethemes");?></h3>
-						<p><?php _e("Two pages will be generated: `Post-a-listing` and `Edit-a-listing`, letting your users post a new listing and edit their existing listings.
+						<p><?php _e("Two pages will be generated: “Post-a-listing” and “Edit-a-listing”, letting your users post a new listing and edit their existing listings.
 ", "enginethemes"); ?></p>
 					</div>
 					<div class="me-spage-group">
@@ -260,7 +260,7 @@ class ME_Setup_Wizard
 					</div>
 					<div class="me-spage-group">
 						<h3><?php _e("Inquiry", "enginethemes");?></h3>
-						<p><?php _e("This page handles the `Make an inquiry` flow, providing buyers and sellers an optimized conversation section to exchange more information about the Listing.", "enginethemes"); ?></p>
+						<p><?php _e("This page handles the “Make an inquiry” flow, providing buyers and sellers an optimized conversation section to exchange more information about the Listing.", "enginethemes"); ?></p>
 					</div>
 					<div class="me-setup-control">
 						<a href="#personalize" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes");?></a>
