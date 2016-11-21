@@ -207,7 +207,7 @@ class ME_Post_Types
         // TODO: tam thoi de day
         register_post_type('me_order', array(
             'labels'             => array(
-                'name'               => __('Order', "enginethemes"),
+                'name'               => __('Orders', "enginethemes"),
                 'singular_name'      => __('Order', "enginethemes"),
                 'add_new'            => false,
                 'add_new_item'       => __('Add New Order', "enginethemes"),
@@ -216,7 +216,7 @@ class ME_Post_Types
                 'all_items'          => __('Orders', "enginethemes"),
                 'view_item'          => __('View Order', "enginethemes"),
                 'search_items'       => __('Search Order', "enginethemes"),
-                'not_found'          => __('No Orders found', "enginethemes"),
+                'not_found'          => __('No orders found', "enginethemes"),
                 'not_found_in_trash' => __('No Orders found in Trash', "enginethemes"),
                 'parent_item_colon'  => '',
                 'menu_name'          => __('MarketEngine', "enginethemes"),
