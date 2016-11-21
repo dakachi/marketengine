@@ -22,7 +22,7 @@ $location = $seller->location[0] ? $seller->location[0] : '';
 			<b class="pull-right"></b>
 		</li>
 		<li>
-			<span class="pull-left"><?php echo __('Member Sinced:'); ?></span>
+			<span class="pull-left"><?php echo __('Member Since:'); ?></span>
 			<b class="pull-right"><?php echo date( 'd M, Y', strtotime($seller->user_registered)); ?></b>
 		</li>
 	</ul>
