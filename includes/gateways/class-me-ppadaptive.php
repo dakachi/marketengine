@@ -461,8 +461,8 @@ class ME_PPAdaptive_Request {
             $amount = me_get_order_item_meta($order_item_id, '_amount', true);
             if ($commission_fee > 0) {
                 // $amount        = $amount - $commission_fee;
-                $commission    = ((float) $amount * (float) $commission_fee) / 100;
-                $amount        = $amount - $commission;
+                $commission    = round( ((float) $amount * (float) $commission_fee) / 100, 2 );
+                $amount        = round( $amount - $commission, 2 );
                 $receiver_list = array(
                     'receiverList.receiver(0).amount' => $amount,
                     'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
@@ -494,7 +494,7 @@ class ME_PPAdaptive_Request {
 
             } else {
                 $receiver_list = array(
-                    'receiverList.receiver(0).amount' => $amount,
+                    'receiverList.receiver(0).amount' => round($amount, 2),
                     'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
                 );
             }
