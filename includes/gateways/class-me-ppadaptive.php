@@ -185,7 +185,10 @@ class ME_PPAdaptive extends ME_Payment {
                 $response = new WP_Error('payment_fail', $error[0]->message);
             }
         }
-
+        echo "<pre>";
+        print_r($response);
+        echo "</pre>";
+        exit;
         return $response;
 
     }
