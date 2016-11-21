@@ -94,3 +94,15 @@ function me_filter_order_count_result( $results ) {
 
     return $temp;
 }
+
+function me_get_listing_categories($args = array('parent' => 0))
+{
+    $result   = array();
+    $termlist = get_terms('listing_category', $args );
+
+    foreach ($termlist as $term) {
+        $result[$term->term_id] =  $term->name;
+    }
+
+    return $result;
+}
