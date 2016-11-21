@@ -52,11 +52,11 @@ function me_get_functional_pages()
             'post_content' => '[me_user_account]',
         ),
         'post_listing'  => array(
-            'post_title'   => __("Post A Listing", "enginethemes"),
+            'post_title'   => __("Post a Listing", "enginethemes"),
             'post_content' => '[me_post_listing_form]',
         ),
         'edit_listing'  => array(
-            'post_title'   => __("Edit Listing", "enginethemes"),
+            'post_title'   => __("Edit a Listing", "enginethemes"),
             'post_content' => '[me_edit_listing_form]',
         ),
         'checkout'      => array(
@@ -72,7 +72,7 @@ function me_get_functional_pages()
             'post_content' => '[me_cancel_payment]',
         ),
         'inquiry'       => array(
-            'post_title'   => __("Inquiry", "enginethemes"),
+            'post_title'   => __("Make an inquiry", "enginethemes"),
             'post_content' => '[me_inquiry_form]',
         ),
     );
