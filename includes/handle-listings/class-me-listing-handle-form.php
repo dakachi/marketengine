@@ -154,9 +154,14 @@ class ME_Listing_Handle_Form extends ME_Form {
             me_get_template('post-listing/sub-cat', array('child_categories' => $child_categories) );
             $content = ob_get_clean();
 
+            $purchase_cats = me_option('purchasion-available');
+            $contact_cats = me_option('contact-available');
+
             wp_send_json_success(array(
                 'content' => $content,
                 'has_child' => !empty($child_categories),
+                'support_purchase' => in_array($_REQUEST['parent-cat'], $purchase_cats),
+                'support_contact' => in_array($_REQUEST['parent-cat'], $contact_cats)
             ));
         }
     }

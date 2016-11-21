@@ -117,9 +117,20 @@ class ME_Listing_Handle {
         $listing                     = me_get_listing($listing_data['ID']);
         $listing_data['post_author'] = $listing->post_author;
 
-        // if($listing->post_author != $current_user_id) {
-        //     return new WP_Error('permission_denied', __("You are not allowed to edit this listing.", "enginethemes"));
-        // }
+
+        // unset($listing_data['parent_cat']);
+        // unset($listing_data['sub_cat']);
+
+        $listing_type = $listing->get_listing_type();
+        if($listing_type !== $listing_data['listing_type']) {
+            return new WP_Error('permission_denied', __("You can not change the listing type.", "enginethemes"));
+        }
+
+        $listing_category = wp_get_post_terms( $listing->ID, 'listing_category', array('fields' => 'ids') );
+
+        if(!in_array($listing_data['parent_cat'], $listing_category) || !in_array($listing_data['sub_cat'], $listing_category)) {
+            return new WP_Error('permission_denied', __("You can not change the listing category.", "enginethemes"));   
+        }
 
         return self::insert($listing_data, $attachment);
     }

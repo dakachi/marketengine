@@ -21,9 +21,9 @@ $pricing_unit = $listing->get_pricing_unit();
 		<input type="hidden" name="add_to_cart" value="<?php echo $listing->ID; ?>" />
 
 		<?php if(me_is_activated_user()) : ?>
-		<input type="submit" class="me-buy-now-btn" value="<?php echo me_option('purchase-action', __("BUY NOW", "enginethemes")  ); //_e("BUY NOW", "enginethemes"); ?>">
+		<input type="submit" class="me-buy-now-btn" value="<?php echo me_option('purchasion-action', __("BUY NOW", "enginethemes")  ); //_e("BUY NOW", "enginethemes"); ?>">
 		<?php else : ?>
-		<a href="<?php the_permalink(); ?>" class="me-buy-now-btn"><?php echo me_option('purchase-action', __("BUY NOW", "enginethemes")  ); //_e("BUY NOW", "enginethemes"); ?></a>
+		<a href="<?php the_permalink(); ?>" class="me-buy-now-btn"><?php echo me_option('purchasion-action', __("BUY NOW", "enginethemes")  ); //_e("BUY NOW", "enginethemes"); ?></a>
 		<?php endif; ?>
 
 	</form>
