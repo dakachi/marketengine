@@ -211,6 +211,7 @@ function marketengine_option_header() {
  * @since 1.0
  */
 function marketengine_option_footer() {
+
     ?>
     </div>
 </div>
@@ -228,3 +229,9 @@ function me_admin_menu_class() {
     $menu[28][6] .= '-icon-me-logo';
 }
 add_action( 'admin_menu', 'me_admin_menu_class', 10 );
+
+function me_admin_footer_text( $text) {
+    $text = sprintf( 'Thank you for creating with <a href="%s">EngineThemes</a>.', 'https://www.enginethemes.com/' );
+    return $text;
+}
+add_filter( 'admin_footer_text', 'me_admin_footer_text' );

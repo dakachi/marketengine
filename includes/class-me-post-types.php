@@ -162,8 +162,8 @@ class ME_Post_Types
                 'all_items'          => __('All Listings', "enginethemes"),
                 'view_item'          => __('View Listing', "enginethemes"),
                 'search_items'       => __('Search Listings', "enginethemes"),
-                'not_found'          => __('No Listing found', "enginethemes"),
-                'not_found_in_trash' => __('No Listings found in Trash', "enginethemes"),
+                'not_found'          => __('No listings found', "enginethemes"),
+                'not_found_in_trash' => __('No listings found in Trash', "enginethemes"),
                 'parent_item_colon'  => '',
                 'menu_name'          => __('Listings', "enginethemes"),
             );
