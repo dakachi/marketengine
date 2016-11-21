@@ -33,7 +33,7 @@ if (get_option('users_can_register')):
 			<div class="me-col-md-6">
 				<div class="marketengine-group-field">
 					<div class="marketengine-input-field">
-					    <label class="me-field-title" for="firstname"><?php _e("First name", "enginethemes");?></label>
+					    <label class="me-field-title" for="firstname"><?php _e("First Name", "enginethemes");?></label>
 					    <input type="text" name="first_name" id="firstname" value="<?php if (!empty($_POST['first_name'])) {echo esc_attr($_POST['first_name']);}?>">
 					</div>
 				</div>
@@ -41,7 +41,7 @@ if (get_option('users_can_register')):
 			<div class="me-col-md-6">
 				<div class="marketengine-group-field">
 					<div class="marketengine-input-field">
-					    <label class="me-field-title" for="lastname"><?php _e("Last name", "enginethemes");?></label>
+					    <label class="me-field-title" for="lastname"><?php _e("Last Name", "enginethemes");?></label>
 					    <input type="text" name="last_name" id="lastname" value="<?php if (!empty($_POST['last_name'])) {echo esc_attr($_POST['last_name']);}?>">
 					</div>
 				</div>
@@ -55,13 +55,13 @@ if (get_option('users_can_register')):
 		</div>
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
-			    <label class="me-field-title" for="password"><?php _e("Create password", "enginethemes");?></label>
+			    <label class="me-field-title" for="password"><?php _e("Create Password", "enginethemes");?></label>
 			    <input type="password" name="user_pass" class="required" id="password">
 			</div>
 		</div>
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
-			    <label class="me-field-title" for="confirm-password"><?php _e("Confirm password", "enginethemes");?></label>
+			    <label class="me-field-title" for="confirm-password"><?php _e("Confirm Password", "enginethemes");?></label>
 			    <input type="password" name="confirm_pass" class="required" id="confirm-password">
 			</div>
 		</div>
@@ -92,4 +92,3 @@ if (get_option('users_can_register')):
 else :
 _e("The register function is disabled.", "enginethemes");
 endif;
-	
