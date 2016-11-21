@@ -170,9 +170,10 @@ function me_cron_close_order() {
     $current = date('Y-m-d H:i:s', current_time('timestamp'));
 
     $sql = "SELECT DISTINCT ID FROM {$wpdb->posts} as p
-                INNER JOIN {$wpdb->postmeta} as mt ON mt.post_id = p.ID AND mt.meta_key = '_me_order_closed_time'
+                INNER JOIN {$wpdb->postmeta} as mt ON mt.post_id = p.ID
                 WHERE   (p.post_type = 'me_order')
                     AND (p.post_status = 'me-complete')
+                    AND mt.meta_key = '_me_order_closed_time'
                     AND (mt.meta_value < '{$current}')
                     AND (mt.meta_value != '' ) ";
 

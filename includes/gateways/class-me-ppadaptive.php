@@ -175,7 +175,7 @@ class ME_PPAdaptive extends ME_Payment {
             'body'        => $data,
             'httpversion' => '1.1',
         ));
-
+        
         if (!is_wp_error($response)) {
             $response = json_decode($response['body']);
             if (empty($response->error)) {

@@ -12,7 +12,6 @@ if( !current_user_can('edit_posts') ) {
     $login_url = me_get_auth_url();
     wp_redirect( $login_url );
 }
-
 $user_id = get_current_user_id();
 $user_data = get_userdata($user_id);
 
@@ -29,7 +28,6 @@ if( !$buyer && !($seller == $user_data->user_login) ) {
 
 $title = $buyer ? __('My Transactions') : __('My Orders');
 $url = $buyer ? me_get_auth_url('purchases') : me_get_auth_url('orders');
-
 get_header();
 ?>
 <div id="marketengine-page">
@@ -55,7 +53,7 @@ get_header();
             } else {
                 me_get_template('purchases/order', array('order' => $order));
             }
-?>
+            ?>
         </div>
     </div>
 </div>
