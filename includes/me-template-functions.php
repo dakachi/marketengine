@@ -429,18 +429,18 @@ function me_get_order_status_info($status, $info_type = '')
             break;
         case 'publish':
             $style         = 'me-order-complete';
-            $text          = __('', 'enginethemes');
+            $text          = '';
             $order_process = 2;
             break;
         // chua co class cho status nay
         case 'me-active':
             $style         = 'me-order-complete';
-            $text          = __('', 'enginethemes');
+            $text          = '';
             $order_process = 2;
             break;
         case 'me-complete':
             $style         = 'me-order-complete';
-            $text          = __('', 'enginethemes');
+            $text          = '';
             $order_process = 2;
             break;
         case 'me-disputed':
@@ -450,17 +450,17 @@ function me_get_order_status_info($status, $info_type = '')
             break;
         case 'me-closed':
             $style         = 'me-order-closed';
-            $text          = __('', 'enginethemes');
+            $text          = '';
             $order_process = 5;
             break;
         case 'me-resolved':
             $style         = 'me-order-resolved';
-            $text          = __('', 'enginethemes');
+            $text          = '';
             $order_process = 5;
             break;
         default:
             $style         = 'me-order-pending';
-            $text          = __('', 'enginethemes');
+            $text          = '';
             $order_process = 1;
             break;
     }
