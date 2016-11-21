@@ -28,15 +28,15 @@ $query = new WP_Query( $args );
 <?php me_get_template('global/order-filter'); ?>
 
 <div class="me-table me-orderlist-table">
+	<div class="me-table-rhead">
+		<div class="me-table-col me-order-id"><?php _e("TRANSACTION ID", "enginethemes"); ?></div>
+		<div class="me-table-col me-order-status"><?php _e("STATUS", "enginethemes"); ?></div>
+		<div class="me-table-col me-order-amount"><?php _e("AMOUNT", "enginethemes"); ?></div>
+		<div class="me-table-col me-order-date"><?php _e("DATE OF ORDER", "enginethemes"); ?></div>
+		<div class="me-table-col me-order-listing"><?php _e("LISTING", "enginethemes"); ?></div>
+	</div>
 	<?php
 	if( $query->have_posts() ) : ?>
-		<div class="me-table-rhead">
-			<div class="me-table-col me-order-id"><?php _e("TRANSACTION ID", "enginethemes"); ?></div>
-			<div class="me-table-col me-order-status"><?php _e("STATUS", "enginethemes"); ?></div>
-			<div class="me-table-col me-order-amount"><?php _e("AMOUNT", "enginethemes"); ?></div>
-			<div class="me-table-col me-order-date"><?php _e("DATE OF ORDER", "enginethemes"); ?></div>
-			<div class="me-table-col me-order-listing"><?php _e("LISTING", "enginethemes"); ?></div>
-		</div>
 	<?php
 		while( $query->have_posts() ) : $query->the_post();
 
@@ -76,13 +76,6 @@ $query = new WP_Query( $args );
 <?php
 	else:
 ?>
-	<div class="me-table-rhead me-table-rhead-empty">
-		<div class="me-table-col me-order-id"><?php _e("TRANSACTION ID", "enginethemes"); ?></div>
-		<div class="me-table-col me-order-status"><?php _e("STATUS", "enginethemes"); ?></div>
-		<div class="me-table-col me-order-amount"><?php _e("AMOUNT", "enginethemes"); ?></div>
-		<div class="me-table-col me-order-date"><?php _e("DATE OF ORDER", "enginethemes"); ?></div>
-		<div class="me-table-col me-order-listing"><?php _e("LISTING", "enginethemes"); ?></div>
-	</div>
 	<div class="me-table-row-empty">
 		<div>
 			<span><?php _e('There are no transactions yet.', 'enginethemes'); ?></span>
