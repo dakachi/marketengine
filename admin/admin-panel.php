@@ -111,7 +111,7 @@ function marketengine_option_menu() {
 
     if (isset($_GET['post_type']) && $_GET['post_type'] == 'listing') {
         echo '<style type="text/css">
-            #favorite-actions, .add-new-h2, .page-title-action, .hide-if-no-js
+            #favorite-actions, .add-new-h2, .page-title-action, .hide-if-no-js { display:none; }
             .sign {font-weight: bold;}
         </style>';
     }
