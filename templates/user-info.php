@@ -29,7 +29,7 @@ $member_sinced = date_i18n( get_option( 'date_format' ), strtotime(get_the_autho
 		</li>
 		*/ ?>
 		<li>
-			<span class="pull-left"><?php echo __('Member Sinced:', 'enginethemes'); ?></span>
+			<span class="pull-left"><?php echo __('Member Since:', 'enginethemes'); ?></span>
 			<b class="pull-right"><?php echo $member_sinced; ?></b>
 		</li>
 	</ul>
