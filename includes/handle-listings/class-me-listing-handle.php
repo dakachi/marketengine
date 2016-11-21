@@ -339,7 +339,7 @@ class ME_Listing_Handle
             if (!in_array($listing_data['parent_cat'], me_option($listing_data['listing_type'] . '-available'))) {
                 $term                             = get_term($listing_data['parent_cat']);
                 $invalid_data['unsupported_type'] = sprintf(
-                    __("The listing %s is not supported in category %s.", "enginethemes"),
+                    __("The listing type %s is not supported in category %s.", "enginethemes"),
                     me_get_listing_type_lable($listing_data['listing_type']),
                     $term->name
                 );
