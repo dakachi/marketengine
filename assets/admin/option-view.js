@@ -139,8 +139,16 @@ _.templateSettings = {
 
             view.option.save('', '', {
                 success: function(result, status, jqXHR) {
-                    if( $target.hasClass('no-zero') && $target.val() == 0) {
-                        status.success = false;
+
+                    if( $target.hasClass('no-zero') ) {
+
+                        if( $target.val() === '' ) {
+                            return;
+                        }
+
+                        if( $target.val() === 0) {
+                            status.success = false;
+                        }
                     }
 
                     if (status.success) {
