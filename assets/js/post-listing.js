@@ -9,6 +9,23 @@
             if (0 === r || 'success' != stat) {
                 return;
             }
+
+            // $('.listing-type option').removeAttr('disabled');
+            // if(!r.data.support_contact) {
+            //     $('.listing-type option[value="contact"]').attr('disabled','disabled');
+            //     $('select.listing-type').val('purchasion').change();
+            // }
+
+            // if(!r.data.support_purchase) {
+            //     $('.listing-type option[value="purchasion"]').attr('disabled','disabled');
+            //     $('select.listing-type').val('contact').change();
+            // }
+
+            // if(!r.data.support_contact && !r.data.support_purchase) {
+            //     $('select.listing-type').val('purchasion').change();
+            //     $('.listing-type option').removeAttr('disabled');
+            // }
+
             if(r.data.has_child == true) {
                 $('.me-sub-category').removeClass('me-sub-category-empty');
                 $('.me-sub-category').removeAttr('disabled');
@@ -20,19 +37,6 @@
             }
         });
     });
-
-    // $('.select-category').on('change', function() {
-    //     var cat = $(this).val();
-    //     $.get(me_globals.ajaxurl, {
-    //         'action': 'me-load-listing-type',
-    //         'parent-cat': cat
-    //     }, function(r, stat) {
-    //         if (0 === r || 'success' != stat) {
-    //             return;
-    //         }
-    //         $('#listing-type-container').html(r.data);
-    //     });
-    // });
 
     $('#listing-type-select').on('change', function() {
         var type = $(this).val();

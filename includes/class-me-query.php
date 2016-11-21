@@ -27,8 +27,13 @@ function me_pre_get_posts($query) {
         return;
     }
 
+    if(is_archive('listing')) {
+        $query->set( 'post_status', 'publish');
+    }
+
     if($query->is_author()) {
         $query->set( 'post_type', 'listing');
+        $query->set( 'post_status', 'publish');
     }
 
     if ($GLOBALS['wp_rewrite']->use_verbose_page_rules && isset($query->queried_object->ID) && $query->queried_object->ID === me_get_page_id('listings')) {

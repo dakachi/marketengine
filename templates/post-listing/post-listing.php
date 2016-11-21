@@ -31,7 +31,11 @@ if(me_option('user-email-confirmation')) {
 <div id="marketengine-wrapper" class="marketengine">
 	<div class="marketengine-post-listing-wrap">
 		<form  id="post-listing-form" class="post-listing-form" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+<<<<<<< HEAD
 			<h3><?php _e('Post a Listing', 'enginethemes'); ?></h3>
+=======
+			<h3><?php _e("Post a Listing", "enginethemes"); ?></h3>
+>>>>>>> 7f79efa92e478b6d5b0d05a9a3005a382e4d11d7
 			<?php me_print_notices(); ?>
 
 			<?php do_action('marketengine_post_listing_form_start'); ?>

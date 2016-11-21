@@ -18,8 +18,8 @@ function me_get_listing($post = null) {
 
 function me_get_listing_types() {
     $listing_types = array(
-        'purchasion' => __("Selling", "enginethemes"),
-        'contact'    => __("Offering", "enginethemes"),
+        'purchasion' => me_option('purchasion-title', __("Selling", "enginethemes")),//__("Selling", "enginethemes"),
+        'contact'    => me_option('contact-title', __("Offering", "enginethemes")),//__("Offering", "enginethemes"),
     );
     return apply_filters('me_get_listing_types', $listing_types);
 }
