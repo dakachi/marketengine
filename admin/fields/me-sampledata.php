@@ -15,10 +15,10 @@ class ME_Sampledata {
         <form id="add-sample-data" <?php if($is_added_sample_data) echo 'style="display:none;"' ?>>
             <div class="me-setup-sample">
                 <p><?php _e("You can add some sample data to grasp some clearer ideas of how your marketplace will look like.<br>Some sample listings will be generated in each of your categories, together with a few users &amp; orders to demonstrate the checkout flows.<br>", "enginethemes"); ?></p>
+                <p><?php _e("You will be able to remove those samples with another click later.", "enginethemes"); ?></p>
                 <label class="me-setup-data-btn" id="me-add-sample-data" for="me-setup-sample-data">
                     <span id="me-setup-sample-data"><?php _e("ADD SAMPLE DATA", "enginethemes"); ?></span>
                 </label>
-                <p><?php _e("You will be able to remove those samples with another click later.", "enginethemes"); ?></p>
             </div>
         </form>
         <script type="text/javascript">
