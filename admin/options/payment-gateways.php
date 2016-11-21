@@ -12,39 +12,39 @@ array(
         'type'     => 'section',
         'template' => array(
             'test-mode' => array(
-                'label'       => __("Test Mode", "enginethemes"),
-                'description' => __("", "enginethemes"),
+                'label'       => __("Payment Test Mode", "enginethemes"),
+                'description' => __("Enabling this will allow you to test payment without charging your account.", "enginethemes"),
                 'slug'        => 'test-mode',
                 'type'        => 'switch',
                 'name'        => 'test-mode',
                 'template'    => array(),
             ),
-            
+
             'paypal-adaptive-api' => array(
-                'label'       => __("Paypal Adaptive API", "enginethemes"),
-                'description' => __("Paypal Adaptive payments handles payments between a buyer and a seller.", "enginethemes"),
+                'label'       => __("PayPal Adaptive API", "enginethemes"),
+                'description' => __("Paypal Adaptive Payments handles all payments between buyer and seller.", "enginethemes"),
                 'slug'        => 'paypal-adaptive-api',
                 'type'        => 'multi_field',
                 'name'        => 'paypal-adaptive-api',
                 'template'    => array(
                     'receiver-email' => array(
                         'label'       => __("Receiver Email", "enginethemes"),
-                        'description' => __("The paypal email to receive commission", "enginethemes"),
+                        'description' => __("Enter your PayPal email to receive commission", "enginethemes"),
                         'slug'        => 'paypal-receiver-email',
                         'type'        => 'textbox',
                         'name'        => 'paypal-receiver-email',
                         'template'    => array(),
                     ),
                     'app-api' => array(
-                        'label'       => __("App API", "enginethemes"),
-                        'description' => __("", "enginethemes"),
+                        'label'       => __("App ID", "enginethemes"),
+                        'description' => __("Enter your PayPal Adaptive AppID", "enginethemes"),
                         'slug'        => 'paypal-app-api',
                         'type'        => 'textbox',
                         'name'        => 'paypal-app-api',
                         'template'    => array(),
                     ),
                     'username' => array(
-                        'label'       => __("Username", "enginethemes"),
+                        'label'       => __("PayPal API username", "enginethemes"),
                         'description' => __("", "enginethemes"),
                         'slug'        => 'paypal-api-username',
                         'type'        => 'textbox',
@@ -52,7 +52,7 @@ array(
                         'template'    => array(),
                     ),
                     'password' => array(
-                        'label'       => __("Password", "enginethemes"),
+                        'label'       => __("PayPal API password", "enginethemes"),
                         'description' => __("", "enginethemes"),
                         'slug'        => 'paypal-api-password',
                         'type'        => 'password',
@@ -60,7 +60,7 @@ array(
                         'template'    => array(),
                     ),
                     'signature' => array(
-                        'label'       => __("Signature", "enginethemes"),
+                        'label'       => __("PayPal API signature", "enginethemes"),
                         'description' => __("", "enginethemes"),
                         'slug'        => 'paypal-api-signature',
                         'type'        => 'textbox',
@@ -69,7 +69,7 @@ array(
                     ),
                 ),
             )
-            
+
         ),
     ),
 );

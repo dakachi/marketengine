@@ -61,13 +61,6 @@ return apply_filters('marketengine_marketplace_options',
                             'text'        => array(__('Left', 'enginethemes'), __('Right', 'enginethemes')),
                             'template'    => array(),
                         ),
-                        'currency-label'        => array(
-                            'label'       => __("Currency Label", "enginethemes"),
-                            'description' => __("The label of currency", "enginethemes"),
-                            'slug'        => 'payment-currency-label',
-                            'type'        => 'textbox',
-                            'name'        => 'payment-currency-label',
-                        ),
 
                         // 'thousand-sep' =>  array(
                         // 	'label' => __("Thousand Separator", "enginethemes"),
