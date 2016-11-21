@@ -39,7 +39,7 @@ class ME_User {
         $user_avatar = get_user_meta( $this->id, 'user_avatar', true);
         if($user_avatar) {
             $avatar_url = wp_get_attachment_url( $user_avatar );
-            return '<img alt="" src="'.$avatar_url.'" class="avatar avartar-{$size} photo" height="{$size}" width="{$size}">';
+            return '<img alt="" src="'.$avatar_url.'" class="avatar avartar-'.$size.' photo" height="'.$size.'" width="'.$size.'">';
         }
         return get_avatar($this->id);
     }
