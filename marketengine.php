@@ -2,7 +2,7 @@
 /*
 Plugin Name: MarketEngine
 Plugin URI: www.enginethemes.com
-Description: Easy implement a front form, and publish a marketplace application
+Description: A WordPress plugin allows you to build a multi vendor marketplace platform for any niche.
 Version: 1.0
 Author: EngineThemes team
 Author URI: https://enginethemes.com

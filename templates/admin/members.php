@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 
 $members = marketengine_members_report($_REQUEST);
 if(empty($_REQUEST['paged'])) {
-	$i = 1;	
+	$i = 1;
 }else {
 	$i = ($_REQUEST['paged'] - 1) * get_option( 'posts_per_page' ) + 1;
 }
@@ -24,7 +24,7 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 		<div class="me-section-content">
 			<div class="me-revenue-section">
 
-				<h3><?php _e("Report members", "enginethemes"); ?></h3>
+				<h3><?php _e("Report Members", "enginethemes"); ?></h3>
 
 				<?php me_get_template('admin/filter'); ?>
 
@@ -52,7 +52,7 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 							<?php $i++; ?>
 
 						<?php endforeach; ?>
-					<?php }else { 
+					<?php }else {
 						me_get_template('admin/report-none');
 					 } ?>
 				</div>
