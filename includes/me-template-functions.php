@@ -791,13 +791,23 @@ function me_format_size_units($bytes)
 
 function me_auth_page_title( $title, $id = null ) {
     
-    if (!is_user_logged_in() && is_page() && get_queried_object_id() === me_get_page_id('user_account')) {
+    if (is_page() && get_queried_object_id() === me_get_page_id('user_account')) {
         global $wp_query;
-        if( isset($wp_query->query_vars['register']) ) {
-            return __('Registration', 'enginethemes');
-        }
-        else {
-            return __('Member Login', 'enginethemes');
+        if(!is_user_logged_in() ) {
+            if( isset($wp_query->query_vars['register']) ) {
+                return __('Registration', 'enginethemes');
+            }
+            else {
+                return __('Member Login', 'enginethemes');
+            }
+        } else {
+            if( isset($wp_query->query_vars['listings']) ) {
+                return __('My Listings', 'enginethemes');
+            } elseif( isset($wp_query->query_vars['orders']) ) {
+                return __('My Orders', 'enginethemes');
+            } elseif( isset($wp_query->query_vars['purchases']) ) {
+                return __('My Transactions', 'enginethemes');
+            }
         }
     }
     return $title;
