@@ -8,9 +8,11 @@
 		<div class="me-contact">
 
 			<?php if(me_is_activated_user()) : ?>
-			<input type="submit" class="me-buy-now-btn" value="<?php echo me_option('contact-action', __("CONTACT NOW", "enginethemes"));  ?>">
+			<input type="submit" class="me-buy-now-btn" value="<?php echo me_option('contact-action') ?  me_option('contact-action') : __("CONTACT NOW", "enginethemes");?>">
 			<?php else : ?>
-			<a href="<?php the_permalink(); ?>" class="me-buy-now-btn"><?php echo me_option('contact-action', __("CONTACT NOW", "enginethemes"));  ?></a>
+			<a href="<?php the_permalink(); ?>" class="me-buy-now-btn">
+				<?php echo me_option('contact-action') ?  me_option('contact-action') : __("CONTACT NOW", "enginethemes"); ?>
+			</a>
 			<?php endif; ?>
 		</div>
 
