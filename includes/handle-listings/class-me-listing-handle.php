@@ -292,13 +292,13 @@ class ME_Listing_Handle
             $invalid_data = me_get_invalid_message($listing_data, $rules, $custom_attributes);
         }
 
-        // if (!empty($invalid_data)) {
-        //     $errors = new WP_Error();
-        //     foreach ($invalid_data as $key => $message) {
-        //         $errors->add($key, $message);
-        //     }
-        //     return $errors;
-        // }
+        if (!empty($invalid_data)) {
+            $errors = new WP_Error();
+            foreach ($invalid_data as $key => $message) {
+                $errors->add($key, $message);
+            }
+            return $errors;
+        }
 
         /**
          * Filter listing meta data validate rule
