@@ -394,12 +394,13 @@ class ME_Setup_Wizard
 						<h3><?php _e("Sample Data", "enginethemes");?></h3>
 						<div class="me-setup-sample">
 							<p><?php _e("You can add some sample data to grasp some clearer ideas of how your marketplace will look like. (Clicking on this button will generate 4 sample listings in each of your categories, together with a few users & orders to demonstrate the checkout flows.)", "enginethemes");?></p>
-							<label class="me-setup-data-btn" id="me-add-sample-data" for="me-setup-sample-data">
-								<span id="me-setup-sample-data"><?php _e("ADD SAMPLE DATA", "enginethemes");?></span>
-							</label>
 							<p>
 							<?php _e("You will be able to remove those samples with another click later.", "enginethemes"); ?>
 							</p>
+							<label class="me-setup-data-btn" id="me-add-sample-data" for="me-setup-sample-data">
+								<span id="me-setup-sample-data"><?php _e("ADD SAMPLE DATA", "enginethemes");?></span>
+							</label>
+							
 						</div>
 						<div class="me-setup-sample-finish">
 							<p><?php _e("Few users, orders and some sample listings have already been generated in each of your categories.", "enginethemes");?></p>
