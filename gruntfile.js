@@ -17,15 +17,13 @@ module.exports = function(grunt) {
         compress: {
             main: {
                 options: {
-                    archive: 'archive.zip'
+                    archive: 'marketengine.zip'
                 },
-                files: [{
-                    expand: true,
-                    src: ['./marketengine/**'],
-                    dest: './'
-                }]
+                files: [
+                    {expand: true, src: ['./*.php', './admin/**', './assets/**', './includes/**','./languages/**', './sample-data/**', './templates/**'], dest: './'}
+                ]
             }
-        },        
+        },
         watch: {
             phpunit: {
                 files: ['tests/*/*.php', 'tests/*.php', 'includes/*.php', 'includes/*/*.php'],

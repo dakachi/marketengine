@@ -49,8 +49,8 @@
                     $parent_container.removeClass('active');
                     if(res.success && res.step =='payment') {
                         console.log('a;');
-                        $('select[name="contact-available[]"]').html(res.data.contact_option);
-                        $('select[name="purchasion-available[]"]').html(res.data.purchase_option);
+                        $('select[name="contact_available[]"]').html(res.data.contact_option);
+                        $('select[name="purchasion_available[]"]').html(res.data.purchase_option);
                     }
                     $('.me-setup-container').eq(data_next).addClass('active');
                     $('.me-setup-line-step').eq(data_next).addClass('active');
