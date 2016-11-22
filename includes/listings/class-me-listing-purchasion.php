@@ -50,7 +50,7 @@ class ME_Listing_Purchasion extends ME_Listing{
             'per_unit' => __("/Unit", "enginethemes"),
             'per_hour' => __("/Hour", "enginethemes")
         );
-        return $pricing_text[get_post_meta($this->ID, 'pricing_unit', true)];   
+        return isset($pricing_text[get_post_meta($this->ID, 'pricing_unit', true)]) ? $pricing_text[get_post_meta($this->ID, 'pricing_unit', true)] : '';   
     }
 
     public function is_downloadable() {
