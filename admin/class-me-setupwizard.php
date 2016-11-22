@@ -108,7 +108,7 @@ class ME_Setup_Wizard
     	me_update_option('contact-title', $contact_title);
 
     	me_update_option('purchasion-action', $purchasion_action);
-    	me_update_option('contact-title', $contact_action);
+    	me_update_option('contact-action', $contact_action);
 
     	me_update_option('purchasion-available', $purchasion_available);
     	me_update_option('contact-available', $contact_available);
