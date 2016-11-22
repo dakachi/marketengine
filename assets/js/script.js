@@ -96,14 +96,19 @@ jQuery(document).ready(function($) {
 	 * Show/Hide menu page tablet/mobile
 	 */
 	$('.me-page-humberger').on('click', function() {
+		$('.marketengine-header-bottom').removeClass('me-account-active');
+		$('.me-account-humberger').removeClass('active');
 		$(this).toggleClass('active');
 		$('.marketengine-header-bottom').toggleClass('me-page-active');
+
 	});
 
 	/**
 	 * Show/Hide menu account mobile
 	 */
 	$('.me-account-humberger').on('click', function() {
+		$('.marketengine-header-bottom').removeClass('me-page-active');
+		$('.me-page-humberger').removeClass('active');
 		$(this).toggleClass('active');
 		$('.marketengine-header-bottom').toggleClass('me-account-active');
 	});
