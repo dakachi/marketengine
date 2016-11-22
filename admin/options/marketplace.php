@@ -21,7 +21,7 @@ return apply_filters('marketengine_marketplace_options',
                 ),
                 'commission_fee'          => array(
                     'label'       => __("Commission Fee", "enginethemes"),
-                    'description' => __("Set up commission fee as percentage (%) of an order price. Seller will be charged for the commission.", "enginethemes"),
+                    'description' => __("Set up the commission fee (%) charging seller for each transaction. 10% is set by default.", "enginethemes"),
                     'slug'        => 'paypal-commission-fee',
                     'type'        => 'number',
                     'class_name'  => 'positive',
