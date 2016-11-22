@@ -51,10 +51,16 @@ $quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
 							<?php $i++; ?>
 
 						<?php endforeach; ?>
-					<?php }else { 
-						me_get_template('admin/report-none');
-					 } ?>
-				</div>
+					</div>
+					
+					<?php }else { ?>
+						</div>
+						<div class="me-result-filter">
+							<?php me_get_template('admin/report-none'); ?>
+						</div>
+						
+					<?php } ?>
+				<!-- </div> -->
 				<?php me_get_template('admin/pagination', array('query' => $inquiries)); ?>
 			</div>
 		</div>
