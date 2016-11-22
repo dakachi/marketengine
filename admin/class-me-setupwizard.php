@@ -45,19 +45,20 @@ class ME_Setup_Wizard
             
             switch ($_POST['step']) {
                 case 'page':
-                    $this->setup_page($_POST['content']);
+                    $data = $this->setup_page($_POST['content']);
                     break;
                 case 'personalize':
-                    $this->setup_personalize($_POST['content']);
+                    $data = $this->setup_personalize($_POST['content']);
                     break;
                 case 'payment':
-                    $this->setup_payment($_POST['content']);
+                    $data = $this->setup_payment($_POST['content']);
                     break;
                 default:
+                	$data = '';
                     break;
             }
 
-            wp_send_json(array('success' => true, 'step' => $_POST['step']));
+            wp_send_json(array('success' => true, 'step' => $_POST['step'], 'data' => $data));
 
         } else {
             wp_send_json(array('success' => false, 'msg' => __("Permission denied.", "enginethemes")));
@@ -95,7 +96,26 @@ class ME_Setup_Wizard
     	me_update_option('payment-currency-code', $currency['code']);
     	me_update_option('payment-currency-sign', $currency['sign']);
     	me_update_option('payment-currency-label', $currency['label']);
-		
+
+    	return $this->get_listing_type_category_option();
+    }
+
+    private function get_listing_type_category_option() {
+    	// setup category for setup listing type
+    	$purchase_available = me_option('purchasion-available');
+    	$contact_available = me_option('contact-available');
+
+    	$purchase_category_option = '';
+    	$contact_category_option = '';
+    	$listing_category = get_terms( 'listing_category', array('parent' => 0) );
+    	foreach ($listing_category as $key => $category) {
+    		$purchase_selected = in_array($category->term_id, $purchase_available) ? 'selected="selected"' : '';
+    		$purchase_category_option .= '<option '.$purchase_selected.' value="'.$category->term_id.'">'.$category->name.'</option>';
+
+    		$contact_selected = in_array($category->term_id, $contact_available ) ? 'selected="selected"' : '';
+    		$contact_category_option .= '<option '.$contact_selected.' value="'.$category->term_id.'">'.$category->name.'</option>';
+    	}
+		return array('contact_option' => $contact_category_option , 'purchase_option' => $purchase_category_option);
     }
 
     private function get_currency_list() {
@@ -225,6 +245,7 @@ class ME_Setup_Wizard
     {
     	$currencies = $this->get_currency_list();	
     	$skip_setup_nonce = wp_create_nonce('skip_setup_wizard');
+    	$listing_type_categories = $this->get_listing_type_category_option();
         ?>
     	<div class="me-setup-section">
     		<?php wp_nonce_field('marketengine-setup');?>
@@ -313,19 +334,18 @@ class ME_Setup_Wizard
 					<div class="me-sfield-group">
 						<label for=""><?php _e("1- Title", "enginethemes");?></label>
 						<span><?php _e('The labels will be shown as listing type allowing user to filter. For example: "Selling"', "enginethemes"); ?></span>
-						<input type="text" name="purchase-title" placeholder="<?php _e("Selling", "enginethemes"); ?>">
+						<input type="text" name="purchasion-title" placeholder="<?php _e("Selling", "enginethemes"); ?>">
 					</div>
 					<div class="me-sfield-group">
 						<label for=""><?php _e("2- Text Button", "enginethemes");?></label>
 						<span><?php _e("Enter the text button demonstrating the behaviour that user can do. For example: \"BUY NOW\"", "enginethemes"); ?></span>
-						<input type="text" name="purchase-action" placeholder="<?php _e("BUY NOW", "enginethemes"); ?>">
+						<input type="text" name="purchasion-action" placeholder="<?php _e("BUY NOW", "enginethemes"); ?>">
 					</div>
 					<div class="me-sfield-group">
 						<label for=""><?php _e("3- Available Categories", "enginethemes");?></label>
 						<span><?php _e("Select categories supporting for this listing type.", "enginethemes"); ?></span>
-						<select multiple="true" name="purchase-available[]">
-							<option>a</option>
-							<option>b</option>
+						<select multiple="true" name="purchasion-available[]">
+							<?php echo $listing_type_categories['purchase_option']; ?>
 						</select>
 					</div>
 					<!-- contact type -->
@@ -344,8 +364,7 @@ class ME_Setup_Wizard
 						<label for=""><?php _e("3- Available Categories", "enginethemes");?></label>
 						<span><?php _e("Select categories supporting for this listing type.", "enginethemes"); ?></span>
 						<select multiple="true" name="contact-available[]">
-							<option value="1">a</option>
-							<option value="2">b</option>
+							<?php echo $listing_type_categories['contact_option']; ?>
 						</select>
 					</div>
 
