@@ -1,8 +1,9 @@
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MarketEngine\n"
-"POT-Creation-Date: 2016-11-21 14:23+0700\n"
-"PO-Revision-Date: 2016-11-21 14:33+0700\n"
+"POT-Creation-Date: 2016-11-22 17:04+0700\n"
+"PO-Revision-Date: 2016-11-22 15:56+0700\n"
 "Last-Translator: \n"
 "Language-Team: EngineThemes <contact@enginethemes.com>\n"
 "Language: en\n"
@@ -39,7 +40,7 @@ msgid "Status"
 msgstr ""
 
 #: includes/class-me-csv-export.php:76 includes/class-me-csv-export.php:92
-#: templates/admin/order-metabox.php:226
+#: templates/admin/order-metabox.php:229
 msgid "Amount"
 msgstr ""
 
@@ -48,7 +49,7 @@ msgid "Date Of Order"
 msgstr ""
 
 #: includes/class-me-csv-export.php:78 includes/class-me-csv-export.php:94
-#: includes/class-me-post-types.php:157 templates/admin/order-metabox.php:185
+#: includes/class-me-post-types.php:157 templates/admin/order-metabox.php:188
 #: templates/checkout/order-details.php:10 templates/purchases/order-item.php:9
 msgid "Listing"
 msgstr ""
@@ -239,11 +240,11 @@ msgid "Search Listings"
 msgstr ""
 
 #: includes/class-me-post-types.php:165
-msgid "No Listing found"
+msgid "No listings found"
 msgstr ""
 
 #: includes/class-me-post-types.php:166
-msgid "No Listings found in Trash"
+msgid "No listings found in Trash"
 msgstr ""
 
 #: includes/class-me-post-types.php:189
@@ -252,7 +253,12 @@ msgstr ""
 msgid "Archived"
 msgstr ""
 
-#: includes/class-me-post-types.php:210 includes/class-me-post-types.php:211
+#: includes/class-me-post-types.php:210 includes/class-me-post-types.php:216
+#: templates/account/my-orders.php:17 templates/admin/overview.php:9
+msgid "Orders"
+msgstr ""
+
+#: includes/class-me-post-types.php:211
 msgid "Order"
 msgstr ""
 
@@ -268,11 +274,6 @@ msgstr ""
 msgid "New Order"
 msgstr ""
 
-#: includes/class-me-post-types.php:216 templates/account/my-orders.php:17
-#: templates/admin/overview.php:9 templates/global/account-menu.php:16
-msgid "Orders"
-msgstr ""
-
 #: includes/class-me-post-types.php:217
 msgid "View Order"
 msgstr ""
@@ -282,7 +283,7 @@ msgid "Search Order"
 msgstr ""
 
 #: includes/class-me-post-types.php:219
-msgid "No Orders found"
+msgid "No orders found"
 msgstr ""
 
 #: includes/class-me-post-types.php:220
@@ -293,7 +294,7 @@ msgstr ""
 msgid "MarketEngine"
 msgstr ""
 
-#: includes/class-me-post-types.php:240 includes/me-order-functions.php:303
+#: includes/class-me-post-types.php:240 includes/me-order-functions.php:304
 msgid "Pending"
 msgstr ""
 
@@ -301,19 +302,19 @@ msgstr ""
 msgid "Finished"
 msgstr ""
 
-#: includes/class-me-post-types.php:260 includes/me-order-functions.php:306
+#: includes/class-me-post-types.php:260 includes/me-order-functions.php:307
 msgid "Completed"
 msgstr ""
 
-#: includes/class-me-post-types.php:270 includes/me-order-functions.php:307
+#: includes/class-me-post-types.php:270
 msgid "Disputed"
 msgstr ""
 
-#: includes/class-me-post-types.php:280 includes/me-order-functions.php:308
+#: includes/class-me-post-types.php:280 includes/me-order-functions.php:309
 msgid "Closed"
 msgstr ""
 
-#: includes/class-me-post-types.php:290 includes/me-order-functions.php:309
+#: includes/class-me-post-types.php:290
 msgid "Resolved"
 msgstr ""
 
@@ -583,15 +584,21 @@ msgid ""
 "Customer Service."
 msgstr ""
 
-#: includes/gateways/class-me-ppadaptive.php:669
+#: includes/gateways/class-me-ppadaptive.php:186
+msgid ""
+"Your order has not been completed yet. API credentials are incorrect. Please "
+"contact the Admin for further information."
+msgstr ""
+
+#: includes/gateways/class-me-ppadaptive.php:672
 msgid "Primary receiver pays all fees"
 msgstr ""
 
-#: includes/gateways/class-me-ppadaptive.php:670
+#: includes/gateways/class-me-ppadaptive.php:673
 msgid "Each receiver pays their own fee"
 msgstr ""
 
-#: includes/gateways/class-me-ppadaptive.php:671
+#: includes/gateways/class-me-ppadaptive.php:674
 msgid "Secondary receivers pay all fees"
 msgstr ""
 
@@ -622,7 +629,8 @@ msgid "- Order listings"
 msgstr ""
 
 #: includes/handle-authentication/class-me-authentication-form.php:96
-msgid "<div><p>You have registered successfully.</p></div>"
+msgid ""
+"Congratulation! You have successfully completed the registration process."
 msgstr ""
 
 #: includes/handle-authentication/class-me-authentication-form.php:120
@@ -642,7 +650,8 @@ msgid "<div><p>Your account has been confirmed successfully!.</p></div>"
 msgstr ""
 
 #: includes/handle-authentication/class-me-authentication-form.php:181
-msgid "Invalid key. Please check your activation email again."
+msgid ""
+"<div><p>Invalid key. Please check your activation email again.</p></div>"
 msgstr ""
 
 #: includes/handle-authentication/class-me-authentication-form.php:197
@@ -904,90 +913,103 @@ msgstr ""
 msgid "You can must confirm your email account to start this conversation."
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:45
+#: includes/handle-listings/class-me-listing-handle.php:47
 #, php-format
 msgid "You can only add %d image(s) to listing gallery."
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:66
+#: includes/handle-listings/class-me-listing-handle.php:68
 msgid "You are not allowed to edit listing as this user."
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:79
+#: includes/handle-listings/class-me-listing-handle.php:81
 msgid "You are not allowed to create posts as this user."
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:267
+#: includes/handle-listings/class-me-listing-handle.php:128
+msgid "You can not change the listing type."
+msgstr ""
+
+#: includes/handle-listings/class-me-listing-handle.php:134
+msgid "You can not change the listing category."
+msgstr ""
+
+#: includes/handle-listings/class-me-listing-handle.php:284
 msgid "listing title"
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:268
+#: includes/handle-listings/class-me-listing-handle.php:285
 msgid "listing description"
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:269
+#: includes/handle-listings/class-me-listing-handle.php:286
 msgid "listing type"
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:295
+#: includes/handle-listings/class-me-listing-handle.php:320
 msgid "The listing category field is required."
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:297
+#: includes/handle-listings/class-me-listing-handle.php:322
 msgid "The selected listing category is invalid."
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:304
+#: includes/handle-listings/class-me-listing-handle.php:329
 msgid "The sub listing category field is required."
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:306
+#: includes/handle-listings/class-me-listing-handle.php:331
 msgid "The selected sub listing category is invalid."
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:314
+#: includes/handle-listings/class-me-listing-handle.php:339
 msgid "You must input paypal email in your profile to start selling."
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:353
+#: includes/handle-listings/class-me-listing-handle.php:350
+#, php-format
+msgid "The listing type %s is not supported in category %s."
+msgstr ""
+
+#: includes/handle-listings/class-me-listing-handle.php:393
 msgid "contact email"
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:359
+#: includes/handle-listings/class-me-listing-handle.php:399
 msgid "listing price"
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:386
+#: includes/handle-listings/class-me-listing-handle.php:427
 msgid "review content"
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:387
+#: includes/handle-listings/class-me-listing-handle.php:428
 msgid "rating"
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:411
-#: includes/handle-listings/class-me-listing-handle.php:421
+#: includes/handle-listings/class-me-listing-handle.php:452
+#: includes/handle-listings/class-me-listing-handle.php:462
 msgid "The reviewed listing is invalid."
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:415
+#: includes/handle-listings/class-me-listing-handle.php:456
 msgid "Invalid order id."
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:426
+#: includes/handle-listings/class-me-listing-handle.php:467
 msgid "You cannot review the listing base on this order."
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:430
+#: includes/handle-listings/class-me-listing-handle.php:471
 msgid "You must complete the order to send review."
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:435
+#: includes/handle-listings/class-me-listing-handle.php:476
 #, php-format
 msgid "You are trying to review listing is not belong to order %d"
 msgstr ""
 
-#: includes/handle-listings/class-me-listing-handle.php:448
+#: includes/handle-listings/class-me-listing-handle.php:489
 #, php-format
 msgid "You have already review on %s."
 msgstr ""
@@ -1108,7 +1130,7 @@ msgstr ""
 msgid "Invalid order ID."
 msgstr ""
 
-#: includes/me-order-functions.php:304
+#: includes/me-order-functions.php:305
 msgid "Actived"
 msgstr ""
 
@@ -1166,6 +1188,27 @@ msgstr ""
 msgid "words"
 msgstr ""
 
+#: includes/me-template-functions.php:804
+msgid "Registration"
+msgstr ""
+
+#: includes/me-template-functions.php:807
+msgid "Member Login"
+msgstr ""
+
+#: includes/me-template-functions.php:811 templates/global/account-menu.php:14
+msgid "My Listings"
+msgstr ""
+
+#: includes/me-template-functions.php:813 templates/global/account-menu.php:15
+#: templates/order-detail.php:29
+msgid "My Orders"
+msgstr ""
+
+#: includes/me-template-functions.php:815 templates/global/account-menu.php:16
+msgid "My Purchases"
+msgstr ""
+
 #: includes/shortcodes/class-me-shortcodes-transaction.php:13
 msgid ""
 "Sorry! Only active account can buy listings. Please check mail box to "
@@ -1212,7 +1255,7 @@ msgid "A search form for your listing."
 msgstr ""
 
 #: includes/widgets/class-me-widget-listing-search.php:31
-msgid "Marketengine Listing Search Form"
+msgid "MarketEngine Listing Search Form"
 msgstr ""
 
 #: includes/widgets/class-me-widget-listing-types.php:24
@@ -1220,7 +1263,7 @@ msgid "A list listing types"
 msgstr ""
 
 #: includes/widgets/class-me-widget-listing-types.php:25
-msgid "MarketEnngine Listing Types"
+msgid "MarketEngine Listing Types"
 msgstr ""
 
 #: includes/widgets/class-me-widget-listing-types.php:44
@@ -1252,15 +1295,15 @@ msgstr ""
 msgid "Filter"
 msgstr ""
 
-#: marketengine.php:177
+#: marketengine.php:180
 msgid "Category Menu"
 msgstr ""
 
-#: marketengine.php:235
+#: marketengine.php:238
 msgid "Exceed number of allowed file upload. Max file upload is "
 msgstr ""
 
-#: marketengine.php:256
+#: marketengine.php:259
 msgid "Image Files"
 msgstr ""
 
@@ -1331,8 +1374,7 @@ msgstr ""
 msgid "New password"
 msgstr ""
 
-#: templates/account/change-password.php:45
-#: templates/account/form-register.php:64 templates/account/reset-pass.php:30
+#: templates/account/change-password.php:45 templates/account/reset-pass.php:30
 msgid "Confirm password"
 msgstr ""
 
@@ -1344,11 +1386,13 @@ msgstr ""
 msgid "&lt; My profile"
 msgstr ""
 
-#: templates/account/edit-profile.php:57 templates/account/user-profile.php:41
+#: templates/account/edit-profile.php:57 templates/account/form-register.php:36
+#: templates/account/user-profile.php:41
 msgid "First Name"
 msgstr ""
 
-#: templates/account/edit-profile.php:65 templates/account/user-profile.php:47
+#: templates/account/edit-profile.php:65 templates/account/form-register.php:44
+#: templates/account/user-profile.php:47
 msgid "Last Name"
 msgstr ""
 
@@ -1385,7 +1429,7 @@ msgstr ""
 
 #: templates/account/edit-profile.php:153
 #: templates/post-listing/edit-listing.php:78
-#: templates/post-listing/post-listing.php:63
+#: templates/post-listing/post-listing.php:59
 msgid "Cancel"
 msgstr ""
 
@@ -1429,8 +1473,7 @@ msgstr ""
 msgid "Need an account?"
 msgstr ""
 
-#: templates/account/form-login.php:49 templates/account/form-register.php:21
-#: templates/global/account-menu.php:27
+#: templates/account/form-login.php:49 templates/global/account-menu.php:27
 msgid "Register"
 msgstr ""
 
@@ -1438,18 +1481,16 @@ msgstr ""
 msgid "&lt;  Back to Home"
 msgstr ""
 
-#: templates/account/form-register.php:36 templates/checkout/billing.php:3
-#: templates/checkout/billing.php:34
-msgid "First name"
-msgstr ""
-
-#: templates/account/form-register.php:44 templates/checkout/billing.php:4
-#: templates/checkout/billing.php:40
-msgid "Last name"
+#: templates/account/form-register.php:21
+msgid "Become our Member"
 msgstr ""
 
 #: templates/account/form-register.php:58
-msgid "Create password"
+msgid "Create Password"
+msgstr ""
+
+#: templates/account/form-register.php:64
+msgid "Confirm Password"
 msgstr ""
 
 #: templates/account/form-register.php:78
@@ -1517,7 +1558,7 @@ msgstr ""
 msgid "Inquiries"
 msgstr ""
 
-#: templates/account/my-purchases.php:18 templates/global/account-menu.php:15
+#: templates/account/my-purchases.php:18
 msgid "Transactions"
 msgstr ""
 
@@ -1629,7 +1670,7 @@ msgid "Export"
 msgstr ""
 
 #: templates/admin/inquiries.php:27
-msgid "Report inquiries"
+msgid "Report Inquiries"
 msgstr ""
 
 #: templates/admin/inquiries.php:32 templates/admin/listings.php:45
@@ -1659,7 +1700,7 @@ msgid "Total Listings"
 msgstr ""
 
 #: templates/admin/members.php:27
-msgid "Report members"
+msgid "Report Members"
 msgstr ""
 
 #: templates/admin/members.php:36
@@ -1670,84 +1711,84 @@ msgstr ""
 msgid "Total Members"
 msgstr ""
 
-#: templates/admin/order-metabox.php:139
+#: templates/admin/order-metabox.php:142
 #, php-format
 msgid "Order #%d details"
 msgstr ""
 
-#: templates/admin/order-metabox.php:142
+#: templates/admin/order-metabox.php:145
 msgid "ID:"
 msgstr ""
 
-#: templates/admin/order-metabox.php:143
+#: templates/admin/order-metabox.php:146
 #, php-format
 msgid "#%d"
 msgstr ""
 
-#: templates/admin/order-metabox.php:146
+#: templates/admin/order-metabox.php:149
 msgid "Order date:"
 msgstr ""
 
-#: templates/admin/order-metabox.php:150
+#: templates/admin/order-metabox.php:153
 msgid "Order status"
 msgstr ""
 
-#: templates/admin/order-metabox.php:154
+#: templates/admin/order-metabox.php:157
 msgid "Buyer:"
 msgstr ""
 
-#: templates/admin/order-metabox.php:161
+#: templates/admin/order-metabox.php:164
 #: templates/purchases/order-bill-info.php:14
 msgid "Billed to:"
 msgstr ""
 
-#: templates/admin/order-metabox.php:170
+#: templates/admin/order-metabox.php:173
 #: templates/purchases/order-bill-info.php:30
 msgid "Order Notes:"
 msgstr ""
 
-#: templates/admin/order-metabox.php:180 templates/purchases/order-item.php:6
+#: templates/admin/order-metabox.php:183 templates/purchases/order-item.php:6
 msgid "Order Item"
 msgstr ""
 
-#: templates/admin/order-metabox.php:186
+#: templates/admin/order-metabox.php:189
 #: templates/checkout/order-details.php:11
 #: templates/post-listing/listing-type.php:43
 #: templates/purchases/order-item.php:10
 msgid "Price"
 msgstr ""
 
-#: templates/admin/order-metabox.php:187
+#: templates/admin/order-metabox.php:190
 #: templates/checkout/order-details.php:12
 #: templates/purchases/order-item.php:11
 msgid "Units"
 msgstr ""
 
-#: templates/admin/order-metabox.php:188
+#: templates/admin/order-metabox.php:191
 #: templates/checkout/order-details.php:13
 #: templates/purchases/order-item.php:12
 msgid "Total price"
 msgstr ""
 
-#: templates/admin/order-metabox.php:210
+#: templates/admin/order-metabox.php:213
 #: templates/checkout/order-details.php:63
-#: templates/purchases/order-item.php:58
+#: templates/purchases/order-item.php:62
 msgid "Total amount:"
 msgstr ""
 
-#: templates/admin/order-metabox.php:219
+#: templates/admin/order-metabox.php:222
 msgid "Payment Info"
 msgstr ""
 
-#: templates/admin/order-metabox.php:224
+#: templates/admin/order-metabox.php:227
 msgid "Receiver Name"
 msgstr ""
 
-#: templates/admin/order-metabox.php:225
+#: templates/admin/order-metabox.php:228
 msgid "Paypal Email"
 msgstr ""
 
-#: templates/admin/order-metabox.php:244
+#: templates/admin/order-metabox.php:247
 msgid "Commision"
 msgstr ""
 
@@ -1791,6 +1832,14 @@ msgstr ""
 
 #: templates/archive-heading.php:28
 msgid "Price: High to Low"
+msgstr ""
+
+#: templates/checkout/billing.php:3 templates/checkout/billing.php:34
+msgid "First name"
+msgstr ""
+
+#: templates/checkout/billing.php:4 templates/checkout/billing.php:40
+msgid "Last name"
 msgstr ""
 
 #: templates/checkout/billing.php:5 templates/checkout/billing.php:48
@@ -2095,10 +2144,6 @@ msgid ""
 "of %s. <br/>View your order details here: %s."
 msgstr ""
 
-#: templates/global/account-menu.php:14
-msgid "My Listings"
-msgstr ""
-
 #: templates/global/account-menu.php:17
 msgid "My Profile"
 msgstr ""
@@ -2148,6 +2193,7 @@ msgid "Order ID, listing name, etc."
 msgstr ""
 
 #: templates/global/post-listing-button.php:10
+#: templates/post-listing/post-listing.php:34
 msgid "Post a Listing"
 msgstr ""
 
@@ -2184,7 +2230,7 @@ msgstr ""
 msgid "This listing was deleted! You cannot send message!"
 msgstr ""
 
-#: templates/loop/contact.php:11 templates/loop/contact.php:13
+#: templates/loop/contact.php:11 templates/loop/contact.php:14
 #: templates/single-listing/contact.php:6
 msgid "CONTACT NOW"
 msgstr ""
@@ -2203,16 +2249,16 @@ msgstr ""
 msgid "BUY NOW"
 msgstr ""
 
-#: templates/order-detail.php:30
+#: templates/order-detail.php:29
 msgid "My Transactions"
 msgstr ""
 
-#: templates/order-detail.php:30
-msgid "My Orders"
+#: templates/post-listing/edit-listing.php:52
+msgid "Edit the Listing"
 msgstr ""
 
 #: templates/post-listing/edit-listing.php:76
-#: templates/post-listing/post-listing.php:60 templates/purchases/review.php:13
+#: templates/post-listing/post-listing.php:56 templates/purchases/review.php:13
 msgid "SUBMIT"
 msgstr ""
 
@@ -2310,20 +2356,24 @@ msgstr ""
 msgid "TO RESOLUTION CENTER"
 msgstr ""
 
-#: templates/purchases/order-item.php:68
+#: templates/purchases/order-item.php:72
 msgid "COMPLETE PAYMENT"
 msgstr ""
 
-#: templates/purchases/order-listing.php:19
+#: templates/purchases/order-listing.php:20
 msgid "view more"
 msgstr ""
 
-#: templates/purchases/order-listing.php:19
+#: templates/purchases/order-listing.php:20
 msgid "view less"
 msgstr ""
 
-#: templates/purchases/order-listing.php:29
+#: templates/purchases/order-listing.php:30
 msgid "RATE &amp; REVIEW NOW"
+msgstr ""
+
+#: templates/purchases/order-listing.php:36
+msgid "The listing has already remove or archived."
 msgstr ""
 
 #: templates/purchases/order-status.php:3
