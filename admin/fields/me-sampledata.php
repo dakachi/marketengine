@@ -21,12 +21,34 @@ class ME_Sampledata {
                 </label>
             </div>
         </form>
+        <div class="me-setup-overlay">
+            <div class="me-setup-overlay-container"></div>
+            <div class="me-setup-overlay-loading">
+                <div class="s1">
+                    <div class="s b sb1"></div>
+                    <div class="s b sb2"></div>
+                    <div class="s b sb3"></div>
+                    <div class="s b sb4"></div>
+                </div>
+                <div class="s2">
+                    <div class="s b sb5"></div>
+                    <div class="s b sb6"></div>
+                    <div class="s b sb7"></div>
+                    <div class="s b sb8"></div>
+                </div>
+                <div class="bigcon">
+                  <!-- <div class="big b"></div> -->
+                </div>
+            </div>
+        </div>
+
         <script type="text/javascript">
             (function($) {
                 $(document).ready(function() {
                     $('#me-add-sample-data').on('click', function(event) {
                         var $target = $(event.currentTarget);
                         var count = 1;
+                        $target.parents('.me-section-content').addClass('me-setup-section-loading');
                         for (var i = 1; i <= 12; i++) {
                             $.ajax({
                                 type: 'post',
@@ -38,6 +60,7 @@ class ME_Sampledata {
                                 },
                                 beforeSend: function() {
                                     
+                                    
                                 },
                                 success: function(res, xhr) {
                                     count ++;
@@ -45,12 +68,14 @@ class ME_Sampledata {
                                         $('#add-sample-data').hide();
                                         $('#remove-sample-data').show();
                                     }
+                                    
                                 }
                             });
                         };
                         setTimeout(function(){
                             $('#add-sample-data').hide();
                             $('#remove-sample-data').show();
+                            $target.parents('.me-section-content').removeClass('me-setup-section-loading');
                         }, 45000);
                     });
                 });
@@ -81,10 +106,12 @@ class ME_Sampledata {
                             },
                             beforeSend: function() {
                                 
+                                $target.parents('.me-section-content').addClass('me-setup-section-loading');
                             },
                             success: function(res, xhr) {
                                 $('#remove-sample-data').hide();
                                 $('#add-sample-data').show();
+                                $target.parents('.me-section-content').removeClass('me-setup-section-loading');
                             }
                         });
                     });

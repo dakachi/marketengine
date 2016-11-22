@@ -72,7 +72,7 @@ function me_get_functional_pages()
             'post_content' => '[me_cancel_payment]',
         ),
         'inquiry'       => array(
-            'post_title'   => __("Make an inquiry", "enginethemes"),
+            'post_title'   => __("Inquiry", "enginethemes"),
             'post_content' => '[me_inquiry_form]',
         ),
     );
