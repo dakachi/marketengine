@@ -48,7 +48,6 @@
                     $parent_section.removeClass('me-setup-section-loading');
                     $parent_container.removeClass('active');
                     if(res.success && res.step =='payment') {
-                        console.log('a;');
                         $('select[name="contact_available[]"]').html(res.data.contact_option);
                         $('select[name="purchasion_available[]"]').html(res.data.purchase_option);
                     }
@@ -76,8 +75,6 @@
                     },
                     success: function(res, xhr) {
                         count++;
-                        console.log(count);
-                        console.log(i);
                         if (count == i) {
                             $parent_section.removeClass('me-setup-section-loading');
                             $target.parents('.me-setup-wrap').addClass('active');

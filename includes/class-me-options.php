@@ -128,7 +128,7 @@ if (!class_exists('ME_Options')) {
          * @return value of option (string or array)
          */
         public function get_option($option_name, $default = false) {
-            if (!isset($this->options_arr[$option_name])) {
+            if (!isset($this->options_arr[$option_name]) || empty($this->options_arr[$option_name])) {
                 return $default;
             }
             return $this->options_arr[$option_name];
