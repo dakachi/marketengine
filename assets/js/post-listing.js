@@ -15,19 +15,18 @@
             }
 
             $('.listing-type option').removeAttr('disabled');
-            if(!r.data.support_contact) {
+            if(!r.data.support_contact && r.data.support_purchase) {
                 $('.listing-type option[value="contact"]').attr('disabled','disabled');
                 $('select.listing-type').val('purchasion').change();
             }
 
-            if(!r.data.support_purchase) {
+            if(!r.data.support_purchase && r.data.support_contact) {
                 $('.listing-type option[value="purchasion"]').attr('disabled','disabled');
                 $('select.listing-type').val('contact').change();
             }
 
             if(!r.data.support_contact && !r.data.support_purchase) {
                 $('select.listing-type').val('purchasion').change();
-                $('.listing-type option').removeAttr('disabled');
             }
 
             if(r.data.has_child == true) {
