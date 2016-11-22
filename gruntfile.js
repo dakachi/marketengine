@@ -4,7 +4,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         phpunit: {
             marketenginetest: {
-                configuration : './phpunit.xml'
+                configuration: './phpunit.xml'
             },
             options: {
                 bin: './vendor/bin/phpunit',
@@ -14,15 +14,28 @@ module.exports = function(grunt) {
                 // coverage : true
             }
         },
+        compress: {
+            main: {
+                options: {
+                    archive: 'archive.zip'
+                },
+                files: [{
+                    expand: true,
+                    src: ['./marketengine/**'],
+                    dest: './'
+                }]
+            }
+        },        
         watch: {
             phpunit: {
-                files: ['tests/*/*.php','tests/*.php','includes/*.php', 'includes/*/*.php'],
+                files: ['tests/*/*.php', 'tests/*.php', 'includes/*.php', 'includes/*/*.php'],
                 tasks: ['phpunit']
             }
         }
     });
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-phpunit');
+    grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-contrib-watch');
     // Default task(s).
     grunt.registerTask('default', ['phpunit']);
