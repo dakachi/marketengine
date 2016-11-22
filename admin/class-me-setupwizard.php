@@ -104,7 +104,14 @@ class ME_Setup_Wizard
 
     public function setup_listing_types($content) {
     	parse_str($content);
-    	var_dump($content);
+    	me_update_option('purchasion-title', $purchasion_title);
+    	me_update_option('contact-title', $contact_title);
+
+    	me_update_option('purchasion-action', $purchasion_action);
+    	me_update_option('contact-title', $contact_action);
+
+    	me_update_option('purchasion-available', $purchasion_available);
+    	me_update_option('contact-available', $contact_available);
     }
 
     private function get_listing_type_category_option() {
@@ -341,12 +348,12 @@ class ME_Setup_Wizard
 					<div class="me-sfield-group">
 						<label for=""><?php _e("1- Title", "enginethemes");?></label>
 						<span><?php _e('The labels will be shown as listing type allowing user to filter. For example: "Selling"', "enginethemes"); ?></span>
-						<input type="text" name="purchasion_title" placeholder="<?php _e("Selling", "enginethemes"); ?>">
+						<input type="text" name="purchasion_title" placeholder="<?php _e("Selling", "enginethemes"); ?>" value="<?php echo me_option('purchasion-title'); ?>">
 					</div>
 					<div class="me-sfield-group">
 						<label for=""><?php _e("2- Text Button", "enginethemes");?></label>
 						<span><?php _e("Enter the text button demonstrating the behaviour that user can do. For example: \"BUY NOW\"", "enginethemes"); ?></span>
-						<input type="text" name="purchasion_action" placeholder="<?php _e("BUY NOW", "enginethemes"); ?>">
+						<input type="text" name="purchasion_action" placeholder="<?php _e("BUY NOW", "enginethemes"); ?>" value="<?php echo me_option('purchasion-action'); ?>">
 					</div>
 					<div class="me-sfield-group">
 						<label for=""><?php _e("3- Available Categories", "enginethemes");?></label>
@@ -360,17 +367,17 @@ class ME_Setup_Wizard
 					<div class="me-sfield-group">
 						<label for=""><?php _e("1- Title", "enginethemes");?></label>
 						<span><?php _e('The labels will be shown as listing type allowing user to filter. For example: "Offering"', "enginethemes"); ?></span>
-						<input type="text" name="contact_title" placeholder="<?php _e("Offering", "enginethemes"); ?>">
+						<input type="text" name="contact_title" placeholder="<?php _e("Offering", "enginethemes"); ?>" value="<?php echo me_option('contact-title'); ?>">
 					</div>
 					<div class="me-sfield-group">
 						<label for=""><?php _e("2- Text Button", "enginethemes");?></label>
 						<span><?php _e("Enter the text button demonstrating the behaviour that user can do. For example: \"CONTACT\"", "enginethemes"); ?></span>
-						<input type="text" name="contact_action" placeholder="<?php _e("CONTACT", "enginethemes"); ?>">
+						<input type="text" name="contact_action" placeholder="<?php _e("CONTACT", "enginethemes"); ?>" value="<?php echo me_option('contact-action'); ?>">
 					</div>
 					<div class="me-sfield-group">
 						<label for=""><?php _e("3- Available Categories", "enginethemes");?></label>
 						<span><?php _e("Select categories supporting for this listing type.", "enginethemes"); ?></span>
-						<select multiple="true" name="contact_available">
+						<select multiple="true" name="contact_available[]">
 							<?php echo $listing_type_categories['contact_option']; ?>
 						</select>
 					</div>
