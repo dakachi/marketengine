@@ -189,11 +189,11 @@ class ME_Setup_Wizard
 						<span class="me-ss-point"></span>
 					</div>
 					<div class="me-setup-line-step">
-						<span class="me-ss-title"><?php _e("Personalize", "enginethemes");?></span>
+						<span class="me-ss-title"><?php _e("Initialize", "enginethemes");?></span>
 						<span class="me-ss-point"></span>
 					</div>
 					<div class="me-setup-line-step">
-						<span class="me-ss-title"><?php _e("More Settings", "enginethemes");?></span>
+						<span class="me-ss-title"><?php _e("Listing types", "enginethemes");?></span>
 						<span class="me-ss-point"></span>
 					</div>
 					<div class="me-setup-line-step">
@@ -264,42 +264,17 @@ class ME_Setup_Wizard
 						<p><?php _e("This page handles the “Make an inquiry” flow, providing buyers and sellers an optimized conversation section to exchange more information about the Listing.", "enginethemes"); ?></p>
 					</div>
 					<div class="me-setup-control">
-						<a href="#personalize" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes");?></a>
-						<a href="#personalize" class="me-scontinue-btn me-next"><?php _e("CONTINUE", "enginethemes");?></a>
+						<a href="#initialize" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes");?></a>
+						<a href="#initialize" class="me-scontinue-btn me-next"><?php _e("CONTINUE", "enginethemes");?></a>
 					</div>
 					<input type="hidden" name="step" value="page" />
 
 				</form>
 			</div>
-			<!-- Personalize -->
-			<div class="me-setup-container me-setup-personalize" id="personalize" data-step="2">
+			<!-- Initialize -->
+			<div class="me-setup-container me-setup-initialize" id="initialize" data-step="2">
 				<form>
-					<h2><?php _e("Personalize", "enginethemes");?></h2>
-					<div class="me-sfield-group">
-						<label for="me-setup-listing"><?php _e("1- How should people understand “listings” in your marketplace?", "enginethemes");?></label>
-						<input id="me-setup-listing"  placeholder="<?php _e("Listing/Product/Ads
-", "enginethemes"); ?>" type="text" name="listing_label" value="<?php echo me_option('listing-label', 'Listing') ?>">
-					</div>
-					<div class="me-sfield-group">
-						<label for="me-setup-seller"><?php _e("2- What should we call the Seller role in your marketplace?", "enginethemes");?></label>
-						<input id="me-setup-seller" placeholder="<?php _e("Seller/Provider/Contractor", "enginethemes"); ?>" type="text" name="seller_label" value="<?php echo me_option('seller-label', 'Seller') ?>">
-					</div>
-					<div class="me-sfield-group">
-						<label for="me-setup-buyer"><?php _e("3- What should we call the Buyer role in your marketplace?", "enginethemes");?></label>
-						<input id="me-setup-buyer" placeholder="<?php _e("Buyer/Consumer/Homeowner", "enginethemes"); ?>" type="text" name="buyer_label" value="<?php echo me_option('buyer-label', 'Buyer') ?>">
-					</div>
-					<div class="me-setup-control">
-						<a href="#payment" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes");?></a>
-						<a href="#payment" class="me-scontinue-btn me-next"><?php _e("CONTINUE", "enginethemes");?></a>
-					</div>
-					<input type="hidden" name="step" value="personalize" />
-				</form>
-			</div>
-
-			<!-- More Settings -->
-			<div class="me-setup-container me-setup-more-settings" id="payment" data-step="3">
-				<form>
-					<h2><?php _e("More Settings", "enginethemes");?></h2>
+					<h2><?php _e("Initialize", "enginethemes");?></h2>
 					<div class="me-sfield-group">
 						<label for=""><?php _e("1- Create some listing categories for your marketplace", "enginethemes");?></label>
 						<input type="text" name="cats[]"> <span class="me-setup-add-cat"><i class="icon-me-add"></i><?php _e("Add more", "enginethemes");?></span>
@@ -321,12 +296,67 @@ class ME_Setup_Wizard
 						</select>
 					</div>
 					<div class="me-setup-control">
-						<a href="#finish" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes");?></a>
-						<a href="#finish" class="me-scontinue-btn me-next"><?php _e("CONTINUE", "enginethemes");?></a>
+						<a href="#listing-types" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes");?></a>
+						<a href="#listing-types" class="me-scontinue-btn me-next"><?php _e("CONTINUE", "enginethemes");?></a>
 					</div>
 					<input type="hidden" name="step" value="payment" />
 				</form>
 			</div>
+
+			<!-- Listing Types -->
+			<div class="me-setup-container me-setup-listing-types" id="listing-types" data-step="3">
+				<form>
+					<h2><?php _e("Listing Types", "enginethemes");?></h2>
+					<p><?php _e("MarketEngine supports two basic listing types: Purchase and Contact, defining the action a User can perform on a listing. Purchase-type listing leads the User to the purchase flow, while Contact-type listing leads the User to the conversation flow with the Listing Author. You can define the meaning of the listings in your marketplace by modifying these labels:", "enginethemes");?></p>
+
+					<h3><?php _e("Purchase", "enginethemes");?></h3>
+					<div class="me-sfield-group">
+						<label for=""><?php _e("1- Title", "enginethemes");?></label>
+						<span><?php _e('The labels will be shown as listing type allowing user to filter. For example: "Selling"', "enginethemes"); ?></span>
+						<input type="text" name="purchase-title" placeholder="<?php _e("Selling", "enginethemes"); ?>">
+					</div>
+					<div class="me-sfield-group">
+						<label for=""><?php _e("2- Text Button", "enginethemes");?></label>
+						<span><?php _e("Enter the text button demonstrating the behaviour that user can do. For example: \"BUY NOW\"", "enginethemes"); ?></span>
+						<input type="text" name="purchase-action" placeholder="<?php _e("BUY NOW", "enginethemes"); ?>">
+					</div>
+					<div class="me-sfield-group">
+						<label for=""><?php _e("3- Available Categories", "enginethemes");?></label>
+						<span><?php _e("Select categories supporting for this listing type.", "enginethemes"); ?></span>
+						<select multiple="true" name="purchase-available">
+							<option>a</option>
+							<option>b</option>
+						</select>
+					</div>
+					<!-- contact type -->
+					<h3><?php _e("Contact", "enginethemes");?></h3>
+					<div class="me-sfield-group">
+						<label for=""><?php _e("1- Title", "enginethemes");?></label>
+						<span><?php _e('The labels will be shown as listing type allowing user to filter. For example: "Offering"', "enginethemes"); ?></span>
+						<input type="text" name="contact-title" placeholder="<?php _e("Offering", "enginethemes"); ?>">
+					</div>
+					<div class="me-sfield-group">
+						<label for=""><?php _e("2- Text Button", "enginethemes");?></label>
+						<span><?php _e("Enter the text button demonstrating the behaviour that user can do. For example: \"CONTACT\"", "enginethemes"); ?></span>
+						<input type="text" name="contact-action" placeholder="<?php _e("CONTACT", "enginethemes"); ?>">
+					</div>
+					<div class="me-sfield-group">
+						<label for=""><?php _e("3- Available Categories", "enginethemes");?></label>
+						<span><?php _e("Select categories supporting for this listing type.", "enginethemes"); ?></span>
+						<select multiple="true" name="contact-available">
+							<option>a</option>
+							<option>b</option>
+						</select>
+					</div>
+
+					<div class="me-setup-control">
+						<a href="#finish" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes");?></a>
+						<a href="#finish" class="me-scontinue-btn me-next"><?php _e("CONTINUE", "enginethemes");?></a>
+					</div>
+					<input type="hidden" name="step" value="listing-type" />
+				</form>
+			</div>
+
 			<!-- That's it -->
 			<div class="me-setup-container me-setup-that-it" id="finish" data-step="4">
 				<div class="me-setup-wrap">
