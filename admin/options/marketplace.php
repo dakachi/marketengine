@@ -87,7 +87,7 @@ return apply_filters('marketengine_marketplace_options',
                 ),
                 'dispute-time-limit' => array(
                     'label'       => __("Auto complete order", "enginethemes"),
-                    'description' => __("Set up the time (days) that the order must be completed", "enginethemes"),
+                    'description' => __("Set up the time (days) that order must be completed. Default is set 3 days", "enginethemes"),
                     'slug'        => 'dispute-time-limit',
                     'type'        => 'number',
                     'class_name'  => 'no-zero positive',
