@@ -217,7 +217,11 @@ function me_setup_sample_data_post_where($where, &$wp_query)
     return $where;
 }
 
-function marketengine_handle_sample_image($image_url, $filename)
+/**
+ * Image url
+ * @return int The file id
+ */
+function marketengine_handle_sample_image($image_url)
 {
     $upload_dir = wp_upload_dir();
     $image_data = file_get_contents($image_url);
@@ -258,6 +262,9 @@ function marketengine_handle_sample_image($image_url, $filename)
     return $attach_id;
 }
 
+/**
+ * Add sample listing
+ */
 function marketengine_add_sample_listing()
 {
 

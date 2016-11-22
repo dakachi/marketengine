@@ -170,9 +170,10 @@ function me_cron_close_order() {
     $current = date('Y-m-d H:i:s', current_time('timestamp'));
 
     $sql = "SELECT DISTINCT ID FROM {$wpdb->posts} as p
-                INNER JOIN {$wpdb->postmeta} as mt ON mt.post_id = p.ID AND mt.meta_key = '_me_order_closed_time'
+                INNER JOIN {$wpdb->postmeta} as mt ON mt.post_id = p.ID
                 WHERE   (p.post_type = 'me_order')
                     AND (p.post_status = 'me-complete')
+                    AND mt.meta_key = '_me_order_closed_time'
                     AND (mt.meta_value < '{$current}')
                     AND (mt.meta_value != '' ) ";
 
@@ -304,9 +305,9 @@ function me_get_order_status_list() {
         'publish'     => __("Actived", "enginethemes"), // mainly intended for technical case, when an error occurs payment, or payment by bank transfer confirmation to admin
         // 'me-active'   => __("Finished", "enginethemes"), // Status of payment order was not yet eligible to transfer money to the account Seller.
         'me-complete' => __("Completed", "enginethemes"), // State order has been completed and is paid to the target account Seller & Admin.
-        'me-disputed' => __("Disputed", "enginethemes"), // Order status are taken into account when processing complaints occur
+        // 'me-disputed' => __("Disputed", "enginethemes"), // Order status are taken into account when processing complaints occur
         'me-closed'   => __("Closed", "enginethemes"), // The end of the first order, while moving through this state can not be anymore Dispute
-        'me-resolved' => __("Resolved", "enginethemes"), // Similar "closed", the end point of the first order, after the complaint was handled.
+        // 'me-resolved' => __("Resolved", "enginethemes"), // Similar "closed", the end point of the first order, after the complaint was handled.
     );
     return apply_filters('marketengine_get_order_status_list', $order_status);
 }

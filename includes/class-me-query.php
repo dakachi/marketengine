@@ -27,7 +27,7 @@ function me_pre_get_posts($query) {
         return;
     }
 
-    if(is_archive('listing')) {
+    if(is_archive('listing') && !is_admin()) {
         $query->set( 'post_status', 'publish');
     }
 

@@ -22,10 +22,14 @@ $total = 0;
 		<div class="me-table-row me-cart-item">
 			<div class="me-table-col me-cart-name">
 				<div class="me-cart-listing">
+				<?php if($listing_obj && $listing_obj->is_available() ) : ?>
 					<a href="<?php echo get_permalink( $listing_obj->ID ); ?>">
 						<?php echo get_the_post_thumbnail($listing_obj->ID); ?>
-						<span><?php echo esc_html(get_the_title($listing_obj->ID)); ?></span>
+						<span><?php echo esc_html($listing_item['title']); ?></span>
 					</a>
+				<?php else : ?>
+					<span><?php echo esc_html($listing_item['title']); ?></span>
+				<?php endif; ?>
 				</div>
 			</div>
 			<div class="me-table-col me-cart-price">

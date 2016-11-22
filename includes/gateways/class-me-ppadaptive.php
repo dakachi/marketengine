@@ -175,17 +175,20 @@ class ME_PPAdaptive extends ME_Payment {
             'body'        => $data,
             'httpversion' => '1.1',
         ));
-
+        
         if (!is_wp_error($response)) {
             $response = json_decode($response['body']);
             if (empty($response->error)) {
                 $response->transaction_url = $this->paypal_url . $response->payKey;
             } else {
                 $error    = $response->error;
-                $response = new WP_Error('payment_fail', $error[0]->message);
+                if($error[0]->errorId == "520003" ) {
+                    $response = new WP_Error('payment_fail', __("Your order has not been completed yet. API credentials are incorrect. Please contact the Admin for further information.", "enginethemes"));
+                }else {
+                    $response = new WP_Error('payment_fail', $error[0]->message);    
+                }
             }
         }
-
         return $response;
 
     }

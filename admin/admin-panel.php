@@ -27,7 +27,6 @@ function marketengine_get_list_of_page() {
 function marketengine_option_view() {
 
     marketengine_option_header();
-    //include 'option-view.php';
     $tabs = array(
         'marketplace-settings'  => array(
             'title'    => __("Marketplace", "enginethemes"),
