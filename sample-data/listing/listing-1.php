@@ -74,36 +74,6 @@ return array(
                 'content' => 'I really enjoy this laptop and everything about it is very good quality, especially for gaming, except for the fact of the very small crack in the case this computer is awesome.',
                 'rate'    => 5,
             ),
-        ),
-        // array(
-        //     'user_login'   => 'shindaiki',
-        //     'first_name'   => 'Shin',
-        //     'last_name'    => 'Daiki',
-        //     'user_email'   => 'shindaiki@mailinator.com',
-        //     'location'     => 'Japan',
-        //     'user_pass'    => '123',
-        //     'avatar'       => 'avatar-6.jpg',
-        //     'paypal_email' => 'dinhle1987-per@yahoo.com',
-        //     'review'       => array(
-        //         'content' => 'It is a great laptop but the back light bleed kills it. It is only a small portion in the upper left-hand panel but that is unacceptable for a laptop that costs $2000. I am thinking of returning it for this reason',
-        //         'rate'    => 3,
-        //     ),
-        // ),
-        
-
-        // array(
-        //     'user_login'   => 'katelinharper',
-        //     'first_name'   => 'Katelin',
-        //     'last_name'    => 'Harper',
-        //     'user_email'   => 'katelinharper@mailinator.com',
-        //     'location'     => 'UK',
-        //     'user_pass'    => '123',
-        //     'avatar'       => 'avatar-2.png',
-        //     'paypal_email' => 'dinhle1987-per@yahoo.com',
-        //     'review'       => array(
-        //         'content' => 'Cracked already and leaves so many hand prints on it. The whole frosting on the case is disappearing slowly. Poor product.',
-        //         'rate'    => 1,
-        //     ),
-        // ),
+        )
     ),
 );

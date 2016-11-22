@@ -14,14 +14,29 @@ module.exports = function(grunt) {
                 // coverage : true
             }
         },
+        pot: {
+            options: {
+                // Specify options 
+                text_domain: "enginethemes",
+                keywords: ['__', '_e', '_x', '_n', '_ex', '_nx', 'esc_attr__', 'esc_attr_e', 'esc_attr_x', 'esc_html__', 'esc_html_e', 'esc_html_x', '_nx_noop'],
+                dest: 'languages/',
+            },
+            files: {
+                // Specify files to scan 
+                expand: true,
+                src: ['./*.php', './admin/**', './includes/**', './languages/**', './sample-data/**', './templates/**'],
+            },
+        },
         compress: {
             main: {
                 options: {
                     archive: 'marketengine.zip'
                 },
-                files: [
-                    {expand: true, src: ['./*.php', './admin/**', './assets/**', './includes/**','./languages/**', './sample-data/**', './templates/**'], dest: './'}
-                ]
+                files: [{
+                    expand: true,
+                    src: ['./*.php', './admin/**', './assets/**', './includes/**', './languages/**', './sample-data/**', './templates/**'],
+                    dest: './'
+                }]
             }
         },
         watch: {
@@ -34,6 +49,7 @@ module.exports = function(grunt) {
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-phpunit');
     grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-pot');
     grunt.loadNpmTasks('grunt-contrib-watch');
     // Default task(s).
     grunt.registerTask('default', ['phpunit']);
