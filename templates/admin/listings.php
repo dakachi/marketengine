@@ -93,11 +93,17 @@ $active_section = empty($_REQUEST['section']) ? '' : $_REQUEST['section'];
 
 						<?php endforeach; ?>
 
-					<?php }else { 
-						me_get_template('admin/report-none');
-					 } ?>
-
-				</div>
+					</div>
+					
+					<?php }else { ?>
+						</div>
+						<div class="me-result-filter">
+							<?php me_get_template('admin/report-none'); ?>
+						</div>
+						
+					<?php } ?>
+					 
+				<!-- </div> -->
 				<?php me_get_template('admin/pagination', array('query' => $listings)); ?>
 			</div>
 		</div>
