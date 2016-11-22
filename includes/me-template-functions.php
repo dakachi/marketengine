@@ -790,8 +790,8 @@ function me_format_size_units($bytes)
 }
 
 function me_auth_page_title( $title, $id = null ) {
-    
-    if (is_page() && in_the_loop() && get_queried_object_id() === me_get_page_id('user_account')) {
+
+    if (is_page() && in_the_loop() && $id === me_get_page_id('user_account')) {
         global $wp_query;
         if(!is_user_logged_in() ) {
             if( isset($wp_query->query_vars['register']) ) {
@@ -812,4 +812,4 @@ function me_auth_page_title( $title, $id = null ) {
     }
     return $title;
 }
-add_filter( 'the_title', 'me_auth_page_title' );
+add_filter( 'the_title', 'me_auth_page_title', 10, 2 );
