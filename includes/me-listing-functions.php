@@ -95,7 +95,7 @@ function me_filter_order_count_result( $results ) {
     return $temp;
 }
 
-function me_get_listing_categories($args = array('parent' => 0))
+function me_get_listing_categories($args = array('parent' => 0 , 'hide_empty' => false))
 {
     $result   = array();
     $termlist = get_terms('listing_category', $args );

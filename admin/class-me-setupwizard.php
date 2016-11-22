@@ -53,6 +53,8 @@ class ME_Setup_Wizard
                 case 'payment':
                     $data = $this->setup_payment($_POST['content']);
                     break;
+                case 'listing-type' : 
+                	$data = $this->setup_listing_types($_POST['content']);
                 default:
                 	$data = '';
                     break;
@@ -100,6 +102,11 @@ class ME_Setup_Wizard
     	return $this->get_listing_type_category_option();
     }
 
+    public function setup_listing_types($content) {
+    	parse_str($content);
+    	var_dump($content);
+    }
+
     private function get_listing_type_category_option() {
     	// setup category for setup listing type
     	$purchase_available = me_option('purchasion-available');
@@ -107,7 +114,7 @@ class ME_Setup_Wizard
 
     	$purchase_category_option = '';
     	$contact_category_option = '';
-    	$listing_category = get_terms( 'listing_category', array('parent' => 0) );
+    	$listing_category = get_terms( 'listing_category', array('parent' => 0, 'hide_empty' => false) );
     	foreach ($listing_category as $key => $category) {
     		$purchase_selected = in_array($category->term_id, $purchase_available) ? 'selected="selected"' : '';
     		$purchase_category_option .= '<option '.$purchase_selected.' value="'.$category->term_id.'">'.$category->name.'</option>';
