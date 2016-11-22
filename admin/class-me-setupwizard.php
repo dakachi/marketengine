@@ -347,12 +347,12 @@ class ME_Setup_Wizard
 						<h3><?php _e("Purchase", "enginethemes");?></h3>
 						<div class="me-sfield-group">
 							<label for=""><?php _e("1- Title", "enginethemes");?></label>
-							<span><?php _e('The labels will be shown as listing type allowing user to filter. Default is: "Selling"', "enginethemes"); ?></span>
+							<span><?php _e('The labels will be shown as listing type allowing user to filter. "Selling" is set by default', "enginethemes"); ?></span>
 							<input type="text" name="purchasion_title" placeholder="<?php _e("Selling", "enginethemes"); ?>" value="<?php echo me_option('purchasion-title'); ?>">
 						</div>
 						<div class="me-sfield-group">
 							<label for=""><?php _e("2- Text Button", "enginethemes");?></label>
-							<span><?php _e("Enter the text button demonstrating the behaviour that user can do. Default is: \"BUY NOW\"", "enginethemes"); ?></span>
+							<span><?php _e("\"BUY NOW\" is set by default. But you can enter the text button to demonstrate the behavior that user can do", "enginethemes"); ?></span>
 							<input type="text" name="purchasion_action" placeholder="<?php _e("BUY NOW", "enginethemes"); ?>" value="<?php echo me_option('purchasion-action'); ?>">
 						</div>
 						<div class="me-sfield-group">
@@ -368,12 +368,12 @@ class ME_Setup_Wizard
 						<h3><?php _e("Contact", "enginethemes");?></h3>
 						<div class="me-sfield-group">
 							<label for=""><?php _e("1- Title", "enginethemes");?></label>
-							<span><?php _e('The labels will be shown as listing type allowing user to filter. Default is: "Offering"', "enginethemes"); ?></span>
+							<span><?php _e('The labels will be shown as listing type allowing user to filter. "Offering" is set by default', "enginethemes"); ?></span>
 							<input type="text" name="contact_title" placeholder="<?php _e("Offering", "enginethemes"); ?>" value="<?php echo me_option('contact-title'); ?>">
 						</div>
 						<div class="me-sfield-group">
 							<label for=""><?php _e("2- Text Button", "enginethemes");?></label>
-							<span><?php _e("Enter the text button demonstrating the behaviour that user can do. Default is: \"CONTACT\"", "enginethemes"); ?></span>
+							<span><?php _e("\"CONTACT\" is set by default. But you can enter the text button to demonstrate the behavior that user can do", "enginethemes"); ?></span>
 							<input type="text" name="contact_action" placeholder="<?php _e("CONTACT", "enginethemes"); ?>" value="<?php echo me_option('contact-action'); ?>">
 						</div>
 						<div class="me-sfield-group">
