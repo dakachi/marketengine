@@ -2,7 +2,7 @@
 /*
 Plugin Name: MarketEngine
 Plugin URI: www.enginethemes.com
-Description: A WordPress plugin allows you to build a multi vendor marketplace platform for any niche.
+Description: A free WordPress plugin that allows you to build a multi vendor marketplace platform for any niche. Let anyone open a store to sell their products/services on your site in minutes, and earn commissions from each transactions happened in your ecommerce marketplace.
 Version: 1.0
 Author: EngineThemes team
 Author URI: https://enginethemes.com
