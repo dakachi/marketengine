@@ -308,7 +308,7 @@ class ME_Setup_Wizard
 				<form>
 					<h2><?php _e("Listing Types", "enginethemes");?></h2>
 					<p><?php _e("MarketEngine supports two basic listing types: Purchase and Contact, defining the action a User can perform on a listing. Purchase-type listing leads the User to the purchase flow, while Contact-type listing leads the User to the conversation flow with the Listing Author. You can define the meaning of the listings in your marketplace by modifying these labels:", "enginethemes");?></p>
-
+					
 					<h3><?php _e("Purchase", "enginethemes");?></h3>
 					<div class="me-sfield-group">
 						<label for=""><?php _e("1- Title", "enginethemes");?></label>
@@ -323,7 +323,7 @@ class ME_Setup_Wizard
 					<div class="me-sfield-group">
 						<label for=""><?php _e("3- Available Categories", "enginethemes");?></label>
 						<span><?php _e("Select categories supporting for this listing type.", "enginethemes"); ?></span>
-						<select multiple="true" name="purchase-available">
+						<select multiple="true" name="purchase-available[]">
 							<option>a</option>
 							<option>b</option>
 						</select>
@@ -343,9 +343,9 @@ class ME_Setup_Wizard
 					<div class="me-sfield-group">
 						<label for=""><?php _e("3- Available Categories", "enginethemes");?></label>
 						<span><?php _e("Select categories supporting for this listing type.", "enginethemes"); ?></span>
-						<select multiple="true" name="contact-available">
-							<option>a</option>
-							<option>b</option>
+						<select multiple="true" name="contact-available[]">
+							<option value="1">a</option>
+							<option value="2">b</option>
 						</select>
 					</div>
 
