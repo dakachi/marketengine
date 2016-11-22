@@ -789,6 +789,12 @@ function me_format_size_units($bytes)
     return $bytes;
 }
 
+/**
+ * Change title of page if user access their manage pages
+ *
+ * @param string $title, int $id
+ * @return string
+ */
 function me_auth_page_title( $title, $id = null ) {
 
     if (is_page() && in_the_loop() && $id === me_get_page_id('user_account')) {
@@ -806,7 +812,7 @@ function me_auth_page_title( $title, $id = null ) {
             } elseif( isset($wp_query->query_vars['orders']) ) {
                 return __('My Orders', 'enginethemes');
             } elseif( isset($wp_query->query_vars['purchases']) ) {
-                return __('My Transactions', 'enginethemes');
+                return __('My Purchases', 'enginethemes');
             }
         }
     }
