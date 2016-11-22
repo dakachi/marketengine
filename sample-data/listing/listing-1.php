@@ -59,7 +59,7 @@ return array(
             'review'       => array(
                 'content' => 'Great machine but bright and loud.',
                 'rate'    => 4,
-            ),
+            )
         ),
         array(
             'user_login'   => 'malenesara',
