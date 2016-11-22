@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
@@ -21,9 +21,9 @@ $review_count_details = $listing->get_review_count_details();
 <div class="me-comments">
 	<div class="marketengine-comments">
 		<h3 class="me-title-comment"><?php printf(_n("Review (%d)", "Reviews (%d)", $review_count,"enginethemes"),$review_count ); ?></h3>
-		
+
 		<?php if ( $review_count ) : ?>
-			
+
 			<div class="me-row">
 				<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating"  class="me-col-md-3">
 					<div class="me-count-rating">
@@ -43,7 +43,7 @@ $review_count_details = $listing->get_review_count_details();
 						<div class="me-count-author">
 							<?php for ($i=5; $i > 0 ; $i--) : ?>
 
-							<?php 
+							<?php
 								$percent = round(($review_count_details[$i. '_star']/$review_count)*100);
 							?>
 
@@ -59,12 +59,12 @@ $review_count_details = $listing->get_review_count_details();
 					</div>
 				</div>
 			</div>
-			
+
 			<ul class="me-comment-list">
 				<?php wp_list_comments( array('callback' => 'marketengine_comments'), $comments ); ?>
 			</ul>
             <?php if ( get_comment_pages_count($comments) > 1 ) : ?>
-            	
+
 				<div class="comment-pagination">
                 	<a href="#" class="read-more-review" id="read-more-review" data-post-id="<?php the_ID(); ?>" data-page="<?php echo get_comment_pages_count($comments); ?>" data-loading-text="<?php _e("Loading ...", "enginethemes"); ?>">
                 		<?php _e("Read more", "enginethemes") ?>
@@ -80,7 +80,7 @@ $review_count_details = $listing->get_review_count_details();
 		<?php endif; ?>
 
 	</div>
-	
+
 </div>
 
 <?php do_action('marketengine_after_single_listing_rating', $listing); ?>
