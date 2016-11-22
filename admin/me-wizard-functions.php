@@ -85,16 +85,22 @@ function marketengine_add_sample_order($orders, $listing_id)
 {
     foreach ($orders as $key => $order_data) {
         $order_data['post_author'] = marketengine_add_sample_user($order_data);
-
+        $order_data['customer_note'] = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.';
+        
         add_filter('marketengine_create_order_status', 'marketengine_sample_filter_order_status');
-
         $order = me_insert_order($order_data);
         update_post_meta($order, 'is_sample_data', 'sample-data');
-
         remove_filter('marketengine_create_order_status', 'marketengine_sample_filter_order_status');
+
+        $billing = $order_data;
+        $billing['phone'] = '13132132130';
+        $billing['email'] = $order_data['user_email'];
+        $billing['address'] = $billing['country']  = $billing['city'] = $order_data['location'];
 
         $me_order = new ME_Order($order);
         $listing  = me_get_listing($listing_id);
+
+        $me_order->set_address($billing);
 
         $me_order->add_listing($listing);
 
