@@ -53,7 +53,7 @@ if (!defined('ABSPATH')) {
 		<?php wp_nonce_field('me_change-password'); ?>
 
 		<div class="marketengine-text-field edit-profile">
-			<input type="submit" class="marketengine-btn" name="change_password" value="<?php _e("CHANGE PASSWORD", "enginethemes");?>" />
+			<input type="submit" class="marketengine-btn" name="change_password" value="<?php _e("CHANGE", "enginethemes");?>" />
 		</div>
 		<a href="<?php echo me_get_page_permalink('user_account'); ?>" class="back-home-sigin me-backlink"><?php _e("&lt; My profile", "enginethemes");?></a>
 	</div>
