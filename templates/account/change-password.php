@@ -26,24 +26,24 @@ if (!defined('ABSPATH')) {
 		<div class="me-profile-info">
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
-					<label class="me-field-title"><?php _e("Your current password", "enginethemes");?></label>
-					<input class="required" type="password" value="" name="current_password" id="current_password">
+					<label class="me-field-title" for="me-current-pass"><?php _e("Your current password", "enginethemes");?></label>
+					<input id="me-current-pass" class="required" type="password" value="" name="current_password" id="current_password">
 				</div>
 			</div>
 		</div>
 		<div class="me-profile-info">
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
-					<label class="me-field-title"><?php _e("New password", "enginethemes");?></label>
-					<input class="required" type="password" value="" name="new_password" id="new_password">
+					<label class="me-field-title" for="me-new-pass"><?php _e("New password", "enginethemes");?></label>
+					<input id="me-new-pass" class="required" type="password" value="" name="new_password" id="new_password">
 				</div>
 			</div>
 		</div>
 		<div class="me-profile-info">
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
-					<label class="me-field-title"><?php _e("Confirm password", "enginethemes");?></label>
-					<input class="required" type="password" value="" name="confirm_password" id="confirm_password">
+					<label class="me-field-title" for="me-confirm-pass"><?php _e("Confirm password", "enginethemes");?></label>
+					<input id="me-confirm-pass" class="required" type="password" value="" name="confirm_password" id="confirm_password">
 				</div>
 			</div>
 		</div>
