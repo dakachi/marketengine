@@ -14,18 +14,14 @@ module.exports = function(grunt) {
                 // coverage : true
             }
         },
-        pot: {
-            options: {
-                // Specify options 
-                text_domain: "enginethemes",
-                keywords: ['__', '_e', '_x', '_n', '_ex', '_nx', 'esc_attr__', 'esc_attr_e', 'esc_attr_x', 'esc_html__', 'esc_html_e', 'esc_html_x', '_nx_noop'],
-                dest: 'languages/',
-            },
-            files: {
-                // Specify files to scan 
-                expand: true,
-                src: ['./*.php', './admin/**', './includes/**', './languages/**', './sample-data/**', './templates/**'],
-            },
+        phpdocumentor: {
+            dist: {
+                phar : 'documentation_tools/phpDocumentor.phar'
+                options: {
+                    directory: './',
+                    target: './docs'
+                }
+            }
         },
         compress: {
             main: {
@@ -49,7 +45,7 @@ module.exports = function(grunt) {
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-phpunit');
     grunt.loadNpmTasks('grunt-contrib-compress');
-    grunt.loadNpmTasks('grunt-pot');
+    grunt.loadNpmTasks('grunt-phpdocumentor');
     grunt.loadNpmTasks('grunt-contrib-watch');
     // Default task(s).
     grunt.registerTask('default', ['phpunit']);

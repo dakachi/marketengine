@@ -37,14 +37,13 @@
             }
             flag = true;
         });
-
         $('#upload_user_avatar').jUploader({
             browse_button: 'change-avatar-user',
             multi: false,
             removable: false,
             name: 'user_avatar',
             extension: 'jpg,jpeg,gif,png',
-            upload_url: me_globals.ajaxurl + '?nonce='  + $('#me-user-avatar').val(),
+            upload_url: me_globals.ajaxurl + '?nonce=' + $('#me-user-avatar').val(),
             maxsize: '2mb',
             maxcount: 1,
         });
