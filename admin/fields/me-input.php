@@ -1,12 +1,50 @@
 <?php
 abstract class ME_Input
 {
+    /**
+     * Input Field Name
+     *
+     * @var string
+     */
     protected $_name;
+    /**
+     * Input Field Name
+     *
+     * @var string
+     */
     protected $_type;
+    /**
+     * Input Field Type
+     *
+     * @var string
+     */
     protected $_label;
+    /**
+     * Input Feild Description
+     *
+     * @var string
+     */
     protected $_description;
+
+    /**
+     * Input Container
+     *
+     * @var string
+     */
     protected $_container;
+
+    /**
+     * Input Value
+     *
+     * @var void
+     */
     protected $_value;
+
+    /**
+     * Input Default Value
+     *
+     * @var void
+     */
     protected $_default_value;
 
     protected $_options;
