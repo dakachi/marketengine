@@ -15,7 +15,7 @@ $galleries = $listing->get_galleries();
 	<div class="me-image-large">
 
 		<a class="me-large-fancybox">
-			<img src="<?php echo wp_get_attachment_image_url( $galleries[0], 'medium' ); ?>" alt="<?php the_title(); ?>">
+			<img src="<?php echo wp_get_attachment_image_url( $galleries[0], 'large' ); ?>" alt="<?php the_title(); ?>">
 		</a>
 
 	</div>
@@ -25,7 +25,7 @@ $galleries = $listing->get_galleries();
 			<ul class="me-list-thumbs">
 			<?php foreach ($galleries as $key => $value) : ?>
 				<li>
-					<a href="<?php echo wp_get_attachment_image_url( $value, 'large' ); ?>" medium-img="<?php echo wp_get_attachment_image_url( $value, 'medium' ); ?>" rel="gallery" class="me-fancybox">
+					<a href="<?php echo wp_get_attachment_image_url( $value, 'full' ); ?>" medium-img="<?php echo wp_get_attachment_image_url( $value, 'large' ); ?>" rel="gallery" class="me-fancybox">
 						<img src="<?php echo wp_get_attachment_image_url( $value, 'thumbnail' ); ?>" alt="<?php the_title('', '-'. $key); ?>">
 					</a>
 				</li>
