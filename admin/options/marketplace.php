@@ -29,7 +29,7 @@ return apply_filters('marketengine_marketplace_options',
                         'min' => 0,
                     ),
                     'name'        => 'paypal-commission-fee',
-                    'default' => 10
+                    'default' => 0
                 ),
 
                 'currency'               => array(
@@ -113,14 +113,14 @@ return apply_filters('marketengine_marketplace_options',
                     'template'           => array(
                         'purchase-title'         => array(
                             'label'       => __("Title", "enginethemes"),
-                            'description' => __('The labels will be shown as listing type allowing user to filter. For example: "Selling"', "enginethemes"),
+                            'description' => __('The labels will be shown as listing type allowing user to filter. "Selling" is set by default.', "enginethemes"),
                             'slug'        => 'purchasion-title',
                             'type'        => 'textbox',
                             'name'        => 'purchasion-title',
                         ),
                         'purchase-action'         => array(
                             'label'       => __("Text Button", "enginethemes"),
-                            'description' => __('Enter the text button demonstrating the behaviour that user can do. For example: "BUY NOW"', "enginethemes"),
+                            'description' => __('"BUY NOW" is set by default. But you can enter the text button to demonstrate the behavior that user can do', "enginethemes"),
                             'slug'        => 'purchasion-action',
                             'type'        => 'textbox',
                             'name'        => 'purchasion-action',
@@ -144,14 +144,14 @@ return apply_filters('marketengine_marketplace_options',
                     'template'           => array(
                         'purchase-title'         => array(
                             'label'       => __("Title", "enginethemes"),
-                            'description' => __('The labels will be shown as listing type allowing user to filter. For example: "Offering"', "enginethemes"),
+                            'description' => __('The labels will be shown as listing type allowing user to filter. "Offering" is set by default', "enginethemes"),
                             'slug'        => 'contact-title',
                             'type'        => 'textbox',
                             'name'        => 'contact-title',
                         ),
                         'purchase-action'         => array(
                             'label'       => __("Text Button", "enginethemes"),
-                            'description' => __('Enter the text button demonstrating the behaviour that user can do. For example: "CONTACT"', "enginethemes"),
+                            'description' => __('"CONTACT" is set by default. But you can enter the text button to demonstrate the behavior that user can do', "enginethemes"),
                             'slug'        => 'contact-action',
                             'type'        => 'textbox',
                             'name'        => 'contact-action',
