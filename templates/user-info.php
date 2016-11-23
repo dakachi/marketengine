@@ -12,7 +12,7 @@ $display_name = get_the_author_meta('display_name', $author_id);
 $location = get_the_author_meta('location', $author_id);
 $member_sinced = date_i18n( get_option( 'date_format' ), strtotime(get_the_author_meta( 'user_registered', $author_id )) );
 ?>
-<div class="me-authors <?php echo !empty($class) ? $class : ''; ?>">
+<div class="me-authors me-authors-xs <?php echo !empty($class) ? $class : ''; ?>">
 	<span class="me-avatar">
 		<?php echo me_get_avatar( $author_id ); ?>
 		<b><?php echo $display_name; ?></b>
