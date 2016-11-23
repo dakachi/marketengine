@@ -47,7 +47,7 @@
                 success: function(res, xhr) {
                     $parent_section.removeClass('me-setup-section-loading');
                     $parent_container.removeClass('active');
-                    if(res.success && res.step =='payment') {
+                    if (res.success && res.step == 'payment') {
                         $('select[name="contact_available[]"]').html(res.data.contact_option);
                         $('select[name="purchasion_available[]"]').html(res.data.purchase_option);
                     }
@@ -105,7 +105,7 @@
                 },
                 success: function(res, xhr) {
                     $parent_section.removeClass('me-setup-section-loading');
-                            $target.parents('.me-setup-wrap').removeClass('active');
+                    $target.parents('.me-setup-wrap').removeClass('active');
                 }
             });
         });
@@ -148,6 +148,12 @@
             // Ensure that it is a number and stop the keypress
             if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
                 e.preventDefault();
+            }
+        });
+        $(".me-input-price").blur(function(event) {
+            var $target = $(event.currentTarget);
+            if (!$target.val()) {
+                $target.val('0');
             }
         });
     });

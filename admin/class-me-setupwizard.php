@@ -90,9 +90,9 @@ class ME_Setup_Wizard
     		}
     	}
 
-    	if(!empty($commission) && is_numeric($commission)) {
-    		me_update_option('paypal-commission-fee', absint( $commission ));
-    	}
+    	
+    	me_update_option('paypal-commission-fee', absint( $commission ));
+    	
 
     	$currency = $currencies[$currency];
     	me_update_option('payment-currency-code', $currency['code']);
@@ -316,7 +316,7 @@ class ME_Setup_Wizard
 					</div>
 					<div class="me-sfield-group">
 						<label for=""><?php _e("2- What is your commission fee?", "enginethemes");?></label>
-						<input id="me-setup-commission" class="me-input-price" name="commission" type="number" min="0" value="<?php echo me_option('paypal-commission-fee', 10); ?>">
+						<input id="me-setup-commission" class="me-input-price" name="commission" type="number" min="0" value="<?php echo me_option('paypal-commission-fee', 0); ?>">
 						<span>%</span>
 					</div>
 					<div class="me-sfield-group">
