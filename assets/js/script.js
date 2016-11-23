@@ -8,7 +8,7 @@ jQuery(document).ready(function($) {
 		}
 	});*/
 
-	$('.marketengine-continue-btn, .me-forward-section').on('click', function(ev) {
+	/*$('.marketengine-continue-btn, .me-forward-section').on('click', function(ev) {
 		ev.preventDefault();
 		var target = ev.currentTarget;
 		var data_active = $(target).attr('data-active');
@@ -18,7 +18,7 @@ jQuery(document).ready(function($) {
 		for (var i = 1; i <= data_active; i++) {
 			$('.me-post-step-'+i).addClass('active');
 		}
-	});
+	});*/
 
 	$('.me-list-thumbs').meSliderThumbs();
 
