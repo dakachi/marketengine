@@ -22,7 +22,7 @@ class ME_Widget_Listing_Types extends WP_Widget {
      **/
     public function ME_Widget_Listing_Types() {
         $widget_ops = array('classname' => 'me-listing-types', 'description' => __("A list listing types", "enginethemes"));
-        parent::__construct('me-listing-types', __("MarketEnngine Listing Types", "enginethemes"), $widget_ops);
+        parent::__construct('me-listing-types', __("MarketEngine Listing Types", "enginethemes"), $widget_ops);
     }
 
     /**

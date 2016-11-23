@@ -17,9 +17,11 @@ function me_get_listing($post = null) {
 }
 
 function me_get_listing_types() {
+    $purchasion_title = me_option('purchasion-title');
+    $contact_title = me_option('purchasion-title');
     $listing_types = array(
-        'purchasion' => __("Selling", "enginethemes"),
-        'contact'    => __("Offering", "enginethemes"),
+        'purchasion' => $purchasion_title ? $purchasion_title : __("Selling", "enginethemes"),
+        'contact'    => $contact_title ? $contact_title : __("Offering", "enginethemes"),
     );
     return apply_filters('me_get_listing_types', $listing_types);
 }
@@ -93,4 +95,16 @@ function me_filter_order_count_result( $results ) {
     }
 
     return $temp;
+}
+
+function me_get_listing_categories($args = array('parent' => 0 , 'hide_empty' => false))
+{
+    $result   = array();
+    $termlist = get_terms('listing_category', $args );
+
+    foreach ($termlist as $term) {
+        $result[$term->term_id] =  $term->name;
+    }
+
+    return $result;
 }

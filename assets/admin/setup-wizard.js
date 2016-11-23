@@ -47,6 +47,10 @@
                 success: function(res, xhr) {
                     $parent_section.removeClass('me-setup-section-loading');
                     $parent_container.removeClass('active');
+                    if (res.success && res.step == 'payment') {
+                        $('select[name="contact_available[]"]').html(res.data.contact_option);
+                        $('select[name="purchasion_available[]"]').html(res.data.purchase_option);
+                    }
                     $('.me-setup-container').eq(data_next).addClass('active');
                     $('.me-setup-line-step').eq(data_next).addClass('active');
                 }
@@ -63,31 +67,49 @@
                     url: me_globals.ajaxurl,
                     data: {
                         action: 'me-add-sample-data',
-                        number : i,
+                        number: i,
                         _wpnonce: $('#_wpnonce').val()
                     },
                     beforeSend: function() {
                         $parent_section.addClass('me-setup-section-loading');
                     },
                     success: function(res, xhr) {
-                        
-                        count ++;
-                        console.log(count);
-                        console.log(i);
-                        if(count == i) {
+                        count++;
+                        if (count == i) {
                             $parent_section.removeClass('me-setup-section-loading');
                             $target.parents('.me-setup-wrap').addClass('active');
                         }
                     }
                 });
             };
-            setTimeout(function(){
+            setTimeout(function() {
                 $parent_section.removeClass('me-setup-section-loading');
                 $target.parents('.me-setup-wrap').addClass('active');
             }, 45000);
         });
-
-        $('.me-smail-submit-btn').click(function(event){
+        // remove sample data
+        $('#me-remove-sample-data').on('click', function(event) {
+            var $target = $(event.currentTarget);
+            var $parent_section = $target.parents('.me-setup-section');
+            var $parent_container = $target.parents('.me-setup-container');
+            var count = 1;
+            $.ajax({
+                type: 'post',
+                url: me_globals.ajaxurl,
+                data: {
+                    action: 'me-remove-sample-data',
+                    _wpnonce: $('#_wpnonce').val()
+                },
+                beforeSend: function() {
+                    $parent_section.addClass('me-setup-section-loading');
+                },
+                success: function(res, xhr) {
+                    $parent_section.removeClass('me-setup-section-loading');
+                    $target.parents('.me-setup-wrap').removeClass('active');
+                }
+            });
+        });
+        $('.me-smail-submit-btn').click(function(event) {
             var $target = $(event.currentTarget);
             $target.parents('.me-setup-wrap').addClass('active');
         });
@@ -126,6 +148,12 @@
             // Ensure that it is a number and stop the keypress
             if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
                 e.preventDefault();
+            }
+        });
+        $(".me-input-price").blur(function(event) {
+            var $target = $(event.currentTarget);
+            if (!$target.val()) {
+                $target.val('0');
             }
         });
     });

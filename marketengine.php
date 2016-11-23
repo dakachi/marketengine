@@ -2,11 +2,14 @@
 /*
 Plugin Name: MarketEngine
 Plugin URI: www.enginethemes.com
-Description: Easy implement a front form, and publish a marketplace application
+Description: A free WordPress plugin that allows you to build a multi vendor marketplace platform for any niche. Let anyone open a store to sell their products/services on your site in minutes, then earn commissions from each transaction happened in your ecommerce marketplace.
 Version: 1.0
 Author: EngineThemes team
 Author URI: https://enginethemes.com
 Domain Path: enginethemes
+Tags: wordpress-plugin, ecommerce-marketplace, multi-vendors, shopping, selling, offering, store, payment-gateways, checkout, listings, seller, monetize money
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
@@ -212,7 +215,7 @@ if (!class_exists('MarketEngine')):
             wp_enqueue_script('raty.js', $this->plugin_url() . "/assets/js/jquery.raty$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('user_profile', $this->plugin_url() . "/assets/js/user-profile$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('tag_box', $this->plugin_url() . "/assets/js/tag-box$suffix.js", array('jquery', 'suggest'), $this->version, true);
-            wp_enqueue_script('post_listing', $this->plugin_url() . "/assets/js/post-listing$suffix.js", array('jquery'), $this->version, true);
+            wp_enqueue_script('post_listing', $this->plugin_url() . "/assets/js/post-listing$suffix.js", array('jquery', 'tag_box'), $this->version, true);
             wp_enqueue_script('jquery-ui', $this->plugin_url() . "/assets/js/jquery-ui$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('jquery.slider', $this->plugin_url() . "/assets/js/jquery.slider$suffix.js", array('jquery', 'jquery-ui'), $this->version, true);
 

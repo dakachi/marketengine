@@ -12,7 +12,7 @@ $display_name = get_the_author_meta('display_name', $user_id);
 $location = get_the_author_meta('location', $user_id);
 $member_sinced = date_i18n( get_option( 'date_format' ), strtotime(get_the_author_meta( 'user_registered', $user_id )) );
 ?>
-<div class="me-authors">
+<div class="me-authors me-authors-xs">
 	<span class="me-avatar">
 		<?php echo me_get_avatar( $user_id ); ?>
 		<b><?php echo $display_name ?></b>
@@ -29,7 +29,7 @@ $member_sinced = date_i18n( get_option( 'date_format' ), strtotime(get_the_autho
 		</li>
 		*/ ?>
 		<li>
-			<span class="pull-left"><?php _e('Member Sinced:', 'enginethemes'); ?></span>
+			<span class="pull-left"><?php _e('Member Since:', 'enginethemes'); ?></span>
 			<b class="pull-right"><?php echo $member_sinced; ?></b>
 		</li>
 	</ul>

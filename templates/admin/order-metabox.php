@@ -134,6 +134,9 @@ $commission_item = array_pop($commission_items);
 	.page-title-action {
 		display: none;
 	}
+	.handlediv.button-link {
+		display: none !important;
+	}
 </style>
 <div class="me-order-preview">
 	<h2><?php printf(__( "Order #%d details" , "enginethemes" ), $order->ID); ?></h2>

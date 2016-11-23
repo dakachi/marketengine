@@ -4,17 +4,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class ME_Select extends ME_Input{
+class ME_MultiSelect extends ME_Input{
     function __construct( $args, $options ) {
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));
 
-        $this->_type        = 'select';
+        $this->_type        = 'multiselect';
         $this->_name        = $args['name'];
         $this->_label       = $args['label'];
         $this->_description = $args['description'];
         $this->_slug        = $args['slug'];
-        $this->_is_multiple = isset($args['is_multiple']) ? 'multiple="multiple"' : '';
-        $this->_placeholder = isset($args['placeholder']) ? $args['placeholder'] : __('Select...', 'enginethemes');
         $this->_data        = isset($args['data']) ? $args['data'] : array();
         $this->_container   = $options;
 
@@ -24,16 +22,14 @@ class ME_Select extends ME_Input{
     function render() {
         $id = $this->_slug ? 'id="'. $this->_slug . '"' : '';
         $option_value = $this->get_value();
-
         echo '<div class="me-group-field" '.$id.'>';
         $this->label();
         $this->description();
         echo '<span class="me-select-control">';
-        echo '<select class="select-field" name="'. $this->_name .'" '. $this->_is_multiple .'>';
-        echo '<option value="">'. $this->_placeholder .'</option>';
+        echo '<select multiple class="select-field" name="'. $this->_name .'">';
         foreach ($this->_data as $key => $value) {
-            echo '<option '.selected($option_value, $key, false).' value="'. $key .'">' . $value . '</option>';
-            $selected = '';
+            $selected = in_array($key, $option_value) ? 'selected="selected"' : '';
+            echo '<option '. $selected .' value="'. $key .'">' . $value . '</option>';
         }
         echo '</select>';
         echo '</span>';

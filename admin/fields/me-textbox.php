@@ -19,6 +19,7 @@ class ME_Textbox extends ME_Input {
         $this->_container   = $options;
 
         $this->_options = $options;
+
     }
 
     public function render() {

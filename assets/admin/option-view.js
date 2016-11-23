@@ -136,18 +136,23 @@ _.templateSettings = {
                 view = this;
             view.option.set('name', $target.attr('name'));
             view.option.set('value', $target.val());
-
-            this.filterOptionValue($target);
-
+            view.option.set('type', $target.attr('type'));
             view.option.save('', '', {
                 success: function(result, status, jqXHR) {
-                    if( $target.hasClass('no-zero') && $target.val() == 0) {
-                        status.success = false;
+                    if ($target.hasClass('no-zero')) {
+                        if ($target.val() === '') {
+                            return;
+                        }
+                        if ($target.val() === 0) {
+                            status.success = false;
+                        }
                     }
-
                     if (status.success) {
                         $target.next().remove();
                         $target.parent().append('<span class="me-success-icon"></span>');
+                        setTimeout(function() {
+                            $target.parent().find('.me-success-icon').remove();
+                        }, 1000);
                     } else {
                         $target.next().remove();
                         $target.parent().append('<span class="me-warning-icon"></span>');
@@ -177,15 +182,13 @@ _.templateSettings = {
                 view = this,
                 allowedKey = [46, 8, 9, 27, 13, 110, 190],
                 reg = /^0+/gi;
-            if($target.hasClass('no-zero')) {
+            if ($target.hasClass('no-zero')) {
                 allowedKey = [46, 8, 9, 27, 13];
             }
-
             // delete leading zero
             if ($target.val().match(reg)) {
                 $target.val($target.val().replace(reg, ''));
             }
-
             // Allow: backspace, delete, tab, escape, enter and .
             if ($.inArray(e.keyCode, allowedKey) !== -1 ||
                 // Allow: Ctrl+A
@@ -199,21 +202,12 @@ _.templateSettings = {
                 // let it happen, don't do anything
                 return;
             }
-
-            if(e.ctrlKey && e.keyCode == 86) {
+            if (e.ctrlKey && e.keyCode == 86) {
                 e.preventDefault();
             }
-
             // Ensure that it is a number and stop the keypress
             if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
                 e.preventDefault();
-            }
-        },
-        filterOptionValue: function($target) {
-            if($target.attr('name') === 'dispute-time-limit') {
-                if($target.val() === '' || $target.val() == '0') {
-                    this.option.set('value', 3);
-                }
             }
         }
     });

@@ -93,7 +93,7 @@ class ME_Auth_Form extends ME_Form {
 
                 me_add_notice( $message );
             } else {
-                me_add_notice(__("<div><p>You have registered successfully.</p></div>", "enginethemes"));
+                me_add_notice(sprintf("<div class='me-authen-inactive'><p>". __("Congratulation! You have successfully completed the registration process.", "enginethemes") ."</p></div>"));
             }
             // login in
             $_POST['user_password'] = $_POST['user_pass'];
@@ -178,7 +178,7 @@ class ME_Auth_Form extends ME_Form {
                 exit;
             } else {
                 $redirect = me_get_page_permalink('user_account');
-                me_add_notice(__("Invalid key. Please check your activation email again.", "enginethemes"));
+                me_add_notice(__("<div><p>Invalid key. Please check your activation email again.</p></div>", "enginethemes"));
                 wp_redirect( $redirect, 302 );
                 exit;
             }

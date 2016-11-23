@@ -28,7 +28,7 @@ class ME_Widget_Search extends WP_Widget {
 			'description' => __( 'A search form for your listing.' ),
 			'customize_selective_refresh' => true,
 		);
-		parent::__construct( 'me_search', __("Marketengine Listing Search Form", "enginethemes"), $widget_ops );
+		parent::__construct( 'me_search', __("MarketEngine Listing Search Form", "enginethemes"), $widget_ops );
 	}
 
 	/**

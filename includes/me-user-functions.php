@@ -25,10 +25,11 @@ add_filter('insert_user_meta', 'me_add_user_meta');
  * @return string
 */
 function me_get_avatar($user_id) {
+    $size= 32;
 	$user_avatar = get_user_meta( $user_id, 'user_avatar', true);
     if($user_avatar) {
-        $avatar_url = wp_get_attachment_url( $user_avatar );
-        return '<img alt="" src="'.$avatar_url.'" class="avatar avartar-{$size} photo" height="{$size}" width="{$size}">';
+        $avatar_obj = wp_get_attachment_image_src( $user_avatar, 'thumbnail' );
+        return '<img alt="" src="'.$avatar_obj[0].'" class="avatar avartar-'.$size.' photo" height="'.$size.'" width="'.$size.'">';
     }
     return get_avatar( $user_id );
 }

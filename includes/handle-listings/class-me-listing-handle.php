@@ -14,7 +14,8 @@ if (!defined('ABSPATH')) {
  * @author      EngineThemesTeam
  * @category    Class
  */
-class ME_Listing_Handle {
+class ME_Listing_Handle
+{
     /**
      * Insert Listing
      *
@@ -27,11 +28,12 @@ class ME_Listing_Handle {
      *
      * @return WP_Error| WP_Post
      */
-    public static function insert($listing_data, $attachment = array()) {
+    public static function insert($listing_data, $is_update = false)
+    {
 
         $user_ID = get_current_user_id();
         // validate data
-        $is_valid = self::validate($listing_data);
+        $is_valid = self::validate($listing_data, $is_update);
         if (is_wp_error($is_valid)) {
             return $is_valid;
         }
@@ -54,9 +56,9 @@ class ME_Listing_Handle {
             // process upload featured image
             $listing_data['meta_input']['_thumbnail_id'] = absint(esc_sql($listing_data['listing_image']));
         } else {
-            if(!empty($listing_data['listing_gallery'])) {
+            if (!empty($listing_data['listing_gallery'])) {
                 $listing_data['meta_input']['_thumbnail_id'] = $listing_data['listing_gallery'][0];
-            }else {
+            } else {
                 $listing_data['meta_input']['_thumbnail_id'] = '';
             }
         }
@@ -110,18 +112,29 @@ class ME_Listing_Handle {
      *
      * @return WP_Error| WP_Post
      */
-    public static function update($listing_data, $attachment = array()) {
+    public static function update($listing_data)
+    {
         $current_user_id    = get_current_user_id();
         $listing_data['ID'] = $listing_data['edit'];
 
         $listing                     = me_get_listing($listing_data['ID']);
         $listing_data['post_author'] = $listing->post_author;
 
-        // if($listing->post_author != $current_user_id) {
-        //     return new WP_Error('permission_denied', __("You are not allowed to edit this listing.", "enginethemes"));
-        // }
+        // unset($listing_data['parent_cat']);
+        // unset($listing_data['sub_cat']);
 
-        return self::insert($listing_data, $attachment);
+        $listing_type = $listing->get_listing_type();
+        if ($listing_type !== $listing_data['listing_type']) {
+            return new WP_Error('permission_denied', __("You can not change the listing type.", "enginethemes"));
+        }
+
+        $listing_category = wp_get_post_terms($listing->ID, 'listing_category', array('fields' => 'ids'));
+
+        if (!in_array($listing_data['parent_cat'], $listing_category) || !in_array($listing_data['sub_cat'], $listing_category)) {
+            return new WP_Error('permission_denied', __("You can not change the listing category.", "enginethemes"));
+        }
+
+        return self::insert($listing_data, true);
     }
 
     /**
@@ -135,7 +148,8 @@ class ME_Listing_Handle {
      *
      * @return array The listing data filtered
      */
-    public static function filter($listing_data) {
+    public static function filter($listing_data)
+    {
         $listing_data['post_type'] = 'listing';
 
         $listing_data['post_title']   = $listing_data['listing_title'];
@@ -178,7 +192,8 @@ class ME_Listing_Handle {
      *
      * @return int The attachment id
      */
-    public static function process_feature_image($file) {
+    public static function process_feature_image($file)
+    {
         global $user_ID;
         $mimes = array(
             'jpg|jpeg|jpe' => 'image/jpeg',
@@ -191,8 +206,6 @@ class ME_Listing_Handle {
         //return self::process_file_upload($file, 0, $user_ID, $mimes);
     }
 
-    
-
     /**
      * Check current user create post capability
      *
@@ -200,7 +213,8 @@ class ME_Listing_Handle {
      *
      * @return bool
      */
-    public static function current_user_can_create_listing() {
+    public static function current_user_can_create_listing()
+    {
         global $user_ID;
         if ($user_ID) {
             return apply_filters('marketengine_user_can_create_listing', true, $user_ID);
@@ -215,7 +229,8 @@ class ME_Listing_Handle {
      *
      * @return bool
      */
-    public static function current_user_can_publish_listing() {
+    public static function current_user_can_publish_listing()
+    {
         global $user_ID;
         return apply_filters('marketengine_user_can_publish_listing', true, $user_ID);
     }
@@ -227,7 +242,8 @@ class ME_Listing_Handle {
      *
      * @return bool
      */
-    public static function current_user_can_create_taxonomy($taxonomy) {
+    public static function current_user_can_create_taxonomy($taxonomy)
+    {
         global $user_ID;
         if (is_taxonomy_hierarchical($taxonomy)) {
             return apply_filters('marketengine_user_can_create_$taxonomy', false, $taxonomy, $user_ID);
@@ -247,7 +263,8 @@ class ME_Listing_Handle {
      * @return True|WP_Error True if success, WP_Error if false
      *
      */
-    public static function validate($listing_data) {
+    public static function validate($listing_data, $is_update =false)
+    {
         $current_user_id = get_current_user_id();
         $invalid_data    = array();
         // validate post data
@@ -273,6 +290,14 @@ class ME_Listing_Handle {
         $is_valid = me_validate($listing_data, $rules, $custom_attributes);
         if (!$is_valid) {
             $invalid_data = me_get_invalid_message($listing_data, $rules, $custom_attributes);
+        }
+
+        if (!empty($invalid_data)) {
+            $errors = new WP_Error();
+            foreach ($invalid_data as $key => $message) {
+                $errors->add($key, $message);
+            }
+            return $errors;
         }
 
         /**
@@ -315,6 +340,20 @@ class ME_Listing_Handle {
             }
         }
 
+        // check supported listing type
+        $purchase_cats = me_option('purchasion-available');
+        $contact_cats  = me_option('contact-available');
+        if (!$is_update && (in_array($listing_data['parent_cat'], $purchase_cats) || in_array($listing_data['parent_cat'], $contact_cats))) {
+            if (!in_array($listing_data['parent_cat'], me_option($listing_data['listing_type'] . '-available'))) {
+                $term                             = get_term($listing_data['parent_cat']);
+                $invalid_data['unsupported_type'] = sprintf(
+                    __("The listing type %s is not supported in category %s.", "enginethemes"),
+                    me_get_listing_type_lable($listing_data['listing_type']),
+                    $term->name
+                );
+            }
+        }
+
         if (!empty($invalid_data)) {
             $errors = new WP_Error();
             foreach ($invalid_data as $key => $message) {
@@ -346,18 +385,19 @@ class ME_Listing_Handle {
      *
      * @since 1.0
      */
-    public static function get_listing_type_fields_rule($listing_type) {
+    public static function get_listing_type_fields_rule($listing_type)
+    {
         switch ($listing_type) {
-        case 'contact':
-            $rules      = array('contact_email' => 'email');
-            $attributes = array('contact_email' => __("contact email", "enginethemes"));
-            break;
-        case 'rental':
+            case 'contact':
+                $rules      = array('contact_email' => 'email');
+                $attributes = array('contact_email' => __("contact email", "enginethemes"));
+                break;
+            case 'rental':
 
-        default:
-            $rules      = array('listing_price' => 'required|numeric|greaterThan:0');
-            $attributes = array('listing_price' => __("listing price", "enginethemes"));
-            break;
+            default:
+                $rules      = array('listing_price' => 'required|numeric|greaterThan:0');
+                $attributes = array('listing_price' => __("listing price", "enginethemes"));
+                break;
         }
 
         $the_rules = array(
@@ -377,7 +417,8 @@ class ME_Listing_Handle {
      *
      * @return WP_Error | ME_Review
      */
-    public static function insert_review($data) {
+    public static function insert_review($data)
+    {
         // validate current user
         $current_user_id = get_current_user_id();
         $rules           = array('content' => 'required', 'score' => 'required|greaterThan:0');
@@ -487,8 +528,9 @@ class ME_Listing_Handle {
      * @param $comment
      * @author Dakachi
      */
-    public static function update_post_rating($comment_id, $comment) {
-        
+    public static function update_post_rating($comment_id, $comment)
+    {
+
         $post_id = $comment->comment_post_ID;
         $post    = get_post($post_id);
         if ($post->post_type == 'listing') {
@@ -498,7 +540,8 @@ class ME_Listing_Handle {
         }
     }
 
-    public static function update_post_rating_score($post_id) {
+    public static function update_post_rating_score($post_id)
+    {
         global $wpdb;
         $sql = "SELECT AVG(M.meta_value)  as rate_point, COUNT(C.comment_ID) as count
                     FROM    $wpdb->comments as C
@@ -514,7 +557,8 @@ class ME_Listing_Handle {
         update_post_meta($post_id, '_me_reviews_count', $results[0]->count);
     }
 
-    public static function update_post_review_count($post_id) {
+    public static function update_post_review_count($post_id)
+    {
         global $wpdb;
         $sql = "SELECT COUNT(C.comment_ID) as count, M.meta_value
                     FROM    $wpdb->comments as C
@@ -537,7 +581,8 @@ class ME_Listing_Handle {
      * @param int $listing_id
      * @author KyNguyen
      */
-    public static function update_order_count($listing_id) {
+    public static function update_order_count($listing_id)
+    {
         global $wpdb;
 
         $listing      = me_get_listing($listing_id);
@@ -559,7 +604,8 @@ class ME_Listing_Handle {
         }
     }
 
-    public static function update_inquiry_count($listing_id) {
+    public static function update_inquiry_count($listing_id)
+    {
         global $wpdb;
         $sql = "SELECT COUNT(M.ID) as count
             FROM $wpdb->marketengine_message_item as M

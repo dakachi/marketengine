@@ -1,14 +1,14 @@
 jQuery(document).ready(function($) {
 
-	$('#terms-service').on('click', function() {
+	/*$('#terms-service').on('click', function() {
 		if($(this).is(':checked')) {
 			$('.submit-signup').find('input').removeClass('disable');
 		} else {
 			$('.submit-signup').find('input').addClass('disable');
 		}
-	});
+	});*/
 
-	$('.marketengine-continue-btn, .me-forward-section').on('click', function(ev) {
+	/*$('.marketengine-continue-btn, .me-forward-section').on('click', function(ev) {
 		ev.preventDefault();
 		var target = ev.currentTarget;
 		var data_active = $(target).attr('data-active');
@@ -18,7 +18,7 @@ jQuery(document).ready(function($) {
 		for (var i = 1; i <= data_active; i++) {
 			$('.me-post-step-'+i).addClass('active');
 		}
-	});
+	});*/
 
 	$('.me-list-thumbs').meSliderThumbs();
 
@@ -96,14 +96,19 @@ jQuery(document).ready(function($) {
 	 * Show/Hide menu page tablet/mobile
 	 */
 	$('.me-page-humberger').on('click', function() {
+		$('.marketengine-header-bottom').removeClass('me-account-active');
+		$('.me-account-humberger').removeClass('active');
 		$(this).toggleClass('active');
 		$('.marketengine-header-bottom').toggleClass('me-page-active');
+
 	});
 
 	/**
 	 * Show/Hide menu account mobile
 	 */
 	$('.me-account-humberger').on('click', function() {
+		$('.marketengine-header-bottom').removeClass('me-page-active');
+		$('.me-page-humberger').removeClass('active');
 		$(this).toggleClass('active');
 		$('.marketengine-header-bottom').toggleClass('me-account-active');
 	});
@@ -128,12 +133,13 @@ jQuery(document).ready(function($) {
 	/**
 	 * Scroll messages inbox
 	 */
-	var width_window = $(window).width();
+	/*var width_window = $(window).width();
 	var height_window = $(window).height();
 	var height_header_top = $('#me-header-wrapper').innerHeight();
 	var height_contact_header = $('.me-contact-header').innerHeight();
 	var height_message_typing = $('.me-message-typing').innerHeight();
-	var height_Scrollbar = height_window - height_header_top - height_message_typing - height_contact_header - 3;
+	var height_Scrollbar = height_window - height_header_top - height_message_typing - height_contact_header - 3;*/
+	
 	// if(width_window <= 767) {
 	// 	$('.me-contact-messages').mCustomScrollbar({
 	// 		setTop:"-1000000px",
@@ -230,7 +236,7 @@ jQuery(document).ready(function($) {
 	 * [marketengine_snap_column description]
 	 * @return {[type]} [description]
 	 */
-	function marketengine_snap_column() {
+	/*function marketengine_snap_column() {
 		var me_snap_column = $('.marketengine-snap-column').innerWidth();
 		// console.log(me_snap_column);
 		if(me_snap_column >= 1140) {
@@ -251,7 +257,7 @@ jQuery(document).ready(function($) {
 			$('body').removeClass('marketengine-snap-column-3');
 			$('body').removeClass('marketengine-snap-column-2');
 		}
-	}
+	}*/
 
 	// me_snap_column < 1140px
 	// me_snap_column < 870px

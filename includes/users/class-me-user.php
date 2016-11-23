@@ -38,8 +38,8 @@ class ME_User {
     public function get_avatar($size = 96) {
         $user_avatar = get_user_meta( $this->id, 'user_avatar', true);
         if($user_avatar) {
-            $avatar_url = wp_get_attachment_url( $user_avatar );
-            return '<img alt="" src="'.$avatar_url.'" class="avatar avartar-{$size} photo" height="{$size}" width="{$size}">';
+            $avatar_obj = wp_get_attachment_image_src( $user_avatar, 'thumbnail' );
+            return '<img alt="" src="'.$avatar_obj[0].'" class="avatar avartar-'.$size.' photo" height="'.$size.'" width="'.$size.'">';
         }
         return get_avatar($this->id);
     }

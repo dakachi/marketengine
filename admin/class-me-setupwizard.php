@@ -45,19 +45,22 @@ class ME_Setup_Wizard
             
             switch ($_POST['step']) {
                 case 'page':
-                    $this->setup_page($_POST['content']);
+                    $data = $this->setup_page($_POST['content']);
                     break;
                 case 'personalize':
-                    $this->setup_personalize($_POST['content']);
+                    $data = $this->setup_personalize($_POST['content']);
                     break;
                 case 'payment':
-                    $this->setup_payment($_POST['content']);
+                    $data = $this->setup_payment($_POST['content']);
                     break;
+                case 'listing-type' : 
+                	$data = $this->setup_listing_types($_POST['content']);
                 default:
+                	$data = '';
                     break;
             }
 
-            wp_send_json(array('success' => true, 'step' => $_POST['step']));
+            wp_send_json(array('success' => true, 'step' => $_POST['step'], 'data' => $data));
 
         } else {
             wp_send_json(array('success' => false, 'msg' => __("Permission denied.", "enginethemes")));
@@ -87,15 +90,46 @@ class ME_Setup_Wizard
     		}
     	}
 
-    	if(!empty($commission) && is_numeric($commission)) {
-    		me_update_option('paypal-commission-fee', absint( $commission ));
-    	}
+    	
+    	me_update_option('paypal-commission-fee', absint( $commission ));
+    	
 
     	$currency = $currencies[$currency];
     	me_update_option('payment-currency-code', $currency['code']);
     	me_update_option('payment-currency-sign', $currency['sign']);
     	me_update_option('payment-currency-label', $currency['label']);
-		
+
+    	return $this->get_listing_type_category_option();
+    }
+
+    public function setup_listing_types($content) {
+    	parse_str($content);
+    	me_update_option('purchasion-title', $purchasion_title);
+    	me_update_option('contact-title', $contact_title);
+
+    	me_update_option('purchasion-action', $purchasion_action);
+    	me_update_option('contact-action', $contact_action);
+
+    	me_update_option('purchasion-available', $purchasion_available);
+    	me_update_option('contact-available', $contact_available);
+    }
+
+    private function get_listing_type_category_option() {
+    	// setup category for setup listing type
+    	$purchase_available = me_option('purchasion-available', array());
+    	$contact_available = me_option('contact-available', array());
+
+    	$purchase_category_option = '';
+    	$contact_category_option = '';
+    	$listing_category = get_terms( 'listing_category', array('parent' => 0, 'hide_empty' => false) );
+    	foreach ($listing_category as $key => $category) {
+    		$purchase_selected = in_array($category->term_id, $purchase_available) ? 'selected="selected"' : '';
+    		$purchase_category_option .= '<option '.$purchase_selected.' value="'.$category->term_id.'">'.$category->name.'</option>';
+
+    		$contact_selected = in_array($category->term_id, $contact_available ) ? 'selected="selected"' : '';
+    		$contact_category_option .= '<option '.$contact_selected.' value="'.$category->term_id.'">'.$category->name.'</option>';
+    	}
+		return array('contact_option' => $contact_category_option , 'purchase_option' => $purchase_category_option);
     }
 
     private function get_currency_list() {
@@ -166,6 +200,7 @@ class ME_Setup_Wizard
 			<title><?php _e('MarketEngine &rsaquo; Setup Wizard', 'enginethemes');?></title>
 			<?php
 				wp_print_scripts('setup-wizard.js');
+        		wp_enqueue_style('me_font_icon', ME_PLUGIN_URL . 'assets/css/marketengine-font-icon.css');
         		wp_enqueue_style('setup-wizard.css', ME_PLUGIN_URL . 'assets/admin/setup-wizard.css');
         	?>
 			<?php do_action('admin_print_styles');?>
@@ -188,11 +223,11 @@ class ME_Setup_Wizard
 						<span class="me-ss-point"></span>
 					</div>
 					<div class="me-setup-line-step">
-						<span class="me-ss-title"><?php _e("Personalize", "enginethemes");?></span>
+						<span class="me-ss-title"><?php _e("Initialize", "enginethemes");?></span>
 						<span class="me-ss-point"></span>
 					</div>
 					<div class="me-setup-line-step">
-						<span class="me-ss-title"><?php _e("More Settings", "enginethemes");?></span>
+						<span class="me-ss-title"><?php _e("Listing types", "enginethemes");?></span>
 						<span class="me-ss-point"></span>
 					</div>
 					<div class="me-setup-line-step">
@@ -224,6 +259,7 @@ class ME_Setup_Wizard
     {
     	$currencies = $this->get_currency_list();	
     	$skip_setup_nonce = wp_create_nonce('skip_setup_wizard');
+    	$listing_type_categories = $this->get_listing_type_category_option();
         ?>
     	<div class="me-setup-section">
     		<?php wp_nonce_field('marketengine-setup');?>
@@ -242,59 +278,35 @@ class ME_Setup_Wizard
 			<div class="me-setup-container me-setup-page" id="page" data-step="1">
 				<form>
 					<h2><?php _e("Page Setup", "enginethemes");?></h2>
-					<p><?php _e("To run your marketplace properly, MarketEngine needs to create some specific pages. This step will automatically generate these needed pages if they don,t exist:", "enginethemes");?></p>
+					<p><?php _e("To run your marketplace properly, MarketEngine needs to create some specific pages. This step will automatically generate these needed pages if they don't exist:", "enginethemes");?></p>
 					<div class="me-spage-group">
-						<h3><?php _e("Account", "enginethemes");?></h3>
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy </p>
+						<h3><?php _e("User Account", "enginethemes");?></h3>
+						<p><?php _e("The main page for your users, with many endpoints to handle account information, password, listing management, order and purchase management...", "enginethemes"); ?></p>
 					</div>
 					<div class="me-spage-group">
 						<h3><?php _e("Listing", "enginethemes");?></h3>
-						<p>consectetuer adipiscing elit, sed diam nonummy consectetuer adipiscing elit, sed diam nonummy Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy </p>
+						<p><?php _e("Two pages will be generated: “Post-a-listing” and “Edit-a-listing”, letting your users post a new listing and edit their existing listings.", "enginethemes"); ?></p>
 					</div>
 					<div class="me-spage-group">
 						<h3><?php _e("Payment Flow", "enginethemes");?></h3>
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy </p>
+						<p><?php _e("The necessary pages for the payment flow: Checkout page, Thank you page, Cancel Order page", "enginethemes"); ?></p>
 					</div>
 					<div class="me-spage-group">
 						<h3><?php _e("Inquiry", "enginethemes");?></h3>
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy </p>
+						<p><?php _e("This page handles the “Make an inquiry” flow, providing buyers and sellers an optimized conversation section to exchange more information about the Listing.", "enginethemes"); ?></p>
 					</div>
 					<div class="me-setup-control">
-						<a href="#personalize" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes");?></a>
-						<a href="#personalize" class="me-scontinue-btn me-next"><?php _e("CONTINUE", "enginethemes");?></a>
+						<a href="#initialize" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes");?></a>
+						<a href="#initialize" class="me-scontinue-btn me-next"><?php _e("CONTINUE", "enginethemes");?></a>
 					</div>
 					<input type="hidden" name="step" value="page" />
 
 				</form>
 			</div>
-			<!-- Personalize -->
-			<div class="me-setup-container me-setup-personalize" id="personalize" data-step="2">
+			<!-- Initialize -->
+			<div class="me-setup-container me-setup-initialize" id="initialize" data-step="2">
 				<form>
-					<h2><?php _e("Personalize", "enginethemes");?></h2>
-					<div class="me-sfield-group">
-						<label for="me-setup-listing"><?php _e("1- How should people understand “listings” in your marketplace?", "enginethemes");?></label>
-						<input id="me-setup-listing" type="text" name="listing_label" value="<?php echo me_option('listing-label', 'Listing') ?>">
-					</div>
-					<div class="me-sfield-group">
-						<label for="me-setup-seller"><?php _e("2- What should we call the Seller role in your marketplace?", "enginethemes");?></label>
-						<input id="me-setup-seller" type="text" name="seller_label" value="<?php echo me_option('seller-label', 'Seller') ?>">
-					</div>
-					<div class="me-sfield-group">
-						<label for="me-setup-buyer"><?php _e("3- What should we call the Buyer role in your marketplace?", "enginethemes");?></label>
-						<input id="me-setup-buyer" type="text" name="buyer_label" value="<?php echo me_option('buyer-label', 'Buyer') ?>">
-					</div>
-					<div class="me-setup-control">
-						<a href="#payment" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes");?></a>
-						<a href="#payment" class="me-scontinue-btn me-next"><?php _e("CONTINUE", "enginethemes");?></a>
-					</div>
-					<input type="hidden" name="step" value="personalize" />
-				</form>
-			</div>
-
-			<!-- More Settings -->
-			<div class="me-setup-container me-setup-more-settings" id="payment" data-step="3">
-				<form>
-					<h2><?php _e("More Settings", "enginethemes");?></h2>
+					<h2><?php _e("Initialize", "enginethemes");?></h2>
 					<div class="me-sfield-group">
 						<label for=""><?php _e("1- Create some listing categories for your marketplace", "enginethemes");?></label>
 						<input type="text" name="cats[]"> <span class="me-setup-add-cat"><i class="icon-me-add"></i><?php _e("Add more", "enginethemes");?></span>
@@ -304,7 +316,7 @@ class ME_Setup_Wizard
 					</div>
 					<div class="me-sfield-group">
 						<label for=""><?php _e("2- What is your commission fee?", "enginethemes");?></label>
-						<input id="me-setup-commission" class="me-input-price" name="commission" type="number" min="0">
+						<input id="me-setup-commission" class="me-input-price" name="commission" type="number" min="0" value="<?php echo me_option('paypal-commission-fee', 0); ?>">
 						<span>%</span>
 					</div>
 					<div class="me-sfield-group">
@@ -316,12 +328,72 @@ class ME_Setup_Wizard
 						</select>
 					</div>
 					<div class="me-setup-control">
-						<a href="#finish" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes");?></a>
-						<a href="#finish" class="me-scontinue-btn me-next"><?php _e("CONTINUE", "enginethemes");?></a>
+						<a href="#listing-types" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes");?></a>
+						<a href="#listing-types" class="me-scontinue-btn me-next"><?php _e("CONTINUE", "enginethemes");?></a>
 					</div>
 					<input type="hidden" name="step" value="payment" />
 				</form>
 			</div>
+
+			<!-- Listing Types -->
+			<div class="me-setup-container me-setup-listing-types" id="listing-types" data-step="3">
+				<form>
+					<div class="me-setup-wrap">
+						<h2><?php _e("Listing Types", "enginethemes");?></h2>
+						<p><?php _e("MarketEngine supports two basic listing types: Purchase and Contact, defining the action a User can perform on a listing. Purchase-type listing leads the User to the purchase flow, while Contact-type listing leads the User to the conversation flow with the Listing Author. You can define the meaning of the listings in your marketplace by modifying these labels:", "enginethemes");?></p>
+					</div>
+
+					<div class="me-setup-wrap">
+						<h3><?php _e("Purchase", "enginethemes");?></h3>
+						<div class="me-sfield-group">
+							<label for=""><?php _e("1- Title", "enginethemes");?></label>
+							<span><?php _e('The labels will be shown as listing type allowing user to filter. "Selling" is set by default', "enginethemes"); ?></span>
+							<input type="text" name="purchasion_title" placeholder="<?php _e("Selling", "enginethemes"); ?>" value="<?php echo me_option('purchasion-title'); ?>">
+						</div>
+						<div class="me-sfield-group">
+							<label for=""><?php _e("2- Text Button", "enginethemes");?></label>
+							<span><?php _e("\"BUY NOW\" is set by default. But you can enter the text button to demonstrate the behavior that user can do", "enginethemes"); ?></span>
+							<input type="text" name="purchasion_action" placeholder="<?php _e("BUY NOW", "enginethemes"); ?>" value="<?php echo me_option('purchasion-action'); ?>">
+						</div>
+						<div class="me-sfield-group">
+							<label for=""><?php _e("3- Available Categories", "enginethemes");?></label>
+							<span><?php _e("Select categories supporting for this listing type.", "enginethemes"); ?></span>
+							<select multiple="true" name="purchasion_available[]">
+								<?php echo $listing_type_categories['purchase_option']; ?>
+							</select>
+						</div>
+					</div>
+					<div class="me-setup-wrap">
+						<!-- contact type -->
+						<h3><?php _e("Contact", "enginethemes");?></h3>
+						<div class="me-sfield-group">
+							<label for=""><?php _e("1- Title", "enginethemes");?></label>
+							<span><?php _e('The labels will be shown as listing type allowing user to filter. "Offering" is set by default', "enginethemes"); ?></span>
+							<input type="text" name="contact_title" placeholder="<?php _e("Offering", "enginethemes"); ?>" value="<?php echo me_option('contact-title'); ?>">
+						</div>
+						<div class="me-sfield-group">
+							<label for=""><?php _e("2- Text Button", "enginethemes");?></label>
+							<span><?php _e("\"CONTACT\" is set by default. But you can enter the text button to demonstrate the behavior that user can do", "enginethemes"); ?></span>
+							<input type="text" name="contact_action" placeholder="<?php _e("CONTACT", "enginethemes"); ?>" value="<?php echo me_option('contact-action'); ?>">
+						</div>
+						<div class="me-sfield-group">
+							<label for=""><?php _e("3- Available Categories", "enginethemes");?></label>
+							<span><?php _e("Select categories supporting for this listing type.", "enginethemes"); ?></span>
+							<select multiple="true" name="contact_available[]">
+								<?php echo $listing_type_categories['contact_option']; ?>
+							</select>
+						</div>
+					</div>
+					<div class="me-setup-wrap">
+						<div class="me-setup-control">
+							<a href="#finish" class="me-sprevious-btn me-skip-btn"><?php _e("Skip this step", "enginethemes");?></a>
+							<a href="#finish" class="me-scontinue-btn me-next"><?php _e("CONTINUE", "enginethemes");?></a>
+						</div>
+						<input type="hidden" name="step" value="listing-type" />
+					</div>
+				</form>
+			</div>
+
 			<!-- That's it -->
 			<div class="me-setup-container me-setup-that-it" id="finish" data-step="4">
 				<div class="me-setup-wrap">
@@ -329,17 +401,25 @@ class ME_Setup_Wizard
 					<p><?php _e("Congragulations! You have successfully made some steps on building your marketplace.", "enginethemes");?><br/><?php _e("What's next?", "enginethemes");?></p>
 				</div>
 				<div class="me-setup-wrap <?php if(get_option('me-added-sample-data')) {echo "active";} ?>">
-					<form>
+					
 						<h3><?php _e("Sample Data", "enginethemes");?></h3>
+					<form>
 						<div class="me-setup-sample">
-							<p><?php _e("You can add some sample data to grasp some clearer ideas of how your marketplace will look like.<br/>Some sample listings will be generated in each of your categories, together with a few users &amp; orders to demonstrate the checkout flows.<br/>You will be able to remove those samples with another click later.", "enginethemes");?></p>
+							<p><?php _e("You can add some sample data to grasp some clearer ideas of how your marketplace will look like. (Clicking on this button will generate 4 sample listings in each of your categories, together with a few users & orders to demonstrate the checkout flows.)", "enginethemes");?></p>
+							<p>
+							<?php _e("You will be able to remove those samples with another click later.", "enginethemes"); ?>
+							</p>
 							<label class="me-setup-data-btn" id="me-add-sample-data" for="me-setup-sample-data">
 								<span id="me-setup-sample-data"><?php _e("ADD SAMPLE DATA", "enginethemes");?></span>
 							</label>
+							
 						</div>
 						<div class="me-setup-sample-finish">
 							<p><?php _e("Few users, orders and some sample listings have already been generated in each of your categories.", "enginethemes");?></p>
 							<p><?php _e("You will be able to remove those samples with another click later.", "enginethemes");?></p>
+							<label class="me-setup-data-btn" id="me-add-sample-data" for="me-setup-sample-data">
+								<span id="me-remove-sample-data"><?php _e("REMOVE SAMPLE DATA", "enginethemes");?></span>
+							</label>
 						</div>
 					</form>
 				</div>

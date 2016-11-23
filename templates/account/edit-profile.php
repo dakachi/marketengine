@@ -54,16 +54,16 @@ $user_avatar = $user->get_user_avatar_id();
 				<div class="me-col-md-6">
 					<div class="marketengine-group-field">
 						<div class="marketengine-input-field">
-							<label class="me-field-title"><?php _e("First Name", "enginethemes");?></label>
-							<input type="text" value="<?php echo $first_name; ?>" name="first_name" id="first_name" />
+							<label class="me-field-title" for="me-first-name"><?php _e("First Name", "enginethemes");?></label>
+							<input id="me-first-name" type="text" value="<?php echo $first_name; ?>" name="first_name" id="first_name" />
 						</div>
 					</div>
 				</div>
 				<div class="me-col-md-6">
 					<div class="marketengine-group-field">
 						<div class="marketengine-input-field">
-							<label class="me-field-title"><?php _e("Last Name", "enginethemes");?></label>
-							<input type="text" value="<?php echo $last_name; ?>" name="last_name" id="last_name">
+							<label class="me-field-title" for="me-last-name"><?php _e("Last Name", "enginethemes");?></label>
+							<input id="me-last-name" type="text" value="<?php echo $last_name; ?>" name="last_name" id="last_name">
 						</div>
 					</div>
 				</div>
@@ -111,40 +111,41 @@ $user_avatar = $user->get_user_avatar_id();
 
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
-					<label class="me-field-title"><?php _e("Username", "enginethemes");?></label>
-					<input disabled="disabled" type="text" value="<?php echo $user->user_login; ?>" id="username">
+					<label class="me-field-title" for="me-user-name"><?php _e("Username", "enginethemes");?></label>
+					<input id="me-user-name" disabled="disabled" type="text" value="<?php echo $user->user_login; ?>" id="username">
 				</div>
 			</div>
 
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
-					<label class="me-field-title"><?php _e("Email", "enginethemes");?></label>
-					<input disabled="disabled" type="text" value="<?php echo $user->email; ?>" id="email">
+					<label class="me-field-title" for="me-email"><?php _e("Email", "enginethemes");?></label>
+					<input id="me-email" disabled="disabled" type="text" value="<?php echo $user->email; ?>" id="email">
 				</div>
 			</div>
 
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
-					<label class="me-field-title"><?php _e("Paypal Email (this email will be used for Paypal payment)", "enginethemes"); ?></label>
-					<input type="text" value="<?php echo $paypal_email; ?>" name="paypal_email" id="paypal_email">
+					<label class="me-field-title" for="me-paypal-email"><?php _e("Paypal Email (this email will be used for Paypal payment)", "enginethemes"); ?></label>
+					<input id="me-paypal-email" type="text" value="<?php echo $paypal_email; ?>" name="paypal_email" id="paypal_email">
 				</div>
 			</div>
 
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
-					<label class="me-field-title"><?php _e("Location", "enginethemes");?></label>
-					<input type="text" value="<?php echo $location; ?>" name="location" id="location">
+					<label class="me-field-title" for="me-location"><?php _e("Location", "enginethemes");?></label>
+					<input id="me-location" type="text" value="<?php echo $location; ?>" name="location" id="location">
 				</div>
 			</div>
 
 			<div class="marketengine-group-field me-no-margin-bottom">
 				<div class="marketengine-textarea-field">
-					<label class="me-field-title"><?php _e("About Me", "enginethemes");?></label>
-					<textarea name="description" id="description"><?php echo $about_user; ?></textarea>
+					<label class="me-field-title" for="me-description"><?php _e("About Me", "enginethemes");?></label>
+					<textarea id="me-description" name="description" id="description"><?php echo $about_user; ?></textarea>
 				</div>
 			</div>
 
 			<?php wp_nonce_field('me-update_profile'); ?>
+			<?php wp_nonce_field('marketengine', 'me-user-avatar'); ?>
 			<?php do_action('marketengine_after_edit_user_profile', $user); ?>
 		</div>
 		<div class="marketengine-text-field edit-profile">

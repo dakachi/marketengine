@@ -15,7 +15,8 @@ if (!defined('ABSPATH')) {
  * @author      Dakachi
  * @category    Class
  */
-class ME_Post_Types {
+class ME_Post_Types
+{
     /**
      * The single instance of the class.
      *
@@ -32,7 +33,8 @@ class ME_Post_Types {
      * @since 1.0
      * @return ME_Listing - Main instance.
      */
-    public static function instance() {
+    public static function instance()
+    {
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
         }
@@ -41,7 +43,8 @@ class ME_Post_Types {
     /**
      * Register default taxonomies
      */
-    public static function register_taxonomies() {
+    public static function register_taxonomies()
+    {
         $labels = array(
             'name'                  => _x('Category', 'Taxonomy plural name', "enginethemes"),
             'singular_name'         => _x('Listing category', 'Taxonomy singular name', "enginethemes"),
@@ -70,7 +73,7 @@ class ME_Post_Types {
             'show_ui'           => true,
             'query_var'         => true,
             'rewrite'           => array(
-                'slug'         => 'listing_category',
+                'slug'         => apply_filters('marketengine_listing_category_slug', 'listing_category'),
                 'hierarchical' => true,
             ),
             'capabilities'      => array(
@@ -85,17 +88,17 @@ class ME_Post_Types {
         ), $args);
 
         $labels = array(
-            'name'                  => _x('Listing Tag', 'Taxonomy plural name', "enginethemes"),
-            'singular_name'         => _x('Listing Tags', 'Taxonomy singular name', "enginethemes"),
+            'name'                  => _x('Tags', 'Taxonomy plural name', "enginethemes"),
+            'singular_name'         => _x('Tag', 'Taxonomy singular name', "enginethemes"),
             'search_items'          => __('Search Tags', "enginethemes"),
             'popular_items'         => __('Popular Tags', "enginethemes"),
-            'all_items'             => __('All listing tags', "enginethemes"),
-            'parent_item'           => __('Parent listing tags', "enginethemes"),
-            'parent_item_colon'     => __('Parent listing tags', "enginethemes"),
-            'edit_item'             => __('Edit listing tags', "enginethemes"),
-            'update_item'           => __('Update listing tag', "enginethemes"),
-            'add_new_item'          => __('Add New listing tag', "enginethemes"),
-            'new_item_name'         => __('New listing tag Name', "enginethemes"),
+            'all_items'             => __('All Tags', "enginethemes"),
+            'parent_item'           => __('Parent Tag', "enginethemes"),
+            'parent_item_colon'     => __('Parent Tag', "enginethemes"),
+            'edit_item'             => __('Edit Tag', "enginethemes"),
+            'update_item'           => __('Update Tag', "enginethemes"),
+            'add_new_item'          => __('Add New Tag', "enginethemes"),
+            'new_item_name'         => __('New Tag Name', "enginethemes"),
             'add_or_remove_items'   => __('Tags', "enginethemes"),
             'choose_from_most_used' => __('Choose from most used tags', "enginethemes"),
             'menu_name'             => __('Tags', "enginethemes"),
@@ -112,7 +115,7 @@ class ME_Post_Types {
             'show_ui'           => true,
             'query_var'         => true,
             'rewrite'           => array(
-                'slug' => 'listing_tag',
+                'slug' => apply_filters('marketengine_listing_tag_slug', 'listing_tag'),
             ),
             'capabilities'      => array(
                 'manage_terms',
@@ -129,11 +132,27 @@ class ME_Post_Types {
     /**
      * Register post type listing
      */
-    public static function register_post_type() {
-        $permalinks = get_option('me_permalinks', 'listing');
-        $listing_label = me_option('listing-label', 'lisitng');
-        register_post_type('listing', array(
-            'labels'             => array(
+    public static function register_post_type()
+    {
+        $listing_label = me_option('listing-label');
+        if($listing_label) {
+            $labels        = array(
+                'name'               => ucfirst($listing_label). 's',
+                'singular_name'      => ucfirst($listing_label),
+                'add_new'            => __('Add New', "enginethemes"),
+                'add_new_item'       => sprintf(__('Add New %s', "enginethemes"), ucfirst($listing_label)),
+                'edit_item'          => sprintf(__('Edit %s', "enginethemes"), $listing_label),
+                'new_item'           => sprintf(__('New %s', "enginethemes"), $listing_label),
+                'all_items'          => sprintf(__('All %s', "enginethemes"), ucfirst($listing_label). 's'),
+                'view_item'          => sprintf(__('View %s', "enginethemes"), $listing_label),
+                'search_items'       => sprintf(__('Search %s', "enginethemes"),$listing_label. 's'),
+                'not_found'          => sprintf(__('No %s found', "enginethemes"), $listing_label. 's'),
+                'not_found_in_trash' => sprintf(__('No %s found in Trash', "enginethemes"), $listing_label. 's'),
+                'parent_item_colon'  => '',
+                'menu_name'          => ucfirst($listing_label). 's',
+            );
+        }else {
+            $labels        = array(
                 'name'               => __('Listings', "enginethemes"),
                 'singular_name'      => __('Listing', "enginethemes"),
                 'add_new'            => __('Add New', "enginethemes"),
@@ -143,17 +162,21 @@ class ME_Post_Types {
                 'all_items'          => __('All Listings', "enginethemes"),
                 'view_item'          => __('View Listing', "enginethemes"),
                 'search_items'       => __('Search Listings', "enginethemes"),
-                'not_found'          => __('No Listing found', "enginethemes"),
-                'not_found_in_trash' => __('No Listings found in Trash', "enginethemes"),
+                'not_found'          => __('No listings found', "enginethemes"),
+                'not_found_in_trash' => __('No listings found in Trash', "enginethemes"),
                 'parent_item_colon'  => '',
                 'menu_name'          => __('Listings', "enginethemes"),
-            ),
+            );
+        }
+        
+        register_post_type('listing', array(
+            'labels'             => $labels,
             'public'             => true,
             'publicly_queryable' => true,
             'show_ui'            => true,
             'show_in_menu'       => true,
             'query_var'          => true,
-            'rewrite'            => $permalinks ? array('slug' => $permalinks, 'with_front' => false, 'feed' => true) : false,
+            'rewrite'            => apply_filters('marketengine_listing_rewrite', array('slug' => 'listing', 'with_front' => false, 'feed' => true)),
             'capability_type'    => 'post',
             'has_archive'        => 'listings',
             'hierarchical'       => false,
@@ -184,7 +207,7 @@ class ME_Post_Types {
         // TODO: tam thoi de day
         register_post_type('me_order', array(
             'labels'             => array(
-                'name'               => __('Order', "enginethemes"),
+                'name'               => __('Orders', "enginethemes"),
                 'singular_name'      => __('Order', "enginethemes"),
                 'add_new'            => false,
                 'add_new_item'       => __('Add New Order', "enginethemes"),
@@ -193,7 +216,7 @@ class ME_Post_Types {
                 'all_items'          => __('Orders', "enginethemes"),
                 'view_item'          => __('View Order', "enginethemes"),
                 'search_items'       => __('Search Order', "enginethemes"),
-                'not_found'          => __('No Orders found', "enginethemes"),
+                'not_found'          => __('No orders found', "enginethemes"),
                 'not_found_in_trash' => __('No Orders found in Trash', "enginethemes"),
                 'parent_item_colon'  => '',
                 'menu_name'          => __('MarketEngine', "enginethemes"),
@@ -205,7 +228,7 @@ class ME_Post_Types {
             ),
             'has_archive'        => true,
             'show_ui'            => true,
-            'show_in_menu'       => current_user_can ('manage_options') ? 'marketengine' : false,
+            'show_in_menu'       => current_user_can('manage_options') ? 'marketengine' : false,
             'query_var'          => true,
             'capability_type'    => 'post',
             'hierarchical'       => false,

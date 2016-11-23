@@ -28,21 +28,3 @@
     </span>
 
 </div>
-<script>
-    (function ($) {
-        $(document).ready(function(){
-            $('#<?php echo esc_js($id); ?>').jUploader({
-                browse_button: '<?php echo esc_js($button); ?>',
-                multi: <?php echo $multi ? "true" : "false"; ?>,
-                removable : <?php echo $close ? "true" : "false"; ?>,
-                name: <?php echo "'" . esc_js($name) . "'" ?>,
-                extension: 'jpg,jpeg,gif,png',
-                upload_url: '<?php echo admin_url('admin-ajax.php') . '?nonce=' . wp_create_nonce('marketengine') ?>',
-                <?php echo isset($maxsize) ? "maxsize : '$maxsize',\n" : ""; ?>
-                <?php echo isset($maxwidth) ? "maxwidth : $maxwidth,\n" : ""; ?>
-                <?php echo isset($maxheight) ? "maxheight : $maxheight,\n" : ""; ?>
-                <?php echo isset($maxcount) ? "maxcount : $maxcount,\n" : ""; ?>
-            });
-        });
-    })(jQuery);
-</script>

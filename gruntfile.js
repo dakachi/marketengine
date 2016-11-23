@@ -4,7 +4,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         phpunit: {
             marketenginetest: {
-                configuration : './phpunit.xml'
+                configuration: './phpunit.xml'
             },
             options: {
                 bin: './vendor/bin/phpunit',
@@ -14,15 +14,39 @@ module.exports = function(grunt) {
                 // coverage : true
             }
         },
+        phpdoc: {
+            options: {
+                verbose: true,
+                template : "zend"
+            },
+            target: {
+                src: ['./*.php', './admin/**', './includes/**'],
+                dest: '../../docs/marketengine'
+            }
+        },
+        compress: {
+            main: {
+                options: {
+                    archive: 'marketengine.zip'
+                },
+                files: [{
+                    expand: true,
+                    src: ['./*.php', './admin/**', './assets/**', './includes/**', './languages/**', './sample-data/**', './templates/**'],
+                    dest: './'
+                }]
+            }
+        },
         watch: {
             phpunit: {
-                files: ['tests/*/*.php','tests/*.php','includes/*.php', 'includes/*/*.php'],
+                files: ['tests/*/*.php', 'tests/*.php', 'includes/*.php', 'includes/*/*.php'],
                 tasks: ['phpunit']
             }
         }
     });
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-phpunit');
+    grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-phpdoc');
     grunt.loadNpmTasks('grunt-contrib-watch');
     // Default task(s).
     grunt.registerTask('default', ['phpunit']);

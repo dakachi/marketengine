@@ -27,7 +27,6 @@ function marketengine_get_list_of_page() {
 function marketengine_option_view() {
 
     marketengine_option_header();
-    //include 'option-view.php';
     $tabs = array(
         'marketplace-settings'  => array(
             'title'    => __("Marketplace", "enginethemes"),
@@ -105,13 +104,13 @@ function marketengine_option_menu() {
     // Hide link on listing page
     if (isset($_GET['post_type']) && $_GET['post_type'] == 'me_order') {
         echo '<style type="text/css">
-            #favorite-actions, .add-new-h2, .page-title-action, .bulkactions { display:none; }
+            #favorite-actions, .add-new-h2, .page-title-action, .hide-if-no-js { display:none; }
         </style>';
     }
 
     if (isset($_GET['post_type']) && $_GET['post_type'] == 'listing') {
         echo '<style type="text/css">
-            #favorite-actions, .add-new-h2, .page-title-action, .bulkactions { display:none; }
+            #favorite-actions, .add-new-h2, .page-title-action, .hide-if-no-js { display:none; }
             .sign {font-weight: bold;}
         </style>';
     }
@@ -142,6 +141,15 @@ function marketengine_option_menu() {
         'manage_options',
         'me-settings',
         'marketengine_option_view'
+    );
+
+    add_submenu_page(
+        'marketengine',
+        __("Setup Wizard", "enginethemes"),
+        __("Setup Wizard", "enginethemes"),
+        'manage_options',
+        '?page=marketengine-setup',
+        null
     );
 }
 add_action('admin_menu', 'marketengine_option_menu');
@@ -202,6 +210,7 @@ function marketengine_option_header() {
  * @since 1.0
  */
 function marketengine_option_footer() {
+
     ?>
     </div>
 </div>
@@ -219,3 +228,9 @@ function me_admin_menu_class() {
     $menu[28][6] .= '-icon-me-logo';
 }
 add_action( 'admin_menu', 'me_admin_menu_class', 10 );
+
+function me_admin_footer_text( $text) {
+    $text = sprintf( 'Thank you for creating with <a href="%s">EngineThemes</a>.', 'https://www.enginethemes.com/' );
+    return $text;
+}
+add_filter( 'admin_footer_text', 'me_admin_footer_text' );

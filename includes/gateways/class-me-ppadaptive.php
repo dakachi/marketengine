@@ -175,17 +175,20 @@ class ME_PPAdaptive extends ME_Payment {
             'body'        => $data,
             'httpversion' => '1.1',
         ));
-
+        
         if (!is_wp_error($response)) {
             $response = json_decode($response['body']);
             if (empty($response->error)) {
                 $response->transaction_url = $this->paypal_url . $response->payKey;
             } else {
                 $error    = $response->error;
-                $response = new WP_Error('payment_fail', $error[0]->message);
+                if($error[0]->errorId == "520003" ) {
+                    $response = new WP_Error('payment_fail', __("Your order has not been completed yet. API credentials are incorrect. Please contact the Admin for further information.", "enginethemes"));
+                }else {
+                    $response = new WP_Error('payment_fail', $error[0]->message);    
+                }
             }
         }
-
         return $response;
 
     }
@@ -461,8 +464,8 @@ class ME_PPAdaptive_Request {
             $amount = me_get_order_item_meta($order_item_id, '_amount', true);
             if ($commission_fee > 0) {
                 // $amount        = $amount - $commission_fee;
-                $commission    = ((float) $amount * (float) $commission_fee) / 100;
-                $amount        = $amount - $commission;
+                $commission    = round( ((float) $amount * (float) $commission_fee) / 100, 2 );
+                $amount        = round( $amount - $commission, 2 );
                 $receiver_list = array(
                     'receiverList.receiver(0).amount' => $amount,
                     'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
@@ -494,7 +497,7 @@ class ME_PPAdaptive_Request {
 
             } else {
                 $receiver_list = array(
-                    'receiverList.receiver(0).amount' => $amount,
+                    'receiverList.receiver(0).amount' => round($amount, 2),
                     'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
                 );
             }

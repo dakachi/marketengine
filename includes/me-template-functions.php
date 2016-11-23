@@ -429,19 +429,19 @@ function me_get_order_status_info($status, $info_type = '')
             break;
         case 'publish':
             $style         = 'me-order-complete';
-            $text          = __('', 'enginethemes');
+            $text          = '';
             $order_process = 2;
             break;
         // chua co class cho status nay
         case 'me-active':
             $style         = 'me-order-complete';
-            $text          = __('', 'enginethemes');
+            $text          = '';
             $order_process = 2;
             break;
         case 'me-complete':
             $style         = 'me-order-complete';
-            $text          = __('', 'enginethemes');
-            $order_process = 3;
+            $text          = '';
+            $order_process = 2;
             break;
         case 'me-disputed':
             $style         = 'me-order-disputed';
@@ -450,17 +450,17 @@ function me_get_order_status_info($status, $info_type = '')
             break;
         case 'me-closed':
             $style         = 'me-order-closed';
-            $text          = __('', 'enginethemes');
+            $text          = '';
             $order_process = 5;
             break;
         case 'me-resolved':
             $style         = 'me-order-resolved';
-            $text          = __('', 'enginethemes');
+            $text          = '';
             $order_process = 5;
             break;
         default:
             $style         = 'me-order-pending';
-            $text          = __('', 'enginethemes');
+            $text          = '';
             $order_process = 1;
             break;
     }
@@ -788,3 +788,36 @@ function me_format_size_units($bytes)
 
     return $bytes;
 }
+
+/**
+ * Change title of page if user access their manage pages
+ *
+ * @param string $title, int $id
+ * @return string
+ */
+function me_auth_page_title( $title, $id = null ) {
+
+    if (is_page() && in_the_loop() && $id === me_get_page_id('user_account')) {
+        global $wp_query;
+        if(!is_user_logged_in() ) {
+            if( isset($wp_query->query_vars['register']) ) {
+                return __('Registration', 'enginethemes');
+            }
+            else {
+                return __('Member Login', 'enginethemes');
+            }
+        } else {
+            if( isset($wp_query->query_vars['listings']) ) {
+                return __('My Listings', 'enginethemes');
+            } elseif( isset($wp_query->query_vars['orders']) ) {
+                return __('My Orders', 'enginethemes');
+            } elseif( isset($wp_query->query_vars['purchases']) ) {
+                return __('My Purchases', 'enginethemes');
+            } elseif( isset($wp_query->query_vars['change-password']) ) {
+                return __('CHANGE PASSWORD', 'enginethemes');
+            }
+        }
+    }
+    return $title;
+}
+add_filter( 'the_title', 'me_auth_page_title', 10, 2 );
