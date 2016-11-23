@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 
 do_action('marketengine_before_reset_password_form');
 ?>
-<div class="me-authen-wrap">
+<div class="me-authen-wrap me-authen-reset">
 
 	<form id="reset-pass-form" action="" method="post">
 
@@ -23,14 +23,14 @@ do_action('marketengine_before_reset_password_form');
 
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
-			    <label class="text"><?php _e("Enter new password", "enginethemes"); ?></label>
-			    <input type="password" name="new_pass">
+			    <label class="me-field-title" for="me-new-pass"><?php _e("Enter new password", "enginethemes"); ?></label>
+			    <input id="me-new-pass" type="password" name="new_pass">
 			</div>
 		</div>
 		<div class="marketengine-group-field">
 			<div class="marketengine-input-field">
-			    <label class="text"><?php _e("Confirm password", "enginethemes"); ?></label>
-			    <input type="password" name="confirm_pass">
+			    <label class="me-field-title" for="me-confirm-pass"><?php _e("Confirm password", "enginethemes"); ?></label>
+			    <input id="me-confirm-pass" type="password" name="confirm_pass">
 			</div>
 		</div>
 
@@ -38,7 +38,7 @@ do_action('marketengine_before_reset_password_form');
 		<input type="hidden" name="user_login" value="<?php echo $_GET['login']; ?>" />
 		<?php wp_nonce_field('me-reset_password', "_wpnonce");?>
 
-		<div class="marketengine-group-field submit-reset">
+		<div class="marketengine-group-field me-submit-reset">
 			<input type="submit" class="marketengine-btn" name="reset_password" value="<?php _e("SET NEW PASSWORD", "enginethemes"); ?>">
 		</div>
 		<a href="<?php echo me_get_page_permalink('user-profile'); ?>" class="back-home-sigin"><?php _e("&lt; Cancel", "enginethemes"); ?></a>
