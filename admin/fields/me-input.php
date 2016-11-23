@@ -46,7 +46,11 @@ abstract class ME_Input
      * @var void
      */
     protected $_default_value;
-
+    /**
+     * Input Options
+     * 
+     * @var void
+     */
     protected $_options;
     abstract public function render();
 
