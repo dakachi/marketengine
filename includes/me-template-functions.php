@@ -813,6 +813,8 @@ function me_auth_page_title( $title, $id = null ) {
                 return __('My Orders', 'enginethemes');
             } elseif( isset($wp_query->query_vars['purchases']) ) {
                 return __('My Purchases', 'enginethemes');
+            } elseif( isset($wp_query->query_vars['change-password']) ) {
+                return __('CHANGE PASSWORD', 'enginethemes');
             }
         }
     }
