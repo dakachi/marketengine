@@ -94,7 +94,6 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH .'/update.php';
 
             require_once ME_PLUGIN_PATH .'/admin/index.php';
-            require_once ME_PLUGIN_PATH .'/sample-data/index.php';
 
             require_once ME_PLUGIN_PATH . '/includes/class-me-install.php';
             require_once ME_PLUGIN_PATH . '/includes/class-me-session.php';
