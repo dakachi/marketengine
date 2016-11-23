@@ -14,16 +14,16 @@ module.exports = function(grunt) {
                 // coverage : true
             }
         },
-        phpdoc: {
-            options: {
-                verbose: true,
-                template : "zend"
-            },
-            target: {
-                src: ['./*.php', './admin/**', './includes/**'],
-                dest: '../../docs/marketengine'
-            }
-        },
+        // phpdoc: {
+        //     options: {
+        //         verbose: true,
+        //         template : "zend"
+        //     },
+        //     target: {
+        //         src: ['./*.php', './admin/**', './includes/**'],
+        //         dest: '../../docs/marketengine'
+        //     }
+        // },
         compress: {
             main: {
                 options: {
@@ -46,7 +46,7 @@ module.exports = function(grunt) {
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-phpunit');
     grunt.loadNpmTasks('grunt-contrib-compress');
-    grunt.loadNpmTasks('grunt-phpdoc');
+    // grunt.loadNpmTasks('grunt-phpdoc');
     grunt.loadNpmTasks('grunt-contrib-watch');
     // Default task(s).
     grunt.registerTask('default', ['phpunit']);
