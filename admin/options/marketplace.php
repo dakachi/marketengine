@@ -29,7 +29,7 @@ return apply_filters('marketengine_marketplace_options',
                         'min' => 0,
                     ),
                     'name'        => 'paypal-commission-fee',
-                    'default' => 10
+                    'default' => 0
                 ),
 
                 'currency'               => array(
