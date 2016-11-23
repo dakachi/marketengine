@@ -145,6 +145,7 @@ $user_avatar = $user->get_user_avatar_id();
 			</div>
 
 			<?php wp_nonce_field('me-update_profile'); ?>
+			<?php wp_nonce_field('marketengine', 'me-user-avatar'); ?>
 			<?php do_action('marketengine_after_edit_user_profile', $user); ?>
 		</div>
 		<div class="marketengine-text-field edit-profile">

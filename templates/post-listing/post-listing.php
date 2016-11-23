@@ -51,6 +51,7 @@ if(me_option('user-email-confirmation')) {
 			<?php do_action('marketengine_post_listing_form_fields'); ?>
 
 			<?php wp_nonce_field('me-insert_listing'); ?>
+			<?php wp_nonce_field('marketengine', 'me-post-listing-gallery'); ?>
 
 			<div class="marketengine-group-field me-text-center submit-post">
 				<input class="marketengine-post-submit-btn" type="submit" name="insert_lisiting" value="<?php _e("SUBMIT", "enginethemes"); ?>">

@@ -99,113 +99,126 @@
 })(jQuery);
 (function($) {
     $.fn.MEmessage = function(options) {
-            var defaults = {
-                type: 'inquiry',
-                parent: 0,
-                paged: 2,
-                nonce: ''
-            };
-            var settings = $.extend({}, defaults, options);
-            var full = false;
-            return $(this).each(function(e) {
-                var $elem = $(this);
-                var $message_container = $elem.find('.me-contact-messages');
-                var $load_more_button = $(this).find('.load-message-button');
-                var $ul = $elem.find('ul');
-                $elem.find('textarea').focus();
-                // fetch message function
-                var fetch_message = function() {
-                        $.ajax({
-                            url: me_globals.ajaxurl,
-                            type: 'get',
-                            data: {
-                                action: 'get_messages',
-                                type: settings.type,
-                                parent: settings.parent,
-                                paged: settings.paged,
-                                _wpnonce: settings.nonce
-                            },
-                            beforeSend: function() {
-                                settings.paged++;
-                            },
-                            success: function(res, xhr) {
-                                if (res.data) {
-                                    $ul.prepend(res.data);
-                                    $message_container.scrollTop($message_container.find("li").eq(0).offset().top + 50);
-                                } else {
-                                    full = true;
-                                    $load_more_button.remove();
-                                }
-                            }
-                        });
-                    }
-                    // click to load more message
-                $load_more_button.click(function() {
-                    fetch_message();
-                });
-                // scroll to load older messages
-                $message_container.scroll(function(e) {
-                    var pos = $message_container.scrollTop(),
-                        h = $message_container.height();
-                    // check scroll and ajax get messsages
-                    if (pos == 0 && !full) {
-                        fetch_message();
-                    }
-                });
-                // send message
-                $elem.find('.me-message-content').keydown(function(e) {
-                    // enter send message
-                    if (e.keyCode == '13' && !e.shiftKey) {
-                        e.preventDefault();
-                        $(this).parent('form').submit();
-                    }
-                });
-                // message form submit
-                $elem.find('form').submit(function(e) {
-                    e.preventDefault();
-                    var $textarea = $(this).find('textarea'),
-                        content = $textarea.val();
-                    // message content can not empty
-                    if (!content) return;
-                    // ajax send message
+        var defaults = {
+            type: 'inquiry',
+            parent: 0,
+            listing: 0,
+            paged: 2,
+            nonce: '',
+            upload_file_nonce: ''
+        };
+        var settings = $.extend({}, defaults, options);
+        var full = false;
+        return $(this).each(function(e) {
+            var $elem = $(this);
+            var $message_container = $elem.find('.me-contact-messages');
+            var $load_more_button = $(this).find('.load-message-button');
+            var $ul = $elem.find('ul');
+            $elem.find('textarea').focus();
+            // fetch message function
+            var fetch_message = function() {
                     $.ajax({
-                        type: 'post',
                         url: me_globals.ajaxurl,
+                        type: 'get',
                         data: {
-                            action: 'me_send_message',
+                            action: 'get_messages',
                             type: settings.type,
-                            inquiry_id: settings.parent,
-                            content: content,
+                            parent: settings.parent,
+                            paged: settings.paged,
                             _wpnonce: settings.nonce
                         },
                         beforeSend: function() {
-                            $textarea.val('');
-                            $elem.find('.me-message-typing').append('<div class="marketengine-loading"><div class="marketengine-loader"><div class="me-ball-clip-rotate"><div></div></div></div></div>');
+                            settings.paged++;
                         },
-                        success: function(response, xhr) {
-                            if (response.success) {
-                                $ul.append(response.content);
-                                $message_container.scrollTop($message_container[0].scrollHeight);
-                                $elem.find('.marketengine-loading').remove();
+                        success: function(res, xhr) {
+                            if (res.data) {
+                                $ul.prepend(res.data);
+                                $message_container.scrollTop($message_container.find("li").eq(0).offset().top + 50);
+                            } else {
+                                full = true;
+                                $load_more_button.remove();
                             }
                         }
                     });
-                });
-            });
-        }
-        window.addEventListener("load", function() {
-                //Don't use keypress event. keypress event doesn't detect backspace and delete keys. 
-                if($('.me-message-content').length) {
-                    window.document.querySelector(".me-message-content").addEventListener("keydown", function() {
-                        var content = window.document.querySelector(".me-message-content").value;
-                        window.document.querySelector(".me-mc-container").innerHTML = content;
-                        window.document.querySelector(".me-message-content").style.height = window.document.querySelector(".me-mc-container").scrollHeight + "px";
-                    }, false);
                 }
+                // click to load more message
+            $load_more_button.click(function() {
+                fetch_message();
+            });
+            // scroll to load older messages
+            $message_container.scroll(function(e) {
+                var pos = $message_container.scrollTop(),
+                    h = $message_container.height();
+                // check scroll and ajax get messsages
+                if (pos == 0 && !full) {
+                    fetch_message();
+                }
+            });
+            // send message
+            $elem.find('.me-message-content').keydown(function(e) {
+                // enter send message
+                if (e.keyCode == '13' && !e.shiftKey) {
+                    e.preventDefault();
+                    $(this).parent('form').submit();
+                }
+            });
+            // message form submit
+            $elem.find('form').submit(function(e) {
+                e.preventDefault();
+                var $textarea = $(this).find('textarea'),
+                    content = $textarea.val();
+                // message content can not empty
+                if (!content) return;
+                // ajax send message
+                $.ajax({
+                    type: 'post',
+                    url: me_globals.ajaxurl,
+                    data: {
+                        action: 'me_send_message',
+                        type: settings.type,
+                        inquiry_id: settings.parent,
+                        content: content,
+                        _wpnonce: settings.nonce
+                    },
+                    beforeSend: function() {
+                        $textarea.val('');
+                        $elem.find('.me-message-typing').append('<div class="marketengine-loading"><div class="marketengine-loader"><div class="me-ball-clip-rotate"><div></div></div></div></div>');
+                    },
+                    success: function(response, xhr) {
+                        if (response.success) {
+                            $ul.append(response.content);
+                            $message_container.scrollTop($message_container[0].scrollHeight);
+                            $elem.find('.marketengine-loading').remove();
+                        }
+                    }
+                });
+            }); 
+            // setup uploader
+            $elem.messageUploader({
+                multi: false,
+                removable: false,
+                name: 'message_file',
+                maxsize: "2mb",
+                listing_id: settings.listing,
+                inquiry_id: settings.parent,
+                extension: 'jpg,jpeg,gif,png,pdf,doc,docx,xls,xlsx,txt',
+                upload_url: me_globals.ajaxurl + '?=' + settings.upload_file_nonce
+            });
+        });
+    }
+    window.addEventListener("load", function() {
+        //Don't use keypress event. keypress event doesn't detect backspace and delete keys. 
+        if ($('.me-message-content').length) {
+            window.document.querySelector(".me-message-content").addEventListener("keydown", function() {
+                var content = window.document.querySelector(".me-message-content").value;
+                window.document.querySelector(".me-mc-container").innerHTML = content;
+                window.document.querySelector(".me-message-content").style.height = window.document.querySelector(".me-mc-container").scrollHeight + "px";
             }, false);
-        /**
-         * Inquiry contacts list
-         */
+        }
+    }, false);
+    /**
+     * Inquiry contacts list
+     */
     var contact_paged = 2;
     var loading = false;
     $('#contact-list').scroll(function() {
@@ -219,7 +232,7 @@
                 data: {
                     action: 'get_contact_list',
                     listing: $('#contact-list').attr('data-id'),
-                    inquiry_id : $('input[name="inquiry_id"]').val(),
+                    inquiry_id: $('input[name="inquiry_id"]').val(),
                     paged: contact_paged,
                     _wpnonce: $('#_wpnonce').val()
                 },

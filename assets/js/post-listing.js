@@ -2,8 +2,18 @@
 (function($) {
     $(document).ready(function() {
         $('.me-parent-category').change();
+
+        $('#upload_listing_gallery').jUploader({
+            browse_button: 'me-btn-upload',
+            multi: true,
+            name: 'listing_gallery',
+            extension: 'jpg,jpeg,gif,png',
+            upload_url: me_globals.ajaxurl + '?nonce='  + $('#me-post-listing-gallery').val(),
+            maxsize: '2mb',
+            maxcount: 5,
+        });
     });
-    
+
     $('.me-parent-category').change(function(e) {
         var parent_cat = $(this).val();
         $.get(me_globals.ajaxurl, {
@@ -13,23 +23,19 @@
             if (0 === r || 'success' != stat) {
                 return;
             }
-
             $('.listing-type option').removeAttr('disabled');
-            if(!r.data.support_contact && r.data.support_purchase) {
-                $('.listing-type option[value="contact"]').attr('disabled','disabled');
+            if (!r.data.support_contact && r.data.support_purchase) {
+                $('.listing-type option[value="contact"]').attr('disabled', 'disabled');
                 $('select.listing-type').val('purchasion').change();
             }
-
-            if(!r.data.support_purchase && r.data.support_contact) {
-                $('.listing-type option[value="purchasion"]').attr('disabled','disabled');
+            if (!r.data.support_purchase && r.data.support_contact) {
+                $('.listing-type option[value="purchasion"]').attr('disabled', 'disabled');
                 $('select.listing-type').val('contact').change();
             }
-
-            if(!r.data.support_contact && !r.data.support_purchase) {
+            if (!r.data.support_contact && !r.data.support_purchase) {
                 $('select.listing-type').val('purchasion').change();
             }
-
-            if(r.data.has_child == true) {
+            if (r.data.has_child == true) {
                 $('.me-sub-category').removeClass('me-sub-category-empty');
                 $('.me-sub-category').removeAttr('disabled');
                 $('.me-sub-category').html(r.data.content);
@@ -40,7 +46,6 @@
             }
         });
     });
-
     $('#listing-type-select').on('change', function() {
         var type = $(this).val();
         $('.listing-type-info').hide();

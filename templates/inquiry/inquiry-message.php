@@ -67,6 +67,7 @@
 											<span id="me-message-send-btn" class="me-message-send-btn"><i class="icon-me-attach"></i></span>
 										</div>
 										<?php wp_nonce_field( 'me-inquiry-message', '_msg_wpnonce' ); ?>
+										<?php wp_nonce_field( 'marketengine', '_msg_file_nonce' ); ?>
 										<input type="hidden" name="inquiry_listing" value="<?php $listing->get_id(); ?>" />
 										<input type="hidden" name="inquiry_id" value="<?php echo $inquiry->ID; ?>" />
 									</form>
@@ -91,20 +92,20 @@
 		objDiv.scrollTop = objDiv.scrollHeight;
 	</script>
 	<script>
-	    (function ($) {
-	        $(document).ready(function(){
-	            $('#upload_message_file').messageUploader({
-	                multi: false,
-	                removable : false,
-	                name: 'message_file',
-	                maxsize : "2mb",
-	                listing_id : "<?php echo $listing ? $listing->get_id() : ''; ?>",
-	                inquiry_id : "<?php echo $inquiry->ID; ?>",
-	                extension: 'jpg,jpeg,gif,png,pdf,doc,docx,xls,xlsx,txt',
-	                upload_url: '<?php echo admin_url('admin-ajax.php') . '?nonce=' . wp_create_nonce('marketengine') ?>'
-	            });
-	        });
-	    })(jQuery);
+	    // (function ($) {
+	    //     $(document).ready(function(){
+	    //         $('#upload_message_file').messageUploader({
+	    //             multi: false,
+	    //             removable : false,
+	    //             name: 'message_file',
+	    //             maxsize : "2mb",
+	    //             listing_id : "<?php echo $listing ? $listing->get_id() : ''; ?>",
+	    //             inquiry_id : "<?php echo $inquiry->ID; ?>",
+	    //             extension: 'jpg,jpeg,gif,png,pdf,doc,docx,xls,xlsx,txt',
+	    //             upload_url: '<?php echo admin_url('admin-ajax.php') . '?nonce=' . wp_create_nonce('marketengine') ?>'
+	    //         });
+	    //     });
+	    // })(jQuery);
 	</script>
 
 <?php 
