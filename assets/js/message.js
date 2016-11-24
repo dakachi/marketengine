@@ -202,7 +202,7 @@
                 listing_id: settings.listing,
                 inquiry_id: settings.parent,
                 extension: 'jpg,jpeg,gif,png,pdf,doc,docx,xls,xlsx,txt',
-                upload_url: me_globals.ajaxurl + '?=' + settings.upload_file_nonce
+                upload_url: me_globals.ajaxurl + '?nonce=' + settings.upload_file_nonce
             });
         });
     }
