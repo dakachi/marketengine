@@ -24,6 +24,10 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+[class*="icon-media"] {
+  font-family: inherit !important;
+}
+
 .icon-me-listing:before {
   content: "\e924";
 }
