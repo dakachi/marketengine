@@ -3,8 +3,8 @@
  * Install MarketEngine database, hook and action
  * @class       ME_Install
  * @version     1.0
- * @package     MarketEngine/Classes
- * @category    Admin
+ * @package     MarketEngine/Admin
+ * @category    Classes
  * @author      EngineThemes
  */
 

@@ -1,9 +1,21 @@
 <?php
+/**
+ * Related to Listing Functions
+ * @package Listing
+ * @category Function
+ */
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Get the listing object from wordpress post
+ * @param object|int $post The wp_post id or object
+ * @since 1.0
+ * 
+ * @return ME_Listing | null Return ME_Listing object if post->post_type is listing, if not return null
+ */
 function me_get_listing($post = null) {
     if (null === $post) {
         global $post;
@@ -26,16 +38,11 @@ function me_get_listing_types() {
     return apply_filters('me_get_listing_types', $listing_types);
 }
 
-function me_get_listing_type_lable($type) {
+function me_get_listing_type_label($type) {
     $types = me_get_listing_types();
     return $types[$type];
 }
 
-function get_listing_type_by_cat($cat_id) {
-    $default_listing_types = me_get_listing_types();
-    $type                  = array_rand($default_listing_types);
-    return array($type => $default_listing_types[$type]);
-}
 
 function me_get_categories($taxonomy = '') {
     if (!taxonomy_exists($taxonomy)) {
@@ -49,6 +56,23 @@ function me_get_categories($taxonomy = '') {
     return $terms;
 }
 
+/**
+ * MarketEngine Get Listing Type Categories
+ * 
+ * Retrieve the categories list supported in each listing type
+ *
+ * @since 1.0
+ * @return array Array of category id the listing type support
+ */
+function me_get_listing_type_categories() {
+    $purchase_cats = me_option('purchasion-available');
+    $contact_cats  = me_option('contact-available');
+    $categories = array(
+        'contact' => empty($contact_cats) ? array() : $contact_cats,
+        'purchasion' => empty($purchase_cats) ? array() : $purchase_cats
+    );
+    return apply_filters('marketengine_listing_type_categories', $categories);
+}
 /**
  * MarketEngine Get Listing Status List
  *

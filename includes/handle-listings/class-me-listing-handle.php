@@ -135,8 +135,8 @@ class ME_Listing_Handle
         }
 
         $listing_sub_category = wp_get_post_terms($listing->ID, 'listing_category', array('fields' => 'ids', 'parent' => $listing_parent_category[0]));
-        if(!empty($listing_sub_category) && !in_array($listing_data['sub_cat'], $listing_sub_category)) {
-            return new WP_Error('permission_denied', __("You can not change the listing category.", "enginethemes"));   
+        if (!empty($listing_sub_category) && !in_array($listing_data['sub_cat'], $listing_sub_category)) {
+            return new WP_Error('permission_denied', __("You can not change the listing category.", "enginethemes"));
         }
 
         return self::insert($listing_data, true);
@@ -268,7 +268,7 @@ class ME_Listing_Handle
      * @return True|WP_Error True if success, WP_Error if false
      *
      */
-    public static function validate($listing_data, $is_update =false)
+    public static function validate($listing_data, $is_update = false)
     {
         $current_user_id = get_current_user_id();
         $invalid_data    = array();
@@ -346,14 +346,20 @@ class ME_Listing_Handle
         }
 
         // check supported listing type
-        $purchase_cats = me_option('purchasion-available');
-        $contact_cats  = me_option('contact-available');
-        if (!$is_update && (in_array($listing_data['parent_cat'], $purchase_cats) || in_array($listing_data['parent_cat'], $contact_cats))) {
-            if (!in_array($listing_data['parent_cat'], me_option($listing_data['listing_type'] . '-available'))) {
-                $term                             = get_term($listing_data['parent_cat']);
+        $listing_type_categories = me_get_listing_type_categories();
+        if (!$is_update && (in_array($listing_data['parent_cat'], $listing_type_categories['purchasion']) 
+            || in_array($listing_data['parent_cat'], $listing_type_categories['contact']))) {
+            if($listing_data['listing_type'] == 'contact') {
+                $available_cats = $listing_type_categories['contact'];
+            }else {
+                $available_cats = $listing_type_categories['purchasion'];
+            }
+            if (!in_array($listing_data['parent_cat'], $available_cats)) {
+                $term = get_term($listing_data['parent_cat']);
+
                 $invalid_data['unsupported_type'] = sprintf(
                     __("The listing type %s is not supported in category %s.", "enginethemes"),
-                    me_get_listing_type_lable($listing_data['listing_type']),
+                    me_get_listing_type_label($listing_data['listing_type']),
                     $term->name
                 );
             }
