@@ -3,7 +3,13 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
+/**
+ * Class ME Button option
+ * 
+ * @category Class
+ * @package Admin/Options
+ * @version 1.0
+ */
 class ME_Button extends ME_Input{
     function __construct( $args, $options ) {
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));

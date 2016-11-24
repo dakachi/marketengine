@@ -20,7 +20,7 @@ function me_get_listing_types() {
     $purchasion_title = me_option('purchasion-title');
     $contact_title = me_option('purchasion-title');
     $listing_types = array(
-        'purchasion' => $purchasion_title ? $contact_title : __("Selling", "enginethemes"),
+        'purchasion' => $purchasion_title ? $purchasion_title : __("Selling", "enginethemes"),
         'contact'    => $contact_title ? $contact_title : __("Offering", "enginethemes"),
     );
     return apply_filters('me_get_listing_types', $listing_types);
