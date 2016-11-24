@@ -233,12 +233,53 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             'listing_title' => 'Listing A',
             'listing_description' => 'Sample content',
             'listing_type' => 'contact',
+            'meta_input' => array(
+                
+            ),
             'parent_cat' => $this->parent_cat_2,
             'sub_cat' => $this->sub_cat,
         );
         add_filter( 'marketengine_listing_type_categories', array($this, 'filter_listing_type_category' ) );
         $p1 = ME_Listing_Handle::insert($listing_data);
         $this->assertEquals(new WP_Error('unsupported_type', 'The listing type Offering is not supported in category Cat 2.'), $p1);
+    }
+
+    /**
+     * test create listing base on listing type available category
+     */
+    public function test_create_listing_contact_success() {
+        $listing_data = array(
+            'listing_title' => 'Listing A',
+            'listing_description' => 'Sample content',
+            'listing_type' => 'purchasion',
+            'meta_input' => array(
+                'listing_price' => 10,
+            ),
+            'parent_cat' => $this->parent_cat_2,
+            'sub_cat' => $this->sub_cat,
+        );
+        add_filter( 'marketengine_listing_type_categories', array($this, 'filter_listing_type_category' ) );
+        $p1 = ME_Listing_Handle::insert($listing_data);
+        $this->assertInternalType('integer', $p1);
+    }
+
+    /**
+     * test create listing base on listing type available category
+     */
+    public function test_create_listing_purchase_success() {
+        $listing_data = array(
+            'listing_title' => 'Listing A',
+            'listing_description' => 'Sample content',
+            'listing_type' => 'contact',
+            'meta_input' => array(
+                
+            ),
+            'parent_cat' => $this->parent_cat,
+            'sub_cat' => $this->sub_cat,
+        );
+        add_filter( 'marketengine_listing_type_categories', array($this, 'filter_listing_type_category' ) );
+        $p1 = ME_Listing_Handle::insert($listing_data);
+        $this->assertInternalType('integer', $p1);
     }
 
     public function filter_listing_type_category($category) {

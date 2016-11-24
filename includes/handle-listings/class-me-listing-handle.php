@@ -297,72 +297,31 @@ class ME_Listing_Handle
             $invalid_data = me_get_invalid_message($listing_data, $rules, $custom_attributes);
         }
 
-        if (!empty($invalid_data)) {
-            $errors = new WP_Error();
-            foreach ($invalid_data as $key => $message) {
-                $errors->add($key, $message);
+        if (!empty($listing_data['listing_type'])) {
+            // user must add paypal email to start selling
+            if ($listing_data['listing_type'] == 'purchasion') {
+                $user_paypal_email = get_user_meta($current_user_id, 'paypal_email', true);
+                if (!is_email($user_paypal_email)) {
+                    $invalid_data['empty_paypal_email'] = __("You must input paypal email in your profile to start selling.", "enginethemes");
+                }
             }
-            return $errors;
-        }
+            /**
+             * Filter listing meta data validate rule
+             *
+             * @param array $listing_meta_data_rules
+             *
+             * @since 1.0
+             */
+            $listing_meta_data_rules = self::get_listing_type_fields_rule($listing_data['listing_type']);
 
-        /**
-         * Filter listing meta data validate rule
-         *
-         * @param array $listing_meta_data_rules
-         *
-         * @since 1.0
-         */
-        $listing_meta_data_rules = self::get_listing_type_fields_rule($listing_data['listing_type']);
-
-        // validate post meta data
-        $is_valid = me_validate($listing_data['meta_input'], $listing_meta_data_rules['rules'], $listing_meta_data_rules['custom_attributes']);
-        if (!$is_valid) {
-            $invalid_data = array_merge($invalid_data, me_get_invalid_message($listing_data['meta_input'], $listing_meta_data_rules['rules'], $listing_meta_data_rules['custom_attributes']));
-        }
-
-        // validate listing category
-        if (empty($listing_data['parent_cat'])) {
-            $invalid_data['listing_category'] = __("The listing category field is required.", "enginethemes");
-        } elseif (!term_exists(intval($listing_data['parent_cat']), 'listing_category')) {
-            $invalid_data['invalid_listing_category'] = __("The selected listing category is invalid.", "enginethemes");
-        } else {
-            // check the parent cat sub is empty or not
-            $child_cats          = get_terms('listing_category', array('hide_empty' => false, 'parent' => $listing_data['parent_cat']));
-            $is_child_cats_empty = empty($child_cats);
-            // validate sub cat
-            if (!$is_child_cats_empty && empty($listing_data['sub_cat'])) {
-                $invalid_data['sub_listing_category'] = __("The sub listing category field is required.", "enginethemes");
-            } elseif (!$is_child_cats_empty && !term_exists(intval($listing_data['sub_cat']))) {
-                $invalid_data['invalid_sub_listing_category'] = __("The selected sub listing category is invalid.", "enginethemes");
+            // validate post meta data
+            $is_valid = me_validate($listing_data['meta_input'], $listing_meta_data_rules['rules'], $listing_meta_data_rules['custom_attributes']);
+            if (!$is_valid) {
+                $invalid_data = array_merge($invalid_data, me_get_invalid_message($listing_data['meta_input'], $listing_meta_data_rules['rules'], $listing_meta_data_rules['custom_attributes']));
             }
-        } // end validate listing category
 
-        // user must add paypal email to start selling
-        if ($listing_data['listing_type'] == 'purchasion') {
-            $user_paypal_email = get_user_meta($current_user_id, 'paypal_email', true);
-            if (!is_email($user_paypal_email)) {
-                $invalid_data['empty_paypal_email'] = __("You must input paypal email in your profile to start selling.", "enginethemes");
-            }
-        }
-
-        // check supported listing type
-        $listing_type_categories = me_get_listing_type_categories();
-        if (!$is_update && (in_array($listing_data['parent_cat'], $listing_type_categories['purchasion']) 
-            || in_array($listing_data['parent_cat'], $listing_type_categories['contact']))) {
-            if($listing_data['listing_type'] == 'contact') {
-                $available_cats = $listing_type_categories['contact'];
-            }else {
-                $available_cats = $listing_type_categories['purchasion'];
-            }
-            if (!in_array($listing_data['parent_cat'], $available_cats)) {
-                $term = get_term($listing_data['parent_cat']);
-
-                $invalid_data['unsupported_type'] = sprintf(
-                    __("The listing type %s is not supported in category %s.", "enginethemes"),
-                    me_get_listing_type_label($listing_data['listing_type']),
-                    $term->name
-                );
-            }
+            // validate listing category
+            $invalid_data = array_merge($invalid_data, self::validate_category($listing_data, $is_update));
         }
 
         if (!empty($invalid_data)) {
@@ -385,6 +344,60 @@ class ME_Listing_Handle
          */
         return apply_filters('marketengine_validate_listing_data', true, $listing_data);
     }
+
+    /**
+     * Validate Listing Category
+     *
+     * @param array $listing_data The listing data user input
+     * @param bool $is_update Is ser editing listing or not
+     *
+     * @since 1.0.1
+     *
+     * @return array Array of messages
+     */
+    public static function validate_category($listing_data, $is_update = false)
+    {
+        $current_user_id = get_current_user_id();
+        $invalid_data    = array();
+
+        if (empty($listing_data['parent_cat'])) {
+            return array('listing_category' => __("The listing category field is required.", "enginethemes"));
+        } elseif (!term_exists(intval($listing_data['parent_cat']), 'listing_category')) {
+            return array('invalid_listing_category' => __("The selected listing category is invalid.", "enginethemes"));
+        }
+
+        // check the parent cat sub is empty or not
+        $child_cats          = get_terms('listing_category', array('hide_empty' => false, 'parent' => $listing_data['parent_cat']));
+        $is_child_cats_empty = empty($child_cats);
+        // validate sub cat
+        if (!$is_child_cats_empty && empty($listing_data['sub_cat'])) {
+            $invalid_data['sub_listing_category'] = __("The sub listing category field is required.", "enginethemes");
+        } elseif (!$is_child_cats_empty && !term_exists(intval($listing_data['sub_cat']))) {
+            $invalid_data['invalid_sub_listing_category'] = __("The selected sub listing category is invalid.", "enginethemes");
+        }
+
+        // check supported listing type
+        $listing_type_categories = me_get_listing_type_categories();
+        $parent_cat = $listing_data['parent_cat'];
+
+        if (!$is_update && (in_array($parent_cat, $listing_type_categories['purchasion']) || in_array($parent_cat, $listing_type_categories['contact']))
+        ) {
+            $listing_type = $listing_data['listing_type'];
+            $available_cats = $listing_type_categories[$listing_type ];
+            
+            if (!in_array($listing_data['parent_cat'], $available_cats)) {
+                $term = get_term($listing_data['parent_cat']);
+
+                $invalid_data['unsupported_type'] = sprintf(
+                    __("The listing type %s is not supported in category %s.", "enginethemes"),
+                    me_get_listing_type_label($listing_data['listing_type']),
+                    $term->name
+                );
+            }
+        }
+        return $invalid_data;
+    }
+
     /**
      * Get Listing Type Fields Rules
      *
