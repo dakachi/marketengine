@@ -205,4 +205,5 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
     }
 
     // test create listing base on listing type available category
+    
 }   

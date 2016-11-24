@@ -18,7 +18,7 @@ function me_get_listing($post = null) {
 
 function me_get_listing_types() {
     $purchasion_title = me_option('purchasion-title');
-    $contact_title = me_option('purchasion-title');
+    $contact_title = me_option('contact-title');
     $listing_types = array(
         'purchasion' => $purchasion_title ? $purchasion_title : __("Selling", "enginethemes"),
         'contact'    => $contact_title ? $contact_title : __("Offering", "enginethemes"),
