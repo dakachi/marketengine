@@ -128,10 +128,15 @@ class ME_Listing_Handle
             return new WP_Error('permission_denied', __("You can not change the listing type.", "enginethemes"));
         }
 
-        $listing_category = wp_get_post_terms($listing->ID, 'listing_category', array('fields' => 'ids'));
+        $listing_parent_category = wp_get_post_terms($listing->ID, 'listing_category', array('fields' => 'ids', 'parent' => 0));
 
-        if (!in_array($listing_data['parent_cat'], $listing_category) || !in_array($listing_data['sub_cat'], $listing_category)) {
+        if (!in_array($listing_data['parent_cat'], $listing_parent_category)) {
             return new WP_Error('permission_denied', __("You can not change the listing category.", "enginethemes"));
+        }
+
+        $listing_sub_category = wp_get_post_terms($listing->ID, 'listing_category', array('fields' => 'ids', 'parent' => $listing_parent_category[0]));
+        if(!empty($listing_sub_category) && !in_array($listing_data['sub_cat'], $listing_sub_category)) {
+            return new WP_Error('permission_denied', __("You can not change the listing category.", "enginethemes"));   
         }
 
         return self::insert($listing_data, true);
