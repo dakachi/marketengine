@@ -4,6 +4,17 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Class ME_Sampledata
+ * 
+ * ME Html install sampledata field
+ *
+ * @since 1.0
+ * @package Admin/Options
+ * @category Class
+ *
+ * @version 1.0
+ */
 class ME_Sampledata {
     function __construct( $args, $options ) {
     }

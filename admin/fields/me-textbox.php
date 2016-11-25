@@ -4,6 +4,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * ME Html textbox input tag
+ *
+ * @since 1.0
+ * @package Admin/Options
+ * @category Class
+ *
+ * @version 1.0
+ */
 class ME_Textbox extends ME_Input {
     public function __construct($args, $options) {
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));

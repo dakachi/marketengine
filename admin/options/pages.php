@@ -1,4 +1,13 @@
 <?php
+/**
+ * ME pages setup options array template
+ * - authentication
+ * - listings
+ * - payment-flow
+ * - others
+ * @since 1.0
+ */
+
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;

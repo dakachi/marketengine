@@ -18,7 +18,7 @@ module.exports = function(grunt) {
             dist: {
                 bin: "./vendor/bin/phpdoc",
                 options: {
-                    directory: './includes',
+                    directory: [ './admin' ],
                     target: '../docs',
                     template: "responsive-twig"
                 }

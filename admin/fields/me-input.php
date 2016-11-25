@@ -1,9 +1,15 @@
 <?php
 /**
  * ME Input
- * HTML input abstract class
+ *
+ * Render HTML input abstract class
+ * 
+ * @since 1.0
  * @package Admin/Options
  * @category Class
+ *
+ * @version 1.0
+ * 
  */
 abstract class ME_Input
 {
@@ -58,8 +64,23 @@ abstract class ME_Input
      * @var void
      */
     protected $_options;
+    /**
+     * Render input tag html
+     */
     abstract public function render();
 
+    /**
+     * Field contructor
+     *
+     * @param array $args Input attribute
+     * @param mix $options Input option value
+     * 
+     */
+    public function __construct($args, $options) {}
+    /**
+     * Render the field label
+     * @return void
+     */
     protected function label()
     {
         if (!empty($this->_label)) {
@@ -67,6 +88,10 @@ abstract class ME_Input
         }
     }
 
+    /**
+     * Render the field description
+     * @return void
+     */
     protected function description()
     {
         if (!empty($this->_description)) {
@@ -74,11 +99,19 @@ abstract class ME_Input
         }
     }
 
+    /**
+     * Get the field id attribute
+     * @return string id="{$id}"
+     */
     protected function get_id()
     {
         return $this->_slug ? 'id="' . $this->_slug . '"' : '';
     }
 
+    /**
+     * Retrieve field option value
+     * @return mix
+     */
     protected function get_value()
     {
         if (!$this->_container || !$this->_options) {
