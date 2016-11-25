@@ -1,0 +1,15 @@
+//=== Dropdown user
+//
+.marketengine-dropdown {
+	> li {
+		&.open {
+			.marketengine-dropdown-menu {
+				display: block;
+			}
+		}
+	} 
+}
+
+.marketengine-dropdown-menu {
+	display: none;
+}

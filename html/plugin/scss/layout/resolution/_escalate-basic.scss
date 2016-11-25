@@ -1,0 +1,87 @@
+//=== Escalate form
+//
+.me-escalate-form {
+	background: #FFF;
+	width: 698px;
+	margin-top: 24px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 40px 60px;
+	border: 1px solid $color_border_1;
+	border-radius: 4px;
+	.me-backlink {
+		display: inline-block;
+		margin-top: 60px;
+	}
+}
+
+.me-escalate-box {
+	margin-bottom: 40px;
+	h3 {
+		font-size: $font_size_base;
+		font-weight: normal;
+		color: $color_label_2;
+		line-height: 1em;
+		margin: 0 0 10px;
+	}
+	> ol {
+		list-style-type: disc;
+		padding-left: 18px;
+		> li {
+			list-style-type: disc;
+			padding: 4px 0;
+			font-size: $font_size_medium;
+			color: $color_text;
+			line-height: 1em;
+		}
+	}
+	select {
+		width: 100%;
+		border: 1px solid $color_border_1;
+		color: $color_text_2;
+	}
+	textarea {
+		width: 100%;
+		max-width: 100%;
+		height: 120px;
+		resize: none;
+		border: 1px solid $color_border_1;
+		padding: 6px 10px;
+		color: $color_text_2;
+	}
+	.marketengine-gallery-img {
+		margin-top: 0;
+		li.me-item-img {
+			margin-top: 0;
+			margin-bottom: 8px;
+		}
+	}
+}
+
+.me-escalate-submit {
+	text-align: center;
+	.me-escalate-submit-btn {
+		
+	}
+}
+
+@media (max-width: $screen_xs_max) { // 767px
+	.me-escalate-form {
+		margin-top: 0;
+		margin-left: -15px;
+		margin-right: -15px;
+		width: auto;
+		padding: 15px;
+		border: none;
+		border-radius: 0;
+		.me-backlink {
+			display: none;
+		}
+	}
+	.me-escalate-box {
+		margin-bottom: 20px;
+	}
+	.me-escalate-submit-btn {
+		width: 100%;
+	}
+}

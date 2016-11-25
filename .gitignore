@@ -8,4 +8,6 @@ phpunit.xml
 wordpress-developer
 includes/- paypal
 marketengine.zip
-html/
+html/node_modules/*
+html/ui-kit/*
+

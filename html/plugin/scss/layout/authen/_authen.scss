@@ -1,0 +1,253 @@
+//=== Layout authentication login
+//
+
+.me-authen-wrap, form {
+	> h3 {
+		margin:0;
+		margin-bottom: 50px;
+		padding: 0;
+		font-size: 26px;
+		line-height: 1em;
+		text-align: center;
+		color: $color_text;
+	}
+	&.me-authen-login {
+		padding-bottom: 30px;
+	}
+}
+
+.marketengine-group-field {
+	.forgot-pass {
+		display: inline-block;
+		float: left;
+		padding: 0;
+		margin:0;
+		/* color: $color_text; */
+	}
+	.account-register {
+		display: inline-block;
+		margin: 0;
+		padding: 0;
+		a {
+			display: inline-block;
+			margin: 0;
+			margin-left: 6px;
+			padding: 0;
+		}
+	}
+	&.me-submit-sigin {
+		margin-bottom: 24px; 
+	}
+	&.forgot-sigin {
+		overflow: hidden;
+		margin-bottom: 58px;
+	}
+}
+
+//=== Layout authentication register
+//
+
+.me-authen-wrap {
+	background: #FFF;
+	margin: 0 auto;
+	margin-top: 24px;
+	padding: 60px;
+	border-radius: $border_radius_base;
+	@include box-shadow(0, 2px, 15px, 0, rgba($color_box_shadow, 1));
+	border: 1px solid $color_border_base;
+	&.me-authen-register {
+		padding-bottom: 30px;
+	}
+	&.me-authen-profile {
+		padding: 30px 50px;
+		margin-top: 26px;
+		border: 1px solid $color_border_base;
+		border-radius: $border_radius_base;
+		@include box-shadow(0, 2px, 15px, 0, rgba($color_box_shadow, 1));
+		.chosen-container {
+			min-width: 100%;
+		}
+	}
+	&.me-authen-change {
+		width: 550px;
+		padding: 15px 50px 30px;
+		margin-top: 26px;
+		border: 1px solid $color_border_base;
+		border-radius: $border_radius_base;
+		@include box-shadow(0, 2px, 15px, 0, rgba($color_box_shadow, 1));
+	}
+}
+form {
+	.marketengine-group-field {
+		&.me-terms-signup {
+			margin-bottom: 28px;
+		}
+		&.me-submit-signup {
+			margin-bottom: 58px;
+		}
+	}
+}
+
+//=== Layout authentication forgot password
+//
+.me-authen-wrap {
+	&.me-authen-forgot {
+		padding-bottom: 30px;
+		.marketengine-group-field {
+			&.submit-forgot {
+				margin-bottom: 58px;
+			}
+		}
+	}
+}
+form {
+	.marketengine-group-field {
+		&.submit-forgot {
+			margin-bottom: 58px;
+		}
+	}
+}
+
+//=== Layout authentication reset password
+//
+.me-authen-wrap {
+	&.me-authen-reset {
+		padding-bottom: 30px;
+		.marketengine-group-field {
+			&.me-submit-reset {
+				margin-bottom: 58px;
+				text-align: center;
+			}
+		}
+	}
+}
+
+.me-authen-success {
+	background: #FFF;
+	margin: 24px auto 0 auto;
+	border: 1px solid $color_border_1;
+	border-left: none;
+	border-radius: $border_radius_base;
+	text-align: left;
+	@include box-shadow(0, 2px, 15px, 0, rgba($color_box_shadow, 1));
+
+	> div {
+		position: relative;
+		padding: 30px 0 30px 60px;
+		&.me-authen-inactive {
+			&:before {
+				background: #53a554;
+			}
+		}
+		&:before {
+			content: '';
+			width: 4px;
+			height: 100%;
+			background: $color_skin;
+			position: absolute;
+			top: 0;
+			left: 0;
+			border-radius: 1px;	
+		}
+	}
+	p {
+		margin: 0;
+		font-size: $font_size_base;
+		color: $color_text;
+		line-height: 1.6em;
+		span {
+			// font-weight: $font_weight_bold;
+		}
+	}
+	ul {
+		margin-top: 10px;
+		list-style-type: none;
+		li {
+			line-height: 1.6em;
+		}
+	}
+}
+
+.me-inactive {
+	.me-authen-inactive {
+		position: relative;
+		padding: 16px 20px;
+		background: #FFF;
+		border: 1px solid $color_border_1;
+		border-left: none;
+		border-radius: $border_radius_base;
+		text-align: left;
+		@include box-shadow(0, 2px, 15px, 0, rgba($color_box_shadow, 1));
+		&:before {
+			content: '';
+			width: 4px;
+			height: 100%;
+			background: $color_skin;
+			position: absolute;
+			top: 0;
+			left: 0;
+			border-radius: 1px;	
+		}
+	}
+	.me-authen-success {
+		margin-top: 0;
+		width: 100%;
+		> div {
+			padding: 16px 20px;
+		}
+	}
+	p {
+		margin: 0;
+		font-size: $font_size_base;
+		color: $color_text;
+		line-height: 1.6em;
+		span {
+			// font-weight: $font_weight_bold;
+		}
+	}
+}
+
+@media (max-width: $screen_xs_max) {
+	.me-authen-success {
+		width: auto;
+		margin: 0 -15px 20px -15px; 
+	}
+	.me-authen-wrap, form {
+		> h3 {
+			font-size: 20px;
+		}
+	}
+	.me-authen-wrap {
+		width: auto;
+		margin-top: 0;
+		margin-left: -15px;
+		margin-right: -15px;
+		&.me-authen-login {
+			margin-top: 0;
+			padding: 25px 15px;
+		}
+		&.me-authen-register {
+			margin-top: 0;
+			padding: 25px 15px;
+		}
+		&.me-authen-profile {
+			margin-top: 0;
+			padding: 25px 15px;
+		}
+		&.me-authen-change {
+			width: auto;
+			margin-top: 0;
+			padding: 25px 15px;
+		}
+		&.me-authen-forgot {
+			width: auto;
+			margin-top: 0;
+			padding: 25px 15px;
+		}
+		&.me-authen-reset {
+			width: auto;
+			margin-top: 0;
+			padding: 25px 15px;
+		}
+	}
+}

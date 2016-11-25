@@ -1,0 +1,298 @@
+//=== My listing
+//
+.marketengine-filter {
+	margin-top: 15px;
+	&:after {
+		content: '';
+		display: table;
+		clear: both;
+	}
+	.marketengine-filter-listing {
+		.filter-listing-status {
+			display: inline-block;
+			vertical-align: top;
+			margin-left: 30px;
+			select {
+				padding: 0.625em 0.4375em;
+			}
+		}
+	}
+}
+.marketengine-listing-post {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	// margin-bottom: 30px;
+}
+
+ul.me-listing-post {
+	list-style-type: none;
+	.me-item-post {
+		// float: left;
+		// width: 292.5px;
+		margin-top: 20px;
+		transition: 0.2s all ease;
+	}
+}
+.me-item-post {
+	&:hover {
+	}
+	.me-item-wrap {
+		overflow: hidden;
+		border: 1px solid $color_border_1;
+		border-radius: $border_radius_base;
+		box-shadow: 0 2px 15px 0 #f5f5f5;
+		&:hover {
+			.me-item-img {
+				img {
+					opacity: 0.4;
+				}
+				> span {
+					display: block;
+					text-align: center;
+				}
+				> i {
+					opacity: 0.4;
+				}
+			}
+			.me-buy-now, .me-contact-now {
+				display: block;
+			}
+		}
+	}
+	.me-item-img {
+		background: #fafafa;
+		position: relative;
+		overflow: hidden;
+		display: block;
+		width: 100%;
+		height: 250px;
+		img {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: auto;
+			height: 100%;
+			max-width: initial; 
+		}
+		.me-label-publish,
+		.me-label-pending,
+		.me-label-archived,
+		.me-label-paused,
+		.me-label-draft {
+			position: absolute;
+			top: 20px;
+			right: 0;
+		}
+		> span {
+			display: none;
+			position: absolute;
+			width: 100%;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			font-weight: $font_weight_bold;
+			color: $color_text;
+		}
+		> i {
+			font-size: 48px;
+			color: $color_label_2;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+	.me-item-price, .me-item-contact {
+		margin-top: 16px;
+		height: 22px;
+		font-size: $font_size_medium;
+		font-weight: $font_weight_bold;
+		&:after {
+			content: '';
+			display: table;
+			clear: both;
+		}
+	}
+	.me-item-action {
+		text-align: left;
+		color: $color_label_2;
+		margin-top: 22px;
+		a {
+			font-size: $font_size_base;
+			color: $color_label_2;
+			&:hover {
+				color: $color_skin;
+			}
+		}
+		span {
+			margin-right: 20px;
+			font-size: $font_size_small;
+			cursor: pointer;
+			&:hover {
+				color: $color_skin;
+			}
+			i {
+				margin-right: 5px;
+				font-size: $font_size_base;
+			}
+		}
+	}
+	.me-item-author {
+		margin-top: 14px;
+		font-style: italic;
+		color: $color_label_2;
+		a {
+			font-size: $font_size_base;
+			color: $color_text_2;
+			font-style: normal;
+		}
+		i {
+			color: $color_label_2;
+			margin-right: 4px;
+		}
+	}
+	.me-price, .me-contact {
+		// font-size: $font_size_base;
+		font-weight: $font_weight_black;
+		color: $color_text;
+	}
+}
+
+.me-item-content {
+	background: #FFF;
+	overflow: hidden;
+	position: relative;
+	padding: 16px 20px;
+	h2 {
+		font-size: $font_size_base;
+		color: $color_label_2;
+		margin-top: 0px;
+		margin-bottom: 0;
+		display: -webkit-box;
+		overflow: hidden;
+		white-space: normal;
+		text-overflow: ellipsis;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		height: 2.8em;
+		line-height: 1.4em;
+		a {
+			color: $color_text;
+			&:hover {
+				color: $color_text;
+			}
+		}
+	}
+	.me-buy-now, .me-contact-now {
+		display: none;
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		height: 80px;
+		background: #FFF;
+		padding: 20px 20px 0 20px;
+	}
+	.me-buynow-btn, .me-contactnow-btn {
+		width: 100%;
+		padding: 5px 0;
+		margin-bottom: 0; // For input.btn
+		font-size: $font_size_btn_base;
+		font-weight: $font_weight_bold;
+		text-align: center;
+		vertical-align: middle;
+		touch-action: manipulation;
+		cursor: pointer;
+		background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+		background: $background_btn;
+		border: 1px solid transparent;
+		white-space: nowrap;
+		border: 1px solid $color_border_button_skin;
+		border-radius: $border_radius_base;
+		color: $color_text_btn;
+		margin-top: 30px;
+		display: inline-block;
+		&:hover {
+			background: $background_btn_hover;
+			color: $color_text_btn;
+		}
+	}
+}
+
+.me-my-listing-none {
+	background: #FFF;
+	text-align: center;
+	border: 1px solid $color_border_1;
+	border-radius: 4px;
+	margin-top: 24px;
+	padding: 60px; 
+	h3 {
+		margin: 0;
+		font-size: $font_size_large + 2;
+		color: $color_text_2;
+		font-weight: 400;
+		line-height: 1.2em;
+	}
+	p {
+		font-size: $font_size_medium;
+		color: $color_text;
+		line-height: 1.2em;
+		margin: 40px 0 0 ;
+		a {
+			color: $color_skin;
+			text-decoration: underline;
+		}
+	}
+}
+
+.me-listing-filter-none {
+	margin-top: 10px;
+	p {
+		margin: 0;
+		font-size: $font_size_large;
+		color: $color_text;
+	}
+}
+//=== Column responsive list post
+//
+// column - 1: < 580px;
+// column - 2: < 870px;
+// column - 3: < 1160px;
+//
+.marketengine-snap-column-3 {
+	.marketengine-listing-post {
+		width: 850px;
+	}
+}
+.marketengine-snap-column-2 {
+	.marketengine-listing-post {
+		width: 560px;
+	}
+}
+.marketengine-snap-column-1 {
+	.marketengine-listing-post {
+		width: 270px;
+	}
+}
+
+@media (max-width: $screen_xs_max) {
+	.marketengine-snap-column-2 {
+		.marketengine-listing-post {
+			width: 100%;
+		}
+	}
+	.marketengine-snap-column-1 {
+		.marketengine-listing-post {
+			width: 100%;
+			margin-bottom: 0;
+		}
+	}
+	.me-my-listing-none {
+		margin-left: -15px;
+		margin-right: -15px;
+		padding: 25px 15px;
+		margin-top: 0;
+	}
+}
