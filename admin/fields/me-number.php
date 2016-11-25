@@ -3,7 +3,15 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
+/**
+ * ME Html number input tag
+ *
+ * @since 1.0
+ * @package Admin/Options
+ * @category Class
+ *
+ * @version 1.0
+ */
 class ME_Number extends ME_Input
 {
     public function __construct($args, $options)

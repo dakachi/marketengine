@@ -5,6 +5,17 @@ if (!defined('ABSPATH')) {
 }
 
 
+/**
+ * Class ME_Section
+ * 
+ * ME Html Section container of field group
+ *
+ * @since 1.0
+ * @package Admin/Options
+ * @category Class
+ *
+ * @version 1.0
+ */
 class ME_Section extends ME_Container {
     /**
      * Contructor

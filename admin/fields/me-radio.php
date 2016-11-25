@@ -4,6 +4,17 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Class ME_Radio
+ * 
+ * ME Html radio input tag
+ *
+ * @since 1.0
+ * @package Admin/Options
+ * @category Class
+ *
+ * @version 1.0
+ */
 class ME_Radio extends ME_Input {
     public function __construct($args, $options) {
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));

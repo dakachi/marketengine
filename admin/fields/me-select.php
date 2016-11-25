@@ -3,7 +3,15 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
+/**
+ * ME Html select input tag
+ *
+ * @since 1.0
+ * @package Admin/Options
+ * @category Class
+ *
+ * @version 1.0
+ */
 class ME_Select extends ME_Input{
     function __construct( $args, $options ) {
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));

@@ -1,15 +1,21 @@
 <?php
+/**
+ * Class ME Multiselect
+ */
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
 }
 /**
- * ME_Field_Autoloader
- *
- * @version        1.0
- * @package        MarketEngine/Fields/
- * @category       Class
- * @author         MarketEngine
+ * Class ME_MultiSelect
+ * 
+ * Render Multiselect option field
+ * 
+ * @category Class
+ * @package Admin/Options
+ * @since 1.0
+ * 
+ * @version 1.0
  */
 class ME_MultiSelect extends ME_Input{
     function __construct( $args, $options ) {
