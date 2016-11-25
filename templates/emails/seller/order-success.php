@@ -1,15 +1,19 @@
 <?php
+/**
+ * This is an email template
+ * Email content send to seller when buyer order a listing successfull
+ *
+ * You can modify the email by copy it to {your theme}/templates/emails
+ * @author EngineThemes
+ * @package MarketEngine/Templates
+ * @since 1.0
+ */
+
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
 }
-/**
- * This is an email template
- * Email content send to seller when buyer order a listing successfull
- * 
- * You can modify the email by copy it to {your theme}/templates/emails
- * @since 1.0
- */
+
 ?>
 <p><?php printf(__("Dear %s", "enginethemes"), $display_name); ?>,</p>
 <p><?php printf(__("You've got a new order for the listing %s on %s", "enginethemes"), $listing_link, get_bloginfo('blogname') ); ?></p>

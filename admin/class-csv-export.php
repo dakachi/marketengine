@@ -1,8 +1,29 @@
 <?php
+/**
+ * Backend Report Exporter.
+ *
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+/**
+ * ME Report CSV Export class
+ *
+ * Generates report data and exports it in CSV format.
+ *
+ * @author   EngineThemes
+ * @category Classes
+ * @package  MarketEngine/Admin
+ * @since    1.0.0
+ */
+
 class ME_Report_CSVExport
 {
     /**
      * Constructor
+     *
+     * Check type of report, generates data, names file and export it.
      */
     public function __construct()
     {
@@ -21,7 +42,6 @@ class ME_Report_CSVExport
                         break;
                     default:
                         $filename = __("Report Members", "enginethemes");
-                        break;
                         break;
                 }
             }
@@ -49,6 +69,8 @@ class ME_Report_CSVExport
 
     /**
      * Converting data to CSV
+     *
+     * @return data to export
      */
     public function generate_csv()
     {
@@ -74,6 +96,9 @@ class ME_Report_CSVExport
      * Generate CSV row
      * @param array $headings
      * @param array $data
+     * @param array $quant
+     *
+     * @return string $csv_output
      */
     public function generate_rows($headings, $data, $quant)
     {
@@ -83,9 +108,9 @@ class ME_Report_CSVExport
                 $csv_output = $csv_output . __("From Date", "enginethemes") . ",";
                 $csv_output = $csv_output . __("To Date", "enginethemes") . ",";
             }else {
-                $csv_output = $csv_output . $heading . ',';    
+                $csv_output = $csv_output . $heading . ',';
             }
-            
+
         }
         $csv_output .= "\n";
 
@@ -107,6 +132,11 @@ class ME_Report_CSVExport
         return $csv_output;
     }
 
+    /**
+     * Generates listing data.
+     *
+     * @return string $csv_output listing data
+     */
     public function generate_listings()
     {
 
@@ -148,7 +178,7 @@ class ME_Report_CSVExport
             foreach ($time as $value) {
                 $csv_output .= str_replace(',', '-', trim($value)) . ",";
             }
-            
+
             if ($active_section == '') {
                 $csv_output .= $listing->count . ",";
             }
@@ -164,6 +194,11 @@ class ME_Report_CSVExport
         return $csv_output;
     }
 
+    /**
+     * Generates orders.
+     *
+     * @return string of orders.
+     */
     public function generate_orders()
     {
 
@@ -185,6 +220,11 @@ class ME_Report_CSVExport
         return $this->generate_rows($headings, $orders, $quant);
     }
 
+    /**
+     * Generates inquiries.
+     *
+     * @return string of inquiries
+     */
     public function generate_inquiries()
     {
 
@@ -206,6 +246,11 @@ class ME_Report_CSVExport
 
     }
 
+    /**
+     * Generates members.
+     *
+     * @return string of rows of members
+     */
     public function generate_members()
     {
 
@@ -228,9 +273,18 @@ class ME_Report_CSVExport
     }
 
 }
-add_action('admin_init', 'me_export_reports');
+
+
+
+/**
+ * Create an instance of SCV exporter when an user accesses the admin area.
+ *
+ * @since 1.0.0
+ */
 function me_export_reports()
 {
     // Instantiate a singleton of this plugin
     $csvExport = new ME_Report_CSVExport();
 }
+add_action('admin_init', 'me_export_reports');
+
