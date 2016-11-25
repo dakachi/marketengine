@@ -366,9 +366,12 @@ function me_get_seller_profile_url($seller_id)
  * Adds an action to get shop categories selectbox template.
  *
  */
-function me_shop_categories_action()
+function me_shop_categories_action( $device = '' )
 {
-    me_get_template('global/shop-categories');
+    if ( 'mobile' === $device )
+        me_get_template('global/shop-categories-mobile');
+    else
+        me_get_template('global/shop-categories');
 }
 add_action('me_shop_categories', 'me_shop_categories_action');
 
@@ -378,11 +381,15 @@ add_action('me_shop_categories', 'me_shop_categories_action');
  * Adds an action to get account menu selectbox template.
  *
  */
-function me_account_menu_action()
+function me_account_menu_action( $device = '' )
 {
-    me_get_template('global/account-menu');
+    if ( 'mobile' === $device )
+        me_get_template('global/account-menu-mobile');
+    else
+        me_get_template('global/account-menu');
 }
 add_action('me_account_menu', 'me_account_menu_action');
+
 function me_account_menu_flag_filter($flag)
 {
     $flag = false;

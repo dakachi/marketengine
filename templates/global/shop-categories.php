@@ -1,12 +1,13 @@
 <?php
-
 /**
- * Prints shop categories.
+ * The Template for displaying shop categories menu.
  *
- * Adds an action to print shop categories select input.
+ * This template can be overridden by copying it to yourtheme/marketengine/global/shop-categories.php.
  *
- * @return string
+ * @package     MarketEngine/Templates
+ * @version       1.0
  */
+
 $listing_categories = me_get_categories('listing_category');
 ?>
 <?php if ( has_nav_menu( 'category-menu' ) ) : ?>

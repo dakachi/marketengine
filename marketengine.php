@@ -12,11 +12,22 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
 // Exit if accessed directly.
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
 if (!class_exists('MarketEngine')):
+
+    /**
+     * Main MarketEngine Class
+     *
+     * Includes files, initialize and define all of MarketEngine parts.
+     *
+     * @package MarketEngine
+     * @category Classes
+     * @author EngineThemes
+     */
 
     class MarketEngine {
         /**
@@ -65,6 +76,14 @@ if (!class_exists('MarketEngine')):
             return self::$_instance;
         }
 
+        /**
+         * MarketEngine Class contructor
+         *
+         * Defines constants, includes files, initialize hooks.
+         *
+         * @since 1.0
+         */
+
         public function __construct() {
             // TODO: init alot of thing here
             $this->define();
@@ -82,6 +101,14 @@ if (!class_exists('MarketEngine')):
             do_action('marketengine_loaded');
         }
 
+        /**
+         * Defines constants.
+         *
+         * Defines path of MarketEngine plugin.
+         *
+         * @since 1.0
+         */
+
         private function define() {
             if (!defined('ME_PLUGIN_PATH')) {
                 define('ME_PLUGIN_PATH', dirname(__FILE__));
@@ -91,6 +118,12 @@ if (!class_exists('MarketEngine')):
                 define('ME_PLUGIN_URL', plugin_dir_url(__FILE__) );
             }
         }
+
+        /**
+         * Includes file in core
+         *
+         * @since 1.0
+         */
 
         private function include_files() {
             require_once ME_PLUGIN_PATH .'/includes/class-me-autoloader.php';
@@ -160,6 +193,12 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-listing.php';
             require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-transaction.php';
         }
+
+        /**
+         * Add action hooks
+         *
+         * @since 1.0
+         */
 
         private function init_hooks() {
             add_action('init', array($this, 'init'));
