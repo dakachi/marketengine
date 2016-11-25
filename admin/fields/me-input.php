@@ -1,4 +1,10 @@
 <?php
+/**
+ * ME Input
+ * HTML input abstract class
+ * @package Admin/Options
+ * @category Class
+ */
 abstract class ME_Input
 {
     /**
