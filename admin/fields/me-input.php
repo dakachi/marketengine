@@ -1,10 +1,13 @@
 <?php
 /**
  * ME Input
+ *
  * Render HTML input abstract class
  * 
+ * @since 1.0
  * @package Admin/Options
  * @category Class
+ *
  * @version 1.0
  * 
  */
@@ -67,6 +70,13 @@ abstract class ME_Input
     abstract public function render();
 
     /**
+     * Field contructor
+     *
+     * @param array $args Input attribute
+     * @param mix $options Input option value
+     */
+    public function __construct($args, $options) {}
+    /**
      * Render the field label
      * @return void
      */
@@ -90,7 +100,7 @@ abstract class ME_Input
 
     /**
      * Get the field id attribute
-     * @return string
+     * @return string id="{$id}"
      */
     protected function get_id()
     {

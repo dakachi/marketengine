@@ -12,6 +12,7 @@ if (!defined('ABSPATH')) {
  * 
  * @category Class
  * @package Admin/Options
+ *
  * @version 1.0
  */
 class ME_Button extends ME_Input{

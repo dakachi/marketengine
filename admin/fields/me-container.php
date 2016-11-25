@@ -7,6 +7,10 @@ if (!defined('ABSPATH')) {
 /**
  * Class ME Container
  *
+ * @since 1.0
+ * @package Admin/Options
+ * @category Class
+ *
  */
 abstract class ME_Container {
     /**

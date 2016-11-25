@@ -3,7 +3,14 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
+/**
+ * ME_Field_Autoloader
+ *
+ * @version        1.0
+ * @package        MarketEngine/Fields/
+ * @category       Class
+ * @author         MarketEngine
+ */
 class ME_MultiSelect extends ME_Input{
     function __construct( $args, $options ) {
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));
