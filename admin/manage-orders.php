@@ -1,4 +1,7 @@
 <?php
+/**
+ * Admin Manage orders
+ */
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
@@ -10,7 +13,8 @@ if (!defined('ABSPATH')) {
 
 /**
  * Remove edit post row action
- * @category Admin/Manage
+ * @package Admin/Manage
+ * @category Hook Function
  * @since 1.0
  */
 function me_order_row_actions($actions, $post)
@@ -26,7 +30,8 @@ add_filter('post_row_actions', 'me_order_row_actions', 10, 2);
  * Hook to action manage_me_order_posts_columns
  * Add order columns: ID, Listing Items, Tota, Commission, Date
  *
- * @category Admin/Manage
+ * @package Admin/Manage
+ * @category Hook Function
  *
  * @param array $existing_columns WP default post column
  * @since 1.0
@@ -55,7 +60,8 @@ add_filter('manage_me_order_posts_columns', 'me_me_order_columns');
 /**
  * Hook to manage_me_order_posts_custom_column render order column data
  *
- * @category Admin/Manage
+ * @package Admin/Manage
+ * @category Hook Function
  *
  * @param string $column
  * @since 1.0
@@ -109,7 +115,8 @@ add_action('manage_me_order_posts_custom_column', 'me_render_me_order_columns', 
 
 /**
  * Load metabox details
- * @category Admin/Manage
+ * @package Admin/Manage
+ * @category Hook Function
  * @since 1.0
  */
 function me_order_payment_details() {
@@ -118,7 +125,8 @@ function me_order_payment_details() {
 
 /**
  * Add order metabox, remove submitdiv
- * @category Admin/Manage
+ * @package Admin/Manage
+ * @category Hook Function
  * @since 1.0
  */
 function me_order_meta_box()
@@ -130,7 +138,14 @@ function me_order_meta_box()
 add_action('add_meta_boxes', 'me_order_meta_box');
 
 
-
+/**
+ * Hook to remove filter mine in order list
+ * 
+ * @package Admin/Manage
+ * @category Hook Function
+ * 
+ * @since 1.0
+ */
 function me_remove_filter_order_mine($views) {
     unset($views['mine']);
     return $views;

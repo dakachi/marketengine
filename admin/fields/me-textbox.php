@@ -5,6 +5,8 @@ if (!defined('ABSPATH')) {
 }
 
 /**
+ * class ME_Textbox
+ * 
  * ME Html textbox input tag
  *
  * @since 1.0
