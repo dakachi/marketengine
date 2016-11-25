@@ -9,18 +9,7 @@ var connect             = require('gulp-connect');
 var browserSync 		= require('browser-sync').create();
 // var stripCssComments    = require('gulp-strip-css-comments');
 var strip_comments = require('gulp-strip-json-comments');
-/**
- * Basic gulp
- */
-gulp.task('default', ['serve', 'scripts']);
 
-gulp.task('serve', [], function() {
-	browserSync.init({
-        server: "./plugin"
-    });
-	gulp.run('watch');
-    // gulp.run('strip-css-comments');
-});
 
 /**
  * More complex gulp
@@ -48,65 +37,62 @@ gulp.task('sass', function() {
 /**
  * Compile Setup Wizard
  */
-var sassPathPlugin = 'plugin/scss/setup-wizard.scss';
-gulp.task('sass', function() {
-    return gulp.src(sassPathPlugin)
+var sassPathPluginSetup = 'plugin/scss/setup-wizard.scss';
+var dest_setup = 'C:/xampp/htdocs/me/wp-content/plugins/zeroengine/assets/admin';
+// var dest_setup = 'plugin/assets/css';
+gulp.task('sass-setup', function() {
+    return gulp.src(sassPathPluginSetup)
         .pipe(sass({ includePaths: ['plugin/scss/custom'], errLogToConsole: true }))
         .pipe(strip_comments())
         .pipe(autoprefixer({cascade: true}))
         .pipe(minifyCSS())
-        .pipe(gulp.dest('C:/xampp/htdocs/me/wp-content/plugins/zeroengine/assets/admin'))
+        .pipe(gulp.dest(dest_setup))
         .pipe(connect.reload());
 });
 
 /**
  * Compile markengine admin
  */
-var sassPathPlugin = 'plugin/scss/marketengine-admin.scss';
-gulp.task('sass', function() {
-    return gulp.src(sassPathPlugin)
+var sassPathPluginAdmin = 'plugin/scss/marketengine-admin.scss';
+var dest_admin = 'C:/xampp/htdocs/me/wp-content/plugins/zeroengine/assets/admin';
+gulp.task('sass-admin', function() {
+    return gulp.src(sassPathPluginAdmin)
         .pipe(sass({ includePaths: ['plugin/scss/custom'], errLogToConsole: true }))
         .pipe(strip_comments())
         .pipe(autoprefixer({cascade: true}))
         .pipe(minifyCSS())
-        .pipe(gulp.dest('C:/xampp/htdocs/me/wp-content/plugins/zeroengine/assets/admin'))
-        .pipe(connect.reload());
+        .pipe(gulp.dest(dest_admin))
+        // .pipe(connect.reload());
 });
 
 /**
  * Compile markengine layout
  */
-var sassPathPlugin = 'plugin/scss/marketengine-layout.scss';
-gulp.task('sass', function() {
-    return gulp.src(sassPathPlugin)
+var sassPathPluginLayout = 'plugin/scss/marketengine-layout.scss';
+gulp.task('sass-layout', function() {
+    return gulp.src(sassPathPluginLayout)
         .pipe(sass({ includePaths: ['plugin/scss/custom'], errLogToConsole: true }))
         .pipe(strip_comments())
         .pipe(autoprefixer({cascade: true}))
         .pipe(minifyCSS())
         .pipe(gulp.dest('C:/xampp/htdocs/me/wp-content/plugins/zeroengine/assets/css'))
-        .pipe(connect.reload());
+        // .pipe(connect.reload());
 });
 
 /**
  * Compile markengine layout basic theme
  */
-var sassPathPlugin = 'plugin/scss/marketengine-layout-basic.scss';
-gulp.task('sass', function() {
-    return gulp.src(sassPathPlugin)
+var sassPathPluginLayoutBasic = 'plugin/scss/marketengine-layout-basic.scss';
+var dest_layout_basic = 'C:/xampp/htdocs/me/wp-content/themes/zeroengine/css';
+gulp.task('sass-layout-basic', function() {
+    return gulp.src(sassPathPluginLayoutBasic)
         .pipe(sass({ includePaths: ['plugin/scss/custom'], errLogToConsole: true }))
         .pipe(strip_comments())
         .pipe(autoprefixer({cascade: true}))
         .pipe(minifyCSS())
-        .pipe(gulp.dest('C:/xampp/htdocs/me/wp-content/themes/zeroengine/css'))
-        .pipe(connect.reload());
+        .pipe(gulp.dest(dest_layout_basic))
+        // .pipe(connect.reload());
 });
-
-
-/*gulp.task('strip-css-comments', function () {
-    return gulp.src('plugin/assets/css')
-        .pipe(stripCssComments())
-        .pipe(gulp.dest('plugin/assets/abc'));
-});*/
 
 // uglify task
 // 
@@ -145,6 +131,22 @@ gulp.task('scripts', function() {
  */
 gulp.task('watch', function() {
     gulp.watch(sassPathPlugin, ['sass']).on('change', browserSync.reload);
+    gulp.watch(sassPathPluginSetup, ['sass-setup']).on('change', browserSync.reload);
+    gulp.watch(sassPathPluginAdmin, ['sass-admin']).on('change', browserSync.reload);
+    gulp.watch(sassPathPluginLayout, ['sass-layout']).on('change', browserSync.reload);
+    gulp.watch(sassPathPluginLayoutBasic, ['sass-layout-basic']).on('change', browserSync.reload);
     gulp.watch(jsPathPlugin, ['scripts']).on('change', browserSync.reload);
     gulp.watch("plugin/**/*.html").on('change', browserSync.reload);
+});
+
+/**
+ * Basic gulp
+ */
+gulp.task('default', ['serve', 'scripts']);
+
+gulp.task('serve', ['sass', 'sass-setup', 'sass-admin', 'sass-layout', 'sass-layout-basic'], function() {
+    browserSync.init({
+        server: "./plugin"
+    });
+    gulp.run('watch');
 });
