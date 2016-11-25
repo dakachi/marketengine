@@ -1,4 +1,7 @@
 <?php
+/**
+ * Class ME_Sampledata
+ */
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
