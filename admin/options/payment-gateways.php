@@ -1,4 +1,13 @@
 <?php
+/**
+ * ME Payment Gateways setting page.
+ *
+ * @author   EngineThemes
+ * @category Functions
+ * @package  Admin/Templates
+ * @version  1.0
+ */
+
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
