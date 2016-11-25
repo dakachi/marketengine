@@ -5,7 +5,7 @@
  * Widget related functions and widget registration.
  *
  * @package MarketEngine/Includes
- * @category Functions
+ * @category Function
  *
  */
 

@@ -3,7 +3,7 @@
  * ME Admin Functions
  *
  * @author   EngineThemes
- * @category Functions
+ * @category Function
  * @package  Admin/Functions
  * @version  1.0
  */
