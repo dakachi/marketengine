@@ -1,7 +1,16 @@
 <?php
 /**
+ * ME Admin Functions
+ *
+ * @author   EngineThemes
+ * @category Functions
+ * @package  Admin/Functions
+ * @version  1.0
+ */
+
+/**
  * Retrieve list of page
- * 
+ *
  * @since 1.0
  * @return array
  */

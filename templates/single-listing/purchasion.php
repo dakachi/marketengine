@@ -32,8 +32,10 @@ $pricing_unit = $listing->get_pricing_unit();
 
 		<?php do_action('marketengine_single_listing_add_to_cart_form_field'); ?>
 
+		<?php if( 'me-archived' !== $listing->post_status ) : ?>
 		<input type="hidden" name="add_to_cart" value="<?php echo $listing->ID; ?>" />
 		<input <?php disabled( !me_is_activated_user() ); ?> type="submit" class="me-buy-now-btn <?php echo !me_is_activated_user() ? 'me-disable-btn' : ''; ?>" value="<?php echo me_option('purchasion-action') ?  me_option('purchasion-action') : __("BUY NOW", "enginethemes"); ?>">
+		<?php endif; ?>
 
 		<?php do_action('marketengine_single_listing_add_to_cart_form_end'); ?>
 
