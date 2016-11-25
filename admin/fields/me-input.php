@@ -74,6 +74,7 @@ abstract class ME_Input
      *
      * @param array $args Input attribute
      * @param mix $options Input option value
+     * 
      */
     public function __construct($args, $options) {}
     /**

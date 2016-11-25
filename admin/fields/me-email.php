@@ -1,4 +1,7 @@
 <?php
+/**
+ * ME Html email input tag
+ */
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
@@ -13,6 +16,13 @@ if (!defined('ABSPATH')) {
  * @version 1.0
  */
 class ME_Email extends ME_Input {
+    /**
+     * Field contructor
+     *
+     * @param array $args Input attribute
+     * @param mix $options Input option value
+     * 
+     */
     public function __construct($args, $options) {
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));
 

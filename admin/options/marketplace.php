@@ -1,4 +1,11 @@
 <?php
+/**
+ * ME Marketplace options array template
+ * - general option
+ * - listing-type
+ * - sample-data
+ * @since 1.0
+ */
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;

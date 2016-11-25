@@ -1,11 +1,7 @@
 <?php
 /**
  * ME Payment Gateways setting page.
- *
- * @author   EngineThemes
- * @category Functions
- * @package  Admin/Templates
- * @version  1.0
+ * @since 1.0
  */
 
 // Exit if accessed directly.
@@ -14,8 +10,7 @@ if (!defined('ABSPATH')) {
 }
 
 return array(
-    'general'      =>
-array(
+    'general'      => array(
         'title'    => __("General", "enginethemes"),
         'slug'     => 'general-section',
         'type'     => 'section',
