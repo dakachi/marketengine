@@ -9,7 +9,7 @@
 ?>
 <?php if( is_user_logged_in() ) : ?>
 
-	<ul class="me-account-list">
+	<ul class="me-account-list-mobile">
 		<li><a href="<?php echo me_get_auth_url( 'listings' ); ?>"><?php echo __('My Listings', 'enginethemes'); ?></a></li>
 		<li><a href="<?php echo me_get_auth_url( 'orders' ); ?>"><?php echo __('My Orders', 'enginethemes'); ?></a></li>
 		<li><a href="<?php echo me_get_auth_url( 'purchases' ); ?>"><?php echo __('My Purchases', 'enginethemes'); ?></a></li>
@@ -19,7 +19,7 @@
 
 <?php else: ?>
 
-	<ul class="me-account-list">
+	<ul class="me-account-list-mobile">
 		<li><a href="<?php echo me_get_page_permalink('user_account'); ?>"><?php echo __('Login', 'enginethemes'); ?></a></li>
 		<?php if( get_option('users_can_register') ) : ?>
 		<li><a href="<?php echo me_get_auth_url( 'register' ); ?>"><?php echo __('Register', 'enginethemes'); ?></a></li>
