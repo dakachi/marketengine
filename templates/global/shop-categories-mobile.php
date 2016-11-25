@@ -1,8 +1,8 @@
 <?php
 /**
- * The Template for displaying shop categories menu.
+ * The Template for displaying shop categories menu. This is version for mobile.
  *
- * This template can be overridden by copying it to yourtheme/marketengine/global/shop-categories.php.
+ * This template can be overridden by copying it to yourtheme/marketengine/global/shop-categories-mobile.php.
  *
  * @package     MarketEngine/Templates
  * @version       1.0

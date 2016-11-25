@@ -4,6 +4,9 @@
  *
  * Widget related functions and widget registration.
  *
+ * @package MarketEngine/Includes
+ * @category Functions
+ *
  */
 
 if (!defined('ABSPATH')) {
@@ -15,6 +18,11 @@ include_once ('widgets/class-me-widget-listing-types.php');
 include_once ('widgets/class-me-widget-price-filter.php');
 include_once ('widgets/class-me-widget-listing-search.php');
 
+/**
+ * Registers MarketEngine Widgets
+ *
+ * @since 1.0.0
+ */
 function me_register_widgets() {
     register_widget('ME_Widget_Listing_Categories');
     register_widget('ME_Widget_Listing_Types');
@@ -22,4 +30,3 @@ function me_register_widgets() {
     register_widget('ME_Widget_Search');
 }
 add_action('widgets_init', 'me_register_widgets');
-
