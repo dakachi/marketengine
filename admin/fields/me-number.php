@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * ME Html number input tag
+ *
+ * @author EngineThemes
+ * @since 1.0
+ */
+
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
@@ -14,6 +22,14 @@ if (!defined('ABSPATH')) {
  */
 class ME_Number extends ME_Input
 {
+    /**
+     * Class constructor
+     *
+     * @param array $args array of values.
+     * @param object $options
+     *
+     * @since 1.0.0
+     */
     public function __construct($args, $options)
     {
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));
@@ -38,6 +54,11 @@ class ME_Number extends ME_Input
         }
     }
 
+    /**
+     * Renders html
+     *
+     * @since 1.0.0
+     */
     public function render()
     {
         $id         = $this->_slug ? 'id="' . $this->_slug . '"' : '';
@@ -61,7 +82,7 @@ class ME_Number extends ME_Input
                     }
                 });
             </script>
-        <?php 
+        <?php
         endif;
 
     }
