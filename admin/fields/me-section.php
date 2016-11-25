@@ -6,8 +6,11 @@ if (!defined('ABSPATH')) {
 
 
 class ME_Section extends ME_Container {
-    protected $_controls;
-    public function __construct($args, $option) {
+    /**
+     * Contructor
+     * @param array $args
+     */
+    public function __construct($args) {
         $this->_name     = $args['slug'];
         $this->_template = $args['template'];
         $this->_first = $args['first'];

@@ -1,14 +1,41 @@
 <?php 
-abstract class ME_Container {
-    protected $_controls;
-    protected $_template;
-    abstract public function start();
-    abstract public function end();
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
 
+/**
+ * Class ME Container
+ *
+ */
+abstract class ME_Container {
+    /**
+     * Container name
+     * @var string
+    */
+    protected $_name;
+    /**
+     * The container option fields to render
+     * @var array|string
+     */
+    protected $_template;
+    /**
+     * Render container header
+     */
+    abstract public function start();
+    /**
+     * Render container footer
+     */
+    abstract public function end();
+    /**
+     * Render container menu
+     */
     public function menus() {
 
     }
-
+    /**
+     * Render html
+     */
     public function render() {
         $this->start();
 
@@ -33,8 +60,12 @@ abstract class ME_Container {
 
         $this->end();
     }
-
+    /**
+     * Render container sub section header
+     */
     public function wrapper_start() {}
-
+    /**
+     * Render container sub section footer
+     */
     public function wrapper_end() {}
 }

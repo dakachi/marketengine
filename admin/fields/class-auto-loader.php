@@ -1,9 +1,4 @@
 <?php
-
-if (!defined('ABSPATH')) {
-    exit;
-}
-
 /**
  * ME_Field_Autoloader
  *
@@ -12,6 +7,11 @@ if (!defined('ABSPATH')) {
  * @category       Class
  * @author         MarketEngine
  */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 class ME_Field_Autoloader {
 
     /**
