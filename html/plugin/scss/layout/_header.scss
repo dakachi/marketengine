@@ -468,6 +468,10 @@
 	display: none;
 }
 
+.marketengine-header-mobile {
+	display: none
+}
+
 @media (max-width: $screen_xs_max) { // 767
 	.marketengine-header-top {
 		position: relative;
@@ -567,5 +571,8 @@
 	}
 	.me-menu-mobile {
 		display: block;
+	}
+	.marketengine-header-mobile {
+		// display: block;
 	}
 }
