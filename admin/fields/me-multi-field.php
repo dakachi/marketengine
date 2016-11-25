@@ -3,7 +3,17 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
+/**
+ * Class ME_Multi_Field
+ * 
+ * A group of multi option fields
+ * 
+ * @category Class
+ * @package Admin/Options
+ * @since 1.0
+ * 
+ * @version 1.0
+ */
 class ME_Multi_Field extends ME_Input{
     function __construct( $args, $options ) {
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));

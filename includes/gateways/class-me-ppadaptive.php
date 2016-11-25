@@ -1,10 +1,27 @@
 <?php
+/**
+ * MarketEngine PayPal Adaptive
+ *
+ * @author EngineThemes
+ * @since 1.0.0
+ *
+ * @version 1.0.0
+ *
+ */
+
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
 }
 /**
  * Paypal Adaptive class
+ *
+ * Handles payments between users of the payment.
+ *
+ * @package MarketEngine/Classes
+ * @category Classes
+ * @since 1.0.0
+ *
  */
 class ME_PPAdaptive extends ME_Payment {
     /**
@@ -131,7 +148,14 @@ class ME_PPAdaptive extends ME_Payment {
         return $headers;
     }
     /**
-     * The GetVerifiedStatus API operation lets you determine whether the specified PayPal account's status is verified or unverified.
+     * The GetVerifiedStatus API operation lets you determine
+     * whether the specified PayPal account's status is verified or unverified.
+     *
+     * @param array $info
+     * @return string $response
+     *
+     * @since 1.0.0
+     *
      */
     public function get_verified_account($info) {
         $testmode = me_option('test-mode') ? true : false;
@@ -175,7 +199,7 @@ class ME_PPAdaptive extends ME_Payment {
             'body'        => $data,
             'httpversion' => '1.1',
         ));
-        
+
         if (!is_wp_error($response)) {
             $response = json_decode($response['body']);
             if (empty($response->error)) {
@@ -185,7 +209,7 @@ class ME_PPAdaptive extends ME_Payment {
                 if($error[0]->errorId == "520003" ) {
                     $response = new WP_Error('payment_fail', __("Your order has not been completed yet. API credentials are incorrect. Please contact the Admin for further information.", "enginethemes"));
                 }else {
-                    $response = new WP_Error('payment_fail', $error[0]->message);    
+                    $response = new WP_Error('payment_fail', $error[0]->message);
                 }
             }
         }
@@ -200,7 +224,7 @@ class ME_PPAdaptive extends ME_Payment {
      *
      * https://developer.paypal.com/docs/classic/api/adaptive-payments/ExecutePayment_API_Operation/
      *
-     * @param $payKey (Optional) The pay key that identifies the payment to be executed.
+     * @param $paykey (Optional) The pay key that identifies the payment to be executed.
      *          This is the pay key returned in the PayResponse message.
      *
      * @since 1.0
@@ -271,9 +295,8 @@ class ME_PPAdaptive extends ME_Payment {
      *  - a specific day of the week or the month,
      *  - and whether or not a PIN is required for each payment request.
      *
-     * @param $endingDate Last date for which the preapproval is valid. It cannot be later than one year from the starting date. Contact PayPal if you do not want to specify an ending date.
-     * @param $startingDate First date for which the preapproval is valid. It cannot be before today's date or after the ending date.
-     * @since 1.2
+     * @param object $order
+     * @since 1.0
      * @author Dakachi
      */
     public function pre_approval($order) {
@@ -296,7 +319,7 @@ class ME_PPAdaptive extends ME_Payment {
      * Use the CancelPreapproval API operation to handle the canceling of preapprovals.
      * Preapprovals can be canceled regardless of the state they are in, such as active, expired, deactivated, and previously canceled.
      *
-     * @param string $paykey The payment pre-approval key
+     * @param string $preapproval_key The payment pre-approval key
      *
      * @since 1.0
      * @return object | WP_Error
@@ -310,7 +333,7 @@ class ME_PPAdaptive extends ME_Payment {
      * Use the PaymentDetails API operation to obtain information about a payment.
      * You can identify the payment by the tracking ID, the PayPal transaction ID in an IPN message, or the pay key associated with the payment.
      *
-     * @param $payKey
+     * @param $paykey
      *
      * @since 1.0
      * @return object | WP_Error
@@ -421,6 +444,10 @@ class ME_PPAdaptive_Request {
         return self::$_instance;
     }
 
+    /**
+     * ME PayPay Adaptive Request Class constructor.
+     * @since 1.0.0
+     */
     public function __construct() {
         $this->gateway = ME_PPAdaptive::instance();
     }
@@ -560,7 +587,7 @@ class ME_PPAdaptive_Request {
      * Process the order
      *
      * @param Int $order_id The order id
-     * @param String $paykey The paypal adaptive pay key
+     * @param String $payKey The paypal adaptive pay key
      * @since 1.0
      */
     public function process_order($order_id, $payKey) {

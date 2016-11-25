@@ -77,10 +77,23 @@ function me_get_functional_pages()
         ),
     );
 }
+/**
+ * Filter order status when import sample data
+ * @package Admin/Setupwizard
+ * @category Function
+ * @since 1.0
+ */
 function marketengine_sample_filter_order_status($status)
 {
     return 'me-complete';
 }
+
+/**
+ * Add sample order
+ * @package Admin/Setupwizard
+ * @category Function
+ * @since 1.0
+ */
 function marketengine_add_sample_order($orders, $listing_id)
 {
     foreach ($orders as $key => $order_data) {
@@ -136,6 +149,12 @@ function marketengine_add_sample_order($orders, $listing_id)
     }
 }
 
+/**
+ * Add sample inquiry
+ * @package Admin/Setupwizard
+ * @category Function
+ * @since 1.0
+ */
 function marketengine_add_sample_inquiry($inquiries, $listing_id)
 {
     foreach ($inquiries as $key => $inquiry_data) {
@@ -176,6 +195,13 @@ function marketengine_add_sample_inquiry($inquiries, $listing_id)
     }
 }
 
+/**
+ * Add sample user
+ * @param array $user_data The user data
+ * @package Admin/Setupwizard
+ * @category Function
+ * @since 1.0
+ */
 function marketengine_add_sample_user($user_data)
 {
     // add user
@@ -214,6 +240,16 @@ function marketengine_add_sample_user($user_data)
     return $user->ID;
 }
 
+/**
+ * Filter post where when add listing, order
+ * 
+ * @param string $where The post query where clause
+ * @param WP_Query $wp_query WP_Query object
+ * 
+ * @package Admin/Setupwizard
+ * @category Function
+ * @since 1.0
+ */
 function me_setup_sample_data_post_where($where, &$wp_query)
 {
     global $wpdb;
@@ -224,8 +260,11 @@ function me_setup_sample_data_post_where($where, &$wp_query)
 }
 
 /**
- * Image url
- * @return int The file id
+ * Add sample image
+ * @param string $image_url The image url
+ * @package Admin/Setupwizard
+ * @category Function
+ * @since 1.0
  */
 function marketengine_handle_sample_image($image_url)
 {
@@ -267,9 +306,11 @@ function marketengine_handle_sample_image($image_url)
     wp_update_attachment_metadata($attach_id, $attach_data);
     return $attach_id;
 }
-
 /**
  * Add sample listing
+ * @package Admin/Setupwizard
+ * @category Function
+ * @since 1.0
  */
 function marketengine_add_sample_listing()
 {
@@ -344,6 +385,12 @@ function marketengine_add_sample_listing()
     exit;
 }
 
+/**
+ * Ajax Delete sample data
+ * @package Admin/Setupwizard
+ * @category Function
+ * @since 1.0
+ */
 function marketengine_delete_sample_data()
 {
     if (!empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'marketengine-setup')) {

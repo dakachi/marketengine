@@ -1,10 +1,31 @@
 <?php
+/**
+ * Backend Report functions
+ *
+ * Functions for rendering backend report.
+ *
+ * @author EngineThemes
+ * @package MarketEngine/Functions
+ * @category Functions
+ *
+ * @since 1.0.0
+ *
+ */
+
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
 }
 
-function marketengine_report_heading($name, $lable)
+/**
+ * Prints report heading html.
+ *
+ * @param string $name
+ * @param string $label
+ *
+ * @since 1.0.0
+ */
+function marketengine_report_heading($name, $label)
 {
     $class = '';
     $link  = add_query_arg('orderby', $name);
@@ -28,6 +49,17 @@ function marketengine_report_heading($name, $lable)
 <?php
 }
 
+/**
+ * Gets quantity report
+ *
+ * @param string $col_name
+ * @param string $quant
+ * @param string $name
+ *
+ * @return string $time
+ *
+ * @since 1.0.0
+ */
 function marketengine_get_quantity_report($col_name, $quant, $name = 'quant')
 {
     switch ($quant) {
@@ -51,6 +83,18 @@ function marketengine_get_quantity_report($col_name, $quant, $name = 'quant')
     return $time;
 }
 
+/**
+ * Gets date range
+ *
+ * @param string $quant
+ * @param string $week
+ * @param string $year
+ * @param string $date_format
+ *
+ * @return string start date and end date
+ *
+ * @since 1.0.0
+ */
 function marketengine_get_start_and_end_date($quant, $week, $year, $date_format = '')
 {
     if (!$date_format) {
@@ -96,6 +140,15 @@ function marketengine_get_start_and_end_date($quant, $week, $year, $date_format 
     }
 }
 
+/**
+ * Gets data of listing report
+ *
+ * @param string $args
+ *
+ * @return array data of listing report
+ *
+ * @since 1.0.0
+ */
 function marketengine_listing_report($args)
 {
     global $wpdb;
@@ -172,6 +225,15 @@ function marketengine_listing_report($args)
     );
 }
 
+/**
+ * Gets data of members report
+ *
+ * @param string $args
+ *
+ * @return array data of members report
+ *
+ * @since 1.0.0
+ */
 function marketengine_members_report($args)
 {
     global $wpdb;
@@ -232,6 +294,15 @@ function marketengine_members_report($args)
     );
 }
 
+/**
+ * Gets data of orders report
+ *
+ * @param string $args
+ *
+ * @return array data of orders report
+ *
+ * @since 1.0.0
+ */
 function marketengine_orders_report($args)
 {
     global $wpdb;
@@ -292,6 +363,15 @@ function marketengine_orders_report($args)
     );
 }
 
+/**
+ * Gets data of inquiries report
+ *
+ * @param string $args
+ *
+ * @return array data of inquiries report
+ *
+ * @since 1.0.0
+ */
 function marketengine_inquiries_report($args)
 {
     global $wpdb;

@@ -1,9 +1,22 @@
 <?php
+/**
+ * Class ME Multiselect
+ */
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
 }
-
+/**
+ * Class ME_MultiSelect
+ * 
+ * Render Multiselect option field
+ * 
+ * @category Class
+ * @package Admin/Options
+ * @since 1.0
+ * 
+ * @version 1.0
+ */
 class ME_MultiSelect extends ME_Input{
     function __construct( $args, $options ) {
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));

@@ -1,4 +1,7 @@
 <?php
+/**
+ * Admin Manage listings
+ */
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
@@ -9,7 +12,8 @@ if (!defined('ABSPATH')) {
  */
 /**
  * Remove post row action to prevent admin edit listing
- * @category Admin/Manage
+ * @package Admin/Manage
+ * @category Hook Function
  * @since 1.0
  */
 function post_row_actions($actions, $post)
@@ -23,7 +27,8 @@ add_filter('post_row_actions', 'post_row_actions', 10, 2);
 
 /**
  * Add and modify listing post column
- * @category Admin/Manage
+ * @package Admin/Manage
+ * @category Hook Function
  * @since 1.0
  */
 function me_listing_columns($existing_columns)
@@ -49,7 +54,8 @@ add_filter('manage_listing_posts_columns', 'me_listing_columns');
 
 /**
  * Render listing column value
- * @category Admin/Manage
+ * @package Admin/Manage
+ * @category Hook Function
  * @since 1.0
  */
 function me_render_listing_columns($column)
@@ -102,7 +108,8 @@ add_action('manage_listing_posts_custom_column', 'me_render_listing_columns', 2)
 
 /**
  * Add listing metabox, remove authordiv
- * @category Admin/Manage
+ * @package Admin/Manage
+ * @category Hook Function
  * @since 1.0
  */
 function me_listing_meta_box()
@@ -112,7 +119,14 @@ function me_listing_meta_box()
 add_action('add_meta_boxes', 'me_listing_meta_box');
 
 
-
+/**
+ * Hook to remove filter mine in listing list
+ * 
+ * @package Admin/Manage
+ * @category Hook Function
+ * 
+ * @since 1.0
+ */
 function me_remove_filter_listing_mine($views) {
     unset($views['mine']);
     return $views;

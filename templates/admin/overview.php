@@ -1,4 +1,11 @@
-<?php 
+<?php
+/**
+ * The template for displaying Backend report.
+ *
+ * @package MarketEngine/Templates/Admin
+ * @version 1.0.0
+ */
+
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
@@ -11,19 +18,19 @@ $admin_report_tabs = array(
 );
 
 if(empty($_REQUEST['tab']) || !isset($admin_report_tabs[$_REQUEST['tab']])) {
-	$_REQUEST['tab'] = 'listings'; 
+	$_REQUEST['tab'] = 'listings';
 }
 ?>
 
 <div class="marketengine-tabs">
 	<ul class="me-nav me-tabs-nav">
-		<?php 
+		<?php
 		foreach ($admin_report_tabs as $key => $tab) : ?>
 			<li <?php if($_REQUEST['tab'] == $key ) {echo 'class="active"';} ?>><a href="?page=me-reports&tab=<?php echo $key; ?>"><?php echo $tab; ?></a></li>
 		<?php endforeach; ?>
 	</ul>
 	<div class="me-tabs-container">
-	<?php 
+	<?php
 		me_get_template('admin/'. $_REQUEST['tab']);
 	?>
 	</div>

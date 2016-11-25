@@ -1,10 +1,38 @@
 <?php
+/**
+ * MarketEngine Input HTML
+ *
+ * @author EngineThemes
+ * @since 1.0.0
+ */
+
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * class ME_Textarea
+ *
+ * ME Html textarea tag
+ *
+ * @since 1.0
+ * @package Admin/Options
+ * @category Class
+ *
+ * @version 1.0
+ */
 class ME_Textarea extends ME_Input {
+    /**
+     * Class constructor.
+     *
+     * Initialize value.
+     *
+     * @param array $args
+     * @param object $options
+     *
+     * @since 1.0.0
+     */
     function __construct( $args, $options ) {
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));
 
@@ -17,6 +45,12 @@ class ME_Textarea extends ME_Input {
 
         $this->_options = $options;
     }
+
+    /**
+     * Renders html
+     *
+     * @since 1.0.0
+     */
     function render() {
         $id = $this->_slug ? 'id="'.$this->_slug.'"' : '';
         echo '<div class="me-group-field" '.$id.'>';

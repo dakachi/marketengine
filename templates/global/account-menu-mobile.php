@@ -1,5 +1,7 @@
 <?php
 /**
+ * The Template for displaying account menu. This is version for mobile.
+ *
  * 	This template can be overridden by copying it to yourtheme/marketengine/account/account-menu.php.
  *
  * @author 		EngineThemes

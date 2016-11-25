@@ -3,7 +3,15 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
+/**
+ * ME Image Option
+ *
+ * @since 1.0
+ * @package Admin/Options
+ * @category Class
+ *
+ * @version 1.0
+ */
 class ME_Image extends ME_Input{
     function __construct( $args, $options ) {
         $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));

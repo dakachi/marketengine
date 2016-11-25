@@ -5,9 +5,23 @@ if (!defined('ABSPATH')) {
 }
 
 
+/**
+ * Class ME_Section
+ * 
+ * ME Html Section container of field group
+ *
+ * @since 1.0
+ * @package Admin/Options
+ * @category Class
+ *
+ * @version 1.0
+ */
 class ME_Section extends ME_Container {
-    protected $_controls;
-    public function __construct($args, $option) {
+    /**
+     * Contructor
+     * @param array $args
+     */
+    public function __construct($args) {
         $this->_name     = $args['slug'];
         $this->_template = $args['template'];
         $this->_first = $args['first'];
