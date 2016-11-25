@@ -1,4 +1,13 @@
 <?php
+/**
+ * The Template for displaying details of a transaction.
+ *
+ * This template can be overridden by copying it to yourtheme/marketengine/purchases/transaction.php.
+ *
+ * @package     MarketEngine/Templates
+ * @version       1.0
+ */
+
 $transaction->update_listings();
 
 $listing_items = $transaction->get_listing_items();
