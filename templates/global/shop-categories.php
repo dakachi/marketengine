@@ -7,11 +7,9 @@
  * @package     MarketEngine/Templates
  * @version       1.0
  */
-
-$listing_categories = me_get_categories('listing_category');
 ?>
 <?php if ( has_nav_menu( 'category-menu' ) ) : ?>
-    <ul class="me-shopcategories <?php if( $listing_categories ) echo 'me-has-category'; ?>">
+    <ul class="me-shopcategories me-has-category">
         <li>
             <span class="marketengine-bar-title"><i class="icon-me-list"></i><span><?php echo __('SHOP CATEGORIES', 'enginethemes'); ?></span></span>
                 <nav class="me-nav-category">

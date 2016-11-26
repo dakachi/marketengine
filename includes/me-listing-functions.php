@@ -12,6 +12,10 @@ if (!defined('ABSPATH')) {
 /**
  * Get the listing object from wordpress post
  * @param object|int $post The wp_post id or object
+ *
+ * @package Includes/Listing
+ * @category Function
+ *
  * @since 1.0
  * 
  * @return ME_Listing | null Return ME_Listing object if post->post_type is listing, if not return null
@@ -27,7 +31,15 @@ function me_get_listing($post = null) {
 
     return ME_Listing_Factory::instance()->get_listing($post);
 }
-
+/**
+ * Retrieve supported listing types
+ * 
+ * @package Includes/Listing
+ * @category Function
+ * 
+ * @since 1.0
+ * @return array Array of listing type
+ */
 function me_get_listing_types() {
     $purchasion_title = me_option('purchasion-title');
     $contact_title = me_option('contact-title');
@@ -38,22 +50,19 @@ function me_get_listing_types() {
     return apply_filters('me_get_listing_types', $listing_types);
 }
 
+/**
+ * Retrieve listing type label
+ * @param string The listing type keyword
+ *
+ * @package Includes/Listing
+ * @category Function
+ * 
+ * @since 1.0
+ * @return string
+ */
 function me_get_listing_type_label($type) {
     $types = me_get_listing_types();
     return $types[$type];
-}
-
-
-function me_get_categories($taxonomy = '') {
-    if (!taxonomy_exists($taxonomy)) {
-        return;
-    }
-
-    $terms = get_terms(array(
-        'taxonomy'   => $taxonomy,
-        'hide_empty' => false,
-    ));
-    return $terms;
 }
 
 /**
@@ -61,6 +70,9 @@ function me_get_categories($taxonomy = '') {
  * 
  * Retrieve the categories list supported in each listing type
  *
+ * @package Includes/Listing
+ * @category Function
+ * 
  * @since 1.0
  * @return array Array of category id the listing type support
  */
@@ -73,11 +85,15 @@ function me_get_listing_type_categories() {
     );
     return apply_filters('marketengine_listing_type_categories', $categories);
 }
+
 /**
  * MarketEngine Get Listing Status List
  *
  * Retrieve marketengine listing status list
  *
+ * @package Includes/Listing
+ * @category Function
+ * 
  * @since 1.0
  * @return array
  */
