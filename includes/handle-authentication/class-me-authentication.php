@@ -517,10 +517,6 @@ class ME_Authentication {
     public static function send_activation_email($user) {
         $user_activate_email_key = get_user_meta($user->ID, 'activate_email_key', true);
         if ($user_activate_email_key) {
-            // get activation mail content from template
-            ob_start();
-            me_get_template('emails/activation');
-            $activation_mail_content = ob_get_clean();
             /**
              * Filter user activation email subject
              *
@@ -537,7 +533,21 @@ class ME_Authentication {
                 'action' => 'confirm-email',
             ), $profile_link);
 
-            $activation_mail_content = str_replace('[activate_email_link]', '<a href="'.$activate_email_link.'" >'.$activate_email_link.'</a>', $activation_mail_content);
+            $activate_email_link = '<a href="'.$activate_email_link.'" >'.$activate_email_link.'</a>';
+
+            $args = array(
+                'display_name' => $display_name, 
+                'blogname' => get_bloginfo('blogname'),
+                'user_login' => $user->user_login,
+                'user_email' => $user->user_email,
+                'activate_email_link' => $activate_email_link
+
+            );
+            // get activation mail content from template
+            ob_start();
+            me_get_template('emails/activation', $args);
+            $activation_mail_content = ob_get_clean();
+
             /**
              * Filter user activation email content
              *
