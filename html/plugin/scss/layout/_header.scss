@@ -450,7 +450,7 @@
 
 //=== Header mobile 
 //
-.me-humberger-mobile {
+.me-humberger-mobile-btn {
 	display: none;
 	color: #FFF;
 	position: absolute;
@@ -460,24 +460,51 @@
 		color: $color_skin;
 	}
 }
-.me-search-mobile {
+.me-search-mobile-btn {
 	display: none;
 	color: #FFF;
 	position: absolute;
 	top: 14px;
 	right: 0;
+	&.selected {
+		color: $color_skin;
+	}
 }
-.me-menu-mobile {
+.me-menu-mobile, .me-search-mobile {
 	display: none;
 }
-
+.me-search-mobile {
+	&.active {
+		display: block;
+	}
+}
+.me-search-mobile {
+	position: absolute;
+	width: 100%;
+	box-shadow: 0 2px 8px 0 rgba(185,209,235,.6);
+	.me-search {
+		input {
+			padding: 0 20px;
+			width: 100%;
+			height: 40px;
+			border: none;
+		}
+	}
+}
 .marketengine-header-mobile {
 	position: relative;
 	z-index: 20;
 	width: 100%;
+	overflow: hidden;
+	display: none;
 	&.active {
+		overflow: visible;
 		.me-header-mobile {
 			left: 0;
+			-webkit-animation-name: bounceInMenu;
+		-moz-animation-name: bounceInMenu;
+		-o-animation-name: bounceInMenu;
+		animation-name: bounceInMenu;
 		}
 	}
 	.me-header-mobile {
@@ -486,7 +513,14 @@
 		top: 0;
 		left: 110%;
 		width: 100%;
-		transition: all 0.6s ease;
+		 -webkit-animation-duration: 2s;
+	   -moz-animation-duration: 2s;
+	     -o-animation-duration: 2s;
+	        animation-duration: 2s;
+	-webkit-animation-fill-mode: both;
+	   -moz-animation-fill-mode: both;
+	     -o-animation-fill-mode: both;
+	        animation-fill-mode: both;
 	}
 }
 
@@ -580,6 +614,43 @@
 	}
 }
 
+@-webkit-keyframes bounceInMenu {
+	0% {
+		transform: translate(100%, 0);
+	}
+
+	100% {
+		transform: translate(0, 0);
+	}
+}
+@-moz-keyframes bounceInMenu {
+	0% {
+		transform: translate(100%, 0);
+	}
+
+	100% {
+		transform: translate(0, 0);
+	}
+}
+@-o-keyframes bounceInMenu {
+	0% {
+		transform: translate(100%, 0);
+	}
+
+	100% {
+		transform: translate(0, 0);
+	}
+}
+@keyframes bounceInMenu {
+	0% {
+		transform: translate(100%, 0);
+	}
+
+	100% {
+		transform: translate(0, 0);
+	}
+}
+
 .me-select-account-mobile, .me-select-cate-mobile {
 	position: relative;
 	&:before {
@@ -620,7 +691,7 @@
 	    -moz-osx-font-smoothing: grayscale;
 	}
 }
-.me-account-list-mobile, {
+.me-account-list-mobile {
 	display: none;
 }
 .me-search-cate-mobile {
@@ -657,6 +728,9 @@
 	}
 	.marketengine-header-bottom {
 		display: none;
+	}
+	.marketengine-header-mobile {
+		display: block;
 	}
 	.marketengine-logo {
 		float: none;
@@ -736,10 +810,10 @@
 
 	//=== Header mobile
 	//
-	.me-humberger-mobile {
+	.me-humberger-mobile-btn {
 		display: block;
 	}
-	.me-search-mobile {
+	.me-search-mobile-btn {
 		display: block;
 	}
 	.me-menu-mobile {
