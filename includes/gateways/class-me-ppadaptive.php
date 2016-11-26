@@ -586,8 +586,8 @@ class ME_PPAdaptive_Request {
     /**
      * Process the order
      *
-     * @param Int $order_id The order id
-     * @param String $payKey The paypal adaptive pay key
+     * @param int $order_id The order id
+     * @param string $payKey The paypal adaptive pay key
      * @since 1.0
      */
     public function process_order($order_id, $payKey) {

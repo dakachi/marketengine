@@ -1,4 +1,21 @@
 <?php
+/**
+ * The Template for displaying order details on checkout page.
+ *
+ * This template can be overridden by copying it to yourtheme/marketengine/checkout/order-details.php.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ *
+ * @since 		1.0.0
+ *
+ * @version     1.0.0
+ *
+ */
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
 // get cart item tu session
 $total = 0;
 ?>

@@ -1,4 +1,11 @@
 <?php
+/**
+ * This is data of a sample listing.
+ *
+ * @author      EngineThemes
+ * @package     MarketEngine/SampleData
+ * @since       1.0.0
+ */
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;

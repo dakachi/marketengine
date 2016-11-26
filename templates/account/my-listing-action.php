@@ -1,4 +1,17 @@
 <?php
+/**
+ * 	The Template for displaying actions of seller.
+ * 	This template can be overridden by copying it to yourtheme/marketengine/account/my-listing-action.php.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ * @version     1.0.0
+ */
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 $edit_url = me_get_endpoint_url( 'listing_id', $listing_id ,me_get_page_permalink('edit_listing'));
 
 	switch ($listing_status->name) {

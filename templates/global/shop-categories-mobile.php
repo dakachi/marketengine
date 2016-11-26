@@ -7,8 +7,6 @@
  * @package     MarketEngine/Templates
  * @version       1.0
  */
-
-$listing_categories = me_get_categories('listing_category');
 ?>
 <?php if ( has_nav_menu( 'category-menu' ) ) : ?>
     <?php
