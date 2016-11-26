@@ -1,4 +1,14 @@
 <?php
+/**
+ * MarketEngine Schedule
+ *
+ * @author EngineThemes
+ * @since 1.0.0
+ *
+ * @version 1.0.0
+ *
+ */
+
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
@@ -6,16 +16,36 @@ if (!defined('ABSPATH')) {
 
 /**
  * Class ME_Schedule
+ *
+ * Handles schedule of system.
+ *
+ * @package MarketEngine/Includes
+ * @category Classes
+ * @since 1.0.0
+ *
  */
 class ME_Schedule {
-
+	/**
+	 * A number in seconds of when the cron job should run.
+	 * @since 1.0.0
+	 */
 	static protected $cron_time	;
+
+	/**
+	 * Name of schedule
+	 * @since 1.0.0
+	 */
 	static protected $cron_name	=	'marketengine_cron';
+
+	/**
+	 * Name of the hook that was scheduled to be fired.
+	 * @since 1.0.0
+	 */
 	protected $cron_hook	=	'marketengine_cron_hook';
 
 	// static $post_type			=	'ad';
 	/**
-	 * init a schedule and set post type will be expire 
+	 * init a schedule and set post type will be expire
 	 * @param string $post_type
 	 * @since 1.0
 	 * @author Dakachi
@@ -50,11 +80,11 @@ class ME_Schedule {
 			strtotime( date( 'Y-m-d 00:00:00', strtotime('now')) );
 			wp_schedule_event( time() , self::$cron_name, $this->cron_hook );
 		}
-	}	
+	}
 
 	/**
 	 * archive expired ad
-	*/
+	 */
 	public  function cron () {
 		do_action( 'marketengine_cron_execute' );
 	}

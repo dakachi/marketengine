@@ -222,10 +222,10 @@ function me_get_listing_categories($args = array('parent' => 0 , 'hide_empty' =>
     return $result;
 }
 
-function me_filter_order_count_result( $results ) {
+function me_filter_order_count_result( $order_count ) {
     $temp = array();
-    foreach( $results as $key => $result) {
-        $temp[$result->status] = $result->count;
+    foreach( $order_count as $key => $value) {
+        $temp[$value->status] = $value->count;
     }
 
     return $temp;
