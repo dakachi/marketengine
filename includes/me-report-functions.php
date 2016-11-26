@@ -1,9 +1,27 @@
 <?php
+/**
+ * MarketEngine Report Functions
+ *
+ * Functions for MarketEngine Report.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Includes
+ * @category 	Functions
+ *
+ * @since 		1.0.0
+ * @version     1.0.0
+ */
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Retrives list of order data.
+ *
+ * @param array $args
+ * @return array $result
+ */
 function me_order_report_data( $args ) {
 	global $wpdb;
 	$defaults = array(
@@ -83,6 +101,12 @@ function me_order_report_data( $args ) {
 	return $result;
 }
 
+/**
+ * Retrives list of transaction data.
+ *
+ * @param array $args
+ * @return array $result
+ */
 function me_transaction_report_data( $args ) {
 	global $wpdb;
 	$defaults = array(

@@ -11,8 +11,19 @@ Tags: wordpress-plugin, ecommerce-marketplace, multi-vendors, shopping, selling,
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
-// Exit if accessed directly.
 
+/**
+ * MarketEngine Core Class
+ *
+ * @author      EngineThemes
+ * @package     MarketEngine
+ * @category    Classes
+ *
+ * @since       1.0.0
+ * @version     1.0.0
+ */
+
+// Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -208,6 +219,9 @@ if (!class_exists('MarketEngine')):
             add_action('init', array($this, 'wpdb_table_fix'), 0);
         }
 
+        /**
+         * Initialize session, post type, taxonomies, navigation menu
+         */
         public function init() {
             $this->session = ME_Session::instance();
 
@@ -219,6 +233,9 @@ if (!class_exists('MarketEngine')):
             register_nav_menu( 'category-menu', __( 'Category Menu', 'enginethemes' ) );
         }
 
+        /**
+         * Creates data tables for storing order and message data.
+         */
         public function wpdb_table_fix() {
             global $wpdb;
             $wpdb->marketengine_order_itemmeta = $wpdb->prefix . 'marketengine_order_itemmeta';
@@ -235,6 +252,9 @@ if (!class_exists('MarketEngine')):
             $wpdb->tables[]                    = 'marketengine_message_item';
         }
 
+        /**
+         * Add javascript for front-end
+         */
         public function add_scripts() {
             $develop_src = true;
 
@@ -305,6 +325,9 @@ if (!class_exists('MarketEngine')):
             );
         }
 
+        /**
+         * Add javascript for admin area
+         */
         public function add_admin_scripts() {
             $develop_src = true;
 
@@ -318,7 +341,11 @@ if (!class_exists('MarketEngine')):
             wp_enqueue_script('jquery-ui', $this->plugin_url() . "/assets/js/jquery-ui$suffix.js", array('jquery'), $this->version, true);
         }
 
+        /**
+         * Add ajax for front-end
+         */
         public function add_ajax(){
+            // TODO: move to admin package
             add_action('wp_ajax_me-option-sync', array('ME_Options_Handle', 'option_sync'));
             add_action('wp_ajax_me-edit-page', array('ME_Options_Handle', 'me_edit_page'));
         }
@@ -347,6 +374,10 @@ if (!class_exists('MarketEngine')):
             return apply_filters('marketengine_template_path', 'marketengine/');
         }
 
+        /**
+         *  Gets the current user information.
+         *  @return object
+         */
         public function get_current_user() {
             global $current_user;
             if (null === $this->current_user && $current_user) {
