@@ -1,4 +1,17 @@
 <?php
+/**
+ * The template for displaying listing type on post listing page.
+ *
+ * This template can be override by copying it to yourtheme/marketengine/post-listing/listing-type.php.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ *
+ * @since 		1.0.0
+ *
+ * @version 	1.0.0
+ *
+ */
 $listing_types = me_get_listing_types();
 $selected_listing_type = empty($_POST['listing_type']) ? $selected_listing_type : $_POST['listing_type'];
 

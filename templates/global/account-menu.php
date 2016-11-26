@@ -1,11 +1,19 @@
 <?php
 /**
- * 	This template can be overridden by copying it to yourtheme/marketengine/account/account-menu.php.
+ * This template can be overridden by copying it to yourtheme/marketengine/account/account-menu.php.
  *
  * @author 		EngineThemes
  * @package 	MarketEngine/Templates
+ *
+ * @since 		1.0.0
+ *
  * @version     1.0.0
  */
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 ?>
 <?php if( is_user_logged_in() ) : ?>
 <nav class="me-menu-account">
@@ -26,7 +34,7 @@
 			<?php if( get_option('users_can_register') ) : ?>
 			<li><a href="<?php echo me_get_auth_url( 'register' ); ?>"><?php echo __('Register', 'enginethemes'); ?></a></li>
 			<?php endif; ?>
-			
+
 		</ul>
 	</nav>
 <?php endif; ?>

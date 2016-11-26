@@ -1,12 +1,22 @@
 <?php
 /**
- * 	The Template for displaying listing list.
- * 	This template can be overridden by copying it to yourtheme/marketengine/listing-list.php.
+ * The Template for displaying listing list.
+ *
+ * This template can be overridden by copying it to yourtheme/marketengine/listing-list.php.
  *
  * @author 		EngineThemes
  * @package 	MarketEngine/Templates
+ *
+ * @since 		1.0.0
+ *
  * @version     1.0.0
+ *
  */
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 ?>
 <div class="marketengine-listing-post">
 	<?php if(have_posts()) : ?>
