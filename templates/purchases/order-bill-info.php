@@ -1,4 +1,21 @@
 <?php
+/**
+ * The Template for displaying billing information.
+ *
+ * This template can be overridden by copying it to yourtheme/marketengine/purchases/order-bill-info.php.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ *
+ * @since 		1.0.0
+ *
+ * @version     1.0.0
+ *
+ */
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
 $shipping_address = $transaction->get_address( 'shipping' );
 $billing_address = $transaction->get_address( 'billing' );
 

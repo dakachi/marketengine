@@ -1,6 +1,7 @@
 <?php
 /**
  * The template for displaying listing type on post listing page.
+ *
  * This template can be override by copying it to yourtheme/marketengine/post-listing/listing-type.php.
  *
  * @author 		EngineThemes
