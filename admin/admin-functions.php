@@ -20,8 +20,9 @@
 function me_admin_notice_filter( $notices ) {
 
 	$payment_setting = me_check_payment_setting();
+	$menu_page = $_GET['page'];
 
-	if( !$payment_setting ) {
+	if( !$payment_setting && 'me-settings' === $menu_page) {
 		$notices['payment_gateway_error'] = __("Your site currently can't process payment yet, since your PayPal API hasn't been set up correctly. Please visit this page to fix the issue.");
 	}
 
