@@ -255,12 +255,17 @@
 		text-align: center;
 	}
 	.me-price {
-		font-size: 16px;
+		font-size: $font_size_large;
 		color: $color_label_2;
-		b {
-			font-size: 22px;
+		> span {
+			font-size: 30px;
+			font-weight: 700;
 			color: $color_text;
 		}
+		/* b {
+			font-size: 22px;
+			color: $color_text;
+		} */
 	}
 	.me-instock {
 		display: block;
@@ -593,7 +598,7 @@
 //
 .marketengine-comments {
 	.me-title-comment {
-		font-size:20px;
+		font-size:16px;
 		font-weight: 800;
 		color: #555;
 		margin: 0;
@@ -807,7 +812,7 @@ ul.me-comment-list {
 	} */
 }
 
-@media (max-width: $screen_sm_max) {
+@media (max-width: $screen_sm_max) {  // 991px
 	.marketengine-sidebar-detail {
 		margin-top: 20px;
 		.me-categories {
@@ -818,8 +823,22 @@ ul.me-comment-list {
 		}
 	}
 	.marketengine-content-detail {
+		.me-images {
+			padding-right: 0;
+			.me-image-thumbs {
+				display: none;
+			}
+		}
+		.me-contact {
+			.me-buy-now-btn {
+				width: 70%;
+			}
+		}
 		.me-box-shadow {
 			margin-top: 20px;
 		}
+	}
+	.me-count-author {
+		margin-top: 15px;
 	}
 }

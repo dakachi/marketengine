@@ -19,18 +19,15 @@ $member_sinced = date_i18n( get_option( 'date_format' ), strtotime(get_the_autho
 	</span>
 	<ul class="me-author-info">
 		<li>
-			<span class="pull-left"><?php echo __('From:', 'enginethemes'); ?></span>
-			<b class="pull-right"><?php echo $location ?></b>
+			<span><?php echo __('From:', 'enginethemes'); ?><span><?php echo $location ?></span></span>
 		</li>
 		<?php /*
 		<li>
-			<span class="pull-left"><?php echo __('Language:', 'enginethemes'); ?></span>
-			<b class="pull-right">Vietnam</b>
+			<span class="pull-left"><?php echo __('Language:', 'enginethemes'); ?><span>Vietnam</span></span>
 		</li>
 		*/ ?>
 		<li>
-			<span class="pull-left"><?php echo __('Member Since:', 'enginethemes'); ?></span>
-			<b class="pull-right"><?php echo $member_sinced; ?></b>
+			<span class="pull-left"><?php echo __('Member Since:', 'enginethemes'); ?><span><?php echo $member_sinced; ?></span></span>
 		</li>
 	</ul>
 	<a href="<?php echo get_author_posts_url($author_id); ?>" class="me-view-profile"><?php echo __('View profile', 'enginethemes'); ?></a>

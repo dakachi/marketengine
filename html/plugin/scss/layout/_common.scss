@@ -332,7 +332,8 @@
 
 @media (max-width: $screen_xs_max) { // 767
 	.marketengine-page-title {
-		margin-top: 15px;
+		margin-top: 20px;
+		padding-bottom: 20px;
 		text-align: center;
 		border-bottom: none;
 		&.me-have-breadcrumb {

@@ -42,7 +42,7 @@ $cart_items = me_get_cart_items();
 		// listing details
 		me_get_template('checkout/order-details', array('cart_items' => $cart_items));
 		// payment gateways
-		me_get_template('checkout/payment-gateways');
+		// me_get_template('checkout/payment-gateways');
 		?>
 	</form>
 </div>

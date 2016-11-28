@@ -1,6 +1,6 @@
 <?php
 /**
- * ME Admin Functions
+ * ME Admin Panel Functions
  *
  * @author   EngineThemes
  * @category Function
@@ -202,6 +202,7 @@ add_action('admin_enqueue_scripts', 'marketengine_load_admin_option_script_css')
  * @since 1.0
  */
 function marketengine_option_header() {
+    marketengine_option_notices();
     ?>
 
 <div class="marketengine-admin">
@@ -243,3 +244,15 @@ function me_admin_footer_text( $text) {
     return $text;
 }
 add_filter( 'admin_footer_text', 'me_admin_footer_text' );
+
+/**
+ * Render MarketEngine Admin notices
+ * @category    Admin
+ * @since       1.0.1
+ */
+function marketengine_option_notices() {
+?>
+    <?php me_get_template( 'admin/notices' ); ?>
+<?php
+}
+
