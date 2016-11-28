@@ -43,6 +43,12 @@ $cart_items = me_get_cart_items();
 		me_get_template('checkout/order-details', array('cart_items' => $cart_items));
 		// payment gateways
 		// me_get_template('checkout/payment-gateways');
+		
 		?>
+		<div class="me-author-mobile">
+			<?php 
+				me_get_template('user-info', array('author_id' => $listing->post_author));
+			?>
+		</div>
 	</form>
 </div>
