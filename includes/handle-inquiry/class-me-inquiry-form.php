@@ -193,15 +193,15 @@ class ME_Inquiry_Form
                 'post_parent' => $listing->ID,
                 'post_type'   => 'inquiry',
                 'showposts'   => 12,
-                'inquiry_id' => $_GET['inquiry_id'],
-                's' => $_GET['s']
+                'inquiry_id'  => $_GET['inquiry_id'],
+                's'           => $_GET['s'],
             );
-            $content = ME_Inquiry_Handle::get_contact_list($args);
+            $contact_list = ME_Inquiry_Handle::get_contact_list($args);
 
-            wp_send_json(array('success' => true, 'data' => $content));
+            wp_send_json(array('success' => true, 'data' => $contact_list['content']));
         }
     }
-    
+
     /**
      * Ajax search buyer contact list
      */
@@ -222,12 +222,18 @@ class ME_Inquiry_Form
                 'post_parent' => $listing->ID,
                 'post_type'   => 'inquiry',
                 'showposts'   => 12,
-                'inquiry_id' => $_GET['inquiry_id'],
-                's' => $_GET['s']
+                'inquiry_id'  => $_GET['inquiry_id'],
+                's'           => $_GET['s'],
             );
-            $content = ME_Inquiry_Handle::get_contact_list($args);
+            $contact_list = ME_Inquiry_Handle::get_contact_list($args);
 
-            wp_send_json(array('success' => true, 'data' => $content));
+            wp_send_json(
+                array(
+                    'success'   => true,
+                    'data'      => $contact_list['content'],
+                    'count_msg' => sprintf(__("%d people contact listing", "enginethemes"), $contact_list['found_posts']),
+                )
+            );
         }
     }
 

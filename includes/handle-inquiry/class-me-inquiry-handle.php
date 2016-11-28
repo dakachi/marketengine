@@ -162,7 +162,7 @@ class ME_Inquiry_Handle
             $search_string = stripslashes($args['s']);
             $search_string = mb_strtolower($search_string);
             $users         = new WP_User_Query(array(
-                'meta_query'     => array(
+                'meta_query' => array(
                     'relation' => 'OR',
                     array(
                         'key'     => 'first_name',
@@ -175,17 +175,20 @@ class ME_Inquiry_Handle
                         'compare' => 'LIKE',
                     ),
                 ),
-                'fields'         => 'ID',
+                'fields'     => 'ID',
             ));
             // TODO: can not search user with utf8
-            $users_found        = $users->get_results();
-            
+            $users_found = $users->get_results();
+
             // no contact found
-            if(empty($users_found)) {
+            if (empty($users_found)) {
                 ob_start();
                 me_get_template('inquiry/contact-item-notfound');
                 $content = ob_get_clean();
-                return $content;
+                return array(
+                    'found_posts' => 0,
+                    'content'     => $content,
+                );
             }
             $args['author__in'] = $users_found;
             unset($args['s']);
@@ -202,6 +205,9 @@ class ME_Inquiry_Handle
             me_get_template('inquiry/contact-item-notfound');
         }
         $content = ob_get_clean();
-        return $content;
+        return array(
+            'found_posts' => $messages->found_posts,
+            'content'     => $content,
+        );
     }
 }
