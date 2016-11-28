@@ -116,8 +116,10 @@ class ME_CSV_Export {
 				if( $key == 'status') {
 					$status_arr = me_get_order_status_list();
 					$csv_output .= $status_arr[$item->$key] .",";
-				} else {
+				} elseif ( $key == 'listing_title' ) {
 					$csv_output .= "\"" . $item->$key."\",";
+				} else {
+					$csv_output .= $item->$key.",";
 				}
 			}
 			$csv_output .= "\n";

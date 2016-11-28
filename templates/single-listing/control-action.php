@@ -1,3 +1,21 @@
+<?php
+/**
+ * The template for displaying actions seller can do to manage listing.
+ *
+ * This template can be override by copying it to yourtheme/marketengine/single-listing/control-action.php
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ * @since       1.0.0
+ * @version     1.0.0
+ */
+
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+?>
+
 <div class="me-action">
 	<?php if( 'purchasion' === $listing_type ) : ?>
 	<?php
