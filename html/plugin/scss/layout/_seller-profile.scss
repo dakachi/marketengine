@@ -31,16 +31,19 @@
 		> li {
 			overflow: hidden;
 			padding: 5px 0;
+			text-align: left;
 			&:first-of-type {
 				margin-top: 20px;
 			}
-			span {
-				color: $color_label_2;
-			}
-			b {
+			> span {
 				font-size: $font_size_base;
-				color: $color_text;
-				text-align: right;
+				color: $color_label_2;
+				span {
+					font-weight: 700;
+					color: $color_text;
+					text-align: right;
+					margin-left: 15px;
+				}
 			}
 		}
 	}
