@@ -20,22 +20,26 @@ if (!defined('ABSPATH')) {
  * @version     1.0.0
  * @since       1.0.0
  */
-class ME_Inquiry_Form {
+class ME_Inquiry_Form
+{
     /**
      * Initialize all hook of inquiry form
      */
-    public static function init_hook() {
+    public static function init_hook()
+    {
         // parse_request
         add_action('wp_loaded', array(__CLASS__, 'process_start_inquiry'));
 
         add_action('wp_ajax_get_messages', array(__CLASS__, 'fetch_messages'));
-        add_action('wp_ajax_get_contact_list', array(__CLASS__, 'fetch_contact_list'));
         add_action('wp_ajax_me_send_message', array(__CLASS__, 'send_message'));
+
+        add_action('wp_ajax_get_contact_list', array(__CLASS__, 'fetch_contact_list'));
+        add_action('wp_ajax_me-get-buyer-list', array(__CLASS__, 'search_buyer'));
 
         add_filter('the_marketengine_message', array(__CLASS__, 'filter_message'));
 
         add_action('save_message_message', array(__CLASS__, 'new_message_in_inquiry'), 10, 2);
-        add_action( 'marketengine_after_inquiry_form', array(__CLASS__, 'clear_unread_message_count') );
+        add_action('marketengine_after_inquiry_form', array(__CLASS__, 'clear_unread_message_count'));
 
     }
 
@@ -45,7 +49,8 @@ class ME_Inquiry_Form {
      * @param int $message_ID
      * @param object $message
      */
-    public static function new_message_in_inquiry($message_ID, $message) {
+    public static function new_message_in_inquiry($message_ID, $message)
+    {
         if (!$message_ID) {
             return;
         }
@@ -58,19 +63,18 @@ class ME_Inquiry_Form {
             return;
         }
 
-
         $message_count = me_get_message_field('message_count', $inquiry_id);
         me_update_message(array('post_type' => 'inquiry', 'message_count' => ($message_count + 1), 'ID' => $inquiry_id), true);
 
         // update message meta
         if ($current_user_id == $inquiry->receiver) {
             $new_message = me_get_message_meta($inquiry_id, '_me_sender_new_message', true);
-            me_update_message_meta($inquiry_id, '_me_sender_new_message', absint($new_message)+1);
+            me_update_message_meta($inquiry_id, '_me_sender_new_message', absint($new_message) + 1);
         }
 
         if ($current_user_id == $inquiry->sender) {
             $new_message = me_get_message_meta($inquiry_id, '_me_recevier_new_message', true);
-            me_update_message_meta($inquiry_id, '_me_recevier_new_message', absint($new_message)+1);
+            me_update_message_meta($inquiry_id, '_me_recevier_new_message', absint($new_message) + 1);
         }
 
     }
@@ -80,9 +84,10 @@ class ME_Inquiry_Form {
      *
      * @param object $inquiry
      */
-    public static function clear_unread_message_count($inquiry) {
+    public static function clear_unread_message_count($inquiry)
+    {
         $current_user_id = get_current_user_id();
-        $inquiry_id = $inquiry->ID;
+        $inquiry_id      = $inquiry->ID;
         // update message meta
         if ($current_user_id == $inquiry->receiver) {
             me_update_message_meta($inquiry_id, '_me_recevier_new_message', 0);
@@ -96,7 +101,8 @@ class ME_Inquiry_Form {
     /**
      * Buyer start inquiry listing in listiting details
      */
-    public static function process_start_inquiry() {
+    public static function process_start_inquiry()
+    {
         if (isset($_POST['send_inquiry']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-send-inquiry')) {
             // check user login
             if (!is_user_logged_in()) {
@@ -127,7 +133,8 @@ class ME_Inquiry_Form {
     /**
      * User send message in a inquiry conversation
      */
-    public static function send_message() {
+    public static function send_message()
+    {
         // send message in an inquiry
         if (isset($_POST['content']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-inquiry-message')) {
             $result = ME_Inquiry_Handle::message($_POST);
@@ -146,7 +153,8 @@ class ME_Inquiry_Form {
     /**
      * User fetch the older messages
      */
-    public static function fetch_messages() {
+    public static function fetch_messages()
+    {
         if (!empty($_GET['parent']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'me-inquiry-message')) {
             $parent  = me_get_message($_GET['parent']);
             $user_id = get_current_user_id();
@@ -168,7 +176,8 @@ class ME_Inquiry_Form {
     /**
      * Seller load the inquiry contact list
      */
-    public static function fetch_contact_list() {
+    public static function fetch_contact_list()
+    {
         if (!empty($_GET['listing'])) {
             $user_id = get_current_user_id();
             $listing = get_post($_GET['listing']);
@@ -178,12 +187,43 @@ class ME_Inquiry_Form {
             if ($listing->post_author != $user_id) {
                 wp_send_json(array('success' => false));
             }
+            // todo: add thêm search user
             $args = array(
                 'paged'       => $paged,
                 'post_parent' => $listing->ID,
                 'post_type'   => 'inquiry',
                 'showposts'   => 12,
             );
+
+            if (!empty($_GET['s'])) {
+                $search_string = $_GET['s'];
+                $users         = new WP_User_Query(array(
+                    'search'         => '*' . esc_attr($search_string) . '*',
+                    'search_columns' => array(
+                        'user_login',
+                        'user_nicename',
+                        'user_email',
+                        'user_url',
+                    ),
+                    'meta_query'     => array(
+                        'relation' => 'OR',
+                        array(
+                            'key'     => 'first_name',
+                            'value'   => $search_string,
+                            'compare' => 'LIKE',
+                        ),
+                        array(
+                            'key'     => 'last_name',
+                            'value'   => $search_string,
+                            'compare' => 'LIKE',
+                        ),
+                    ),
+                    'fields'         => 'ID',
+                ));
+                $users_found        = $users->get_results();
+                $args['author__in'] = $users_found;
+            }
+
             $messages = new ME_Message_Query($args);
 
             ob_start();
@@ -197,12 +237,77 @@ class ME_Inquiry_Form {
     }
 
     /**
+     * Ajax search buyer contact list
+     */
+    public static function search_buyer()
+    {
+        if (!empty($_GET['s']) && !empty($_GET['listing_id'])) {
+            $user_id = get_current_user_id();
+            $listing = get_post($_GET['listing_id']);
+
+            $paged = 1;
+
+            if ($listing->post_author != $user_id) {
+                wp_send_json(array('success' => false));
+            }
+
+            $search_string = $_GET['s'];
+            $users         = new WP_User_Query(array(
+                'search'         => '*' . esc_attr($search_string) . '*',
+                'search_columns' => array(
+                    'user_login',
+                    'user_nicename',
+                    'user_email',
+                    'user_url',
+                ),
+                'meta_query'     => array(
+                    'relation' => 'OR',
+                    array(
+                        'key'     => 'first_name',
+                        'value'   => $search_string,
+                        'compare' => 'LIKE',
+                    ),
+                    array(
+                        'key'     => 'last_name',
+                        'value'   => $search_string,
+                        'compare' => 'LIKE',
+                    ),
+                ),
+                'fields'         => 'ID',
+            ));
+            $users_found = $users->get_results();
+
+            ob_start();
+            if (!empty($users_found)) {
+                $args = array(
+                    'paged'       => $paged,
+                    'post_parent' => $listing->ID,
+                    'post_type'   => 'inquiry',
+                    'showposts'   => 12,
+                    'author__in'  => $users_found,
+                );
+                $messages = new ME_Message_Query($args);
+
+                while ($messages->have_posts()): $messages->the_post();
+                    me_get_template('inquiry/contact-item', array('inquiry' => $_GET['inquiry_id']));
+                endwhile;
+
+            } else {
+                me_get_template('inquiry/contact-item-notfound');
+            }
+            $content = ob_get_clean();
+            wp_send_json(array('success' => true, 'data' => $content));
+        }
+    }
+
+    /**
      * Filters the message content
      *
      * @param string $content
      * @return string $content
      */
-    public static function filter_message($content) {
+    public static function filter_message($content)
+    {
         $content = nl2br(esc_html($content));
 
         $url     = '~(?:(https?)://([^\s<]+)|(www\.[^\s<]+?\.[^\s<]+))(?<![\.,:])~i';

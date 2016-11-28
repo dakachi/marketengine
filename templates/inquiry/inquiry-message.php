@@ -68,7 +68,7 @@
 										</div>
 										<?php wp_nonce_field( 'me-inquiry-message', '_msg_wpnonce' ); ?>
 										<?php wp_nonce_field( 'marketengine', '_msg_file_nonce' ); ?>
-										<input type="hidden" name="inquiry_listing" value="<?php $listing->get_id(); ?>" />
+										<input type="hidden" name="inquiry_listing" value="<?php echo $listing->get_id(); ?>" />
 										<input type="hidden" name="inquiry_id" value="<?php echo $inquiry->ID; ?>" />
 									</form>
 
