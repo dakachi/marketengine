@@ -263,7 +263,7 @@ class ME_Inquiry_Form
                 endwhile;
                 
             }else {
-                me_get_template('inquiry/no-contact-item');
+                me_get_template('inquiry/contact-item-notfound');
             }
             $content = ob_get_clean();
             wp_send_json(array('success' => true, 'data' => $content));
