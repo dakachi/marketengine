@@ -221,7 +221,7 @@
      */
     var contact_paged = 2;
     var loading = false;
-    $('#contact-list').scroll(function() {
+    $('#contact-list').click(function() {
         var pos = $('#contact-list').scrollTop();
         var scroll_height = $(this)[0].scrollHeight;
         var inner_height = $(this).innerHeight();
@@ -234,6 +234,7 @@
                     listing: $('#contact-list').attr('data-id'),
                     inquiry_id: $('input[name="inquiry_id"]').val(),
                     paged: contact_paged,
+                    s : $('#s_buyer_name').val(),
                     _wpnonce: $('#_wpnonce').val()
                 },
                 beforeSend: function() {

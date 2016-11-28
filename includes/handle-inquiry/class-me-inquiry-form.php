@@ -187,12 +187,43 @@ class ME_Inquiry_Form
             if ($listing->post_author != $user_id) {
                 wp_send_json(array('success' => false));
             }
+            // todo: add thêm search user
             $args = array(
                 'paged'       => $paged,
                 'post_parent' => $listing->ID,
                 'post_type'   => 'inquiry',
                 'showposts'   => 12,
             );
+
+            if (!empty($_GET['s'])) {
+                $search_string = $_GET['s'];
+                $users         = new WP_User_Query(array(
+                    'search'         => '*' . esc_attr($search_string) . '*',
+                    'search_columns' => array(
+                        'user_login',
+                        'user_nicename',
+                        'user_email',
+                        'user_url',
+                    ),
+                    'meta_query'     => array(
+                        'relation' => 'OR',
+                        array(
+                            'key'     => 'first_name',
+                            'value'   => $search_string,
+                            'compare' => 'LIKE',
+                        ),
+                        array(
+                            'key'     => 'last_name',
+                            'value'   => $search_string,
+                            'compare' => 'LIKE',
+                        ),
+                    ),
+                    'fields'         => 'ID',
+                ));
+                $users_found        = $users->get_results();
+                $args['author__in'] = $users_found;
+            }
+
             $messages = new ME_Message_Query($args);
 
             ob_start();
@@ -257,12 +288,11 @@ class ME_Inquiry_Form
                 );
                 $messages = new ME_Message_Query($args);
 
-                
                 while ($messages->have_posts()): $messages->the_post();
                     me_get_template('inquiry/contact-item', array('inquiry' => $_GET['inquiry_id']));
                 endwhile;
-                
-            }else {
+
+            } else {
                 me_get_template('inquiry/contact-item-notfound');
             }
             $content = ob_get_clean();
