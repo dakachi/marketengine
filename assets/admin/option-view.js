@@ -213,9 +213,9 @@ _.templateSettings = {
     });
     $(document).ready(function() {
         var option_model = new Models.Options();
-        if ($('#em-setting-tab').length > 0) {
+        if ($('.marketengine-tabs').length > 0) {
             var option_view = new Views.Options({
-                el: '#em-setting-tab',
+                el: '.marketengine-tabs',
                 model: option_model,
             });
         }
