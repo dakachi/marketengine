@@ -39,6 +39,13 @@ abstract class ME_Input
     protected $_description;
 
     /**
+     * Input Feild Note
+     *
+     * @var string
+     */
+    protected $_note;
+
+    /**
      * Input Container
      *
      * @var string

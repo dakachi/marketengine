@@ -8,23 +8,26 @@ if (!defined('ABSPATH')) {
 }
 /**
  * Class ME_MultiSelect
- * 
+ *
  * Render Multiselect option field
- * 
+ *
  * @category Class
  * @package Admin/Options
  * @since 1.0
- * 
+ *
  * @version 1.0
  */
-class ME_MultiSelect extends ME_Input{
-    function __construct( $args, $options ) {
-        $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));
+class ME_MultiSelect extends ME_Input
+{
+    public function __construct($args, $options)
+    {
+        $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => '', 'note' => ''));
 
         $this->_type        = 'multiselect';
         $this->_name        = $args['name'];
         $this->_label       = $args['label'];
         $this->_description = $args['description'];
+        $this->_note        = $args['note'];
         $this->_slug        = $args['slug'];
         $this->_data        = isset($args['data']) ? $args['data'] : array();
         $this->_container   = $options;
@@ -32,20 +35,26 @@ class ME_MultiSelect extends ME_Input{
         $this->_options = $options;
     }
 
-    function render() {
-        $id = $this->_slug ? 'id="'. $this->_slug . '"' : '';
+    public function render()
+    {
+        $id           = $this->_slug ? 'id="' . $this->_slug . '"' : '';
         $option_value = $this->get_value();
-        echo '<div class="me-group-field" '.$id.'>';
+        echo '<div class="me-group-field" ' . $id . '>';
         $this->label();
         $this->description();
-        echo '<span class="me-select-control">';
-        echo '<select multiple class="select-field" name="'. $this->_name .'">';
+        echo '<div class="me-select-control">';
+        echo '<select multiple class="select-field" name="' . $this->_name . '">';
         foreach ($this->_data as $key => $value) {
             $selected = in_array($key, $option_value) ? 'selected="selected"' : '';
-            echo '<option '. $selected .' value="'. $key .'">' . $value . '</option>';
+            echo '<option ' . $selected . ' value="' . $key . '">' . $value . '</option>';
         }
         echo '</select>';
-        echo '</span>';
+        if ($this->_note) {
+            echo '<p class="me-field-note">';
+            echo $this->_note;
+            echo '</p>';
+        }
+        echo '</div>';
         echo '</div>';
     }
 
