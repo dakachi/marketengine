@@ -51,9 +51,11 @@ $total = 0;
 			</div>
 			<div class="me-table-col me-cart-price">
 				<?php echo me_price_html( $listing_item['price'] ); ?>
+				<span class="me-cart-price-mobile"><?php _e("Price", "enginethemes"); ?></span>
 			</div>
 			<div class="me-table-col me-cart-units">
 				<?php echo $unit ?>
+				<span class="me-cart-units-mobile"><?php _e("Units", "enginethemes"); ?></span>
 			</div>
 			<div class="me-table-col me-cart-units-total">
 				<?php echo me_price_html($listing_item['price'] * $unit); ?>
