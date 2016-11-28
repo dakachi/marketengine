@@ -159,15 +159,9 @@ class ME_Inquiry_Handle
     public static function get_contact_list($args)
     {
         if (!empty($args['s'])) {
-            $search_string = $args['s'];
+            $search_string = stripslashes($args['s']);
+            $search_string = mb_strtolower($search_string);
             $users         = new WP_User_Query(array(
-                'search'         => '*' . esc_attr($search_string) . '*',
-                'search_columns' => array(
-                    'user_login',
-                    'user_nicename',
-                    'user_email',
-                    'user_url',
-                ),
                 'meta_query'     => array(
                     'relation' => 'OR',
                     array(
