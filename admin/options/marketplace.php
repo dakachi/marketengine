@@ -170,6 +170,7 @@ return apply_filters('marketengine_marketplace_options',
                             'slug'        => 'contact-available',
                             'type'        => 'multiselect',
                             'name'        => 'contact-available',
+                            'note' => __("Please select categories for the listing type. Otherwise, this field won't display in the post listing form", "enginethemes"),
                             'data' => me_get_listing_categories()
                         ),
                     ),
