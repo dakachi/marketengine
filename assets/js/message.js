@@ -221,7 +221,7 @@
      */
     var contact_paged = 2;
     var loading = false;
-    $('#contact-list').click(function() {
+    $('#contact-list').scroll(function() {
         var pos = $('#contact-list').scrollTop();
         var scroll_height = $(this)[0].scrollHeight;
         var inner_height = $(this).innerHeight();
