@@ -234,7 +234,7 @@
                     listing: $('#contact-list').attr('data-id'),
                     inquiry_id: $('input[name="inquiry_id"]').val(),
                     paged: contact_paged,
-                    s : $('#s_buyer_name').val(),
+                    s: $('#s_buyer_name').val(),
                     _wpnonce: $('#_wpnonce').val()
                 },
                 beforeSend: function() {
@@ -250,7 +250,6 @@
             });
         }
     });
-
     /**
      * Returns a function, that, as long as it continues to be invoked, will not
      * be triggered. The function will be called after it stops being called for
@@ -272,26 +271,29 @@
             if (callNow) func.apply(context, args);
         };
     };
-
     var me_ajax_search_buyer = me_debounce(function(event) {
-            var $target = $(event.currentTarget),
-                name = $target.val(),
-                listing_id = $('input[name="listing-contact-list"]').val();
-            $.get({
-                url : me_globals.ajaxurl,
-                data : {
-                    action : 'me-get-buyer-list',
-                    s : name, 
-                    listing_id : listing_id
-                },
-                beforeSend : function() {},
-                success : function(res, xhr) {
-                    if (res.data) {
-                        $('#contact-list').html(res.data);
-                    }
+        var $target = $(event.currentTarget),
+            name = $target.val(),
+            inquiry_id = $('input[name="inquiry_id"]').val(),
+            listing_id = $('input[name="listing-contact-list"]').val();
+        $.get({
+            url: me_globals.ajaxurl,
+            data: {
+                action: 'me-get-buyer-list',
+                s: name,
+                listing_id: listing_id,
+                inquiry_id : inquiry_id
+            },
+            beforeSend: function() {},
+            success: function(res, xhr) {
+                if (res.data) {
+                    contact_paged = 1;
+                    $('#contact-list').html(res.data);
+                    $('.me-contact-user-count').html(res.count_msg);
                 }
-            });
-        }, 500);
+            }
+        });
+    }, 500);
     //  search buyer name
     $('#s_buyer_name').on('keypress', me_ajax_search_buyer);
 })(jQuery);

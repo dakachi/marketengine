@@ -14,7 +14,8 @@ if (!defined('ABSPATH')) {
  * @author      EngineThemesTeam
  * @category    Class
  */
-class ME_Inquiry_Handle {
+class ME_Inquiry_Handle
+{
     /**
      * Handle buyer inquire a listing
      * @param array $data
@@ -24,7 +25,8 @@ class ME_Inquiry_Handle {
      *
      * @since 1.0
      */
-    public static function inquiry($data) {
+    public static function inquiry($data)
+    {
         $current_user_id = get_current_user_id();
 
         if (empty($data['send_inquiry'])) {
@@ -62,14 +64,14 @@ class ME_Inquiry_Handle {
                     'post_type'    => 'inquiry',
                     'receiver'     => get_post_field('post_author', $listing_id),
                     'post_parent'  => $listing_id,
-                    'sender' => $current_user_id
+                    'sender'       => $current_user_id,
                 ), true
             );
             if (is_wp_error($inquiry_id)) {
                 return $inquiry_id;
             }
         }
-        
+
         return $inquiry_id;
     }
 
@@ -82,7 +84,8 @@ class ME_Inquiry_Handle {
      *
      * @since 1.0
      */
-    public static function insert_message($message_data) {
+    public static function insert_message($message_data)
+    {
         $inquiry_id = $message_data['inquiry_id'];
         if ($inquiry_id) {
             // add message to inquiry
@@ -108,7 +111,7 @@ class ME_Inquiry_Handle {
             }
 
             $message_data = array(
-                'sender' => $current_user,
+                'sender'       => $current_user,
                 'post_content' => $message_data['content'],
                 'post_title'   => 'Message listing #' . $message_data['listing_id'],
                 'post_type'    => 'message',
@@ -116,8 +119,8 @@ class ME_Inquiry_Handle {
                 'post_parent'  => $message_data['inquiry_id'],
             );
 
-            return  me_insert_message($message_data, true);
-            
+            return me_insert_message($message_data, true);
+
         } else {
             return new WP_Error('invalid_inquiry', __("Invalid inquiry.", "enginethemes"));
         }
@@ -135,7 +138,8 @@ class ME_Inquiry_Handle {
      *
      * @since 1.0
      */
-    public static function message($data) {
+    public static function message($data)
+    {
         $listing_id = $data['inquiry_listing'];
         $inquiry_id = $data['inquiry_id'];
         // strip html tag
@@ -147,5 +151,63 @@ class ME_Inquiry_Handle {
             'inquiry_id' => $inquiry_id,
         );
         return self::insert_message($message_data);
+    }
+
+    /**
+     * Retrieve listing contact list
+     */
+    public static function get_contact_list($args)
+    {
+        if (!empty($args['s'])) {
+            $search_string = stripslashes($args['s']);
+            $search_string = mb_strtolower($search_string);
+            $users         = new WP_User_Query(array(
+                'meta_query' => array(
+                    'relation' => 'OR',
+                    array(
+                        'key'     => 'first_name',
+                        'value'   => $search_string,
+                        'compare' => 'LIKE',
+                    ),
+                    array(
+                        'key'     => 'last_name',
+                        'value'   => $search_string,
+                        'compare' => 'LIKE',
+                    ),
+                ),
+                'fields'     => 'ID',
+            ));
+            // TODO: can not search user with utf8
+            $users_found = $users->get_results();
+
+            // no contact found
+            if (empty($users_found)) {
+                ob_start();
+                me_get_template('inquiry/contact-item-notfound');
+                $content = ob_get_clean();
+                return array(
+                    'found_posts' => 0,
+                    'content'     => $content,
+                );
+            }
+            $args['author__in'] = $users_found;
+            unset($args['s']);
+        }
+
+        ob_start();
+        $messages = new ME_Message_Query($args);
+
+        if ($messages->have_posts()) {
+            while ($messages->have_posts()): $messages->the_post();
+                me_get_template('inquiry/contact-item', array('current_inquiry' => $args['inquiry_id']));
+            endwhile;
+        } else {
+            me_get_template('inquiry/contact-item-notfound');
+        }
+        $content = ob_get_clean();
+        return array(
+            'found_posts' => $messages->found_posts,
+            'content'     => $content,
+        );
     }
 }
