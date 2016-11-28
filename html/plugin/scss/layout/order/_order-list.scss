@@ -658,12 +658,10 @@
 	}
 	.me-orderlist-table {
 		display: block;
-		border-left: none;
-		border-right: none;
-		border-bottom: none;
+		border: none;
 		margin-top: 0;
 		.me-table-rhead {
-			display: block;
+			display: none;
 			font-size: 0;
 			.me-table-col {
 				padding-right: 0;
@@ -688,6 +686,11 @@
 		.me-table-row {
 			display: block;
 			font-size: 0;
+			&:first-of-type {
+				.me-table-col {
+					border: none;
+				}
+			}
 			.me-table-col {
 				padding-right: 0;
 				font-size: $font_size_base;

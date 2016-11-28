@@ -718,7 +718,7 @@ class ME_Message_Query {
 
 		// Fill again in case pre_get_posts unset some vars.
 		$q = $this->fill_query_vars($q);
-
+		
 		// Set a flag if a pre_get_posts hook changed the query vars.
 		$hash = md5( serialize( $this->query_vars ) );
 		if ( $hash != $this->query_vars_hash ) {
