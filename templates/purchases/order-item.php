@@ -1,4 +1,19 @@
 <?php
+/**
+ * The template for displaying order item.
+ *
+ * This template can be overridden by copying it to yourtheme/marketengine/account/confirm-email.php.
+ *
+ * @package     MarketEngine/Templates
+ * @since 		1.0.0
+ * @version     1.0.0
+ */
+
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 $total = 0;
 ?>
 <?php do_action( 'marketengine_before_checkout_form' ); ?>
@@ -28,7 +43,9 @@ $total = 0;
 						<span><?php echo esc_html($listing_item['title']); ?></span>
 					</a>
 				<?php else : ?>
+					<?php echo get_the_post_thumbnail($listing_obj->ID); ?>
 					<span><?php echo esc_html($listing_item['title']); ?></span>
+					<p><?php _e('This listing has been archived.', 'enginethemes'); ?></p>
 				<?php endif; ?>
 				</div>
 			</div>
