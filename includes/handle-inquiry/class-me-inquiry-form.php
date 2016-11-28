@@ -1,19 +1,29 @@
 <?php
+/**
+ * MarketEngine Inquiry Form
+ *
+ * @version     1.0.0
+ * @package     Includes/Handle-inquiry
+ * @category    Classes
+ * @author      EngineThemes
+ * @since       1.0.0
+ */
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
 }
 /**
- * ME_Inquiry_Form
+ * ME_Inquiry_Form Class
  *
  * Handle submit, ajax inquire listing
  *
- * @version     1.0
- * @package     Includes/Handle-inquiry
- * @author      EngineThemesTeam
- * @category    Class
+ * @version     1.0.0
+ * @since       1.0.0
  */
 class ME_Inquiry_Form {
+    /**
+     * Initialize all hook of inquiry form
+     */
     public static function init_hook() {
         // parse_request
         add_action('wp_loaded', array(__CLASS__, 'process_start_inquiry'));
@@ -31,6 +41,9 @@ class ME_Inquiry_Form {
 
     /**
      * Update inquiry message count
+     *
+     * @param int $message_ID
+     * @param object $message
      */
     public static function new_message_in_inquiry($message_ID, $message) {
         if (!$message_ID) {
@@ -45,7 +58,7 @@ class ME_Inquiry_Form {
             return;
         }
 
-        
+
         $message_count = me_get_message_field('message_count', $inquiry_id);
         me_update_message(array('post_type' => 'inquiry', 'message_count' => ($message_count + 1), 'ID' => $inquiry_id), true);
 
@@ -62,6 +75,11 @@ class ME_Inquiry_Form {
 
     }
 
+    /**
+     * Update number of unread message to 0.
+     *
+     * @param object $inquiry
+     */
     public static function clear_unread_message_count($inquiry) {
         $current_user_id = get_current_user_id();
         $inquiry_id = $inquiry->ID;
@@ -178,6 +196,12 @@ class ME_Inquiry_Form {
         }
     }
 
+    /**
+     * Filters the message content
+     *
+     * @param string $content
+     * @return string $content
+     */
     public static function filter_message($content) {
         $content = nl2br(esc_html($content));
 

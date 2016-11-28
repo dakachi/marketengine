@@ -1,5 +1,17 @@
 <?php
 /**
+ * MarketEngine Template Functions
+ *
+ * Functions for template system.
+ *
+ * @author      EngineThemes
+ * @package     MarketEngine/Includes
+ * @category    Functions
+ *
+ * @since 1.0
+ */
+
+/**
  * Retrieve the name of the highest priority template file that exists.
  *
  * Searches in the STYLESHEETPATH before TEMPLATEPATH and marketengine/templates
@@ -8,8 +20,6 @@
  * @since 1.0
  *
  * @param string|array $template_names Template file(s) to search for, in order.
- * @param bool         $load           If true the template file will be loaded if it is found.
- * @param bool         $require_once   Whether to require_once or require. Default true. Has no effect if $load is false.
  *
  * @return string The template filename if one is located.
  */
@@ -52,7 +62,7 @@ function me_locate_template($template_names)
  *
  * @since 1.0
  *
- * @param string $slug The slug name for the generic template.
+ * @param string $template_name The slug name for the generic template.
  * @param string $args The array of the varaible.
  */
 function me_get_template($template_name, $args = array())
@@ -616,10 +626,9 @@ function marketengine_get_search_form($echo = true)
                 </div>
             </form>
             <form method="get" class="mobile-search-form" action="' . $url . '">
-                <span class="me-search-btn-xs me-visible-xs"><i class="icon-me-search me-search-btn"></i></span>
-                <div class="me-search-xs me-visible-xs">
+                
+                <div class="me-search me-visible-xs">
                     <input type="search" name="s" value="' . esc_attr(get_query_var('keyword')) . '" placeholder="' . esc_attr(__("Type here and hit enter to search", "enginethemes")) . '">
-                    <i id="mobile-search-btn" class="icon-me-search me-search-btn"></i>
                 </div>
             </form>';
     } else {
@@ -630,10 +639,9 @@ function marketengine_get_search_form($echo = true)
                 </div>
             </form>
             <form method="get" class="mobile-search-form" action="' . $url . '">
-                <span class="me-search-btn-xs me-visible-xs"><i class="icon-me-search me-search-btn"></i></span>
-                <div class="me-search-xs me-visible-xs">
+                
+                <div class="me-search me-visible-xs">
                     <input type="text" name="s" value="' . esc_attr(get_query_var('keyword')) . '" placeholder="' . esc_attr(__("Type here and hit enter to search", "enginethemes")) . '">
-                    <i id="mobile-search-btn" class="icon-me-search me-search-btn"></i>
                 </div>
             </form>';
 
