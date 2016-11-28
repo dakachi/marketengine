@@ -71,7 +71,8 @@ $listing_content = apply_filters('the_content', $listing->post_content);
 			<?php wp_nonce_field('me-update_listing'); ?>
 
 			<input type="hidden" name="edit" value="<?php echo $listing->ID; ?>" />
-
+			<?php wp_nonce_field('marketengine', 'me-post-listing-gallery'); ?>
+			
 			<div class="marketengine-group-field me-text-center submit-post">
 				<input class="marketengine-post-submit-btn" type="submit" name="update_lisiting" value="<?php _e("SUBMIT", "enginethemes"); ?>">
 			</div>

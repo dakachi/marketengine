@@ -187,7 +187,7 @@ class ME_Inquiry_Form
             if ($listing->post_author != $user_id) {
                 wp_send_json(array('success' => false));
             }
-            // todo: add thêm search user
+            
             $args = array(
                 'paged'       => $paged,
                 'post_parent' => $listing->ID,
