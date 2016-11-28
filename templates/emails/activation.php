@@ -11,9 +11,7 @@ if (!defined('ABSPATH')) {
  * @since 1.0
  */
 ?>
-<p>
-	<?php printf(__("Hello %s,", "enginethemes"), $display_name); ?>
-</p>
+<p><?php printf(__("Hello %s,", "enginethemes"), $display_name); ?></p>
 <p>
 	<?php printf(__("You have successfully registered an account with %s.", "enginethemes"), $blogname ); ?>
 	&nbsp;<?php _e("Here is your account information:", "enginethemes"); ?>

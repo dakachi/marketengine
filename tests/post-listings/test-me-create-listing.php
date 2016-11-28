@@ -21,6 +21,13 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
             )
         );
 
+        $this->parent_cat_3 = $this->listing_category->create_object(
+            array(
+                'taxonomy' => 'listing_category',
+                'name' => 'Cat 3',
+            )
+        );
+
         $this->sub_cat = $this->listing_category->create_object(
             array(
                 'taxonomy' => 'listing_category',
@@ -280,6 +287,40 @@ class Tests_ME_Create_Listing extends WP_UnitTestCase {
         add_filter( 'marketengine_listing_type_categories', array($this, 'filter_listing_type_category' ) );
         $p1 = ME_Listing_Handle::insert($listing_data);
         $this->assertInternalType('integer', $p1);
+    }
+
+    // sub listing trong category chua chon listing type
+    public function test_create_listing_with_no_support_category() {
+        $listing_data = array(
+            'listing_title' => 'Listing A',
+            'listing_description' => 'Sample content',
+            'listing_type' => 'contact',
+            'meta_input' => array(
+                
+            ),
+            'parent_cat' => 4343,
+            'sub_cat' => $this->sub_cat,
+        );
+        add_filter( 'marketengine_listing_type_categories', array($this, 'filter_listing_type_category' ) );
+        $p1 = ME_Listing_Handle::insert($listing_data);
+        $this->assertEquals(new WP_Error('invalid_listing_category','The selected listing category is invalid.'), $p1);
+    }
+
+    // sub listing trong category chua chon listing type
+    public function test_create_listing_with_no_support_listing_type_category() {
+        $listing_data = array(
+            'listing_title' => 'Listing A',
+            'listing_description' => 'Sample content',
+            'listing_type' => 'contact',
+            'meta_input' => array(
+                
+            ),
+            'parent_cat' => $this->parent_cat_3,
+            'sub_cat' => $this->sub_cat,
+        );
+        add_filter( 'marketengine_listing_type_categories', array($this, 'filter_listing_type_category' ) );
+        $p1 = ME_Listing_Handle::insert($listing_data);
+        $this->assertEquals(new WP_Error('invalid_listing_category','The selected listing category is invalid.'), $p1);
     }
 
     public function filter_listing_type_category($category) {

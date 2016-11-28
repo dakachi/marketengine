@@ -15,7 +15,8 @@ if (!defined('ABSPATH')) {
  * @author      EngineThemesTeam
  * @category    Class
  */
-class ME_Authentication {
+class ME_Authentication
+{
     /**
      * Login
      *
@@ -30,9 +31,10 @@ class ME_Authentication {
      *
      * @return WP_User|WP_Error True: WP_User finish. WP_Error on error
      */
-    public static function login($user_data) {
+    public static function login($user_data)
+    {
         $user_login = $user_data['user_login'];
-        $user_pass = $user_data['user_password'];
+        $user_pass  = $user_data['user_password'];
 
         $error = new WP_Error();
         if (empty($user_login)) {
@@ -54,18 +56,18 @@ class ME_Authentication {
             $user_login = $user->user_login;
         }
 
-        $creds = array();
-        $creds['user_login'] = $user_login;
+        $creds                  = array();
+        $creds['user_login']    = $user_login;
         $creds['user_password'] = $user_pass;
-        $creds['remember'] = isset($user_data['rememberme']);
-        $secure = is_ssl() ? true : false;
+        $creds['remember']      = isset($user_data['rememberme']);
+        $secure                 = is_ssl() ? true : false;
         /**
          * filter the login credentials
          * @param Array $creds
          * @since 1.0
          */
         $creds = apply_filters('marketengine_login_credentials', $creds);
-        $user = wp_signon($creds, $secure);
+        $user  = wp_signon($creds, $secure);
 
         return $user;
     }
@@ -84,25 +86,26 @@ class ME_Authentication {
      *
      * @return WP_User|WP_Error True: WP_User finish. WP_Error on error
      */
-    public static function register($user_data) {
+    public static function register($user_data)
+    {
         // TODO: these rules will be considered, role?
         $rules = array(
-            'user_login' => 'required',
-            'user_pass' => 'required',
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'confirm_pass' => 'required|same:user_pass',
-            'user_email' => 'required|email',
+            'user_login'     => 'required',
+            'user_pass'      => 'required',
+            'first_name'     => 'required',
+            'last_name'      => 'required',
+            'confirm_pass'   => 'required|same:user_pass',
+            'user_email'     => 'required|email',
             'agree_with_tos' => 'required',
         );
 
         $custom_attributes = array(
-            'user_login' => __("user login", "enginethemes"),
-            'user_pass' => __("user password", "enginethemes"),
-            'first_name' => __("first name", "enginethemes"),
-            'last_name' => __("last name", "enginethemes"),
-            'confirm_pass' => __("confirm password", "enginethemes"),
-            'user_email' => __("user email", "enginethemes"),
+            'user_login'     => __("user login", "enginethemes"),
+            'user_pass'      => __("user password", "enginethemes"),
+            'first_name'     => __("first name", "enginethemes"),
+            'last_name'      => __("last name", "enginethemes"),
+            'confirm_pass'   => __("confirm password", "enginethemes"),
+            'user_email'     => __("user email", "enginethemes"),
             'agree_with_tos' => __("agree with term of use", "enginethemes"),
         );
         /**
@@ -113,7 +116,7 @@ class ME_Authentication {
          *
          * @since 1.0
          */
-        $rules = apply_filters('marketengine_register_form_rules', $rules, $user_data);
+        $rules    = apply_filters('marketengine_register_form_rules', $rules, $user_data);
         $is_valid = me_validate($user_data, $rules, $custom_attributes);
 
         $errors = new WP_Error();
@@ -203,12 +206,12 @@ class ME_Authentication {
         do_action('marketengine_before_user_register', $user_data);
 
         $user_data['role'] = apply_filters('marketengine_user_register_role', 'author');
-        $user_id = wp_insert_user($user_data);
+        $user_id           = wp_insert_user($user_data);
         if (is_wp_error($user_id)) {
             return $user_id;
         }
 
-        $user = new WP_User($user_id);
+        $user                           = new WP_User($user_id);
         $is_required_email_confirmation = me_option('user-email-confirmation') ? true : false;
 
         if ($is_required_email_confirmation) {
@@ -244,7 +247,8 @@ class ME_Authentication {
      *
      * @return bool|WP_Error True: when finish. WP_Error on error
      */
-    public static function retrieve_password($user) {
+    public static function retrieve_password($user)
+    {
         global $wpdb, $wp_hasher;
 
         $errors = new WP_Error();
@@ -254,7 +258,7 @@ class ME_Authentication {
         );
 
         $custom_attributes = array(
-            'user_email' => __("user email", "enginethemes")
+            'user_email' => __("user email", "enginethemes"),
         );
         /**
          * Filter register data validate rules
@@ -264,7 +268,7 @@ class ME_Authentication {
          *
          * @since 1.0
          */
-        $rules = apply_filters('marketengine_forgot_password_form_rules', $rules, $user);
+        $rules    = apply_filters('marketengine_forgot_password_form_rules', $rules, $user);
         $is_valid = me_validate($user, $rules, $custom_attributes);
 
         if (!$is_valid) {
@@ -303,23 +307,19 @@ class ME_Authentication {
         // Redefining user_login ensures we return the right case in the email.
         $user_login = $user_data->user_login;
         $user_email = $user_data->user_email;
-        $key = get_password_reset_key($user_data);
+        $key        = get_password_reset_key($user_data);
 
         if (is_wp_error($key)) {
             return $key;
         }
 
-        $profile_link = me_get_page_permalink('user_account');
+        $profile_link    = me_get_page_permalink('user_account');
         $reset_pass_link = add_query_arg(array(
-            'key' => $key,
+            'key'   => $key,
             'login' => rawurlencode($user_login),
         ), me_get_endpoint_url('reset-password', '', $profile_link));
 
         $reset_pass_link = apply_filters('marketengine_resert_password_link', $reset_pass_link, $user_data, $key);
-
-        ob_start();
-        me_get_template('emails/reset-password');
-        $message = ob_get_clean();
 
         if (is_multisite()) {
             $blogname = $GLOBALS['current_site']->site_name;
@@ -332,6 +332,17 @@ class ME_Authentication {
             $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
         }
 
+        $mail_args = array(
+            'recover_url' => $reset_pass_link,
+            'blogname' => $blogname,
+            'display_name' => get_the_author_meta( 'display_name', $user_data->ID )
+        );
+        ob_start();
+        me_get_template('emails/reset-password', $mail_args);
+        $message = ob_get_clean();
+
+        
+
         $title = sprintf(__("[%s] Password Reset", "enginethemes"), $blogname);
 
         /**
@@ -343,8 +354,6 @@ class ME_Authentication {
          * @since 1.0
          */
         $title = apply_filters('marketengine_reset_password_mail_subject', $title, $user_data);
-
-        $message = str_replace('[recover_url]', $reset_pass_link, $message);
         /**
          * Filter user reset password email content
          *
@@ -373,19 +382,20 @@ class ME_Authentication {
      * @param Array  $user_data The user reset pass data
      * @return WP_User| WP_Error WP_User: when finish. WP_Error on error
      */
-    public static function reset_pass($user_data) {
+    public static function reset_pass($user_data)
+    {
         $rules = array(
-            'user_login' => 'required',
-            'new_pass' => 'required',
+            'user_login'   => 'required',
+            'new_pass'     => 'required',
             'confirm_pass' => 'required|same:new_pass',
-            'key' => 'required',
+            'key'          => 'required',
         );
 
         $custom_attributes = array(
-            'user_login' => __("user login", "enginethemes"),
-            'new_pass' => __("new password", "enginethemes"),
+            'user_login'   => __("user login", "enginethemes"),
+            'new_pass'     => __("new password", "enginethemes"),
             'confirm_pass' => __("confirm password", "enginethemes"),
-            'key' => __("reset password key", "enginethemes")
+            'key'          => __("reset password key", "enginethemes"),
         );
         /**
          * filter reset pass data validate rules
@@ -395,10 +405,10 @@ class ME_Authentication {
          *
          * @since 1.0
          */
-        $rules = apply_filters('marketengine_reset_password_form_rules', $rules, $user_data);
+        $rules    = apply_filters('marketengine_reset_password_form_rules', $rules, $user_data);
         $is_valid = me_validate($user_data, $rules, $custom_attributes);
         if (!$is_valid) {
-            $errors = new WP_Error();
+            $errors       = new WP_Error();
             $invalid_data = me_get_invalid_message($user_data, $rules, $custom_attributes);
             foreach ($invalid_data as $key => $message) {
                 $errors->add($key, $message);
@@ -423,9 +433,15 @@ class ME_Authentication {
              * @since 1.0
              */
             $mail_title = apply_filters('marketengine_reset_password_success_mail_subject', $mail_title, $user);
+
+            $mail_args = array(
+                'site_url' => get_bloginfo('url'),
+                'blogname' => get_bloginfo('blogname'),
+                'display_name' => get_the_author_meta( 'display_name', $user->ID )
+            );
             // get mail content
             ob_start();
-            me_get_template('emails/reset-password-success');
+            me_get_template('emails/reset-password-success', $mail_args);
             $mail_content = ob_get_clean();
             /**
              * Filter user reset password success email content
@@ -453,15 +469,16 @@ class ME_Authentication {
      *         - String key:    the secure key
      * @return WP_Error| WP_User object
      */
-    public static function confirm_email($user_data) {
+    public static function confirm_email($user_data)
+    {
         $rules = array(
             'user_email' => 'required|email',
-            'key' => 'required',
+            'key'        => 'required',
         );
 
         $custom_attributes = array(
             'user_email' => __("user email", "enginethemes"),
-            'key' => __("reset password key", "enginethemes")
+            'key'        => __("reset password key", "enginethemes"),
         );
         /**
          * filter confirm email data validate rules
@@ -471,10 +488,10 @@ class ME_Authentication {
          *
          * @since 1.0
          */
-        $rules = apply_filters('marketengine_confirm_mail_rules', $rules, $user_data);
+        $rules    = apply_filters('marketengine_confirm_mail_rules', $rules, $user_data);
         $is_valid = me_validate($user_data, $rules, $custom_attributes);
         if (!$is_valid) {
-            $errors = new WP_Error();
+            $errors       = new WP_Error();
             $invalid_data = me_get_invalid_message($user_data, $rules, $custom_attributes);
             foreach ($invalid_data as $key => $message) {
                 $errors->add($key, $message);
@@ -514,7 +531,8 @@ class ME_Authentication {
      *
      * @return bool | WP_Error
      */
-    public static function send_activation_email($user) {
+    public static function send_activation_email($user)
+    {
         $user_activate_email_key = get_user_meta($user->ID, 'activate_email_key', true);
         if ($user_activate_email_key) {
             /**
@@ -526,21 +544,21 @@ class ME_Authentication {
              * @since 1.0
              */
             $activation_mail_subject = apply_filters('marketengine_activation_mail_subject', __("Activate Email", "enginethemes"), $user);
-            $profile_link = me_get_page_permalink('user-profile');
-            $activate_email_link = add_query_arg(array(
-                'key' => $user_activate_email_key,
+            $profile_link            = me_get_page_permalink('user-profile');
+            $activate_email_link     = add_query_arg(array(
+                'key'        => $user_activate_email_key,
                 'user_email' => $user->user_email,
-                'action' => 'confirm-email',
+                'action'     => 'confirm-email',
             ), $profile_link);
 
-            $activate_email_link = '<a href="'.$activate_email_link.'" >'.$activate_email_link.'</a>';
+            $activate_email_link = '<a href="' . $activate_email_link . '" >' . $activate_email_link . '</a>';
 
             $args = array(
-                'display_name' => $display_name, 
-                'blogname' => get_bloginfo('blogname'),
-                'user_login' => $user->user_login,
-                'user_email' => $user->user_email,
-                'activate_email_link' => $activate_email_link
+                'display_name'        => get_the_author_meta('display_name', $user->ID),
+                'blogname'            => get_bloginfo('blogname'),
+                'user_login'          => $user->user_login,
+                'user_email'          => $user->user_email,
+                'activate_email_link' => $activate_email_link,
 
             );
             // get activation mail content from template
@@ -573,10 +591,17 @@ class ME_Authentication {
      *
      * @return bool
      */
-    public static function send_registration_success_email($user) {
+    public static function send_registration_success_email($user)
+    {
+        $args = array(
+            'display_name' => get_the_author_meta('display_name', $user->ID),
+            'blogname'     => get_bloginfo('blogname'),
+            'user_login'   => $user->user_login,
+            'user_email'   => $user->user_email,
+        );
         // get registration success mail content from template
         ob_start();
-        me_get_template('emails/registration-success');
+        me_get_template('emails/registration-success', $args);
         $registration_success_mail_content = ob_get_clean();
         /**
          * Filter user registration success email subject
@@ -611,7 +636,8 @@ class ME_Authentication {
      *
      * @return Int | WP_Error
      */
-    public static function update_profile($user_data) {
+    public static function update_profile($user_data)
+    {
         global $user_ID;
         $user_id = $user_ID;
 
@@ -620,7 +646,7 @@ class ME_Authentication {
         }
 
         $user_data['ID'] = $user_id;
-        $errors = new WP_Error();
+        $errors          = new WP_Error();
         if (isset($_POST['first_name']) && $_POST['first_name'] == '') {
             $errors->add('first_name', __("The first name cannot be empty .", "enginethemes"));
         }
@@ -628,11 +654,11 @@ class ME_Authentication {
             $errors->add('first_name', __("The last name cannot be empty.", "enginethemes"));
         }
 
-        if(empty($_POST['paypal_email'])){
+        if (empty($_POST['paypal_email'])) {
             $errors->add('paypal_email_empty', __("The paypal email field cannot be empty.", "enginethemes"));
         }
 
-        if (!empty($_POST['paypal_email']) && !is_email( $_POST['paypal_email'] )) {
+        if (!empty($_POST['paypal_email']) && !is_email($_POST['paypal_email'])) {
             $errors->add('first_name', __("The paypal email is incorrect.", "enginethemes"));
         }
 
@@ -662,26 +688,26 @@ class ME_Authentication {
      *
      * @see wp_update_user()
      *
-     * @param Array $user_data 
+     * @param Array $user_data
      *          - old_password
      *          - new_password
      *          - confirm_password
      *
      * @return Int | WP_Error
      */
-    public static function change_password($user_data) {
+    public static function change_password($user_data)
+    {
         $rules = array(
             'current_password' => 'required',
-            'new_password' => 'required',
+            'new_password'     => 'required',
             'confirm_password' => 'required|same:new_password',
         );
         $errors = new WP_Error();
 
-
         $custom_attributes = array(
             'current_password' => __("current password", "enginethemes"),
-            'new_password' => __("new password", "enginethemes"),
-            'confirm_password' => __("confirm password", "enginethemes")
+            'new_password'     => __("new password", "enginethemes"),
+            'confirm_password' => __("confirm password", "enginethemes"),
         );
 
         /**
@@ -692,7 +718,7 @@ class ME_Authentication {
          *
          * @since 1.0
          */
-        $rules = apply_filters('marketengine_change_password_rules', $rules, $user_data);
+        $rules    = apply_filters('marketengine_change_password_rules', $rules, $user_data);
         $is_valid = me_validate($user_data, $rules, $custom_attributes);
         if (!$is_valid) {
             $invalid_data = me_get_invalid_message($user_data, $rules, $custom_attributes);
@@ -708,12 +734,12 @@ class ME_Authentication {
             return $errors;
         }
         // user have to activate email first
-        if(get_option('is_required_email_confirmation') && get_user_meta($user->ID,'confirm_key', true )) {
+        if (get_option('is_required_email_confirmation') && get_user_meta($user->ID, 'confirm_key', true)) {
             $errors->add('inactive_account', __("Please confirm your email first.", "enginethemes"));
             return $errors;
         }
 
-        wp_update_user( array('ID' => $user->ID, 'user_pass' => $user_data['new_password']) );
+        wp_update_user(array('ID' => $user->ID, 'user_pass' => $user_data['new_password']));
         /**
          * do action change password
          *

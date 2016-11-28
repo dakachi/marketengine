@@ -18,11 +18,10 @@ if (!defined('ABSPATH')) {
 }
 
 ?>
-
-<p>Hello [display_name],</p>
-<p>You have successfully registered an account with [blogname].Here is your account information:</p>
+<p><?php printf(__("Hello %s,", "enginethemes"), $display_name); ?></p>
+<p><?php printf(__("You have successfully registered an account with %s.Here is your account information:", "enginethemes"), $blogname); ?></p>
 <ol>
-<li>Username: [user_login]</li>
-<li>Email: [user_email]</li>
+	<li><?php printf(__("Username: %s", "enginethemes"), $user_login); ?></li>
+	<li><?php printf(__("Email: %s", "enginethemes"), $user_email); ?></li>
 </ol>
-<p>Thank you and welcome to [blogname].</p>
+<p><?php printf(__("Thank you and welcome to %s.", "enginethemes"), $blogname); ?></p>
