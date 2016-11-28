@@ -30,8 +30,7 @@ class Tests_ME_Forgot_Pass extends WP_UnitTestCase {
 
         //retrieve the mailer instance
         $mailer = tests_retrieve_phpmailer_instance();
-        $this->assertStringStartsWith( "<p>Hello Dakachi,</p>".
-                                        "<p>You have just sent a request to recover the password associated with your account in Test Blog. ",
+        $this->assertStringStartsWith( "<p>Hello dakachi,</p>",
                                         $mailer->get_sent()->body 
                                     );
         reset_phpmailer_instance();
