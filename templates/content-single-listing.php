@@ -38,18 +38,11 @@ $listing_status = get_post_status_object($listing->post_status);
 						<!-- Add code for mobile @KuKy fix here -->
 						<div class="me-visible-sm me-visible-xs">
 							<?php me_get_template('single-listing/notices'); ?>
+
 							<div class="me-status-action">
-								<?php
-									if($listing_type) :
-										if( $is_owner ) :
-											me_get_template('single-listing/status', array('listing_status' => $listing_status) );
-											me_get_template('single-listing/control-action', array('listing_type' => $listing_type , 'listing' => $listing, 'listing_status' => $listing_status) );
-										else :
-											me_get_template('single-listing/'. $listing_type , array('listing' => $listing));
-										endif;
-									endif;
-								?>
+								<?php me_get_template('single-listing/control', array('listing' => $listing) ); ?>
 							</div>
+
 							<?php me_get_template('single-listing/category');?>
 							<?php
 								if( !$is_owner ) :
@@ -78,21 +71,13 @@ $listing_status = get_post_status_object($listing->post_status);
 
 						<?php me_get_template('single-listing/notices'); ?>
 
-						<?php
-						if($listing_type) :
-							if( $is_owner ) :
-								me_get_template('single-listing/status', array('listing_status' => $listing_status) );
-								me_get_template('single-listing/control-action', array('listing_type' => $listing_type , 'listing' => $listing, 'listing_status' => $listing_status) );
-							else :
-								me_get_template('single-listing/'. $listing_type , array('listing' => $listing));
-							endif;
-						endif;
-						?>
+						<?php me_get_template('single-listing/control', array('listing' => $listing) ); ?>
+
 						<?php me_get_template('single-listing/category');?>
 						<?php
 						if( !$is_owner ) :
 							me_get_template('user-info', array('author_id' => $listing->post_author));
-							me_get_template('single-listing/report');
+							// me_get_template('single-listing/report');
 						endif;
 						?>
 
