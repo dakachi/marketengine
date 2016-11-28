@@ -38,6 +38,7 @@ class Tests_ME_Edit_Listing extends WP_UnitTestCase
 
         wp_set_current_user($this->user_1);
 
+        add_filter( 'marketengine_listing_type_categories', array($this, 'filter_listing_type_category' ) );
         $listing_data = array(
             'listing_title'       => 'listing title',
             'listing_description' => 'abc',
@@ -50,6 +51,14 @@ class Tests_ME_Edit_Listing extends WP_UnitTestCase
         );
         $p1               = ME_Listing_Handle::insert($listing_data);
         $this->listing_id = $p1;
+    }
+
+    public function filter_listing_type_category($category) {
+        return array(
+            'all' => array ($this->parent_cat, $this->parent_cat_2),
+            'contact' => array($this->parent_cat, $this->parent_cat_2 ),
+            'purchasion' => array($this->parent_cat_2, $this->parent_cat)
+        );
     }
 
     /**

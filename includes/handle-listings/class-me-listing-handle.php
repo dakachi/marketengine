@@ -365,6 +365,11 @@ class ME_Listing_Handle
         } elseif (!term_exists(intval($listing_data['parent_cat']), 'listing_category')) {
             return array('invalid_listing_category' => __("The selected listing category is invalid.", "enginethemes"));
         }
+        
+        $listing_type_categories = me_get_listing_type_categories();
+        if(!$is_update && !in_array($listing_data['parent_cat'], $listing_type_categories['all'])) {
+            return array('no_support_category' => __("The selected listing category is not support in any listing type.", "enginethemes"));   
+        }
 
         // check the parent cat sub is empty or not
         $child_cats          = get_terms('listing_category', array('hide_empty' => false, 'parent' => $listing_data['parent_cat']));
@@ -377,20 +382,19 @@ class ME_Listing_Handle
         }
 
         // check supported listing type
-        $listing_type_categories = me_get_listing_type_categories();
         $parent_cat = $listing_data['parent_cat'];
+        $listing_type = $listing_data['listing_type'];
 
-        if (!$is_update && (in_array($parent_cat, $listing_type_categories['purchasion']) || in_array($parent_cat, $listing_type_categories['contact']))
-        ) {
-            $listing_type = $listing_data['listing_type'];
-            $available_cats = $listing_type_categories[$listing_type ];
+        if (!$is_update && isset($listing_type_categories[$listing_type])) {
+            
+            $available_cats = $listing_type_categories[$listing_type];
             
             if (!in_array($listing_data['parent_cat'], $available_cats)) {
                 $term = get_term($listing_data['parent_cat']);
 
                 $invalid_data['unsupported_type'] = sprintf(
                     __("The listing type %s is not supported in category %s.", "enginethemes"),
-                    me_get_listing_type_label($listing_data['listing_type']),
+                    me_get_listing_type_label($listing_type),
                     $term->name
                 );
             }

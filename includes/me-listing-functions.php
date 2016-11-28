@@ -83,6 +83,12 @@ function me_get_listing_type_categories() {
         'contact' => empty($contact_cats) ? array() : $contact_cats,
         'purchasion' => empty($purchase_cats) ? array() : $purchase_cats
     );
+    $categories['all'] = array_merge($categories['contact'], $categories['purchasion']);
+    /**
+     * Filter MarketEngine Support Listing Type Categories List
+     * @param array $categories
+     * @since 1.0.1
+     */
     return apply_filters('marketengine_listing_type_categories', $categories);
 }
 

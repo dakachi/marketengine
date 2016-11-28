@@ -34,6 +34,7 @@ class Tests_ME_Listing extends WP_UnitTestCase {
         update_user_meta( $user_id, 'paypal_email', 'dinhle1987-per@yahoo.com' );
         wp_set_current_user( $user_id );
 
+        add_filter( 'marketengine_listing_type_categories', array($this, 'filter_listing_type_category' ) );
         $this->listing_data = array(
             'listing_title' => 'Listing A',
             'listing_description' => 'Sample content',
@@ -42,7 +43,7 @@ class Tests_ME_Listing extends WP_UnitTestCase {
                 'listing_price' => '222',
                 'pricing_unit' => 'none'
             ),
-            'parent_cat' => $this->parent_cat,
+            'parent_cat' => $this->parent_cat_2,
             'sub_cat' => $this->sub_cat,
         );
 
@@ -63,6 +64,14 @@ class Tests_ME_Listing extends WP_UnitTestCase {
         $p1 = ME_Listing_Handle::insert($this->listing_data);
         $this->listing_4 = new ME_Listing_Contact(get_post($p1));
         
+    }
+
+    public function filter_listing_type_category($category) {
+        return array(
+            'all' => array ($this->parent_cat, $this->parent_cat_2),
+            'contact' => array($this->parent_cat, $this->parent_cat_2 ),
+            'purchasion' => array($this->parent_cat_2, $this->parent_cat)
+        );
     }
 
     public function test_get_price() {
