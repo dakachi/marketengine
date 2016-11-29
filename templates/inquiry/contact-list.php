@@ -5,7 +5,7 @@ $messages = new ME_Message_Query(array('post_parent' => $listing->ID, 'post_type
 ?>
 
 <div class="me-sidebar-contact">
-	<span class="me-contact-user-count"><?php printf(__("%d people contact listing", "enginethemes"), $messages->found_posts) ?></span>
+	<span class="me-contact-user-count"><?php printf(__("%d people in contact listing", "enginethemes"), $messages->found_posts) ?></span>
 	<div class="me-contact-user-search">
 		<input type="text" name="buyer_name" id="s_buyer_name" placeholder="<?php echo __('Search buyer'); ?>">
 		<input type="hidden" name="listing-contact-list" id="listing-contact-list" value="<?php echo $listing->ID; ?>" />

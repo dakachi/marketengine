@@ -231,7 +231,7 @@ class ME_Inquiry_Form
                 array(
                     'success'   => true,
                     'data'      => $contact_list['content'],
-                    'count_msg' => sprintf(__("%d people contact listing", "enginethemes"), $contact_list['found_posts']),
+                    'count_msg' => sprintf(__("%d people in contact listing", "enginethemes"), $contact_list['found_posts']),
                 )
             );
         }
