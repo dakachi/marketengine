@@ -168,7 +168,7 @@ class ME_Inquiry_Handle
                     'user_nicename',
                     'display_name',
                 ),
-                'fields'         => 'ID',
+                //'fields'         => 'ID',
             ));
 
             $users_found = $users_1->get_results();
