@@ -171,30 +171,8 @@ class ME_Inquiry_Handle
                 ),
                 'fields'         => 'ID',
             ));
-            // $users_2  = new WP_User_Query(array(
-            //     'meta_query'     => array(
-            //         'relation' => 'OR',
-            //         array(
-            //             'key'     => 'first_name',
-            //             'value'   => $search_string,
-            //             'compare' => 'LIKE',
-            //         ),
-            //         array(
-            //             'key'     => 'last_name',
-            //             'value'   => $search_string,
-            //             'compare' => 'LIKE',
-            //         ),
-            //         array(
-            //             'key'     => 'display_name',
-            //             'value'   => $search_string,
-            //             'compare' => 'LIKE',
-            //         ),
-            //     ),
-            //     'fields'         => 'ID',
-            // ));
-            // TODO: can not search user with utf8
-            $users_found = $users_1->get_results();
 
+            $users_found = $users_1->get_results();
             // no contact found
             if (empty($users_found)) {
                 ob_start();
