@@ -295,5 +295,5 @@
         });
     }, 500);
     //  search buyer name
-    $('#s_buyer_name').on('keypress', me_ajax_search_buyer);
+    $('#s_buyer_name').on('keyup', me_ajax_search_buyer);
 })(jQuery);

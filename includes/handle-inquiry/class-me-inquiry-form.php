@@ -207,7 +207,7 @@ class ME_Inquiry_Form
      */
     public static function search_contact()
     {
-        if (!empty($_GET['s']) && !empty($_GET['listing_id'])) {
+        if (isset($_GET['s']) && !empty($_GET['listing_id'])) {
             $user_id = get_current_user_id();
             $listing = get_post($_GET['listing_id']);
 
