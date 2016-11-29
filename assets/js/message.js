@@ -287,7 +287,7 @@
             beforeSend: function() {},
             success: function(res, xhr) {
                 if (res.data) {
-                    contact_paged = 1;
+                    contact_paged = 2;
                     $('#contact-list').html(res.data);
                     $('.me-contact-user-count').html(res.count_msg);
                 }
