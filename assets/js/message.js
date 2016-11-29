@@ -276,23 +276,25 @@
             name = $target.val(),
             inquiry_id = $('input[name="inquiry_id"]').val(),
             listing_id = $('input[name="listing-contact-list"]').val();
-        $.get({
-            url: me_globals.ajaxurl,
-            data: {
-                action: 'me-get-buyer-list',
-                s: name,
-                listing_id: listing_id,
-                inquiry_id : inquiry_id
-            },
-            beforeSend: function() {},
-            success: function(res, xhr) {
-                if (res.data) {
-                    contact_paged = 2;
-                    $('#contact-list').html(res.data);
-                    $('.me-contact-user-count').html(res.count_msg);
+        if(name == '' || name.length > 3) {
+            $.get({
+                url: me_globals.ajaxurl,
+                data: {
+                    action: 'me-get-buyer-list',
+                    s: name,
+                    listing_id: listing_id,
+                    inquiry_id : inquiry_id
+                },
+                beforeSend: function() {},
+                success: function(res, xhr) {
+                    if (res.data) {
+                        contact_paged = 2;
+                        $('#contact-list').html(res.data);
+                        $('.me-contact-user-count').html(res.count_msg);
+                    }
                 }
-            }
-        });
+            });
+        }
     }, 500);
     //  search buyer name
     $('#s_buyer_name').on('keyup', me_ajax_search_buyer);

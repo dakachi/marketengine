@@ -165,7 +165,7 @@ class ME_Inquiry_Handle
             $users_1         = new WP_User_Query(array(
                 'search'         => "*{$search_string}*",
                 'search_columns' => array(
-                    'display_name',
+                    'display_name'
                 ),
                 'fields'         => 'ID',
             ));
