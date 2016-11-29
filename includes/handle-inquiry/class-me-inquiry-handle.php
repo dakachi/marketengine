@@ -161,7 +161,7 @@ class ME_Inquiry_Handle
         if (!empty($args['s'])) {
             $search_string = stripslashes($args['s']);
             $search_string = trim(mb_strtolower($search_string));
-
+            var_dump($search_string);
             $users_1         = new WP_User_Query(array(
                 'search'         => "*{$search_string}*",
                 'search_fields' => array(
