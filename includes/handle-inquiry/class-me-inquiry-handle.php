@@ -161,7 +161,8 @@ class ME_Inquiry_Handle
         if (!empty($args['s'])) {
             $search_string = stripslashes($args['s']);
             $search_string = trim(mb_strtolower($search_string));
-            
+
+            add_filter('user_search_columns', array(__CLASS__, 'filter_user_search_columns'));
             $users_1         = new WP_User_Query(array(
                 'search'         => "*{$search_string}*",
                 'search_columns' => array(
@@ -169,6 +170,7 @@ class ME_Inquiry_Handle
                 ),
                 'fields'         => 'ID',
             ));
+            remove_filter('user_search_columns', array(__CLASS__, 'filter_user_search_columns'));
 
             $users_found = $users_1->get_results();
             // no contact found
@@ -202,5 +204,8 @@ class ME_Inquiry_Handle
             'found_posts' => $messages->found_posts,
             'content'     => $content,
         );
+    }
+    public static function filter_user_search_columns($search_columns) {
+        return array('display_name');
     }
 }
