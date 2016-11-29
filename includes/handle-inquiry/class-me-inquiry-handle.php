@@ -161,7 +161,19 @@ class ME_Inquiry_Handle
         if (!empty($args['s'])) {
             $search_string = stripslashes($args['s']);
             $search_string = mb_strtolower($search_string);
-            $users         = new WP_User_Query(array(
+
+            $sanitialize_search = sanitize_title($search_string);
+            $users_1         = new WP_User_Query(array(
+                'search'         => "*{$sanitialize_search}*",
+                'search_columns' => array(
+                    'user_login',
+                    'user_nicename',
+                    'user_email',
+                    'user_url',
+                ),
+                'fields'         => 'ID',
+            ));
+            $users_2  = new WP_User_Query(array(
                 'meta_query'     => array(
                     'relation' => 'OR',
                     array(
@@ -183,7 +195,7 @@ class ME_Inquiry_Handle
                 'fields'         => 'ID',
             ));
             // TODO: can not search user with utf8
-            $users_found = $users->get_results();
+            $users_found = array_merge($users_1->get_results(), $users_2->get_results());
 
             // no contact found
             if (empty($users_found)) {
