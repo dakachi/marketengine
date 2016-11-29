@@ -11,15 +11,18 @@ class Test_ME_Query extends WP_UnitTestCase {
     }
 
     public function test_me_get_page_id() {
-        $result = me_get_page_id('test_page');
-        $this->assertEquals(-1, $result);
+        $pages = $this->get_list_of_pages();
+        foreach( $pages as $page ) {
+            $result = me_get_page_id( $page );
+            $this->assertEquals(-1, $result);
 
-        $page_id = $this->post_factory->create_object( array('post_type' => 'page') );
-        $name = 'me_test_page_page_id';
-        $this->options->$name = $page_id;
-        $this->options->save();
-        $result = me_get_page_id('test_page');
-        $this->assertEquals($page_id, $result);
+            $page_id = $this->post_factory->create_object( array('post_type' => 'page') );
+            $name = "me_{$page}_page_id";
+            $this->options->$name = $page_id;
+            $this->options->save();
+            $result = me_get_page_id($page);
+            $this->assertEquals($page_id, $result);
+        }
     }
 
     public function test_me_get_endpoint_name() {
@@ -31,5 +34,13 @@ class Test_ME_Query extends WP_UnitTestCase {
         $this->options->save();
         $result = me_get_endpoint_name('forgot_password');
         $this->assertEquals('quen-mat-khau', $result);
+    }
+
+    function get_list_of_pages() {
+        return array('user_account', 'post_listing', 'edit_listing', 'checkout', 'confirm_order', 'cancel_order', 'inquiry');
+    }
+
+    function get_list_of_endpoints() {
+        return array('forgot-password', 'register', 'edit-profile', 'change-password', 'listings', 'orders', 'purchases', 'order');
     }
 }
