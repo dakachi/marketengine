@@ -67,6 +67,10 @@
                         var current = $(preview).find('li').size();
                         var totalfile = files.length + current;
                         if(options.multi) {
+                            if(totalfile == options.maxcount) {
+                                $('#me-btn-upload').remove();
+                            }
+
                             if(totalfile > options.maxcount) {
                                 alert(me_globals.limitFile + options.maxcount);
                             } else {

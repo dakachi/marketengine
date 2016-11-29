@@ -11,3 +11,6 @@ marketengine.zip
 html/node_modules/*
 html/ui-kit/*
 
+tests/query/test-me-option.php
+tests/query/test-me-query.php
+tests/query/test-me-query.php
