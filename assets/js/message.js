@@ -276,7 +276,7 @@
             name = $target.val(),
             inquiry_id = $('input[name="inquiry_id"]').val(),
             listing_id = $('input[name="listing-contact-list"]').val();
-        if(name == '' || name.length > 3) {
+        //if(name == '' || name.length > 3) {
             $.get({
                 url: me_globals.ajaxurl,
                 data: {
@@ -294,7 +294,7 @@
                     }
                 }
             });
-        }
+        //}
     }, 500);
     //  search buyer name
     $('#s_buyer_name').on('keyup', me_ajax_search_buyer);
