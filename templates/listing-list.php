@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 $users_1         = new WP_User_Query(array(
-                'search'         => "*tien*",
+                'search'         => "*s*",
                 'search_columns' => array(
                     'display_name'
                 )
@@ -25,7 +25,7 @@ $users_1         = new WP_User_Query(array(
 
             $users_found = $users_1->get_results();
             echo "<pre>";
-            print_r($users_found);
+            print_r($users_1);
             echo "</pre>";
 ?>
 <div class="marketengine-listing-post">
