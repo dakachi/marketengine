@@ -26,6 +26,15 @@ function me_order_row_actions($actions, $post)
 }
 add_filter('post_row_actions', 'me_order_row_actions', 10, 2);
 
+/**
+ * Hook to change order list table primary column
+ * 
+ * @param string $column The primary column
+ * @param string $screen_id Current screen
+ * @package Admin/Manage
+ * @category Hook Function
+ * @since 1.0
+ */
 function me_change_order_primary_column($column, $screen_id) {
     if($screen_id == 'edit-me_order') {
         return 'listing';
