@@ -132,6 +132,17 @@ function marketengine_option_menu() {
         echo '<style type="text/css">
             #favorite-actions, .add-new-h2, .page-title-action, .hide-if-no-js { display:none; }
             .sign {font-weight: bold;}
+            @media screen and (max-width: 782px) {
+                .wp-list-table tr:not(.inline-edit-row):not(.no-items) td:not(.column-primary)::before {
+                    content: "" !important;
+                }
+                .wp-list-table .column-author,.wp-list-table .column-primary{
+                    display : table-cell !important;
+                }
+                .wp-list-table thead th.column-primary {
+                    width : 40% !important;
+                }
+            }
         </style>';
     }
 

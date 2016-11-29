@@ -25,6 +25,14 @@ function post_row_actions($actions, $post)
 }
 add_filter('post_row_actions', 'post_row_actions', 10, 2);
 
+function me_change_listing_primary_column($column, $screen_id) {
+    if($screen_id == 'edit-listing') {
+        return 'post_title';
+    }
+    return $column;
+}
+add_filter('list_table_primary_column', 'me_change_listing_primary_column',10, 2);
+
 /**
  * Add and modify listing post column
  * @package Admin/Manage
