@@ -37,7 +37,7 @@ $listing_status = $listing->post_status;
 
 <?php else : ?>
 	<div class="me-contact">
-		<p><?php echo me_option('contact-action') ?  me_option('contact-action') : __("CONTACT NOW", "enginethemes") ; ?></p>
+		<p class="me-contact-archive"><?php echo me_option('contact-action') ?  me_option('contact-action') : __("CONTACT NOW", "enginethemes") ; ?></p>
 	</div>
 <?php endif; ?>
 

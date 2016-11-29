@@ -45,7 +45,7 @@ $total = 0;
 				<?php else : ?>
 					<?php echo get_the_post_thumbnail($listing_obj->ID); ?>
 					<span><?php echo esc_html($listing_item['title']); ?></span>
-					<p><?php _e('This listing has been archived.', 'enginethemes'); ?></p>
+					<p class="me-item-archive"><i class="icon-me-info-circle"></i><?php _e('This listing has been archived.', 'enginethemes'); ?></p>
 				<?php endif; ?>
 				</div>
 			</div>

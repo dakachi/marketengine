@@ -373,6 +373,24 @@
 	}
 }
 
+.me-item-archive {
+	margin: 15px 0 0;
+	font-size: $font_size_base;
+	font-style: italic;
+	color: $color_text;
+	i {
+		color: $color_skin;
+		margin-right: 4px;
+	}
+}
+
+.me-contact-archive {
+	margin: 0;
+	font-size: 24px;
+	font-weight: 700;
+	line-height: 1.2em;
+}
+
 @media (min-width: $screen_md_min) {
 	.me-orderpayment-info {
 		// margin-left: 60px;

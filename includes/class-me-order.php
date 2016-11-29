@@ -426,7 +426,7 @@ class ME_Order {
      * @return array Array of address details
      */
     public function get_address($type) {
-        $address_fields = array('first_name', 'last_name', 'phone', 'email', 'postcode', 'address', 'city', 'country');
+        $address_fields = array('first_name', 'last_name', 'phone', 'email', 'address', 'city', 'country', 'postcode');
         $address        = array();
         foreach ($address_fields as $field) {
             $address[$field] = get_post_meta($this->id, '_me_' . $type . '_' . $field, true);
