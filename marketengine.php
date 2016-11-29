@@ -271,6 +271,8 @@ if (!class_exists('MarketEngine')):
             wp_enqueue_style('flexslider', $this->plugin_url() . '/assets/css/flexslider.css');
 
             wp_enqueue_script('plupload-all');
+            wp_enqueue_script('muploader.js', $this->plugin_url() . "/assets/js/muploader$suffix.js", array('jquery','plupload-all'), $this->version, true);
+            
             wp_enqueue_script('raty.js', $this->plugin_url() . "/assets/js/jquery.raty$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('user_profile', $this->plugin_url() . "/assets/js/user-profile$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('tag_box', $this->plugin_url() . "/assets/js/tag-box$suffix.js", array('jquery', 'suggest'), $this->version, true);
@@ -287,7 +289,7 @@ if (!class_exists('MarketEngine')):
             wp_enqueue_script('my-listings.js', $this->plugin_url() . "/assets/js/my-listings$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('listing-review', $this->plugin_url() . "/assets/js/listing-review$suffix.js", array('jquery'), $this->version, true);
 
-            wp_enqueue_script('muploader.js', $this->plugin_url() . "/assets/js/muploader$suffix.js", array('jquery','plupload-all'), $this->version, true);
+            
 
             wp_localize_script(
                 'post_listing',
