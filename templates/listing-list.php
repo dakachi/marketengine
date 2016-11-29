@@ -16,7 +16,17 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+$users_1         = new WP_User_Query(array(
+                'search'         => "*s*",
+                'search_columns' => array(
+                    'display_name'
+                )
+            ));
 
+            $users_found = $users_1->get_results();
+            echo "<pre>";
+            print_r($users_found);
+            echo "</pre>";
 ?>
 <div class="marketengine-listing-post">
 	<?php if(have_posts()) : ?>
