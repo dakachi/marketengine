@@ -46,7 +46,7 @@ $notices = me_get_notices();
 		</div>
 		<div class="marketengine-group-field forgot-sigin">
 			<a href="<?php echo me_get_endpoint_url('forgot-password'); ?>" class="forgot-pass"><?php _e("Forgot password? &nbsp;", "enginethemes");?></a>
-			<span class="pull-right account-register"><?php _e("Need an account?", "enginethemes");?><a href="<?php echo me_get_auth_url('register'); ?>"><?php _e("Register", "enginethemes");?></a></span>
+			<span class="me-account-register"><?php _e("Need an account?", "enginethemes");?><a href="<?php echo me_get_auth_url('register'); ?>"><?php _e("Register", "enginethemes");?></a></span>
 		</div>
 		<a href="<?php echo home_url(); ?>" class="back-home-sigin"><?php _e("&lt;  Back to Home", "enginethemes");?></a>
 

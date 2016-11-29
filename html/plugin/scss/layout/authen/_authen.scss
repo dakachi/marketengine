@@ -24,23 +24,25 @@
 		margin:0;
 		/* color: $color_text; */
 	}
-	.me-account-register {
-		display: inline-block;
-		margin: 0;
-		padding: 0;
-		a {
-			display: inline-block;
-			margin: 0;
-			margin-left: 6px;
-			padding: 0;
-		}
-	}
 	&.me-submit-sigin {
-		margin-bottom: 24px; 
+		margin-bottom: 28px; 
 	}
 	&.forgot-sigin {
 		overflow: hidden;
 		margin-bottom: 58px;
+	}
+}
+
+.me-account-register {
+	float: right;
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	a {
+		display: inline-block;
+		margin: 0;
+		margin-left: 6px;
+		padding: 0;
 	}
 }
 
@@ -80,7 +82,7 @@
 form {
 	.marketengine-group-field {
 		&.me-terms-signup {
-			margin-bottom: 28px;
+			margin-bottom: 30px;
 		}
 		&.me-submit-signup {
 			margin-bottom: 58px;
@@ -249,6 +251,20 @@ form {
 			width: auto;
 			margin-top: 0;
 			// padding: 25px 15px;
+		}
+	}
+	.me-account-register {
+		float: none;
+		display: block;
+		margin: 0;
+		padding: 0;
+		clear: both;
+		line-height: 2em;
+		a {
+			display: inline-block;
+			margin: 0;
+			margin-left: 6px;
+			padding: 0;
 		}
 	}
 }
