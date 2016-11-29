@@ -196,7 +196,9 @@ class ME_Inquiry_Handle
                 me_get_template('inquiry/contact-item', array('current_inquiry' => $args['inquiry_id']));
             endwhile;
         } else {
-            me_get_template('inquiry/contact-item-notfound');
+            if($args['page'] == 1) {
+                me_get_template('inquiry/contact-item-notfound');    
+            }
         }
         $content = ob_get_clean();
         return array(
