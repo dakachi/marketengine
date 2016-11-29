@@ -829,6 +829,11 @@ ul.me-comment-list {
 				display: none;
 			}
 		}
+		.me-price {
+			> span {
+				font-size: 24px;
+			}
+		}
 		.me-contact {
 			.me-buy-now-btn {
 				width: 70%;
