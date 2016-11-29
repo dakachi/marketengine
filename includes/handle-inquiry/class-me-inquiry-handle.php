@@ -161,10 +161,10 @@ class ME_Inquiry_Handle
         if (!empty($args['s'])) {
             $search_string = stripslashes($args['s']);
             $search_string = trim(mb_strtolower($search_string));
-            var_dump($search_string);
+            
             $users_1         = new WP_User_Query(array(
                 'search'         => "*{$search_string}*",
-                'search_fields' => array(
+                'search_columns' => array(
                     'user_nicename',
                     'display_name',
                 ),
@@ -172,7 +172,6 @@ class ME_Inquiry_Handle
             ));
 
             $users_found = $users_1->get_results();
-            var_dump($users_found);
             // no contact found
             if (empty($users_found)) {
                 ob_start();
