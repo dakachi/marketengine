@@ -165,7 +165,7 @@ class ME_Inquiry_Handle
             $users_1         = new WP_User_Query(array(
                 'search'         => "*{$search_string}*",
                 'search_fields' => array(
-                    'user_nicename',
+                    // 'user_nicename',
                     'display_name',
                 ),
                 'fields'         => 'ID',
