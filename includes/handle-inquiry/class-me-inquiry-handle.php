@@ -165,7 +165,6 @@ class ME_Inquiry_Handle
             $users_1         = new WP_User_Query(array(
                 'search'         => "*{$search_string}*",
                 'search_columns' => array(
-                    'user_nicename',
                     'display_name',
                 ),
                 'fields'         => 'ID',
@@ -194,7 +193,7 @@ class ME_Inquiry_Handle
                 me_get_template('inquiry/contact-item', array('current_inquiry' => $args['inquiry_id']));
             endwhile;
         } else {
-            if($args['page'] == 1) {
+            if($args['paged'] == 1) {
                 me_get_template('inquiry/contact-item-notfound');    
             }
         }
