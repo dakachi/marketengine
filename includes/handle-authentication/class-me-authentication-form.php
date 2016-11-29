@@ -264,7 +264,7 @@ class ME_Auth_Form extends ME_Form
 <p>This email has been sent to ###EMAIL###</p>
 <p>
 Regards, <br/>
-All at ###SITENAME###
+All at ###SITENAME### <br/>
 ###SITEURL### </p>', 'enginethemes');
 
         $subject = __('Notice of Password Change', 'enginethemes');
