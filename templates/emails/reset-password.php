@@ -21,7 +21,8 @@ if (!defined('ABSPATH')) {
 <p>
 <?php 
 	printf(__("You have just sent a request to recover the password associated with your account in %s. ", "enginethemes"), $blogname);
-	printf(__("If you did not make this request, please ignore this email; otherwise, click the link below to create your new password: %s", "enginethemes"), $recover_url);
+	echo '</br>';
+	printf(__("If you did not make this request, please ignore this email; otherwise, click the link below to create your new password: <br/> %s", "enginethemes"), $recover_url);
 ?>
 </p>
 <p><?php printf(__("Regards, <br/> %s", "enginethemes"), $blogname); ?></p>

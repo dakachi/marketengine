@@ -114,6 +114,17 @@ function marketengine_option_menu() {
     if (isset($_GET['post_type']) && $_GET['post_type'] == 'me_order') {
         echo '<style type="text/css">
             #favorite-actions, .add-new-h2, .page-title-action, .hide-if-no-js { display:none; }
+            @media screen and (max-width: 782px) {
+                .wp-list-table tr:not(.inline-edit-row):not(.no-items) td:not(.column-primary)::before {
+                    content: "" !important;
+                }
+                .wp-list-table .column-order_id,.wp-list-table .column-primary,.wp-list-table .column-status {
+                    display : table-cell !important;
+                }
+                .wp-list-table thead th.column-primary {
+                    width : 40% !important;
+                }
+            }
         </style>';
     }
 

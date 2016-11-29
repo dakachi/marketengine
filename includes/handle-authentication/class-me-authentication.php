@@ -332,8 +332,9 @@ class ME_Authentication
             $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
         }
 
+        $recover_url = '<a href="'.$reset_pass_link.'">'.$reset_pass_link.'</a>';
         $mail_args = array(
-            'recover_url' => $reset_pass_link,
+            'recover_url' => $recover_url,
             'blogname' => $blogname,
             'display_name' => get_the_author_meta( 'display_name', $user_data->ID )
         );
@@ -343,7 +344,7 @@ class ME_Authentication
 
         
 
-        $title = sprintf(__("[%s] Password Reset", "enginethemes"), $blogname);
+        $title = sprintf(__("Password Reset", "enginethemes"), $blogname);
 
         /**
          * Filter user reset password email subject
@@ -434,8 +435,9 @@ class ME_Authentication
              */
             $mail_title = apply_filters('marketengine_reset_password_success_mail_subject', $mail_title, $user);
 
+            $site_url = '<a href="'.get_bloginfo('url').'">'.get_bloginfo('url').'</a>';
             $mail_args = array(
-                'site_url' => get_bloginfo('url'),
+                'site_url' => $site_url,
                 'blogname' => get_bloginfo('blogname'),
                 'display_name' => get_the_author_meta( 'display_name', $user->ID )
             );

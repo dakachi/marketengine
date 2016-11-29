@@ -14,9 +14,11 @@ if (!defined('ABSPATH')) {
  * @author      Dakachi
  * @category    Class
  */
-class ME_Auth_Form extends ME_Form {
+class ME_Auth_Form extends ME_Form
+{
 
-    public static function init_hooks() {
+    public static function init_hooks()
+    {
         add_action('wp_loaded', array(__CLASS__, 'process_login'));
         add_action('wp_loaded', array(__CLASS__, 'process_register'));
         add_action('wp_loaded', array(__CLASS__, 'process_forgot_pass'));
@@ -25,10 +27,13 @@ class ME_Auth_Form extends ME_Form {
         add_action('wp_loaded', array(__CLASS__, 'process_resend_confirm_email'));
 
         add_action('wp_loaded', array(__CLASS__, 'process_change_password'));
+        add_filter('password_change_email', array(__CLASS__, 'password_change_email'));
+
         add_action('wp_loaded', array(__CLASS__, 'update_user_profile'));
     }
 
-    public static function get_redirect_link() {
+    public static function get_redirect_link()
+    {
         if (isset($_POST['redirect'])) {
             $redirect = $_POST['redirect'];
         } elseif (wp_get_referer()) {
@@ -39,7 +44,8 @@ class ME_Auth_Form extends ME_Form {
         return $redirect;
     }
 
-    public static function process_login() {
+    public static function process_login()
+    {
         if (!empty($_POST['login']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-login')) {
             $user = ME_Authentication::login($_POST);
             if (is_wp_error($user)) {
@@ -67,7 +73,8 @@ class ME_Auth_Form extends ME_Form {
         }
     }
 
-    public static function process_register() {
+    public static function process_register()
+    {
         if (!empty($_POST['register']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-register')) {
             // Admin disable registration function
             if (!get_option('users_can_register')) {
@@ -91,13 +98,13 @@ class ME_Auth_Form extends ME_Form {
                 $message .= "<p>" . __("- Order listings", "enginethemes") . "</p>";
                 $message .= "</div>";
 
-                me_add_notice( $message );
+                me_add_notice($message);
             } else {
-                me_add_notice(sprintf("<div class='me-authen-inactive'><p>". __("Congratulation! You have successfully completed the registration process.", "enginethemes") ."</p></div>"));
+                me_add_notice(sprintf("<div class='me-authen-inactive'><p>" . __("Congratulation! You have successfully completed the registration process.", "enginethemes") . "</p></div>"));
             }
             // login in
             $_POST['user_password'] = $_POST['user_pass'];
-            $user = ME_Authentication::login($_POST);
+            $user                   = ME_Authentication::login($_POST);
             // set the redirect link after register
             $redirect = self::get_redirect_link();
             /**
@@ -113,7 +120,8 @@ class ME_Auth_Form extends ME_Form {
         }
     }
 
-    public static function process_forgot_pass() {
+    public static function process_forgot_pass()
+    {
         if (!empty($_POST['forgot_pass']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-forgot_pass')) {
             $password_retrieve = ME_Authentication::retrieve_password($_POST);
             if (!is_wp_error($password_retrieve)) {
@@ -136,7 +144,8 @@ class ME_Auth_Form extends ME_Form {
         }
     }
 
-    public static function process_reset_pass() {
+    public static function process_reset_pass()
+    {
         if (!empty($_POST['reset_password']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-reset_password')) {
             $user = ME_Authentication::reset_pass($_POST);
             if (!is_wp_error($user)) {
@@ -159,7 +168,8 @@ class ME_Auth_Form extends ME_Form {
         }
     }
 
-    public static function process_confirm_email() {
+    public static function process_confirm_email()
+    {
         if (!empty($_GET['action']) && 'confirm-email' === $_GET['action']) {
             $user = ME_Authentication::confirm_email($_GET);
             if (!is_wp_error($user)) {
@@ -179,13 +189,14 @@ class ME_Auth_Form extends ME_Form {
             } else {
                 $redirect = me_get_page_permalink('user_account');
                 me_add_notice(__("<div><p>Invalid key. Please check your activation email again.</p></div>", "enginethemes"));
-                wp_redirect( $redirect, 302 );
+                wp_redirect($redirect, 302);
                 exit;
             }
         }
     }
 
-    public static function process_resend_confirm_email() {
+    public static function process_resend_confirm_email()
+    {
         if (!empty($_GET['resend-confirmation-email']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'me-resend_confirmation_email')) {
             global $current_user;
 
@@ -206,7 +217,8 @@ class ME_Auth_Form extends ME_Form {
         }
     }
 
-    public static function update_user_profile() {
+    public static function update_user_profile()
+    {
         if (!empty($_POST['update_profile']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-update_profile')) {
             $user = ME_Authentication::update_profile($_POST);
             if (!is_wp_error($user)) {
@@ -216,13 +228,14 @@ class ME_Auth_Form extends ME_Form {
                 $redirect = apply_filters('marketengine_update_profile_redirect', $redirect, $user);
                 wp_redirect($redirect, 302);
                 exit;
-            }else {
+            } else {
                 me_wp_error_to_notices($user);
             }
         }
     }
 
-    public static function process_change_password(){
+    public static function process_change_password()
+    {
         if (!empty($_POST['change_password']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me_change-password')) {
             $user = ME_Authentication::change_password($_POST);
             if (!is_wp_error($user)) {
@@ -232,10 +245,33 @@ class ME_Auth_Form extends ME_Form {
                 $redirect = apply_filters('marketengine_update_profile_redirect', $redirect, $user);
                 wp_redirect($redirect, 302);
                 exit;
-            }else {
+            } else {
                 me_wp_error_to_notices($user);
             }
         }
+    }
+
+    public static function password_change_email($pass_change_email)
+    {
+        /* translators: Do not translate USERNAME, ADMIN_EMAIL, EMAIL, SITENAME, SITEURL: those are placeholders. */
+        $pass_change_text = __('<p>Hi ###USERNAME###</p>,
+
+<p>This notice confirms that your password was changed on ###SITENAME###.</p>
+
+<p>If you did not change your password, please contact the Site Administrator at
+###ADMIN_EMAIL### </p>
+
+<p>This email has been sent to ###EMAIL###</p>
+<p>
+Regards, <br/>
+All at ###SITENAME###
+###SITEURL### </p>', 'enginethemes');
+
+        $subject = __('Notice of Password Change', 'enginethemes');
+
+        $pass_change_email['subject'] = $subject;
+        $pass_change_email['message'] = $pass_change_text;
+        return $pass_change_email;
     }
 }
 

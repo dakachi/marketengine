@@ -26,6 +26,14 @@ function me_order_row_actions($actions, $post)
 }
 add_filter('post_row_actions', 'me_order_row_actions', 10, 2);
 
+function me_change_order_primary_column($column, $screen_id) {
+    if($screen_id == 'edit-me_order') {
+        return 'listing';
+    }
+    return $column;
+}
+add_filter('list_table_primary_column', 'me_change_order_primary_column',10, 2);
+
 /**
  * Hook to action manage_me_order_posts_columns
  * Add order columns: ID, Listing Items, Tota, Commission, Date
