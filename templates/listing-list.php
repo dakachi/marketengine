@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 $users_1         = new WP_User_Query(array(
-                'search'         => "*s*",
+                'search'         => "s",
                 'search_columns' => array(
                     'display_name'
                 )
