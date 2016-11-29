@@ -162,7 +162,7 @@ class ME_Inquiry_Handle
             $search_string = stripslashes($args['s']);
             $search_string = mb_strtolower($search_string);
             $users         = new WP_User_Query(array(
-                'meta_query' => array(
+                'meta_query'     => array(
                     'relation' => 'OR',
                     array(
                         'key'     => 'first_name',
@@ -174,8 +174,13 @@ class ME_Inquiry_Handle
                         'value'   => $search_string,
                         'compare' => 'LIKE',
                     ),
+                    array(
+                        'key'     => 'display_name',
+                        'value'   => $search_string,
+                        'compare' => 'LIKE',
+                    ),
                 ),
-                'fields'     => 'ID',
+                'fields'         => 'ID',
             ));
             // TODO: can not search user with utf8
             $users_found = $users->get_results();
