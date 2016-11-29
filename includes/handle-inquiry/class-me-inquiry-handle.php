@@ -171,9 +171,8 @@ class ME_Inquiry_Handle
                 'fields'         => 'ID',
             ));
 
-            // TODO: can not search user with utf8
             $users_found = $users_1->get_results();
-
+            var_dump($users_found);
             // no contact found
             if (empty($users_found)) {
                 ob_start();
