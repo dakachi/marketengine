@@ -109,8 +109,8 @@ var sys = require('sys');
 var exec = require('gulp-exec');
 
 gulp.task('phpunit', function() {
-    gulp.src('./tests').pipe(
-        exec('phpunit --bootstrap ' + curr_project.settings.src + 'bootstrap.php -c phpunit.xml tests/', function(error, stdout){
+    gulp.src('tests').pipe(
+        exec('phpunit --bootstrap ' + curr_project.settings.src + ' bootstrap.php -c phpunit.xml tests/', function(error, stdout){
             console.log(stdout);
             return false;
         })
