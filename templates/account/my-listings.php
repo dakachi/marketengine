@@ -59,8 +59,8 @@ $query = new WP_Query( $args );
 						<a href="<?php the_permalink(); ?>" class="me-item-img">
 							<?php the_post_thumbnail( 'thumbnail' ); ?>
 							<span><?php echo __('VIEW DETAILS', 'enginethemes'); ?></span>
-							<div class="marketengine-ribbon-<?php echo str_replace('me-', '', $listing_status->name); ?>">
-								<span class="me-ribbon-content"><?php echo ucfirst($listing_status->label); ?></span>
+							<div class="me-label-<?php echo str_replace('me-', '', $listing_status->name); ?>">
+								<span><?php echo ucfirst($listing_status->label); ?></span>
 							</div>
 						</a>
 						<div class="me-item-content">
