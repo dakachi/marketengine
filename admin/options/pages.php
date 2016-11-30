@@ -91,7 +91,6 @@ return array(
                         'placeholder' => 'listings',
                         'template'    => array(),
                     ),
-                    
                     'ep-orders' => array(
                         'label'       => __("My Orders", "enginethemes"),
                         'description' => __("Endpoint for the User Account -> My Orders page", "enginethemes"),
@@ -110,8 +109,6 @@ return array(
                         'placeholder' => 'purchases',
                         'template'    => array(),
                     ),
-                    
-                    
                 ),
             ),
         ),
@@ -121,6 +118,15 @@ return array(
         'slug'     => 'listings',
         'type'     => 'section',
         'template' => array(
+            'listings-page' => array(
+                'label'         => __("Listing Page", "enginethemes"),
+                'description'   => __("Choose a page displaying as Listing Page", "enginethemes"),
+                'slug'          => 'me_listings',
+                'name'          => 'me_listings_page_id',
+                'type'          => 'select',
+                'data'          => marketengine_get_list_of_page(),
+                'template'      => array(),
+            ),
             'post-listings-page' => array(
                 'label'         => __("Post Listing Page", "enginethemes"),
                 'description'   => __("Choose a page displaying as Post Listing Page", "enginethemes"),
@@ -130,7 +136,7 @@ return array(
                 'data'          => marketengine_get_list_of_page(),
                 'template'      => array(),
             ),
-            'listings-page' => array(
+            'edit-listings-page' => array(
                 'label'         => __("Edit Listing Page", "enginethemes"),
                 'description'   => __("Choose a page displaying as Edit Listing Page", "enginethemes"),
                 'slug'          => 'me_listings',

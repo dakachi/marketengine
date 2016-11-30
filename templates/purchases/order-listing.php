@@ -1,6 +1,4 @@
-<?php //if($listing_obj && $listing_obj->is_available() ) :
-
-?>
+<?php //if($listing_obj && $listing_obj->is_available() ) : ?>
 <div class="me-orderlisting-info">
 	<a class="me-orderlisting-thumbs" href="<?php echo $listing_obj->get_permalink(); ?>"><?php echo $listing_obj->get_listing_thumbnail(); ?></a>
 	<div class="me-listing-info">
