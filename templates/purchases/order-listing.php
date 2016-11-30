@@ -33,7 +33,7 @@
 		</a>
 	<?php endif; ?>
 
-	<?php if($listing_obj->post_status === "me-archived") : ?>
+	<?php if($listing_obj->post_status === "me-archived" && $can_rate) : ?>
 	<p class="me-item-archive"><i class="icon-me-info-circle"></i><?php _e('This listing has been archived.', 'enginethemes'); ?></p>
 	<?php endif; ?>
 </div>
