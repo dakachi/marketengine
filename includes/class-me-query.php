@@ -364,6 +364,12 @@ function me_sort_listing_query($query)
     return $query;
 }
 
+/**
+ * Filters order detail url.
+ *
+ * @since       1.0.0
+ * @version     1.0.0
+ */
 function rewrite_order_url()
 {
     $order_endpoint = me_get_endpoint_name('order_id');
@@ -372,6 +378,16 @@ function rewrite_order_url()
     add_rewrite_rule($order_endpoint . '/([0-9]+)/?$', 'index.php?post_type=me_order&p=$matches[1]', 'top');
 }
 
+/**
+ * Filters order detail url.
+ *
+ * @param       string $permalink
+ * @param       object $post
+ * @return      string $permalink
+ *
+ * @since       1.0.0
+ * @version     1.0.0
+ */
 function custom_me_order_link($order_link, $post = 0)
 {
     if ($post->post_type == 'me_order') {
