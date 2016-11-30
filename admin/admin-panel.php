@@ -112,7 +112,7 @@ function marketengine_option_menu() {
     unset($submenu['edit.php?post_type=listing'][10]);
     // Hide link on listing page
     if (isset($_GET['post_type']) && $_GET['post_type'] == 'me_order') {
-        echo '<style type="text/css">
+        $style = '<style type="text/css">
             #favorite-actions, .add-new-h2, .page-title-action, .hide-if-no-js { display:none; }
             @media screen and (max-width: 782px) {
                 .wp-list-table tr:not(.inline-edit-row):not(.no-items) td:not(.column-primary)::before {
@@ -126,10 +126,11 @@ function marketengine_option_menu() {
                 }
             }
         </style>';
+        add_action( 'admin_head', 'marketengine_add_header_style', $style );
     }
 
     if (isset($_GET['post_type']) && $_GET['post_type'] == 'listing') {
-        echo '<style type="text/css">
+        $style = '<style type="text/css">
             #favorite-actions, .add-new-h2, .page-title-action, .hide-if-no-js { display:none; }
             .sign {font-weight: bold;}
             @media screen and (max-width: 782px) {
@@ -144,6 +145,7 @@ function marketengine_option_menu() {
                 }
             }
         </style>';
+        add_action( 'admin_head', 'marketengine_add_header_style', $style );
     }
 
     add_menu_page(
@@ -185,6 +187,10 @@ function marketengine_option_menu() {
 }
 add_action('admin_menu', 'marketengine_option_menu');
 
+
+function marketengine_add_header_style( $style ) {
+    echo $style;
+}
 
 /**
  * Add marketengine admin menu
