@@ -68,7 +68,7 @@
                         var totalfile = files.length + current;
                         if(options.multi) {
                             if(totalfile == options.maxcount) {
-                                $('#me-btn-upload').remove();
+                                $('#me-btn-upload').hide();
                             }
 
                             if(totalfile > options.maxcount) {
@@ -110,6 +110,7 @@
                 var parent = $(this).parents('li.me-item-img');
                 $(parent).fadeOut(function(){
                     $(this).remove();
+                    $('#me-btn-upload').show();
                 });
             });
 
