@@ -118,15 +118,6 @@ return array(
         'slug'     => 'listings',
         'type'     => 'section',
         'template' => array(
-            'listings-page' => array(
-                'label'         => __("Listing Page", "enginethemes"),
-                'description'   => __("Choose a page displaying as Listing Page", "enginethemes"),
-                'slug'          => 'me_listings',
-                'name'          => 'me_listings_page_id',
-                'type'          => 'select',
-                'data'          => marketengine_get_list_of_page(),
-                'template'      => array(),
-            ),
             'post-listings-page' => array(
                 'label'         => __("Post Listing Page", "enginethemes"),
                 'description'   => __("Choose a page displaying as Post Listing Page", "enginethemes"),
