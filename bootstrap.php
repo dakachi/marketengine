@@ -1,19 +1,19 @@
 <?php
- 
+
 /**
  * Set up environment for my plugin's tests suite.
  */
- 
+
 /**
  * The path to the WordPress tests checkout.
  */
 define( 'WP_TESTS_DIR', '/wordpress-developer/tests/phpunit/' );
- 
+
 /**
  * The path to the main file of the plugin to test.
  */
 define( 'TEST_PLUGIN_FILE', dirname( __FILE__ ) );
- 
+
 /**
  * The WordPress tests functions.
  *
@@ -21,7 +21,7 @@ define( 'TEST_PLUGIN_FILE', dirname( __FILE__ ) );
  * to load the plugin, using tests_add_filter().
  */
 require_once WP_TESTS_DIR . 'includes/functions.php';
- 
+
 /**
  * Manually load the plugin main file.
  *

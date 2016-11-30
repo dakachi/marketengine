@@ -13,7 +13,7 @@ var project = {
 		settings: {
 			name: "MarketEngine",
 			slug: 'marketengine',
-			src: 'C:/xampp/htdocs/sites/wp-content/plugins/zeroengine/',
+			src: 'E:/xampp/htdocs/sites/wp-content/plugins/zeroengine/',
 			version: '2.0',
 			struct: [
 				'**',
@@ -103,3 +103,22 @@ gulp.task('zip', ['copy'], () => {
 var gulp_path = 'C:/xampp/htdocs/gulp/';
 var shell = require('gulp-shell');
 gulp.task('phpdoc', shell.task([gulp_path + 'vendor/bin/phpdoc -d ' + curr_project.settings.src + ' -t ' + gulp_path + 'docs/phpdoc -i ' + curr_project.settings.src + 'vendor/,node_modules/,tests/,bootstrap.php --template="responsive-twig"']));
+
+var sys = require('sys');
+// var gutil = require('gulp-util');
+var exec = require('gulp-exec');
+
+gulp.task('phpunit', function() {
+    gulp.src('./tests').pipe(
+        exec('phpunit --bootstrap ' + curr_project.settings.src + 'bootstrap.php -c phpunit.xml tests/', function(error, stdout){
+            console.log(stdout);
+            return false;
+        })
+    );
+});
+
+gulp.task('watch', function () {
+    gulp.watch('**/*.php', ['phpunit']);
+});
+
+gulp.task('default', ['watch']);

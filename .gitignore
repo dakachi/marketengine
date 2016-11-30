@@ -14,3 +14,5 @@ html/ui-kit/*
 tests/query/test-me-option.php
 tests/query/test-me-query.php
 tests/query/test-me-query.php
+package.json
+gulpfile.js
