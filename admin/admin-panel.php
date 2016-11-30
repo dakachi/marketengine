@@ -152,7 +152,11 @@ function marketengine_option_menu() {
 }
 add_action('admin_menu', 'marketengine_option_menu');
 
-
+/**
+ * Prints styles to admin head.
+ *
+ * @since   1.0.1
+ */
 function marketengine_add_header_style () {
     if (isset($_GET['post_type']) && $_GET['post_type'] == 'me_order') {
         echo '<style type="text/css">
