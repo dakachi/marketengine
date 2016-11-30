@@ -177,6 +177,10 @@ class ME_Auth_Form extends ME_Form {
     public static function process_resend_confirm_email() {
         if (!empty($_GET['resend-confirmation-email']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'me-resend_confirmation_email')) {
             global $current_user;
+
+            $activate_email_key = wp_hash(md5($current_user->user_email . time()));
+            update_user_meta($current_user->ID, 'activate_email_key', $activate_email_key);
+
             $is_send_success = ME_Authentication::send_activation_email($current_user);
             if (!is_wp_error($is_send_success)) {
                 me_add_notice(__("<p>Thank you! Please <span>check your mailbox</span> to activate your account.</p>", "enginethemes"));
