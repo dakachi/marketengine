@@ -36,9 +36,11 @@ $listing_status = $listing->post_status;
 </form>
 
 <?php else : ?>
+
 	<div class="me-contact">
-		<p class="me-contact-archive"><?php echo me_option('contact-action') ?  me_option('contact-action') : __("OFFERING", "enginethemes") ; ?></p>
+		<p class="me-contact-archive"><?php echo me_option('contact-title') ?  me_option('contact-title') : __("OFFERING", "enginethemes") ; ?></p>
 	</div>
+
 <?php endif; ?>
 
 <?php do_action('marketengine_after_single_listing_contact_button'); ?>

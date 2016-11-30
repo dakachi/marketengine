@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <div class="me-orderlisting-info">
-<?php if($listing) : ?>
+
 	<a class="me-orderlisting-thumbs" href="<?php echo $listing->get_permalink(); ?>">
 		<?php echo $listing->get_listing_thumbnail(); ?>
 	</a>
@@ -27,7 +27,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php echo $listing->get_short_description(); ?>
 
 	</div>
-<?php else: ?>
-	<p><?php _e('Deleted listing'); ?></p>
+
+<?php if($listing->post_status === 'me-archived') : ?>
+	<p class="me-item-archive"><i class="icon-me-info-circle"></i><?php _e('This listing has been archived.', 'enginethemes'); ?></p>
 <?php endif; ?>
 </div>

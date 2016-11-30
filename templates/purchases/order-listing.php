@@ -1,8 +1,8 @@
-<?php if($listing_obj && $listing_obj->is_available() ) : ?>
+<?php //if($listing_obj && $listing_obj->is_available() ) : ?>
 <div class="me-orderlisting-info">
 	<a class="me-orderlisting-thumbs" href="<?php echo $listing_obj->get_permalink(); ?>"><?php echo $listing_obj->get_listing_thumbnail(); ?></a>
 	<div class="me-listing-info">
-		<h2><a href="<?php echo $listing_obj->get_permalink(); ?>"><?php echo esc_html($listing_obj->get_title()); ?></a></h2>
+		<h2><a href="<?php echo $listing_obj->get_permalink(); ?>"><?php echo esc_html($cart_listing['title']); ?></a></h2>
 		<div class="me-rating">
 			<div class="result-rating" data-score="<?php echo $listing_obj->get_review_score(); ?>"></div>
 		</div>
@@ -30,9 +30,14 @@
 			<?php _e('RATE &amp; REVIEW NOW', 'enginethemes'); ?>
 		</a>
 	<?php endif; ?>
+
+	<?php if($listing_obj->post_status === "me-archived" && $can_rate) : ?>
+	<p class="me-item-archive"><i class="icon-me-info-circle"></i><?php _e('This listing has been archived.', 'enginethemes'); ?></p>
+	<?php endif; ?>
 </div>
-<?php else : ?>
+<?php /* else : ?>
 <div class="me-orderlisting-info">
+<?php var_dump($listing_obj); ?>
 	<?php _e("The listing has already remove or archived.", "enginethemes"); ?>
-</div>	
-<?php endif; ?>
+</div>
+<?php endif; */?>

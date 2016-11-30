@@ -1,7 +1,7 @@
 <?php if($inquiry) :  ?>
 
 <?php
-	
+
 	do_action('marketengine_before_inquiry_form', $inquiry);
 
 	$user_id = get_current_user_id();
@@ -41,7 +41,7 @@
 									<li class="me-contact-user-tabs"><span><?php _e("Seller info", "enginethemes"); ?></span></li>
 								</ul>
 							</div>
-							
+
 							<div class="inquiry-message-wrapper">
 								<div id="messages-container" class="me-contact-messages" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
 
@@ -52,31 +52,22 @@
 											<?php me_get_template('inquiry/message-item', array('message' => $message)); ?>
 										<?php endforeach; ?>
 
+										<?php if(!$listing || $listing->post_status === "me-archived") : ?>
+											<p><?php _e('This listing has been archived'); ?>
+										<?php endif; ?>
 									</ul>
 
 								</div>
 
 								<div class="me-message-typing">
 
-								<?php if($listing) : ?>
+								<?php if($listing && $listing->post_status !== "me-archived") : ?>
 
-									<form method="post" id="send-message">
-										<div class="me-mc-container" id="me-mc-container"></div>
-										<textarea id="me-message-content" class="required me-message-content" required name="content" placeholder="<?php _e("Type your message here", "enginethemes"); ?>"></textarea>
-										<div class="upload-container">
-											<span id="me-message-send-btn" class="me-message-send-btn"><i class="icon-me-attach"></i></span>
-										</div>
-										<?php wp_nonce_field( 'me-inquiry-message', '_msg_wpnonce' ); ?>
-										<?php wp_nonce_field( 'marketengine', '_msg_file_nonce' ); ?>
-										<input type="hidden" name="inquiry_listing" value="<?php echo $listing->get_id(); ?>" />
-										<input type="hidden" name="inquiry_id" value="<?php echo $inquiry->ID; ?>" />
-									</form>
+									<?php me_get_template('inquiry/send-message-form'); ?>
 
 								<?php else: ?>
 
-									<p style="padding: 20px;font-size: 14px; line-height: 22px;">
-										<?php _e('This listing was deleted! You cannot send message!', "enginethemes"); ?>
-									</p>
+									<?php me_get_template('inquiry/send-message-disabled'); ?>
 
 								<?php endif; ?>
 								</div>
@@ -108,7 +99,7 @@
 	    // })(jQuery);
 	</script>
 
-<?php 
+<?php
 do_action('marketengine_after_inquiry_form', $inquiry);
  ?>
 

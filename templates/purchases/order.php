@@ -18,7 +18,7 @@ $author_id = $order->post_author;
 		<div class="me-col-md-9">
 
 			<?php
-				me_get_template( 'purchases/order-listing', array('listing_obj' => $listing_obj, 'seller' => true, 'transaction' => $order) );
+				me_get_template( 'purchases/order-listing', array('listing_obj' => $listing_obj, 'seller' => true, 'transaction' => $order, 'cart_listing' => $listing) );
 				me_get_template( 'user-info', array('class' => 'me-authors-xs me-visible-sm me-visible-xs', 'author_id' => $author_id ) );
 				me_get_template( 'purchases/order-action', array('order' => $order) );
 			?>

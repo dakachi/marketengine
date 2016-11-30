@@ -53,13 +53,20 @@ $query = new ME_Message_Query($args);
 					<p><a href="<?php echo me_inquiry_permalink($inquiry->ID); ?>"><?php echo get_the_author_meta( 'display_name', $inquiry->sender ); ?></a></p>
 				</div>
 			</div>
-			<?php if($new_message > 0) : ?>
-				<div class="me-table-col me-order-status me-unread">
-					<i class="icon-me-reply"></i><?php printf(__("%d unread", "enginethemes"), $new_message); ?>
+			<?php if($listing->post_status !== "me-archived") : ?>
+				<?php if($new_message > 0) : ?>
+					<div class="me-table-col me-order-status me-unread">
+						<i class="icon-me-reply"></i><?php printf(__("%d unread", "enginethemes"), $new_message); ?>
+					</div>
+				<?php else : ?>
+					<div class="me-table-col me-order-status me-read"><?php _e("read", "enginethemes"); ?></div>
+				<?php endif; ?>
+			<?php else :?>
+				<div class="me-table-col me-order-status">
+					<p class="me-item-archive"><i class="icon-me-info-circle"></i><?php _e('Archived', 'enginethemes'); ?></p>
 				</div>
-			<?php else : ?>
-				<div class="me-table-col me-order-status me-read"><?php _e("read", "enginethemes"); ?></div>
 			<?php endif; ?>
+
 			<div class="me-table-col me-order-listing"><?php echo $listing ? esc_html($listing->get_title()) : __('Deleted listing', 'enginethemes'); ?></div>
 			<div class="me-table-col me-order-date-contact"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $inquiry->post_modified ) ); ?></div>
 		</div>
