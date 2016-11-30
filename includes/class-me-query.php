@@ -2,7 +2,8 @@
 /**
  * Handle redirects before content is output - hooked into template_redirect so is_page works.
  */
-function me_template_redirect() {
+function me_template_redirect()
+{
     global $wp_query, $wp;
 
     // When default permalinks are enabled, redirect shop page to post type archive url
@@ -13,7 +14,8 @@ function me_template_redirect() {
 }
 add_action('template_redirect', 'me_template_redirect');
 
-function listing_body_classes( $classess ) {
+function listing_body_classes($classess)
+{
     $classes[] = 'marketengine-snap-column marketengine-snap-column-4';
     return $classes;
 }
@@ -21,19 +23,20 @@ function listing_body_classes( $classess ) {
 /**
  *
  */
-function me_pre_get_posts($query) {
+function me_pre_get_posts($query)
+{
     // Only affect the main query
     if (!$query->is_main_query()) {
         return;
     }
 
-    if(is_archive('listing') && !is_admin()) {
-        $query->set( 'post_status', 'publish');
+    if (is_archive('listing') && !is_admin()) {
+        $query->set('post_status', 'publish');
     }
 
-    if($query->is_author()) {
-        $query->set( 'post_type', 'listing');
-        $query->set( 'post_status', 'publish');
+    if ($query->is_author()) {
+        $query->set('post_type', 'listing');
+        $query->set('post_status', 'publish');
     }
 
     if ($GLOBALS['wp_rewrite']->use_verbose_page_rules && isset($query->queried_object->ID) && $query->queried_object->ID === me_get_page_id('listings')) {
@@ -77,13 +80,14 @@ function me_pre_get_posts($query) {
     }
 
     global $wp_post_types;
-    if( is_search() ) {
+    if (is_search()) {
         $wp_post_types['listing']->exclude_from_search = true;
     }
 }
 add_action('pre_get_posts', 'me_pre_get_posts');
 
-function me_products_plugin_query_vars($vars) {
+function me_products_plugin_query_vars($vars)
+{
     $vars[] = 'order-id';
     $vars[] = 'keyword';
 
@@ -98,8 +102,9 @@ add_filter('query_vars', 'me_products_plugin_query_vars');
  * @param  string $page
  * @return int
  */
-function me_get_page_id($page) {
-    $page_id = me_option('me_' . $page . '_page_id');
+function me_get_page_id($page)
+{
+    $page_id  = me_option('me_' . $page . '_page_id');
     $page_obj = get_post($page_id);
     return $page_id && isset($page_obj) ? absint($page_id) : -1;
 }
@@ -111,7 +116,8 @@ function me_get_page_id($page) {
  * @param  string $query_var
  * @return string
  */
-function me_get_endpoint_name($query_var) {
+function me_get_endpoint_name($query_var)
+{
     $current_endpoints = me_setting_endpoint_name();
     $query_var         = str_replace('-', '_', $query_var);
     return $current_endpoints[$query_var];
@@ -123,7 +129,8 @@ function me_get_endpoint_name($query_var) {
  * @access public
  * @return array of endpoints
  */
-function me_get_default_endpoints() {
+function me_get_default_endpoints()
+{
     $endpoint_arr = array(
         'forgot_password' => 'forgot-password',
         'reset_password'  => 'reset-password',
@@ -147,7 +154,8 @@ function me_get_default_endpoints() {
  * @access public
  * @return array of endpoints
  */
-function me_setting_endpoint_name() {
+function me_setting_endpoint_name()
+{
     $endpoint_arr = me_get_default_endpoints();
     foreach ($endpoint_arr as $key => $value) {
         $option_value = me_option('ep_' . $key);
@@ -163,7 +171,8 @@ function me_setting_endpoint_name() {
  *
  * @access public
  */
-function me_page_rewrite_rule($rewrite_args) {
+function me_page_rewrite_rule($rewrite_args)
+{
     foreach ($rewrite_args as $key => $value) {
         if ($value['page_id'] > -1) {
             $page = get_post($value['page_id']);
@@ -175,7 +184,8 @@ function me_page_rewrite_rule($rewrite_args) {
 /**
  * add account endpoint
  */
-function me_init_endpoint() {
+function me_init_endpoint()
+{
     $endpoint_arr = me_setting_endpoint_name();
     foreach ($endpoint_arr as $key => $value) {
         add_rewrite_endpoint($value, EP_ROOT | EP_PAGES, str_replace('_', '-', $key));
@@ -197,7 +207,7 @@ function me_init_endpoint() {
             'page_id'       => me_get_page_id('me_checkout'),
             'endpoint_name' => me_get_endpoint_name('pay'),
             'query_var'     => 'pay',
-        )
+        ),
     );
     me_page_rewrite_rule($rewrite_args);
 
@@ -207,9 +217,9 @@ function me_init_endpoint() {
     }
 
     $edit_listing_page = me_get_page_id('edit_listing');
-    if( $edit_listing_page > -1) {
+    if ($edit_listing_page > -1) {
         $page = get_post($edit_listing_page);
-        add_rewrite_rule('^/' . $page->post_name . '/'. me_get_endpoint_name('listing_id') .'/?([0-9]{1,})/?$', 'index.php?page_id='.$edit_listing_page.'&listing_id'.'=$matches[1]', 'top');
+        add_rewrite_rule('^/' . $page->post_name . '/' . me_get_endpoint_name('listing_id') . '/?([0-9]{1,})/?$', 'index.php?page_id=' . $edit_listing_page . '&listing_id' . '=$matches[1]', 'top');
     }
 
     rewrite_order_url();
@@ -220,7 +230,8 @@ add_action('init', 'me_init_endpoint');
  * Filter listing query
  * @since 1.0
  */
-function me_filter_listing_query($query) {
+function me_filter_listing_query($query)
+{
     // We only want to affect the main query
     if (!$query->is_main_query()) {
         return $query;
@@ -244,7 +255,8 @@ add_filter('pre_get_posts', 'me_filter_listing_query');
  * @param object $query The WP_Query Object
  * @since 1.0
  */
-function me_filter_price_query($query) {
+function me_filter_price_query($query)
+{
     if (!empty($_GET['price-min']) && !empty($_GET['price-max'])) {
         $min_price                                       = $_GET['price-min'];
         $max_price                                       = $_GET['price-max'];
@@ -272,7 +284,8 @@ function me_filter_price_query($query) {
  * @param object $query The WP_Query Object
  * @since 1.0
  */
-function me_filter_listing_type_query($query) {
+function me_filter_listing_type_query($query)
+{
     if (!empty($_GET['type'])) {
         $query->query_vars['meta_query']['filter_type'] = array(
             'key'     => '_me_listing_type',
@@ -288,7 +301,8 @@ function me_filter_listing_type_query($query) {
  * @param object $query The WP_Query Object
  * @since 1.0
  */
-function me_filter_search_query($query) {
+function me_filter_search_query($query)
+{
     if (!empty($_GET['keyword'])) {
         $query->query_vars['s'] = $_GET['keyword'];
     }
@@ -300,67 +314,70 @@ function me_filter_search_query($query) {
  * @param object $query The WP_Query Object
  * @since 1.0
  */
-function me_sort_listing_query($query) {
+function me_sort_listing_query($query)
+{
     if (!empty($_GET['orderby'])) {
         switch ($_GET['orderby']) {
-        case 'date':
-            $query->set('orderby', 'date');
-            break;
-        case 'price':
-            $query->set('meta_key', 'listing_price');
-            $meta_query = array(
-                'relation' => 'AND',
-                'filter_price' => array(
-                    'key' => 'listing_price',
-                ),
-                'type' => array(
-                    'key'     => '_me_listing_type',
-                    'value'   => 'purchasion',
-                    'compare' => '=',
-                ),
-            );
-            $query->set('meta_query', $meta_query);
-            $query->set('orderby', 'meta_value_num');
-            $query->set('order', 'asc');
-            break;
-        case 'price-desc':
-            $query->set('meta_key', 'listing_price');
-            $meta_query = array(
-                'relation' => 'AND',
-                'filter_price' => array(
-                    'key' => 'listing_price',
-                ),
-                'type' => array(
-                    'key'     => '_me_listing_type',
-                    'value'   => 'purchasion',
-                    'compare' => '=',
-                ),
-            );
-            $query->set('meta_query', $meta_query);
-            $query->set('orderby', 'meta_value_num');
-            $query->set('order', 'desc');
-            break;
-        case 'rating':
-            $query->set('meta_key', '_me_rating');
-            $query->set('orderby', 'meta_value_num');
-            $query->set('order', 'desc');
+            case 'date':
+                $query->set('orderby', 'date');
+                break;
+            case 'price':
+                $query->set('meta_key', 'listing_price');
+                $meta_query = array(
+                    'relation'     => 'AND',
+                    'filter_price' => array(
+                        'key' => 'listing_price',
+                    ),
+                    'type'         => array(
+                        'key'     => '_me_listing_type',
+                        'value'   => 'purchasion',
+                        'compare' => '=',
+                    ),
+                );
+                $query->set('meta_query', $meta_query);
+                $query->set('orderby', 'meta_value_num');
+                $query->set('order', 'asc');
+                break;
+            case 'price-desc':
+                $query->set('meta_key', 'listing_price');
+                $meta_query = array(
+                    'relation'     => 'AND',
+                    'filter_price' => array(
+                        'key' => 'listing_price',
+                    ),
+                    'type'         => array(
+                        'key'     => '_me_listing_type',
+                        'value'   => 'purchasion',
+                        'compare' => '=',
+                    ),
+                );
+                $query->set('meta_query', $meta_query);
+                $query->set('orderby', 'meta_value_num');
+                $query->set('order', 'desc');
+                break;
+            case 'rating':
+                $query->set('meta_key', '_me_rating');
+                $query->set('orderby', 'meta_value_num');
+                $query->set('order', 'desc');
         }
     }
     return $query;
 }
 
-function rewrite_order_url() {
+function rewrite_order_url()
+{
     $order_endpoint = me_get_endpoint_name('order_id');
     add_filter('post_type_link', 'custom_me_order_link', 1, 3);
 
-    add_rewrite_rule( $order_endpoint . '/([0-9]+)/?$', 'index.php?post_type=me_order&p=$matches[1]', 'top' );
+    add_rewrite_rule($order_endpoint . '/([0-9]+)/?$', 'index.php?post_type=me_order&p=$matches[1]', 'top');
 }
 
-function custom_me_order_link($order_link, $post = 0) {
+function custom_me_order_link($order_link, $post = 0)
+{
     if ($post->post_type == 'me_order') {
-        if(get_option('permalink_structure')) {
-            $pos = strrpos($order_link, '%/');
-            $order_link = substr($order_link, 0, $pos+1);
+        if (get_option('permalink_structure')) {
+            $pos        = strrpos($order_link, '%/');
+            $order_link = substr($order_link, 0, $pos + 1);
         }
         return str_replace('%post_id%', $post->ID, $order_link);
     } else {
