@@ -170,6 +170,7 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/me-cart-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-conversation-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-user-functions.php';
+            require_once ME_PLUGIN_PATH . '/includes/me-helper-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-widgets.php';
 
             require_once ME_PLUGIN_PATH . '/includes/abstracts/class-abstract-form.php';

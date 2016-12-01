@@ -177,36 +177,6 @@ class ME_Query
 ME_Query::instance();
 
 /**
- * Returns the page id
- *
- * @access public
- * @param  string $page_option_name The page option name
- * @return int
- */
-function me_get_option_page_id($page_option_name)
-{
-    $page_id  = absint(me_option('me_' . $page_option_name . '_page_id'));
-    $page = get_post($page_id);
-    if(!$page) {
-        return -1;
-    }
-    return $page_id;
-}
-
-/**
- * Returns the endpoint name by query_var.
- *
- * @access public
- * @param  string $query_var
- * @return string
- */
-function me_get_endpoint_name($query_var)
-{
-    $query_var = str_replace('-', '_', $query_var);
-    return me_option('ep_' . $query_var, 'order');
-}
-
-/**
  * Returns the default endpoints.
  *
  * @access public
