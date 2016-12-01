@@ -58,7 +58,7 @@
 									<?php endif; ?>
 
 										<?php if(!$listing || !$listing->is_available()) : ?>
-											<li><?php _e('This listing has been archived'); ?></li>
+											<li class="me-inquires-listing-archived"><i class="icon-me-minus-circle"></i><span><?php _e('This listing has been archived'); ?></span></li>
 										<?php endif; ?>
 
 									</ul>
