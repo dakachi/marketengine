@@ -1,9 +1,20 @@
 <?php
 class ME_Query
 {
+    static $instance = null;
+
+    public static function instance()
+    {
+        if (self::$instance == null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
     public function __construct()
     {
         add_action('pre_get_posts', array($this, 'filter_pre_get_posts'));
+        add_filter('query_vars', array($this, 'add_query_vars'));
     }
 
     /**
@@ -23,47 +34,6 @@ class ME_Query
         if ($query->is_author()) {
             $query->set('post_type', 'listing');
             $query->set('post_status', 'publish');
-        }
-
-        // convert page to archive listing
-        if ($GLOBALS['wp_rewrite']->use_verbose_page_rules && isset($query->queried_object->ID) && $query->queried_object->ID === me_get_page_id('listings')) {
-            $query->set('post_type', 'listing');
-            $query->set('page', '');
-            $query->set('pagename', '');
-
-            // Fix conditional Functions
-            $query->is_archive           = true;
-            $query->is_post_type_archive = true;
-            $query->is_singular          = false;
-            $query->is_page              = false;
-        }
-
-        // Fix for endpoints on the homepage
-        if ($query->is_home() && 'page' === get_option('show_on_front') && absint(get_option('page_on_front')) !== absint($query->get('page_id'))) {
-            $_query = wp_parse_args($query->query);
-            if (!empty($_query)) {
-                $query->is_page     = true;
-                $query->is_home     = false;
-                $query->is_singular = true;
-                $query->set('page_id', (int) get_option('page_on_front'));
-                add_filter('redirect_canonical', '__return_false');
-            }
-        }
-
-        // When orderby is set, WordPress shows posts. Get around that here.
-        if ($query->is_home() && 'page' === get_option('show_on_front') && absint(get_option('page_on_front')) === me_get_page_id('listings')) {
-            $_query = wp_parse_args($query->query);
-            if (empty($_query) || !array_diff(array_keys($_query), array('preview', 'page', 'paged', 'cpage', 'orderby'))) {
-                $query->is_page = true;
-                $query->is_home = false;
-                $query->set('page_id', (int) get_option('page_on_front'));
-                $query->set('post_type', 'listing');
-            }
-        }
-
-        // Special check for shops with the listing archive on front
-        if ($query->is_page() && 'page' === get_option('show_on_front') && absint($query->get('page_id')) === me_get_page_id('listings')) {
-            add_filter('body_class', array($this, 'listing_body_classes'));
         }
 
         global $wp_post_types;
@@ -161,38 +131,10 @@ class ME_Query
                     $query->set('orderby', 'date');
                     break;
                 case 'price':
-                    $query->set('meta_key', 'listing_price');
-                    $meta_query = array(
-                        'relation'     => 'AND',
-                        'filter_price' => array(
-                            'key' => 'listing_price',
-                        ),
-                        'type'         => array(
-                            'key'     => '_me_listing_type',
-                            'value'   => 'purchasion',
-                            'compare' => '=',
-                        ),
-                    );
-                    $query->set('meta_query', $meta_query);
-                    $query->set('orderby', 'meta_value_num');
-                    $query->set('order', 'asc');
+                    $query = $this->sort_by_price($query, 'asc');
                     break;
                 case 'price-desc':
-                    $query->set('meta_key', 'listing_price');
-                    $meta_query = array(
-                        'relation'     => 'AND',
-                        'filter_price' => array(
-                            'key' => 'listing_price',
-                        ),
-                        'type'         => array(
-                            'key'     => '_me_listing_type',
-                            'value'   => 'purchasion',
-                            'compare' => '=',
-                        ),
-                    );
-                    $query->set('meta_query', $meta_query);
-                    $query->set('orderby', 'meta_value_num');
-                    $query->set('order', 'desc');
+                    $query = $this->sort_by_price($query, 'desc');
                     break;
                 case 'rating':
                     $query->set('meta_key', '_me_rating');
@@ -203,66 +145,36 @@ class ME_Query
         return $query;
     }
 
-    public function listing_body_classes($classess)
+    public function sort_by_price($query, $asc = 'asc')
     {
-        $classes[] = 'marketengine-snap-column marketengine-snap-column-4';
-        return $classes;
+        $query->set('meta_key', 'listing_price');
+        $meta_query = array(
+            'relation'     => 'AND',
+            'filter_price' => array(
+                'key' => 'listing_price',
+            ),
+            'type'         => array(
+                'key'     => '_me_listing_type',
+                'value'   => 'purchasion',
+                'compare' => '=',
+            ),
+        );
+        $query->set('meta_query', $meta_query);
+        $query->set('orderby', 'meta_value_num');
+        $query->set('order', $asc);
+        return $query;
+    }
+
+    public function add_query_vars($vars)
+    {
+        $vars[] = 'order-id';
+        $vars[] = 'keyword';
+
+        return $vars;
     }
 }
 
-new ME_Query();
-
-/**
- * Handle redirects before content is output - hooked into template_redirect so is_page works.
- */
-function me_template_redirect()
-{
-    global $wp_query, $wp;
-
-    // When default permalinks are enabled, redirect shop page to post type archive url
-    if (!empty($_GET['page_id']) && '' === get_option('permalink_structure') && $_GET['page_id'] == me_get_page_id('listings')) {
-        wp_safe_redirect(get_post_type_archive_link('listing'));
-        exit;
-    }
-}
-add_action('template_redirect', 'me_template_redirect');
-
-function me_products_plugin_query_vars($vars)
-{
-    $vars[] = 'order-id';
-    $vars[] = 'keyword';
-
-    return $vars;
-}
-add_filter('query_vars', 'me_products_plugin_query_vars');
-
-/**
- * Returns the page id
- *
- * @access public
- * @param  string $page
- * @return int
- */
-function me_get_page_id($page)
-{
-    $page_id  = me_option('me_' . $page . '_page_id');
-    $page_obj = get_post($page_id);
-    return $page_id && isset($page_obj) ? absint($page_id) : -1;
-}
-
-/**
- * Returns the endpoint name by query_var.
- *
- * @access public
- * @param  string $query_var
- * @return string
- */
-function me_get_endpoint_name($query_var)
-{
-    $current_endpoints = me_setting_endpoint_name();
-    $query_var         = str_replace('-', '_', $query_var);
-    return $current_endpoints[$query_var];
-}
+ME_Query::instance();
 
 /**
  * Returns the default endpoints.
@@ -334,18 +246,18 @@ function me_init_endpoint()
 
     $rewrite_args = array(
         array(
-            'page_id'       => me_get_page_id('confirm_order'),
+            'page_id'       => me_get_option_page_id('confirm_order'),
             'endpoint_name' => me_get_endpoint_name('order-id'),
             'query_var'     => 'order-id',
         ),
 
         array(
-            'page_id'       => me_get_page_id('cancel_order'),
+            'page_id'       => me_get_option_page_id('cancel_order'),
             'endpoint_name' => me_get_endpoint_name('order-id'),
             'query_var'     => 'order-id',
         ),
         array(
-            'page_id'       => me_get_page_id('me_checkout'),
+            'page_id'       => me_get_option_page_id('me_checkout'),
             'endpoint_name' => me_get_endpoint_name('pay'),
             'query_var'     => 'pay',
         ),
@@ -357,7 +269,7 @@ function me_init_endpoint()
         add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
     }
 
-    $edit_listing_page = me_get_page_id('edit_listing');
+    $edit_listing_page = me_get_option_page_id('edit_listing');
     if ($edit_listing_page > -1) {
         $page = get_post($edit_listing_page);
         add_rewrite_rule('^/' . $page->post_name . '/' . me_get_endpoint_name('listing_id') . '/?([0-9]{1,})/?$', 'index.php?page_id=' . $edit_listing_page . '&listing_id' . '=$matches[1]', 'top');

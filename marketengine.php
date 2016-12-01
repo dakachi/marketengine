@@ -170,6 +170,7 @@ if (!class_exists('MarketEngine')):
             require_once ME_PLUGIN_PATH . '/includes/me-cart-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-conversation-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-user-functions.php';
+            require_once ME_PLUGIN_PATH . '/includes/me-helper-functions.php';
             require_once ME_PLUGIN_PATH . '/includes/me-widgets.php';
 
             require_once ME_PLUGIN_PATH . '/includes/abstracts/class-abstract-form.php';
@@ -270,6 +271,7 @@ if (!class_exists('MarketEngine')):
             wp_enqueue_style('me_font_icon', $this->plugin_url() . '/assets/css/marketengine-font-icon.css');
             wp_enqueue_style('flexslider', $this->plugin_url() . '/assets/css/flexslider.css');
 
+            wp_enqueue_script('jquery');
             wp_enqueue_script('plupload-all');
             wp_enqueue_script('muploader.js', $this->plugin_url() . "/assets/js/muploader$suffix.js", array('jquery','plupload-all'), $this->version, true);
             
@@ -348,8 +350,6 @@ if (!class_exists('MarketEngine')):
          */
         public function add_ajax(){
             // TODO: move to admin package
-            add_action('wp_ajax_me-option-sync', array('ME_Options_Handle', 'option_sync'));
-            add_action('wp_ajax_me-edit-page', array('ME_Options_Handle', 'me_edit_page'));
         }
 
         /**

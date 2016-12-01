@@ -7,16 +7,18 @@ if (!defined('ABSPATH')) {
 class ME_Options_Handle
 {
 
-    public $_instance;
+    static $_instance;
 
-    public function get_instance()
+    public static function instance()
     {
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
         }
         return self::$_instance;
     }
-
+    public function __construct() {
+        add_action('wp_ajax_me-option-sync', array($this, 'option_sync'));
+    }
     /**
      *  Sync option
      *  @author     KyNguyen
@@ -63,3 +65,4 @@ class ME_Options_Handle
         wp_send_json($response);
     }
 }
+ME_Options_Handle::instance();

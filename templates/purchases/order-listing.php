@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) {
 
 	<div class="me-listing-info">
 
-		<?php if($listing_obj->post_status === "me-archived") : ?>
+		<?php if($listing_obj->is_available()) : ?>
 		<h2><a href="<?php echo $listing_obj->get_permalink(); ?>"><?php echo esc_html($cart_listing['title']); ?></a></h2>
 		<?php else: ?>
 		<h2><?php echo esc_html($cart_listing['title']); ?></h2>
@@ -47,7 +47,7 @@ if (!defined('ABSPATH')) {
 
 	<?php
 		$seller = $listing_obj->get_author();
-		$can_rate = $seller != get_current_user_id() && $listing_obj->post_status !== "me-archived";
+		$can_rate = $seller != get_current_user_id() && $listing_obj->is_available();
 	?>
 	<?php if( $can_rate  && !me_get_user_rate_listing_score($listing_obj->ID, $transaction->post_author) && !$transaction->has_status('me-pending') ) : ?>
 		<a class="me-orderlisting-review" href="<?php echo add_query_arg(array('id' => $listing_obj->ID, 'action' => 'review')); ?>">
@@ -55,13 +55,5 @@ if (!defined('ABSPATH')) {
 		</a>
 	<?php endif; ?>
 
-	<?php if($listing_obj->post_status === "me-archived") : ?>
-	<p class="me-item-archive"><i class="icon-me-info-circle"></i><?php _e('This listing has been archived.', 'enginethemes'); ?></p>
-	<?php endif; ?>
+	<?php me_get_template('purchases/archived-listing-notice', array('listing_obj' => $listing_obj) ); ?>
 </div>
-<?php /* else : ?>
-<div class="me-orderlisting-info">
-<?php var_dump($listing_obj); ?>
-	<?php _e("The listing has already remove or archived.", "enginethemes"); ?>
-</div>
-<?php endif; */?>

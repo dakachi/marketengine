@@ -184,7 +184,7 @@ return array(
                         'description' => __("Endpoint for the Order Confirmation page -> Order ID page", "enginethemes"),
                         'slug'        => 'ep-orderid',
                         'type'        => 'textbox',
-                        'name'        => 'ep_orderid',
+                        'name'        => 'ep_order_id',
                         'placeholder' => 'order',
                         'template'    => array(),
                     )
