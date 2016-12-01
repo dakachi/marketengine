@@ -20,11 +20,7 @@ if (!defined('ABSPATH')) {
 
 	<div class="me-listing-info">
 
-		<?php if($listing_obj->is_available()) : ?>
-		<h2><a href="<?php echo $listing_obj->get_permalink(); ?>"><?php echo esc_html($cart_listing['title']); ?></a></h2>
-		<?php else: ?>
-		<h2><?php echo esc_html($cart_listing['title']); ?></h2>
-		<?php endif; ?>
+		<h2><a href="<?php echo $listing_obj && (($listing_obj->get_author() == get_current_user_id()) || $listing_obj->is_available()) ? $listing_obj->get_permalink() : 'javascript:void(0)'; ?>"><?php echo esc_html($cart_listing['title']); ?></a></h2>
 
 		<div class="me-rating">
 			<div class="result-rating" data-score="<?php echo $listing_obj->get_review_score(); ?>"></div>
