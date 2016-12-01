@@ -24,15 +24,14 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-[class*="icon-media"] {
-  font-family: inherit !important;
-}
-
-.icon-me-listing:before {
-  content: "\e924";
+.icon-me-minus-circle:before {
+  content: "\e92a";
 }
 .icon-me-logo:before {
-  content: "\e92a";
+  content: "\e92b";
+}
+.icon-me-listing:before {
+  content: "\e924";
 }
 .icon-me-image:before {
   content: "\e922";

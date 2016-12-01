@@ -308,6 +308,7 @@
 	position: relative;
 	margin-top: 20px;
 	border-top: 1px solid $color_border_1;
+	font-size: 0;
 	textarea {
 		padding: 10px 40px 10px 20px; 
 		width: 100%;
@@ -328,6 +329,7 @@
 		width: 30px;
 		height: 30px;
 		padding: 7px 8px;
+		font-size: $font_size_base;
 		cursor: pointer;
 		input[type="submit"] {
 			
@@ -361,7 +363,9 @@
 		right: 2px;
 	}
 }
-
+#me-message-send-btn-disabled {
+	cursor: default;
+}
 .me-mess-file-item {
 	position: relative;
 	margin-top: 14px;
@@ -560,6 +564,19 @@ ul.me-contact-tabs {
 		margin: 20px 0 0;
 		font-size: $font_size_medium;
 		color: $color_text;
+	}
+}
+.me-inquires-listing-archived {
+	text-align: center;
+	font-size: $font_size_medium;
+	color: $color_text;
+	.icon-me-minus-circle {
+		font-size: 30px;
+		color: $color_skin;
+	}
+	span {
+		display: block;
+		margin: 6px 0 30px;
 	}
 }
 
