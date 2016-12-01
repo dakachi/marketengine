@@ -63,7 +63,7 @@
 
 								<?php if($listing && $listing->post_status !== "me-archived") : ?>
 
-									<?php me_get_template('inquiry/send-message-form', 'listing' => $listing); ?>
+									<?php me_get_template('inquiry/send-message-form', array('listing' => $listing)); ?>
 
 								<?php else: ?>
 
