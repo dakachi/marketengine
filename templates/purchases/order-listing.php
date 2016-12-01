@@ -2,12 +2,17 @@
 <div class="me-orderlisting-info">
 	<a class="me-orderlisting-thumbs" href="<?php echo $listing_obj->get_permalink(); ?>"><?php echo $listing_obj->get_listing_thumbnail(); ?></a>
 	<div class="me-listing-info">
+
+		<?php if($listing_obj->post_status === "me-archived") : ?>
 		<h2><a href="<?php echo $listing_obj->get_permalink(); ?>"><?php echo esc_html($cart_listing['title']); ?></a></h2>
+		<?php else: ?>
+		<h2><?php echo esc_html($cart_listing['title']); ?></h2>
+		<?php endif; ?>
+
 		<div class="me-rating">
 			<div class="result-rating" data-score="<?php echo $listing_obj->get_review_score(); ?>"></div>
 		</div>
 		<div class="me-count-purchases-review">
-			<?php // <span>12 Purchase</span><span>30 review</span> ?>
 			<span><?php printf(_n('%d Purchase', '%d Purchases', $listing_obj->get_order_count(), 'enginethemes'), $listing_obj->get_order_count()); ?></span>
 			<span><?php printf(_n('%d Review', '%d Reviews', $listing_obj->get_review_count(), 'enginethemes'), $listing_obj->get_review_count()); ?></span>
 		</div>
