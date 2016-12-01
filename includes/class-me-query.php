@@ -13,8 +13,122 @@ class ME_Query
 
     public function __construct()
     {
+        add_action('init', array($this, 'init_endpoint'));
         add_action('pre_get_posts', array($this, 'filter_pre_get_posts'));
         add_filter('query_vars', array($this, 'add_query_vars'));
+        add_filter('post_type_link', array($this, 'custom_order_link'), 1, 3);
+    }
+
+    /**
+     * add account endpoint
+     */
+    public function init_endpoint()
+    {
+        $endpoint_arr = $this->load_endpoint_name();
+        foreach ($endpoint_arr as $key => $value) {
+            add_rewrite_endpoint($value, EP_ROOT | EP_PAGES, str_replace('_', '-', $key));
+        }
+
+        $rewrite_args = array(
+            array(
+                'page_id'       => me_get_option_page_id('confirm_order'),
+                'endpoint_name' => me_get_endpoint_name('order-id'),
+                'query_var'     => 'order-id',
+            ),
+
+            array(
+                'page_id'       => me_get_option_page_id('cancel_order'),
+                'endpoint_name' => me_get_endpoint_name('order-id'),
+                'query_var'     => 'order-id',
+            ),
+            array(
+                'page_id'       => me_get_option_page_id('me_checkout'),
+                'endpoint_name' => me_get_endpoint_name('pay'),
+                'query_var'     => 'pay',
+            ),
+        );
+        $this->me_page_rewrite_rule($rewrite_args);
+
+        $endpoints = array('orders', 'purchases', 'listings');
+        foreach ($endpoints as $endpoint) {
+            add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
+        }
+
+        $edit_listing_page = me_get_option_page_id('edit_listing');
+        if ($edit_listing_page > -1) {
+            $page = get_post($edit_listing_page);
+            add_rewrite_rule('^/' . $page->post_name . '/' . me_get_endpoint_name('listing_id') . '/?([0-9]{1,})/?$', 'index.php?page_id=' . $edit_listing_page . '&listing_id' . '=$matches[1]', 'top');
+        }
+
+        $this->rewrite_order_url();
+    }
+
+    /**
+     * Renames endpoints and returns them.
+     *
+     * @access public
+     * @return array of endpoints
+     */
+    public function load_endpoint_name()
+    {
+        $endpoint_arr = me_default_endpoints();
+        foreach ($endpoint_arr as $key => $value) {
+            $option_value = me_option('ep_' . $key);
+            if (isset($option_value) && !empty($option_value) && $option_value != $value) {
+                $endpoint_arr[$key] = $option_value;
+            }
+        }
+        return $endpoint_arr;
+    }
+
+    /**
+     * Rewrite page url.
+     *
+     * @access public
+     */
+    public function me_page_rewrite_rule($rewrite_args)
+    {
+        foreach ($rewrite_args as $key => $value) {
+            if ($value['page_id'] > -1) {
+                $page = get_post($value['page_id']);
+                add_rewrite_rule('^/' . $page->post_name . '/' . $value['endpoint_name'] . '/([^/]*)/?', 'index.php?page_id=' . $value['page_id'] . '&' . $value['query_var'] . '=$matches[1]', 'top');
+            }
+        }
+    }
+
+    /**
+     * Filters order detail url.
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     */
+    public function rewrite_order_url()
+    {
+        $order_endpoint = me_get_endpoint_name('order_id');
+        add_rewrite_rule($order_endpoint . '/([0-9]+)/?$', 'index.php?post_type=me_order&p=$matches[1]', 'top');
+    }
+
+    /**
+     * Filters order detail url.
+     *
+     * @param       string $permalink
+     * @param       object $post
+     * @return      string $permalink
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     */
+    public function custom_order_link($order_link, $post = 0)
+    {
+        if ($post->post_type == 'me_order') {
+            if (get_option('permalink_structure')) {
+                $pos        = strrpos($order_link, '%/');
+                $order_link = substr($order_link, 0, $pos + 1);
+            }
+            return str_replace('%post_id%', $post->ID, $order_link);
+        } else {
+            return $order_link;
+        }
     }
 
     /**
@@ -175,143 +289,3 @@ class ME_Query
 }
 
 ME_Query::instance();
-
-/**
- * Returns the default endpoints.
- *
- * @access public
- * @return array of endpoints
- */
-function me_get_default_endpoints()
-{
-    $endpoint_arr = array(
-        'forgot_password' => 'forgot-password',
-        'reset_password'  => 'reset-password',
-        'register'        => 'register',
-        'edit_profile'    => 'edit-profile',
-        'change_password' => 'change-password',
-        'listings'        => 'listings',
-        'orders'          => 'orders',
-        'order_id'        => 'order',
-        'purchases'       => 'purchases',
-        'pay'             => 'pay',
-        'listing_id'      => 'listing-id',
-        'seller_id'       => 'seller',
-    );
-    return $endpoint_arr;
-}
-
-/**
- * Renames endpoints and returns them.
- *
- * @access public
- * @return array of endpoints
- */
-function me_setting_endpoint_name()
-{
-    $endpoint_arr = me_get_default_endpoints();
-    foreach ($endpoint_arr as $key => $value) {
-        $option_value = me_option('ep_' . $key);
-        if (isset($option_value) && !empty($option_value) && $option_value != $value) {
-            $endpoint_arr[$key] = $option_value;
-        }
-    }
-    return $endpoint_arr;
-}
-
-/**
- * Rewrite page url.
- *
- * @access public
- */
-function me_page_rewrite_rule($rewrite_args)
-{
-    foreach ($rewrite_args as $key => $value) {
-        if ($value['page_id'] > -1) {
-            $page = get_post($value['page_id']);
-            add_rewrite_rule('^/' . $page->post_name . '/' . $value['endpoint_name'] . '/([^/]*)/?', 'index.php?page_id=' . $value['page_id'] . '&' . $value['query_var'] . '=$matches[1]', 'top');
-        }
-    }
-}
-
-/**
- * add account endpoint
- */
-function me_init_endpoint()
-{
-    $endpoint_arr = me_setting_endpoint_name();
-    foreach ($endpoint_arr as $key => $value) {
-        add_rewrite_endpoint($value, EP_ROOT | EP_PAGES, str_replace('_', '-', $key));
-    }
-
-    $rewrite_args = array(
-        array(
-            'page_id'       => me_get_option_page_id('confirm_order'),
-            'endpoint_name' => me_get_endpoint_name('order-id'),
-            'query_var'     => 'order-id',
-        ),
-
-        array(
-            'page_id'       => me_get_option_page_id('cancel_order'),
-            'endpoint_name' => me_get_endpoint_name('order-id'),
-            'query_var'     => 'order-id',
-        ),
-        array(
-            'page_id'       => me_get_option_page_id('me_checkout'),
-            'endpoint_name' => me_get_endpoint_name('pay'),
-            'query_var'     => 'pay',
-        ),
-    );
-    me_page_rewrite_rule($rewrite_args);
-
-    $endpoints = array('orders', 'purchases', 'listings');
-    foreach ($endpoints as $endpoint) {
-        add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
-    }
-
-    $edit_listing_page = me_get_option_page_id('edit_listing');
-    if ($edit_listing_page > -1) {
-        $page = get_post($edit_listing_page);
-        add_rewrite_rule('^/' . $page->post_name . '/' . me_get_endpoint_name('listing_id') . '/?([0-9]{1,})/?$', 'index.php?page_id=' . $edit_listing_page . '&listing_id' . '=$matches[1]', 'top');
-    }
-
-    rewrite_order_url();
-}
-add_action('init', 'me_init_endpoint');
-
-/**
- * Filters order detail url.
- *
- * @since       1.0.0
- * @version     1.0.0
- */
-function rewrite_order_url()
-{
-    $order_endpoint = me_get_endpoint_name('order_id');
-    add_filter('post_type_link', 'custom_me_order_link', 1, 3);
-
-    add_rewrite_rule($order_endpoint . '/([0-9]+)/?$', 'index.php?post_type=me_order&p=$matches[1]', 'top');
-}
-
-/**
- * Filters order detail url.
- *
- * @param       string $permalink
- * @param       object $post
- * @return      string $permalink
- *
- * @since       1.0.0
- * @version     1.0.0
- */
-function custom_me_order_link($order_link, $post = 0)
-{
-    if ($post->post_type == 'me_order') {
-        if (get_option('permalink_structure')) {
-            $pos        = strrpos($order_link, '%/');
-            $order_link = substr($order_link, 0, $pos + 1);
-        }
-        return str_replace('%post_id%', $post->ID, $order_link);
-    } else {
-        return $order_link;
-    }
-}
