@@ -14,9 +14,10 @@ $listing_items = $transaction->get_listing_items();
 $listing = array_pop($listing_items);
 
 $listing_obj = me_get_listing($listing['ID']);
-$listing_cat = get_the_terms($listing_obj->ID, 'listing_category');
 
-$author_id = $listing_obj->post_author;
+// $listing_cat = get_the_terms($listing_obj->ID, 'listing_category');
+
+$author_id = $listing_obj ? $listing_obj->post_author : '';
 ?>
 <div class="marketengine-content">
 	<?php me_print_notices(); ?>

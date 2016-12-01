@@ -50,15 +50,18 @@
 									<ul class="me-contact-messages-list" >
 
 									<?php if( $messages ) : ?>
-									<?php foreach ($messages  as $key => $message) : ?>
+										<?php foreach ($messages  as $key => $message) : ?>
 										<?php me_get_template('inquiry/message-item', array('message' => $message)); ?>
-									<?php endforeach; ?>
-									<?php else : ?>
+										<?php endforeach; ?>
+									<?php elseif($listing) : ?>
 										<?php me_get_template('inquiry/message-item-notfound', array('author' => $listing->get_author()) ); ?>
 									<?php endif; ?>
-
-										<?php if(!$listing || !$listing->is_available()) : ?>
-											<li class="me-inquires-listing-archived"><i class="icon-me-minus-circle"></i><span><?php _e('This listing has been archived'); ?></span></li>
+										<?php if( $listing ) : ?>
+											<?php if( !$listing->is_available() ) : ?>
+											<li class="me-inquires-listing-archived"><i class="icon-me-minus-circle"></i><span><?php _e('This listing has been archived', 'enginethemes'); ?></span></li>
+											<?php endif; ?>
+										<?php else : ?>
+											<li class="me-inquires-listing-archived"><i class="icon-me-minus-circle"></i><span><?php _e('This listing has been deleted', 'enginethemes'); ?></span></li>
 										<?php endif; ?>
 
 									</ul>

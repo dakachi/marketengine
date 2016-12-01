@@ -40,7 +40,7 @@ $query = new ME_Message_Query($args);
 			</div>
 		<?php
 		if( $query->have_posts() ) : ?>
-			
+
 		<?php
 			foreach( $query->posts as $inquiry ) :
 				$listing = me_get_listing($inquiry->post_parent);
@@ -53,7 +53,8 @@ $query = new ME_Message_Query($args);
 					<p><a href="<?php echo me_inquiry_permalink($inquiry->ID); ?>"><?php echo get_the_author_meta( 'display_name', $inquiry->sender ); ?></a></p>
 				</div>
 			</div>
-			<?php if($listing->post_status !== "me-archived") : ?>
+
+			<?php if($listing && $listing->is_available()) : ?>
 				<?php if($new_message > 0) : ?>
 					<div class="me-table-col me-order-status me-unread">
 						<i class="icon-me-reply"></i><?php printf(__("%d unread", "enginethemes"), $new_message); ?>

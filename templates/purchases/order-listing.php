@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
 }
 ?>
 <div class="me-orderlisting-info">
-
+<?php if ($listing_obj) : ?>
 	<?php me_get_template('purchases/order-listing-image', array('listing_obj' => $listing_obj)); ?>
 
 	<div class="me-listing-info">
@@ -29,10 +29,12 @@ if (!defined('ABSPATH')) {
 		<div class="me-rating">
 			<div class="result-rating" data-score="<?php echo $listing_obj->get_review_score(); ?>"></div>
 		</div>
+
 		<div class="me-count-purchases-review">
 			<span><?php printf(_n('%d Purchase', '%d Purchases', $listing_obj->get_order_count(), 'enginethemes'), $listing_obj->get_order_count()); ?></span>
 			<span><?php printf(_n('%d Review', '%d Reviews', $listing_obj->get_review_count(), 'enginethemes'), $listing_obj->get_review_count()); ?></span>
 		</div>
+
 		<div class="me-listing-desc">
 			<div class="me-listing-desc-less">
 				<?php echo $listing_obj->get_short_description(20); ?>
@@ -56,4 +58,7 @@ if (!defined('ABSPATH')) {
 	<?php endif; ?>
 
 	<?php me_get_template('purchases/archived-listing-notice', array('listing_obj' => $listing_obj) ); ?>
+<?php else: ?>
+	<p class="me-item-archive"><i class="icon-me-info-circle"></i><?php _e('This listing has been deleted.', 'enginethemes'); ?></p>
+<?php endif; ?>
 </div>
