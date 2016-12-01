@@ -16,11 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="me-orderlisting-info">
 
-	<a class="me-orderlisting-thumbs" href="<?php echo $listing->get_permalink(); ?>">
-		<?php echo $listing->get_listing_thumbnail(); ?>
-	</a>
+	<?php me_get_template('purchases/order-listing-image', array('listing_obj' => $listing)); ?>
 	<div class="me-listing-info">
-		<a href="<?php echo $listing->get_permalink(); ?>">
+		<a href="<?php echo $listing->is_available() ? $listing->get_permalink() : 'javascript:void(0)'; ?>">
 			<?php echo esc_html( $listing->get_title() ); ?>
 		</a>
 
@@ -28,7 +26,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	</div>
 
-<?php if($listing->post_status === 'me-archived') : ?>
-	<p class="me-item-archive"><i class="icon-me-info-circle"></i><?php _e('This listing has been archived.', 'enginethemes'); ?></p>
-<?php endif; ?>
+	<?php me_get_template('purchases/archived-listing-notice', array('listing_obj' => $listing) ); ?>
 </div>
