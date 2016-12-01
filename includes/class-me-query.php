@@ -10,38 +10,45 @@
  */
 class ME_Query
 {
-    static $instance = null;
+    /**
+     * The single instance of the class.
+     *
+     * @var ME_Query
+     * @since 1.0
+     */
+    protected static $_instance = null;
 
+    /**
+     * Main ME_Query Instance.
+     *
+     * Ensures only one instance of ME_Query is loaded or can be loaded.
+     *
+     * @since 1.0
+     * @static
+     * @return ME_Query - Main instance.
+     */
     public static function instance()
     {
-        if (self::$instance == null) {
-            self::$instance = new self();
+        if (is_null(self::$_instance)) {
+            self::$_instance = new self();
         }
-        return self::$instance;
-    }
-
-    public function __construct()
-    {
-        add_action('init', array($this, 'init_endpoint'));
-        add_action('pre_get_posts', array($this, 'filter_pre_get_posts'));
-        add_filter('query_vars', array($this, 'add_query_vars'));
-        add_filter('post_type_link', array($this, 'custom_order_link'), 1, 3);
+        return self::$_instance;
     }
 
     /**
-     * add account endpoint
+     * ME_Query Class contructor
+     *
+     * Initialize hooks to filter query, add enpoint, rewrite rules
+     *
+     * @since 1.0
      */
-    public function init_endpoint()
+    public function __construct()
     {
-        $this->add_enpoint();
+        add_action('init', array($this, 'init_endpoint'));
+        add_filter('query_vars', array($this, 'add_query_vars'));
+        add_filter('post_type_link', array($this, 'custom_order_link'), 1, 3);
 
-        $this->rewrite_payment_flow_url();
-
-        $this->rewrite_account_url();
-
-        $this->rewrite_edit_listing_url();
-
-        $this->rewrite_order_url();
+        add_action('pre_get_posts', array($this, 'filter_pre_get_posts'));
     }
 
     /**
@@ -64,6 +71,27 @@ class ME_Query
         return $endpoint_arr;
     }
 
+    /**
+     * Hook to action init setup site enpoint
+     * @since 1.0
+     */
+    public function init_endpoint()
+    {
+        $this->add_enpoint();
+
+        $this->rewrite_payment_flow_url();
+
+        $this->rewrite_user_account_url();
+
+        $this->rewrite_edit_listing_url();
+
+        $this->rewrite_order_detail_url();
+    }
+
+    /**
+     * Add plugin supported enpoint
+     * @since 1.0
+     */
     private function add_enpoint()
     {
         $endpoint_arr = $this->load_endpoints_name();
@@ -73,9 +101,12 @@ class ME_Query
     }
 
     /**
-     * Rewrite page url.
+     * Rewrite page flow page url.
+     * - confirm order page
+     * - cancel order page
+     * - checkout page
      *
-     * @access private
+     * @since 1.0
      */
     private function rewrite_payment_flow_url()
     {
@@ -105,7 +136,11 @@ class ME_Query
         }
     }
 
-    private function rewrite_account_url()
+    /**
+     * Rewrite user account url rule
+     * @since 1.0
+     */
+    private function rewrite_user_account_url()
     {
         $endpoints = array('orders', 'purchases', 'listings');
         foreach ($endpoints as $endpoint) {
@@ -113,6 +148,10 @@ class ME_Query
         }
     }
 
+    /**
+     * Rewrite edit listing url rule
+     * @since 1.0
+     */
     private function rewrite_edit_listing_url()
     {
         $edit_listing_page = me_get_option_page_id('edit_listing');
@@ -127,7 +166,7 @@ class ME_Query
      * @since       1.0.0
      * @version     1.0.0
      */
-    private function rewrite_order_url()
+    private function rewrite_order_detail_url()
     {
         $order_endpoint = me_get_endpoint_name('order_id');
         add_rewrite_rule($order_endpoint . '/([0-9]+)/?$', 'index.php?post_type=me_order&p=$matches[1]', 'top');
