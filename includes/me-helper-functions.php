@@ -40,7 +40,9 @@ function me_get_endpoint_name($query_var)
     $query_var        = str_replace('-', '_', $query_var);
     $defaults         = me_default_endpoints();
     $default_endpoint = isset($defaults[$query_var]) ? $defaults[$query_var] : '';
-    return me_option('ep_' . $query_var, $default_endpoint);
+
+    $enpoint = me_option('ep_' . $query_var);
+    return $endpoint ? $endpoint : $default_endpoint;
 }
 
 /**
