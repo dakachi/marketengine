@@ -540,6 +540,29 @@ ul.me-contact-tabs {
 	}
 }
 
+.me-inquires-avatar-seller {
+	margin-top: 90px;
+	margin-bottom: 50px;
+	text-align: center;
+	img {
+		width: 70px;
+		height: 70px;
+	}
+	b {
+		display: block;
+		margin-top: 10px;
+		font-size: $font_size_large;
+		font-weight: 700;
+		color: $color_text;
+		line-height: 1.2em;
+	}
+	p {
+		margin: 20px 0 0;
+		font-size: $font_size_medium;
+		color: $color_text;
+	}
+}
+
 @media (max-width: $screen_xs_max) {
 	.me-contact-listing-wrap {
 		margin-top: 0;

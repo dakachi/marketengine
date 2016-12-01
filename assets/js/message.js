@@ -188,6 +188,7 @@
                         if (response.success) {
                             $ul.append(response.content);
                             $message_container.scrollTop($message_container[0].scrollHeight);
+                            $elem.find('.me-inquires-no-conversation').remove();
                             $elem.find('.marketengine-loading').remove();
                         }
                     }

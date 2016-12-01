@@ -75,9 +75,9 @@ class ME_Query
     /**
      * Rewrite page url.
      *
-     * @access public
+     * @access private
      */
-    public function rewrite_payment_flow_url()
+    private function rewrite_payment_flow_url()
     {
         $rewrite_args = array(
             array(
@@ -105,7 +105,7 @@ class ME_Query
         }
     }
 
-    public function rewrite_account_url()
+    private function rewrite_account_url()
     {
         $endpoints = array('orders', 'purchases', 'listings');
         foreach ($endpoints as $endpoint) {
@@ -113,7 +113,7 @@ class ME_Query
         }
     }
 
-    public function rewrite_edit_listing_url()
+    private function rewrite_edit_listing_url()
     {
         $edit_listing_page = me_get_option_page_id('edit_listing');
         if ($edit_listing_page > -1) {
@@ -127,7 +127,7 @@ class ME_Query
      * @since       1.0.0
      * @version     1.0.0
      */
-    public function rewrite_order_url()
+    private function rewrite_order_url()
     {
         $order_endpoint = me_get_endpoint_name('order_id');
         add_rewrite_rule($order_endpoint . '/([0-9]+)/?$', 'index.php?post_type=me_order&p=$matches[1]', 'top');
@@ -136,24 +136,23 @@ class ME_Query
     /**
      * Filters order detail url.
      *
-     * @param       string $permalink
+     * @param       string $post_link
      * @param       object $post
-     * @return      string $permalink
+     * @return      string $post_link
      *
      * @since       1.0.0
      * @version     1.0.0
      */
-    public function custom_order_link($order_link, $post = 0)
+    public function custom_order_link($post_link, $post = 0)
     {
         if ($post->post_type == 'me_order') {
             if (get_option('permalink_structure')) {
-                $pos        = strrpos($order_link, '%/');
-                $order_link = substr($order_link, 0, $pos + 1);
+                $pos       = strrpos($post_link, '%/');
+                $post_link = substr($post_link, 0, $pos + 1);
             }
-            return str_replace('%post_id%', $post->ID, $order_link);
-        } else {
-            return $order_link;
+            return str_replace('%post_id%', $post->ID, $post_link);
         }
+        return $post_link;
     }
 
     /**
@@ -264,22 +263,23 @@ class ME_Query
      */
     public function sort_listing_query($query)
     {
-        if (!empty($_GET['orderby'])) {
-            switch ($_GET['orderby']) {
-                case 'date':
-                    $query->set('orderby', 'date');
-                    break;
-                case 'price':
-                    $query = $this->sort_by_price($query, 'asc');
-                    break;
-                case 'price-desc':
-                    $query = $this->sort_by_price($query, 'desc');
-                    break;
-                case 'rating':
-                    $query->set('meta_key', '_me_rating');
-                    $query->set('orderby', 'meta_value_num');
-                    $query->set('order', 'desc');
-            }
+        if (empty($_GET['orderby'])) {
+            return $query;
+        }
+        switch ($_GET['orderby']) {
+            case 'date':
+                $query->set('orderby', 'date');
+                break;
+            case 'price':
+                $query = $this->sort_by_price($query, 'asc');
+                break;
+            case 'price-desc':
+                $query = $this->sort_by_price($query, 'desc');
+                break;
+            case 'rating':
+                $query->set('meta_key', '_me_rating');
+                $query->set('orderby', 'meta_value_num');
+                $query->set('order', 'desc');
         }
         return $query;
     }
@@ -292,7 +292,7 @@ class ME_Query
             'filter_price' => array(
                 'key' => 'listing_price',
             ),
-            'type'         => array(
+            'filter_type'  => array(
                 'key'     => '_me_listing_type',
                 'value'   => 'purchasion',
                 'compare' => '=',
