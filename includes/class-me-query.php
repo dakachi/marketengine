@@ -1,4 +1,13 @@
 <?php
+/**
+ * Class ME Query
+ *
+ * Filter & sort the listing query, setup site enpoint, custom order post link
+ *
+ * @category Class
+ * @package Includes/Query
+ * @version 1.0
+ */
 class ME_Query
 {
     static $instance = null;
@@ -24,11 +33,52 @@ class ME_Query
      */
     public function init_endpoint()
     {
-        $endpoint_arr = $this->load_endpoint_name();
+        $this->add_enpoint();
+
+        $this->rewrite_payment_flow_url();
+
+        $this->rewrite_account_url();
+
+        $this->rewrite_edit_listing_url();
+
+        $this->rewrite_order_url();
+    }
+
+    /**
+     * Load the enpoints name
+     *
+     * Retrieve the enpoint list, if the value is not set get the default
+     *
+     * @since 1.0
+     * @return array of endpoints
+     */
+    private function load_endpoints_name()
+    {
+        $endpoint_arr = me_default_endpoints();
+        foreach ($endpoint_arr as $key => $value) {
+            $option_value = me_option('ep_' . $key);
+            if (isset($option_value) && !empty($option_value) && $option_value != $value) {
+                $endpoint_arr[$key] = $option_value;
+            }
+        }
+        return $endpoint_arr;
+    }
+
+    private function add_enpoint()
+    {
+        $endpoint_arr = $this->load_endpoints_name();
         foreach ($endpoint_arr as $key => $value) {
             add_rewrite_endpoint($value, EP_ROOT | EP_PAGES, str_replace('_', '-', $key));
         }
+    }
 
+    /**
+     * Rewrite page url.
+     *
+     * @access public
+     */
+    public function rewrite_payment_flow_url()
+    {
         $rewrite_args = array(
             array(
                 'page_id'       => me_get_option_page_id('confirm_order'),
@@ -47,47 +97,6 @@ class ME_Query
                 'query_var'     => 'pay',
             ),
         );
-        $this->me_page_rewrite_rule($rewrite_args);
-
-        $endpoints = array('orders', 'purchases', 'listings');
-        foreach ($endpoints as $endpoint) {
-            add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
-        }
-
-        $edit_listing_page = me_get_option_page_id('edit_listing');
-        if ($edit_listing_page > -1) {
-            $page = get_post($edit_listing_page);
-            add_rewrite_rule('^/' . $page->post_name . '/' . me_get_endpoint_name('listing_id') . '/?([0-9]{1,})/?$', 'index.php?page_id=' . $edit_listing_page . '&listing_id' . '=$matches[1]', 'top');
-        }
-
-        $this->rewrite_order_url();
-    }
-
-    /**
-     * Renames endpoints and returns them.
-     *
-     * @access public
-     * @return array of endpoints
-     */
-    public function load_endpoint_name()
-    {
-        $endpoint_arr = me_default_endpoints();
-        foreach ($endpoint_arr as $key => $value) {
-            $option_value = me_option('ep_' . $key);
-            if (isset($option_value) && !empty($option_value) && $option_value != $value) {
-                $endpoint_arr[$key] = $option_value;
-            }
-        }
-        return $endpoint_arr;
-    }
-
-    /**
-     * Rewrite page url.
-     *
-     * @access public
-     */
-    public function me_page_rewrite_rule($rewrite_args)
-    {
         foreach ($rewrite_args as $key => $value) {
             if ($value['page_id'] > -1) {
                 $page = get_post($value['page_id']);
@@ -96,6 +105,22 @@ class ME_Query
         }
     }
 
+    public function rewrite_account_url()
+    {
+        $endpoints = array('orders', 'purchases', 'listings');
+        foreach ($endpoints as $endpoint) {
+            add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
+        }
+    }
+
+    public function rewrite_edit_listing_url()
+    {
+        $edit_listing_page = me_get_option_page_id('edit_listing');
+        if ($edit_listing_page > -1) {
+            $page = get_post($edit_listing_page);
+            add_rewrite_rule('^/' . $page->post_name . '/' . me_get_endpoint_name('listing_id') . '/?([0-9]{1,})/?$', 'index.php?page_id=' . $edit_listing_page . '&listing_id' . '=$matches[1]', 'top');
+        }
+    }
     /**
      * Filters order detail url.
      *
