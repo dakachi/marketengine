@@ -61,9 +61,9 @@
 
 								<div class="me-message-typing">
 
-								<?php if($listing && $listing->post_status !== "me-archived") : ?>
+								<?php if($listing && $listing->is_available()) : ?>
 
-									<?php me_get_template('inquiry/send-message-form'); ?>
+									<?php me_get_template('inquiry/send-message-form', array('listing' => $listing, 'inquiry' => $inquiry)); ?>
 
 								<?php else: ?>
 
