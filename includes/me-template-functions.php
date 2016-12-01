@@ -166,7 +166,6 @@ function me_get_endpoint_url($ep_query_var, $value = '', $permalink = '')
     if (!$permalink) {
         $permalink = get_permalink();
     }
-
     $endpoint = me_get_endpoint_name($ep_query_var);
 
     if (get_option('permalink_structure')) {
@@ -316,6 +315,7 @@ function me_get_client_agent()
 function me_get_auth_url($query_var = '', $value = '')
 {
     $url = me_get_page_permalink('user_account');
+
     if ($url) {
         $url = me_get_endpoint_url($query_var, $value, $url);
         return $url;

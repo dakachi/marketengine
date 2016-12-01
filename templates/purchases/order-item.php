@@ -37,16 +37,13 @@ $total = 0;
 		<div class="me-table-row me-cart-item">
 			<div class="me-table-col me-cart-name">
 				<div class="me-cart-listing">
-				<?php if($listing_obj && $listing_obj->is_available() ) : ?>
-					<a href="<?php echo get_permalink( $listing_obj->ID ); ?>">
-						<?php echo get_the_post_thumbnail($listing_obj->ID); ?>
+				<?php me_get_template('purchases/order-listing-image', array('listing_obj' => $listing_obj) ); ?>
+
+					<a href="<?php echo $listing_obj && $listing_obj->is_available() ? get_permalink( $listing_obj->ID ) : 'javascript:void(0)'; ?>">
 						<span><?php echo esc_html($listing_item['title']); ?></span>
 					</a>
-				<?php else : ?>
-					<?php echo get_the_post_thumbnail($listing_obj->ID); ?>
-					<span><?php echo esc_html($listing_item['title']); ?></span>
-					<p class="me-item-archive"><i class="icon-me-info-circle"></i><?php _e('This listing has been archived.', 'enginethemes'); ?></p>
-				<?php endif; ?>
+
+				<?php me_get_template('purchases/archived-listing-notice', array('listing_obj' => $listing_obj) ); ?>
 				</div>
 			</div>
 			<div class="me-table-col me-cart-price">

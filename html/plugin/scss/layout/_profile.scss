@@ -81,7 +81,6 @@
 		> p {
 			font-size: $font_size_medium;
 			color: $color_text;
-			// @include text-overflow();
 			min-height: 20px;
 			margin: 0;
 			margin-top: 6px;
@@ -100,7 +99,7 @@
 .marketengine-text-field.edit-profile {
 	margin-top: 35px;
 	margin-bottom: 36px;
-}
+}	
 
 @media (max-width: $screen_xs_max) {
 	.me-avatar-user {
