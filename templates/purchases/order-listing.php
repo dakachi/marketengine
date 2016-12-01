@@ -1,6 +1,23 @@
-<?php //if($listing_obj && $listing_obj->is_available() ) : ?>
+<?php
+/**
+ * The template for displaying information of listing ordered.
+ *
+ * This template can be overridden by copying it to yourtheme/marketengine/purchases/order-listing.php.
+ *
+ * @package     MarketEngine/Templates
+ * @since 		1.0.0
+ * @version     1.0.0
+ */
+
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+?>
 <div class="me-orderlisting-info">
-	<a class="me-orderlisting-thumbs" href="<?php echo $listing_obj->get_permalink(); ?>"><?php echo $listing_obj->get_listing_thumbnail(); ?></a>
+
+	<?php me_get_template('purchases/order-listing-image', array('listing_obj' => $listing_obj)); ?>
+
 	<div class="me-listing-info">
 
 		<?php if($listing_obj->post_status === "me-archived") : ?>
