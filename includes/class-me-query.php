@@ -160,11 +160,10 @@ class ME_Query
             add_rewrite_rule('^/' . $page->post_name . '/' . me_get_endpoint_name('listing_id') . '/?([0-9]{1,})/?$', 'index.php?page_id=' . $edit_listing_page . '&listing_id' . '=$matches[1]', 'top');
         }
     }
+
     /**
-     * Filters order detail url.
-     *
-     * @since       1.0.0
-     * @version     1.0.0
+     * Rewrite order details url rule
+     * @since 1.0
      */
     private function rewrite_order_detail_url()
     {
@@ -175,9 +174,10 @@ class ME_Query
     /**
      * Filters order detail url.
      *
-     * @param       string $post_link
-     * @param       object $post
-     * @return      string $post_link
+     * @param       string $post_link The post link
+     * @param       object $post The post object
+     * @return      string $post_link Return filter order link if is order post 
+     *                                else return normal post link
      *
      * @since       1.0.0
      * @version     1.0.0
@@ -195,7 +195,14 @@ class ME_Query
     }
 
     /**
+     * Filter wordpress pre get posts to control listing query
+     *  - only load published listing in archive listing page, author page
+     *  - exclude listing from wordpress search page
+     *  - filter listing by price, keyword, listing type
+     *  - order listing by price asc | desc
      *
+     * @param WP_Query $query The wordpress main wp_query object
+     * @since 1.0.0
      */
     public function filter_pre_get_posts($query)
     {
@@ -224,6 +231,9 @@ class ME_Query
 
     /**
      * Filter, sort listing
+     *
+     * @param WP_Query $query The wordpress main wp_query object
+     * @since 1.0.0
      */
     public function filter_listing_query($query)
     {
@@ -238,7 +248,8 @@ class ME_Query
     }
     /**
      * Filter query listing by price
-     * @param object $query The WP_Query Object
+     * 
+     * @param WP_Query $query The wordpress main wp_query object
      * @since 1.0
      */
     public function filter_price_query($query)
@@ -267,7 +278,8 @@ class ME_Query
 
     /**
      * Filter query listing by listing type
-     * @param object $query The WP_Query Object
+     * 
+     * @param WP_Query $query The wordpress main wp_query object
      * @since 1.0
      */
     public function filter_listing_type_query($query)
@@ -284,7 +296,8 @@ class ME_Query
 
     /**
      * Filter query listing by keyword
-     * @param object $query The WP_Query Object
+     * 
+     * @param WP_Query $query The wordpress main wp_query object
      * @since 1.0
      */
     public function filter_search_query($query)
@@ -297,7 +310,8 @@ class ME_Query
 
     /**
      * Sort the listing
-     * @param object $query The WP_Query Object
+     * 
+     * @param WP_Query $query The wordpress main wp_query object
      * @since 1.0
      */
     public function sort_listing_query($query)
@@ -323,6 +337,13 @@ class ME_Query
         return $query;
     }
 
+    /**
+     * Sort the listing by price
+     * 
+     * @param WP_Query $query The wordpress main wp_query object
+     * @param string $asc sort asc or desc
+     * @since 1.0
+     */
     public function sort_by_price($query, $asc = 'asc')
     {
         $query->set('meta_key', 'listing_price');
@@ -343,6 +364,12 @@ class ME_Query
         return $query;
     }
 
+    /**
+     * Add query order-id, keyword
+     * 
+     * @param array $vars WP query var list
+     * @since 1.0
+     */
     public function add_query_vars($vars)
     {
         $vars[] = 'order-id';
