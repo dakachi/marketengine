@@ -51,9 +51,11 @@
 										<?php foreach ($messages  as $key => $message) : ?>
 											<?php me_get_template('inquiry/message-item', array('message' => $message)); ?>
 										<?php endforeach; ?>
-
+										<?php if(empty($messages)) : ?>
+											<li><?php echo get_the_author_meta( 'display_name', $inquiry->receiver ); ?></li>
+										<?php endif; ?>
 										<?php if(!$listing || $listing->post_status === "me-archived") : ?>
-											<p><?php _e('This listing has been archived'); ?>
+											<li><?php _e('This listing has been archived'); ?></li>
 										<?php endif; ?>
 									</ul>
 
