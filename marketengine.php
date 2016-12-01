@@ -348,8 +348,6 @@ if (!class_exists('MarketEngine')):
          */
         public function add_ajax(){
             // TODO: move to admin package
-            add_action('wp_ajax_me-option-sync', array('ME_Options_Handle', 'option_sync'));
-            add_action('wp_ajax_me-edit-page', array('ME_Options_Handle', 'me_edit_page'));
         }
 
         /**
