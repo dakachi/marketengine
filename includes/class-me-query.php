@@ -14,6 +14,7 @@ class ME_Query
     public function __construct()
     {
         add_action('pre_get_posts', array($this, 'filter_pre_get_posts'));
+        add_filter('query_vars', array($this, 'add_query_vars'));
     }
 
     /**
@@ -163,31 +164,33 @@ class ME_Query
         $query->set('order', $asc);
         return $query;
     }
+
+    public function add_query_vars($vars)
+    {
+        $vars[] = 'order-id';
+        $vars[] = 'keyword';
+
+        return $vars;
+    }
 }
 
 ME_Query::instance();
-
-function me_products_plugin_query_vars($vars)
-{
-    $vars[] = 'order-id';
-    $vars[] = 'keyword';
-
-    return $vars;
-}
-add_filter('query_vars', 'me_products_plugin_query_vars');
 
 /**
  * Returns the page id
  *
  * @access public
- * @param  string $page
+ * @param  string $page_option_name The page option name
  * @return int
  */
-function me_get_page_id($page)
+function me_get_option_page_id($page_option_name)
 {
-    $page_id  = me_option('me_' . $page . '_page_id');
-    $page_obj = get_post($page_id);
-    return $page_id && isset($page_obj) ? absint($page_id) : -1;
+    $page_id  = absint(me_option('me_' . $page_option_name . '_page_id'));
+    $page = get_post($page_id);
+    if(!$page) {
+        return -1;
+    }
+    return $page_id;
 }
 
 /**
@@ -199,7 +202,7 @@ function me_get_page_id($page)
  */
 function me_get_endpoint_name($query_var)
 {
-    $query_var         = str_replace('-', '_', $query_var);
+    $query_var = str_replace('-', '_', $query_var);
     return me_option('ep_' . $query_var, 'order');
 }
 
@@ -273,18 +276,18 @@ function me_init_endpoint()
 
     $rewrite_args = array(
         array(
-            'page_id'       => me_get_page_id('confirm_order'),
+            'page_id'       => me_get_option_page_id('confirm_order'),
             'endpoint_name' => me_get_endpoint_name('order-id'),
             'query_var'     => 'order-id',
         ),
 
         array(
-            'page_id'       => me_get_page_id('cancel_order'),
+            'page_id'       => me_get_option_page_id('cancel_order'),
             'endpoint_name' => me_get_endpoint_name('order-id'),
             'query_var'     => 'order-id',
         ),
         array(
-            'page_id'       => me_get_page_id('me_checkout'),
+            'page_id'       => me_get_option_page_id('me_checkout'),
             'endpoint_name' => me_get_endpoint_name('pay'),
             'query_var'     => 'pay',
         ),
@@ -296,7 +299,7 @@ function me_init_endpoint()
         add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
     }
 
-    $edit_listing_page = me_get_page_id('edit_listing');
+    $edit_listing_page = me_get_option_page_id('edit_listing');
     if ($edit_listing_page > -1) {
         $page = get_post($edit_listing_page);
         add_rewrite_rule('^/' . $page->post_name . '/' . me_get_endpoint_name('listing_id') . '/?([0-9]{1,})/?$', 'index.php?page_id=' . $edit_listing_page . '&listing_id' . '=$matches[1]', 'top');

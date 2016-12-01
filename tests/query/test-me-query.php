@@ -13,14 +13,14 @@ class Test_ME_Query extends WP_UnitTestCase {
     public function test_me_get_page_id() {
         $pages = $this->get_list_of_pages();
         foreach( $pages as $page ) {
-            $result = me_get_page_id( $page );
+            $result = me_get_option_page_id( $page );
             $this->assertEquals(-1, $result);
 
             $page_id = $this->post_factory->create_object( array('post_type' => 'page') );
             $name = "me_{$page}_page_id";
             $this->options->$name = $page_id;
             $this->options->save();
-            $result = me_get_page_id($page);
+            $result = me_get_option_page_id($page);
             $this->assertEquals($page_id, $result);
         }
     }
