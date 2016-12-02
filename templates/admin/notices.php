@@ -20,14 +20,14 @@ $notices = apply_filters( 'me_admin_notices', $notices );
 
 if( !empty($notices) ) : ?>
 
-	<div class="marketengine-notification">
+	<div class="me-notification-error">
+		<i class="icon-me-warning"></i>
+		<?php foreach ($notices as $key => $notice) : ?>
 
-<?php foreach ($notices as $key => $notice) : ?>
+			<p><?php echo $notice; ?></p>
 
-	<p><?php echo $notice; ?></p>
+		<?php endforeach; ?>
 
-<?php endforeach; ?>
-
-</div>
+	</div>
 
 <?php endif; ?>

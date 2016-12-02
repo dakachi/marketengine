@@ -24,7 +24,7 @@ function me_admin_notice_filter( $notices ) {
 	$link = me_menu_page_url('me-settings', 'payment-gateways');
 
 	if( !$payment_setting && 'me-settings' === $menu_page) {
-		$notices['payment_gateway_error'] = sprintf(__("Your site currently can't process payment yet, since your PayPal API hasn't been set up correctly. Please visit <a href='%s'>this page</a> to fix the issue."), $link );
+		$notices['payment_gateway_error'] = sprintf(__("Your site currently can't process payment yet, since your PayPal API hasn't been set up correctly.<br/>Please visit <a href='%s'>this page</a> to fix the issue."), $link );
 	}
 
 	return $notices;

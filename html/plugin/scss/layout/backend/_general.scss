@@ -20,6 +20,31 @@ ul, ol, li {
 	list-style-type: none;
 }
 
+.me-notification-error {
+	margin-right: 20px;
+	padding: 10px 10px 10px 62px;
+	position: relative;
+	background: #fae8eb;
+	border-radius: 3px;
+	color: #e84a5f;
+	> i {
+		position: absolute;
+		top: 50%;
+		left: 20px;
+		transform: translateY(-50%);
+		font-size: 28px;
+		color: #f44336;
+	}
+	> p {
+		margin: 0;
+		line-height: 1.7em;
+		> a {
+			color: #e84a5f;
+			text-decoration: underline;
+		}
+	}
+}
+
 //=== Float
 //
 .pull-left {
