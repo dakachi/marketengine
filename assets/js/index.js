@@ -60,11 +60,16 @@
         listing: $('input[name="inquiry_listing"]').val(),
         type: 'inquiry'
     });
-    $('.me-message-fancybox').magnificPopup({
-        type: 'image',
-        gallery: {
-            enabled: true
-        }
+    $(document).on('click', '.me-message-fancybox', function(e) {
+        
+
+        $(this).magnificPopup({
+            type: 'image',
+            gallery: {
+                enabled: true
+            }
+        })
+        e.preventDefault();
     });
     $('form#send-inquiry textarea').keydown(function(e) {
         // enter send message
