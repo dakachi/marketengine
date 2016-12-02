@@ -62,11 +62,9 @@ $query = new ME_Message_Query($args);
 				<?php else : ?>
 					<div class="me-table-col me-order-status me-read"><?php _e("read", "enginethemes"); ?></div>
 				<?php endif; ?>
-			<?php else :?>
-				<div class="me-table-col me-order-status">
-					<p class="me-item-archive"><i class="icon-me-info-circle"></i><?php _e('Archived', 'enginethemes'); ?></p>
-				</div>
 			<?php endif; ?>
+
+			<?php me_get_template('account/archived-listing-notice', array('listing_obj' => $listing)); ?>
 
 			<div class="me-table-col me-order-listing"><?php echo $listing ? esc_html($listing->get_title()) : __('Deleted listing', 'enginethemes'); ?></div>
 			<div class="me-table-col me-order-date-contact"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $inquiry->post_modified ) ); ?></div>

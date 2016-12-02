@@ -42,10 +42,9 @@ if (!defined('ABSPATH')) {
 					</a>
 				<?php endif; ?>
 
-				<?php me_get_template('purchases/archived-listing-notice', array('listing_obj' => $listing_obj) ); ?>
 			</div>
 		</div>
-		
+
 		<?php /*
 		<div class="me-listing-desc">
 			<div class="me-listing-desc-less">
@@ -60,7 +59,7 @@ if (!defined('ABSPATH')) {
 	
 	</div>
 
-<?php else: ?>
-	<p class="me-item-delete"><i class="icon-me-info-circle"></i><?php _e('This listing has been deleted.', 'enginethemes'); ?></p>
 <?php endif; ?>
+
+	<?php me_get_template('purchases/archived-listing-notice', array('listing_obj' => $listing_obj) ); ?>
 </div>
