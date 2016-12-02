@@ -21,13 +21,14 @@ class ME_MultiSelect extends ME_Input
 {
     public function __construct($args, $options)
     {
-        $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => '', 'note' => ''));
-
+        $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => '', 'note' => '', 'icon_note' => ''));
+        // var_dump($args);
         $this->_type        = 'multiselect';
         $this->_name        = $args['name'];
         $this->_label       = $args['label'];
         $this->_description = $args['description'];
         $this->_note        = $args['note'];
+        $this->_icon_note   = $args['icon_note'];
         $this->_slug        = $args['slug'];
         $this->_data        = isset($args['data']) ? $args['data'] : array();
         $this->_container   = $options;
@@ -51,6 +52,7 @@ class ME_MultiSelect extends ME_Input
         echo '</select>';
         if ($this->_note) {
             echo '<p class="me-field-note">';
+            echo $this->_icon_note;
             echo $this->_note;
             echo '</p>';
         }

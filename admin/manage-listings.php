@@ -62,7 +62,7 @@ function me_listing_columns($existing_columns)
     $columns['type']             = 'Type';
     $columns['listing_category'] = 'Categories';
     $columns['price']            = 'Price';
-    $columns['author']   = 'Author';
+    $columns['author']           = 'Author';
     $columns['date']             = 'Posted';
 
     return array_merge($existing_columns, $columns);
