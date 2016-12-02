@@ -39,7 +39,7 @@ $total = 0;
 				<div class="me-cart-listing">
 				<?php me_get_template('purchases/order-listing-image', array('listing_obj' => $listing_obj) ); ?>
 
-					<a href="<?php echo $listing_obj && $listing_obj->is_available() ? get_permalink( $listing_obj->ID ) : 'javascript:void(0)'; ?>">
+					<a href="<?php echo $listing_obj && (($listing_obj->get_author() == get_current_user_id()) || $listing_obj->is_available()) ? get_permalink( $listing_obj->ID ) : 'javascript:void(0)'; ?>">
 						<span><?php echo esc_html($listing_item['title']); ?></span>
 					</a>
 
