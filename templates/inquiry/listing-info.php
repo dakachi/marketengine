@@ -31,6 +31,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 	
 <?php else : ?>
-	<p class="me-item-archive"><i class="icon-me-info-circle"></i><?php _e('This listing has been deleted.', 'enginethemes'); ?></p>
+	<p class="me-item-delete"><i class="icon-me-info-circle"></i><?php _e('This listing has been deleted.', 'enginethemes'); ?></p>
 <?php endif; ?>
 </div>

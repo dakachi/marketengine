@@ -194,7 +194,7 @@
 		clear: none;
 	}
 	.me-listing-info {
-		padding-left: 94px;
+		padding-left: 95px;
 		a {
 			color: $color_text;
 			&.me-listing-info-view {
@@ -204,6 +204,9 @@
 				color: $color_label_3;
 				text-decoration: underline;
 				cursor: pointer;
+			}
+			&.me-orderlisting-review {
+				color: $color_skin;
 			}
 		}
 		> p {
@@ -244,6 +247,7 @@
 	}
 }
 
+/*
 .me-listing-desc {
 	font-size: $font_size_medium;
 	color: $color_text_2;
@@ -293,7 +297,7 @@
 		padding-left: 4px;
 	}
 }
-
+*/
 //===
 //
 .me-orderwarning-info {
@@ -390,6 +394,16 @@
 	}
 }
 
+.me-item-delete {
+	margin: 0;
+	font-size: $font_size_base;
+	font-style: italic;
+	color: $color_text;
+	i {
+		color: $color_skin;
+		margin-right: 4px;
+	}
+}
 .me-contact-archive {
 	margin: 0;
 	font-size: 24px;
