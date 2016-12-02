@@ -26,11 +26,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<?php echo $listing->get_short_description(); ?>
 
-		<?php me_get_template('purchases/archived-listing-notice', array('listing_obj' => $listing) ); ?>
-
 	</div>
-	
-<?php else : ?>
-	<p class="me-item-archive"><i class="icon-me-info-circle"></i><?php _e('This listing has been deleted.', 'enginethemes'); ?></p>
+
 <?php endif; ?>
+	<?php me_get_template('purchases/archived-listing-notice', array('listing_obj' => $listing) ); ?>
 </div>
