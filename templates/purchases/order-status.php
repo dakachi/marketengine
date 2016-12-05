@@ -24,7 +24,7 @@
 			*/ ?>
 
 			<div class="me-line-step-order <?php echo $process_index >= 2 ? 'active' : '' ?>">
-				<span><?php _e('Mark completed', 'enginethemes'); ?></span>
+				<span><?php _e('Order completed', 'enginethemes'); ?></span>
 			</div>
 			<div class="me-line-step-order <?php echo $process_index >= 5 ? 'active' : '' ?>">
 				<span><?php _e('Closed order', 'enginethemes'); ?></span>
