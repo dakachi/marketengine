@@ -65,4 +65,34 @@ $(document).ready(function() {
 		$(parent_sfield).append('<input type="text" /> <input type="text" /><small>More categories can be added later in MarketEngine settings</small>')
 		$(this).hide();
 	});
+
+
+	//=== Custom Field
+	//
+	$('.me-cf-show').on('click', function(event) {
+		event.preventDefault();
+		var target = event.currentTarget;
+		$('.me-cf-item').not($(target).parents('.me-cf-item')).removeClass('active');
+		$(target).parents('.me-cf-item').toggleClass('active');
+		$(this).me_tooltip();
+	});
+	$('.me-cf-show, .me-cf-edit, .me-cf-remove').tooltip({
+		position: {
+			my: "center bottom-10",
+			at: "center top",
+			using: function( position, feedback ) {
+				$( this ).css( position );
+				$( "<div>" )
+				.addClass( "arrow" )
+				.addClass( feedback.vertical )
+				.addClass( feedback.horizontal )
+				.appendTo( this );
+			}
+		}
+	});
+
+	$('#me-cf-by-category').sortable({
+		revert: true,
+		placeholder: "me-sortable-highlight"
+    });
 });

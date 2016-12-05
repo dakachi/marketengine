@@ -27,6 +27,30 @@
   font-family: inherit !important;
 }
 
+.icon-me-minus-circle:before {
+  content: "\e92a";
+}
+.icon-me-logo:before {
+  content: "\e92b";
+}
+.icon-me-listing:before {
+  content: "\e924";
+}
+.icon-me-image:before {
+  content: "\e922";
+}
+.icon-me-file-excel:before {
+  content: "\e921";
+}
+.icon-me-file-code:before {
+  content: "\e902";
+}
+.icon-me-file-doc:before {
+  content: "\e903";
+}
+.icon-me-file-pdf:before {
+  content: "\e904";
+}
 .icon-me-quote-left:before {
   content: "\e929";
 }
@@ -123,11 +147,11 @@
 .icon-me-star-o:before {
   content: "\e915";
 }
+.icon-me-star-half:before {
+  content: "\e923";
+}
 .icon-me-star:before {
   content: "\e916";
-}
-.icon-me-star-half-o:before {
-  content: "\e92a";
 }
 .icon-me-check:before {
   content: "\e917";
