@@ -5,8 +5,8 @@
  * Functions for rendering backend report.
  *
  * @author EngineThemes
- * @package MarketEngine/Functions
- * @category Functions
+ * @package MarketEngine/Reports
+ * @category Function
  *
  * @since 1.0.0
  *
