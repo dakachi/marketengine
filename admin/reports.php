@@ -44,7 +44,7 @@ function marketengine_report_heading($name, $label)
     }
     ?>
     <div class="me-table-col">
-        <a href="<?php echo $link; ?>" class="<?php echo $class; ?>"><?php echo $lable; ?></a>
+        <a href="<?php echo $link; ?>" class="<?php echo $class; ?>"><?php echo $label; ?></a>
     </div>
 <?php
 }

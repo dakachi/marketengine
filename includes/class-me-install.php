@@ -107,17 +107,26 @@ class ME_Install {
             CREATE TABLE {$wpdb->prefix}marketengine_custom_fields (
                     field_id bigint(20) NOT NULL auto_increment,
                     field_name varchar(20) NOT NULL,
-                    field_label longtext NOT NULL,
+                    field_title longtext NOT NULL,
                     field_type longtext NOT NULL,
                     field_input_type longtext NOT NULL,
-                    field_placeholder varchar(200) NOT NULL DEFAULT '',
-                    field_description varchar(200) NOT NULL DEFAULT '',
-                    field_constraint varchar(200) NOT NULL DEFAULT '',
+                    field_placeholder varchar(200) NOT NULL default '',
+                    field_description varchar(200) NOT NULL default '',
+                    field_help_text varchar(200) NOT NULL default '',
+                    field_constraint varchar(200) NOT NULL default '',
+                    field_default_value varchar(200) NOT NULL default '',
                     PRIMARY KEY  (field_id),
                     KEY field_name (field_name)
                 ) $collate;
-
-        CREATE TABLE {$wpdb->prefix}marketengine_sessions (
+        
+            CREATE TABLE {$wpdb->prefix}marketengine_fields_relationship (
+                    field_id bigint(20) NOT NULL,
+                    term_taxonomy_id bigint(20) NOT NULL,
+                    term_order bigint(20) NULL,
+                    PRIMARY KEY  (field_id, term_taxonomy_id)
+                ) $collate;
+    
+            CREATE TABLE {$wpdb->prefix}marketengine_sessions (
                     session_id bigint(20) NOT NULL AUTO_INCREMENT,
                     session_key char(32) NOT NULL,
                     session_value longtext NOT NULL,
@@ -126,7 +135,7 @@ class ME_Install {
                     PRIMARY KEY  (session_key)
                 ) $collate;
 
-        CREATE TABLE {$wpdb->prefix}marketengine_message_item (
+            CREATE TABLE {$wpdb->prefix}marketengine_message_item (
                 ID bigint(20) unsigned NOT NULL auto_increment,
                 sender bigint(20) unsigned NOT NULL default '0',
                 receiver bigint(20) unsigned NOT NULL default '0',
@@ -153,7 +162,7 @@ class ME_Install {
                 KEY sender (sender)
             ) $collate;
 
-        CREATE TABLE {$wpdb->prefix}marketengine_message_itemmeta (
+            CREATE TABLE {$wpdb->prefix}marketengine_message_itemmeta (
                     meta_id bigint(20) NOT NULL auto_increment,
                     marketengine_message_item_id bigint(20) NOT NULL,
                     meta_key varchar(255) NULL,
