@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function me_insert_field($args)
+function me_cf_insert_field($args, $wp_error = false)
 {
     global $wpdb;
     $defaults = array(
@@ -43,9 +43,9 @@ function me_insert_field($args)
     }
 
     $update = false;
-    if(!empty($args['field_id'])) {
-    	$update = true;
-    	$field_ID = $args['field_id'];
+    if (!empty($args['field_id'])) {
+        $update   = true;
+        $field_ID = $args['field_id'];
     }
 
     $field_placeholder   = $args['field_placeholder'];
@@ -78,13 +78,6 @@ function me_insert_field($args)
             }
         }
     } else {
-        // If there is a suggested ID, use it if not already present.
-        if (!empty($import_id)) {
-            $import_id = (int) $import_id;
-            if (!$wpdb->get_var($wpdb->prepare("SELECT ID FROM $field_table WHERE ID = %d", $import_id))) {
-                $data['ID'] = $import_id;
-            }
-        }
         if (false === $wpdb->insert($field_table, $data)) {
             if ($wp_error) {
                 return new WP_Error('db_insert_error', __('Could not insert field into the database', 'enginethemes'), $wpdb->last_error);
@@ -99,31 +92,95 @@ function me_insert_field($args)
     }
 
     // set field and category relationship, order
+
+    return $field_ID;
 }
 
-function me_update_field($args)
+function me_cf_update_field($args)
 {
 
 }
 
-function me_delete_field($args)
+function me_cf_delete_field($args)
 {
 
 }
 
-function me_sort_fields($args)
+function me_cf_set_field_category($field_id, $term_id, $order)
+{
+    global $wpdb;
+
+    $object_id = (int) $object_id;
+
+    if (!term_exists($term_id, 'listing_category')) {
+        return new WP_Error('invalid_taxonomy', __('Invalid category.', 'enginethemes'));
+    }
+
+    $term_info = get_term($term_id, 'listing_category', ARRAY_A);
+
+    $tt_id = $term_info['term_taxonomy_id'];
+
+    if ($wpdb->get_var($wpdb->prepare("SELECT term_taxonomy_id FROM $wpdb->marketengine_custom_fields WHERE object_id = %d AND term_taxonomy_id = %d", $object_id, $tt_id))) {
+        // update relationship order
+        $wpdb->update($wpdb->marketengine_custom_fields, array('object_id' => $object_id, 'term_taxonomy_id' => $tt_id, 'term_order' => $order));
+    } else {
+    	// insert relationship
+        $wpdb->insert($wpdb->marketengine_custom_fields, array('object_id' => $object_id, 'term_taxonomy_id' => $tt_id, 'term_order' => $order));
+
+    }
+
+    //TODO:
+    // me_cf_update_field_count();
+    // me_cf_update_term_count();
+
+}
+
+function me_cf_sort_fields($args)
 {
 
 }
 
-function me_get_field()
+function me_cf_get_field()
 {
 
 }
 
-function me_get_fields()
+function me_cf_get_fields($category_id)
 {
+	return array(
+		array(
+			'name' => "field_1",
+			'title' => "Field 1 in category " . $category_id,
+			'type' => 'text',
+			'placeholder' => 'field placeholder',
+			'description' => 'field description',
+			'constraint' => 'required',
+			'default_value' => 'field default value',
+			'help_text' => 'help text'
+		),
 
+		array(
+			'name' => "field_2",
+			'title' => "Field 2 in category " . $category_id,
+			'type' => 'date',
+			'placeholder' => 'field placeholder',
+			'description' => 'field description',
+			'constraint' => 'required',
+			'default_value' => 'field default value',
+			'help_text' => 'help text'
+		),
+
+		array(
+			'name' => "field_3",
+			'title' => "Field 3 in category " . $category_id,
+			'type' => 'number',
+			'placeholder' => 'field placeholder',
+			'description' => 'field description',
+			'constraint' => 'required',
+			'default_value' => 'field default value',
+			'help_text' => 'help text'
+		)
+	);
 }
 
 function me_field()
