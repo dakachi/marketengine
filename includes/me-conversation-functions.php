@@ -167,7 +167,7 @@ function me_insert_message($message_arr, $wp_error = false) {
         /**
          * Fires immediately before an existing post is updated in the database.
          *
-         * @since 2.5.0
+         * @since 1.0.0
          *
          * @param int   $message_ID Message ID.
          * @param array $data    Array of unslashed post data.
@@ -202,11 +202,11 @@ function me_insert_message($message_arr, $wp_error = false) {
     }
 
     // TODO: message meta
-    if (!empty($message_arr['meta_input'])) {
-        foreach ($message_arr['meta_input'] as $field => $value) {
-            update_post_meta($message_ID, $field, $value);
-        }
-    }
+    // if (!empty($message_arr['meta_input'])) {
+    //     foreach ($message_arr['meta_input'] as $field => $value) {
+    //         update_post_meta($message_ID, $field, $value);
+    //     }
+    // }
 
     $message = me_get_message($message_ID);
     if ($update) {

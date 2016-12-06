@@ -14,10 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @author   EngineThemes
  * @category Classes
- * @package  MarketEngine/Admin
+ * @package  Admin/Reports
  * @since    1.0.0
  */
-
 class ME_Report_CSVExport
 {
     /**

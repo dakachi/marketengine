@@ -1,4 +1,14 @@
 <?php
+/**
+ * ME_Setup_Wizard class
+ *
+ * Render admin setup wizard menu page.
+ *
+ * @author   EngineThemes
+ * @category Classes
+ * @package  Admin/SetupWizard
+ * @since    1.0.0
+ */
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
