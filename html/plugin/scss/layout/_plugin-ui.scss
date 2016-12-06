@@ -44,6 +44,24 @@
 		width: 100%;
 	}
 }
+.marketengine-date-field {
+	.me-field-title {
+		display: block;
+		margin: 0;
+		padding: 0;
+		margin-bottom: 6px;
+		line-height: 1.2em;
+		/* small {
+			font-size: $font_size_small;
+			font-style: italic;
+			color: $color_label_2;
+		} */
+	}
+	input[type="text"] {
+		margin: 0;
+		width: 100%;
+	}
+}
 .marketengine-checkbox-field {
 	label {
 		margin: 0;
