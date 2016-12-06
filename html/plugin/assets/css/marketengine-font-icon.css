@@ -26,7 +26,18 @@
 [class*="icon-media"] {
   font-family: inherit !important;
 }
-
+.icon-me-trash:before {
+  content: "\e92d";
+}
+.icon-me-edit-pad:before {
+  content: "\e92e";
+}
+.icon-me-eye-slash:before {
+  content: "\e92f";
+}
+.icon-me-eye:before {
+  content: "\e92c";
+}
 .icon-me-minus-circle:before {
   content: "\e92a";
 }
