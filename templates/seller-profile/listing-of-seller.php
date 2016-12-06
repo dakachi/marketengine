@@ -18,6 +18,7 @@ $args = apply_filters( 'filter_listing_query', $args );
 $query = new WP_Query( $args );
 
 ?>
+<input type="hidden" name="" value="<?php print_r($query->found_posts); ?>">
 
 <ul class="me-listing-seller">
 

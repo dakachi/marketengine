@@ -129,23 +129,37 @@ class Test_ME_Query extends WP_UnitTestCase {
         $this->assertSame( $redirect, $rewrite_rules[ $pattern ] );
     }
 
-    // function test_custom_order_link() {
+    public function test_custom_order_link_if_not_order() {
+        $post_id = $this->post_factory->create_object( array(
+            'post_content' => 'This is not order',
+        ) );
+
+        $post = get_post($post_id);
+
+        $this->assertSame( site_url( '?p='.$post_id ), get_the_permalink($post) );
+    }
+
+    public function test_custom_order_link() {
+        $order_id = $this->post_factory->create_object( array(
+            'post_type' => 'me_order',
+        ) );
+
+        $order = get_post($order_id);
+        $this->assertSame( site_url('?post_type=me_order&p='.$order_id), get_the_permalink($order) );
+    }
+
+    // public function test_custom_order_link_with_pretty_url() {
     //     global $wp_rewrite;
-    //     $post_id = $this->post_factory->create_object( array(
-    //         'post_type' => 'post',
-    //     ) );
     //     $order_id = $this->post_factory->create_object( array(
     //         'post_type' => 'me_order',
     //     ) );
 
-    //     $post_arr = array();
-    //     $post_arr[] = get_post($post_id);
-    //     $post_arr[] = get_post($order_id);
+    //     update_option('permalink_structure', '%postname%');
+    //     $wp_rewrite->flush_rules();
 
-    //     foreach($post_arr as $key => $post_obj) {
-            
-    //     }
-
+    //     $order = get_post($order_id);
+    //     var_dump(get_the_permalink($order));exit;
+    //     $this->assertSame( site_url('order/'.$order_id), get_the_permalink($order) );
     // }
 
     function get_list_of_pages() {
