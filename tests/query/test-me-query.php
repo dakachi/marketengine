@@ -10,10 +10,23 @@ class Test_ME_Query extends WP_UnitTestCase {
     public function setUp() {
         parent::setUp();
         // $this->create_test_pages();
+        // register_post_type('me_order', array(
+        //     'public'             => false,
+        //     'publicly_queryable' => true,
+        //     'rewrite'            => array(
+        //         'slug' => me_get_endpoint_name('order-id') . '/%post_id%',
+        //     ),
+        //     'has_archive'        => true,
+        //     'query_var'          => true,
+        //     'capability_type'    => 'post',
+        // ));
     }
 
     public function tearDown() {
-        // unset($this->options);
+        // global $wp_post_types;
+        // if ( isset( $wp_post_types[ 'me_order' ] ) ) {
+        //     unset( $wp_post_types[ 'me_order' ] );
+        // }
     }
 
     public function test_me_get_option_page_id() {
@@ -148,19 +161,20 @@ class Test_ME_Query extends WP_UnitTestCase {
         $this->assertSame( site_url('?post_type=me_order&p='.$order_id), get_the_permalink($order) );
     }
 
-    // public function test_custom_order_link_with_pretty_url() {
-    //     global $wp_rewrite;
-    //     $order_id = $this->post_factory->create_object( array(
-    //         'post_type' => 'me_order',
-    //     ) );
+    public function test_custom_order_link_with_pretty_url() {
+        // global $wp_rewrite;
+        // $wp_rewrite->extra_permastructs['me_order'] = '/order/%post_id%/%me_order%';
 
-    //     update_option('permalink_structure', '%postname%');
-    //     $wp_rewrite->flush_rules();
+        // $order_id = $this->post_factory->create_object( array(
+        //     'post_type' => 'me_order',
+        // ) );
+        // $order_endpoint = me_get_endpoint_name('order_id');
 
-    //     $order = get_post($order_id);
-    //     var_dump(get_the_permalink($order));exit;
-    //     $this->assertSame( site_url('order/'.$order_id), get_the_permalink($order) );
-    // }
+        // $this->set_permalink_structure('%postname%');
+
+        // $order = get_post($order_id);
+        // $this->assertSame( site_url($order_endpoint.'/'.$order_id), get_the_permalink($order) );
+    }
 
     function get_list_of_pages() {
         return array('user_account', 'post_listing', 'edit_listing', 'checkout', 'confirm_order', 'cancel_order', 'inquiry');
