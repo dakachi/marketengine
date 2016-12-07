@@ -31,12 +31,14 @@ class ME_Tab extends ME_Container {
         }
 
         echo '<ul class="me-nav me-section-nav '.$this->_class.'">';
-        $class = 'class="active"';
+        $count = 0;
         foreach ($this->_template as $key => $tab) {
+            $class = ((!$_REQUEST['section'] && $count == 0) || $_REQUEST['section'] == $tab['slug']) ? 'class="active"' : '';
             if ($tab['type'] == 'section') {
-                echo '<li ' . $class . '><span>' . $tab['title'] . '</span></li>';
+                echo '<li ' . $class . '><a href="'.add_query_arg('section', $tab['slug'], '?page=me-settings&tab='.$this->_name).'"><span>' . $tab['title'] . '</span></a></li>';
             }
             $class = '';
+            $count = 1;
         }
         echo '</ul>';
     }
