@@ -10,6 +10,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Insert custom field
+ * 
+ * @param array $args
+ * @param bool $wp_error
+ * 
+ * @package Includes/CustomField
+ * @category Function
+ */
 function me_cf_insert_field($args, $wp_error = false)
 {
     global $wpdb;
