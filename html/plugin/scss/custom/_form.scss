@@ -5,7 +5,7 @@
 		font-size: $font_size_base;
 		color: $color_label_1;
 	}
-	input[type="text"], input[type="password"], input[type="email"] {
+	input[type="text"], input[type="password"], input[type="email"], input[type="number"] {
 		background: none;
 		font-size: $font_size_medium;
 		border: none;
@@ -25,6 +25,33 @@
 		color: $color_field_required;
 		margin-top: 8px;
 		font-size: $font_size_base;
+	}
+}
+
+.marketengine-date-field {
+	position: relative;
+	.me-field-title {
+		font-size: $font_size_base;
+		color: $color_label_1;
+	}
+	input[type="text"] {
+		background: none;
+		font-size: $font_size_medium;
+		border: none;
+		border-bottom: 1px solid $color_border_input_text;
+		width: 100%;
+		height: 24px;
+		line-height: 22px;
+		outline: none;
+		padding: 0;
+		padding-right: 30px;
+		margin-top: 6px;
+	}
+	.icon-me-calendar {
+		position: absolute;
+		right: 0;
+		bottom: 6px;
+		color: #dbdbdb;
 	}
 }
 

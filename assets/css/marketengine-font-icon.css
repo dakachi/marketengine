@@ -23,11 +23,17 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-.icon-me-trash:before {
-  content: "\e92d";
+.icon-me-calendar:before {
+  content: "\e931";
+}
+.icon-me-question-circle:before {
+  content: "\e930";
 }
 .icon-me-edit-pad:before {
   content: "\e92e";
+}
+.icon-me-trash:before {
+  content: "\e92d";
 }
 .icon-me-eye-slash:before {
   content: "\e92f";
