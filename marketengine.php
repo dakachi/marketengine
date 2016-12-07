@@ -255,6 +255,7 @@ class MarketEngine
         $wpdb->marketengine_message_item     = $wpdb->prefix . 'marketengine_message_item';
 
         $wpdb->marketengine_custom_fields = $wpdb->prefix . 'marketengine_custom_fields';
+        $wpdb->marketengine_fields_relationship = $wpdb->prefix . 'marketengine_fields_relationship';
 
         $wpdb->tables[] = 'marketengine_order_itemmeta';
         $wpdb->tables[] = 'marketengine_order_items';

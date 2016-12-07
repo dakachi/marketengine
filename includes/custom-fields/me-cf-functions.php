@@ -61,6 +61,7 @@ function me_cf_insert_field($args, $wp_error = false)
 
     $field_table = $wpdb->prefix . 'marketengine_custom_fields';
     if ($update) {
+        $where = array('field_id' => $field_ID);
         /**
          * Fires immediately before an existing post is updated in the database.
          *
@@ -91,42 +92,67 @@ function me_cf_insert_field($args, $wp_error = false)
         $where = array('ID' => $field_ID);
     }
 
-    // set field and category relationship, order
-
     return $field_ID;
 }
 
-function me_cf_update_field($args)
+function me_cf_update_field($args, $wp_error = false)
 {
+    $field = me_cf_get_field($args['field_id'], ARRAY_A);
+    if (is_null($field)) {
+        if ($wp_error) {
+            return new WP_Error('invalid_field', __('Invalid field ID.'));
+        }
 
+        return 0;
+    }
+
+    $field = wp_slash($field);
+    $args  = array_merge($field, $args);
+
+    return me_cf_insert_field($args, $wp_error);
 }
 
-function me_cf_delete_field($args)
+function me_cf_delete_field($field_id)
 {
+    global $wpdb;
 
+    $field_table = $wpdb->prefix . 'marketengine_custom_fields';
+    // delete field
+    $wpdb->delete($field_table, array('field_id' => $field_id));
+    // delete field relationship
+    $tt_ids = $wpdb->get_results($wpdb->prepare("SELECT term_taxonomy_id FROM $wpdb->marketengine_fields_relationship WHERE field_id = %d", $field_id, $tt_id));
+    $wpdb->delete($wpdb->marketengine_fields_relationship, array('field_id' => $field_id), array('%d'));
+    // update category count (cho nay co the co nhieu term)
+    foreach ($tt_ids as $key => $tt_id) {
+    	// me_cf_update_term_count();
+    }
 }
 
 function me_cf_set_field_category($field_id, $term_id, $order)
 {
     global $wpdb;
 
-    $object_id = (int) $object_id;
-
+    $field_id = (int) $field_id;
     if (!term_exists($term_id, 'listing_category')) {
         return new WP_Error('invalid_taxonomy', __('Invalid category.', 'enginethemes'));
     }
 
     $term_info = get_term($term_id, 'listing_category', ARRAY_A);
+    var_dump($term_info);
 
     $tt_id = $term_info['term_taxonomy_id'];
 
-    if ($wpdb->get_var($wpdb->prepare("SELECT term_taxonomy_id FROM $wpdb->marketengine_custom_fields WHERE object_id = %d AND term_taxonomy_id = %d", $object_id, $tt_id))) {
+    if ($wpdb->get_var($wpdb->prepare("SELECT term_taxonomy_id FROM $wpdb->marketengine_fields_relationship WHERE field_id = %d AND term_taxonomy_id = %d", $field_id, $tt_id))) {
         // update relationship order
-        $wpdb->update($wpdb->marketengine_custom_fields, array('object_id' => $object_id, 'term_taxonomy_id' => $tt_id, 'term_order' => $order));
-    } else {
-    	// insert relationship
-        $wpdb->insert($wpdb->marketengine_custom_fields, array('object_id' => $object_id, 'term_taxonomy_id' => $tt_id, 'term_order' => $order));
+        $wpdb->update(
+            $wpdb->marketengine_fields_relationship,
+            array('term_order' => $order),
+            array('field_id' => $field_id, 'term_taxonomy_id' => $tt_id)
+        );
 
+    } else {
+        // insert relationship
+        $wpdb->insert($wpdb->marketengine_fields_relationship, array('field_id' => $field_id, 'term_taxonomy_id' => $tt_id, 'term_order' => $order));
     }
 
     //TODO:
@@ -135,57 +161,74 @@ function me_cf_set_field_category($field_id, $term_id, $order)
 
 }
 
+function me_cf_remove_field_category($field_id, $category_id)
+{
+
+}
+
 function me_cf_sort_fields($args)
 {
 
 }
 
-function me_cf_get_field()
+function me_cf_get_field($field, $type = OBJECT)
 {
-
+    return array(
+        'field_name'          => "field_1",
+        'field_title'         => "Field 1 in category ",
+        'field_type'          => 'text',
+        'field_placeholder'   => 'field placeholder',
+        'field_description'   => 'field description',
+        'field_constraint'    => 'required',
+        'field_default_value' => 'field default value',
+        'field_help_text'     => 'help text',
+    );
 }
 
 function me_cf_get_fields($category_id)
 {
-	return array(
-		array(
-			'name' => "field_1",
-			'title' => "Field 1 in category " . $category_id,
-			'type' => 'text',
-			'placeholder' => 'field placeholder',
-			'description' => 'field description',
-			'constraint' => 'required',
-			'default_value' => 'field default value',
-			'help_text' => 'help text'
-		),
+    return array(
+        array(
+            'field_name'          => "field_1",
+            'field_title'         => "Field 1 in category " . $category_id,
+            'field_type'          => 'text',
+            'field_placeholder'   => 'field placeholder',
+            'field_description'   => 'field description',
+            'field_constraint'    => 'required',
+            'field_default_value' => 'field default value',
+            'field_help_text'     => 'help text',
+        ),
 
-		array(
-			'name' => "field_2",
-			'title' => "Field 2 in category " . $category_id,
-			'type' => 'date',
-			'placeholder' => 'field placeholder',
-			'description' => 'field description',
-			'constraint' => 'required',
-			'default_value' => 'field default value',
-			'help_text' => 'help text'
-		),
+        array(
+            'field_name'          => "field_2",
+            'field_title'         => "Field 2 in category " . $category_id,
+            'field_type'          => 'date',
+            'field_placeholder'   => 'field placeholder',
+            'field_description'   => 'field description',
+            'field_constraint'    => 'required',
+            'field_default_value' => 'field default value',
+            'field_help_text'     => 'help text',
+        ),
 
-		array(
-			'name' => "field_3",
-			'title' => "Field 3 in category " . $category_id,
-			'type' => 'number',
-			'placeholder' => 'field placeholder',
-			'description' => 'field description',
-			'constraint' => 'required',
-			'default_value' => 'field default value',
-			'help_text' => 'help text'
-		)
-	);
+        array(
+            'field_name'          => "field_3",
+            'field_title'         => "Field 3 in category " . $category_id,
+            'field_type'          => 'number',
+            'field_placeholder'   => 'field placeholder',
+            'field_description'   => 'field description',
+            'field_constraint'    => 'required',
+            'field_default_value' => 'field default value',
+            'field_help_text'     => 'help text',
+        ),
+    );
 }
 
-function me_field()
+function me_field($field_name, $post = null, $single = true)
 {
-
+    if (!$post) {
+        $post = get_post();
+    }
+    return get_post_meta($post->ID, $field_name, $single);
 }
 
 function me_the_field()
