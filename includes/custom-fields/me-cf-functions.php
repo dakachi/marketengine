@@ -124,7 +124,7 @@ function me_cf_set_field_category($field_id, $term_id, $order)
         // update relationship order
         $wpdb->update($wpdb->marketengine_custom_fields, array('object_id' => $object_id, 'term_taxonomy_id' => $tt_id, 'term_order' => $order));
     } else {
-    	// insert relationship
+        // insert relationship
         $wpdb->insert($wpdb->marketengine_custom_fields, array('object_id' => $object_id, 'term_taxonomy_id' => $tt_id, 'term_order' => $order));
 
     }
@@ -147,40 +147,40 @@ function me_cf_get_field()
 
 function me_cf_get_fields($category_id)
 {
-	return array(
-		array(
-			'name' => "field_1",
-			'title' => "Field 1 in category " . $category_id,
-			'type' => 'text',
-			'placeholder' => 'field placeholder',
-			'description' => 'field description',
-			'constraint' => 'required',
-			'default_value' => 'field default value',
-			'help_text' => 'help text'
-		),
+    return array(
+        array(
+            'name'          => "field_1",
+            'title'         => "Field 1 in category " . $category_id,
+            'type'          => 'text',
+            'placeholder'   => 'field placeholder',
+            'description'   => 'field description',
+            'constraint'    => 'required',
+            'default_value' => 'field default value',
+            'help_text'     => 'help text',
+        ),
 
-		array(
-			'name' => "field_2",
-			'title' => "Field 2 in category " . $category_id,
-			'type' => 'date',
-			'placeholder' => 'field placeholder',
-			'description' => 'field description',
-			'constraint' => 'required',
-			'default_value' => 'field default value',
-			'help_text' => 'help text'
-		),
+        array(
+            'name'          => "field_2",
+            'title'         => "Field 2 in category " . $category_id,
+            'type'          => 'date',
+            'placeholder'   => 'field placeholder',
+            'description'   => 'field description',
+            'constraint'    => 'required',
+            'default_value' => 'field default value',
+            'help_text'     => 'help text',
+        ),
 
-		array(
-			'name' => "field_3",
-			'title' => "Field 3 in category " . $category_id,
-			'type' => 'number',
-			'placeholder' => 'field placeholder',
-			'description' => 'field description',
-			'constraint' => 'required',
-			'default_value' => 'field default value',
-			'help_text' => 'help text'
-		)
-	);
+        array(
+            'name'          => "field_3",
+            'title'         => "Field 3 in category " . $category_id,
+            'type'          => 'number',
+            'placeholder'   => 'field placeholder',
+            'description'   => 'field description',
+            'constraint'    => 'required',
+            'default_value' => 'field default value',
+            'help_text'     => 'help text',
+        ),
+    );
 }
 
 function me_field()
