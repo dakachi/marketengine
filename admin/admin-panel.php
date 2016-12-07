@@ -41,16 +41,19 @@ function marketengine_option_view() {
             'title'    => __("Marketplace", "enginethemes"),
             'slug'     => 'marketplace-settings',
             'template' => include (dirname(__FILE__) . '/options/marketplace.php'),
+            'index' => 0
         ),
         'payment-gateways'      => array(
             'title'    => __("Payment Gateways", "enginethemes"),
             'slug'     => 'payment-gateways',
             'template' => include (dirname(__FILE__) . '/options/payment-gateways.php'),
+            'index' => 5
         ),
         'pages-settings'     => array(
             'title'    => __("Pages", "enginethemes"),
             'slug'     => 'pages-settings',
             'template' => include (dirname(__FILE__) . '/options/pages.php'),
+            'index' => 10
         )
     );
 

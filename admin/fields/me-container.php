@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
@@ -12,11 +12,12 @@ if (!defined('ABSPATH')) {
  * @category Class
  *
  */
-abstract class ME_Container {
+abstract class ME_Container
+{
     /**
      * Container name
      * @var string
-    */
+     */
     protected $_name;
     /**
      * The container option fields to render
@@ -34,13 +35,15 @@ abstract class ME_Container {
     /**
      * Render container menu
      */
-    public function menus() {
+    public function menus()
+    {
 
     }
     /**
      * Render html
      */
-    public function render() {
+    public function render()
+    {
         $this->start();
 
         $template = $this->_template;
@@ -52,9 +55,9 @@ abstract class ME_Container {
 
             $first = true;
             foreach ($template as $key => $control) {
-                $class   = 'ME_' . ucfirst($control['type']);
+                $class            = 'ME_' . ucfirst($control['type']);
                 $control['first'] = $first;
-                $control = new $class($control, $this);
+                $control          = new $class($control, $this);
                 $control->render();
                 $first = false;
             }
@@ -67,9 +70,11 @@ abstract class ME_Container {
     /**
      * Render container sub section header
      */
-    public function wrapper_start() {}
+    public function wrapper_start()
+    {}
     /**
      * Render container sub section footer
      */
-    public function wrapper_end() {}
+    public function wrapper_end()
+    {}
 }

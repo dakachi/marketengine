@@ -120,11 +120,16 @@ function me_cf_delete_field($field_id)
     // delete field
     $wpdb->delete($field_table, array('field_id' => $field_id));
     // delete field relationship
-    $tt_ids = $wpdb->get_results($wpdb->prepare("SELECT term_taxonomy_id FROM $wpdb->marketengine_fields_relationship WHERE field_id = %d", $field_id, $tt_id));
+    $tt_ids = $wpdb->get_results($wpdb->prepare("SELECT term_taxonomy_id FROM $wpdb->marketengine_fields_relationship WHERE field_id = %d", $field_id));
     $wpdb->delete($wpdb->marketengine_fields_relationship, array('field_id' => $field_id), array('%d'));
-    // update category count (cho nay co the co nhieu term)
+    // update term count
     foreach ($tt_ids as $key => $tt_id) {
-    	// me_cf_update_term_count();
+        $term = get_term_by('term_taxonomy_id', $tt_id, 'listing_category');
+        if (!$term || is_wp_error($term)) {
+            continue;
+        }
+
+        me_cf_update_term_count($term->term_id);
     }
 }
 
@@ -138,9 +143,7 @@ function me_cf_set_field_category($field_id, $term_id, $order)
     }
 
     $term_info = get_term($term_id, 'listing_category', ARRAY_A);
-    var_dump($term_info);
-
-    $tt_id = $term_info['term_taxonomy_id'];
+    $tt_id     = $term_info['term_taxonomy_id'];
 
     if ($wpdb->get_var($wpdb->prepare("SELECT term_taxonomy_id FROM $wpdb->marketengine_fields_relationship WHERE field_id = %d AND term_taxonomy_id = %d", $field_id, $tt_id))) {
         // update relationship order
@@ -156,20 +159,54 @@ function me_cf_set_field_category($field_id, $term_id, $order)
     }
 
     //TODO:
-    // me_cf_update_field_count();
-    // me_cf_update_term_count();
+    me_cf_update_field_count($field_id);
+    me_cf_update_term_count($term_id);
 
 }
 
-function me_cf_remove_field_category($field_id, $category_id)
+function me_cf_remove_field_category($field_id, $term_id)
 {
+	global $wpdb;
 
+    $field_id = (int) $field_id;
+    if (!term_exists($term_id, 'listing_category')) {
+        return new WP_Error('invalid_taxonomy', __('Invalid category.', 'enginethemes'));
+    }
+
+    $term_info = get_term($term_id, 'listing_category', ARRAY_A);
+    $tt_id     = $term_info['term_taxonomy_id'];
+
+    $wpdb->delete($wpdb->marketengine_fields_relationship, array('field_id' => $field_id, 'term_taxonomy_id' => $tt_id), array('%d', '%d'));
+        
+    me_cf_update_field_count($field_id);
+    me_cf_update_term_count($term_id);
 }
 
-function me_cf_sort_fields($args)
+
+function me_cf_update_field_count($field_id)
 {
+    global $wpdb;
+    $term_count = $wpdb->get_results($wpdb->prepare("SELECT count(term_taxonomy_id) FROM $wpdb->marketengine_fields_relationship WHERE field_id = %d", $field_id));
 
 }
+
+function me_cf_update_term_count($term_id)
+{
+    global $wpdb;
+
+    if (!term_exists($term_id, 'listing_category')) {
+        return new WP_Error('invalid_taxonomy', __('Invalid category.', 'enginethemes'));
+    }
+
+    $term_info = get_term($term_id, 'listing_category', ARRAY_A);
+    $tt_id     = $term_info['term_taxonomy_id'];
+
+    $field_count = $wpdb->get_results($wpdb->prepare("SELECT count(field_id) FROM $wpdb->marketengine_fields_relationship WHERE term_taxonomy_id  = %d", $tt_id));
+    update_term_meta($term_id, '_me_cf_count', $field_count);
+
+    return $field_count;
+}
+
 
 function me_cf_get_field($field, $type = OBJECT)
 {
