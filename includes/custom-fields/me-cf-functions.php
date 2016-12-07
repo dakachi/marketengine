@@ -61,7 +61,7 @@ function me_cf_insert_field($args, $wp_error = false)
 
     $field_table = $wpdb->prefix . 'marketengine_custom_fields';
     if ($update) {
-    	$where = array('field_id' => $field_ID);
+        $where = array('field_id' => $field_ID);
         /**
          * Fires immediately before an existing post is updated in the database.
          *
@@ -112,9 +112,20 @@ function me_cf_update_field($args, $wp_error = false)
     return me_cf_insert_field($args, $wp_error);
 }
 
-function me_cf_delete_field($args)
+function me_cf_delete_field($field_id)
 {
+    global $wpdb;
 
+    $field_table = $wpdb->prefix . 'marketengine_custom_fields';
+    // delete field
+    $wpdb->delete($field_table, array('field_id' => $field_id));
+    // delete field relationship
+    $tt_ids = $wpdb->get_results($wpdb->prepare("SELECT term_taxonomy_id FROM $wpdb->marketengine_fields_relationship WHERE field_id = %d", $field_id, $tt_id));
+    $wpdb->delete($wpdb->marketengine_fields_relationship, array('field_id' => $field_id), array('%d'));
+    // update category count (cho nay co the co nhieu term)
+    foreach ($tt_ids as $key => $tt_id) {
+    	// me_cf_update_term_count();
+    }
 }
 
 function me_cf_set_field_category($field_id, $term_id, $order)
@@ -147,6 +158,11 @@ function me_cf_set_field_category($field_id, $term_id, $order)
     //TODO:
     // me_cf_update_field_count();
     // me_cf_update_term_count();
+
+}
+
+function me_cf_remove_field_category($field_id, $category_id)
+{
 
 }
 
@@ -207,9 +223,12 @@ function me_cf_get_fields($category_id)
     );
 }
 
-function me_field()
+function me_field($field_name, $post = null, $single = true)
 {
-
+    if (!$post) {
+        $post = get_post();
+    }
+    return get_post_meta($post->ID, $field_name, $single);
 }
 
 function me_the_field()
