@@ -28,7 +28,7 @@ class ME_Section extends ME_Container {
     }
 
     public function start() {
-        if($this->_first) {
+        if((!isset($_REQUEST['section']) && $this->_first) || (isset($_REQUEST['section']) && $_REQUEST['section'] == $this->_name)) {
             echo '<div class="me-section-content" id="'.$this->_name.'">';
         }else {
             echo '<div class="me-section-content" id="'.$this->_name.'" style="display:none;">';
