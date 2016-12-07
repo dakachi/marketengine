@@ -51,6 +51,12 @@ function marketengine_option_view() {
             'title'    => __("Pages", "enginethemes"),
             'slug'     => 'pages-settings',
             'template' => include (dirname(__FILE__) . '/options/pages.php'),
+        ),
+        'custom-field-settings'     => array(
+            'title'    => __("Custom Field", "enginethemes"),
+            'slug'     => 'custom-field-settings',
+            'class'    => 'me-no-ajax',
+            'template' => include (dirname(__FILE__) . '/options/custom-field.php'),
         )
     );
 
