@@ -23,6 +23,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+[class*="icon-media"] {
+  font-family: inherit !important;
+}
+
+
+
 .icon-me-calendar:before {
   content: "\e931";
 }

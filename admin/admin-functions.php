@@ -92,3 +92,31 @@ function me_menu_page_url( $menu_slug = 'me-settings', $tab = '', $echo = false)
 
 	return $url;
 }
+
+/**
+ * List custom field type
+ *
+ * @since 	1.0.1
+ */
+function me_list_custom_field_type() {
+	return array(
+		array(
+			'label'		=> __("Basic", "enginethemes"),
+			'options'	=> array(
+				'text'		=> 'Text',
+				'textarea'	=> 'Textarea',
+				'number'	=> 'Number',
+				'date'		=> 'Date',
+			),
+		),
+		array(
+			'label'		=> __("Choose", "enginethemes"),
+			'options'	=> array(
+				'checkbox'				 => 'Checkbox',
+				'radio'					 => 'Radio',
+				'single-select' => 'Dropdown Single Select',
+				'multi-select'	 => 'Dropdown Multi Select',
+			),
+		),
+	);
+}

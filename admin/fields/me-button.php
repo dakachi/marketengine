@@ -22,12 +22,14 @@ class ME_Button extends ME_Input{
      * @param $options The field option value
      */
     function __construct( $args, $options ) {
-        $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => ''));
+        $args = wp_parse_args($args, array('name' => 'option_name', 'description' => '', 'label' => '', 'class' => '', 'cancel' => false));
 
         $this->_type        = 'button';
+        $this->_template    = $args['template'];
         $this->_name        = $args['name'];
         $this->_label       = $args['label'];
         $this->_slug        = $args['slug'];
+        $this->_class       = $args['class'];
         $this->_container   = $options;
 
         $this->_options = $options;
@@ -36,6 +38,14 @@ class ME_Button extends ME_Input{
      * Render button html
      */
     function render() {
-        echo '<input id="'.$this->_slug.'" type="submit" name="'.$this->_name.'" value="'.$this->_label.'"/>';
+        echo '<input class="'.$this->_class.'" id="'.$this->_slug.'" type="submit" name="'.$this->_name.'" value="'.$this->_label.'"/>';
+
+        if($this->_template) {
+            foreach( $this->_template as $key => $value) {
+                $class = 'ME_'.ucfirst($value['type']);
+                $control = new $class($value, $this);
+                $control->render();
+            }
+        }
     }
 }

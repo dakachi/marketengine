@@ -54,7 +54,14 @@ function marketengine_option_view() {
             'slug'     => 'pages-settings',
             'template' => include (dirname(__FILE__) . '/options/pages.php'),
             'index' => 10
-        )
+        ),
+
+        // 'custom-field-settings'     => array(
+        //     'title'    => __("Custom Field", "enginethemes"),
+        //     'slug'     => 'custom-field-settings',
+        //     'class'    => 'me-no-ajax',
+        //     'template' => include (dirname(__FILE__) . '/options/custom-field.php'),
+        // )
     );
 
     /**
