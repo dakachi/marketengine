@@ -12,10 +12,10 @@ if (!defined('ABSPATH')) {
 
 /**
  * Insert custom field
- * 
+ *
  * @param array $args
  * @param bool $wp_error
- * 
+ *
  * @package Includes/CustomField
  * @category Function
  */
@@ -188,7 +188,7 @@ function me_cf_remove_field_category($field_id, $term_id)
     $tt_id     = $term_info['term_taxonomy_id'];
 
     $wpdb->delete($wpdb->marketengine_fields_relationship, array('field_id' => $field_id, 'term_taxonomy_id' => $tt_id), array('%d', '%d'));
-        
+
     me_cf_update_field_count($field_id);
     me_cf_update_term_count($term_id);
 }

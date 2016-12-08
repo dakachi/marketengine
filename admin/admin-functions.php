@@ -151,7 +151,7 @@ function marketengine_add_actions() {
         add_action('get_custom_field_template', 'marketengine_custom_field_template');
     }
 }
-add_action('wp_loaded', 'marketengine_add_actions');
+// add_action('wp_loaded', 'marketengine_add_actions');
 
 /**
  * Removes ajax handle of option
