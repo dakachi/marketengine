@@ -115,6 +115,7 @@ class ME_Install {
                     field_help_text varchar(200) NOT NULL default '',
                     field_constraint varchar(200) NOT NULL default '',
                     field_default_value varchar(200) NOT NULL default '',
+                    count bigint(20) NOT NULL default 0,
                     PRIMARY KEY  (field_id),
                     KEY field_name (field_name)
                 ) $collate;
