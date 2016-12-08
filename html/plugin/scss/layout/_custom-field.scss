@@ -47,3 +47,22 @@
 		}
 	}
 }
+
+@media (max-width: $screen_xs_max) { //767px
+	.me-custom-field {
+		padding-bottom: 10px;
+	}
+	.me-cf-title {
+		padding-bottom: 0;
+		p {
+			+ span {
+				margin: 0;
+			}
+		}
+	}
+	.me-cf-content {
+		border: none;
+		padding-top: 5px;
+		padding-bottom: 10px;
+	}
+}

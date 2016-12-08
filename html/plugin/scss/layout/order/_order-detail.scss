@@ -195,7 +195,12 @@
 	}
 	.me-listing-info {
 		padding-left: 95px;
-		a {
+		a, span {
+			font-size: $font_size_medium;
+			font-weight: 800;
+			color: $color_text;
+		}
+		/* a {
 			color: $color_text;
 			&.me-listing-info-view {
 				display: inline-block;
@@ -208,13 +213,21 @@
 			&.me-orderlisting-review {
 				color: $color_skin;
 			}
-		}
+		} */
 		> p {
 			font-size: $font_size_medium;
 			color: $color_label_3;
 			line-height: 1.4em;
 			margin-top: 6px;
 			margin-bottom: 0;
+		}
+		+ .me-item-archive {
+			padding-left: 95px;
+		}
+	}
+	.me-listing-info-archive {
+		a, span {
+			color: $color_label_2;
 		}
 	}
 	.me-rating {

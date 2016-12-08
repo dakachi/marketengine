@@ -13,21 +13,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
+
 <div class="me-orderlisting-info">
 <?php if($listing) : ?>
 
 	<?php $author = $listing->get_author() ==  get_current_user_id(); ?>
 
 	<?php me_get_template('purchases/order-listing-image', array('listing_obj' => $listing)); ?>
-	<div class="me-listing-info">
-		<a href="<?php echo $author || $listing->is_available() ? $listing->get_permalink() : 'javascript:void(0)'; ?>">
-			<?php echo esc_html( $listing->get_title() ); ?>
-		</a>
-
-		<?php echo $listing->get_short_description(); ?>
+	<div class="me-listing-info <?php echo (!$listing->is_available() ) ? 'me-listing-info-archive' : ''; ?>">
+		<?php if($author || $listing->is_available()) : ?>
+			<a class="" href="<?php echo $listing->get_permalink(); ?>">
+				<?php echo esc_html( $listing->get_title() ); ?>
+			</a>
+		<?php else : ?>
+			<span>
+				<?php echo esc_html( $listing->get_title() ); ?>
+			</span>
+		<?php endif; ?>
+		
+		<?php if( $listing->is_available()) : ?>
+			<?php echo $listing->get_short_description(); ?>
+		<?php endif; ?>
 
 	</div>
-	
+
 <?php endif; ?>
 	<?php me_get_template('purchases/archived-listing-notice', array('listing_obj' => $listing) ); ?>
 </div>

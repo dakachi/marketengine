@@ -48,6 +48,7 @@
 	}
 }
 .marketengine-date-field {
+	position: relative;
 	.me-field-title {
 		display: block;
 		margin: 0;
@@ -62,7 +63,14 @@
 	}
 	input[type="text"] {
 		margin: 0;
+		padding-right: 30px;
 		width: 100%;
+	}
+	.icon-me-calendar {
+		position: absolute;
+		right: 10px;
+		bottom: 6px;
+		color: #dbdbdb;
 	}
 }
 /* .marketengine-checkbox-field {
