@@ -562,6 +562,12 @@
 		.me-order-date {
 			width: 24%;
 		}
+		.me-table-row-empty {
+			> div {
+				// border: none;
+				top: 0;
+			}
+		}	
 	}
 	.me-order-inquiries-table {
 		.me-order-date-contact {
