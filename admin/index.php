@@ -21,3 +21,4 @@ require_once ME_PLUGIN_PATH . '/admin/me-wizard-functions.php';
 
 require_once ME_PLUGIN_PATH . '/admin/class-csv-export.php';
 require_once ME_PLUGIN_PATH . '/admin/class-me-setupwizard.php';
+require_once ME_PLUGIN_PATH . '/admin/class-me-custom-field.php';

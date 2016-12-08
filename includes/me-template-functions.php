@@ -507,11 +507,15 @@ function me_print_order_status($status)
 function me_print_buyer_information($address)
 {
     foreach ($address as $key => $value) {
-        if ($key === 'first_name' || $key === 'last_name' || $key === 'email' || $key === 'phone') {
+        if( $key === 'first_name' ) {
+            echo $value . " ";
+            continue;
+        }
+        if ($key === 'email' || $key === 'phone') {
             continue;
         }
 
-        $key = ucfirst($key);
+        // $key = ucfirst($key);
         echo "{$value}<br/>";
     }
 }
