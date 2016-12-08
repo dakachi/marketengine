@@ -289,15 +289,18 @@ class MarketEngine
         wp_enqueue_script('plupload-all');
         wp_enqueue_script('muploader.js', $this->plugin_url() . "/assets/js/muploader$suffix.js", array('jquery', 'plupload-all'), $this->version, true);
 
+        // lib
+        wp_enqueue_script('jquery-ui', $this->plugin_url() . "/assets/js/jquery-ui.js", array('jquery'), $this->version, true);
+        wp_enqueue_script('jquery.slider', $this->plugin_url() . "/assets/js/jquery.slider.js", array('jquery', 'jquery-ui'), $this->version, true);
+        wp_enqueue_script('magnific_popup', $this->plugin_url() . "/assets/js/jquery.magnific-popup.min.js", array('jquery'), $this->version, true);
+        wp_enqueue_script('flexslider-js', $this->plugin_url() . "/assets/js/jquery.flexslider-min.js", array('jquery'), $this->version, true);
         wp_enqueue_script('raty.js', $this->plugin_url() . "/assets/js/jquery.raty$suffix.js", array('jquery'), $this->version, true);
+
+
         wp_enqueue_script('user_profile', $this->plugin_url() . "/assets/js/user-profile$suffix.js", array('jquery'), $this->version, true);
         wp_enqueue_script('tag_box', $this->plugin_url() . "/assets/js/tag-box$suffix.js", array('jquery', 'suggest'), $this->version, true);
         wp_enqueue_script('post_listing', $this->plugin_url() . "/assets/js/post-listing$suffix.js", array('jquery', 'tag_box'), $this->version, true);
-        wp_enqueue_script('jquery-ui', $this->plugin_url() . "/assets/js/jquery-ui$suffix.js", array('jquery'), $this->version, true);
-        wp_enqueue_script('jquery.slider', $this->plugin_url() . "/assets/js/jquery.slider$suffix.js", array('jquery', 'jquery-ui'), $this->version, true);
 
-        wp_enqueue_script('magnific_popup', $this->plugin_url() . "/assets/js/jquery.magnific-popup.min$suffix.js", array('jquery'), $this->version, true);
-        wp_enqueue_script('flexslider-js', $this->plugin_url() . "/assets/js/jquery.flexslider-min$suffix.js", array('jquery'), $this->version, true);
         wp_enqueue_script('me.sliderthumbs', $this->plugin_url() . "/assets/js/me.sliderthumbs$suffix.js", array('jquery'), $this->version, true);
         wp_enqueue_script('script.js', $this->plugin_url() . "/assets/js/script$suffix.js", array('jquery', 'jquery-ui'), $this->version, true);
         wp_enqueue_script('message.js', $this->plugin_url() . "/assets/js/message$suffix.js", array('jquery'), $this->version, true);
