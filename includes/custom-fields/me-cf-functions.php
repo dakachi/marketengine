@@ -32,6 +32,7 @@ function me_cf_insert_field($args, $wp_error = false)
         'field_help_text'     => '',
         'field_constraint'    => '',
         'field_default_value' => '',
+        'count' => 0
     );
     $args = wp_parse_args($args, $defaults);
     // validate data
@@ -63,9 +64,10 @@ function me_cf_insert_field($args, $wp_error = false)
     $field_constraint    = $args['field_constraint'];
     $field_help_text     = $args['field_help_text'];
     $field_default_value = $args['field_default_value'];
+    $count = $args['count'];
 
     // save field
-    $data = compact('field_name', 'field_title', 'field_type', 'field_input_type', 'field_placeholder', 'field_description', 'field_help_text', 'field_constraint', 'field_default_value');
+    $data = compact('field_name', 'field_title', 'field_type', 'field_input_type', 'field_placeholder', 'field_description', 'field_help_text', 'field_constraint', 'field_default_value', 'count');
     $data = wp_unslash($data);
 
     $field_table = $wpdb->prefix . 'marketengine_custom_fields';
@@ -196,7 +198,7 @@ function me_cf_update_field_count($field_id)
 {
     global $wpdb;
     $term_count = $wpdb->get_results($wpdb->prepare("SELECT count(term_taxonomy_id) FROM $wpdb->marketengine_fields_relationship WHERE field_id = %d", $field_id));
-
+    me_cf_update_field(array('field_id' => $field_id, 'count' => $term_count));
 }
 
 function me_cf_update_term_count($term_id)
