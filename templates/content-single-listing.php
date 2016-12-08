@@ -29,7 +29,7 @@ $listing_status = get_post_status_object($listing->post_status);
 			<div class="me-row">
 				<div class="me-col-md-9">
 
-					<?php do_action('marketengine_before_single_listing_details'); ?>
+					<?php do_action('marketengine_before_single_listing_information'); ?>
 
 					<div class="marketengine-content-detail">
 						<?php me_get_template('single-listing/gallery', array('listing' => $listing));?>
@@ -60,7 +60,7 @@ $listing_status = get_post_status_object($listing->post_status);
 						</div>
 					</div>
 
-					<?php do_action('marketengine_after_single_listing_details'); ?>
+					<?php do_action('marketengine_after_single_listing_information'); ?>
 
 				</div>
 

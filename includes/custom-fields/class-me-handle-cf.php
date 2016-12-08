@@ -18,7 +18,7 @@ class ME_Handle_CF
 		add_action( 'marketengine_post_listing_form_fields', array($this, 'post_form_fields') );
 		add_action( 'marketengine_edit_listing_information_form_fields', array($this, 'edit_form_fields') );
 
-		add_action('marketengine_single_listing_details_end', array($this, 'field_details'));
+		add_action('marketengine_after_single_listing_details', array($this, 'field_details'));
 	}
 
 	public function post_form_fields() {
@@ -30,6 +30,7 @@ class ME_Handle_CF
 	}
 
 	public function field_details() {
-		
+		me_get_template('custom-fields/field-details');
 	}
 }
+new ME_Handle_CF();
