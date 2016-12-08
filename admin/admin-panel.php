@@ -297,3 +297,31 @@ function marketengine_option_notices() {
 <?php
 }
 
+
+function marketengine_add_custom_field_section( $sections ) {
+    if(!isset($_REQUEST['tab']) || $_REQUEST['tab'] == 'marketplace-settings') {
+        $sample_data = $sections['sample-data'];
+        $sections['custom-field'] = array(
+            'title'  => __('Custom Field', 'enginethemes'),
+            'slug'   => 'custom-field',
+            'type'   => 'section',
+        );
+        unset($sections['sample-data']);
+        $sections['sample-data'] = $sample_data;
+    }
+    return $sections;
+}
+add_action('marketengine_section', 'marketengine_add_custom_field_section');
+
+
+//TODO: Tam thoi de day
+function marketengine_custom_field_template() {
+    me_get_template('admin/custom-field');
+}
+
+function marketengine_add_actions() {
+    if( is_admin() && isset($_REQUEST['section']) && $_REQUEST['section'] == 'custom-field') {
+        add_action('get_custom_field_template', 'marketengine_custom_field_template');
+    }
+}
+add_action('wp_loaded', 'marketengine_add_actions');

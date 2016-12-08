@@ -53,6 +53,8 @@ abstract class ME_Container
             $this->menus();
             $this->wrapper_start();
 
+            do_action('get_custom_field_template');
+
             $first = true;
             foreach ($template as $key => $control) {
                 $class            = 'ME_' . ucfirst($control['type']);
