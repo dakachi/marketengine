@@ -54,7 +54,7 @@ $listing_status = get_post_status_object($listing->post_status);
 							<?php
 								if( !$is_owner ) :
 									me_get_template('user-info', array('author_id' => $listing->post_author));
-									me_get_template('single-listing/report');
+									//me_get_template('single-listing/report');
 								endif;
 							?>
 						</div>
