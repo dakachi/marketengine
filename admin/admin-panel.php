@@ -55,13 +55,6 @@ function marketengine_option_view() {
             'template' => include (dirname(__FILE__) . '/options/pages.php'),
             'index' => 10
         ),
-
-        // 'custom-field-settings'     => array(
-        //     'title'    => __("Custom Field", "enginethemes"),
-        //     'slug'     => 'custom-field-settings',
-        //     'class'    => 'me-no-ajax',
-        //     'template' => include (dirname(__FILE__) . '/options/custom-field.php'),
-        // )
     );
 
     /**
@@ -316,7 +309,11 @@ add_action('marketengine_section', 'marketengine_add_custom_field_section');
 
 //TODO: Tam thoi de day
 function marketengine_custom_field_template() {
-    me_get_template('admin/custom-field');
+    if(isset($_REQUEST['view']) && $_REQUEST['view'] == 'add') {
+        me_get_template('admin/add-custom-field');
+    } else {
+        me_get_template('admin/custom-field');
+    }
 }
 
 function marketengine_add_actions() {

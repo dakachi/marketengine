@@ -11,30 +11,35 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+
+$categories = me_get_listing_categories();
+
 ?>
 
 <div class="me-custom-field">
-	<h2>List of Custom Field</h2>
+	<h2><?php _e('List of Custom Field', 'enginethemes'); ?></h2>
 	<div class="me-cf-by-category">
 		<label>
-			<span>Group by</span>
+			<span><?php _e('Group by', 'enginethemes'); ?></span>
 			<select name="" id="" onchange="window.location.href=this.value;">
-				<option value="#">All category</option>
-				<option value="#">Category111</option>
-				<option value="#">Category22</option>
-				<option value="#">Category3455</option>
+				<option value="/"><?php _e('All category', 'enginethemes'); ?></option>
+
+			<?php foreach($categories as $key => $category) : ?>
+				<option value="<?php echo $key; ?>"><?php echo $category; ?></option>
+			<?php endforeach; ?>
+
 			</select>
 		</label>
 	</div>
-	<a class="me-add-custom-field-btn" href="">Add New Custom Field</a>
+	<a class="me-add-custom-field-btn" href="<?php echo add_query_arg('view', 'add'); ?>"><?php _e('Add New Custom Field', 'enginethemes'); ?></a>
 
 	<div class="me-custom-field-list">
 		<ul class="me-cf-list">
 			<li class="">
 				<div class="me-cf-row-header">
 					<div class="me-cf-row-wrap">
-						<div class="me-cf-col-title">Field Title</div>
-						<div class="me-cf-col-number">Number of<br/>Affected Categories</div>
+						<div class="me-cf-col-title"><?php _e('Field Title', 'enginethemes'); ?></div>
+						<div class="me-cf-col-number"><?php _e('Number of<br/>Affected Categories', 'enginethemes'); ?></div>
 					</div>
 				</div>
 			</li>
@@ -46,9 +51,9 @@ if (!defined('ABSPATH')) {
 						<div class="me-cf-col-number">
 							12
 							<div class="me-cf-action">
-								<a class="me-cf-show" href="" title="Show\Hide custom field"><i class="icon-me-eye"></i><i class="icon-me-eye-slash"></i></a>
-								<a class="me-cf-edit" href="" title="Edit custom field"><i class="icon-me-edit-pad"></i></a>
-								<a class="me-cf-remove" href="" title="Remove from this category"><i class="icon-me-trash"></i></a>
+								<a class="me-cf-show" href="" title="<?php _e('Show\Hide custom field', 'enginethemes'); ?>"><i class="icon-me-eye"></i><i class="icon-me-eye-slash"></i></a>
+								<a class="me-cf-edit" href="" title="<?php _e('Edit custom field', 'enginethemes'); ?>"><i class="icon-me-edit-pad"></i></a>
+								<a class="me-cf-remove" href="" title="<?php _e('Remove from this category', 'enginethemes'); ?>"><i class="icon-me-trash"></i></a>
 							</div>
 						</div>
 					</div>
