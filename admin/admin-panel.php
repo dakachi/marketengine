@@ -305,20 +305,3 @@ function marketengine_add_custom_field_section( $sections ) {
     return $sections;
 }
 add_action('marketengine_section', 'marketengine_add_custom_field_section');
-
-
-//TODO: Tam thoi de day
-function marketengine_custom_field_template() {
-    if(isset($_REQUEST['view']) && $_REQUEST['view'] == 'add') {
-        me_get_template('admin/add-custom-field');
-    } else {
-        me_get_template('admin/custom-field');
-    }
-}
-
-function marketengine_add_actions() {
-    if( is_admin() && isset($_REQUEST['section']) && $_REQUEST['section'] == 'custom-field') {
-        add_action('get_custom_field_template', 'marketengine_custom_field_template');
-    }
-}
-add_action('wp_loaded', 'marketengine_add_actions');

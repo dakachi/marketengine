@@ -21,18 +21,14 @@
 			<span class="me-select-control">
 				<select id="me-choose-field-type" class="select-field" name="" id="">
 					<option><?php _e('Choose field type', 'enginethemes'); ?></option>
-					<optgroup label="Basic">
-						<option value="text">Text</option>
-						<option value="textarea">Textarea</option>
-						<option value="number">Number</option>
-						<option value="date">Date</option>
-					</optgroup>
-					<optgroup label="Choose">
-						<option value="checkbox">Checkbox</option>
-						<option value="radio">Radio</option>
-						<option value="single-select">Dropdown Single Select</option>
-						<option value="multi-select">Dropdown Multi Select</option>
-					</optgroup>
+					<?php $field_types = me_list_custom_field_type(); ?>
+					<?php foreach ($field_types as $key => $group_value) : ?>
+			            <optgroup label="<?php echo $group_value['label']; ?>">
+			            <?php foreach ($group_value['options'] as $key => $value) : ?>
+			                <option <?php selected($option_value, $key); ?> value="<?php echo $key; ?>"><?php echo $value; ?></option>
+			            <?php endforeach; ?>
+			            </optgroup>
+			        <?php endforeach; ?>
 				</select>
 			</span>
 			<div class="me-field-type-options">
@@ -125,20 +121,21 @@
 			<label for="" class="me-title"><?php _e('Available In Which Categories', 'enginethemes'); ?></label>
 			<span class="me-select-control">
 				<select class="select-field" name="" id="" multiple="true">
-					<option value="">Category 1</option>
-					<option value="">Category 1100</option>
-					<option value="">Category 1001</option>
-					<option value="">Category 1011</option>
-					<option value="">Category 1101</option>
-					<option value="">Category 1001</option>
-					<option value="">Category 101</option>
+
+				<?php
+					$categories = me_get_listing_categories();
+					foreach ($categories as $key => $value) :
+				?>
+					<option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+				<?php endforeach; ?>
+
 				</select>
 			</span>
 		</div>
 
 		<div class="me-group-field">
 			<label for="" class="me-title"><?php _e('Help text', 'enginethemes'); ?> <small>(<?php _e('optional', 'enginethemes'); ?>)</small></label>
-			<span class="me-subtitle">Help text for fields of post listing form</span>
+			<span class="me-subtitle"><?php _e('Help text for fields of post listing form', 'enginethemes'); ?></span>
 			<textarea class="me-textarea-field"></textarea>
 		</div>
 
@@ -146,7 +143,10 @@
 			<label for="" class="me-title"><?php _e('Description', 'enginethemes'); ?> <small>(<?php _e('optional', 'enginethemes'); ?>)</small></label>
 			<textarea class="me-textarea-field"></textarea>
 		</div>
-		<input type="submit" class="me-cf-save-btn" value="Save"><a href="" class="me-cf-cancel-btn"><?php _e('Cancel', 'enginethemes'); ?></a>
+
+		<?php wp_nonce_field( 'add_custom_field' ); ?>
+
+		<input type="submit" class="me-cf-save-btn" value="<?php _e('Save', 'enginethemes'); ?>"><a href="<?php echo add_query_arg('section', 'custom-field', me_menu_page_url('me-settings', 'marketplace-settings')); ?>" class="me-cf-cancel-btn"><?php _e('Cancel', 'enginethemes'); ?></a>
 
 	</form>
 </div>
