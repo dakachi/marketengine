@@ -36,17 +36,17 @@ if(me_option('user-email-confirmation')) {
 
 			<?php do_action('marketengine_post_listing_form_start'); ?>
 
-			<?php me_get_template('post-listing/listing-category', array('selected_cat' => '', 'selected_sub_cat' => '') );  ?>
+			<?php me_get_template('post-listing/category', array('selected_cat' => '', 'selected_sub_cat' => '') );  ?>
 
-			<?php me_get_template('post-listing/listing-type', array('selected_listing_type' => 'purchasion', 'contact_email' => '', 'price' => '', 'unit' => '')); ?>
+			<?php me_get_template('post-listing/type', array('selected_listing_type' => 'purchasion', 'contact_email' => '', 'price' => '', 'unit' => '')); ?>
 
-			<?php me_get_template('post-listing/listing-information', array('listing_content' => '',  'listing_title' => '')); ?>
+			<?php me_get_template('post-listing/information', array('listing_content' => '',  'listing_title' => '')); ?>
 
 			<?php do_action('marketengine_post_listing_information_form_fields'); ?>
 
-			<?php me_get_template('post-listing/listing-gallery',  array('listing_gallery' => '', 'listing_image' => '')); ?>
+			<?php me_get_template('post-listing/gallery',  array('listing_gallery' => '', 'listing_image' => '')); ?>
 
-			<?php me_get_template('post-listing/listing-tags', array('default' => '')); ?>
+			<?php me_get_template('post-listing/tags', array('default' => '')); ?>
 
 			<?php do_action('marketengine_post_listing_form_fields'); ?>
 

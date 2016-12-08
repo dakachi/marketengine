@@ -54,24 +54,24 @@ $listing_content = apply_filters('the_content', $listing->post_content);
 
 			<?php do_action('marketengine_edit_listing_form_start', $listing); ?>
 
-			<?php me_get_template('post-listing/listing-category', array('selected_cat' => $selected_cat, 'selected_sub_cat' => $selected_sub_cat, 'editing' => true) ); ?>
+			<?php me_get_template('post-listing/category', array('selected_cat' => $selected_cat, 'selected_sub_cat' => $selected_sub_cat, 'editing' => true) ); ?>
 
-			<?php me_get_template('post-listing/listing-type', $listing_types); ?>
+			<?php me_get_template('post-listing/type', $listing_types); ?>
 
-			<?php me_get_template('post-listing/listing-information', array('listing_content' => $listing_content,  'listing_title' => $listing->post_title)); ?>
+			<?php me_get_template('post-listing/information', array('listing_content' => $listing_content,  'listing_title' => $listing->post_title)); ?>
 
 			<?php do_action('marketengine_edit_listing_information_form_fields', $listing); ?>
 
-			<?php me_get_template('post-listing/listing-gallery', array('listing_gallery' => $listing->get_gallery(), 'listing_image' => $listing->get_featured_image())); ?>
+			<?php me_get_template('post-listing/gallery', array('listing_gallery' => $listing->get_gallery(), 'listing_image' => $listing->get_featured_image())); ?>
 
-			<?php me_get_template('post-listing/listing-tags', array('default' => join(',', $listing_tag))); ?>
+			<?php me_get_template('post-listing/tags', array('default' => join(',', $listing_tag))); ?>
 
 			<?php do_action('marketengine_edit_listing_form_fields', $listing); ?>
 
 			<?php wp_nonce_field('me-update_listing'); ?>
+			<?php wp_nonce_field('marketengine', 'me-post-listing-gallery'); ?>
 
 			<input type="hidden" name="edit" value="<?php echo $listing->ID; ?>" />
-			<?php wp_nonce_field('marketengine', 'me-post-listing-gallery'); ?>
 			
 			<div class="marketengine-group-field me-text-center submit-post">
 				<input class="marketengine-post-submit-btn" type="submit" name="update_lisiting" value="<?php _e("SUBMIT", "enginethemes"); ?>">
