@@ -283,3 +283,12 @@ function me_the_field()
 {
 
 }
+
+function me_custom_field_page_url( $view = '', $action = '') {
+    $url = add_query_arg('section', 'custom-field', me_menu_page_url('me-settings', 'marketplace-settings'));
+
+    $url = $view ? add_query_arg('view', $view , $url) : $url;
+    $url = $action ? add_query_arg('action', $action , $url) : $url;
+
+    return $url;
+}
