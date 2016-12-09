@@ -48,14 +48,21 @@ class ME_Handle_CF
 
     public function load_category_fields()
     {
-        if (!empty($_GET['cat'])) {
-            $cat    = $_GET['cat'];
-            $fields = me_cf_get_fields($cat);
-            foreach ($fields as $field):
-                $value = '';
-                me_get_template('custom-fields/field-' . $field['field_type'], array('field' => $field, 'value' => $value));
-            endforeach;
+        if (empty($_GET['cat'])) {
+            exit;
         }
+
+        $cat    = $_GET['cat'];
+        $fields = me_cf_get_fields($cat);
+        if (empty($fields)) {
+            exit;
+        }
+
+        foreach ($fields as $field):
+            $value = '';
+            me_get_template('custom-fields/field-' . $field['field_type'], array('field' => $field, 'value' => $value));
+        endforeach;
+
         exit;
     }
 
