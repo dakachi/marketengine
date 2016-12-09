@@ -263,7 +263,7 @@ ul, ol, li {
 					color: #333;
 				}
 			}
-			a, span {
+			> a, > span {
 				display: inline-block;
 				padding: 8px 24px;
 				font-size: 16px;
@@ -308,7 +308,7 @@ ul, ol, li {
 		// font-size: 0;
 		> li {
 			position: relative;
-			padding: 10px 10px;
+			// padding: 10px 10px;
 			display: inline-block;
 			cursor: pointer;
 			font-size: 16px;
@@ -335,9 +335,12 @@ ul, ol, li {
 			}
 			&:hover {
 				color: #f44336;
+				&:after {
+					background: #f44336;
+				}
 			}
-			a, span {
-				padding: 0 6px;
+			> a, > span {
+				padding: 10px 14px;
 				color: #919191;
 			}
 		}

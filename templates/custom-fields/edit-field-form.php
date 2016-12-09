@@ -1,33 +1,31 @@
+<?php
+/**
+ * Render edit listing custom field 
+ * This template can be overridden by copying it to yourtheme/marketengine/custom-fields/edit-field-form.php.
+ * 
+ * @package     MarketEngine/Templates
+ * @version     1.0.1
+ */
+
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+if($fields) :
+?>
 <div class="marketengine-custom-field">
-	<div class="marketengine-group-field">
-		<div class="marketengine-input-field">
-		    <label for="me_cf_text_1" class="me-field-title">Custom field text</label>
-		    <input id="me_cf_text_1" type="text" placeholder="Text placeholder" name="me_cf_text_1">
-		</div>
-	</div>
+	<?php foreach ($fields as $field) : ?>
 
-	<div class="marketengine-group-field">
-		<div class="marketengine-textarea-field">
-		    <label for="me_cf_textarea_2" class="me-field-title">Custom field textarea</label>
-		    <textarea id="me_cf_textarea_2" placeholder="Textarea placeholder" name="me_cf_textarea_2"></textarea>
-		</div>
-	</div>
+		<?php me_get_template('custom-fields/field-'. $field['field_type'], array('field' => $field, 'listing' => $listing)); ?>
 
-	<div class="marketengine-group-field">
-		<div class="marketengine-input-field">
-		    <label for="me_cf_number_3" class="me-field-title">Custom field number <small>(optional)</small><i class="me-help-text icon-me-question-circle" title="Help text: Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt"></i></label>
-		    <input id="me_cf_number_3" type="number" placeholder="Number placeholder" name="me_cf_number_3" min="1" max="1001">
-		</div>
-	</div>
+	<?php endforeach; ?>
+
+</div>
+<?php endif; ?>
 	
-	<div class="marketengine-group-field">
-		<div class="marketengine-date-field">
-		    <label for="me_cf_date_4" class="me-field-title">Custom field date</label>
-		    <input id="me_cf_date_4" type="text" placeholder="Date placeholder" name="me_cf_date_4">
-		    <i class="icon-me-calendar"></i>
-		</div>
-	</div>
-
+	
+<!-- 
 	<div class="marketengine-group-field">
 		<div class="marketengine-checkbox-field">
 		    <label class="me-field-title">Custom field Checkbox</label>
@@ -78,5 +76,4 @@
 		    </select>
 		</div>
 	</div>
-
-</div>
+-->

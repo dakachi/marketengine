@@ -1,6 +1,6 @@
 (function($){
 $(document).ready(function() {
-	$('.me-nav > li').on('click', function(ev) {
+	/*$('.me-nav > li').on('click', function(ev) {
 		var target = ev.currentTarget;
 		$(target).parent('.me-nav').children('li').removeClass('active');
 		$(target).addClass('active');
@@ -9,6 +9,7 @@ $(document).ready(function() {
 		$(parent).next().children('div').hide()
 		$(parent).next().children('div').eq(pos).show();
 	});
+	*/
 	$('.me-scroll-language').mCustomScrollbar({
 		setHeight:340
 	});
