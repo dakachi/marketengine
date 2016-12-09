@@ -35,13 +35,13 @@ foreach ($fields as $field) :
 		<div class="me-row">
 			<div class="me-col-sm-3">
 				<div class="me-cf-title">
-					<p>Custom field text</p>
-					<span>Description: lorem ipsum dolor sit amet, consectetuer adpiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</span>
+					<p><?php echo $field['field_title'] ?></p>
+					<span><?php echo $field['field_description'] ?></span>
 				</div>
 			</div>
 			<div class="me-col-sm-9">
 				<div class="me-cf-content">
-					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut</p>
+					<p><?php me_the_field($field['field_name']); ?></p>
 				</div>
 			</div>
 		</div>
