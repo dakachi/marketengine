@@ -50,13 +50,13 @@ class ME_MultiSelect extends ME_Input
             echo '<option ' . selected(in_array($key, $option_value), true, false) . ' value="' . $key . '">' . $value . '</option>';
         }
         echo '</select>';
+        echo '</div>';
         if ($this->_note) {
             echo '<p class="me-field-note">';
             echo $this->_icon_note;
             echo $this->_note;
             echo '</p>';
         }
-        echo '</div>';
         echo '</div>';
     }
 
