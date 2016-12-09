@@ -42,7 +42,7 @@ $listing_status = get_post_status_object($listing->post_status);
 								<?php me_get_template('single-listing/control', array('listing' => $listing) ); ?>
 							</div>
 
-							<?php me_get_template('single-listing/category');?>
+							<?php me_get_template('single-listing/category', array('listing' => $listing));?>
 						</div>
 
 

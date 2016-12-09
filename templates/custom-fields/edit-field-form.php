@@ -17,7 +17,10 @@ if($fields) :
 <div class="marketengine-custom-field">
 	<?php foreach ($fields as $field) : ?>
 
-		<?php me_get_template('custom-fields/field-'. $field['field_type'], array('field' => $field, 'listing' => $listing)); ?>
+		<?php 
+			$value = me_field($field['field_name']);
+			me_get_template('custom-fields/field-'. $field['field_type'], array('field' => $field, 'listing' => $listing, 'value' => $value)); 
+		?>
 
 	<?php endforeach; ?>
 
