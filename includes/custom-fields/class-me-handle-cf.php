@@ -25,6 +25,7 @@ class ME_Handle_CF
         add_action('wp_ajax_me-load-category-fields', array($this, 'load_category_fields'));
 
         add_action('marketengine_after_update_listing', array($this, 'update_fields'), 10, 2);
+        add_action('marketengine_after_insert_listing', array($this, 'update_fields'), 10, 2);
 
         // custom field in listing details
         add_action('marketengine_after_single_listing_details', array($this, 'field_details'));
