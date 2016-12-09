@@ -19,7 +19,7 @@ if($fields) :
 
 		<?php 
 			$value = me_field($field['field_name'], $listing);
-			me_get_template('custom-fields/field-'. $field['field_type'], array('field' => $field, 'listing' => $listing, 'value' => $value)); 
+			me_get_template('custom-fields/field-'. $field['field_type'], array('field' => $field, 'value' => $value)); 
 		?>
 
 	<?php endforeach; ?>

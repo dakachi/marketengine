@@ -22,6 +22,7 @@ class ME_Handle_CF
         add_action('marketengine_post_listing_information_form_fields', array($this, 'post_form_fields'));
 
         // add ajax load custom field when user select category
+        add_action('wp_ajax_me-load-category-fields', array($this, 'load_category_fields'));
 
         add_action('marketengine_after_update_listing', array($this, 'update_fields'), 10, 2);
 
@@ -43,6 +44,19 @@ class ME_Handle_CF
     public function post_form_fields()
     {
         me_get_template('custom-fields/post-field-form');
+    }
+
+    public function load_category_fields()
+    {
+        if (!empty($_GET['cat'])) {
+            $cat    = $_GET['cat'];
+            $fields = me_cf_get_fields($cat);
+            foreach ($fields as $field):
+                $value = '';
+                me_get_template('custom-fields/field-' . $field['field_type'], array('field' => $field, 'value' => $value));
+            endforeach;
+        }
+        exit;
     }
 
     public function update_fields($post, $data)
