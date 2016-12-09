@@ -34,7 +34,6 @@ $listing_status = get_post_status_object($listing->post_status);
 					<div class="marketengine-content-detail">
 						<?php me_get_template('single-listing/gallery', array('listing' => $listing));?>
 
-						<!-- Add code for mobile @KuKy fix here -->
 						<div class="me-visible-sm me-visible-xs">
 							<?php me_get_template('single-listing/notices'); ?>
 

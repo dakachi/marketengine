@@ -48,7 +48,7 @@ function me_cf_insert_field($args, $wp_error = false)
     }
 
     $field_type = $args['field_type'];
-    if (empty($field_title)) {
+    if (empty($field_type)) {
         return new WP_Error('field_type_empty', __("Field type can not be empty.", 'enginethemes'));
     }
 

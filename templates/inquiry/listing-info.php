@@ -12,6 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+$inquiry_count = $listing->get_inquiry_count();
+
 ?>
 
 <div class="me-orderlisting-info">
@@ -30,7 +32,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php echo esc_html( $listing->get_title() ); ?>
 			</span>
 		<?php endif; ?>
-		
+
+		<div class="me-rating-contact">
+			<span class="me-count-contact">
+				<?php printf(_n("%d Contact", "%d Contacts", $inquiry_count,"enginethemes"),$inquiry_count ); ?>
+			</span>
+		</div>
+
 		<?php if( $listing->is_available()) : ?>
 			<?php echo $listing->get_short_description(); ?>
 		<?php endif; ?>

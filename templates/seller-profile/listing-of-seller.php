@@ -9,14 +9,14 @@
  */
 
 $args = array(
-	'author' => $user_id,
+	'author' 	=> $user_id,
 	'post_type' => 'listing',
 	'paged'		=> get_query_var('paged') ? get_query_var('paged') : 1,
+	'orderby'   => 'ID',
 );
 $args = apply_filters( 'filter_listing_query', $args );
 
 $query = new WP_Query( $args );
-
 ?>
 
 <ul class="me-listing-seller">
