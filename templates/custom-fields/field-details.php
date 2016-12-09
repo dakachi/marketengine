@@ -10,6 +10,9 @@ if (!defined('ABSPATH')) {
 foreach ($fields as $field) :
 	switch ($field['field_type']) {
 		case 'text':
+		case 'textarea':
+		case 'number' :
+		case 'date' :
 		$value = me_field($field['field_name']);
 		if(!$value) break;
 		?>
@@ -28,27 +31,31 @@ foreach ($fields as $field) :
 		</div>
 		<?php
 			break;
-		case 'textarea':
-			$value = me_field($field['field_name']);
-			if(!$value) break;
+		case 'radio':
+		case 'checkbox':
+		case 'select': 
+		case 'multiselect': 
 		?>
 		<div class="me-row">
 			<div class="me-col-sm-3">
 				<div class="me-cf-title">
-					<p><?php echo $field['field_title'] ?></p>
-					<span><?php echo $field['field_description'] ?></span>
+					<p>Custom field dropdown</p>
+					<span>Description: lorem ipsum dolor sit amet.</span>
 				</div>
 			</div>
 			<div class="me-col-sm-9">
 				<div class="me-cf-content">
-					<p><?php me_the_field($field['field_name']); ?></p>
+					<ul>
+						<li>Lorem ipsum dolor sit amet</li>
+						<li>Lorem ipsum</li>
+						<li>Lorem ipsum dolor sit</li>
+					</ul>
 				</div>
 			</div>
 		</div>
+
 		<?php 
-			break;
 		default:
-			# code...
 			break;
 	}
 endforeach;
@@ -93,23 +100,7 @@ endforeach;
 		</div>
 	</div>
 
-	<div class="me-row">
-		<div class="me-col-sm-3">
-			<div class="me-cf-title">
-				<p>Custom field dropdown</p>
-				<span>Description: lorem ipsum dolor sit amet.</span>
-			</div>
-		</div>
-		<div class="me-col-sm-9">
-			<div class="me-cf-content">
-				<ul>
-					<li>- Lorem ipsum dolor sit amet</li>
-					<li>- Lorem ipsum</li>
-					<li>- Lorem ipsum dolor sit</li>
-				</ul>
-			</div>
-		</div>
-	</div>
+	
 
 	<div class="me-row">
 		<div class="me-col-sm-3">
