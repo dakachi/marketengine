@@ -21,16 +21,34 @@ if (!defined('ABSPATH')) {
  */
 
 class ME_Custom_Field_Handle {
-	public function __construct() {
+	public $instance;
+
+	public static function get_instance() {
+		if(is_null(self::$instance)) {
+			self::$instance = new self;
+		}
+		return self::$instance;
+	}
+
+	public static function init() {
 		add_action('wp_loaded', 'marketengine_add_actions');
-		add_action('wp_loaded', array($this, 'insert'));
+		add_action('wp_loaded', array(__CLASS__, 'insert'));
 	}
 
 	public static function insert() {
 		if( isset($_POST['insert-custom-field']) && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert_custom_field') ) {
-			// Insert field
+			$field_id = me_cf_insert_field($_POST);
+
+			if(is_wp_error($field_id)) {
+				me_wp_error_to_notices($field_id);
+			} else {
+				if($_POST['redirect']) {
+					wp_redirect($_POST['redirect']);
+					exit;
+				}
+			}
 		}
 	}
 }
 
-new ME_Custom_Field_Handle();
+ME_Custom_Field_Handle::init();

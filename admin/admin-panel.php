@@ -289,19 +289,3 @@ function marketengine_option_notices() {
     <?php me_get_template( 'admin/notices' ); ?>
 <?php
 }
-
-
-function marketengine_add_custom_field_section( $sections ) {
-    if(!isset($_REQUEST['tab']) || $_REQUEST['tab'] == 'marketplace-settings') {
-        $sample_data = $sections['sample-data'];
-        $sections['custom-field'] = array(
-            'title'  => __('Custom Field', 'enginethemes'),
-            'slug'   => 'custom-field',
-            'type'   => 'section',
-        );
-        unset($sections['sample-data']);
-        $sections['sample-data'] = $sample_data;
-    }
-    return $sections;
-}
-add_action('marketengine_section', 'marketengine_add_custom_field_section');
