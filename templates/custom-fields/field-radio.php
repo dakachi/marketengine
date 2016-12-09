@@ -1,3 +1,9 @@
+<?php
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+?>
 <div class="marketengine-group-field">
 	<div class="marketengine-radio-field">
 	    <label class="me-field-title">Custom field Checkbox</label>

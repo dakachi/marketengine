@@ -1,3 +1,9 @@
+<?php
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+?>
 <div class="marketengine-group-field">
 	<div class="marketengine-input-field">
 	    <label for="me_cf_date_4" class="me-field-title">Custom field single select</label>
