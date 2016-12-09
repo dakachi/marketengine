@@ -268,6 +268,16 @@ function me_cf_get_fields($category_id)
             'field_default_value' => 'field default value',
             'field_help_text'     => 'help text',
         ),
+        array(
+            'field_name'          => "field_3",
+            'field_title'         => "Field 3 in category " . $category_id,
+            'field_type'          => 'textarea',
+            'field_placeholder'   => 'field placeholder',
+            'field_description'   => 'field description',
+            'field_constraint'    => 'required',
+            'field_default_value' => 'field default value',
+            'field_help_text'     => 'help text',
+        ),
     );
 }
 
