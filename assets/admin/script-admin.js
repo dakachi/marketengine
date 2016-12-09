@@ -52,103 +52,109 @@ $(document).ready(function() {
     $('#me-choose-field-type').on('change', function(event) {
     	var target = event.currentTarget;
     	var field_type = $(target).val();
-    	var options = '';
-    	switch(field_type) {
-    		case 'text':
-    			options += 	'<div class="me-group-field">';
-				options +=	'<label class="me-title">Placeholder <small>(optional)</small></label>';
-				options +=	'<span class="me-field-control">';
-				options +=	'<input class="me-input-field" type="text">';
-				options +=	'</span>';
-				options	+=	'</div>';
-    			break;
 
-    		case 'textarea':
-    			options += 	'<div class="me-group-field">';
-				options +=	'<label class="me-title">Placeholder <small>(optional)</small></label>';
-				options +=	'<span class="me-field-control">';
-				options +=	'<input class="me-input-field" type="text">';
-				options +=	'</span>';
-				options	+=	'</div>';
-    			break;
+    	var data = {
+    		action: 'me_cf_load_input_type',
+    		field_type: field_type,
+    	};
 
-    		case 'number':
-    			options += 	'<div class="me-group-field">';
-				options +=	'<label class="me-title">Placeholder <small>(optional)</small></label>';
-				options +=	'<span class="me-field-control">';
-				options +=	'<input class="me-input-field" type="text">';
-				options +=	'</span>';
-				options +=	'</div>';
-				options +=	'<div class="me-group-field">';
-				options +=	'<label class="me-title">Minimum value <small>(optional)</small></label>';
-				options +=	'<span class="me-field-control">';
-				options +=	'<input class="me-input-field" type="number">';
-				options +=	'</span>';
-				options +=	'</div>';
-				options +=	'<div class="me-group-field">';
-				options +=	'<label class="me-title">Maximum value <small>(optional)</small></label>';
-				options +=	'<span class="me-field-control">';
-				options +=	'<input class="me-input-field" type="number">';
-				options +=	'</span>';
-				options +=	'</div>';
-    			break;
-    		case 'date':
-    			break;
-
-    		case 'checkbox':
-				options +=	'<div class="me-group-field">';
-				options +=	'<label class="me-title">Options</label>';
-				options +=	'<span class="me-field-control">';
-				options +=	'<textarea class="me-textarea-field" placeholder="Enter each option on a new line"></textarea>';
-				options +=	'</span>';
-				options +=	'</div>';
-    			break;
-
-    		case 'radio':
-				options +=	'<div class="me-group-field">';
-				options +=	'<label class="me-title">Options</label>';
-				options +=	'<span class="me-field-control">';
-				options +=	'<textarea class="me-textarea-field" placeholder="Enter each option on a new line"></textarea>';
-				options +=	'</span>';
-				options +=	'</div>';
-    			break;
-
-    		case 'single-select': 
-				options +=	'<div class="me-group-field">';
-				options +=	'<label class="me-title">Option none</label>';
-				options +=	'<span class="me-field-control">';
-				options +=	'<input class="me-input-field" type="text">';
-				options +=	'</span>';
-				options +=	'</div>';
-				options +=	'<div class="me-group-field">';
-				options +=	'<label class="me-title">Options</label>';
-				options +=	'<span class="me-field-control">';
-				options +=	'<textarea class="me-textarea-field" placeholder="Enter each option on a new line"></textarea>';
-				options +=	'</span>';
-				options +=	'</div>';
-    			break;
-
-    		case 'multi-select':
-    			options +=	'<div class="me-group-field">';
-				options +=	'<label class="me-title">Option none</label>';
-				options +=	'<span class="me-field-control">';
-				options +=	'<input class="me-input-field" type="text">';
-				options +=	'</span>';
-				options +=	'</div>';
-				options +=	'<div class="me-group-field">';
-				options +=	'<label class="me-title">Options</label>';
-				options +=	'<span class="me-field-control">';
-				options +=	'<textarea class="me-textarea-field" placeholder="Enter each option on a new line"></textarea>';
-				options +=	'</span>';
-				options +=	'</div>';
-    			break;
-
-    		default:
-    			break;
-    	}
-
-    	$('.me-field-type-options').html(options);
-
+    	$.post( me_globals.ajaxurl, data, function(res) {
+			$('.me-field-type-options').html(res.options);
+		});
     });
+
+    // $('#me-choose-field-type').on('change', function(event) {
+    // 	var target = event.currentTarget;
+    // 	var field_type = $(target).val();
+    // 	var options = '';
+    // 	switch(field_type) {
+    // 		case 'text':
+    // 		case 'textarea':
+    // 			options += 	'<div class="me-group-field">';
+				// options +=	'<label class="me-title">Placeholder <small>(optional)</small></label>';
+				// options +=	'<span class="me-field-control">';
+				// options +=	'<input class="me-input-field" type="text" name="field_placeholder">';
+				// options +=	'</span>';
+				// options	+=	'</div>';
+    // 			break;
+
+    // 		case 'number':
+    // 			options += 	'<div class="me-group-field">';
+				// options +=	'<label class="me-title">Placeholder <small>(optional)</small></label>';
+				// options +=	'<span class="me-field-control">';
+				// options +=	'<input class="me-input-field" type="text">';
+				// options +=	'</span>';
+				// options +=	'</div>';
+				// options +=	'<div class="me-group-field">';
+				// options +=	'<label class="me-title">Minimum value <small>(optional)</small></label>';
+				// options +=	'<span class="me-field-control">';
+				// options +=	'<input class="me-input-field" type="number">';
+				// options +=	'</span>';
+				// options +=	'</div>';
+				// options +=	'<div class="me-group-field">';
+				// options +=	'<label class="me-title">Maximum value <small>(optional)</small></label>';
+				// options +=	'<span class="me-field-control">';
+				// options +=	'<input class="me-input-field" type="number">';
+				// options +=	'</span>';
+				// options +=	'</div>';
+    // 			break;
+    // 		case 'date':
+    // 			break;
+
+    // 		case 'checkbox':
+				// options +=	'<div class="me-group-field">';
+				// options +=	'<label class="me-title">Options</label>';
+				// options +=	'<span class="me-field-control">';
+				// options +=	'<textarea class="me-textarea-field" placeholder="Enter each option on a new line"></textarea>';
+				// options +=	'</span>';
+				// options +=	'</div>';
+    // 			break;
+
+    // 		case 'radio':
+				// options +=	'<div class="me-group-field">';
+				// options +=	'<label class="me-title">Options</label>';
+				// options +=	'<span class="me-field-control">';
+				// options +=	'<textarea class="me-textarea-field" placeholder="Enter each option on a new line"></textarea>';
+				// options +=	'</span>';
+				// options +=	'</div>';
+    // 			break;
+
+    // 		case 'single-select':
+				// options +=	'<div class="me-group-field">';
+				// options +=	'<label class="me-title">Option none</label>';
+				// options +=	'<span class="me-field-control">';
+				// options +=	'<input class="me-input-field" type="text">';
+				// options +=	'</span>';
+				// options +=	'</div>';
+				// options +=	'<div class="me-group-field">';
+				// options +=	'<label class="me-title">Options</label>';
+				// options +=	'<span class="me-field-control">';
+				// options +=	'<textarea class="me-textarea-field" placeholder="Enter each option on a new line"></textarea>';
+				// options +=	'</span>';
+				// options +=	'</div>';
+    // 			break;
+
+    // 		case 'multi-select':
+    // 			options +=	'<div class="me-group-field">';
+				// options +=	'<label class="me-title">Option none</label>';
+				// options +=	'<span class="me-field-control">';
+				// options +=	'<input class="me-input-field" type="text">';
+				// options +=	'</span>';
+				// options +=	'</div>';
+				// options +=	'<div class="me-group-field">';
+				// options +=	'<label class="me-title">Options</label>';
+				// options +=	'<span class="me-field-control">';
+				// options +=	'<textarea class="me-textarea-field" placeholder="Enter each option on a new line"></textarea>';
+				// options +=	'</span>';
+				// options +=	'</div>';
+    // 			break;
+
+    // 		default:
+    // 			break;
+    // 	}
+
+    // 	$('.me-field-type-options').html(options);
+
+    // });
 });
 })(jQuery);

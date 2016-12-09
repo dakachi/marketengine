@@ -22,7 +22,7 @@
 			<span class="me-select-control">
 
 				<select id="me-choose-field-type" class="select-field" name="field_type" id="">
-					<option><?php _e('Choose field type', 'enginethemes'); ?></option>
+					<option value=""><?php _e('Choose field type', 'enginethemes'); ?></option>
 					<?php $field_types = me_list_custom_field_type(); ?>
 					<?php foreach ($field_types as $key => $group_value) : ?>
 			            <optgroup label="<?php echo $group_value['label']; ?>">
@@ -34,96 +34,24 @@
 				</select>
 
 			</span>
+
 			<div class="me-field-type-options">
-
-				<!-- Options field type - TEXT
-				<div class="me-group-field">
-					<label class="me-title">Placeholder <small>(optional)</small></label>
-					<span class="me-field-control">
-						<input class="me-input-field" type="text">
-					</span>
-				</div>
-				-->
-
-				<!-- Options field type - TEXTAREA
-				<div class="me-group-field">
-					<label class="me-title">Placeholder <small>(optional)</small></label>
-					<span class="me-field-control">
-						<input class="me-input-field" type="text">
-					</span>
-				</div>
-				-->
-
-				<!-- Options field type - NUMBER
-				<div class="me-group-field">
-					<label class="me-title">Placeholder <small>(optional)</small></label>
-					<span class="me-field-control">
-						<input class="me-input-field" type="text">
-					</span>
-				</div>
-				<div class="me-group-field">
-					<label class="me-title">Minimum value <small>(optional)</small></label>
-					<span class="me-field-control">
-						<input class="me-input-field" type="number">
-					</span>
-				</div>
-				<div class="me-group-field">
-					<label class="me-title">Maximum value <small>(optional)</small></label>
-					<span class="me-field-control">
-						<input class="me-input-field" type="number">
-					</span>
-				</div>
-				-->
-
-				<!-- Options field type - CHECKBOX
-				<div class="me-group-field">
-					<label class="me-title">Options</label>
-					<span class="me-field-control">
-						<textarea class="me-textarea-field" placeholder="Enter each option on a new line"></textarea>
-					</span>
-				</div>
-				-->
-
-				<!-- Options field type - RADIO
-				<div class="me-group-field">
-					<label class="me-title">Options</label>
-					<span class="me-field-control">
-						<textarea class="me-textarea-field" placeholder="Enter each option on a new line"></textarea>
-					</span>
-				</div>
-				-->
-
-				<!-- Options field type - SINGLE SELECT | MULTI SELECT
-				<div class="me-group-field">
-					<label class="me-title">Option none</label>
-					<span class="me-field-control">
-						<input class="me-input-field" type="text">
-					</span>
-				</div>
-
-				<div class="me-group-field">
-					<label class="me-title">Options</label>
-					<span class="me-field-control">
-						<textarea class="me-textarea-field" placeholder="Enter each option on a new line"></textarea>
-					</span>
-				</div>
-				-->
-
 			</div>
+
 		</div>
 
 		<div class="me-group-field">
 			<label class="me-title"><?php _e('Required?', 'enginethemes'); ?></label>
 			<span class="me-radio-field">
-				<label class="me-radio" for="me-field-required-yes"><input id="me-field-required-yes" type="radio" name="field-required" checked><span><?php _e('Yes', 'enginethemes'); ?></span></label>
-				<label class="me-radio" for="me-field-required-no"><input id="me-field-required-no" type="radio" name="field-required"><span><?php _e('No', 'enginethemes'); ?></span></label>
+				<label class="me-radio" for="me-field-required-yes"><input id="me-field-required-yes" type="radio" name="field_required" value="required" checked="checked"><span><?php _e('Yes', 'enginethemes'); ?></span></label>
+				<label class="me-radio" for="me-field-required-no"><input id="me-field-required-no" type="radio" name="field_required" value=""><span><?php _e('No', 'enginethemes'); ?></span></label>
 			</span>
 		</div>
 
 		<div class="me-group-field">
 			<label for="" class="me-title"><?php _e('Available In Which Categories', 'enginethemes'); ?></label>
 			<span class="me-select-control">
-				<select class="select-field" name="field_for_categories" id="" multiple="true">
+				<select class="select-field" name="field_for_categories[]" id="" multiple="true">
 
 				<?php
 					$categories = me_get_listing_categories();

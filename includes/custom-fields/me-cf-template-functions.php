@@ -39,9 +39,9 @@ function me_list_custom_field_type() {
  */
 function marketengine_custom_field_template() {
     if(isset($_REQUEST['view']) && $_REQUEST['view'] == 'add') {
-        me_get_template('admin/add-custom-field');
+        me_get_template('custom-fields/admin-custom-field-form');
     } else {
-        me_get_template('admin/custom-field');
+        me_get_template('custom-fields/admin-custom-field');
     }
 }
 
