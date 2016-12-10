@@ -41,7 +41,7 @@ class ME_Custom_Field_Handle {
 	public static function insert() {
 		if( isset($_POST['insert-custom-field']) && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert_custom_field') ) {
 			$term_ids = $_POST['field_for_categories'];
-
+            $_POST['count'] = count($term_ids);
 			$field_id = me_cf_insert_field($_POST);
 
 			if(is_wp_error($field_id)) {
