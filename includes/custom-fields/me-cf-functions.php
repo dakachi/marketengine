@@ -221,16 +221,27 @@ function me_cf_update_term_count($term_id)
 
 function me_cf_get_field($field, $type = OBJECT)
 {
-    return array(
-        'field_name'          => "field_1",
-        'field_title'         => "Field 1 in category ",
-        'field_type'          => 'text',
-        'field_placeholder'   => 'field placeholder',
-        'field_description'   => 'field description',
-        'field_constraint'    => 'required',
-        'field_default_value' => 'field default value',
-        'field_help_text'     => 'help text',
-    );
+    // return array(
+    //     'field_name'          => "field_1",
+    //     'field_title'         => "Field 1 in category ",
+    //     'field_type'          => 'text',
+    //     'field_placeholder'   => 'field placeholder',
+    //     'field_description'   => 'field description',
+    //     'field_constraint'    => 'required',
+    //     'field_default_value' => 'field default value',
+    //     'field_help_text'     => 'help text',
+    // );
+    global $wpdb;
+
+    $sql = "SELECT *
+            FROM $wpdb->marketengine_custom_fields as C
+            LEFT JOIN $wpdb->marketengine_fields_relationship as R
+            ON C.field_id = R.field_id
+            WHERE C.field_id = {$field}";
+
+    $results = $wpdb->get_results($sql);
+
+    return $results;
 }
 
 function me_cf_get_fields($category_id)

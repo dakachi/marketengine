@@ -26,6 +26,7 @@
 					<?php
 						$field_types = me_list_custom_field_type();
 						$field_type = isset($_POST['field_type']) ? $_POST['field_type'] : '';
+						if(!empty($field_types)) : ?>
 					?>
 					<?php foreach ($field_types as $key => $group_value) : ?>
 			            <optgroup label="<?php echo $group_value['label']; ?>">
@@ -34,6 +35,7 @@
 			            <?php endforeach; ?>
 			            </optgroup>
 			        <?php endforeach; ?>
+			    	<?php endif; ?>
 				</select>
 
 			</span>
@@ -50,13 +52,13 @@
 
 		<div class="me-group-field">
 		<?php
-			$checked = !isset($_POST['field_required']) ? 'required' : $_POST['field_required'];
+			$checked = !isset($_POST['field_constraint']) ? 'required' : $_POST['field_constraint'];
 		?>
 
 			<label class="me-title"><?php _e('Required?', 'enginethemes'); ?></label>
 			<span class="me-radio-field">
-				<label class="me-radio" for="me-field-required-yes"><input id="me-field-required-yes" type="radio" name="field_required" value="required" <?php checked($checked, 'required'); ?>><span><?php _e('Yes', 'enginethemes'); ?></span></label>
-				<label class="me-radio" for="me-field-required-no"><input id="me-field-required-no" type="radio" name="field_required" value="" <?php checked($checked, ''); ?>><span><?php _e('No', 'enginethemes'); ?></span></label>
+				<label class="me-radio" for="me-field-required-yes"><input id="me-field-required-yes" type="radio" name="field_constraint" value="required" <?php checked($checked, 'required'); ?>><span><?php _e('Yes', 'enginethemes'); ?></span></label>
+				<label class="me-radio" for="me-field-required-no"><input id="me-field-required-no" type="radio" name="field_constraint" value="" <?php checked($checked, ''); ?>><span><?php _e('No', 'enginethemes'); ?></span></label>
 			</span>
 		</div>
 
@@ -67,9 +69,10 @@
 
 				<?php
 					$categories = me_get_listing_categories();
+					$selected = isset($_POST['field_for_categories']) ? $_POST['field_for_categories'] : array();
 					foreach ($categories as $key => $value) :
 				?>
-					<option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+					<option <?php selected(in_array($key, $selected)); ?> value="<?php echo $key; ?>"><?php echo $value; ?></option>
 				<?php endforeach; ?>
 
 				</select>
@@ -79,12 +82,12 @@
 		<div class="me-group-field">
 			<label for="" class="me-title"><?php _e('Help text', 'enginethemes'); ?> <small>(<?php _e('optional', 'enginethemes'); ?>)</small></label>
 			<span class="me-subtitle"><?php _e('Help text for fields of post listing form', 'enginethemes'); ?></span>
-			<textarea class="me-textarea-field" name="field_help_text"></textarea>
+			<textarea class="me-textarea-field" name="field_help_text"><?php echo isset($_POST['field_help_text']) ? $_POST['field_help_text'] : ''; ?></textarea>
 		</div>
 
 		<div class="me-group-field">
 			<label for="" class="me-title"><?php _e('Description', 'enginethemes'); ?> <small>(<?php _e('optional', 'enginethemes'); ?>)</small></label>
-			<textarea class="me-textarea-field" name="field_description"></textarea>
+			<textarea class="me-textarea-field" name="field_description"><?php echo isset($_POST['field_description']) ? $_POST['field_description'] : ''; ?></textarea>
 		</div>
 
 		<?php wp_nonce_field( 'me-insert_custom_field' ); ?>
