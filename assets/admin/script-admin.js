@@ -64,6 +64,8 @@ $(document).ready(function() {
 		});
     });
 
+    // $('#me-choose-field-type').trigger('change');
+
     // $('#me-choose-field-type').on('change', function(event) {
     // 	var target = event.currentTarget;
     // 	var field_type = $(target).val();

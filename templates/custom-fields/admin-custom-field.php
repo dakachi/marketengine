@@ -14,6 +14,7 @@ if (!defined('ABSPATH')) {
 
 $categories = me_get_listing_categories();
 
+
 ?>
 
 <div class="me-custom-field">
@@ -43,6 +44,8 @@ $categories = me_get_listing_categories();
 					</div>
 				</div>
 			</li>
+
+
 
 			<li class="me-cf-item">
 				<div class="me-cf-row">

@@ -149,7 +149,7 @@ function me_cf_set_field_category($field_id, $term_id, $order)
     global $wpdb;
 
     $field_id = (int) $field_id;
-    if (!term_exists($term_id, 'listing_category')) {
+    if (!term_exists((int)$term_id, 'listing_category')) {
         return new WP_Error('invalid_taxonomy', __('Invalid category.', 'enginethemes'));
     }
 

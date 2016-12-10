@@ -6,14 +6,14 @@
 		<div class="me-group-field">
 			<label for="me-cf-field-name" class="me-title"><?php _e('Field Name', 'enginethemes'); ?></label>
 			<span class="me-field-control">
-				<input id="me-cf-field-name" name="field_name" class="me-input-field " type="text">
+				<input id="me-cf-field-name" name="field_name" class="me-input-field " type="text" value="<?php echo isset($_POST['field_name']) ? $_POST['field_name'] : ''; ?>">
 			</span>
 		</div>
 
 		<div class="me-group-field">
 			<label for="" class="me-title"><?php _e('Field Title', 'enginethemes'); ?></label>
 			<span class="me-field-control">
-				<input id="me-cf-field-title" name="field_title" class="me-input-field " type="text">
+				<input id="me-cf-field-title" name="field_title" class="me-input-field " type="text" value="<?php echo isset($_POST['field_title']) ? $_POST['field_title'] : ''; ?>">
 			</span>
 		</div>
 
@@ -23,11 +23,14 @@
 
 				<select id="me-choose-field-type" class="select-field" name="field_type" id="">
 					<option value=""><?php _e('Choose field type', 'enginethemes'); ?></option>
-					<?php $field_types = me_list_custom_field_type(); ?>
+					<?php
+						$field_types = me_list_custom_field_type();
+						$field_type = isset($_POST['field_type']) ? $_POST['field_type'] : '';
+					?>
 					<?php foreach ($field_types as $key => $group_value) : ?>
 			            <optgroup label="<?php echo $group_value['label']; ?>">
 			            <?php foreach ($group_value['options'] as $key => $value) : ?>
-			                <option <?php selected($option_value, $key); ?> value="<?php echo $key; ?>"><?php echo $value; ?></option>
+			                <option <?php selected($field_type, $key); ?> value="<?php echo $key; ?>"><?php echo $value; ?></option>
 			            <?php endforeach; ?>
 			            </optgroup>
 			        <?php endforeach; ?>
@@ -36,15 +39,24 @@
 			</span>
 
 			<div class="me-field-type-options">
+			<?php
+				if (isset($_POST['field_type'])) {
+					do_action('me_load_cf_input');
+				}
+			?>
 			</div>
 
 		</div>
 
 		<div class="me-group-field">
+		<?php
+			$checked = !isset($_POST['field_required']) ? 'required' : $_POST['field_required'];
+		?>
+
 			<label class="me-title"><?php _e('Required?', 'enginethemes'); ?></label>
 			<span class="me-radio-field">
-				<label class="me-radio" for="me-field-required-yes"><input id="me-field-required-yes" type="radio" name="field_required" value="required" checked="checked"><span><?php _e('Yes', 'enginethemes'); ?></span></label>
-				<label class="me-radio" for="me-field-required-no"><input id="me-field-required-no" type="radio" name="field_required" value=""><span><?php _e('No', 'enginethemes'); ?></span></label>
+				<label class="me-radio" for="me-field-required-yes"><input id="me-field-required-yes" type="radio" name="field_required" value="required" <?php checked($checked, 'required'); ?>><span><?php _e('Yes', 'enginethemes'); ?></span></label>
+				<label class="me-radio" for="me-field-required-no"><input id="me-field-required-no" type="radio" name="field_required" value="" <?php checked($checked, ''); ?>><span><?php _e('No', 'enginethemes'); ?></span></label>
 			</span>
 		</div>
 
