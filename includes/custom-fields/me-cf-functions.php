@@ -241,6 +241,10 @@ function me_cf_get_field($field, $type = OBJECT)
 
     $results = $wpdb->get_results($sql);
 
+    if($type != OBJECT) {
+        $results = apply_filters('me_filter_cf_get_fields', $results)[0];
+    }
+
     return $results;
 }
 
@@ -248,13 +252,22 @@ function me_cf_get_fields($category_id = '')
 {
     global $wpdb;
 
+    $sql = $join = $where = '';
+
     $sql = "SELECT *
             FROM $wpdb->marketengine_custom_fields as C";
-    $where = $category_id ? " WHERE R.term_taxonomy_id = {$category_id}" : '';
 
-    $sql .= $where;
+    if($category_id) {
+        $join = " LEFT JOIN $wpdb->marketengine_fields_relationship as R
+                    ON C.field_id = R.field_id";
+        $where = " WHERE R.term_taxonomy_id = {$category_id}";
+    }
+
+    $sql .= $join . $where;
 
     $results = $wpdb->get_results($sql);
+
+    $results = apply_filters('me_filter_cf_get_fields', $results);
 
     return $results;
     // return array(
@@ -312,6 +325,25 @@ function me_cf_get_fields($category_id = '')
     //     ),
     // );
 }
+
+function marketengine_filter_cf_get_fields($field_objs) {
+    $field_arr = array();
+    foreach( $field_objs as $key => $field_obj ) {
+        $field_arr[] =  array(
+            'field_name'          => $field_obj->field_name,
+            'field_title'         => $field_obj->field_title,
+            'field_type'          => $field_obj->field_type,
+            'field_placeholder'   => isset($field_obj->field_placeholder) ? $field_obj->field_placeholder : '',
+            'field_description'   => isset($field_obj->field_description) ? $field_obj->field_description : '',
+            'field_constraint'    => $field_obj->field_constraint ? 'required' : '',
+            'field_default_value' => isset($field_obj->field_default_value) ? $field_obj->field_default_value : '',
+            'field_help_text'     => isset($field_obj->field_help_text) ? $field_obj->field_help_text : '',
+            'count'         => $field_obj->count,
+        );
+    }
+    return $field_arr;
+}
+add_filter('me_filter_cf_get_fields', 'marketengine_filter_cf_get_fields');
 
 function me_field($field_name, $post = null, $single = true)
 {

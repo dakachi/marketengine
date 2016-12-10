@@ -160,19 +160,20 @@ function marketengine_load_input_by_field_type($args) {
 }
 
 function marketengine_load_inputs_for_view( $field ) {
-    switch($field->field_type) {
+	extract($field);
+    switch($field_type) {
         case 'text':
         case 'textarea':
-    		echo "<p><span>".__('Placeholder:', 'enginethemes')."</span>".$field->field_placeholder."</p>";
+    		echo "<p><span>".__('Placeholder:', 'enginethemes')."</span>".$field_placeholder."</p>";
 
             break;
 
         case 'number':
-        	$field_placeholder = isset($field->field_placeholder) ? $field->field_placeholder : 'N/A';
+        	$field_placeholder = isset($field_placeholder) ? $field_placeholder : 'N/A';
         	/*$field_minimum_value = isset($field->field_minimum_value) ? $field->field_minimum_value : 'N/A';
         	$field_maximum_value = isset($field->field_maximum_value) ? $field->field_maximum_value : 'N/A';*/
 
-	        echo "<p><span>".__('Placeholder:', 'enginethemes')."</span>".$field->field_placeholder."</p>";
+	        echo "<p><span>".__('Placeholder:', 'enginethemes')."</span>".$field_placeholder."</p>";
 	        echo "<p><span>".__('Minimum value:', 'enginethemes')."</span></p>";
 	        echo "<p><span>".__('Maximum value:', 'enginethemes')."</span></p>";
 
