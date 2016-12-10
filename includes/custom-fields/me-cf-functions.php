@@ -244,62 +244,73 @@ function me_cf_get_field($field, $type = OBJECT)
     return $results;
 }
 
-function me_cf_get_fields($category_id)
+function me_cf_get_fields($category_id = '')
 {
-    return array(
-        array(
-            'field_name'          => "field_1",
-            'field_title'         => "Field 1 in category " . $category_id,
-            'field_type'          => 'text',
-            'field_placeholder'   => 'field placeholder',
-            'field_description'   => 'field description',
-            'field_constraint'    => 'required',
-            'field_default_value' => 'field default value',
-            'field_help_text'     => 'help text',
-        ),
+    global $wpdb;
 
-        array(
-            'field_name'          => "field_2",
-            'field_title'         => "Field 2 in category " . $category_id,
-            'field_type'          => 'date',
-            'field_placeholder'   => 'field placeholder',
-            'field_description'   => 'field description',
-            'field_constraint'    => 'required',
-            'field_default_value' => 'field default value',
-            'field_help_text'     => 'help text',
-        ),
+    $sql = "SELECT *
+            FROM $wpdb->marketengine_custom_fields as C";
+    $where = $category_id ? " WHERE R.term_taxonomy_id = {$category_id}" : '';
 
-        array(
-            'field_name'          => "field_3",
-            'field_title'         => "Field 3 in category " . $category_id,
-            'field_type'          => 'number',
-            'field_placeholder'   => 'field placeholder',
-            'field_description'   => 'field description',
-            'field_constraint'    => 'required',
-            'field_default_value' => 'field default value',
-            'field_help_text'     => 'help text',
-        ),
-        array(
-            'field_name'          => "field_4",
-            'field_title'         => "Field 3 in category " . $category_id,
-            'field_type'          => 'textarea',
-            'field_placeholder'   => 'field placeholder',
-            'field_description'   => 'field description',
-            'field_constraint'    => 'required',
-            'field_default_value' => 'field default value',
-            'field_help_text'     => 'help text',
-        ),
-        array(
-            'field_name'          => "field_4",
-            'field_title'         => "Field 3 in category " . $category_id,
-            'field_type'          => 'checkbox',
-            'field_placeholder'   => 'field placeholder',
-            'field_description'   => 'field description',
-            'field_constraint'    => 'required',
-            'field_default_value' => 'field default value',
-            'field_help_text'     => 'help text',
-        ),
-    );
+    $sql .= $where;
+
+    $results = $wpdb->get_results($sql);
+
+    return $results;
+    // return array(
+    //     array(
+    //         'field_name'          => "field_1",
+    //         'field_title'         => "Field 1 in category " . $category_id,
+    //         'field_type'          => 'text',
+    //         'field_placeholder'   => 'field placeholder',
+    //         'field_description'   => 'field description',
+    //         'field_constraint'    => 'required',
+    //         'field_default_value' => 'field default value',
+    //         'field_help_text'     => 'help text',
+    //     ),
+
+    //     array(
+    //         'field_name'          => "field_2",
+    //         'field_title'         => "Field 2 in category " . $category_id,
+    //         'field_type'          => 'date',
+    //         'field_placeholder'   => 'field placeholder',
+    //         'field_description'   => 'field description',
+    //         'field_constraint'    => 'required',
+    //         'field_default_value' => 'field default value',
+    //         'field_help_text'     => 'help text',
+    //     ),
+
+    //     array(
+    //         'field_name'          => "field_3",
+    //         'field_title'         => "Field 3 in category " . $category_id,
+    //         'field_type'          => 'number',
+    //         'field_placeholder'   => 'field placeholder',
+    //         'field_description'   => 'field description',
+    //         'field_constraint'    => 'required',
+    //         'field_default_value' => 'field default value',
+    //         'field_help_text'     => 'help text',
+    //     ),
+    //     array(
+    //         'field_name'          => "field_4",
+    //         'field_title'         => "Field 3 in category " . $category_id,
+    //         'field_type'          => 'textarea',
+    //         'field_placeholder'   => 'field placeholder',
+    //         'field_description'   => 'field description',
+    //         'field_constraint'    => 'required',
+    //         'field_default_value' => 'field default value',
+    //         'field_help_text'     => 'help text',
+    //     ),
+    //     array(
+    //         'field_name'          => "field_4",
+    //         'field_title'         => "Field 3 in category " . $category_id,
+    //         'field_type'          => 'checkbox',
+    //         'field_placeholder'   => 'field placeholder',
+    //         'field_description'   => 'field description',
+    //         'field_constraint'    => 'required',
+    //         'field_default_value' => 'field default value',
+    //         'field_help_text'     => 'help text',
+    //     ),
+    // );
 }
 
 function me_field($field_name, $post = null, $single = true)

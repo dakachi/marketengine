@@ -39,20 +39,24 @@ $categories = me_get_listing_categories();
 			<li class="">
 				<div class="me-cf-row-header">
 					<div class="me-cf-row-wrap">
-						<div class="me-cf-col-title"><?php _e('Field Title', 'enginethemes'); ?></div>
+						<div class="me-cf-col-title"><?php _e('Field Name', 'enginethemes'); ?></div>
 						<div class="me-cf-col-number"><?php _e('Number of<br/>Affected Categories', 'enginethemes'); ?></div>
 					</div>
 				</div>
 			</li>
 
-
+		<?php
+			$customfields = me_cf_get_fields();
+			if(!empty($customfields)) :
+				foreach($customfields as $key => $field) :
+		?>
 
 			<li class="me-cf-item">
 				<div class="me-cf-row">
 					<div class="me-cf-row-wrap">
-						<div class="me-cf-col-title">Custom field 1</div>
+						<div class="me-cf-col-title"><?php echo esc_attr($field->field_name); ?></div>
 						<div class="me-cf-col-number">
-							12
+							<?php echo $field->count; ?>
 							<div class="me-cf-action">
 								<a class="me-cf-show" href="" title="<?php _e('Show\Hide custom field', 'enginethemes'); ?>"><i class="icon-me-eye"></i><i class="icon-me-eye-slash"></i></a>
 								<a class="me-cf-edit" href="" title="<?php _e('Edit custom field', 'enginethemes'); ?>"><i class="icon-me-edit-pad"></i></a>
@@ -62,66 +66,21 @@ $categories = me_get_listing_categories();
 					</div>
 				</div>
 				<div class="me-cf-row-content">
-					<p><span>Field title:</span>Custom field 4</p>
-					<p><span>Field type:</span>Checkbox</p>
-					<p><span>Default value:</span>1</p>
-					<p><span>Options:</span>Option1, Option 2</p>
-					<p><span>Required:</span>No</p>
-					<p><span>Available in:</span>Category 1, Category 2, Category 3</p>
-					<p><span>Help text:</span>N/A</p>
-					<p><span>Description:</span>N/A</p>
+					<p><span><?php _e('Field title:', 'enginethemes'); ?></span><?php echo $field->field_title; ?></p>
+					<p><span><?php _e('Field type:', 'enginethemes'); ?></span><?php echo $field->field_type; ?></p>
+					<p><span><?php _e('Default value:', 'enginethemes'); ?></span><?php echo isset($field->field_default_value) && !empty($field->field_default_value) ? $field->field_default_value : 'N/A'; ?></p>
+					<?php /*<p><span><?php _e('Options:', 'enginethemes'); ?></span></p>*/ ?>
+					<?php do_action('me_load_inputs_for_view', $field); ?>
+
+					<p><span><?php _e('Required:', 'enginethemes'); ?></span><?php echo $field->field_constraint ? __('Yes', 'enginethemes') : __('No', 'enginethemes') ; ?></p>
+					<p><span><?php _e('Available in:', 'enginethemes'); ?></span>Category 1, Category 2, Category 3</p>
+					<p><span><?php _e('Help text:', 'enginethemes'); ?></span><?php echo $field->field_help_text ? $field->field_help_text : 'N/A'; ?></p>
+					<p><span><?php _e('Description:', 'enginethemes'); ?></span><?php echo $field->field_description ? $field->field_description : 'N/A'; ?></p>
 				</div>
 			</li>
-			<li class="me-cf-item">
-				<div class="me-cf-row">
-					<div class="me-cf-row-wrap">
-						<div class="me-cf-col-title">Custom field 1</div>
-						<div class="me-cf-col-number">
-							12
-							<div class="me-cf-action">
-								<a class="me-cf-show" href="" title="Show\Hide custom field"><i class="icon-me-eye"></i><i class="icon-me-eye-slash"></i></a>
-								<a class="me-cf-edit" href="" title="Edit custom field"><i class="icon-me-edit-pad"></i></a>
-								<a class="me-cf-remove" href="" title="Remove from this category"><i class="icon-me-trash"></i></a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="me-cf-row-content">
-					<p><span>Field title:</span>Custom field 4</p>
-					<p><span>Field type:</span>Checkbox</p>
-					<p><span>Default value:</span>1</p>
-					<p><span>Options:</span>Option1, Option 2</p>
-					<p><span>Required:</span>No</p>
-					<p><span>Available in:</span>Category 1, Category 2, Category 3, Category 4</p>
-					<p><span>Help text:</span>N/A</p>
-					<p><span>Description:</span>N/A</p>
-				</div>
-			</li>
-			<li class="me-cf-item">
-				<div class="me-cf-row">
-					<div class="me-cf-row-wrap">
-						<div class="me-cf-col-title">Custom field 1</div>
-						<div class="me-cf-col-number">
-							12
-							<div class="me-cf-action">
-								<a class="me-cf-show" href="" title="Show\Hide custom field"><i class="icon-me-eye"></i><i class="icon-me-eye-slash"></i></a>
-								<a class="me-cf-edit" href="" title="Edit custom field"><i class="icon-me-edit-pad"></i></a>
-								<a class="me-cf-remove" href="" title="Remove from this category"><i class="icon-me-trash"></i></a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="me-cf-row-content">
-					<p><span>Field title:</span>Custom field 4</p>
-					<p><span>Field type:</span>Checkbox</p>
-					<p><span>Default value:</span>1</p>
-					<p><span>Options:</span>Option1, Option 2</p>
-					<p><span>Required:</span>No</p>
-					<p><span>Available in:</span>Category 1, Category 2, Category 3, Category 4</p>
-					<p><span>Help text:</span>N/A</p>
-					<p><span>Description:</span>N/A</p>
-				</div>
-			</li>
+
+			<?php endforeach; ?>
+			<?php endif; ?>
 		</ul>
 	</div>
 	</div>

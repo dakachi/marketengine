@@ -67,92 +67,17 @@ class ME_Custom_Field_Handle {
 	}
 
 	public static function load_field_input_ajax() {
-		$options = load_input_by_field_type($_POST);
+		$options = marketengine_load_input_by_field_type($_POST);
 	    wp_send_json(array(
 	    	'options' => $options,
 	    ));
 	}
 
 	public static function load_field_input() {
-		$options = load_input_by_field_type($_POST);
+		$options = marketengine_load_input_by_field_type($_POST);
 	    echo $options;
 	}
 }
 
 
-
-function load_input_by_field_type($args) {
-	$placeholder = isset($args['field_placeholder']) ? $args['field_placeholder'] : '';
-	$field_minimum_value = isset($args['field_minimum_value']) ? $args['field_minimum_value'] : '';
-	$field_maximum_value = isset($args['field_maximum_value']) ? $args['field_maximum_value'] : '';
-	$option_values = isset($args['option_values']) ? $args['option_values'] : '';
-	$option_none = isset($args['option_none']) ? $args['option_none'] : '';
-
-    $options = '';
-
-    switch($args['field_type']) {
-        case 'text':
-        case 'textarea':
-            $options .= '<div class="me-group-field">';
-            $options .= '<label class="me-title">'.__('Placeholder', 'enginethemes').' <small>'.__('(optional)', 'enginethemes').'</small></label>';
-            $options .= '<span class="me-field-control">';
-            $options .= '<input class="me-input-field" type="text" name="field_placeholder" value="'.$placeholder.'">';
-            $options .= '</span>';
-            $options .= '</div>';
-            break;
-
-        case 'number':
-            $options .= '<div class="me-group-field">';
-            $options .= '<label class="me-title">'.__('Placeholder', 'enginethemes').' <small>'.__('(optional)', 'enginethemes').'</small></label>';
-            $options .= '<span class="me-field-control">';
-            $options .= '<input class="me-input-field" type="text" name="field_placeholder" value="'.$placeholder.'">';
-            $options .= '</span>';
-            $options .= '</div>';
-            $options .= '<div class="me-group-field">';
-            $options .= '<label class="me-title">'.__('Minimum value', 'enginethemes').' <small>'.__('(optional)', 'enginethemes').'</small></label>';
-            $options .= '<span class="me-field-control">';
-            $options .= '<input class="me-input-field" type="number" name="field_minimum_value" value="'.$field_minimum_value.'">';
-            $options .= '</span>';
-            $options .= '</div>';
-            $options .= '<div class="me-group-field">';
-            $options .= '<label class="me-title">'.__('Maximum value', 'enginethemes').' <small>'.__('(optional)','enginethemes').'</small></label>';
-            $options .= '<span class="me-field-control">';
-            $options .= '<input class="me-input-field" type="number" name="field_maximum_value" value="'.$field_maximum_value.'">';
-            $options .= '</span>';
-            $options .= '</div>';
-            break;
-        case 'date':
-            break;
-
-        case 'checkbox':
-        case 'radio':
-            $options .= '<div class="me-group-field">';
-            $options .= '<label class="me-title">'.__('Option','enginethemes').'</label>';
-            $options .= '<span class="me-field-control">';
-            $options .= '<textarea class="me-textarea-field" name="option_values" placeholder="'.__('Enter each option on a new line', 'enginethemes').'">'.$option_values.'</textarea>';
-            $options .= '</span>';
-            $options .= '</div>';
-            break;
-
-        case 'single-select':
-        case 'multi-select':
-            $options .= '<div class="me-group-field">';
-            $options .= '<label class="me-title">'.__('Option none', 'enginethemes').'</label>';
-            $options .= '<span class="me-field-control">';
-            $options .= '<input class="me-input-field" type="text" name="option_none" value="'.$option_none.'">';
-            $options .= '</span>';
-            $options .= '</div>';
-            $options .= '<div class="me-group-field">';
-            $options .= '<label class="me-title">'.__('Option','enginethemes').'</label>';
-            $options .= '<span class="me-field-control">';
-            $options .= '<textarea class="me-textarea-field" name="option_values" placeholder="'.__('Enter each option on a new line', 'enginethemes').'">'.$option_values.'</textarea>';
-            $options .= '</span>';
-            $options .= '</div>';
-            break;
-
-        default:
-            break;
-    }
-    return $options;
-}
 ME_Custom_Field_Handle::init();
