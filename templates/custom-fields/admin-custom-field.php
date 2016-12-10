@@ -50,7 +50,12 @@ $categories = me_get_listing_categories();
 			if(!empty($customfields)) :
 				foreach($customfields as $key => $field) :
 					extract($field);
-					// var_dump(me_field($field->field_name));
+					$affected_cats = me_cf_get_affected_categories($field_id);
+					$affected_cats_name = '';
+					foreach ($affected_cats as $key => $cat) {
+						$cat_name = get_term($cat)->name;
+						$affected_cats_name .= $cat_name . ', ';
+					}
 		?>
 
 			<li class="me-cf-item">
@@ -75,7 +80,7 @@ $categories = me_get_listing_categories();
 					<?php do_action('me_load_inputs_for_view', $field); ?>
 
 					<p><span><?php _e('Required:', 'enginethemes'); ?></span><?php echo $field_constraint ? __('Yes', 'enginethemes') : __('No', 'enginethemes') ; ?></p>
-					<p><span><?php _e('Available in:', 'enginethemes'); ?></span>Category 1, Category 2, Category 3</p>
+					<p><span><?php _e('Available in:', 'enginethemes'); ?></span><?php echo $affected_cats_name; ?></p>
 					<p><span><?php _e('Help text:', 'enginethemes'); ?></span><?php echo $field_help_text ? $field_help_text : 'N/A'; ?></p>
 					<p><span><?php _e('Description:', 'enginethemes'); ?></span><?php echo $field_description ? $field_description : 'N/A'; ?></p>
 				</div>

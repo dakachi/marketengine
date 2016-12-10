@@ -330,6 +330,7 @@ function marketengine_filter_cf_get_fields($field_objs) {
     $field_arr = array();
     foreach( $field_objs as $key => $field_obj ) {
         $field_arr[] =  array(
+            'field_id'            => $field_obj->field_id,
             'field_name'          => $field_obj->field_name,
             'field_title'         => $field_obj->field_title,
             'field_type'          => $field_obj->field_type,
@@ -344,6 +345,20 @@ function marketengine_filter_cf_get_fields($field_objs) {
     return $field_arr;
 }
 add_filter('me_filter_cf_get_fields', 'marketengine_filter_cf_get_fields');
+
+function me_cf_get_affected_categories($field_id) {
+    global $wpdb;
+
+    $sql = "SELECT DISTINCT R.term_taxonomy_id";
+    $from = " FROM $wpdb->marketengine_fields_relationship as R";
+    $where = " WHERE R.field_id = $field_id";
+
+    $sql .= $from . $where;
+
+    $results = $wpdb->get_col($sql);
+
+    return $results;
+}
 
 function me_field($field_name, $post = null, $single = true)
 {
