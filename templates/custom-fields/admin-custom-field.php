@@ -14,7 +14,6 @@ if (!defined('ABSPATH')) {
 
 $categories = me_get_listing_categories();
 
-
 ?>
 
 <div class="me-custom-field">
@@ -22,13 +21,13 @@ $categories = me_get_listing_categories();
 	<div class="me-cf-by-category">
 		<label>
 			<span><?php _e('Group by', 'enginethemes'); ?></span>
+			<?php $link = remove_query_arg('paged'); ?>
 			<select name="" id="" onchange="window.location.href=this.value;">
-				<option value="/"><?php _e('All category', 'enginethemes'); ?></option>
+				<option value="<?php echo me_custom_field_page_url(); ?>"><?php _e('All category', 'enginethemes'); ?></option>
 
 			<?php foreach($categories as $key => $category) : ?>
-				<option value="<?php echo $key; ?>"><?php echo $category; ?></option>
+				<option <?php selected(isset($_REQUEST['category-id']) && $key==$_REQUEST['category-id']); ?> value="<?php echo add_query_arg(array('view' => 'group-by-category', 'category-id' => $key), $link); ?>"><?php echo $category; ?></option>
 			<?php endforeach; ?>
-
 			</select>
 		</label>
 	</div>
@@ -46,9 +45,9 @@ $categories = me_get_listing_categories();
 			</li>
 
 		<?php
-			$customfields = me_cf_get_fields();
-			if(!empty($customfields)) :
-				foreach($customfields as $key => $field) :
+			$customfields = me_cf_get_fields($_REQUEST);
+			if($customfields['found_posts']) :
+				foreach($customfields['fields'] as $key => $field) :
 					extract($field);
 					$affected_cats = me_cf_get_affected_categories($field_id);
 					$affected_cats_name = '';
@@ -66,7 +65,7 @@ $categories = me_get_listing_categories();
 							<?php echo $count; ?>
 							<div class="me-cf-action">
 								<a class="me-cf-show" href="" title="<?php _e('Show\Hide custom field', 'enginethemes'); ?>"><i class="icon-me-eye"></i><i class="icon-me-eye-slash"></i></a>
-								<a class="me-cf-edit" href="" title="<?php _e('Edit custom field', 'enginethemes'); ?>"><i class="icon-me-edit-pad"></i></a>
+								<a class="me-cf-edit" href="<?php echo add_query_arg(array('view' => 'edit', 'custom-field-id' => $field_id)); ?>" title="<?php _e('Edit custom field', 'enginethemes'); ?>"><i class="icon-me-edit-pad"></i></a>
 								<a class="me-cf-remove" href="" title="<?php _e('Remove from this category', 'enginethemes'); ?>"><i class="icon-me-trash"></i></a>
 							</div>
 						</div>
@@ -90,4 +89,10 @@ $categories = me_get_listing_categories();
 			<?php endif; ?>
 		</ul>
 	</div>
+
+	<div class="me-pagination-wrap">
+		<span class="me-paginations">
+		<?php marketengine_cf_pagination( $customfields ); ?>
+		</span>
 	</div>
+</div>

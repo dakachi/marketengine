@@ -248,103 +248,46 @@ function me_cf_get_field($field, $type = OBJECT)
     return $results;
 }
 
-function me_cf_get_fields($category_id = '')
+function me_cf_get_fields($args = array())
 {
     global $wpdb;
 
-    $sql = $join = $where = '';
+    $defaults = array(
+        'category-id' => '',
+        'paged'       => 1,
+        'showposts'   => (isset($args['view']) && $args['view'] == 'group-by-category') ? -1 : get_option('posts_per_page'),
+    );
+    $args = wp_parse_args($args, $defaults);
 
-    $sql = "SELECT *
+    $sql = $join = $where = $limit = '';
+
+    $sql = "SELECT SQL_CALC_FOUND_ROWS *
             FROM $wpdb->marketengine_custom_fields as C";
 
-    if($category_id) {
+    if($args['category-id']) {
         $join = " LEFT JOIN $wpdb->marketengine_fields_relationship as R
                     ON C.field_id = R.field_id";
-        $where = " WHERE R.term_taxonomy_id = {$category_id}";
+        $where = " WHERE R.term_taxonomy_id = {$args['category-id']}";
+    } else {
+        if( $args['showposts'] > -1 ) {
+            $current = (absint($args['paged'])-1) * $args['showposts'];
+            $limit = " LIMIT " . ($current) . ', ' . $args['showposts'];
+        }
     }
 
-    $sql .= $join . $where;
+    $sql .= $join . $where . $limit;
 
-    $results = $wpdb->get_results($sql);
+    $results = $wpdb->get_results($sql, ARRAY_A);
 
-    $results = apply_filters('me_filter_cf_get_fields', $results);
+    $found_rows     = $wpdb->get_var('SELECT FOUND_ROWS() as row');
+    $max_numb_pages = ceil($found_rows / $args['showposts']);
 
-    return $results;
-    // return array(
-    //     array(
-    //         'field_name'          => "field_1",
-    //         'field_title'         => "Field 1 in category " . $category_id,
-    //         'field_type'          => 'text',
-    //         'field_placeholder'   => 'field placeholder',
-    //         'field_description'   => 'field description',
-    //         'field_constraint'    => 'required',
-    //         'field_default_value' => 'field default value',
-    //         'field_help_text'     => 'help text',
-    //     ),
-
-    //     array(
-    //         'field_name'          => "field_2",
-    //         'field_title'         => "Field 2 in category " . $category_id,
-    //         'field_type'          => 'date',
-    //         'field_placeholder'   => 'field placeholder',
-    //         'field_description'   => 'field description',
-    //         'field_constraint'    => 'required',
-    //         'field_default_value' => 'field default value',
-    //         'field_help_text'     => 'help text',
-    //     ),
-
-    //     array(
-    //         'field_name'          => "field_3",
-    //         'field_title'         => "Field 3 in category " . $category_id,
-    //         'field_type'          => 'number',
-    //         'field_placeholder'   => 'field placeholder',
-    //         'field_description'   => 'field description',
-    //         'field_constraint'    => 'required',
-    //         'field_default_value' => 'field default value',
-    //         'field_help_text'     => 'help text',
-    //     ),
-    //     array(
-    //         'field_name'          => "field_4",
-    //         'field_title'         => "Field 3 in category " . $category_id,
-    //         'field_type'          => 'textarea',
-    //         'field_placeholder'   => 'field placeholder',
-    //         'field_description'   => 'field description',
-    //         'field_constraint'    => 'required',
-    //         'field_default_value' => 'field default value',
-    //         'field_help_text'     => 'help text',
-    //     ),
-    //     array(
-    //         'field_name'          => "field_4",
-    //         'field_title'         => "Field 3 in category " . $category_id,
-    //         'field_type'          => 'checkbox',
-    //         'field_placeholder'   => 'field placeholder',
-    //         'field_description'   => 'field description',
-    //         'field_constraint'    => 'required',
-    //         'field_default_value' => 'field default value',
-    //         'field_help_text'     => 'help text',
-    //     ),
-    // );
+    return array(
+        'fields'         => $results,
+        'found_posts'    => $found_rows,
+        'max_numb_pages' => $max_numb_pages,
+    );
 }
-
-function marketengine_filter_cf_get_fields($field_objs) {
-    $field_arr = array();
-    foreach( $field_objs as $key => $field_obj ) {
-        $field_arr[] =  array(
-            'field_id'            => $field_obj->field_id,
-            'field_name'          => $field_obj->field_name,
-            'field_title'         => $field_obj->field_title,
-            'field_type'          => $field_obj->field_type,
-            'field_placeholder'   => isset($field_obj->field_placeholder) ? $field_obj->field_placeholder : '',
-            'field_description'   => isset($field_obj->field_description) ? $field_obj->field_description : '',
-            'field_constraint'    => $field_obj->field_constraint ? 'required' : '',
-            'field_default_value' => isset($field_obj->field_default_value) ? $field_obj->field_default_value : '',
-            'field_help_text'     => isset($field_obj->field_help_text) ? $field_obj->field_help_text : '',
-            'count'         => $field_obj->count,
-        );
-    }
-    return $field_arr;
-}
-add_filter('me_filter_cf_get_fields', 'marketengine_filter_cf_get_fields');
 
 function me_cf_get_affected_categories($field_id) {
     global $wpdb;
