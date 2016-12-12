@@ -250,42 +250,59 @@ function me_cf_get_field($field, $type = OBJECT)
 
 function me_cf_get_fields($args = array())
 {
-    global $wpdb;
-
-    $defaults = array(
-        'category-id' => '',
-        'paged'       => 1,
-        'showposts'   => (isset($args['view']) && $args['view'] == 'group-by-category') ? -1 : get_option('posts_per_page'),
-    );
-    $args = wp_parse_args($args, $defaults);
-
-    $sql = $join = $where = $limit = '';
-
-    $sql = "SELECT SQL_CALC_FOUND_ROWS *
-            FROM $wpdb->marketengine_custom_fields as C";
-
-    if($args['category-id']) {
-        $join = " LEFT JOIN $wpdb->marketengine_fields_relationship as R
-                    ON C.field_id = R.field_id";
-        $where = " WHERE R.term_taxonomy_id = {$args['category-id']}";
-    } else {
-        if( $args['showposts'] > -1 ) {
-            $current = (absint($args['paged'])-1) * $args['showposts'];
-            $limit = " LIMIT " . ($current) . ', ' . $args['showposts'];
-        }
-    }
-
-    $sql .= $join . $where . $limit;
-
-    $results = $wpdb->get_results($sql, ARRAY_A);
-
-    $found_rows     = $wpdb->get_var('SELECT FOUND_ROWS() as row');
-    $max_numb_pages = ceil($found_rows / $args['showposts']);
-
     return array(
-        'fields'         => $results,
-        'found_posts'    => $found_rows,
-        'max_numb_pages' => $max_numb_pages,
+        array(
+            'field_name'          => "field_1",
+            'field_title'         => "Field 1 in category " . $category_id,
+            'field_type'          => 'text',
+            'field_placeholder'   => 'field placeholder',
+            'field_description'   => 'field description',
+            'field_constraint'    => 'required',
+            'field_default_value' => 'field default value',
+            'field_help_text'     => 'help text',
+        ),
+
+        array(
+            'field_name'          => "field_2",
+            'field_title'         => "Field 2 in category " . $category_id,
+            'field_type'          => 'date',
+            'field_placeholder'   => 'field placeholder',
+            'field_description'   => 'field description',
+            'field_constraint'    => 'required',
+            'field_default_value' => 'field default value',
+            'field_help_text'     => 'help text',
+        ),
+
+        array(
+            'field_name'          => "field_3",
+            'field_title'         => "Field 3 in category " . $category_id,
+            'field_type'          => 'number',
+            'field_placeholder'   => 'field placeholder',
+            'field_description'   => 'field description',
+            'field_constraint'    => 'required',
+            'field_default_value' => 'field default value',
+            'field_help_text'     => 'help text',
+        ),
+        array(
+            'field_name'          => "field_4",
+            'field_title'         => "Field 3 in category " . $category_id,
+            'field_type'          => 'textarea',
+            'field_placeholder'   => 'field placeholder',
+            'field_description'   => 'field description',
+            'field_constraint'    => 'required',
+            'field_default_value' => 'field default value',
+            'field_help_text'     => 'help text',
+        ),
+        array(
+            'field_name'          => "field_4",
+            'field_title'         => "Field 3 in category " . $category_id,
+            'field_type'          => 'checkbox',
+            'field_placeholder'   => 'field placeholder',
+            'field_description'   => 'field description',
+            'field_constraint'    => 'required',
+            'field_default_value' => 'field default value',
+            'field_help_text'     => 'help text',
+        ),
     );
 }
 
