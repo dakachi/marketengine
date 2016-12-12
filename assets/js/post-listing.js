@@ -1,7 +1,17 @@
 /* global me_globals.ajaxurl, wpAjax*/
 (function($) {
     $(document).ready(function() {
-        $('.me-parent-category').change();
+        $('.me-help-text').tooltip({
+            position: {
+                my: "center bottom-10",
+                at: "center top",
+                using: function(position, feedback) {
+                    $(this).css(position);
+                    $("<div>").addClass("arrow").addClass(feedback.vertical).addClass(feedback.horizontal).appendTo(this);
+                }
+            }
+        });
+        $('.marketengine-date-field input').datepicker();
         $('#upload_listing_gallery').jUploader({
             browse_button: 'me-btn-upload',
             multi: true,
@@ -39,11 +49,25 @@
                 $('.me-sub-category').attr('disabled', 'disabled').addClass('me-sub-category-empty').html(r.data.content);
             }
         });
+    });
+    $('#post-listing-form .me-parent-category').change(function(e) {
+        var parent_cat = $(this).val();
         $.get(me_globals.ajaxurl, {
             'action': 'me-load-category-fields',
             'cat': parent_cat,
         }, function(res, stat) {
             $('.marketengine-custom-field').html(res);
+            $('.me-help-text').tooltip({
+                position: {
+                    my: "center bottom-10",
+                    at: "center top",
+                    using: function(position, feedback) {
+                        $(this).css(position);
+                        $("<div>").addClass("arrow").addClass(feedback.vertical).addClass(feedback.horizontal).appendTo(this);
+                    }
+                }
+            });
+            $('.marketengine-date-field input').datepicker();
         });
     });
     $('#listing-type-select').on('change', function() {

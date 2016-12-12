@@ -93,6 +93,25 @@ function me_get_listing_type_categories() {
 }
 
 /**
+ * Function me is listing type available
+ * Check the listing type is available in a category
+ * 
+ * @param string $listing_type The listing type name
+ * @param int $cat The category id. If the cat is not set, get the $_POST['parent_cat']
+ *
+ * @return bool
+ */
+function me_is_listing_type_available($listing_type, $cat = 0) {
+    if(!$cat && !empty($_POST['parent_cat'])) {
+        $cat = $_POST['parent_cat'];
+    }
+    if($cat == '') return true;
+
+    $categories = me_get_listing_type_categories();
+    return in_array($cat, $categories[$listing_type]);
+}
+
+/**
  * MarketEngine Get Listing Status List
  *
  * Retrieve marketengine listing status list

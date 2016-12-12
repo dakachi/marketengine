@@ -24,6 +24,9 @@ class ME_Handle_CF
         // add ajax load custom field when user select category
         add_action('wp_ajax_me-load-category-fields', array($this, 'load_category_fields'));
 
+        // validate field
+        add_filter('marketengine_post_listing_error_messages', array($this, 'validate_fields'), 10, 2);
+
         add_action('marketengine_after_update_listing', array($this, 'update_fields'), 10, 2);
         add_action('marketengine_after_insert_listing', array($this, 'update_fields'), 10, 2);
 
@@ -65,6 +68,28 @@ class ME_Handle_CF
         endforeach;
 
         exit;
+    }
+
+    public function validate_fields($errors, $listing_data)
+    {
+        $cat    = $listing_data['parent_cat'];
+        $fields = me_cf_get_fields($cat);
+
+        $rules             = array();
+        $custom_attributes = array();
+
+        foreach ($fields as $field) {
+            $field_name                     = $field['field_name'];
+            $rules[$field_name]             = $field['field_constraint'];
+            $custom_attributes[$field_name] = $field['field_title'];
+        }
+
+        $is_valid = me_validate($listing_data, $rules, $custom_attributes);
+        if (!$is_valid) {
+            $errors = array_merge($errors, me_get_invalid_message($listing_data, $rules, $custom_attributes));
+        }
+
+        return $errors;
     }
 
     public function update_fields($post, $data)
