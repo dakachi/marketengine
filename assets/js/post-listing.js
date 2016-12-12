@@ -1,7 +1,7 @@
 /* global me_globals.ajaxurl, wpAjax*/
 (function($) {
     $(document).ready(function() {
-        $('.me-parent-category').change();
+        //$('.me-parent-category').change();
         $('#upload_listing_gallery').jUploader({
             browse_button: 'me-btn-upload',
             multi: true,
