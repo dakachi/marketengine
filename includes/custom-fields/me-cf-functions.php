@@ -235,7 +235,7 @@ function me_cf_get_field($field, $type = OBJECT)
     return $results;
 }
 
-function me_cf_get_fields($args = array())
+function me_cf_get_fields($category_id)
 {
     return array(
         array(
