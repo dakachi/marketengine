@@ -39,6 +39,11 @@
                 $('.me-sub-category').attr('disabled', 'disabled').addClass('me-sub-category-empty').html(r.data.content);
             }
         });
+        
+    });
+    
+    $('#post-listing-form .me-parent-category').change(function(e){
+        var parent_cat = $(this).val();
         $.get(me_globals.ajaxurl, {
             'action': 'me-load-category-fields',
             'cat': parent_cat,
@@ -46,6 +51,7 @@
             $('.marketengine-custom-field').html(res);
         });
     });
+
     $('#listing-type-select').on('change', function() {
         var type = $(this).val();
         $('.listing-type-info').hide();
