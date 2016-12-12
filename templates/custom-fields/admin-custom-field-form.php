@@ -6,14 +6,14 @@
 		<div class="me-group-field">
 			<label for="me-cf-field-name" class="me-title"><?php _e('Field Name', 'enginethemes'); ?></label>
 			<span class="me-field-control">
-				<input id="me-cf-field-name" name="field_name" class="me-input-field " type="text" value="<?php echo isset($_POST['field_name']) ? $_POST['field_name'] : ''; ?>">
+				<input id="me-cf-field-name" name="field_name" class="me-input-field " type="text" value="<?php echo isset($_POST['field_name']) ? esc_attr($_POST['field_name']) : ''; ?>">
 			</span>
 		</div>
 
 		<div class="me-group-field">
 			<label for="" class="me-title"><?php _e('Field Title', 'enginethemes'); ?></label>
 			<span class="me-field-control">
-				<input id="me-cf-field-title" name="field_title" class="me-input-field " type="text" value="<?php echo isset($_POST['field_title']) ? $_POST['field_title'] : ''; ?>">
+				<input id="me-cf-field-title" name="field_title" class="me-input-field " type="text" value="<?php echo isset($_POST['field_title']) ? esc_attr($_POST['field_title']) : ''; ?>">
 			</span>
 		</div>
 

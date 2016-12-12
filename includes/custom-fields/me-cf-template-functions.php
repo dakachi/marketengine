@@ -103,7 +103,7 @@ function marketengine_load_input_by_field_type($args) {
             $options .= '<div class="me-group-field">';
             $options .= '<label class="me-title">'.__('Placeholder', 'enginethemes').' <small>'.__('(optional)', 'enginethemes').'</small></label>';
             $options .= '<span class="me-field-control">';
-            $options .= '<input class="me-input-field" type="text" name="field_placeholder" value="'.$placeholder.'">';
+            $options .= '<input class="me-input-field" type="text" name="field_placeholder" value="'.esc_attr($placeholder).'">';
             $options .= '</span>';
             $options .= '</div>';
             break;
@@ -112,7 +112,7 @@ function marketengine_load_input_by_field_type($args) {
             $options .= '<div class="me-group-field">';
             $options .= '<label class="me-title">'.__('Placeholder', 'enginethemes').' <small>'.__('(optional)', 'enginethemes').'</small></label>';
             $options .= '<span class="me-field-control">';
-            $options .= '<input class="me-input-field" type="text" name="field_placeholder" value="'.$placeholder.'">';
+            $options .= '<input class="me-input-field" type="text" name="field_placeholder" value="'.esc_attr($placeholder).'">';
             $options .= '</span>';
             $options .= '</div>';
             $options .= '<div class="me-group-field">';
@@ -146,7 +146,7 @@ function marketengine_load_input_by_field_type($args) {
             $options .= '<div class="me-group-field">';
             $options .= '<label class="me-title">'.__('Option none', 'enginethemes').'</label>';
             $options .= '<span class="me-field-control">';
-            $options .= '<input class="me-input-field" type="text" name="option_none" value="'.$option_none.'">';
+            $options .= '<input class="me-input-field" type="text" name="option_none" value="'.esc_attr($placeholder).'">';
             $options .= '</span>';
             $options .= '</div>';
             $options .= '<div class="me-group-field">';
