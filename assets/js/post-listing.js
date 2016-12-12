@@ -11,7 +11,7 @@
                 }
             }
         });
-        $('.marketengine-date-field input').datepicker();
+        $('.marketengine-date-field input').datepicker({dateFormat : 'yy-mm-dd'});
         $('#upload_listing_gallery').jUploader({
             browse_button: 'me-btn-upload',
             multi: true,
@@ -67,7 +67,7 @@
                     }
                 }
             });
-            $('.marketengine-date-field input').datepicker();
+            $('.marketengine-date-field input').datepicker({dateFormat : 'yy-mm-dd'});
         });
     });
     $('#listing-type-select').on('change', function() {
@@ -75,7 +75,7 @@
         $('.listing-type-info').hide();
         $('#' + type + '-type-field').show();
     });
-    $(".me-input-price").keydown(function(e) {
+    $(".me-input-price, .positive").keydown(function(e) {
         // Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
             // Allow: Ctrl+A
