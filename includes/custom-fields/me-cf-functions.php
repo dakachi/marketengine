@@ -343,6 +343,24 @@ function me_the_field($field_name, $post = null, $single = true)
     echo get_post_meta($post->ID, $field_name, $single);
 }
 
+function me_field_attribute($field_constraint) {
+	$constraint = explode('|', $field_constraint);
+	if(empty($constraint)) return '';
+	$attr = '';
+	
+	foreach ($constraint as $value) {
+		if($value == 'required') {
+			$attr .= 'required="true" ';
+		}
+
+		if(strpos($value, 'min') !== false || strpos($value, 'max') !== false) {
+			$min = explode(':', $value);
+			$attr .= $min[0] . '="'.$min[1].'" ';
+		}
+	}
+	return apply_filters('marketengine_cf_field_constraint_attr', $attr, $field_constraint);
+}
+
 function me_custom_field_page_url( $view = '', $action = '') {
     $url = add_query_arg('section', 'custom-field', me_menu_page_url('me-settings', 'marketplace-settings'));
 
