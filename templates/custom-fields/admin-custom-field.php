@@ -49,12 +49,7 @@ $categories = me_get_listing_categories();
 			if($customfields['found_posts']) :
 				foreach($customfields['fields'] as $key => $field) :
 					extract($field);
-					$affected_cats = me_cf_get_affected_categories($field_id);
-					$affected_cats_name = '';
-					foreach ($affected_cats as $key => $cat) {
-						$cat_name = get_term($cat)->name;
-						$affected_cats_name .= $cat_name . ', ';
-					}
+					$affected_cats_name = me_cf_get_affected_categories_html($field_id);
 		?>
 
 			<li class="me-cf-item">

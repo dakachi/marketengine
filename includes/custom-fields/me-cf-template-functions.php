@@ -38,8 +38,12 @@ function me_list_custom_field_type() {
  * @version 1.0.0
  */
 function marketengine_custom_field_template() {
-    if(isset($_REQUEST['view']) && $_REQUEST['view'] == 'add') {
-        me_get_template('custom-fields/admin-custom-field-form');
+    if(isset($_REQUEST['view'])) {
+        if($_REQUEST['view'] == 'add') {
+            me_get_template('custom-fields/admin-custom-field-form');
+        } elseif($_REQUEST['view'] == 'edit') {
+            me_get_template('custom-fields/admin-custom-field-form');
+        }
     } else {
         me_get_template('custom-fields/admin-custom-field');
     }

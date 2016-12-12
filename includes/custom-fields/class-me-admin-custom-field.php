@@ -33,6 +33,7 @@ class ME_Custom_Field_Handle {
 	public static function init() {
 		add_action('wp_loaded', 'marketengine_add_actions');
 		add_action('wp_loaded', array(__CLASS__, 'insert'));
+		add_action('wp_loaded', array(__CLASS__, 'update'));
 
 		add_action('me_load_cf_input', array(__CLASS__, 'load_field_input'));
 		add_action('wp_ajax_me_cf_load_input_type', array(__CLASS__, 'load_field_input_ajax'));
@@ -40,7 +41,7 @@ class ME_Custom_Field_Handle {
 
 	public static function insert() {
 		if( isset($_POST['insert-custom-field']) && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert_custom_field') ) {
-			$term_ids = $_POST['field_for_categories'];
+			$term_ids = isset($_POST['field_for_categories']) ? $_POST['field_for_categories'] : array();
             $_POST['count'] = count($term_ids);
 			$field_id = me_cf_insert_field($_POST);
 
@@ -64,6 +65,10 @@ class ME_Custom_Field_Handle {
 				}
 			}
 		}
+	}
+
+	public static function update() {
+
 	}
 
 	public static function load_field_input_ajax() {

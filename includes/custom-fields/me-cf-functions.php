@@ -303,6 +303,19 @@ function me_cf_get_affected_categories($field_id) {
     return $results;
 }
 
+function me_cf_get_affected_categories_html($field_id) {
+    $affected_cats = me_cf_get_affected_categories($field_id);
+    $affected_cats_name = '';
+    foreach ($affected_cats as $key => $cat) {
+        $cat_name = get_term($cat)->name;
+        $affected_cats_name .= $cat_name . ', ';
+    }
+    return $affected_cats_name;
+}
+
+function me_field_by_id() {
+}
+
 function me_field($field_name, $post = null, $single = true)
 {
     if (!$post) {
