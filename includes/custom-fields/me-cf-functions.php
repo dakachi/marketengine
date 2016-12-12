@@ -234,10 +234,8 @@ function me_cf_get_field($field, $type = OBJECT)
     $results = $wpdb->get_results($sql, $type);
     return $results;
 }
-
-function me_cf_get_fields($category_id)
-{
-    global $wpdb;
+function me_cf_fields_query($args) {
+	global $wpdb;
 
     $defaults = array(
         'paged'       => 1,
@@ -266,6 +264,23 @@ function me_cf_get_fields($category_id)
         'found_posts'    => $found_rows,
         'max_numb_pages' => $max_numb_pages,
     );
+}
+
+function me_cf_get_fields($category_id)
+{
+    global $wpdb;
+    $sql = $join = $where = '';
+    $sql = "SELECT *
+            FROM $wpdb->marketengine_custom_fields as C";
+    if($category_id) {
+        $join = " LEFT JOIN $wpdb->marketengine_fields_relationship as R
+                    ON C.field_id = R.field_id";
+        $where = " WHERE R.term_taxonomy_id = {$category_id}";
+    }
+    $sql .= $join . $where;
+    $results = $wpdb->get_results($sql, ARRAY_A);
+
+    return $results;
 }
 
 function me_cf_get_fields_by_category($category_id)

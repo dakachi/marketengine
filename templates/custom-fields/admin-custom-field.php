@@ -45,7 +45,7 @@ $categories = me_get_listing_categories();
 			</li>
 
 		<?php
-			$customfields = me_cf_get_fields($_REQUEST);
+			$customfields = me_cf_fields_query($_REQUEST);
 			if($customfields['found_posts']) :
 				foreach($customfields['fields'] as $key => $field) :
 					extract($field);
