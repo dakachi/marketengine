@@ -223,18 +223,15 @@ function me_cf_get_field($field, $type = OBJECT)
 {
     global $wpdb;
 
+    $field = absint( $field );
+
     $sql = "SELECT *
             FROM $wpdb->marketengine_custom_fields as C
             LEFT JOIN $wpdb->marketengine_fields_relationship as R
             ON C.field_id = R.field_id
             WHERE C.field_id = {$field}";
 
-    $results = $wpdb->get_results($sql);
-
-    if($type != OBJECT) {
-        $results = apply_filters('me_filter_cf_get_fields', $results)[0];
-    }
-
+    $results = $wpdb->get_results($sql, $type);
     return $results;
 }
 
