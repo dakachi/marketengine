@@ -106,7 +106,7 @@ class ME_Install {
 
             CREATE TABLE {$wpdb->prefix}marketengine_custom_fields (
                     field_id bigint(20) NOT NULL auto_increment,
-                    field_name varchar(20) NOT NULL,
+                    field_name varchar(20) NOT NULL UNIQUE,
                     field_title longtext NOT NULL,
                     field_type longtext NOT NULL,
                     field_input_type longtext NOT NULL,
@@ -116,8 +116,7 @@ class ME_Install {
                     field_constraint varchar(200) NOT NULL default '',
                     field_default_value varchar(200) NOT NULL default '',
                     count bigint(20) NOT NULL default 0,
-                    PRIMARY KEY  (field_id),
-                    KEY field_name (field_name)
+                    PRIMARY KEY  (field_id)
                 ) $collate;
         
             CREATE TABLE {$wpdb->prefix}marketengine_fields_relationship (
