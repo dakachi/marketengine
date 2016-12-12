@@ -234,6 +234,7 @@ function me_cf_get_field($field, $type = OBJECT)
     $results = $wpdb->get_results($sql, $type);
     return $results;
 }
+
 function me_cf_fields_query($args) {
 	global $wpdb;
 
