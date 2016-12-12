@@ -324,6 +324,15 @@ class ME_Listing_Handle
             $invalid_data = array_merge($invalid_data, self::validate_category($listing_data, $is_update));
         }
 
+         /**
+         * Filter listing data  eror message
+         *
+         * @param array $invalid_data The listing data invalid message
+         * @param array $listing_data The listing data
+         *
+         * @since 1.0.1
+         */
+        $invalid_data = apply_filters('marketengine_post_listing_error_messages', $invalid_data, $listing_data);
         if (!empty($invalid_data)) {
             $errors = new WP_Error();
             foreach ($invalid_data as $key => $message) {

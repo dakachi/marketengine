@@ -24,6 +24,9 @@ class ME_Handle_CF
         // add ajax load custom field when user select category
         add_action('wp_ajax_me-load-category-fields', array($this, 'load_category_fields'));
 
+        // validate field
+        add_filter('marketengine_post_listing_error_messages', array($this, 'validate_fields'), 10, 2);
+
         add_action('marketengine_after_update_listing', array($this, 'update_fields'), 10, 2);
         add_action('marketengine_after_insert_listing', array($this, 'update_fields'), 10, 2);
 
@@ -65,6 +68,11 @@ class ME_Handle_CF
         endforeach;
 
         exit;
+    }
+
+    public function validate_fields($errors, $listing_data) {
+    	
+    	return $errors;
     }
 
     public function update_fields($post, $data)
