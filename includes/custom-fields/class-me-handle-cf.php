@@ -70,9 +70,26 @@ class ME_Handle_CF
         exit;
     }
 
-    public function validate_fields($errors, $listing_data) {
-    	
-    	return $errors;
+    public function validate_fields($errors, $listing_data)
+    {
+        $cat    = $listing_data['parent_cat'];
+        $fields = me_cf_get_fields($cat);
+
+        $rules             = array();
+        $custom_attributes = array();
+
+        foreach ($fields as $field) {
+            $field_name                     = $field['field_name'];
+            $rules[$field_name]             = $field['field_constraint'];
+            $custom_attributes[$field_name] = $field['field_title'];
+        }
+
+        $is_valid = me_validate($listing_data, $rules, $custom_attributes);
+        if (!$is_valid) {
+            $errors = array_merge($errors, me_get_invalid_message($listing_data, $rules, $custom_attributes));
+        }
+
+        return $errors;
     }
 
     public function update_fields($post, $data)
