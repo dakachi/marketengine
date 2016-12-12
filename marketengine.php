@@ -314,6 +314,7 @@ class MarketEngine
             array(
                 'ajaxurl'   => admin_url('admin-ajax.php'),
                 'limitFile' => __("Exceed number of allowed file upload. Max file upload is ", "enginethemes"),
+                'date_format' => get_option( 'date_format' ),
             )
         );
 
