@@ -195,3 +195,14 @@ function marketengine_load_inputs_for_view( $field ) {
     }
 }
 add_action('me_load_inputs_for_view', 'marketengine_load_inputs_for_view');
+
+function marketengine_cf_pagination($args) {
+    $big = 999999999;
+    $current_page = empty($_REQUEST['paged']) ? 1 : $_REQUEST['paged'];
+    echo paginate_links( array(
+        'base' => add_query_arg( 'paged', '%#%' ),
+        'format' => '',
+        'current' => max( 1, $current_page ),
+        'total' => $args['max_numb_pages']
+    ) );
+}
