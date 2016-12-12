@@ -343,8 +343,8 @@ function me_the_field($field_name, $post = null, $single = true)
     echo get_post_meta($post->ID, $field_name, $single);
 }
 
-function me_field_attribute($field_constraint) {
-	$constraint = explode('|', $field_constraint);
+function me_field_attribute($field) {
+	$constraint = explode('|', $field['field_constraint']);
 	if(empty($constraint)) return '';
 	$attr = '';
 	
@@ -358,7 +358,7 @@ function me_field_attribute($field_constraint) {
 			$attr .= $min[0] . '="'.$min[1].'" ';
 		}
 	}
-	return apply_filters('marketengine_cf_field_constraint_attr', $attr, $field_constraint);
+	return apply_filters('marketengine_cf_field_attribute', $attr, $field);
 }
 
 function me_custom_field_page_url( $view = '', $action = '') {
