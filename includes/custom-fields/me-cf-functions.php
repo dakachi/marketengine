@@ -412,7 +412,8 @@ function me_cf_get_affected_categories_html($field_id)
         $cat_name = get_term($cat)->name;
         $affected_cats_name .= $cat_name . ', ';
     }
-    return $affected_cats_name;
+
+    return substr($affected_cats_name, 0, strlen(trim($affected_cats_name))-1);
 }
 
 function me_field($field_name, $post = null, $single = true)
@@ -468,6 +469,33 @@ function me_field_attribute($field)
         }
     }
     return apply_filters('marketengine_cf_field_attribute', $attr, $field);
+}
+
+function me_field_attribute_array($field)
+{
+    if(!isset($field['field_constraint'])) {
+        return;
+    }
+    $constraint = explode('|', $field['field_constraint']);
+    if (empty($constraint)) {
+        return '';
+    }
+
+    $attr = array();
+
+    foreach ($constraint as $value) {
+        if ($value == 'required') {
+            $attr['required'] = true;
+        }
+
+        if (strpos($value, 'min') !== false || strpos($value, 'max') !== false) {
+            $min = explode(':', $value);
+
+            $attr[$min[0]] = $min[1];
+        }
+    }
+
+    return $attr;
 }
 
 function me_custom_field_page_url($view = '', $action = '')

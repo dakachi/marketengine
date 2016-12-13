@@ -2,24 +2,26 @@
 if(isset($field_obj)) {
 	$_POST = $field_obj;
 }
-?>
 
+$constraint = me_field_attribute_array($_POST);
+
+?>
 <div class="me-custom-field">
 	<?php me_print_notices(); ?>
 	<h2><?php _e('Add New Custom Field', 'enginethemes'); ?></h2>
-	<form method="post">
+	<form method="post" id="me-custom-field-form">
 
 		<div class="me-group-field">
 			<label for="me-cf-field-name" class="me-title"><?php _e('Field Name', 'enginethemes'); ?></label>
 			<span class="me-field-control">
-				<input id="me-cf-field-name" name="field_name" class="me-input-field " type="text" value="<?php echo isset($_POST['field_name']) ? esc_attr($_POST['field_name']) : ''; ?>">
+				<input required id="me-cf-field-name" name="field_name" class="me-input-field " type="text" value="<?php echo isset($_POST['field_name']) ? esc_attr($_POST['field_name']) : ''; ?>">
 			</span>
 		</div>
 
 		<div class="me-group-field">
 			<label for="" class="me-title"><?php _e('Field Title', 'enginethemes'); ?></label>
 			<span class="me-field-control">
-				<input id="me-cf-field-title" name="field_title" class="me-input-field " type="text" value="<?php echo isset($_POST['field_title']) ? esc_attr($_POST['field_title']) : ''; ?>">
+				<input required aria-required="true" id="me-cf-field-title" name="field_title" class="me-input-field " type="text" value="<?php echo isset($_POST['field_title']) ? esc_attr($_POST['field_title']) : ''; ?>">
 			</span>
 		</div>
 
@@ -27,7 +29,7 @@ if(isset($field_obj)) {
 			<label for="" class="me-title"><?php _e('Field Type', 'enginethemes'); ?></label>
 			<span class="me-select-control">
 
-				<select id="me-choose-field-type" class="select-field" name="field_type" id="">
+				<select required id="me-choose-field-type" class="select-field" name="field_type" id="">
 					<option value=""><?php _e('Choose field type', 'enginethemes'); ?></option>
 					<?php
 						$field_types = me_list_custom_field_type();
@@ -58,7 +60,7 @@ if(isset($field_obj)) {
 
 		<div class="me-group-field">
 		<?php
-			$checked = !isset($_POST['field_constraint']) ? 'required' : $_POST['field_constraint'];
+			$checked = (!isset($constraint['required']) || !empty($constraint['required'])) ? 'required' : '';
 		?>
 
 			<label class="me-title"><?php _e('Required?', 'enginethemes'); ?></label>
@@ -71,11 +73,21 @@ if(isset($field_obj)) {
 		<div class="me-group-field">
 			<label for="" class="me-title"><?php _e('Available In Which Categories', 'enginethemes'); ?></label>
 			<span class="me-select-control">
-				<select class="select-field" name="field_for_categories[]" id="" multiple="true">
+				<select required class="select-field" name="field_for_categories[]" id="" multiple="true">
 
 				<?php
 					$categories = me_get_listing_categories();
-					$selected = isset($_POST['field_for_categories']) ? $_POST['field_for_categories'] : array();
+					if(!isset($_POST['field_id'])) {
+						if(!isset($_REQUEST['category-id'])) {
+							$selected = isset($_POST['field_id']) ? $selected : array_keys($categories);
+						} else {
+							$selected = array($_REQUEST['category-id']);
+						}
+							var_dump($selected);
+					} else {
+						$selected = isset($_POST['field_for_categories']) ? $_POST['field_for_categories'] : array();
+					}
+
 					foreach ($categories as $key => $value) :
 				?>
 					<option <?php selected(in_array($key, $selected)); ?> value="<?php echo $key; ?>"><?php echo $value; ?></option>

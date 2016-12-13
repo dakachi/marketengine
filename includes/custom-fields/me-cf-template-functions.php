@@ -94,8 +94,8 @@ add_action('marketengine_section', 'marketengine_add_custom_field_section');
 
 function marketengine_load_input_by_field_type($args) {
 	$placeholder = isset($args['field_placeholder']) ? $args['field_placeholder'] : '';
-	$field_minimum_value = isset($args['field_minimum_value']) ? $args['field_minimum_value'] : '';
-	$field_maximum_value = isset($args['field_maximum_value']) ? $args['field_maximum_value'] : '';
+    $attribute = me_field_attribute_array($args);
+
 	$option_values = isset($args['option_values']) ? $args['option_values'] : '';
 	$option_none = isset($args['option_none']) ? $args['option_none'] : '';
 
@@ -122,13 +122,13 @@ function marketengine_load_input_by_field_type($args) {
             $options .= '<div class="me-group-field">';
             $options .= '<label class="me-title">'.__('Minimum value', 'enginethemes').' <small>'.__('(optional)', 'enginethemes').'</small></label>';
             $options .= '<span class="me-field-control">';
-            $options .= '<input class="me-input-field" type="number" name="field_minimum_value" value="'.$field_minimum_value.'">';
+            $options .= '<input class="me-input-field" type="number" name="field_minimum_value" value="'.$attribute['min'].'">';
             $options .= '</span>';
             $options .= '</div>';
             $options .= '<div class="me-group-field">';
             $options .= '<label class="me-title">'.__('Maximum value', 'enginethemes').' <small>'.__('(optional)','enginethemes').'</small></label>';
             $options .= '<span class="me-field-control">';
-            $options .= '<input class="me-input-field" type="number" name="field_maximum_value" value="'.$field_maximum_value.'">';
+            $options .= '<input class="me-input-field" type="number" name="field_maximum_value" value="'.$attribute['max'].'">';
             $options .= '</span>';
             $options .= '</div>';
             break;
@@ -178,12 +178,11 @@ function marketengine_load_inputs_for_view( $field ) {
 
         case 'number':
         	$field_placeholder = isset($field_placeholder) ? $field_placeholder : 'N/A';
-        	/*$field_minimum_value = isset($field->field_minimum_value) ? $field->field_minimum_value : 'N/A';
-        	$field_maximum_value = isset($field->field_maximum_value) ? $field->field_maximum_value : 'N/A';*/
+        	$field_attribute = me_field_attribute_array($field);
 
 	        echo "<p><span>".__('Placeholder:', 'enginethemes')."</span>".$field_placeholder."</p>";
-	        echo "<p><span>".__('Minimum value:', 'enginethemes')."</span></p>";
-	        echo "<p><span>".__('Maximum value:', 'enginethemes')."</span></p>";
+	        echo "<p><span>".__('Minimum value:', 'enginethemes')."</span>".$field_attribute['min']."</p>";
+	        echo "<p><span>".__('Maximum value:', 'enginethemes')."</span>".$field_attribute['max']."</p>";
 
             break;
 

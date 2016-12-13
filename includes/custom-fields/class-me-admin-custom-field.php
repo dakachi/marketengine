@@ -40,9 +40,12 @@ class ME_Custom_Field_Handle {
 	}
 
 	public static function insert() {
-		if( isset($_POST['insert-custom-field']) && isset($_REQUEST['view']) && ($_REQUEST['view'] == 'add' || $_REQUEST['view'] == 'edit' ) && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert_custom_field') ) {
+		if( is_admin() && isset($_POST['insert-custom-field']) && isset($_REQUEST['view']) && ($_REQUEST['view'] == 'add' || $_REQUEST['view'] == 'edit' ) && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert_custom_field') ) {
 			$term_ids = isset($_POST['field_for_categories']) ? $_POST['field_for_categories'] : array();
             $_POST['count'] = count($term_ids);
+
+            $attributes = self::filter_field_attribute();
+            $_POST['field_constraint'] = $attributes;
 
             if($_REQUEST['view'] == 'add') {
 				$field_id = me_cf_insert_field($_POST, true);
@@ -52,7 +55,7 @@ class ME_Custom_Field_Handle {
             	self::remove_categories(array(
             		'field_id'		=> $_POST['field_id'],
             		'current_cats' => $current_cats,
-            		'new_cats'	=> $_POST['field_for_categories'],
+            		'new_cats'	=> $term_ids,
             	));
 
             	$field_id = me_cf_update_field($_POST, true);
@@ -61,14 +64,10 @@ class ME_Custom_Field_Handle {
 			if(is_wp_error($field_id)) {
 				me_wp_error_to_notices($field_id);
 			} else {
-				if(isset($term_ids) && !empty($term_ids)) {
-					foreach($term_ids as $key => $term_id) {
-						$result = me_cf_set_field_category( $field_id, $term_id, 0);
-						if(is_wp_error($result)) {
-							me_wp_error_to_notices($result);
-							return;
-						}
-					}
+				$result = self::set_field_category($field_id, $term_ids);
+				if(is_wp_error($result)) {
+					me_wp_error_to_notices($result);
+					return;
 				}
 
 				if($_POST['redirect']) {
@@ -105,6 +104,17 @@ class ME_Custom_Field_Handle {
 	    echo $options;
 	}
 
+	public static function set_field_category($field_id, $term_ids) {
+		if(isset($term_ids) && !empty($term_ids)) {
+			foreach($term_ids as $key => $term_id) {
+				$result = me_cf_set_field_category( $field_id, $term_id, 0);
+			}
+		} else {
+			$result = new WP_Error('invalid_taxonomy', __('Categories is required!', 'enginethemes'));
+		}
+		return $result;
+	}
+
 	public static function remove_categories($args) {
 		extract($args);
 		$unuse_cats = array_diff($current_cats, $new_cats);
@@ -116,6 +126,23 @@ class ME_Custom_Field_Handle {
 				return;
 	    	}
 	    }
+	}
+
+	public static function filter_field_attribute() {
+		$temp = '';
+		if(isset($_POST['field_constraint']) && !empty($_POST['field_constraint'])) {
+			$temp .= 'required';
+		}
+
+		if(isset($_POST['field_minimum_value']) && !empty($_POST['field_minimum_value'])) {
+			$temp .= '|min:' . $_POST['field_minimum_value'];
+		}
+
+		if(isset($_POST['field_maximum_value']) && !empty($_POST['field_maximum_value'])) {
+			$temp .= '|max:' . $_POST['field_maximum_value'];
+		}
+
+		return $temp;
 	}
 }
 
