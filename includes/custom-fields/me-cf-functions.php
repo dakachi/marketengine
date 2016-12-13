@@ -359,7 +359,7 @@ function me_field_attribute($field) {
 	$constraint = explode('|', $field['field_constraint']);
 	if(empty($constraint)) return '';
 	$attr = '';
-	
+
 	foreach ($constraint as $value) {
 		if($value == 'required') {
 			$attr .= 'required="true" ';
