@@ -40,7 +40,7 @@ class ME_Custom_Field_Handle {
 	}
 
 	public static function insert() {
-		if( isset($_POST['insert-custom-field']) && isset($_REQUEST['view']) && ($_REQUEST['view'] == 'add' || $_REQUEST['view'] == 'edit' ) && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert_custom_field') ) {
+		if( is_admin() && isset($_POST['insert-custom-field']) && isset($_REQUEST['view']) && ($_REQUEST['view'] == 'add' || $_REQUEST['view'] == 'edit' ) && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert_custom_field') ) {
 			$term_ids = isset($_POST['field_for_categories']) ? $_POST['field_for_categories'] : array();
             $_POST['count'] = count($term_ids);
 
@@ -64,14 +64,10 @@ class ME_Custom_Field_Handle {
 			if(is_wp_error($field_id)) {
 				me_wp_error_to_notices($field_id);
 			} else {
-				if(isset($term_ids) && !empty($term_ids)) {
-					foreach($term_ids as $key => $term_id) {
-						$result = me_cf_set_field_category( $field_id, $term_id, 0);
-						if(is_wp_error($result)) {
-							me_wp_error_to_notices($result);
-							return;
-						}
-					}
+				$result = self::set_field_category($term_ids);
+				if(is_wp_error($result)) {
+					me_wp_error_to_notices($result);
+					return;
 				}
 
 				if($_POST['redirect']) {
@@ -106,6 +102,17 @@ class ME_Custom_Field_Handle {
 	public static function load_field_input() {
 		$options = marketengine_load_input_by_field_type($_POST);
 	    echo $options;
+	}
+
+	public static function set_field_category($term_ids) {
+		if(isset($term_ids) && !empty($term_ids)) {
+			foreach($term_ids as $key => $term_id) {
+				$result = me_cf_set_field_category( $field_id, $term_id, 0);
+			}
+		} else {
+			$result = new WP_Error('invalid_taxonomy', __('Categories is required!.', 'enginethemes'));
+		}
+		return $result;
 	}
 
 	public static function remove_categories($args) {
