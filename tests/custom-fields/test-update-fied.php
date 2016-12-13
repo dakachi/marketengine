@@ -35,6 +35,9 @@ class Tests_Update_Field extends WP_UnitTestCase
     }
 
     public function test_update_change_field_type() {
-        
+        $this->field_data['field_type'] = 'number';
+
+        $result = me_cf_update_field($this->field_data, true);
+        $this->assertEquals(new WP_Error('field_type_changed', 'The field type cannot change.'), $result);
     }
 }
