@@ -24,6 +24,15 @@ class Tests_Insert_Field extends WP_UnitTestCase
         );
     }
 
+    public function tearDown() { 
+        parent::tearDown();
+        global $wpdb;
+
+        $field_table = $wpdb->prefix . 'marketengine_custom_fields';
+        // delete field
+        $deleted = $wpdb->query("DELETE FROM $field_table WHERE 1=1");
+    }
+
     public function test_insert_field_success()
     {
         $result = me_cf_insert_field($this->field_data, true);
