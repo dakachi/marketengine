@@ -64,7 +64,11 @@ $(document).ready(function() {
 		});
     });
 
-    $('#me-custom-field-form').validate();
+    $('#me-custom-field-form').validate({
+    	errorClass: 'me-field-required',
+	    validClass: 'success',
+	    errorElement: 'div',
+    });
 
     $('.me-cf-remove').on('click', function(e) {
 

@@ -77,8 +77,17 @@ $constraint = me_field_attribute_array($_POST);
 
 				<?php
 					$categories = me_get_listing_categories();
-					$selected = isset($_POST['field_for_categories']) ? $_POST['field_for_categories'] : array();
-					$selected = isset($_POST['field_id']) ? $selected : array_keys($categories);
+					if(!isset($_POST['field_id'])) {
+						if(!isset($_REQUEST['category-id'])) {
+							$selected = isset($_POST['field_id']) ? $selected : array_keys($categories);
+						} else {
+							$selected = array($_REQUEST['category-id']);
+						}
+							var_dump($selected);
+					} else {
+						$selected = isset($_POST['field_for_categories']) ? $_POST['field_for_categories'] : array();
+					}
+
 					foreach ($categories as $key => $value) :
 				?>
 					<option <?php selected(in_array($key, $selected)); ?> value="<?php echo $key; ?>"><?php echo $value; ?></option>
