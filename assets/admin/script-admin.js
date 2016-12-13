@@ -64,9 +64,11 @@ $(document).ready(function() {
 		});
     });
 
+    $('#me-custom-field-form').validate();
+
     $('.me-cf-remove').on('click', function(e) {
 
-    	var cfm = confirm('Are you sure?');
+    	var cfm = confirm('Are you sure you want to delete the selected custom field?');
 
 	    if (cfm == false) {
 	    	e.preventDefault();

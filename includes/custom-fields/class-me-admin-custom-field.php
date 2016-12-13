@@ -107,10 +107,10 @@ class ME_Custom_Field_Handle {
 	public static function set_field_category($term_ids) {
 		if(isset($term_ids) && !empty($term_ids)) {
 			foreach($term_ids as $key => $term_id) {
-				$result = me_cf_set_field_category( $field_id, $term_id, 0);
+				$result = me_cf_set_field_category( $_POST['field_id'], $term_id, 0);
 			}
 		} else {
-			$result = new WP_Error('invalid_taxonomy', __('Categories is required!.', 'enginethemes'));
+			$result = new WP_Error('invalid_taxonomy', __('Categories is required!', 'enginethemes'));
 		}
 		return $result;
 	}
