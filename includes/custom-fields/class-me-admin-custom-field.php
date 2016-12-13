@@ -55,7 +55,7 @@ class ME_Custom_Field_Handle {
             	self::remove_categories(array(
             		'field_id'		=> $_POST['field_id'],
             		'current_cats' => $current_cats,
-            		'new_cats'	=> $_POST['field_for_categories'],
+            		'new_cats'	=> $term_ids,
             	));
 
             	$field_id = me_cf_update_field($_POST, true);
