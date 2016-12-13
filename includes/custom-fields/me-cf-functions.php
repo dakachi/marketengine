@@ -430,20 +430,12 @@ function me_field_attribute($field)
             $attr .= 'required="true" ';
         }
 
-        $attr = '';
-
-        foreach ($constraint as $value) {
-            if ($value == 'required') {
-                $attr .= 'required="true" ';
-            }
-
-            if (strpos($value, 'min') !== false || strpos($value, 'max') !== false) {
-                $min = explode(':', $value);
-                $attr .= $min[0] . '="' . $min[1] . '" ';
-            }
+        if (strpos($value, 'min') !== false || strpos($value, 'max') !== false) {
+            $min = explode(':', $value);
+            $attr .= $min[0] . '="' . $min[1] . '" ';
         }
-        return apply_filters('marketengine_cf_field_attribute', $attr, $field);
     }
+    return apply_filters('marketengine_cf_field_attribute', $attr, $field);
 }
 
 function me_custom_field_page_url($view = '', $action = '')
