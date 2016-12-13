@@ -1,3 +1,9 @@
+<?php
+if(isset($field_obj)) {
+	$_POST = $field_obj;
+}
+?>
+
 <div class="me-custom-field">
 	<?php me_print_notices(); ?>
 	<h2><?php _e('Add New Custom Field', 'enginethemes'); ?></h2>
