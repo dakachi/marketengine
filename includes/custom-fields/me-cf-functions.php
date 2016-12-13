@@ -155,7 +155,6 @@ function me_cf_set_field_category($field_id, $term_id, $order)
 
     $term_info = get_term($term_id, 'listing_category', ARRAY_A);
     $tt_id     = $term_info['term_taxonomy_id'];
-
     if ($wpdb->get_var($wpdb->prepare("SELECT term_taxonomy_id FROM $wpdb->marketengine_fields_relationship WHERE field_id = %d AND term_taxonomy_id = %d", $field_id, $tt_id))) {
         // update relationship order
         $wpdb->update(
@@ -163,16 +162,13 @@ function me_cf_set_field_category($field_id, $term_id, $order)
             array('term_order' => $order),
             array('field_id' => $field_id, 'term_taxonomy_id' => $tt_id)
         );
-
     } else {
         // insert relationship
         $wpdb->insert($wpdb->marketengine_fields_relationship, array('field_id' => $field_id, 'term_taxonomy_id' => $tt_id, 'term_order' => $order));
     }
-
     //TODO:
     me_cf_update_field_count($field_id);
     me_cf_update_term_count($term_id);
-
 }
 
 function me_cf_remove_field_category($field_id, $term_id)
@@ -180,7 +176,7 @@ function me_cf_remove_field_category($field_id, $term_id)
 	global $wpdb;
 
     $field_id = (int) $field_id;
-    if (!term_exists($term_id, 'listing_category')) {
+    if (!term_exists((int)$term_id, 'listing_category')) {
         return new WP_Error('invalid_taxonomy', __('Invalid category.', 'enginethemes'));
     }
 
@@ -197,7 +193,8 @@ function me_cf_remove_field_category($field_id, $term_id)
 function me_cf_update_field_count($field_id)
 {
     global $wpdb;
-    $term_count = $wpdb->get_results($wpdb->prepare("SELECT count(term_taxonomy_id) FROM $wpdb->marketengine_fields_relationship WHERE field_id = %d", $field_id));
+    $term_count = $wpdb->get_var($wpdb->prepare("SELECT count(term_taxonomy_id) FROM $wpdb->marketengine_fields_relationship WHERE field_id = %d", $field_id));
+
     me_cf_update_field(array('field_id' => $field_id, 'count' => $term_count));
 }
 
@@ -224,14 +221,12 @@ function me_cf_get_field($field, $type = OBJECT)
     global $wpdb;
 
     $field = absint( $field );
-
     $sql = "SELECT *
             FROM $wpdb->marketengine_custom_fields as C
-            LEFT JOIN $wpdb->marketengine_fields_relationship as R
-            ON C.field_id = R.field_id
             WHERE C.field_id = {$field}";
 
-    $results = $wpdb->get_results($sql, $type);
+    $results = $wpdb->get_row($sql, ARRAY_A);
+
     return $results;
 }
 
@@ -317,6 +312,23 @@ function me_field($field_name, $post = null, $single = true)
         $post = get_post();
     }
     return get_post_meta($post->ID, $field_name, $single);
+}
+
+function me_get_the_field( $field_id ) {
+    global $wpdb;
+
+    $sql = "SELECT *";
+    $from = " FROM $wpdb->marketengine_custom_fields as C";
+    $join = " LEFT JOIN $wpdb->marketengine_fields_relationship as R
+                    ON C.field_id = R.field_id";
+    $where = " WHERE C.field_id = {$field_id}";
+
+
+    $sql .= $from . $join . $where;
+
+    $results = $wpdb->get_row($sql, ARRAY_A);
+
+    return $results;
 }
 
 function me_the_field($field_name, $post = null, $single = true)
