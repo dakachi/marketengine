@@ -33,6 +33,7 @@ class ME_Custom_Field_Handle {
 	public static function init() {
 		add_action('wp_loaded', 'marketengine_add_actions');
 		add_action('wp_loaded', array(__CLASS__, 'insert'));
+		add_action('wp_loaded', array(__CLASS__, 'delete'));
 
 		add_action('me_load_cf_input', array(__CLASS__, 'load_field_input'));
 		add_action('wp_ajax_me_cf_load_input_type', array(__CLASS__, 'load_field_input_ajax'));
@@ -75,6 +76,20 @@ class ME_Custom_Field_Handle {
 					exit;
 				}
 			}
+		}
+	}
+
+	public static function delete() {
+		if(is_admin() && isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete-custom-field' && isset($_REQUEST['_wp_nonce']) && wp_verify_nonce($_REQUEST['_wp_nonce'], 'delete-custom-field') && isset($_REQUEST['custom-field-id'])) {
+			$result = me_cf_delete_field($_REQUEST['custom-field-id']);
+			if(is_wp_error($result)) {
+				me_wp_error_to_notices($field_id);
+				return;
+			}
+
+			$redirect = remove_query_arg(array('action', '_wp_nonce', 'custom-field-id'));
+			wp_redirect($redirect);
+			exit;
 		}
 	}
 

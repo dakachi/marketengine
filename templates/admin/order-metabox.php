@@ -137,7 +137,7 @@ $commission_item = array_pop($commission_items);
 	.handlediv.button-link {
 		display: none !important;
 	}
-	@media (max-width: 1199px) {
+	@media (min-width: 1200px) {
 		.me-item-price {
 			text-align: right;
 		}

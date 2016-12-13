@@ -64,6 +64,15 @@ $(document).ready(function() {
 		});
     });
 
+    $('.me-cf-remove').on('click', function(e) {
+
+    	var cfm = confirm('Are you sure?');
+
+	    if (cfm == false) {
+	    	e.preventDefault();
+	    }
+    })
+
     // $('#me-choose-field-type').trigger('change');
 
     // $('#me-choose-field-type').on('change', function(event) {

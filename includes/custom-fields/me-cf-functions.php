@@ -70,10 +70,10 @@ function me_cf_insert_field($args, $wp_error = false)
 
     $field_type = $args['field_type'];
     if (empty($field_type)) {
-        if($wp_error) {
-        	return new WP_Error('field_type_empty', __("Field type can not be empty.", 'enginethemes'));
-        }else {
-        	return 0;
+        if ($wp_error) {
+            return new WP_Error('field_type_empty', __("Field type can not be empty.", 'enginethemes'));
+        } else {
+            return 0;
         }
     }
 
@@ -237,7 +237,7 @@ function me_cf_remove_field_category($field_id, $term_id)
     global $wpdb;
 
     $field_id = (int) $field_id;
-    if (!term_exists((int)$term_id, 'listing_category')) {
+    if (!term_exists((int) $term_id, 'listing_category')) {
         return new WP_Error('invalid_taxonomy', __('Invalid category.', 'enginethemes'));
     }
 
@@ -280,7 +280,7 @@ function me_cf_get_field($field, $type = OBJECT)
     global $wpdb;
 
     $field = absint($field);
-    $sql = "SELECT *
+    $sql   = "SELECT *
             FROM $wpdb->marketengine_custom_fields as C
             WHERE C.field_id = {$field}";
 
@@ -391,15 +391,15 @@ function me_field($field_name, $post = null, $single = true)
     return get_post_meta($post->ID, $field_name, $single);
 }
 
-function me_get_the_field( $field_id ) {
+function me_get_the_field($field_id)
+{
     global $wpdb;
 
-    $sql = "SELECT *";
+    $sql  = "SELECT *";
     $from = " FROM $wpdb->marketengine_custom_fields as C";
     $join = " LEFT JOIN $wpdb->marketengine_fields_relationship as R
                     ON C.field_id = R.field_id";
     $where = " WHERE C.field_id = {$field_id}";
-
 
     $sql .= $from . $join . $where;
 
@@ -430,12 +430,20 @@ function me_field_attribute($field)
             $attr .= 'required="true" ';
         }
 
-        if (strpos($value, 'min') !== false || strpos($value, 'max') !== false) {
-            $min = explode(':', $value);
-            $attr .= $min[0] . '="' . $min[1] . '" ';
+        $attr = '';
+
+        foreach ($constraint as $value) {
+            if ($value == 'required') {
+                $attr .= 'required="true" ';
+            }
+
+            if (strpos($value, 'min') !== false || strpos($value, 'max') !== false) {
+                $min = explode(':', $value);
+                $attr .= $min[0] . '="' . $min[1] . '" ';
+            }
         }
+        return apply_filters('marketengine_cf_field_attribute', $attr, $field);
     }
-    return apply_filters('marketengine_cf_field_attribute', $attr, $field);
 }
 
 function me_custom_field_page_url($view = '', $action = '')
