@@ -64,7 +64,7 @@ class ME_Custom_Field_Handle {
 			if(is_wp_error($field_id)) {
 				me_wp_error_to_notices($field_id);
 			} else {
-				$result = self::set_field_category($term_ids);
+				$result = self::set_field_category($field_id, $term_ids);
 				if(is_wp_error($result)) {
 					me_wp_error_to_notices($result);
 					return;
@@ -104,10 +104,10 @@ class ME_Custom_Field_Handle {
 	    echo $options;
 	}
 
-	public static function set_field_category($term_ids) {
+	public static function set_field_category($field_id, $term_ids) {
 		if(isset($term_ids) && !empty($term_ids)) {
 			foreach($term_ids as $key => $term_id) {
-				$result = me_cf_set_field_category( $_POST['field_id'], $term_id, 0);
+				$result = me_cf_set_field_category( $field_id, $term_id, 0);
 			}
 		} else {
 			$result = new WP_Error('invalid_taxonomy', __('Categories is required!', 'enginethemes'));
