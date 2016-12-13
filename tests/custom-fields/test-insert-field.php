@@ -33,27 +33,31 @@ class Tests_Insert_Field extends WP_UnitTestCase
     public function test_insert_invalid_field_name()
     {
         $this->field_data['field_name'] = 'asqwop-2032*213';
-        $result                         = me_cf_insert_field($this->field_data, true);
+
+        $result = me_cf_insert_field($this->field_data, true);
         $this->assertEquals(new WP_Error('field_name_format_invalid', 'Field name only lowercase letters (a-z, -, _) and numbers are allowed.'), $result);
     }
 
     public function test_insert_empty_field_name()
     {
         $this->field_data['field_name'] = '';
-        $result                         = me_cf_insert_field($this->field_data, true);
+
+        $result = me_cf_insert_field($this->field_data, true);
         $this->assertEquals(new WP_Error('field_name_format_invalid', 'Field name only lowercase letters (a-z, -, _) and numbers are allowed.'), $result);
     }
     public function test_insert_empty_field_title()
     {
         $this->field_data['field_title'] = '';
-        $result                         = me_cf_insert_field($this->field_data, true);
+
+        $result = me_cf_insert_field($this->field_data, true);
         $this->assertEquals(new WP_Error('field_title_empty', 'Field title can not be empty.'), $result);
     }
 
     public function test_insert_empty_field_type()
     {
         $this->field_data['field_type'] = '';
-        $result                         = me_cf_insert_field($this->field_data, true);
+
+        $result = me_cf_insert_field($this->field_data, true);
         $this->assertEquals(new WP_Error('field_type_empty', 'Field type can not be empty.'), $result);
     }
 }

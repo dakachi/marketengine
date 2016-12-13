@@ -205,12 +205,25 @@ function me_cf_delete_field($field_id)
     return $field_id;
 }
 
+/**
+ * Relates a field to a listing category.
+ *
+ * @param int $field_id The field id
+ * @param int $term_id The category id
+ * @param int $order The position field will be list
+ *
+ * @package Includes/CustomField
+ * @category Function
+ *
+ * @return void
+ */
 function me_cf_set_field_category($field_id, $term_id, $order)
 {
     global $wpdb;
 
     $field_id = (int) $field_id;
-    if (!term_exists((int) $term_id, 'listing_category')) {
+    $term_id  = (int) $term_id;
+    if (!term_exists($term_id, 'listing_category')) {
         return new WP_Error('invalid_taxonomy', __('Invalid category.', 'enginethemes'));
     }
 
@@ -227,10 +240,21 @@ function me_cf_set_field_category($field_id, $term_id, $order)
         // insert relationship
         $wpdb->insert($wpdb->marketengine_fields_relationship, array('field_id' => $field_id, 'term_taxonomy_id' => $tt_id, 'term_order' => $order));
     }
-    //TODO:
     me_cf_update_field_count($field_id);
     me_cf_update_term_count($term_id);
 }
+
+/**
+ * Un-relates a field to a listing category.
+ *
+ * @param int $field_id The field id
+ * @param int $term_id The category id
+ *
+ * @package Includes/CustomField
+ * @category Function
+ *
+ * @return void
+ */
 
 function me_cf_remove_field_category($field_id, $term_id)
 {
