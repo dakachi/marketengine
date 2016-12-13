@@ -13,11 +13,23 @@ if (!defined('ABSPATH')) {
 /**
  * Insert custom field
  *
- * @param array $args
+ * @param array $args Field information
+ *             - string field_name Field name should be unique
+ *             - string field_title Field Title
+ *             - string field_type Field type: text, number, textarea, date, checkbox, radio, multiselect, select
+ *             - string field_input_type
+ *             - string field_placeholder Field placeholder
+ *             - string field_description The field description in listing details
+ *             - string field_help_text The field helptext in submit listing form
+ *             - string field_constraint Field constraint condition
+ *             - string field_default_value Field default value
+ *             - int count Field category count
  * @param bool $wp_error
  *
  * @package Includes/CustomField
  * @category Function
+ *
+ * @return int | WP_Error
  */
 function me_cf_insert_field($args, $wp_error = false)
 {
@@ -32,24 +44,37 @@ function me_cf_insert_field($args, $wp_error = false)
         'field_help_text'     => '',
         'field_constraint'    => '',
         'field_default_value' => '',
-        'count' => 0
+        'count'               => 0,
     );
     $args = wp_parse_args($args, $defaults);
     // validate data
     // validate field name
     $field_name = $args['field_name'];
     if (!$field_name || !preg_match('/^[a-z0-9_]+$/', $field_name)) {
-        return new WP_Error('field_name_format_invalid', __("Field name only lowercase letters (a-z, -, _) and numbers are allowed.", 'enginethemes'));
+        if ($wp_error) {
+            return new WP_Error('field_name_format_invalid', __("Field name only lowercase letters (a-z, -, _) and numbers are allowed.", 'enginethemes'));
+        } else {
+            return 0;
+        }
+
     }
 
     $field_title = $args['field_title'];
     if (empty($field_title)) {
-        return new WP_Error('field_title_empty', __("Field title can not be empty.", 'enginethemes'));
+        if ($wp_error) {
+            return new WP_Error('field_title_empty', __("Field title can not be empty.", 'enginethemes'));
+        } else {
+            return 0;
+        }
     }
 
     $field_type = $args['field_type'];
     if (empty($field_type)) {
-        return new WP_Error('field_type_empty', __("Field type can not be empty.", 'enginethemes'));
+        if ($wp_error) {
+            return new WP_Error('field_type_empty', __("Field type can not be empty.", 'enginethemes'));
+        } else {
+            return 0;
+        }
     }
 
     $update = false;
@@ -64,7 +89,7 @@ function me_cf_insert_field($args, $wp_error = false)
     $field_constraint    = $args['field_constraint'];
     $field_help_text     = $args['field_help_text'];
     $field_default_value = $args['field_default_value'];
-    $count = $args['count'];
+    $count               = $args['count'];
 
     // save field
     $data = compact('field_name', 'field_title', 'field_type', 'field_input_type', 'field_placeholder', 'field_description', 'field_help_text', 'field_constraint', 'field_default_value', 'count');
@@ -106,6 +131,27 @@ function me_cf_insert_field($args, $wp_error = false)
     return $field_ID;
 }
 
+/**
+ * Update custom field
+ *
+ * @param array $args Field information
+ *             - string field_name
+ *             - string field_title
+ *             - string field_type
+ *             - string field_input_type
+ *             - string field_placeholder
+ *             - string field_description The field description in listing details
+ *             - string field_help_text The field helptext in submit listing form
+ *             - string field_constraint Field constraint condition
+ *             - string field_default_value Field default value
+ *             - int count Field category count
+ * @param bool $wp_error
+ *
+ * @package Includes/CustomField
+ * @category Function
+ *
+ * @return int | WP_Error
+ */
 function me_cf_update_field($args, $wp_error = false)
 {
     $field = me_cf_get_field($args['field_id'], ARRAY_A);
@@ -123,13 +169,27 @@ function me_cf_update_field($args, $wp_error = false)
     return me_cf_insert_field($args, $wp_error);
 }
 
+/**
+ * Delete custom field
+ *
+ * @param int $field_id The delete field id
+ *
+ * @package Includes/CustomField
+ * @category Function
+ *
+ * @return bool
+ */
 function me_cf_delete_field($field_id)
 {
     global $wpdb;
 
     $field_table = $wpdb->prefix . 'marketengine_custom_fields';
     // delete field
-    $wpdb->delete($field_table, array('field_id' => $field_id));
+    $deleted = $wpdb->delete($field_table, array('field_id' => $field_id));
+    if (!$deleted) {
+        return false;
+    }
+
     // delete field relationship
     $tt_ids = $wpdb->get_results($wpdb->prepare("SELECT term_taxonomy_id FROM $wpdb->marketengine_fields_relationship WHERE field_id = %d", $field_id));
     $wpdb->delete($wpdb->marketengine_fields_relationship, array('field_id' => $field_id), array('%d'));
@@ -142,6 +202,7 @@ function me_cf_delete_field($field_id)
 
         me_cf_update_term_count($term->term_id);
     }
+    return $field_id;
 }
 
 function me_cf_set_field_category($field_id, $term_id, $order)
@@ -149,7 +210,7 @@ function me_cf_set_field_category($field_id, $term_id, $order)
     global $wpdb;
 
     $field_id = (int) $field_id;
-    if (!term_exists((int)$term_id, 'listing_category')) {
+    if (!term_exists((int) $term_id, 'listing_category')) {
         return new WP_Error('invalid_taxonomy', __('Invalid category.', 'enginethemes'));
     }
 
@@ -173,10 +234,10 @@ function me_cf_set_field_category($field_id, $term_id, $order)
 
 function me_cf_remove_field_category($field_id, $term_id)
 {
-	global $wpdb;
+    global $wpdb;
 
     $field_id = (int) $field_id;
-    if (!term_exists((int)$term_id, 'listing_category')) {
+    if (!term_exists((int) $term_id, 'listing_category')) {
         return new WP_Error('invalid_taxonomy', __('Invalid category.', 'enginethemes'));
     }
 
@@ -188,7 +249,6 @@ function me_cf_remove_field_category($field_id, $term_id)
     me_cf_update_field_count($field_id);
     me_cf_update_term_count($term_id);
 }
-
 
 function me_cf_update_field_count($field_id)
 {
@@ -215,13 +275,12 @@ function me_cf_update_term_count($term_id)
     return $field_count;
 }
 
-
 function me_cf_get_field($field, $type = OBJECT)
 {
     global $wpdb;
 
-    $field = absint( $field );
-    $sql = "SELECT *
+    $field = absint($field);
+    $sql   = "SELECT *
             FROM $wpdb->marketengine_custom_fields as C
             WHERE C.field_id = {$field}";
 
@@ -230,12 +289,13 @@ function me_cf_get_field($field, $type = OBJECT)
     return $results;
 }
 
-function me_cf_fields_query($args) {
-	global $wpdb;
+function me_cf_fields_query($args)
+{
+    global $wpdb;
 
     $defaults = array(
-        'paged'       => 1,
-        'showposts'   => get_option('posts_per_page'),
+        'paged'     => 1,
+        'showposts' => get_option('posts_per_page'),
     );
     $args = wp_parse_args($args, $defaults);
 
@@ -244,9 +304,8 @@ function me_cf_fields_query($args) {
     $sql = "SELECT SQL_CALC_FOUND_ROWS *
             FROM $wpdb->marketengine_custom_fields as C";
 
-    $current = (absint($args['paged'])-1) * $args['showposts'];
-    $limit = " LIMIT " . ($current) . ', ' . $args['showposts'];
-
+    $current = (absint($args['paged']) - 1) * $args['showposts'];
+    $limit   = " LIMIT " . ($current) . ', ' . $args['showposts'];
 
     $sql .= $limit;
 
@@ -268,7 +327,7 @@ function me_cf_get_fields($category_id)
     $sql = $join = $where = '';
     $sql = "SELECT *
             FROM $wpdb->marketengine_custom_fields as C";
-    if($category_id) {
+    if ($category_id) {
         $join = " LEFT JOIN $wpdb->marketengine_fields_relationship as R
                     ON C.field_id = R.field_id";
         $where = " WHERE R.term_taxonomy_id = {$category_id}";
@@ -298,11 +357,12 @@ function me_cf_get_fields_by_category($category_id)
     return $results;
 }
 
-function me_cf_get_affected_categories($field_id) {
+function me_cf_get_affected_categories($field_id)
+{
     global $wpdb;
 
-    $sql = "SELECT DISTINCT R.term_taxonomy_id";
-    $from = " FROM $wpdb->marketengine_fields_relationship as R";
+    $sql   = "SELECT DISTINCT R.term_taxonomy_id";
+    $from  = " FROM $wpdb->marketengine_fields_relationship as R";
     $where = " WHERE R.field_id = $field_id";
 
     $sql .= $from . $where;
@@ -312,8 +372,9 @@ function me_cf_get_affected_categories($field_id) {
     return $results;
 }
 
-function me_cf_get_affected_categories_html($field_id) {
-    $affected_cats = me_cf_get_affected_categories($field_id);
+function me_cf_get_affected_categories_html($field_id)
+{
+    $affected_cats      = me_cf_get_affected_categories($field_id);
     $affected_cats_name = '';
     foreach ($affected_cats as $key => $cat) {
         $cat_name = get_term($cat)->name;
@@ -330,15 +391,15 @@ function me_field($field_name, $post = null, $single = true)
     return get_post_meta($post->ID, $field_name, $single);
 }
 
-function me_get_the_field( $field_id ) {
+function me_get_the_field($field_id)
+{
     global $wpdb;
 
-    $sql = "SELECT *";
+    $sql  = "SELECT *";
     $from = " FROM $wpdb->marketengine_custom_fields as C";
     $join = " LEFT JOIN $wpdb->marketengine_fields_relationship as R
                     ON C.field_id = R.field_id";
     $where = " WHERE C.field_id = {$field_id}";
-
 
     $sql .= $from . $join . $where;
 
@@ -349,35 +410,40 @@ function me_get_the_field( $field_id ) {
 
 function me_the_field($field_name, $post = null, $single = true)
 {
-	if (!$post) {
+    if (!$post) {
         $post = get_post();
     }
     echo get_post_meta($post->ID, $field_name, $single);
 }
 
-function me_field_attribute($field) {
-	$constraint = explode('|', $field['field_constraint']);
-	if(empty($constraint)) return '';
-	$attr = '';
-	
-	foreach ($constraint as $value) {
-		if($value == 'required') {
-			$attr .= 'required="true" ';
-		}
+function me_field_attribute($field)
+{
+    $constraint = explode('|', $field['field_constraint']);
+    if (empty($constraint)) {
+        return '';
+    }
 
-		if(strpos($value, 'min') !== false || strpos($value, 'max') !== false) {
-			$min = explode(':', $value);
-			$attr .= $min[0] . '="'.$min[1].'" ';
-		}
-	}
-	return apply_filters('marketengine_cf_field_attribute', $attr, $field);
+    $attr = '';
+
+    foreach ($constraint as $value) {
+        if ($value == 'required') {
+            $attr .= 'required="true" ';
+        }
+
+        if (strpos($value, 'min') !== false || strpos($value, 'max') !== false) {
+            $min = explode(':', $value);
+            $attr .= $min[0] . '="' . $min[1] . '" ';
+        }
+    }
+    return apply_filters('marketengine_cf_field_attribute', $attr, $field);
 }
 
-function me_custom_field_page_url( $view = '', $action = '') {
+function me_custom_field_page_url($view = '', $action = '')
+{
     $url = add_query_arg('section', 'custom-field', me_menu_page_url('me-settings', 'marketplace-settings'));
 
-    $url = $view ? add_query_arg('view', $view , $url) : $url;
-    $url = $action ? add_query_arg('action', $action , $url) : $url;
+    $url = $view ? add_query_arg('view', $view, $url) : $url;
+    $url = $action ? add_query_arg('action', $action, $url) : $url;
 
     return $url;
 }
