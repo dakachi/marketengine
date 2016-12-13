@@ -11,7 +11,9 @@
                 }
             }
         });
-        $('.marketengine-date-field input').datepicker({dateFormat : 'yy-mm-dd'});
+        $('.marketengine-date-field input').datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
         $('#upload_listing_gallery').jUploader({
             browse_button: 'me-btn-upload',
             multi: true,
@@ -20,6 +22,31 @@
             upload_url: me_globals.ajaxurl + '?nonce=' + $('#me-post-listing-gallery').val(),
             maxsize: '2mb',
             maxcount: 5,
+        });
+        
+        $('input[type="number"]').each(function() {
+            if (parseInt($(this).attr('min')) >= 0) {
+                $(this).addClass('positive');
+            }
+        })
+        $(".me-input-price, .positive").keydown(function(e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                // Allow: Ctrl+A
+                (e.keyCode == 65 && e.ctrlKey === true) ||
+                // Allow: Ctrl+C
+                (e.keyCode == 67 && e.ctrlKey === true) ||
+                // Allow: Ctrl+X
+                (e.keyCode == 88 && e.ctrlKey === true) ||
+                // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
         });
     });
     $('.me-parent-category').change(function(e) {
@@ -67,32 +94,15 @@
                     }
                 }
             });
-            $('.marketengine-date-field input').datepicker({dateFormat : 'yy-mm-dd'});
+            $('.marketengine-date-field input').datepicker({
+                dateFormat: 'yy-mm-dd'
+            });
         });
     });
     $('#listing-type-select').on('change', function() {
         var type = $(this).val();
         $('.listing-type-info').hide();
         $('#' + type + '-type-field').show();
-    });
-    $(".me-input-price, .positive").keydown(function(e) {
-        // Allow: backspace, delete, tab, escape, enter and .
-        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-            // Allow: Ctrl+A
-            (e.keyCode == 65 && e.ctrlKey === true) ||
-            // Allow: Ctrl+C
-            (e.keyCode == 67 && e.ctrlKey === true) ||
-            // Allow: Ctrl+X
-            (e.keyCode == 88 && e.ctrlKey === true) ||
-            // Allow: home, end, left, right
-            (e.keyCode >= 35 && e.keyCode <= 39)) {
-            // let it happen, don't do anything
-            return;
-        }
-        // Ensure that it is a number and stop the keypress
-        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            e.preventDefault();
-        }
     });
     window.tagBox.init();
     // process tag input

@@ -230,9 +230,8 @@ function me_cf_get_field($field, $type = OBJECT)
     return $results;
 }
 
-function me_cf_get_fields($args = array())
-{
-    global $wpdb;
+function me_cf_fields_query($args) {
+	global $wpdb;
 
     $defaults = array(
         'paged'       => 1,
@@ -261,6 +260,23 @@ function me_cf_get_fields($args = array())
         'found_posts'    => $found_rows,
         'max_numb_pages' => $max_numb_pages,
     );
+}
+
+function me_cf_get_fields($category_id)
+{
+    global $wpdb;
+    $sql = $join = $where = '';
+    $sql = "SELECT *
+            FROM $wpdb->marketengine_custom_fields as C";
+    if($category_id) {
+        $join = " LEFT JOIN $wpdb->marketengine_fields_relationship as R
+                    ON C.field_id = R.field_id";
+        $where = " WHERE R.term_taxonomy_id = {$category_id}";
+    }
+    $sql .= $join . $where;
+    $results = $wpdb->get_results($sql, ARRAY_A);
+
+    return $results;
 }
 
 function me_cf_get_fields_by_category($category_id)
@@ -337,6 +353,24 @@ function me_the_field($field_name, $post = null, $single = true)
         $post = get_post();
     }
     echo get_post_meta($post->ID, $field_name, $single);
+}
+
+function me_field_attribute($field) {
+	$constraint = explode('|', $field['field_constraint']);
+	if(empty($constraint)) return '';
+	$attr = '';
+	
+	foreach ($constraint as $value) {
+		if($value == 'required') {
+			$attr .= 'required="true" ';
+		}
+
+		if(strpos($value, 'min') !== false || strpos($value, 'max') !== false) {
+			$min = explode(':', $value);
+			$attr .= $min[0] . '="'.$min[1].'" ';
+		}
+	}
+	return apply_filters('marketengine_cf_field_attribute', $attr, $field);
 }
 
 function me_custom_field_page_url( $view = '', $action = '') {
