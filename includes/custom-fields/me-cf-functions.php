@@ -412,7 +412,8 @@ function me_cf_get_affected_categories_html($field_id)
         $cat_name = get_term($cat)->name;
         $affected_cats_name .= $cat_name . ', ';
     }
-    return $affected_cats_name;
+
+    return substr($affected_cats_name, 0, strlen(trim($affected_cats_name))-1);
 }
 
 function me_field($field_name, $post = null, $single = true)
