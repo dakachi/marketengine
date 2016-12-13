@@ -2,6 +2,9 @@
 if(isset($field_obj)) {
 	$_POST = $field_obj;
 }
+
+$constraint = me_field_attribute_array($_POST);
+
 ?>
 
 <div class="me-custom-field">
@@ -58,7 +61,7 @@ if(isset($field_obj)) {
 
 		<div class="me-group-field">
 		<?php
-			$checked = !isset($_POST['field_constraint']) ? 'required' : $_POST['field_constraint'];
+			$checked = isset($constraint['required']) ? 'required' : '';
 		?>
 
 			<label class="me-title"><?php _e('Required?', 'enginethemes'); ?></label>

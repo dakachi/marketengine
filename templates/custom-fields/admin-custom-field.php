@@ -74,7 +74,7 @@ $categories = me_get_listing_categories();
 					<?php /*<p><span><?php _e('Options:', 'enginethemes'); ?></span></p>*/ ?>
 					<?php do_action('me_load_inputs_for_view', $field); ?>
 
-					<p><span><?php _e('Required:', 'enginethemes'); ?></span><?php echo $field_constraint ? __('Yes', 'enginethemes') : __('No', 'enginethemes') ; ?></p>
+					<p><span><?php _e('Required:', 'enginethemes'); ?></span><?php echo (strpos($field_constraint, 'equired')) ? __('Yes', 'enginethemes') : __('No', 'enginethemes') ; ?></p>
 					<p><span><?php _e('Available in:', 'enginethemes'); ?></span><?php echo $affected_cats_name; ?></p>
 					<p><span><?php _e('Help text:', 'enginethemes'); ?></span><?php echo $field_help_text ? $field_help_text : 'N/A'; ?></p>
 					<p><span><?php _e('Description:', 'enginethemes'); ?></span><?php echo $field_description ? $field_description : 'N/A'; ?></p>

@@ -438,6 +438,33 @@ function me_field_attribute($field)
     return apply_filters('marketengine_cf_field_attribute', $attr, $field);
 }
 
+function me_field_attribute_array($field)
+{
+    if(!isset($field['field_constraint'])) {
+        return;
+    }
+    $constraint = explode('|', $field['field_constraint']);
+    if (empty($constraint)) {
+        return '';
+    }
+
+    $attr = array();
+
+    foreach ($constraint as $value) {
+        if ($value == 'required') {
+            $attr['required'] = true;
+        }
+
+        if (strpos($value, 'min') !== false || strpos($value, 'max') !== false) {
+            $min = explode(':', $value);
+
+            $attr[$min[0]] = $min[1];
+        }
+    }
+
+    return $attr;
+}
+
 function me_custom_field_page_url($view = '', $action = '')
 {
     $url = add_query_arg('section', 'custom-field', me_menu_page_url('me-settings', 'marketplace-settings'));

@@ -44,6 +44,9 @@ class ME_Custom_Field_Handle {
 			$term_ids = isset($_POST['field_for_categories']) ? $_POST['field_for_categories'] : array();
             $_POST['count'] = count($term_ids);
 
+            $attributes = self::filter_field_attribute();
+            $_POST['field_constraint'] = $attributes;
+
             if($_REQUEST['view'] == 'add') {
 				$field_id = me_cf_insert_field($_POST, true);
             } else {
@@ -116,6 +119,23 @@ class ME_Custom_Field_Handle {
 				return;
 	    	}
 	    }
+	}
+
+	public static function filter_field_attribute() {
+		$temp = '';
+		if(isset($_POST['field_constraint']) && !empty($_POST['field_constraint'])) {
+			$temp .= 'required';
+		}
+
+		if(isset($_POST['field_minimum_value']) && !empty($_POST['field_minimum_value'])) {
+			$temp .= '|min:' . $_POST['field_minimum_value'];
+		}
+
+		if(isset($_POST['field_maximum_value']) && !empty($_POST['field_maximum_value'])) {
+			$temp .= '|max:' . $_POST['field_maximum_value'];
+		}
+
+		return $temp;
 	}
 }
 
