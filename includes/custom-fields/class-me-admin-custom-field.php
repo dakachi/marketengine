@@ -45,7 +45,7 @@ class ME_Custom_Field_Handle {
             $_POST['count'] = count($term_ids);
 
             if($_REQUEST['view'] == 'add') {
-				$field_id = me_cf_insert_field($_POST);
+				$field_id = me_cf_insert_field($_POST, true);
             } else {
             	$_POST['field_id'] = $_REQUEST['custom-field-id'];
             	$current_cats = me_cf_get_affected_categories($_REQUEST['custom-field-id']);
@@ -55,7 +55,7 @@ class ME_Custom_Field_Handle {
             		'new_cats'	=> $_POST['field_for_categories'],
             	));
 
-            	$field_id = me_cf_update_field($_POST);
+            	$field_id = me_cf_update_field($_POST, true);
             }
 
 			if(is_wp_error($field_id)) {

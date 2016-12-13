@@ -81,7 +81,7 @@ function marketengine_add_custom_field_section( $sections ) {
     if(!isset($_REQUEST['tab']) || $_REQUEST['tab'] == 'marketplace-settings') {
         $sample_data = $sections['sample-data'];
         $sections['custom-field'] = array(
-            'title'  => __('Custom Field', 'enginethemes'),
+            'title'  => __('Custom Fields', 'enginethemes'),
             'slug'   => 'custom-field',
             'type'   => 'section',
         );

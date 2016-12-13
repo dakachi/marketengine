@@ -137,11 +137,11 @@ $commission_item = array_pop($commission_items);
 	.handlediv.button-link {
 		display: none !important;
 	}
-	@media (min-width: 1200px) {
-		.me-item-price {
-			text-align: right;
-		}
+
+	.me-order-items .me-item-price {
+		text-align: right;
 	}
+	
 </style>
 <div class="me-order-preview">
 	<h2><?php printf(__( "Order #%d details" , "enginethemes" ), $order->ID); ?></h2>
@@ -193,7 +193,7 @@ $commission_item = array_pop($commission_items);
 					<th><?php _e("Listing", "enginethemes"); ?></th>
 					<th><?php _e("Price", "enginethemes"); ?></th>
 					<th><?php _e("Units", "enginethemes"); ?></th>
-					<th><?php _e("Total price", "enginethemes"); ?></th>
+					<th class="me-item-price"><?php _e("Total price", "enginethemes"); ?></th>
 				</tr>
 			</thead>
 			<?php
