@@ -52,6 +52,7 @@ foreach ($fields as $field) :
 			</div>
 		</div>
 		<?php
+			break;
 		case 'radio':
 		case 'checkbox':
 		case 'select': 
