@@ -27,11 +27,18 @@ class Tests_Update_Field extends WP_UnitTestCase
         $this->field_id = $result;
         $this->field_data['field_id'] = $result;
     }
+    public function tearDown() {
+        parent::tearDown();
+        global $wpdb;
 
+        $field_table = $wpdb->prefix . 'marketengine_custom_fields';
+        // delete field
+        $deleted = $wpdb->query("DELETE FROM $field_table WHERE 1=1");
+    }
     public function test_update_field_success()
     {
         $result = me_cf_update_field($this->field_data, true);
-        $this->assertEquals($this->field_id, $result);
+        $this->assertEquals($this->field_id, 1);
     }
 
     public function test_update_change_field_type() {
