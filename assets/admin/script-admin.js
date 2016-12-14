@@ -79,6 +79,9 @@ $(document).ready(function() {
 	    		required: true,
 	    		regx: true,
 	    	}
+	    },
+	    highlight: function(element, errorClass) {
+	    	$(element).removeClass(errorClass)
 	    }
     });
 
