@@ -301,7 +301,7 @@ function me_cf_update_term_count($term_id)
     $term_info = get_term($term_id, 'listing_category', ARRAY_A);
     $tt_id     = $term_info['term_taxonomy_id'];
 
-    $field_count = $wpdb->get_results($wpdb->prepare("SELECT count(field_id) FROM $wpdb->marketengine_fields_relationship WHERE term_taxonomy_id  = %d", $tt_id));
+    $field_count = $wpdb->get_var($wpdb->prepare("SELECT count(field_id) FROM $wpdb->marketengine_fields_relationship WHERE term_taxonomy_id  = %d", $tt_id));
     update_term_meta($term_id, '_me_cf_count', $field_count);
 
     return $field_count;

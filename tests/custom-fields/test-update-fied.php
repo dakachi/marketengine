@@ -38,7 +38,7 @@ class Tests_Update_Field extends WP_UnitTestCase
     public function test_update_field_success()
     {
         $result = me_cf_update_field($this->field_data, true);
-        $this->assertEquals($this->field_id, 1);
+        $this->assertEquals($this->field_id, $result);
     }
 
     public function test_update_change_field_type() {

@@ -84,6 +84,9 @@ class ME_Handle_CF
         foreach ($fields as $field) {
             $field_name                     = $field['field_name'];
             $rules[$field_name]             = $field['field_constraint'];
+            if($field['field_type'] == 'date') {
+                $rules[$field_name] .= '|date';
+            }
             $custom_attributes[$field_name] = $field['field_title'];
         }
 
@@ -110,7 +113,13 @@ class ME_Handle_CF
         foreach ($fields as $field) {
             $field_name = $field['field_name'];
             if (!empty($data[$field_name])) {
-                update_post_meta($post, $field_name, $data[$field_name]);
+
+                $field_value = $data[$field_name];
+                if('date' === $field['field_type']) {
+                    $field_value = date( 'Y-m-d', strtotime($field_value));
+                }
+
+                update_post_meta($post, $field_name, $field_value);
             }
         }
 
