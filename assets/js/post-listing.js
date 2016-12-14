@@ -11,9 +11,7 @@
                 }
             }
         });
-        $('.marketengine-date-field input').datepicker({
-            dateFormat: 'yy-mm-dd'
-        });
+        $('.marketengine-date-field input').datepicker();
         $('#upload_listing_gallery').jUploader({
             browse_button: 'me-btn-upload',
             multi: true,
@@ -94,9 +92,7 @@
                     }
                 }
             });
-            $('.marketengine-date-field input').datepicker({
-                dateFormat: 'yy-mm-dd'
-            });
+            $('.marketengine-date-field input').datepicker();
         });
     });
     $('#listing-type-select').on('change', function() {

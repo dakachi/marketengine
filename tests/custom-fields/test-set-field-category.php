@@ -83,14 +83,14 @@ class Tests_Set_Field_Category extends WP_UnitTestCase
         me_cf_set_field_category($this->field_id, $this->parent_cat, 1);
 
         me_cf_remove_field_category($this->field_id, $this->parent_cat);
-        
+
         $fields = me_cf_get_fields($this->parent_cat);
-        $field = array_pop($fields);
+
+        $this->assertEmpty($fields);
 
         $count = get_term_meta( $this->parent_cat, '_me_cf_count', true );
-
-        $this->assertEquals($this->field_id, $field['field_id']);
-        $this->assertEquals(1, $count);
+        var_dump($count);
+        $this->assertEquals(0, $count);
 
     }
 }
