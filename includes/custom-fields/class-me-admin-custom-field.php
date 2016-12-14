@@ -143,6 +143,10 @@ class ME_Custom_Field_Handle {
 			$temp .= '|max:' . $_POST['field_maximum_value'];
 		}
 
+		if($_POST['field_type'] == 'date') {
+			$temp .= '|date';
+		}
+
 		return $temp;
 	}
 

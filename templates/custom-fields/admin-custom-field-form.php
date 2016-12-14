@@ -60,7 +60,12 @@ $constraint = me_field_attribute_array($_POST);
 
 		<div class="me-group-field">
 		<?php
-			$checked = (!isset($constraint['required']) || !empty($constraint['required'])) ? 'required' : '';
+			$checked = (isset($constraint['required']) || !empty($constraint['required'])) ? 'required' : '';
+			if($_REQUEST['view'] == 'add') {
+				$checked = 'required';
+			} else {
+				$checked = isset($constraint['required']) ? 'required' : '';
+			}
 		?>
 
 			<label class="me-title"><?php _e('Required?', 'enginethemes'); ?></label>
