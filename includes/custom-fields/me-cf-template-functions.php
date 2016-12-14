@@ -46,7 +46,7 @@ function marketengine_custom_field_template() {
             $field_obj['field_for_categories'] = me_cf_get_affected_categories($_REQUEST['custom-field-id']);
             me_get_template('custom-fields/admin-custom-field-form', array('field_obj' => $field_obj));
         } elseif($_REQUEST['view'] == 'group-by-category') {
-            me_get_template('custom-fields/admin-custom-field-by-category');
+            me_get_template('custom-fields/admin-custom-field');
         }
     } else {
         me_get_template('custom-fields/admin-custom-field');

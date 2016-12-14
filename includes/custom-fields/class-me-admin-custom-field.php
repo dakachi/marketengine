@@ -34,6 +34,7 @@ class ME_Custom_Field_Handle {
 		add_action('wp_loaded', 'marketengine_add_actions');
 		add_action('wp_loaded', array(__CLASS__, 'insert'));
 		add_action('wp_loaded', array(__CLASS__, 'delete'));
+		add_action('wp_loaded', array(__CLASS__, 'remove_from_category'));
 
 		add_action('me_load_cf_input', array(__CLASS__, 'load_field_input'));
 		add_action('wp_ajax_me_cf_load_input_type', array(__CLASS__, 'load_field_input_ajax'));
@@ -86,6 +87,17 @@ class ME_Custom_Field_Handle {
 				me_wp_error_to_notices($field_id);
 				return;
 			}
+
+			$redirect = remove_query_arg(array('action', '_wp_nonce', 'custom-field-id'));
+			wp_redirect($redirect);
+			exit;
+		}
+	}
+
+	public static function remove_from_category() {
+		if(is_admin() && isset($_REQUEST['action']) && $_REQUEST['action'] == 'remove-from-category' && isset($_REQUEST['_wp_nonce']) && wp_verify_nonce($_REQUEST['_wp_nonce'], 'remove-from-category') && isset($_REQUEST['custom-field-id'])) {
+
+			me_cf_remove_field_category($_REQUEST['custom-field-id'], $_REQUEST['category-id']);
 
 			$redirect = remove_query_arg(array('action', '_wp_nonce', 'custom-field-id'));
 			wp_redirect($redirect);
