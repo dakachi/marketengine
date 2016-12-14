@@ -84,6 +84,9 @@ class ME_Handle_CF
         foreach ($fields as $field) {
             $field_name                     = $field['field_name'];
             $rules[$field_name]             = $field['field_constraint'];
+            if($field['field_type'] == 'date') {
+                $rules[$field_name] .= '|date';
+            }
             $custom_attributes[$field_name] = $field['field_title'];
         }
 
