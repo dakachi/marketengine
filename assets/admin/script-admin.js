@@ -78,31 +78,33 @@ $(document).ready(function() {
 	    	field_name: {
 	    		required: true,
 	    		regx: true,
+	    		remote: {
+			        url: me_globals.ajaxurl,
+			        type: "POST",
+			        cache: false,
+			        dataType: "json",
+			        data: {
+			    		action: 'check_field_name',
+			    		field_name: function() {
+			    			return $('#me-cf-field-name').val();
+			    		},
+			    	},
+			    	dataFilter: function(res) {
+			    		res = JSON.parse(res);
+			    		return res.unique;
+			    	}
+			    },
+	    	}
+	    },
+	    messages: {
+	    	field_name: {
+	    		remote: 'Field name must be unique.',
 	    	}
 	    },
 	    highlight: function(element, errorClass) {
 	    	$(element).parent().children('div').remove();
 	    	$(element).removeClass(errorClass)
 	    },
-    });
-
-    $('#me-cf-field-name').on('blur', function(e) {
-    	if($(this).val() == '') {
-    		return;
-    	}
-
-    	var $this = $(this);
-    	var data = {
-    		action: 'check_field_name',
-    		field_name: $(this).val(),
-    	}
-
-    	$.post(me_globals.ajaxurl, data, function(res) {
-    		$this.parent().children('div').remove();
-    		if(!res.unique) {
-    			$this.parent().append('<div><i class="icon-me-warning me-field-required">'+res.message+'</i></div>');
-    		}
-    	})
     });
 
     $('.me-cf-remove').on('click', function(e) {
