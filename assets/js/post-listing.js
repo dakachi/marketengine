@@ -1,6 +1,7 @@
 /* global me_globals.ajaxurl, wpAjax*/
 (function($) {
     $(document).ready(function() {
+        $('textarea#listing_description').attr('required', true);
         $('.me-help-text').tooltip({
             position: {
                 my: "center bottom-10",
