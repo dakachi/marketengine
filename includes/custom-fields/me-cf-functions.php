@@ -281,15 +281,33 @@ function me_cf_remove_field_category($field_id, $term_id)
     me_cf_update_field_count($field_id);
     me_cf_update_term_count($term_id);
 }
-
+/**
+ * Refresh the field's category count
+ * @param int $field_id The field id
+ * 
+ * @package Includes/CustomField
+ * @category Function
+ * 
+ * @return int Number of category
+ */
 function me_cf_update_field_count($field_id)
 {
     global $wpdb;
     $term_count = $wpdb->get_var($wpdb->prepare("SELECT count(term_taxonomy_id) FROM $wpdb->marketengine_fields_relationship WHERE field_id = %d", $field_id));
 
     me_cf_update_field(array('field_id' => $field_id, 'count' => $term_count));
+    return $term_count;
 }
 
+/**
+ * Refresh the category's field count
+ * @param int $term_id The category id
+ * 
+ * @package Includes/CustomField
+ * @category Function
+ * 
+ * @return int Number of field
+ */
 function me_cf_update_term_count($term_id)
 {
     global $wpdb;
@@ -307,6 +325,16 @@ function me_cf_update_term_count($term_id)
     return $field_count;
 }
 
+/**
+ * Retrieve field data from database
+ * 
+ * @param int $field The field id
+ * 
+ * @package Includes/CustomField
+ * @category Function
+ * 
+ * @return object Field data
+ */
 function me_cf_get_field($field, $type = OBJECT)
 {
     global $wpdb;
