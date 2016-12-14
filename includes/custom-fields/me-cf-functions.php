@@ -394,7 +394,7 @@ function me_cf_fields_query($args)
     );
 }
 
-function me_cf_get_fields($category_id)
+function me_cf_get_fields($category_id = '')
 {
     global $wpdb;
     $sql = $join = $where = '';
