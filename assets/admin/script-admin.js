@@ -85,6 +85,23 @@ $(document).ready(function() {
 	    }
     });
 
+    $('#me-cf-field-name').on('blur', function(e) {
+    	if($(this).val() == '') return;
+
+    	var $this = $(this);
+    	var data = {
+    		action: 'check_field_name',
+    		field_name: $(this).val(),
+    	}
+
+    	$.post(me_globals.ajaxurl, data, function(res) {
+    		$this.parent().children('div').remove();
+    		if(!res.unique) {
+    			$this.parent().append('<div><i class="icon-me-warning me-field-required">'+res.message+'</i></div>');
+    		}
+    	})
+    });
+
     $('.me-cf-remove').on('click', function(e) {
 
     	var cfm = confirm('Are you sure you want to delete the selected custom field?');

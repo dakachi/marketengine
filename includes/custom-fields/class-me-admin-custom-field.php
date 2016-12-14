@@ -37,6 +37,7 @@ class ME_Custom_Field_Handle {
 
 		add_action('me_load_cf_input', array(__CLASS__, 'load_field_input'));
 		add_action('wp_ajax_me_cf_load_input_type', array(__CLASS__, 'load_field_input_ajax'));
+		add_action('wp_ajax_check_field_name', array(__CLASS__, 'check_field_name'));
 	}
 
 	public static function insert() {
@@ -143,6 +144,23 @@ class ME_Custom_Field_Handle {
 		}
 
 		return $temp;
+	}
+
+	public static function check_field_name() {
+		$field = me_cf_check_field_name($_POST['field_name']);
+
+		if($field) {
+			$unique = false;
+			$message = __('Field name must be unique.', 'enginethemes');
+		} else {
+			$unique = true;
+			$message = '';
+		}
+
+		wp_send_json( array(
+			'unique'	=> $unique,
+			'message'	=> $message,
+		) );
 	}
 }
 
