@@ -90,9 +90,13 @@ $(document).ready(function() {
 			    		},
 			    	},
 			    	dataFilter: function(res) {
+			    		console.log($('#me-cf-field-name').data('old-field-name'));
+			    		if($('#me-cf-field-name').data('old-field-name') == $('#me-cf-field-name').val()) {
+			    			return true;
+			    		}
 			    		res = JSON.parse(res);
 			    		return res.unique;
-			    	}
+			    	},
 			    },
 	    	}
 	    },
