@@ -50,7 +50,7 @@ function me_cf_insert_field($args, $wp_error = false)
     // validate data
     // validate field name
     $field_name = $args['field_name'];
-    if (!$field_name || !preg_match('/^[a-z0-9_]+$/', $field_name)) {
+    if (!$field_name || !preg_match('/^[a-z0-9_\-]+$/', $field_name)) {
         if ($wp_error) {
             return new WP_Error('field_name_format_invalid', __("Field name only lowercase letters (a-z, -, _) and numbers are allowed.", 'enginethemes'));
         } else {
@@ -199,7 +199,7 @@ function me_cf_delete_field($field_id)
     }
 
     // delete field relationship
-    $tt_ids = $wpdb->get_results($wpdb->prepare("SELECT term_taxonomy_id FROM $wpdb->marketengine_fields_relationship WHERE field_id = %d", $field_id));
+    $tt_ids = $wpdb->get_var($wpdb->prepare("SELECT term_taxonomy_id FROM $wpdb->marketengine_fields_relationship WHERE field_id = %d", $field_id));
     $wpdb->delete($wpdb->marketengine_fields_relationship, array('field_id' => $field_id), array('%d'));
     // update term count
     foreach ($tt_ids as $key => $tt_id) {
