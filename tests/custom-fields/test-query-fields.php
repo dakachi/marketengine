@@ -4,29 +4,13 @@ class Tests_Query_Fields extends WP_UnitTestCase
     public function __construct($factory = null)
     {
         parent::__construct($factory);
+
         $this->listing_category = new WP_UnitTest_Factory_For_Term($this, 'listing_category');
     }
 
     public function setUp()
     {
         parent::setUp();
-        $this->field_data = array(
-            'field_name'          => 'field_1',
-            'field_title'         => 'Field 1',
-            'field_type'          => 'text',
-            'field_input_type'    => 'string',
-            'field_placeholder'   => 'Field 1',
-            'field_description'   => '',
-            'field_help_text'     => 'Field help text',
-            'field_constraint'    => 'required',
-            'field_default_value' => '0',
-            'count'               => 0,
-        );
-
-        $result = me_cf_insert_field($this->field_data, true);
-        $this->field_id = $result;
-
-        $this->field_data['field_id'] = $result;
 
         $this->parent_cat = $this->listing_category->create_object(
             array(
@@ -42,12 +26,56 @@ class Tests_Query_Fields extends WP_UnitTestCase
             )
         );
 
-        $this->parent_cat_3 = $this->listing_category->create_object(
+        $this->field_data = array(
             array(
-                'taxonomy' => 'listing_category',
-                'name' => 'Cat 3',
+                'field_name'          => 'field_1',
+                'field_title'         => 'Field 1',
+                'field_type'          => 'text',
+                'field_input_type'    => 'string',
+                'field_placeholder'   => 'Field 1',
+                'field_description'   => '',
+                'field_help_text'     => 'Field help text',
+                'field_constraint'    => 'required',
+                'field_default_value' => '0',
+                'count'               => 0,
+            ),
+            array(
+                'field_name'          => 'field_2',
+                'field_title'         => 'Field 1',
+                'field_type'          => 'text',
+                'field_input_type'    => 'string',
+                'field_placeholder'   => 'Field 1',
+                'field_description'   => '',
+                'field_help_text'     => 'Field help text',
+                'field_constraint'    => 'required',
+                'field_default_value' => '0',
+                'count'               => 0,
+            ),
+            array(
+                'field_name'          => 'field_3',
+                'field_title'         => 'Field 1',
+                'field_type'          => 'text',
+                'field_input_type'    => 'string',
+                'field_placeholder'   => 'Field 1',
+                'field_description'   => '',
+                'field_help_text'     => 'Field help text',
+                'field_constraint'    => 'required',
+                'field_default_value' => '0',
+                'count'               => 0,
             )
         );
+        
+        foreach ($this->field_data as $key => $field_data) {
+            $result = me_cf_insert_field($field_data, true);
+            if($key < 2) {
+                me_cf_set_field_category($result , $this->parent_cat, $key);
+                me_cf_set_field_category($result , $this->parent_cat_2, $key);    
+            }else {
+                me_cf_set_field_category($result , $this->parent_cat_2, $key);
+            }
+        }
+
+        
     }
 
     public function tearDown() {
@@ -67,29 +95,10 @@ class Tests_Query_Fields extends WP_UnitTestCase
 
     }
 
-    public function test_me_set_feild_category()
+    public function test_me_query_field()
     {
-        me_cf_set_field_category($this->field_id, $this->parent_cat, 1);
-        $fields = me_cf_get_fields($this->parent_cat);
-        $field = array_pop($fields);
-
-        $count = get_term_meta( $this->parent_cat, '_me_cf_count', true );
-
-        $this->assertEquals($this->field_id, $field['field_id']);
-        $this->assertEquals(1, $count);
-    }
-
-    public function test_me_remove_field_category() {
-        me_cf_set_field_category($this->field_id, $this->parent_cat, 1);
-
-        me_cf_remove_field_category($this->field_id, $this->parent_cat);
-
-        $fields = me_cf_get_fields($this->parent_cat);
-
-        $this->assertEmpty($fields);
-
-        $count = get_term_meta( $this->parent_cat, '_me_cf_count', true );
-        $this->assertEquals(0, $count);
-
+        $fields = me_cf_fields_query(array('paged' => 2, 'showposts' => 1));
+        $this->assertEquals(array( 'field_2', ),wp_list_pluck ( $fields['fields'] , 'field_name')) ;
+        $this->assertEquals(3, $fields['found_posts']) ;
     }
 }
