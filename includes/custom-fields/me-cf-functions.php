@@ -321,6 +321,19 @@ function me_cf_get_field($field, $type = OBJECT)
     return $results;
 }
 
+function me_cf_check_field_name($field_name)
+{
+    global $wpdb;
+
+    $sql   = "SELECT count(C.field_name)
+            FROM $wpdb->marketengine_custom_fields as C
+            WHERE C.field_name = '{$field_name}'";
+
+    $results = $wpdb->get_var($sql);
+
+    return $results;
+}
+
 function me_cf_fields_query($args)
 {
     global $wpdb;
@@ -422,23 +435,6 @@ function me_field($field_name, $post = null, $single = true)
         $post = get_post();
     }
     return get_post_meta($post->ID, $field_name, $single);
-}
-
-function me_get_the_field($field_id)
-{
-    global $wpdb;
-
-    $sql  = "SELECT *";
-    $from = " FROM $wpdb->marketengine_custom_fields as C";
-    $join = " LEFT JOIN $wpdb->marketengine_fields_relationship as R
-                    ON C.field_id = R.field_id";
-    $where = " WHERE C.field_id = {$field_id}";
-
-    $sql .= $from . $join . $where;
-
-    $results = $wpdb->get_row($sql, ARRAY_A);
-
-    return $results;
 }
 
 function me_the_field($field_name, $post = null, $single = true)
