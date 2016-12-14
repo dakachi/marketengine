@@ -115,9 +115,9 @@ $constraint = me_field_attribute_array($_POST);
 
 		<?php wp_nonce_field( 'me-insert_custom_field' ); ?>
 
-		<input type="submit" class="me-cf-save-btn" name="insert-custom-field" value="<?php _e('Save', 'enginethemes'); ?>"><a href="<?php echo me_custom_field_page_url(); ?>" class="me-cf-cancel-btn"><?php _e('Cancel', 'enginethemes'); ?></a>
+		<input type="submit" class="me-cf-save-btn" name="insert-custom-field" value="<?php _e('Save', 'enginethemes'); ?>"><a href="<?php echo remove_query_arg('view'); ?>" class="me-cf-cancel-btn"><?php _e('Cancel', 'enginethemes'); ?></a>
 
-		<input type="hidden" name="redirect" value="<?php echo me_custom_field_page_url(); ?>">
+		<input type="hidden" name="redirect" value="<?php echo remove_query_arg('view'); ?>">
 
 	</form>
 </div>
