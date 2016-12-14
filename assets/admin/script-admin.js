@@ -64,10 +64,22 @@ $(document).ready(function() {
 		});
     });
 
+    $.validator.addMethod("regx", function(value, element) {
+    	var regx = /^[a-z0-9\_\-]+$/;
+
+        return value.match(regx);
+    }, 'Field name only lowercase letters (a-z, -, _) and numbers are allowed.');
+
     $('#me-custom-field-form').validate({
-    	errorClass: 'me-field-required',
-	    validClass: 'success',
-	    errorElement: 'div',
+	    errorElement: 'i',
+	    wrapper: "div",
+	    errorClass: 'icon-me-warning me-field-required',
+	    rules: {
+	    	field_name: {
+	    		required: true,
+	    		regx: true,
+	    	}
+	    }
     });
 
     $('.me-cf-remove').on('click', function(e) {

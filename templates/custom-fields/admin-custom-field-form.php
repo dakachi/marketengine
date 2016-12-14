@@ -29,12 +29,12 @@ $constraint = me_field_attribute_array($_POST);
 			<label for="" class="me-title"><?php _e('Field Type', 'enginethemes'); ?></label>
 			<span class="me-select-control">
 
-				<select required id="me-choose-field-type" class="select-field" name="field_type" id="">
+				<select required id="me-choose-field-type" class="select-field" name="field_type">
 					<option value=""><?php _e('Choose field type', 'enginethemes'); ?></option>
 					<?php
 						$field_types = me_list_custom_field_type();
 						$field_type = isset($_POST['field_type']) ? $_POST['field_type'] : '';
-						if(!empty($field_types)) : ?>
+						if(!empty($field_types)) :
 					?>
 					<?php foreach ($field_types as $key => $group_value) : ?>
 			            <optgroup label="<?php echo $group_value['label']; ?>">
