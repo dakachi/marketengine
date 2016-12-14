@@ -89,4 +89,4 @@ class ME_Schedule {
 		do_action( 'marketengine_cron_execute' );
 	}
 }
-// new ME_Schedule();
+new ME_Schedule();
