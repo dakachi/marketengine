@@ -81,12 +81,15 @@ $(document).ready(function() {
 	    	}
 	    },
 	    highlight: function(element, errorClass) {
+	    	$(element).parent().children('div').remove();
 	    	$(element).removeClass(errorClass)
-	    }
+	    },
     });
 
     $('#me-cf-field-name').on('blur', function(e) {
-    	if($(this).val() == '') return;
+    	if($(this).val() == '') {
+    		return;
+    	}
 
     	var $this = $(this);
     	var data = {
