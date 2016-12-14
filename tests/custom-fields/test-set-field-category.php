@@ -89,7 +89,6 @@ class Tests_Set_Field_Category extends WP_UnitTestCase
         $this->assertEmpty($fields);
 
         $count = get_term_meta( $this->parent_cat, '_me_cf_count', true );
-        var_dump($count);
         $this->assertEquals(0, $count);
 
     }
