@@ -3,6 +3,6 @@
 	    <label for="me_cf_textarea_2" class="me-field-title">
 	    	<?php echo $field['field_title'] ?>
 	    </label>
-	    <textarea <?php echo me_field_attribute($field); ?> id="<?php echo $field['field_name'] ?>" placeholder="<?php echo $field['field_placeholder'] ?>" name="<?php echo $field['field_name'] ?>"><?php echo $value; ?></textarea>
+	    <textarea id="<?php echo $field['field_name'] ?>" placeholder="<?php echo $field['field_placeholder'] ?>" name="<?php echo $field['field_name'] ?>"><?php echo $value; ?></textarea>
 	</div>
 </div>

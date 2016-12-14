@@ -1,7 +1,7 @@
 <div class="marketengine-custom-field">
 <?php
 if (!empty($_POST['parent_cat'])):
-    $fields = me_cf_fields_query($_POST['parent_cat']);
+    $fields = me_cf_get_fields($_POST['parent_cat']);
     if (!empty($fields)) {
         foreach ($fields as $field):
             $field_name = $field['field_name'];
