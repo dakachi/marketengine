@@ -73,6 +73,9 @@ class ME_Handle_CF
     public function validate_fields($errors, $listing_data)
     {
         $cat    = $listing_data['parent_cat'];
+
+        if(!$cat) return $errors;
+
         $fields = me_cf_get_fields($cat);
 
         $rules             = array();
