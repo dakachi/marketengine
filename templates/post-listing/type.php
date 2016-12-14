@@ -32,7 +32,7 @@ if (!isset($editing)) $editing = false;
 
 	<div class="marketengine-select-field">
 	    <label class="me-field-title"><?php _e("Listing Type", "enginethemes"); ?></label>
-	    <select <?php disabled( $editing); ?> class="listing-type me-chosen-select" name="listing_type" id="listing-type-select">
+	    <select required="true" <?php disabled( $editing); ?> class="listing-type me-chosen-select" name="listing_type" id="listing-type-select">
 	    	<?php foreach ($listing_types as $type => $name) : ?>
 	    		<option value="<?php echo $type ?>" <?php selected( $selected_listing_type, $type) ?> <?php disabled(!me_is_listing_type_available($type)); ?> >
 	    			<?php echo $name; ?>
@@ -56,7 +56,7 @@ if (!isset($editing)) $editing = false;
 			<div class="marketengine-group-field">
 				<div class="marketengine-input-field">
 				    <label class="me-field-title"><?php _e("Price", "enginethemes"); ?></label>
-				    <input type="text" name="meta_input[listing_price]" placeholder="<?php echo me_option('payment-currency-sign'); ?>" class="required me-input-price" value="<?php echo $price; ?>">
+				    <input required="true" type="text" name="meta_input[listing_price]" placeholder="<?php echo me_option('payment-currency-sign'); ?>" class="required me-input-price" value="<?php echo $price; ?>">
 				</div>
 			</div>
 		</div>

@@ -18,7 +18,7 @@ if(!isset($editing)) $editing = false;
 	<div class="marketengine-group-field" id="me-parent-cat-container">
 		<div class="marketengine-select-field">
 		    <label class="me-field-title"><?php _e("Category", "enginethemes");?></label>
-		    <select <?php disabled($editing); ?> class="select-category me-parent-category me-chosen-select" name="parent_cat">
+		    <select required="true" <?php disabled($editing); ?> class="select-category me-parent-category me-chosen-select" name="parent_cat">
 		    	<option value=""><?php _e("Select your category", "enginethemes");?></option>
 		    	<?php foreach ($parent_categories as $key => $parent_cat): ?>
 			    	<option value="<?php echo $parent_cat->term_id; ?>" <?php selected($selected_cat, $parent_cat->term_id);?> >
@@ -31,7 +31,7 @@ if(!isset($editing)) $editing = false;
 	<div class="marketengine-group-field" id="me-sub-cat-container">
 		<div class="marketengine-select-field">
 		    <label class="me-field-title"><?php _e("Sub-category", "enginethemes");?></label>
-		    <select <?php disabled( empty($child_cats) || $editing ); ?> class="select-category me-sub-category me-chosen-select" name="sub_cat">
+		    <select required="true" <?php disabled( empty($child_cats) || $editing ); ?> class="select-category me-sub-category me-chosen-select" name="sub_cat">
 		    	<option value=""><?php _e("Select sub category", "enginethemes");?></option>
 		    	<?php if (!empty($child_cats)) : ?>
 		    	<?php foreach ($child_cats as $key => $sub_cat): ?>
