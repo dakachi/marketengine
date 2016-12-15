@@ -40,4 +40,6 @@
 	</li>
 
 	<?php endforeach; ?>
-	<?php endif; ?>
+<?php else : ?>
+	<?php me_get_template('custom-fields/field-list-no-fields'); ?>
+<?php endif; ?>
