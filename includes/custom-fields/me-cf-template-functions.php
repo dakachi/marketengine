@@ -95,6 +95,7 @@ add_action('marketengine_section', 'marketengine_add_custom_field_section');
 function marketengine_load_input_by_field_type($args) {
 	$placeholder = isset($args['field_placeholder']) ? $args['field_placeholder'] : '';
     $attribute = me_field_attribute_array($args);
+    $attribute = wp_parse_args(array('min'=>'','max'=>''), $attribute);
 
 	$option_values = isset($args['option_values']) ? $args['option_values'] : '';
 	$option_none = isset($args['option_none']) ? $args['option_none'] : '';
