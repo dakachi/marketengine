@@ -15,7 +15,7 @@
 					<?php echo $count; ?>
 					<div class="me-cf-action">
 						<a class="me-cf-show" href="" title="<?php _e('Show\Hide custom field', 'enginethemes'); ?>"><i class="icon-me-eye"></i><i class="icon-me-eye-slash"></i></a>
-						<a class="me-cf-edit" href="<?php echo add_query_arg(array('view' => 'edit', 'custom-field-id' => $field_id), remove_query_arg('category-id')); ?>" title="<?php _e('Edit custom field', 'enginethemes'); ?>"><i class="icon-me-edit-pad"></i></a>
+						<a class="me-cf-edit" href="<?php echo add_query_arg(array('view' => 'edit', 'custom-field-id' => $field_id)); ?>" title="<?php _e('Edit custom field', 'enginethemes'); ?>"><i class="icon-me-edit-pad"></i></a>
 						<a data-count="<?php echo $count; ?>" class="me-cf-remove" href="<?php echo add_query_arg(array('action' => 'remove-from-category', '_wp_nonce' => wp_create_nonce('remove-from-category'), 'custom-field-id' => $field_id)); ?>" title="<?php _e('Remove from this category', 'enginethemes'); ?>"><i class="icon-me-trash"></i></a>
 					</div>
 				</div>

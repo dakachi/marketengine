@@ -114,8 +114,8 @@ $constraint = me_field_attribute_array($_POST);
 
 		<?php wp_nonce_field( 'me-insert_custom_field' ); ?>
 
-		<input type="submit" class="me-cf-save-btn" name="insert-custom-field" value="<?php _e('Save', 'enginethemes'); ?>"><a href="<?php echo isset($_REQUEST['category-id']) ? add_query_arg('view', 'group-by-category') : remove_query_arg('view'); ?>" class="me-cf-cancel-btn"><?php _e('Cancel', 'enginethemes'); ?></a>
+		<input type="submit" class="me-cf-save-btn" name="insert-custom-field" value="<?php _e('Save', 'enginethemes'); ?>"><a href="<?php echo isset($_REQUEST['category-id']) ? add_query_arg('view', 'group-by-category', remove_query_arg('custom-field-id')) : remove_query_arg(array('view', 'custom-field-id')); ?>" class="me-cf-cancel-btn"><?php _e('Cancel', 'enginethemes'); ?></a>
 
-		<input type="hidden" name="redirect" value="<?php echo isset($_REQUEST['category-id']) ? add_query_arg('view', 'group-by-category') : remove_query_arg('view'); ?>">
+		<input type="hidden" name="redirect" value="<?php echo isset($_REQUEST['category-id']) ? add_query_arg('view', 'group-by-category', remove_query_arg('custom-field-id')) : remove_query_arg(array('view', 'custom-field-id')); ?>">
 	</form>
 </div>
