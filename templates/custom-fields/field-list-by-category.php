@@ -1,5 +1,5 @@
 <?php
-	$customfields = me_cf_get_fields_by_category($_REQUEST['category-id']);
+	// $customfields = me_cf_get_fields($_REQUEST['category-id']);
 
 	if(!empty($customfields)) :
 		foreach($customfields as $key => $field) :

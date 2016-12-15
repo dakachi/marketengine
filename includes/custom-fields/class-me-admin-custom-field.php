@@ -172,7 +172,7 @@ class ME_Custom_Field_Handle {
 	}
 
 	public static function check_field_name() {
-		$field = me_cf_check_field_name($_POST['field_name']);
+		$field = me_cf_is_field_name_exists($_POST['field_name']);
 
 		if($field) {
 			$unique = false;

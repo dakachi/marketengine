@@ -349,7 +349,18 @@ function me_cf_get_field($field, $type = OBJECT)
     return $results;
 }
 
-function me_cf_check_field_name($field_name)
+
+/**
+ * Check if field name exists
+ *
+ * @param string $field_name
+ *
+ * @package Includes/CustomField
+ * @category Function
+ *
+ * @return bool true if the field name exists, and vice versa
+ */
+function me_cf_is_field_name_exists($field_name)
 {
     global $wpdb;
 
@@ -359,9 +370,19 @@ function me_cf_check_field_name($field_name)
 
     $results = $wpdb->get_var($sql);
 
-    return $results;
+    return $results ? true : false;
 }
 
+/**
+ * Gets custom fields
+ *
+ * @param array $args Query arguments
+ *
+ * @package Includes/CustomField
+ * @category Function
+ *
+ * @return array of fields match the query, number of post founded, and maximum number of pages
+ */
 function me_cf_fields_query($args)
 {
     global $wpdb;
@@ -394,6 +415,16 @@ function me_cf_fields_query($args)
     );
 }
 
+/**
+ * Gets custom fields of the listing category
+ *
+ * @param int $category_id
+ *
+ * @package Includes/CustomField
+ * @category Function
+ *
+ * @return array $result list of fields
+ */
 function me_cf_get_fields($category_id = '')
 {
     global $wpdb;
