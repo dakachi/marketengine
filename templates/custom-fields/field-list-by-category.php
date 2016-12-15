@@ -24,8 +24,12 @@
 		<div class="me-cf-row-content">
 			<p><span><?php _e('Field title:', 'enginethemes'); ?></span><?php echo $field_title; ?></p>
 			<p><span><?php _e('Field type:', 'enginethemes'); ?></span><?php echo $field_type; ?></p>
+
+			<?php /*
 			<p><span><?php _e('Default value:', 'enginethemes'); ?></span><?php echo isset($field_default_value) && !empty($field_default_value) ? $field_default_value : 'N/A'; ?></p>
-			<?php /*<p><span><?php _e('Options:', 'enginethemes'); ?></span></p>*/ ?>
+			<p><span><?php _e('Options:', 'enginethemes'); ?></span></p>
+			*/ ?>
+
 			<?php do_action('me_load_inputs_for_view', $field); ?>
 
 			<p><span><?php _e('Required:', 'enginethemes'); ?></span><?php echo $field_constraint ? __('Yes', 'enginethemes') : __('No', 'enginethemes') ; ?></p>
