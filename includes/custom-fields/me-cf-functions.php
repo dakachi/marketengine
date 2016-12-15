@@ -442,25 +442,18 @@ function me_cf_get_fields($category_id = '')
     return $results;
 }
 
-function me_cf_get_fields_by_category($category_id)
-{
-    global $wpdb;
-
-    $sql = $join = $where = '';
-
-    $sql = "SELECT *
-            FROM $wpdb->marketengine_custom_fields as C";
-    $join = " LEFT JOIN $wpdb->marketengine_fields_relationship as R
-                    ON C.field_id = R.field_id";
-    $where = " WHERE R.term_taxonomy_id = {$category_id}";
-
-    $sql .= $join . $where;
-
-    $results = $wpdb->get_results($sql, ARRAY_A);
-
-    return $results;
-}
-
+/**
+ * Gets list of categories that the field affected
+ *
+ * @param int $field_id
+ * @param bool $html
+ *
+ * @package Includes/CustomField
+ * @category Function
+ *
+ * @return array $result list of categories or html string
+ */
+// function me_cf_get_field_categories($field_id, $html = false)
 function me_cf_get_affected_categories($field_id)
 {
     global $wpdb;
@@ -473,6 +466,7 @@ function me_cf_get_affected_categories($field_id)
 
     $results = $wpdb->get_col($sql);
 
+    // return $html ? implode(', ', $results) : $results;
     return $results;
 }
 
@@ -504,6 +498,16 @@ function me_the_field($field_name, $post = null, $single = true)
     echo get_post_meta($post->ID, $field_name, $single);
 }
 
+/**
+ * Gets string attributes of the custom field.
+ *
+ * @param array $field
+ *
+ * @package Includes/CustomField
+ * @category Function
+ *
+ * @return string $attr
+ */
 function me_field_attribute($field)
 {
     $constraint = explode('|', $field['field_constraint']);
@@ -526,6 +530,16 @@ function me_field_attribute($field)
     return apply_filters('marketengine_cf_field_attribute', $attr, $field);
 }
 
+/**
+ * Gets array attributes of the custom field.
+ *
+ * @param array $field
+ *
+ * @package Includes/CustomField
+ * @category Function
+ *
+ * @return array $attr
+ */
 function me_field_attribute_array($field)
 {
     if(!isset($field['field_constraint'])) {
@@ -550,9 +564,20 @@ function me_field_attribute_array($field)
         }
     }
 
-    return $attr;
+    return apply_filters('marketengine_cf_field_attribute_array', $attr, $field);
 }
 
+/**
+ * Gets the custom field page url.
+ *
+ * @param string $view
+ * @param string $action
+ *
+ * @package Includes/CustomField
+ * @category Function
+ *
+ * @return string $url
+ */
 function me_custom_field_page_url($view = '', $action = '')
 {
     $url = add_query_arg('section', 'custom-field', me_menu_page_url('me-settings', 'marketplace-settings'));
