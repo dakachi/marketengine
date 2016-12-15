@@ -40,7 +40,7 @@ $categories = me_get_listing_categories();
 		</ul>
 	</div>
 
-	<?php if(isset($_REQUEST['view']) && $_REQUEST['view'] != 'group-by-category') : ?>
+	<?php if( !isset($_REQUEST['view']) ) : ?>
 	<div class="me-pagination-wrap">
 		<span class="me-paginations">
 		<?php marketengine_cf_pagination( $customfields ); ?>

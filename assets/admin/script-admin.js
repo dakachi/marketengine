@@ -71,13 +71,13 @@ $(document).ready(function() {
     }, 'Field name only lowercase letters (a-z, -, _) and numbers are allowed.');
     $.validator.addMethod("meMax", function(value, element) {
     	if($('#field_maximum_value').val() != '') {
-    		return value < parseInt($('#field_maximum_value').val());
+    		return parseFloat(value) < parseFloat($('#field_maximum_value').val());
     	}
     	return true;
     }, 'Please enter a value less than maximum value.');
     $.validator.addMethod("meMin", function(value, element) {
     	if($('#field_minimum_value').val() != '') {
-    		return value > parseInt($('#field_minimum_value').val());
+    		return parseFloat(value) > parseFloat($('#field_minimum_value').val());
     	}
     	return true;
     }, 'Please enter a value greater than minimum value.');

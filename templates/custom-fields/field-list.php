@@ -22,10 +22,14 @@
 		<div class="me-cf-row-content">
 			<p><span><?php _e('Field title:', 'enginethemes'); ?></span><?php echo $field_title; ?></p>
 			<p><span><?php _e('Field type:', 'enginethemes'); ?></span><?php echo $field_type; ?></p>
-			<?php /*if($field_type == 'date') : ?>
+
+			<?php /*
+			if($field_type == 'date') : ?>
 			<p><span><?php _e('Default value:', 'enginethemes'); ?></span><?php echo isset($field_default_value) && !empty($field_default_value) ? $field_default_value : 'N/A'; ?></p>
-			<?php endif;*/ ?>
-			<?php /*<p><span><?php _e('Options:', 'enginethemes'); ?></span></p>*/ ?>
+			<?php endif; ?>
+			<p><span><?php _e('Options:', 'enginethemes'); ?></span></p>
+			*/ ?>
+
 			<?php do_action('me_load_inputs_for_view', $field); ?>
 
 			<p><span><?php _e('Required:', 'enginethemes'); ?></span><?php echo (strpos($field_constraint, 'equired')) ? __('Yes', 'enginethemes') : __('No', 'enginethemes') ; ?></p>
@@ -36,4 +40,6 @@
 	</li>
 
 	<?php endforeach; ?>
+<?php else : ?>
+	<?php me_get_template('custom-fields/field-list-no-fields'); ?>
 <?php endif; ?>
