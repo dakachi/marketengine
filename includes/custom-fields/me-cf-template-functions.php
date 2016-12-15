@@ -179,6 +179,7 @@ function marketengine_load_inputs_for_view( $field ) {
         case 'number':
         	$field_placeholder = isset($field_placeholder) ? $field_placeholder : 'N/A';
         	$field_attribute = me_field_attribute_array($field);
+            $field_attribute = wp_parse_args(array('min' => '', 'max' => ''), $field_attribute);
 
 	        echo "<p><span>".__('Placeholder:', 'enginethemes')."</span>".$field_placeholder."</p>";
 	        echo "<p><span>".__('Minimum value:', 'enginethemes')."</span>".$field_attribute['min']."</p>";
