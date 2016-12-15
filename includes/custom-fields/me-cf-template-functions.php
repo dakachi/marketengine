@@ -95,7 +95,7 @@ add_action('marketengine_section', 'marketengine_add_custom_field_section');
 function marketengine_load_input_by_field_type($args) {
 	$placeholder = isset($args['field_placeholder']) ? $args['field_placeholder'] : '';
     $attribute = me_field_attribute_array($args);
-    $attribute = wp_parse_args(array('min'=>'','max'=>''), $attribute);
+    $attribute = wp_parse_args($attribute, array('min'=>'','max'=>''));
 
 	$option_values = isset($args['option_values']) ? $args['option_values'] : '';
 	$option_none = isset($args['option_none']) ? $args['option_none'] : '';
@@ -180,7 +180,7 @@ function marketengine_load_inputs_for_view( $field ) {
         case 'number':
         	$field_placeholder = isset($field_placeholder) ? $field_placeholder : 'N/A';
         	$field_attribute = me_field_attribute_array($field);
-            $field_attribute = wp_parse_args(array('min' => '', 'max' => ''), $field_attribute);
+            $field_attribute = wp_parse_args($field_attribute, array('min' => '', 'max' => ''));
 
 	        echo "<p><span>".__('Placeholder:', 'enginethemes')."</span>".$field_placeholder."</p>";
 	        echo "<p><span>".__('Minimum value:', 'enginethemes')."</span>".$field_attribute['min']."</p>";

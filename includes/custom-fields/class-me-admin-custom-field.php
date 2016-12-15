@@ -42,7 +42,7 @@ class ME_Custom_Field_Handle {
 	}
 
 	public static function insert() {
-		if( is_admin() && isset($_POST['insert-custom-field']) && isset($_REQUEST['view']) && ($_REQUEST['view'] == 'add' || $_REQUEST['view'] == 'edit' ) && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert_custom_field') ) {
+		if( is_admin() && isset($_REQUEST['view']) && ($_REQUEST['view'] == 'add' || $_REQUEST['view'] == 'edit' ) && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert_custom_field') ) {
 			$term_ids = isset($_POST['field_for_categories']) ? $_POST['field_for_categories'] : array();
             $_POST['count'] = count($term_ids);
 

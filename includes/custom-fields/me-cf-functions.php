@@ -284,10 +284,10 @@ function me_cf_remove_field_category($field_id, $term_id)
 /**
  * Refresh the field's category count
  * @param int $field_id The field id
- * 
+ *
  * @package Includes/CustomField
  * @category Function
- * 
+ *
  * @return int Number of category
  */
 function me_cf_update_field_count($field_id)
@@ -302,10 +302,10 @@ function me_cf_update_field_count($field_id)
 /**
  * Refresh the category's field count
  * @param int $term_id The category id
- * 
+ *
  * @package Includes/CustomField
  * @category Function
- * 
+ *
  * @return int Number of field
  */
 function me_cf_update_term_count($term_id)
@@ -327,12 +327,12 @@ function me_cf_update_term_count($term_id)
 
 /**
  * Retrieve field data from database
- * 
+ *
  * @param int $field The field id
- * 
+ *
  * @package Includes/CustomField
  * @category Function
- * 
+ *
  * @return object Field data
  */
 function me_cf_get_field($field, $type = OBJECT)
@@ -545,6 +545,7 @@ function me_field_attribute_array($field)
     if(!isset($field['field_constraint'])) {
         return;
     }
+
     $constraint = explode('|', $field['field_constraint']);
     if (empty($constraint)) {
         return '';
