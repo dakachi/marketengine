@@ -34,6 +34,10 @@ class ME_Handle_CF
         add_action('marketengine_after_single_listing_details', array($this, 'field_details'));
     }
 
+    /**
+     * Render edit listing custom fields form
+     * @since 1.0
+     */
     public function edit_form_fields($listing)
     {
         $category = wp_get_object_terms($listing->ID, 'listing_category', array('parent' => 0, 'fields' => 'ids'));
@@ -45,11 +49,19 @@ class ME_Handle_CF
         me_get_template('custom-fields/edit-field-form', array('fields' => $fields, 'listing' => $listing));
     }
 
+    /**
+     * Render post listing custom fields form
+     * @since 1.0
+     */
     public function post_form_fields()
     {
         me_get_template('custom-fields/post-field-form');
     }
 
+    /**
+     * Ajax callback load custom fields by category
+     * @since 1.0
+     */
     public function load_category_fields()
     {
         if (empty($_GET['cat'])) {
@@ -70,6 +82,16 @@ class ME_Handle_CF
         exit;
     }
 
+    /**
+     * Hook to filter marketengine_post_listing_error_messages
+     * Check category's custom field constraint and return the error messages
+     *
+     * @param array $errors The errors will be filtered
+     * @param array $listing_data The listing data user submit
+     * 
+     * @return array $errors
+     * @since 1.0
+     */
     public function validate_fields($errors, $listing_data)
     {
         $cat    = $listing_data['parent_cat'];
@@ -98,6 +120,15 @@ class ME_Handle_CF
         return $errors;
     }
 
+    /**
+     * Hook to update listing custom fields data
+     *
+     * @param int $post The listing id
+     * @param array $data The data user submit
+     *
+     * @return void
+     * @since 1.0
+     */
     public function update_fields($post, $data)
     {
         $category = wp_get_object_terms($post, 'listing_category', array('parent' => 0, 'fields' => 'ids'));
@@ -125,6 +156,12 @@ class ME_Handle_CF
 
     }
 
+    /**
+     * Render custom fields info in listing details template
+     *
+     * @return void
+     * @since 1.0
+     */
     public function field_details()
     {
         $post     = get_post();
