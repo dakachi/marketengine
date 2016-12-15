@@ -84,7 +84,7 @@ class ME_Custom_Field_Handle {
 		if(is_admin() && isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete-custom-field' && isset($_REQUEST['_wp_nonce']) && wp_verify_nonce($_REQUEST['_wp_nonce'], 'delete-custom-field') && isset($_REQUEST['custom-field-id'])) {
 			$result = me_cf_delete_field($_REQUEST['custom-field-id']);
 			if(is_wp_error($result)) {
-				me_wp_error_to_notices($field_id);
+				me_wp_error_to_notices($result);
 				return;
 			}
 
@@ -97,7 +97,16 @@ class ME_Custom_Field_Handle {
 	public static function remove_from_category() {
 		if(is_admin() && isset($_REQUEST['action']) && $_REQUEST['action'] == 'remove-from-category' && isset($_REQUEST['_wp_nonce']) && wp_verify_nonce($_REQUEST['_wp_nonce'], 'remove-from-category') && isset($_REQUEST['custom-field-id'])) {
 
-			me_cf_remove_field_category($_REQUEST['custom-field-id'], $_REQUEST['category-id']);
+			$term_ids = me_cf_get_affected_categories($_REQUEST['custom-field-id']);
+			if(count($term_ids) == 1) {
+				$result = me_cf_delete_field($_REQUEST['custom-field-id']);
+				if(is_wp_error($result)) {
+					me_wp_error_to_notices($result);
+					return;
+				}
+			} else {
+				me_cf_remove_field_category($_REQUEST['custom-field-id'], $_REQUEST['category-id']);
+			}
 
 			$redirect = remove_query_arg(array('action', '_wp_nonce', 'custom-field-id'));
 			wp_redirect($redirect);

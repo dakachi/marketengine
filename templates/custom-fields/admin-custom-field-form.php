@@ -78,7 +78,7 @@ $constraint = me_field_attribute_array($_POST);
 		<div class="me-group-field">
 			<label for="" class="me-title"><?php _e('Available In Which Categories', 'enginethemes'); ?></label>
 			<span class="me-select-control">
-				<select required class="select-field" name="field_for_categories[]" id="" multiple="true">
+				<select required class="select-field" name="field_for_categories[]" id="field_for_categories" multiple="true">
 
 				<?php
 					$categories = me_get_listing_categories();
@@ -88,7 +88,6 @@ $constraint = me_field_attribute_array($_POST);
 						} else {
 							$selected = array($_REQUEST['category-id']);
 						}
-							var_dump($selected);
 					} else {
 						$selected = isset($_POST['field_for_categories']) ? $_POST['field_for_categories'] : array();
 					}
@@ -118,6 +117,5 @@ $constraint = me_field_attribute_array($_POST);
 		<input type="submit" class="me-cf-save-btn" name="insert-custom-field" value="<?php _e('Save', 'enginethemes'); ?>"><a href="<?php echo remove_query_arg('view'); ?>" class="me-cf-cancel-btn"><?php _e('Cancel', 'enginethemes'); ?></a>
 
 		<input type="hidden" name="redirect" value="<?php echo remove_query_arg('view'); ?>">
-
 	</form>
 </div>

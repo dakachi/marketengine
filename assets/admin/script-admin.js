@@ -132,8 +132,14 @@ $(document).ready(function() {
     });
 
     $('.me-cf-remove').on('click', function(e) {
+    	var count = $(this).data('count');
+    	var cfm;
 
-    	var cfm = confirm('Are you sure you want to delete the selected custom field?');
+    	if(typeof count == 'undefined' || count == 1) {
+    		cfm = confirm('Are you sure you want to delete the selected custom field?')
+    	} else {
+    		cfm = confirm('Are you sure you want to remove the selected field from this category?')
+    	}
 
 	    if (cfm == false) {
 	    	e.preventDefault();
