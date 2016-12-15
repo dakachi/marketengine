@@ -30,7 +30,7 @@ $categories = me_get_listing_categories();
 
 			<?php
 			if(isset($_REQUEST['view']) && $_REQUEST['view'] == 'group-by-category') {
-				$customfields = me_cf_get_fields_by_category($_REQUEST['category-id']);
+				$customfields = me_cf_get_fields($_REQUEST['category-id']);
 				me_get_template('custom-fields/field-list-by-category', array('customfields' => $customfields ));
 			} else {
 				$customfields = me_cf_fields_query($_REQUEST);
