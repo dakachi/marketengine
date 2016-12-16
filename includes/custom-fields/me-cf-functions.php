@@ -453,33 +453,25 @@ function me_cf_get_fields($category_id = '')
  *
  * @return array $result list of categories or html string
  */
-// function me_cf_get_field_categories($field_id, $html = false)
-function me_cf_get_affected_categories($field_id)
+function me_cf_get_field_categories($field_id, $html = false)
 {
     global $wpdb;
 
-    $sql   = "SELECT DISTINCT R.term_taxonomy_id";
+    $sql   = "SELECT DISTINCT R.term_taxonomy_id, T.name";
     $from  = " FROM $wpdb->marketengine_fields_relationship as R";
+    $join  = " LEFT JOIN wp_terms as T ON R.term_taxonomy_id = T.term_id";
     $where = " WHERE R.field_id = $field_id";
 
-    $sql .= $from . $where;
+    $sql .= $from . $join . $where;
 
-    $results = $wpdb->get_col($sql);
-
-    // return $html ? implode(', ', $results) : $results;
-    return $results;
-}
-
-function me_cf_get_affected_categories_html($field_id)
-{
-    $affected_cats      = me_cf_get_affected_categories($field_id);
-    $affected_cats_name = '';
-    foreach ($affected_cats as $key => $cat) {
-        $cat_name = get_term($cat)->name;
-        $affected_cats_name .= $cat_name . ', ';
+    $results = $wpdb->get_results($sql, ARRAY_A);
+    if($html) {
+        $results = implode(', ', array_column($results, 'name'));
+    } else {
+        $results = array_column($results, 'term_taxonomy_id');
     }
 
-    return substr($affected_cats_name, 0, strlen(trim($affected_cats_name))-1);
+    return $results;
 }
 
 function me_field($field_name, $post = null, $single = true)

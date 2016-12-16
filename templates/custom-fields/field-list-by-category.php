@@ -4,7 +4,7 @@
 	if(!empty($customfields)) :
 		foreach($customfields as $key => $field) :
 			extract($field);
-			$affected_cats_name = me_cf_get_affected_categories_html($field_id);
+			$affected_cats_name = me_cf_get_field_categories($field_id, true);
 ?>
 
 	<li class="me-cf-item">

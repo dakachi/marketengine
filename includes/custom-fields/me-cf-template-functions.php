@@ -43,7 +43,7 @@ function marketengine_custom_field_template() {
             me_get_template('custom-fields/admin-custom-field-form');
         } elseif($_REQUEST['view'] == 'edit') {
             $field_obj = me_cf_get_field($_REQUEST['custom-field-id']);
-            $field_obj['field_for_categories'] = me_cf_get_affected_categories($_REQUEST['custom-field-id']);
+            $field_obj['field_for_categories'] = me_cf_get_field_categories($_REQUEST['custom-field-id']);
             me_get_template('custom-fields/admin-custom-field-form', array('field_obj' => $field_obj));
         } elseif($_REQUEST['view'] == 'group-by-category') {
             me_get_template('custom-fields/admin-custom-field');
