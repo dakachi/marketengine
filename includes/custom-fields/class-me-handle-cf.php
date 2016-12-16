@@ -109,6 +109,11 @@ class ME_Handle_CF
             if($field['field_type'] == 'date') {
                 $rules[$field_name] .= '|date';
             }
+
+            if($field['field_type'] == 'number') {
+                $rules[$field_name] .= '|numeric';
+            }
+
             $custom_attributes[$field_name] = $field['field_title'];
         }
 
