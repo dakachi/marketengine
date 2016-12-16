@@ -31,6 +31,8 @@ class ME_Custom_Field_Handle {
 	}
 
 	public static function init() {
+		add_action('marketengine_section', 'marketengine_add_custom_field_section');
+
 		add_action('wp_loaded', 'marketengine_add_actions');
 		add_action('wp_loaded', array(__CLASS__, 'insert'));
 		add_action('wp_loaded', array(__CLASS__, 'delete'));
