@@ -172,6 +172,7 @@ function marketengine_load_inputs_for_view( $field ) {
     switch($field_type) {
         case 'text':
         case 'textarea':
+            $field_placeholder = isset($field_placeholder) && !empty($field_placeholder) ? $field_placeholder : 'N/A';
     		echo "<p><span>".__('Placeholder:', 'enginethemes')."</span>".$field_placeholder."</p>";
 
             break;
