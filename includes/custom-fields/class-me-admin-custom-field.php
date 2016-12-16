@@ -31,9 +31,9 @@ class ME_Custom_Field_Handle {
 	}
 
 	public static function init() {
-		add_action('marketengine_section', 'marketengine_add_custom_field_section');
+		add_action('marketengine_section', array(__CLASS__, 'marketengine_add_custom_field_section'));
 
-		add_action('wp_loaded', 'marketengine_add_actions');
+		add_action('wp_loaded', array(__CLASS__, 'marketengine_add_actions'));
 		add_action('wp_loaded', array(__CLASS__, 'insert'));
 		add_action('wp_loaded', array(__CLASS__, 'delete'));
 		add_action('wp_loaded', array(__CLASS__, 'remove_from_category'));
@@ -41,6 +41,19 @@ class ME_Custom_Field_Handle {
 		add_action('me_load_cf_input', array(__CLASS__, 'load_field_input'));
 		add_action('wp_ajax_me_cf_load_input_type', array(__CLASS__, 'load_field_input_ajax'));
 		add_action('wp_ajax_check_field_name', array(__CLASS__, 'check_field_name'));
+	}
+
+	/**
+	 * Prepares content of custom field section
+	 *
+	 * @since 	1.0.1
+	 * @version 1.0.0
+	 */
+	public static function marketengine_add_actions() {
+	    if( is_admin() && isset($_REQUEST['section']) && $_REQUEST['section'] == 'custom-field') {
+	        add_action( 'wp_print_scripts', 'marketengine_dequeue_script', 100 );
+	        add_action('get_custom_field_template', 'marketengine_custom_field_template');
+	    }
 	}
 
 	public static function insert() {
@@ -188,6 +201,20 @@ class ME_Custom_Field_Handle {
 			'unique'	=> $unique,
 			'message'	=> $message,
 		) );
+	}
+
+	public static function marketengine_add_custom_field_section( $sections ) {
+	    if(!isset($_REQUEST['tab']) || $_REQUEST['tab'] == 'marketplace-settings') {
+	        $sample_data = $sections['sample-data'];
+	        $sections['custom-field'] = array(
+	            'title'  => __('Custom Fields', 'enginethemes'),
+	            'slug'   => 'custom-field',
+	            'type'   => 'section',
+	        );
+	        unset($sections['sample-data']);
+	        $sections['sample-data'] = $sample_data;
+	    }
+	    return $sections;
 	}
 }
 

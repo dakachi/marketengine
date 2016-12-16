@@ -53,18 +53,7 @@ function marketengine_custom_field_template() {
     }
 }
 
-/**
- * Prepares content of custom field section
- *
- * @since 	1.0.1
- * @version 1.0.0
- */
-function marketengine_add_actions() {
-    if( is_admin() && isset($_REQUEST['section']) && $_REQUEST['section'] == 'custom-field') {
-        add_action( 'wp_print_scripts', 'marketengine_dequeue_script', 100 );
-        add_action('get_custom_field_template', 'marketengine_custom_field_template');
-    }
-}
+
 
 /**
  * Removes ajax handle of option
@@ -77,19 +66,7 @@ function marketengine_dequeue_script() {
 }
 
 
-function marketengine_add_custom_field_section( $sections ) {
-    if(!isset($_REQUEST['tab']) || $_REQUEST['tab'] == 'marketplace-settings') {
-        $sample_data = $sections['sample-data'];
-        $sections['custom-field'] = array(
-            'title'  => __('Custom Fields', 'enginethemes'),
-            'slug'   => 'custom-field',
-            'type'   => 'section',
-        );
-        unset($sections['sample-data']);
-        $sections['sample-data'] = $sample_data;
-    }
-    return $sections;
-}
+
 
 function marketengine_load_input_by_field_type($args) {
 	$placeholder = isset($args['field_placeholder']) ? $args['field_placeholder'] : '';
@@ -104,12 +81,9 @@ function marketengine_load_input_by_field_type($args) {
     switch($args['field_type']) {
         case 'text':
         case 'textarea':
-            $options .= '<div class="me-group-field">';
-            $options .= '<label class="me-title">'.__('Placeholder', 'enginethemes').' <small>'.__('(optional)', 'enginethemes').'</small></label>';
-            $options .= '<span class="me-field-control">';
-            $options .= '<input class="me-input-field" id="field_placeholder" type="text" name="field_placeholder" value="'.esc_attr($placeholder).'">';
-            $options .= '</span>';
-            $options .= '</div>';
+            ob_start();
+            me_get_template('custom-fields/admin-field-text');
+            $options = ob_get_clean();
             break;
 
         case 'number':
