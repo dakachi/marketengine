@@ -464,11 +464,11 @@ function me_cf_get_field_categories($field_id, $html = false)
 
     $sql .= $from . $join . $where;
 
-    $results = $wpdb->get_results($sql, ARRAY_A);
     if($html) {
-        $results = implode(', ', array_column($results, 'name'));
+        $results = $wpdb->get_col($sql, 1);
+        $results = implode(', ', $results);
     } else {
-        $results = array_column($results, 'term_taxonomy_id');
+        $results = $wpdb->get_col($sql, 0);
     }
 
     return $results;

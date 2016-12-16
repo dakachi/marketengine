@@ -90,7 +90,6 @@ function marketengine_add_custom_field_section( $sections ) {
     }
     return $sections;
 }
-add_action('marketengine_section', 'marketengine_add_custom_field_section');
 
 function marketengine_load_input_by_field_type($args) {
 	$placeholder = isset($args['field_placeholder']) ? $args['field_placeholder'] : '';
