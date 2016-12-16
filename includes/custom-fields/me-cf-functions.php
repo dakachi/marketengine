@@ -459,14 +459,13 @@ function me_cf_get_field_categories($field_id, $html = false)
 
     $sql   = "SELECT DISTINCT R.term_taxonomy_id, T.name";
     $from  = " FROM $wpdb->marketengine_fields_relationship as R";
-    $join  = " LEFT JOIN wp_terms as T ON R.term_taxonomy_id = T.term_id";
+    $join  = " LEFT JOIN $wpdb->terms as T ON R.term_taxonomy_id = T.term_id";
     $where = " WHERE R.field_id = $field_id";
 
     $sql .= $from . $join . $where;
 
     if($html) {
         $results = $wpdb->get_col($sql, 1);
-        var_dump($sql);
         $results = implode(', ', $results);
     } else {
         $results = $wpdb->get_col($sql, 0);
