@@ -5,6 +5,3 @@
 	</div>
 </div>
 <?php 
-echo "<pre>";
-print_r($field);
-echo "</pre>";
