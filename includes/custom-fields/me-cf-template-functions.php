@@ -82,29 +82,18 @@ function marketengine_load_input_by_field_type($args) {
         case 'text':
         case 'textarea':
             ob_start();
-            me_get_template('custom-fields/admin-field-text');
+            me_get_template('custom-fields/admin-field-placeholder', array('placeholder' => $placeholder));
             $options = ob_get_clean();
             break;
 
         case 'number':
-            $options .= '<div class="me-group-field">';
-            $options .= '<label class="me-title">'.__('Placeholder', 'enginethemes').' <small>'.__('(optional)', 'enginethemes').'</small></label>';
-            $options .= '<span class="me-field-control">';
-            $options .= '<input class="me-input-field" id="field_placeholder" type="text" name="field_placeholder" value="'.esc_attr($placeholder).'">';
-            $options .= '</span>';
-            $options .= '</div>';
-            $options .= '<div class="me-group-field">';
-            $options .= '<label class="me-title">'.__('Minimum value', 'enginethemes').' <small>'.__('(optional)', 'enginethemes').'</small></label>';
-            $options .= '<span class="me-field-control">';
-            $options .= '<input class="me-input-field" id="field_minimum_value" type="number" name="field_minimum_value" value="'.$attribute['min'].'">';
-            $options .= '</span>';
-            $options .= '</div>';
-            $options .= '<div class="me-group-field">';
-            $options .= '<label class="me-title">'.__('Maximum value', 'enginethemes').' <small>'.__('(optional)','enginethemes').'</small></label>';
-            $options .= '<span class="me-field-control">';
-            $options .= '<input class="me-input-field" id="field_maximum_value" type="number" name="field_maximum_value" value="'.$attribute['max'].'">';
-            $options .= '</span>';
-            $options .= '</div>';
+            ob_start();
+            me_get_template('custom-fields/admin-field-placeholder', array('placeholder' => $placeholder));
+
+            me_get_template('custom-fields/admin-field-minimum-value', array('min' => $attribute['min']));
+
+            me_get_template('custom-fields/admin-field-maximum-value', array('max' => $attribute['max']));
+            $options = ob_get_clean();
             break;
         case 'date':
             break;
