@@ -1,6 +1,6 @@
 <?php
 /**
- * Includes admin files
+ * Includes custom field functions files
  */
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
