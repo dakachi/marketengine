@@ -466,6 +466,7 @@ function me_cf_get_field_categories($field_id, $html = false)
 
     if($html) {
         $results = $wpdb->get_col($sql, 1);
+        var_dump($results);
         $results = implode(', ', $results);
     } else {
         $results = $wpdb->get_col($sql, 0);
