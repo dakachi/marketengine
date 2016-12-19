@@ -390,17 +390,27 @@ function me_cf_fields_query($args)
     $defaults = array(
         'paged'     => 1,
         'showposts' => get_option('posts_per_page'),
+        'field_type' => ''
     );
     $args = wp_parse_args($args, $defaults);
+    extract($args);
 
-    $sql = $limit = '';
+    $sql = $limit = $where = '';
 
     $sql = "SELECT SQL_CALC_FOUND_ROWS *
             FROM $wpdb->marketengine_custom_fields as C";
+    if($showposts > 0) {
+        $current = (absint($args['paged']) - 1) * $args['showposts'];
+        $limit   = " LIMIT " . ($current) . ', ' . $args['showposts'];
+    }
 
-    $current = (absint($args['paged']) - 1) * $args['showposts'];
-    $limit   = " LIMIT " . ($current) . ', ' . $args['showposts'];
-
+    if(!empty($field_type)) {
+        $field_type = (array)$field_type;
+        $field_type = join('", "', $field_type) ;
+        $where = ' WHERE field_type IN ("'. $field_type .'")';
+    }
+    
+    $sql .= $where;
     $sql .= $limit;
 
     $results = $wpdb->get_results($sql, ARRAY_A);
