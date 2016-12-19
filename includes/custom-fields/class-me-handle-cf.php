@@ -88,15 +88,17 @@ class ME_Handle_CF
      *
      * @param array $errors The errors will be filtered
      * @param array $listing_data The listing data user submit
-     * 
+     *
      * @return array $errors
      * @since 1.0
      */
     public function validate_fields($errors, $listing_data)
     {
-        $cat    = $listing_data['parent_cat'];
+        $cat = $listing_data['parent_cat'];
 
-        if(!$cat) return $errors;
+        if (!$cat) {
+            return $errors;
+        }
 
         $fields = me_cf_get_fields($cat);
 
@@ -104,13 +106,13 @@ class ME_Handle_CF
         $custom_attributes = array();
 
         foreach ($fields as $field) {
-            $field_name                     = $field['field_name'];
-            $rules[$field_name]             = $field['field_constraint'];
-            if($field['field_type'] == 'date') {
+            $field_name         = $field['field_name'];
+            $rules[$field_name] = $field['field_constraint'];
+            if ($field['field_type'] == 'date') {
                 $rules[$field_name] .= '|date';
             }
 
-            if($field['field_type'] == 'number') {
+            if ($field['field_type'] == 'number') {
                 $rules[$field_name] .= '|numeric';
             }
 
@@ -149,16 +151,47 @@ class ME_Handle_CF
         foreach ($fields as $field) {
             $field_name = $field['field_name'];
             if (!empty($data[$field_name])) {
-
-                $field_value = $data[$field_name];
-                if('date' === $field['field_type']) {
-                    $field_value = date( 'Y-m-d', strtotime($field_value));
+                if (taxonomy_exists($field_name)) {
+                    $this->update_field_taxonomy($post, $field_name, $data);
+                } else {
+                    $this->update_field_meta($post, $field_name, $data);
                 }
-
-                update_post_meta($post, $field_name, $field_value);
             }
         }
 
+    }
+
+    public function update_field_taxonomy($post, $field_name, $data)
+    {
+
+        $field_value = $data[$field_name];
+        $term_arr = array();
+        if (is_array($field_value)) {
+            foreach ($field_value as $term) {
+                $term = absint($term);
+                if (term_exists($term, $field_name)) {
+                    $term_arr[]  = $term;
+                }
+            }
+        } else {
+            $term = absint($field_value);
+            if (term_exists($term, $field_name)) {
+                $term_arr[] = $term;
+            }
+        }
+
+        wp_set_object_terms($post, $term_arr, $field_name);
+
+    }
+
+    public function update_field_meta($post, $field_name, $data)
+    {
+        $field_value = $data[$field_name];
+        if ('date' === $field['field_type']) {
+            $field_value = date('Y-m-d', strtotime($field_value));
+        }
+
+        update_post_meta($post, $field_name, $field_value);
     }
 
     /**

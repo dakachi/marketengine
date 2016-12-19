@@ -163,8 +163,8 @@ function me_cf_update_field($args, $wp_error = false)
         return 0;
     }
 
-    if(!empty($args['field_type']) && $args['field_type'] !== $field['field_type']) {
-    	if ($wp_error) {
+    if (!empty($args['field_type']) && $args['field_type'] !== $field['field_type']) {
+        if ($wp_error) {
             return new WP_Error('field_type_changed', __('The field type cannot change.'));
         }
 
@@ -349,7 +349,6 @@ function me_cf_get_field($field, $type = OBJECT)
     return $results;
 }
 
-
 /**
  * Check if field name exists
  *
@@ -364,7 +363,7 @@ function me_cf_is_field_name_exists($field_name)
 {
     global $wpdb;
 
-    $sql   = "SELECT count(C.field_name)
+    $sql = "SELECT count(C.field_name)
             FROM $wpdb->marketengine_custom_fields as C
             WHERE C.field_name = '{$field_name}'";
 
@@ -388,9 +387,9 @@ function me_cf_fields_query($args)
     global $wpdb;
 
     $defaults = array(
-        'paged'     => 1,
-        'showposts' => get_option('posts_per_page'),
-        'field_type' => ''
+        'paged'      => 1,
+        'showposts'  => get_option('posts_per_page'),
+        'field_type' => '',
     );
     $args = wp_parse_args($args, $defaults);
     extract($args);
@@ -399,17 +398,17 @@ function me_cf_fields_query($args)
 
     $sql = "SELECT SQL_CALC_FOUND_ROWS *
             FROM $wpdb->marketengine_custom_fields as C";
-    if($showposts > 0) {
+    if ($showposts > 0) {
         $current = (absint($args['paged']) - 1) * $args['showposts'];
         $limit   = " LIMIT " . ($current) . ', ' . $args['showposts'];
     }
 
-    if(!empty($field_type)) {
-        $field_type = (array)$field_type;
-        $field_type = join('", "', $field_type) ;
-        $where = ' WHERE field_type IN ("'. $field_type .'")';
+    if (!empty($field_type)) {
+        $field_type = (array) $field_type;
+        $field_type = join('", "', $field_type);
+        $where      = ' WHERE field_type IN ("' . $field_type . '")';
     }
-    
+
     $sql .= $where;
     $sql .= $limit;
 
@@ -475,7 +474,7 @@ function me_cf_get_field_categories($field_id, $html = false)
 
     $sql .= $from . $join . $where;
 
-    if($html) {
+    if ($html) {
         $results = $wpdb->get_col($sql, 1);
         $results = implode(', ', $results);
     } else {
@@ -485,20 +484,30 @@ function me_cf_get_field_categories($field_id, $html = false)
     return $results;
 }
 
-function me_field($field_name, $post = null, $single = true)
+function me_field($field_name, $post = null, $args = array())
 {
     if (!$post) {
         $post = get_post();
     }
-    return get_post_meta($post->ID, $field_name, $single);
+
+    if (taxonomy_exists($field_name)) {
+        return wp_get_object_terms($post->ID, $field_name, $args);
+    } else {
+        return get_post_meta($post->ID, $field_name, true);
+    }
 }
 
-function me_the_field($field_name, $post = null, $single = true)
+function me_the_field($field_name, $post = null, $args = array())
 {
     if (!$post) {
         $post = get_post();
     }
-    echo get_post_meta($post->ID, $field_name, $single);
+
+    if (taxonomy_exists($field_name)) {
+        // the_taxonomies();
+    } else {
+        echo get_post_meta($post->ID, $field_name, true);
+    }
 }
 
 /**
@@ -545,7 +554,7 @@ function me_field_attribute($field)
  */
 function me_field_attribute_array($field)
 {
-    if(!isset($field['field_constraint'])) {
+    if (!isset($field['field_constraint'])) {
         return;
     }
 

@@ -54,9 +54,30 @@ foreach ($fields as $field) :
 		<?php
 			break;
 		case 'radio':
+		case 'single-select': 
+		$value = me_field($field['field_name'], null, array('fields' => 'names'));
+		if(empty($value)) break;
+		?>
+		<div class="me-row">
+			<div class="me-col-sm-3">
+				<div class="me-cf-title">
+					<p><?php echo $field['field_title'] ?></p>
+					<span><?php echo $field['field_description'] ?></span>
+				</div>
+			</div>
+			<div class="me-col-sm-9">
+				<div class="me-cf-content">
+					<?php echo $value[0]; ?>
+				</div>
+			</div>
+		</div>
+
+		<?php 
+		break;
 		case 'checkbox':
-		case 'select': 
-		case 'multiselect': 
+		case 'multi-select': 
+		$value = me_field($field['field_name'], null, array('fields' => 'names'));
+		if(empty($value)) break;
 		?>
 		<div class="me-row">
 			<div class="me-col-sm-3">
@@ -68,9 +89,9 @@ foreach ($fields as $field) :
 			<div class="me-col-sm-9">
 				<div class="me-cf-content">
 					<ul>
-						<li>Lorem ipsum dolor sit amet</li>
-						<li>Lorem ipsum</li>
-						<li>Lorem ipsum dolor sit</li>
+						<li>
+						<?php echo join('</li><li>', $value); ?>
+						</li>
 					</ul>
 				</div>
 			</div>

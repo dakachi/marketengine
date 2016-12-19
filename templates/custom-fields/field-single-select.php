@@ -16,7 +16,7 @@ if(empty($options)) return;
 	    	<?php endif; ?>	
 
 	    	<?php foreach ($options as $option) : ?>
-	    		<option value="<?php echo $option['value'] ?>"><?php echo $option['label']; ?></option>
+	    		<option value="<?php echo $option['value'] ?>" <?php if(in_array($option['value'], (array)$value)) {echo 'selected="true"';} ?> ><?php echo $option['label']; ?></option>
 	    	<?php endforeach; ?>
 	    </select>
 	</div>

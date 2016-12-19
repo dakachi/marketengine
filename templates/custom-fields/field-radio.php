@@ -11,8 +11,8 @@ if(empty($options)) return;
 	    <?php me_get_template('custom-fields/field-label', array('field' => $field));  ?>
 	    <div>
 	    	<?php foreach ($options as $option) : ?>
-	    		<label class="me-radio" for="<?php echo $option['value'] ?>">
-	    			<input id="<?php echo $option['value'] ?>" name="me_cf_radio" type="radio">
+	    		<label class="me-radio" for="<?php echo $field['field_name'] ?>-<?php echo $option['value']; ?>">
+	    			<input value="<?php echo $option['value']; ?>" name="<?php echo $field['field_name'] ?>" id="<?php echo $field['field_name'] ?>-<?php echo $option['value']; ?>" type="radio" <?php if(in_array($option['value'], (array)$value)) {echo 'checked="true"';} ?>>
 	    			<span><?php echo $option['label']; ?></span>
 	    		</label>	
 	    	<?php endforeach; ?>

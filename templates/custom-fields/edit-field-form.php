@@ -18,7 +18,7 @@ if($fields) :
 	<?php foreach ($fields as $field) : ?>
 
 		<?php 
-			$value = me_field($field['field_name'], $listing);
+			$value = me_field($field['field_name'], $listing, array('fields' => 'ids'));
 			me_get_template('custom-fields/field-'. $field['field_type'], array('field' => $field, 'value' => $value)); 
 		?>
 
