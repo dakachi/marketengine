@@ -7,7 +7,7 @@
 			$affected_cats_name = me_cf_get_field_categories($field_id, true);
 ?>
 
-	<li class="me-cf-item">
+	<li id="me-cf-item_<?php echo $field_id; ?>" class="me-cf-item">
 		<div class="me-cf-row">
 			<div class="me-cf-row-wrap">
 				<div class="me-cf-col-title"><?php echo esc_attr($field_name); ?></div>
@@ -37,6 +37,7 @@
 			<p><span><?php _e('Help text:', 'enginethemes'); ?></span><?php echo $field_help_text ? $field_help_text : 'N/A'; ?></p>
 			<p><span><?php _e('Description:', 'enginethemes'); ?></span><?php echo $field_description ? $field_description : 'N/A'; ?></p>
 		</div>
+		<input id="current-category" type="hidden" value="<?php echo $_REQUEST['category-id'] ?>" />
 	</li>
 
 	<?php endforeach; ?>
