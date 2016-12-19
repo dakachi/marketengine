@@ -40,6 +40,8 @@ function me_locate_template($template_names)
         } elseif (file_exists(ME()->plugin_path() . '/templates/' . $template_name)) {
             $located = ME()->plugin_path() . '/templates/' . $template_name;
             break;
+        }else {
+            $located = false;
         }
     }
     return $located;
@@ -90,6 +92,7 @@ function me_get_template($template_name, $args = array())
     }
 
     $located = me_locate_template($templates);
+    if(!$located) return;
     include $located;
 }
 
