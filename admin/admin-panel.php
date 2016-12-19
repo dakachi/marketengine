@@ -63,7 +63,7 @@ function marketengine_option_view() {
      * @param array $tabs The admin settings tabs
      * @since 1.0
      */
-    $tabs = apply_filters('marketengine_settings_tab', $tabs);
+    $tabs = apply_filters('marketengine_settings_tabs', $tabs);
 
     echo '<div class="marketengine-tabs">';
 
