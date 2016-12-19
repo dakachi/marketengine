@@ -4,6 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 $options = me_cf_get_field_options($field['field_name']);
+if(empty($options)) return;
 ?>
 <div class="marketengine-group-field">
 	<div class="marketengine-input-field">
@@ -13,7 +14,7 @@ $options = me_cf_get_field_options($field['field_name']);
 	    	<?php if( $field['field_placeholder'] ) : ?>
 	    		<option value=""><?php echo $field['field_placeholder']; ?></option>
 	    	<?php endif; ?>	
-	    	
+
 	    	<?php foreach ($options as $option) : ?>
 	    		<option value="<?php echo $option['value'] ?>"><?php echo $option['label']; ?></option>
 	    	<?php endforeach; ?>
