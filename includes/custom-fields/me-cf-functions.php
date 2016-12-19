@@ -162,7 +162,7 @@ function me_cf_update_field($args, $wp_error = false)
 
         return 0;
     }
-    
+
     if(!empty($args['field_name']) && $args['field_name'] !== $field['field_name']) {
         if ($wp_error) {
             return new WP_Error('field_name_changed', __('The field name cannot change.'));
@@ -492,6 +492,18 @@ function me_cf_get_field_categories($field_id, $html = false)
     return $results;
 }
 
+/**
+ * Get the listing field value
+ *
+ * @param string $field_name The field name to get value
+ * @param object $post Current listing
+ * @param array $args The args use to get field taxonomy field value
+ *
+ * @package Includes/CustomField
+ * @category Function
+ *
+ * @return mixed The field value
+ */
 function me_field($field_name, $post = null, $args = array())
 {
     if (!$post) {
@@ -505,18 +517,6 @@ function me_field($field_name, $post = null, $args = array())
     }
 }
 
-function me_the_field($field_name, $post = null, $args = array())
-{
-    if (!$post) {
-        $post = get_post();
-    }
-
-    if (taxonomy_exists($field_name)) {
-        // the_taxonomies();
-    } else {
-        echo get_post_meta($post->ID, $field_name, true);
-    }
-}
 
 /**
  * Gets string attributes of the custom field.

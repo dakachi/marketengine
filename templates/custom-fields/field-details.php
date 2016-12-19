@@ -25,7 +25,7 @@ foreach ($fields as $field) :
 			</div>
 			<div class="me-col-sm-9">
 				<div class="me-cf-content">
-					<p><?php me_the_field($field['field_name']); ?></p>
+					<p><?php echo $value; ?></p>
 				</div>
 			</div>
 		</div>
