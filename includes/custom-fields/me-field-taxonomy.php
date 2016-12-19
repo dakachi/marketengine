@@ -11,7 +11,7 @@ add_action('init', 'me_cf_register_field_taxonomies');
 function me_cf_register_field_taxonomies()
 {
     // get fields by type select, checkbox, multiselect, radio
-    $fields_query = me_cf_fields_query(array('showposts' => -1, 'field_type' => array('single-select', 'multiselect', 'radio', 'checkbox')));
+    $fields_query = me_cf_fields_query(array('showposts' => -1, 'field_type' => array('single-select', 'multi-select', 'radio', 'checkbox')));
     $fields       = $fields_query['fields'];
     if (empty($fields)) {
         return;
