@@ -14,7 +14,7 @@ $constraint = me_field_attribute_array($_POST);
 		<div class="me-group-field">
 			<label for="me-cf-field-name" class="me-title"><?php _e('Field Name', 'enginethemes'); ?></label>
 			<span class="me-field-control">
-				<input data-old-field-name="<?php echo isset($_POST['field_name']) ? esc_attr($_POST['field_name']) : ''; ?>" required id="me-cf-field-name" name="field_name" class="me-input-field " type="text" value="<?php echo isset($_POST['field_name']) ? esc_attr($_POST['field_name']) : ''; ?>">
+				<input <?php disabled( isset($_POST['field_name']) && !empty($_POST['field_name']) ); ?> data-old-field-name="<?php echo isset($_POST['field_name']) ? esc_attr($_POST['field_name']) : ''; ?>" required id="me-cf-field-name" name="field_name" class="me-input-field " type="text" value="<?php echo isset($_POST['field_name']) ? esc_attr($_POST['field_name']) : ''; ?>">
 			</span>
 		</div>
 
@@ -29,7 +29,7 @@ $constraint = me_field_attribute_array($_POST);
 			<label for="" class="me-title"><?php _e('Field Type', 'enginethemes'); ?></label>
 			<span class="me-select-control">
 
-				<select required id="me-choose-field-type" class="select-field" name="field_type">
+				<select <?php disabled( isset($_POST['field_name']) && !empty($_POST['field_name']) ); ?> required id="me-choose-field-type" class="select-field" name="field_type">
 					<option value=""><?php _e('Choose field type', 'enginethemes'); ?></option>
 					<?php
 						$field_types = me_list_custom_field_type();
@@ -117,5 +117,7 @@ $constraint = me_field_attribute_array($_POST);
 		<input type="submit" class="me-cf-save-btn" name="insert-custom-field" value="<?php _e('Save', 'enginethemes'); ?>"><a href="<?php echo isset($_REQUEST['category-id']) ? add_query_arg('view', 'group-by-category', remove_query_arg('custom-field-id')) : remove_query_arg(array('view', 'custom-field-id')); ?>" class="me-cf-cancel-btn"><?php _e('Cancel', 'enginethemes'); ?></a>
 
 		<input type="hidden" name="redirect" value="<?php echo isset($_REQUEST['category-id']) ? add_query_arg('view', 'group-by-category', remove_query_arg('custom-field-id')) : remove_query_arg(array('view', 'custom-field-id')); ?>">
+
+		<input type="hidden" id="me-cf-current-field-id" value="<?php echo isset($_REQUEST['custom-field-id']) ? $_REQUEST['custom-field-id'] : -1; ?>">
 	</form>
 </div>

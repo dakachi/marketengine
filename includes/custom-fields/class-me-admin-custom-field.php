@@ -193,7 +193,7 @@ class ME_Custom_Field_Handle {
 			$temp .= '|max:' . $_POST['field_maximum_value'];
 		}
 
-		if($_POST['field_type'] == 'date') {
+		if(isset($_POST['field_type']) && $_POST['field_type'] == 'date') {
 			$temp .= '|date';
 		}
 
@@ -201,6 +201,17 @@ class ME_Custom_Field_Handle {
 	}
 
 	public static function check_field_name() {
+		if($_POST['current_field_id'] != -1) {
+			$field = me_cf_get_field($_POST['current_field_id']);
+
+			if($field) {
+				wp_send_json( array(
+					'unique'	=> false,
+					'message'	=> __('Field name cannot be changed.', 'enginethemes'),
+				) );
+			}
+		}
+
 		$field = me_cf_is_field_name_exists($_POST['field_name']);
 
 		if($field) {
