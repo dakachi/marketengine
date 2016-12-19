@@ -157,8 +157,14 @@ class ME_Custom_Field_Handle {
 
 	public static function set_field_category($field_id, $term_ids) {
 		if(isset($term_ids) && !empty($term_ids)) {
+
+			$field_cat = me_cf_get_field_categories($field_id);
+
 			foreach($term_ids as $key => $term_id) {
-				$result = me_cf_set_field_category( $field_id, $term_id, 0);
+				if(!in_array($term_id, $field_cat) ) {
+					$field_count = count(me_cf_get_fields($term_id));
+					$result = me_cf_set_field_category( $field_id, $term_id, $field_count);
+				}
 			}
 		} else {
 			$result = new WP_Error('invalid_taxonomy', __('Categories is required!', 'enginethemes'));

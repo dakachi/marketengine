@@ -417,7 +417,7 @@ function me_cf_fields_query($args)
         $field_type = join('", "', $field_type) ;
         $where = ' WHERE field_type IN ("'. $field_type .'")';
     }
-    
+
     $sql .= $where;
     $sql .= $limit;
 
