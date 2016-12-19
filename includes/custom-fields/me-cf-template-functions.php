@@ -85,12 +85,9 @@ function marketengine_load_input_by_field_type($args) {
 
         case 'checkbox':
         case 'radio':
-            $options .= '<div class="me-group-field">';
-            $options .= '<label class="me-title">'.__('Option','enginethemes').'</label>';
-            $options .= '<span class="me-field-control">';
-            $options .= '<textarea class="me-textarea-field" name="option_values" placeholder="'.__('Enter each option on a new line', 'enginethemes').'">'.$option_values.'</textarea>';
-            $options .= '</span>';
-            $options .= '</div>';
+            ob_start();
+            me_get_template('custom-fields/admin-field-option');
+            $options = ob_get_clean();
             break;
 
         case 'single-select':

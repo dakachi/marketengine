@@ -23,6 +23,9 @@ $categories = me_get_listing_categories();
 	<?php me_get_template('custom-fields/category-select', array('categories' => $categories )); ?>
 
 	<a class="me-add-custom-field-btn" href="<?php echo add_query_arg('view', 'add'); ?>"><?php _e('Add New Custom Field', 'enginethemes'); ?></a>
+	<?php if(isset($_REQUEST['view']) && $_REQUEST['view'] == 'group-by-category') : ?>
+	<p><?php _e('Drag & drop to arrange custom field order.'); ?></p>
+	<?php endif; ?>
 
 	<div class="me-custom-field-list">
 		<ul id="me-cf-list-sortable" class="me-cf-list">

@@ -260,15 +260,6 @@ class ME_Custom_Field_Handle {
 						'message'	=> $result,
 					));
 				}
-				// wp_send_json(array(
-				// 	'status'	=> true,
-				// 	'message'	=> 'Sort custom fields successfully',
-				// 	'asd'		=> $result,
-				// 	'field_id'	=> $field_id,
-				// 	'category'	=> $_POST['category_id'],
-				// 	'order' 	=>$order,
-				// 	'field'		=> $fields
-				// ));
 			}
 
 			wp_send_json(array(
