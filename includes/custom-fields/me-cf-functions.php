@@ -445,8 +445,9 @@ function me_cf_get_fields($category_id = '')
         $join = " LEFT JOIN $wpdb->marketengine_fields_relationship as R
                     ON C.field_id = R.field_id";
         $where = " WHERE R.term_taxonomy_id = {$category_id}";
+        $order = " ORDER BY R.term_order";
     }
-    $sql .= $join . $where;
+    $sql .= $join . $where . $order;
     $results = $wpdb->get_results($sql, ARRAY_A);
 
     return $results;

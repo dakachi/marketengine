@@ -25,7 +25,7 @@ $categories = me_get_listing_categories();
 	<a class="me-add-custom-field-btn" href="<?php echo add_query_arg('view', 'add'); ?>"><?php _e('Add New Custom Field', 'enginethemes'); ?></a>
 
 	<div class="me-custom-field-list">
-		<ul class="me-cf-list">
+		<ul id="me-cf-list-sortable" class="me-cf-list">
 			<?php me_get_template('custom-fields/table-header'); ?>
 
 			<?php

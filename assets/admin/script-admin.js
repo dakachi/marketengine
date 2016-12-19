@@ -144,7 +144,7 @@ $(document).ready(function() {
 	    if (cfm == false) {
 	    	e.preventDefault();
 	    }
-    })
+    });
 
     // $('#me-choose-field-type').trigger('change');
 

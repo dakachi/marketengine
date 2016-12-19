@@ -53,21 +53,6 @@ function marketengine_custom_field_template() {
     }
 }
 
-
-
-/**
- * Removes ajax handle of option
- *
- * @since 	1.0.1
- * @version 1.0.0
- */
-function marketengine_dequeue_script() {
-   wp_dequeue_script( 'option-view' );
-}
-
-
-
-
 function marketengine_load_input_by_field_type($args) {
 	$placeholder = isset($args['field_placeholder']) ? $args['field_placeholder'] : '';
     $attribute = me_field_attribute_array($args);

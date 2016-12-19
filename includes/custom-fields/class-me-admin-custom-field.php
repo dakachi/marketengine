@@ -41,6 +41,7 @@ class ME_Custom_Field_Handle {
 		add_action('me_load_cf_input', array(__CLASS__, 'load_field_input'));
 		add_action('wp_ajax_me_cf_load_input_type', array(__CLASS__, 'load_field_input_ajax'));
 		add_action('wp_ajax_check_field_name', array(__CLASS__, 'check_field_name'));
+		add_action('wp_ajax_me_cf_sort', array(__CLASS__, 'me_cf_sort'));
 	}
 
 	/**
@@ -51,9 +52,22 @@ class ME_Custom_Field_Handle {
 	 */
 	public static function marketengine_add_actions() {
 	    if( is_admin() && isset($_REQUEST['section']) && $_REQUEST['section'] == 'custom-field') {
-	        add_action( 'wp_print_scripts', 'marketengine_dequeue_script', 100 );
+	        add_action( 'wp_print_scripts', array(__CLASS__, 'marketengine_print_script'), 100 );
 	        add_action('get_custom_field_template', 'marketengine_custom_field_template');
 	    }
+	}
+
+	/**
+	 * Removes ajax handle of option
+	 *
+	 * @since 	1.0.1
+	 * @version 1.0.0
+	 */
+	public static function marketengine_print_script() {
+	   wp_dequeue_script( 'option-view' );
+	   if( is_admin() && isset($_REQUEST['view']) && $_REQUEST['view'] == 'group-by-category' ) {
+	   		wp_enqueue_script('cf_sort', ME_PLUGIN_URL . "assets/admin/custom-field-sort.js", array('jquery-ui'));
+	   }
 	}
 
 	public static function insert() {
@@ -215,6 +229,40 @@ class ME_Custom_Field_Handle {
 	        $sections['sample-data'] = $sample_data;
 	    }
 	    return $sections;
+	}
+
+	public static function me_cf_sort() {
+		if( is_admin() ) {
+			parse_str($_POST['order'], $fields);
+			$fields = $fields['me-cf-item'];
+			foreach ($fields as $order => $field_id) {
+				$result = me_cf_set_field_category( $field_id, $_POST['category_id'], $order);
+				if( is_wp_error($result) ) {
+					wp_send_json(array(
+						'status'	=> false,
+						'message'	=> $result,
+					));
+				}
+				// wp_send_json(array(
+				// 	'status'	=> true,
+				// 	'message'	=> 'Sort custom fields successfully',
+				// 	'asd'		=> $result,
+				// 	'field_id'	=> $field_id,
+				// 	'category'	=> $_POST['category_id'],
+				// 	'order' 	=>$order,
+				// 	'field'		=> $fields
+				// ));
+			}
+
+			wp_send_json(array(
+				'status'	=> true,
+				'message'	=> 'Sort custom fields successfully',
+				'asd'		=> $result,
+				'field_id'	=> $field_id,
+				'category'	=> $_POST['category_id'],
+				'order' 	=>$order
+			));
+		}
 	}
 }
 
