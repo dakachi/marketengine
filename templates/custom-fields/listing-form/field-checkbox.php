@@ -8,7 +8,7 @@ if(empty($options)) return;
 ?>
 <div class="marketengine-group-field">
 	<div class="marketengine-checkbox-field">
-	    <?php me_get_template('custom-fields/field-label', array('field' => $field));  ?>
+	    <?php me_get_template('custom-fields/listing-form/field-label', array('field' => $field));  ?>
 	    <?php foreach ($options as $option) : ?>
 		    <div class="me-checkbox">
 		    	<label for="<?php echo $field['field_name'] ?>-<?php echo $option['value']; ?>">

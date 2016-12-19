@@ -6,7 +6,7 @@ if (!empty($_POST['parent_cat'])):
         foreach ($fields as $field):
             $field_name = $field['field_name'];
             $value      = !empty($_POST[$field_name]) ? $_POST[$field_name] : '';
-            me_get_template('custom-fields/field-' . $field['field_type'], array('field' => $field, 'value' => $value));
+            me_get_template('custom-fields/listing-form/field-' . $field['field_type'], array('field' => $field, 'value' => $value));
         endforeach;
     }
 endif;
