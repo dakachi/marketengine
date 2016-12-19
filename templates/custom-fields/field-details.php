@@ -53,7 +53,6 @@ foreach ($fields as $field) :
 		</div>
 		<?php
 			break;
-		case 'radio':
 		case 'single-select': 
 		$value = me_field($field['field_name'], null, array('fields' => 'names'));
 		if(empty($value)) break;
