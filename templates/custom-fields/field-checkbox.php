@@ -3,19 +3,19 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+$options = me_cf_get_field_options($field['field_name']);
+if(empty($options)) return;
 ?>
 <div class="marketengine-group-field">
 	<div class="marketengine-checkbox-field">
-	    <label class="me-field-title">Custom field Checkbox</label>
-	    <div class="me-checkbox">
-	    	<label for="me_cf_checkbox_5"><input id="me_cf_checkbox_5" type="checkbox"><span>Option 1</span></label>	
-	    </div>
-	    <div class="me-checkbox">
-	    	<label for="me_cf_checkbox_6"><input id="me_cf_checkbox_6" type="checkbox"><span>Option 101</span></label>	
-	    </div>
-	    <div class="me-checkbox">
-	    	<label for="me_cf_checkbox_7"><input id="me_cf_checkbox_7" type="checkbox"><span>Option 1001 overnight full options</span></label>
-	    </div>
-	    
+	    <?php me_get_template('custom-fields/field-label', array('field' => $field));  ?>
+	    <?php foreach ($options as $option) : ?>
+		    <div class="me-checkbox">
+		    	<label for="<?php echo $option['value'] ?>">
+		    			<input id="<?php echo $option['value'] ?>" name="me_cf_radio" type="checkbox">
+		    			<span><?php echo $option['label']; ?></span>
+		    		</label>	
+		    </div>
+	    <?php endforeach; ?>
 	</div>
 </div>
