@@ -40,7 +40,9 @@ foreach ($fields as $field):
 
             $value = $value[0];
             me_get_template('custom-fields/listing-details/text', array('field' => $field, 'value' => $value));
+
             break;
+
         case 'checkbox':
         case 'multi-select':
             $value = me_field($field['field_name'], null, array('fields' => 'names'));
