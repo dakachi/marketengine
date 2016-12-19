@@ -162,6 +162,14 @@ function me_cf_update_field($args, $wp_error = false)
 
         return 0;
     }
+    
+    if(!empty($args['field_name']) && $args['field_name'] !== $field['field_name']) {
+        if ($wp_error) {
+            return new WP_Error('field_name_changed', __('The field name cannot change.'));
+        }
+
+        return 0;
+    }
 
     if (!empty($args['field_type']) && $args['field_type'] !== $field['field_type']) {
         if ($wp_error) {

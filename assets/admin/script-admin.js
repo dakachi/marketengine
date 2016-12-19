@@ -101,13 +101,16 @@ $(document).ready(function() {
 			    		field_name: function() {
 			    			return $('#me-cf-field-name').val();
 			    		},
+			    		current_field_id: function() {
+			    			return $('#me-cf-current-field-id').val();
+			    		},
 			    	},
 			    	dataFilter: function(res) {
-			    		console.log($('#me-cf-field-name').data('old-field-name'));
-			    		if($('#me-cf-field-name').data('old-field-name') == $('#me-cf-field-name').val()) {
+			    		if($('#me-cf-current-field-id').val() == -1 && $('#me-cf-field-name').data('old-field-name') == $('#me-cf-field-name').val()) {
 			    			return true;
 			    		}
 			    		res = JSON.parse(res);
+			    		$.validator.messages.remote = res.message;
 			    		return res.unique;
 			    	},
 			    },
@@ -118,11 +121,6 @@ $(document).ready(function() {
 	    	},
 	    	field_maximum_value: {
 	    		meMin: true,
-	    	}
-	    },
-	    messages: {
-	    	field_name: {
-	    		remote: 'Field name must be unique.',
 	    	}
 	    },
 	    highlight: function(element, errorClass) {
