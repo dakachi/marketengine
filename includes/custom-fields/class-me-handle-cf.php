@@ -160,7 +160,17 @@ class ME_Handle_CF
         }
 
     }
-
+    
+    /**
+     * Update listing custom field value as term taxonomy
+     *
+     * @param int $post The post id
+     * @param string $field_name The field name
+     * @param array $data The listing data
+     * 
+     * @since 1.0
+     * @return void
+     */
     public function update_field_taxonomy($post, $field_name, $data)
     {
 
@@ -184,6 +194,16 @@ class ME_Handle_CF
 
     }
 
+    /**
+     * Update listing custom field value as meta data
+     *
+     * @param int $post The post id
+     * @param string $field_name The field name
+     * @param array $data The listing data
+     * 
+     * @since 1.0
+     * @return void
+     */
     public function update_field_meta($post, $field_name, $data)
     {
         $field_value = $data[$field_name];
