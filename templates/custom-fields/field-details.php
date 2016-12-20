@@ -1,4 +1,17 @@
 <?php
+/**
+ * The Template for render listing custom field value
+ *
+ * This template can be overridden by copying it to yourtheme/marketengine/custom-fields/field-details.php.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ *
+ * @since 		1.0.1
+ *
+ * @version     1.0.0
+ *
+ */
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;

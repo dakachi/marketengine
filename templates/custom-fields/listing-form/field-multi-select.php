@@ -1,4 +1,17 @@
 <?php
+/**
+ * The Template for field multi select form
+ *
+ * This template can be overridden by copying it to yourtheme/marketengine/custom-fields/listing-form/field-multi-select.php.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ *
+ * @since 		1.0.1
+ *
+ * @version     1.0.0
+ *
+ */
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Render edit listing custom field 
+ * Render edit listing custom field form
  * This template can be overridden by copying it to yourtheme/marketengine/custom-fields/edit-field-form.php.
  * 
  * @package     MarketEngine/Templates

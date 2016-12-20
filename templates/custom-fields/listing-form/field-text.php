@@ -1,3 +1,22 @@
+<?php
+/**
+ * The Template for field text input form
+ *
+ * This template can be overridden by copying it to yourtheme/marketengine/custom-fields/listing-form/field-text.php.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ *
+ * @since 		1.0.1
+ *
+ * @version     1.0.0
+ *
+ */
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+?>
 <?php if($field) :?>
 <div class="marketengine-group-field">
 	<div class="marketengine-input-field">
