@@ -76,7 +76,7 @@ class ME_Handle_CF
 
         foreach ($fields as $field):
             $value = '';
-            me_get_template('custom-fields/field-' . $field['field_type'], array('field' => $field, 'value' => $value));
+            me_get_template('custom-fields/listing-form/field-' . $field['field_type'], array('field' => $field, 'value' => $value));
         endforeach;
 
         exit;
@@ -165,12 +165,12 @@ class ME_Handle_CF
     {
 
         $field_value = $data[$field_name];
-        $term_arr = array();
+        $term_arr    = array();
         if (is_array($field_value)) {
             foreach ($field_value as $term) {
                 $term = absint($term);
                 if (term_exists($term, $field_name)) {
-                    $term_arr[]  = $term;
+                    $term_arr[] = $term;
                 }
             }
         } else {
