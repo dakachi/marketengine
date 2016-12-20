@@ -152,9 +152,9 @@ class ME_Handle_CF
             $field_name = $field['field_name'];
             if (!empty($data[$field_name])) {
                 if (taxonomy_exists($field_name)) {
-                    $this->update_field_taxonomy($post, $field_name, $data);
+                    $this->update_field_taxonomy($post, $field, $data);
                 } else {
-                    $this->update_field_meta($post, $field_name, $data);
+                    $this->update_field_meta($post, $field, $data);
                 }
             }
         }
@@ -165,15 +165,16 @@ class ME_Handle_CF
      * Update listing custom field value as term taxonomy
      *
      * @param int $post The post id
-     * @param string $field_name The field name
+     * @param array $field The field info
      * @param array $data The listing data
      * 
      * @since 1.0
      * @return void
      */
-    public function update_field_taxonomy($post, $field_name, $data)
+    public function update_field_taxonomy($post, $field, $data)
     {
 
+        $field_name = $field['field_name'];
         $field_value = $data[$field_name];
         $term_arr    = array();
         if (is_array($field_value)) {
@@ -198,14 +199,15 @@ class ME_Handle_CF
      * Update listing custom field value as meta data
      *
      * @param int $post The post id
-     * @param string $field_name The field name
+     * @param array $field The field info
      * @param array $data The listing data
      * 
      * @since 1.0
      * @return void
      */
-    public function update_field_meta($post, $field_name, $data)
+    public function update_field_meta($post, $field, $data)
     {
+        $field_name = $field['field_name'];
         $field_value = $data[$field_name];
         if ('date' === $field['field_type']) {
             $field_value = date('Y-m-d', strtotime($field_value));
