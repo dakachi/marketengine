@@ -64,8 +64,8 @@ $(document).ready(function() {
 		});
     });
 
-    $.validator.addMethod("regx", function(value, element) {
-    	var regx = /^[a-z0-9\_\-]+$/;
+    $.validator.addMethod("regx", function(value, element, params) {
+		var regx = params.value;
 
         return value.match(regx);
     }, 'Field name only lowercase letters (a-z, -, _) and numbers are allowed.');
@@ -90,7 +90,10 @@ $(document).ready(function() {
 	    rules: {
 	    	field_name: {
 	    		required: true,
-	    		regx: true,
+	    		regx: {
+	    			name: 'field_name',
+	    			value: /^[a-z0-9\_\-]+$/,
+	    		},
 	    		remote: {
 			        url: me_globals.ajaxurl,
 			        type: "POST",
@@ -121,7 +124,7 @@ $(document).ready(function() {
 	    	},
 	    	field_maximum_value: {
 	    		meMin: true,
-	    	}
+	    	},
 	    },
 	    highlight: function(element, errorClass) {
 	    	$(element).parent().children('div').remove();

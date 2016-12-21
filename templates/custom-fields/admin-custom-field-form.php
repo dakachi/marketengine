@@ -15,6 +15,10 @@ $constraint = me_field_attribute_array($_POST);
 			<label for="me-cf-field-name" class="me-title"><?php _e('Field Name', 'enginethemes'); ?></label>
 			<span class="me-field-control">
 				<input <?php disabled( isset($_POST['field_name']) && !empty($_POST['field_name']) ); ?> data-old-field-name="<?php echo isset($_POST['field_name']) ? esc_attr($_POST['field_name']) : ''; ?>" required id="me-cf-field-name" name="field_name" class="me-input-field " type="text" value="<?php echo isset($_POST['field_name']) ? esc_attr($_POST['field_name']) : ''; ?>">
+
+				<?php if(isset($_REQUEST['view']) && $_REQUEST['view'] == 'edit') : ?>
+				<input type="hidden" name="field_name" value="<?php echo isset($_POST['field_name']) ? esc_attr($_POST['field_name']) : ''; ?>">
+				<?php endif; ?>
 			</span>
 		</div>
 

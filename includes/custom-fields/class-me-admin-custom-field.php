@@ -95,11 +95,15 @@ class ME_Custom_Field_Handle {
 			if(is_wp_error($field_id)) {
 				me_wp_error_to_notices($field_id);
 			} else {
+
 				$result = self::set_field_category($field_id, $term_ids);
+
 				if(is_wp_error($result)) {
 					me_wp_error_to_notices($result);
 					return;
 				}
+
+				self::me_cf_add_options();
 
 				if($_POST['redirect']) {
 					wp_redirect($_POST['redirect']);
@@ -156,6 +160,7 @@ class ME_Custom_Field_Handle {
 	}
 
 	public static function set_field_category($field_id, $term_ids) {
+		$result = '';
 		if(isset($term_ids) && !empty($term_ids)) {
 
 			$field_cat = me_cf_get_field_categories($field_id);
@@ -246,6 +251,66 @@ class ME_Custom_Field_Handle {
 	        $sections['sample-data'] = $sample_data;
 	    }
 	    return $sections;
+	}
+
+	public static function me_cf_add_options() {
+		if(isset($_POST['field_options'])) {
+			me_cf_register_field_taxonomy($_POST);
+
+        	if(empty($_POST['field_options'])) {
+        		return new WP_Error('field_option_empty', __("Field option cannot be empty.", 'enginethemes'));
+        	}
+
+        	$old_options = me_cf_get_field_options($_POST['field_name']);
+        	$new_options = self::field_options_to_array(trim($_POST['field_options']));
+        	$new_options = self::filter_field_options($new_options, $old_options);
+        	$new_options = self::sanitize_field_options_array($new_options);
+
+        	foreach($new_options as $key => $option) {
+        		wp_insert_term(trim($option), $_POST['field_name'] , array('slug' => sanitize_title(trim($key))) );
+        	}
+        }
+	}
+
+	private static function filter_field_options($new_options, $old_options = array()) {
+		$old = array();
+        foreach($old_options as $key => $option) {
+            $old[$option['key']] = $option['label'];
+        }
+
+        $options_remove = array_diff($old, $new_options);
+
+        foreach ($options_remove as $key => $option) {
+        	$term = get_term_by('slug', $key, $_POST['field_name']);
+        	wp_delete_term($term->term_id, $_POST['field_name']);
+        }
+        return $new_options;
+	}
+
+	private static function field_options_to_array($options) {
+		$options = explode(PHP_EOL, $options);
+		$array = array();
+		foreach($options as $key => $option) {
+    		$temp = explode(':', $option);
+    		$temp = self::sanitize_field_options_array($temp);
+        	$array[sanitize_title(trim($temp[0]))] = trim($temp[1]);
+    	}
+    	return $array;
+	}
+
+	private static function sanitize_field_options_array($options) {
+		if(sizeof($options) == 1) {
+			$options[1] = $options[0];
+		}
+		if(!empty($options[0]) || !empty($options[1])) {
+    		if(empty($options[0])) {
+    			$options[0] = sanitize_title($options[1]);
+    		}
+    		if(empty($options[1])) {
+    			$options[1] = $options[0];
+    		}
+    	}
+    	return $options;
 	}
 
 	public static function me_cf_sort() {
