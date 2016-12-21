@@ -52,8 +52,8 @@ function me_cf_register_field_taxonomy($field)
     $args = array(
         'hierarchical'      => true,
         'labels'            => $labels,
-        'show_ui'           => true,
-        'show_admin_column' => true,
+        'show_ui'           => false,
+        'show_admin_column' => false,
         'query_var'         => true,
         'rewrite'           => false,
     );
@@ -73,7 +73,9 @@ function me_cf_get_field_options($field_name, $args = array())
 
     $args = apply_filters('marketengine_get_field_option_args', $args);
     $termlist = get_terms($field_name, $args );
-
+    if(empty($termlist)) {
+        $termlist = get_terms($field_name, array('hide_empty' => 0) );
+    }
     foreach ($termlist as $term) {
         $results[$term->slug] = array(
             'value' => $term->term_id,
