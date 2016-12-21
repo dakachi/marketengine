@@ -62,13 +62,18 @@ function me_cf_register_field_taxonomy($field)
 }
 
 /**
+ * Get field taxonomy option value list
  * 
+ * @param string $field_name The field name
+ * @param array $args Get terms args @see get_terms()
+ * 
+ * @since 1.0.1
+ * @return array Array of option value
  */
 function me_cf_get_field_options($field_name, $args = array())
 {
     $results   = array();
     $defaults = array('hide_empty' => 0, 'meta_key' => '_field_option_order', 'orderby' => 'meta_value_num');
-    // order by meta key _field_option_order _field_option_order
     $args     = wp_parse_args($args, $defaults);
 
     $args = apply_filters('marketengine_get_field_option_args', $args);
