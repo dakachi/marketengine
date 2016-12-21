@@ -301,9 +301,8 @@ class ME_Custom_Field_Handle
 
     private static function remove_unused_field_options($field, $new_options)
     {
-        $old             = array();
         $existed_options = me_cf_get_field_options($field);
-        $options_remove = array_diff_key($old, $new_options);
+        $options_remove = array_diff_key($existed_options, $new_options);
 
         foreach ($options_remove as $key => $option) {
             $term = get_term_by('slug', $key, $field);
