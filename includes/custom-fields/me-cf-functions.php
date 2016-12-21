@@ -511,8 +511,12 @@ function me_field($field_name, $post = null, $args = array())
     }
 
     if (taxonomy_exists($field_name)) {
-        $defaults = array('meta_key' => '_field_option_order', 'orderby' => 'meta_value_num');
-        $args = wp_parse_args( $args, $defaults );
+        /**
+         * Filter get listing field taxonomy args
+         * @param array 
+         * @since 1.0.1
+         */
+        $args = apply_filters('marketengine_me_field_taxonomy_args', $args);
         return wp_get_object_terms($post->ID, $field_name, $args);
     } else {
         return get_post_meta($post->ID, $field_name, true);

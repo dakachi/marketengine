@@ -91,3 +91,14 @@ function me_cf_get_field_options($field_name, $args = array())
 
     return $results;
 }
+
+/**
+ * Hook to filter me_field taxonomy args
+ * @param array $args
+ * @return array 
+ */
+function me_field_taxonomy_args($args) {
+    $defaults = array('meta_key' => '_field_option_order', 'orderby' => 'meta_value_num');
+    return wp_parse_args( $args, $defaults );
+}
+add_filter( 'marketengine_me_field_taxonomy_args', 'me_field_taxonomy_args' );
