@@ -19,7 +19,6 @@ function me_list_custom_field_type() {
 			'label'		=> __("Choose", "enginethemes"),
 			'options'	=> array(
 				'checkbox'				 => 'Checkbox',
-				'radio'					 => 'Radio',
 				'single-select' => 'Dropdown Single Select',
 				'multi-select'	 => 'Dropdown Multi Select',
 			),
@@ -58,8 +57,7 @@ function marketengine_load_input_by_field_type($args) {
     $attribute = me_field_attribute_array($args);
     $attribute = wp_parse_args($attribute, array('min'=>'','max'=>''));
 
-	$option_values = isset($args['option_values']) ? $args['option_values'] : '';
-	$option_none = isset($args['option_none']) ? $args['option_none'] : '';
+	$field_options = isset($args['field_options']) ? $args['field_options'] : array();
 
     $options = '';
 
@@ -86,7 +84,7 @@ function marketengine_load_input_by_field_type($args) {
         case 'checkbox':
         case 'radio':
             ob_start();
-            me_get_template('custom-fields/admin-field-option');
+            me_get_template('custom-fields/admin-field-option', $args);
             $options = ob_get_clean();
             break;
 
@@ -137,7 +135,12 @@ function marketengine_load_inputs_for_view( $field ) {
             break;
 
         case 'checkbox':
-        case 'radio':
+            $field_options = me_cf_get_field_options($field_name) ? me_cf_get_field_options($field_name) : array();
+            foreach($field_options as $key => $option) {
+                $options[] = $option['label'];
+            }
+
+            echo "<p><span>".__('Options:', 'enginethemes')."</span>".implode(', ', $options)."</p>";
             break;
 
         case 'single-select':
@@ -149,6 +152,14 @@ function marketengine_load_inputs_for_view( $field ) {
     }
 }
 add_action('me_load_inputs_for_view', 'marketengine_load_inputs_for_view');
+
+function me_field_option_to_string($options) {
+    $str = '';
+    foreach($options as $key => $option) {
+        $str .= sprintf("%s : %s\n", $option['key'], $option['label']);
+    }
+    return $str;
+}
 
 function marketengine_cf_pagination($args) {
     $big = 999999999;
