@@ -118,6 +118,12 @@ $(document).ready(function() {
 			    	},
 			    },
 	    	},
+	    	field_title: {
+	    		required: true,
+	    		normalizer: function( value ) {
+			        return $.trim( value );
+			    },
+	    	},
 	    	field_minimum_value: {
 	    		// max: parseInt($('#field_maximum_value').val()) - 1 | true,
 	    		meMax: true,
@@ -125,6 +131,12 @@ $(document).ready(function() {
 	    	field_maximum_value: {
 	    		meMin: true,
 	    	},
+	    	field_options: {
+	    		required: true,
+	    		normalizer: function( value ) {
+			        return $.trim( value );
+			    },
+	    	}
 	    },
 	    highlight: function(element, errorClass) {
 	    	$(element).parent().children('div').remove();
