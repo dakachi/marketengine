@@ -68,7 +68,7 @@ function me_cf_get_field_options($field_name, $args = array())
 {
     $results   = array();
     $defaults = array('hide_empty' => 0);
-    // order by meta key _field_option_order
+    // order by meta key _field_option_order _field_option_order
     $args     = wp_parse_args($args, $defaults);
 
     $termlist = get_terms($field_name, $args);

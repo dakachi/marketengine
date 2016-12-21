@@ -287,9 +287,7 @@ class ME_Custom_Field_Handle
         
         $order = 0;
         foreach ($posted_options as $key => $option) {
-        	var_dump($key);
         	$term = get_term_by( 'slug', $key, $field_name );
-        	var_dump($term);
         	if($term) {
         		$term_id = wp_update_term( $term->term_id, $field_name, array('name' => $option, 'slug' => $key) );
         	}else {
