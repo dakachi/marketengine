@@ -9,6 +9,7 @@
 		<div class="me-cf-row">
 			<div class="me-cf-row-wrap">
 				<div class="me-cf-col-title"><?php echo esc_attr($field_name); ?></div>
+				<div class="me-cf-col-title"><?php echo esc_attr($field_title); ?></div>
 				<div class="me-cf-col-number">
 					<?php echo $count; ?>
 					<div class="me-cf-action">
@@ -20,15 +21,7 @@
 			</div>
 		</div>
 		<div class="me-cf-row-content">
-			<p><span><?php _e('Field title:', 'enginethemes'); ?></span><?php echo $field_title; ?></p>
-			<p><span><?php _e('Field type:', 'enginethemes'); ?></span><?php echo $field_type; ?></p>
-
-			<?php /*
-			if($field_type == 'date') : ?>
-			<p><span><?php _e('Default value:', 'enginethemes'); ?></span><?php echo isset($field_default_value) && !empty($field_default_value) ? $field_default_value : 'N/A'; ?></p>
-			<?php endif; ?>
-			<p><span><?php _e('Options:', 'enginethemes'); ?></span></p>
-			*/ ?>
+			<p><span><?php _e('Field type:', 'enginethemes'); ?></span><?php echo me_get_field_type_label($field_type); ?></p>
 
 			<?php do_action('me_load_inputs_for_view', $field); ?>
 

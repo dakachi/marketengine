@@ -30,6 +30,22 @@ function me_list_custom_field_type() {
 	return $field_types;
 }
 
+function me_get_field_type_label($field_type) {
+    $field_types = array(
+        'text'          => 'Text',
+        'textarea'      => 'Textarea',
+        'number'        => 'Number',
+        'date'          => 'Date',
+        'checkbox'      => 'Checkbox',
+        'single-select' => 'Dropdown Single Select',
+        'multi-select'  => 'Dropdown Multi Select',
+    );
+
+    $field_types = apply_filters('filter_custom_field', $field_types);
+
+    return $field_types[$field_type];
+}
+
 /**
  * Loads custom field templates
  *
