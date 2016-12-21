@@ -74,7 +74,7 @@ function me_cf_get_field_options($field_name, $args = array())
     $termlist = get_terms($field_name, $args);
 
     foreach ($termlist as $term) {
-        $results[] = array(
+        $results[$term->slug] = array(
             'value' => $term->term_id,
             'label' => $term->name,
             'key'   => $term->slug,
