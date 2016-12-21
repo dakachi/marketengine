@@ -109,7 +109,7 @@ class ME_Custom_Field_Handle
                     return;
                 }
 
-                self::add_field_taxonomy_options();
+                self::add_field_taxonomy_options($_POST);
 
                 if ($_POST['redirect']) {
                     wp_redirect($_POST['redirect']);
@@ -272,15 +272,15 @@ class ME_Custom_Field_Handle
         return $sections;
     }
 
-    public static function add_field_taxonomy_options()
+    public static function add_field_taxonomy_options($field_data)
     {
-        if (isset($_POST['field_options']) && empty($_POST['field_options'])) {
+        if (isset($field_data['field_options']) && empty($field_data['field_options'])) {
             return new WP_Error('field_option_empty', __("Field option cannot be empty.", 'enginethemes'));
         }
 
-        me_cf_register_field_taxonomy($_POST);
-        $field_options = trim($_POST['field_options']);
-        $field_name    = $_POST['field_name'];
+        me_cf_register_field_taxonomy($field_data);
+        $field_options = trim($field_data['field_options']);
+        $field_name    = $field_data['field_name'];
 
         $posted_options = self::field_options_to_array($field_options);
         self::remove_unused_field_options($field_name, $posted_options);
