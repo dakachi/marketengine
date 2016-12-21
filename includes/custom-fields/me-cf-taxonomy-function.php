@@ -67,11 +67,12 @@ function me_cf_register_field_taxonomy($field)
 function me_cf_get_field_options($field_name, $args = array())
 {
     $results   = array();
-    $defaults = array('hide_empty' => 0);
+    $defaults = array('hide_empty' => 0, 'meta_key' => '_field_option_order', 'orderby' => 'meta_value_num');
     // order by meta key _field_option_order _field_option_order
     $args     = wp_parse_args($args, $defaults);
 
-    $termlist = get_terms($field_name, $args);
+    $args = apply_filters('marketengine_get_field_option_args', $args);
+    $termlist = get_terms($field_name, $args );
 
     foreach ($termlist as $term) {
         $results[$term->slug] = array(
