@@ -367,5 +367,3 @@ class ME_Custom_Field_Handle
         }
     }
 }
-
-ME_Custom_Field_Handle::init();

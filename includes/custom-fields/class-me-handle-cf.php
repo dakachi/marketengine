@@ -15,6 +15,31 @@ if (!defined('ABSPATH')) {
  */
 class ME_Handle_CF
 {
+    /**
+     * The single instance of the class.
+     *
+     * @var ME_Handle_CF
+     * @since 1.0
+     */
+    protected static $_instance = null;
+
+    /**
+     * Main ME_Handle_CF Instance.
+     *
+     * Ensures only one instance of MarketEngine is loaded or can be loaded.
+     *
+     * @since 1.0
+     * @static
+     * @return ME_Handle_CF - Main instance.
+     */
+    public static function instance()
+    {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    }
+
     public function __construct()
     {
         // render field form in post, edit listing
@@ -235,4 +260,4 @@ class ME_Handle_CF
         me_get_template('custom-fields/field-details', array('fields' => $fields));
     }
 }
-new ME_Handle_CF();
+

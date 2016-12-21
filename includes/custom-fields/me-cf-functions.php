@@ -513,10 +513,11 @@ function me_field($field_name, $post = null, $args = array())
     if (taxonomy_exists($field_name)) {
         /**
          * Filter get listing field taxonomy args
-         * @param array 
+         * @param array $args
+         * @param string $field_name
          * @since 1.0.1
          */
-        $args = apply_filters('marketengine_me_field_taxonomy_args', $args);
+        $args = apply_filters('marketengine_me_field_taxonomy_args', $args, $field_name);
         return wp_get_object_terms($post->ID, $field_name, $args);
     } else {
         return get_post_meta($post->ID, $field_name, true);
