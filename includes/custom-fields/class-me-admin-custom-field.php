@@ -293,9 +293,12 @@ class ME_Custom_Field_Handle
         	}else {
         		$term_id = wp_insert_term($option, $field_name, array('slug' => sanitize_title(trim($key))));
         	}
-        	var_dump($term_id['term_id']);
-            update_term_meta( $term_id['term_id'], '_field_option_order', $order );
-            $order++;
+            
+            if(!is_wp_error( $term_id )) {
+                update_term_meta( $term_id['term_id'], '_field_option_order', $order );
+                $order++;    
+            }
+            
         }
     }
 

@@ -445,7 +445,7 @@ function me_cf_fields_query($args)
 function me_cf_get_fields($category_id = '')
 {
     global $wpdb;
-    $sql = $join = $where = '';
+    $sql = $join = $where = $order =  '';
     $sql = "SELECT *
             FROM $wpdb->marketengine_custom_fields as C";
     if ($category_id) {
@@ -511,6 +511,12 @@ function me_field($field_name, $post = null, $args = array())
     }
 
     if (taxonomy_exists($field_name)) {
+        /**
+         * Filter get listing field taxonomy args
+         * @param array 
+         * @since 1.0.1
+         */
+        $args = apply_filters('marketengine_me_field_taxonomy_args', $args);
         return wp_get_object_terms($post->ID, $field_name, $args);
     } else {
         return get_post_meta($post->ID, $field_name, true);
