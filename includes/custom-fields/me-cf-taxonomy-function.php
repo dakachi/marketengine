@@ -52,8 +52,8 @@ function me_cf_register_field_taxonomy($field)
     $args = array(
         'hierarchical'      => true,
         'labels'            => $labels,
-        'show_ui'           => false,
-        'show_admin_column' => false,
+        'show_ui'           => true,
+        'show_admin_column' => true,
         'query_var'         => true,
         'rewrite'           => false,
     );
