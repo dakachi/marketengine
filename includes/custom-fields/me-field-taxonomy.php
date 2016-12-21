@@ -44,30 +44,19 @@ function me_cf_register_field_taxonomy($field)
 
 function me_cf_get_field_options($field_name, $args = array())
 {
-    $result   = array();
+    $results   = array();
     $defaults = array('hide_empty' => 0);
     $args     = wp_parse_args($args, $defaults);
 
     $termlist = get_terms($field_name, $args);
 
     foreach ($termlist as $term) {
-        $result[] = array(
+        $results[] = array(
             'value' => $term->term_id,
             'label' => $term->name,
             'key'   => $term->slug,
         );
     }
 
-    return $result;
+    return $results;
 }
-
-// function me_cf_add_field_taxonomy_option()
-// {
-
-// }
-
-// dang ky taxonomy, luu y taxonomy se la build-in, ko show trong menu
-// luu option tu add field, update field
-// get field option tạo format $key : $value ( trong backend )
-// get field option format $key => $value (ở front-end)
-// ... co the co nhieu ham bo tro nua
