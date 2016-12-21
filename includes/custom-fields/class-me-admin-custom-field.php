@@ -271,7 +271,8 @@ class ME_Custom_Field_Handle {
         	$new_options = self::sanitize_field_options_array($new_options);
 
         	foreach($new_options as $key => $option) {
-        		wp_insert_term(trim($option), $_POST['field_name'] , array('slug' => sanitize_title(trim($key))) );
+        		$term_id = wp_insert_term(trim($option), $_POST['field_name'] , array('slug' => sanitize_title(trim($key))) );
+        		// add term meta _field_option_order
         	}
         }
 	}
