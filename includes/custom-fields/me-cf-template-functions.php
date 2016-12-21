@@ -93,9 +93,7 @@ function marketengine_load_input_by_field_type($args) {
         case 'single-select':
         case 'multi-select':
             ob_start();
-            me_get_template('custom-fields/admin-field-placeholder', array('placeholder' => $placeholder));
-
-            me_get_template('custom-fields/admin-field-default-value', array('default_value' => $default_value));
+            me_get_template('custom-fields/admin-field-option-none', array('options_none_text' => $placeholder));
 
             me_get_template('custom-fields/admin-field-option', $args);
             $options = ob_get_clean();
@@ -143,8 +141,8 @@ function marketengine_load_inputs_for_view( $field ) {
             $field_options = me_cf_get_field_options($field_name);
             $field_options = me_render_field_option($field_options);
 
-            $default_value = isset($field_default_value) && !empty($field_default_value) ? $field_default_value : 'N/A';
-            echo "<p><span>".__('Default Value:', 'enginethemes')."</span>".$default_value."</p>";
+            $field_option_none = isset($field_placeholder) && !empty($field_placeholder) ? $field_placeholder : 'N/A';
+            echo "<p><span>".__('Option None Text:', 'enginethemes')."</span>".$field_option_none."</p>";
             echo "<p><span>".__('Options:', 'enginethemes')."</span>".$field_options."</p>";
             break;
 

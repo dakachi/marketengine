@@ -284,14 +284,14 @@ class ME_Custom_Field_Handle
 
         $posted_options = self::field_options_to_array($field_options);
         self::remove_unused_field_options($field_name, $posted_options);
-        
+
         $order = 0;
         foreach ($posted_options as $key => $option) {
         	$term = get_term_by( 'slug', $key, $field_name );
         	if($term) {
         		$term_id = wp_update_term( $term->term_id, $field_name, array('name' => $option, 'slug' => $key) );
         	}else {
-        		$term_id = wp_insert_term($option, $field_name, array('slug' => sanitize_title(trim($key))));	
+        		$term_id = wp_insert_term($option, $field_name, array('slug' => sanitize_title(trim($key))));
         	}
         	var_dump($term_id['term_id']);
             update_term_meta( $term_id['term_id'], '_field_option_order', $order );
