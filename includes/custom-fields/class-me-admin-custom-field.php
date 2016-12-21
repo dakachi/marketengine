@@ -245,7 +245,7 @@ class ME_Custom_Field_Handle
 
         if ($field) {
             $unique  = false;
-            $message = __('Field name must be unique.', 'enginethemes');
+            $message = __('Sorry, this field name already exists!', 'enginethemes');
         } else {
             $unique  = true;
             $message = '';
