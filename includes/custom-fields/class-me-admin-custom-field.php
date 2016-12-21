@@ -191,24 +191,28 @@ class ME_Custom_Field_Handle {
 	}
 
 	public static function filter_field_attribute() {
-		$temp = '';
+		$constraint = '';
 		if(isset($_POST['field_constraint']) && !empty($_POST['field_constraint'])) {
-			$temp .= 'required';
+			$constraint .= 'required';
 		}
 
 		if(isset($_POST['field_minimum_value']) && !empty($_POST['field_minimum_value'])) {
-			$temp .= '|min:' . $_POST['field_minimum_value'];
+			$constraint .= '|min:' . $_POST['field_minimum_value'];
 		}
 
 		if(isset($_POST['field_maximum_value']) && !empty($_POST['field_maximum_value'])) {
-			$temp .= '|max:' . $_POST['field_maximum_value'];
+			$constraint .= '|max:' . $_POST['field_maximum_value'];
 		}
 
 		if(isset($_POST['field_type']) && $_POST['field_type'] == 'date') {
-			$temp .= '|date';
+			$constraint .= '|date';
 		}
 
-		return $temp;
+		if(isset($_POST['field_type']) && $_POST['field_type'] == 'number') {
+			$constraint .= '|numeric';
+		}
+
+		return apply_filters('marketengine_add_field_contraints', $constraint);
 	}
 
 	public static function check_field_name() {

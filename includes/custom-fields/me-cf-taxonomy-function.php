@@ -7,7 +7,14 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-add_action('init', 'me_cf_register_field_taxonomies');
+/**
+ * Register taxonomy to control custom field value for checkbox, multi-select, single-select
+ *
+ * @package Includes/CustomField
+ * @category Function
+ *
+ * @since 1.0.1
+ */
 function me_cf_register_field_taxonomies()
 {
     // get fields by type select, checkbox, multiselect, radio
@@ -19,10 +26,22 @@ function me_cf_register_field_taxonomies()
 
     foreach ($fields as $field) {
         // register taxonomy
-    	me_cf_register_field_taxonomy($field);
+        me_cf_register_field_taxonomy($field);
     }
 }
+add_action('init', 'me_cf_register_field_taxonomies');
 
+/**
+ * Register taxonomy to control a field value
+ * 
+ * @param array $field The field data
+ * @see register_taxonomy()
+ *
+ * @package Includes/CustomField
+ * @category Function
+ *
+ * @since 1.0.1
+ */
 function me_cf_register_field_taxonomy($field)
 {
     $labels = array(
@@ -42,6 +61,9 @@ function me_cf_register_field_taxonomy($field)
     register_taxonomy($field['field_name'], 'listing', $args);
 }
 
+/**
+ * 
+ */
 function me_cf_get_field_options($field_name, $args = array())
 {
     $results   = array();
