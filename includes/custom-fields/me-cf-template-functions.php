@@ -59,6 +59,8 @@ function marketengine_load_input_by_field_type($args) {
 
 	$field_options = isset($args['field_options']) ? $args['field_options'] : array();
 
+    $default_value = isset($args['field_default_value']) ? $args['field_default_value'] : '';
+
     $options = '';
 
     switch($args['field_type']) {
@@ -90,18 +92,13 @@ function marketengine_load_input_by_field_type($args) {
 
         case 'single-select':
         case 'multi-select':
-            $options .= '<div class="me-group-field">';
-            $options .= '<label class="me-title">'.__('Option none', 'enginethemes').'</label>';
-            $options .= '<span class="me-field-control">';
-            $options .= '<input class="me-input-field" type="text" name="option_none" value="'.esc_attr($placeholder).'">';
-            $options .= '</span>';
-            $options .= '</div>';
-            $options .= '<div class="me-group-field">';
-            $options .= '<label class="me-title">'.__('Option','enginethemes').'</label>';
-            $options .= '<span class="me-field-control">';
-            $options .= '<textarea class="me-textarea-field" name="option_values" placeholder="'.__('Enter each option on a new line', 'enginethemes').'">'.$option_values.'</textarea>';
-            $options .= '</span>';
-            $options .= '</div>';
+            ob_start();
+            me_get_template('custom-fields/admin-field-placeholder', array('placeholder' => $placeholder));
+
+            me_get_template('custom-fields/admin-field-default-value', array('default_value' => $default_value));
+
+            me_get_template('custom-fields/admin-field-option', $args);
+            $options = ob_get_clean();
             break;
 
         default:
@@ -135,16 +132,20 @@ function marketengine_load_inputs_for_view( $field ) {
             break;
 
         case 'checkbox':
-            $field_options = me_cf_get_field_options($field_name) ? me_cf_get_field_options($field_name) : array();
-            foreach($field_options as $key => $option) {
-                $options[] = $option['label'];
-            }
+            $field_options = me_cf_get_field_options($field_name);
+            $field_options = me_render_field_option($field_options);
 
-            echo "<p><span>".__('Options:', 'enginethemes')."</span>".implode(', ', $options)."</p>";
+            echo "<p><span>".__('Options:', 'enginethemes')."</span>".$field_options."</p>";
             break;
 
         case 'single-select':
         case 'multi-select':
+            $field_options = me_cf_get_field_options($field_name);
+            $field_options = me_render_field_option($field_options);
+
+            $default_value = isset($field_default_value) && !empty($field_default_value) ? $field_default_value : 'N/A';
+            echo "<p><span>".__('Default Value:', 'enginethemes')."</span>".$default_value."</p>";
+            echo "<p><span>".__('Options:', 'enginethemes')."</span>".$field_options."</p>";
             break;
 
         default:
@@ -159,6 +160,14 @@ function me_field_option_to_string($options) {
         $str .= sprintf("%s : %s\n", $option['key'], $option['label']);
     }
     return $str;
+}
+
+function me_render_field_option($options) {
+    $str = array();
+    foreach($options as $key => $option) {
+        $str[] = $option['label'];
+    }
+    return implode(', ', $str);
 }
 
 function marketengine_cf_pagination($args) {
