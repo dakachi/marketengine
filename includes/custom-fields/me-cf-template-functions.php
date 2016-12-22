@@ -30,6 +30,15 @@ function me_list_custom_field_type() {
 	return $field_types;
 }
 
+/**
+ * Gets label of the field type
+ *
+ * @param string $field_type
+ * @return string label of the field type
+ *
+ * @since   1.0.1
+ * @version 1.0.0
+ */
 function me_get_field_type_label($field_type) {
     $field_types = array(
         'text'          => 'Text',
@@ -168,6 +177,13 @@ function marketengine_load_inputs_for_view( $field ) {
 }
 add_action('me_load_inputs_for_view', 'marketengine_load_inputs_for_view');
 
+/**
+ * Convert array of field option to string for displaying in textarea value format.
+ *
+ * @param array $options
+ *
+ * @return string $str
+ */
 function me_field_option_to_string($options) {
     $str = '';
     foreach($options as $key => $option) {
@@ -176,6 +192,13 @@ function me_field_option_to_string($options) {
     return $str;
 }
 
+/**
+ * Convert array of field option to a string of labels.
+ *
+ * @param array $options
+ *
+ * @return string $str
+ */
 function me_render_field_option($options) {
     $str = array();
     foreach($options as $key => $option) {

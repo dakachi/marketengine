@@ -20,141 +20,86 @@ if (!defined('ABSPATH')) {
  * @version 1.0.0
  */
 
-class ME_Custom_Field_Handle
-{
-    public $instance;
-
-    public static function get_instance()
+class ME_Custom_Field_Handle {
+    /**
+     * Inserts or updates a custom field
+     *
+     * @param   array $field_data
+     * @param   bool $is_update
+     *
+     * @return  int|WP_Error $field_id
+     *
+     * @since   1.0.1
+     * @version 1.0.0
+     */
+    public static function insert($field_data, $is_update = false)
     {
-        if (is_null(self::$instance)) {
-            self::$instance = new self;
+        $term_ids                   = $field_data['field_for_categories'];
+        $field_data['count'] = count($term_ids);
+
+        $attributes                            = self::filter_field_attribute($field_data);
+        $field_data['field_constraint'] = $attributes;
+
+        if(!$is_update) {
+            $field_id = me_cf_insert_field($field_data, true);
         }
-        return self::$instance;
-    }
+        else {
+            $current_cats      = me_cf_get_field_categories($field_data['field_id']);
+            self::remove_categories(array(
+                'field_id'     => $field_data['field_id'],
+                'current_cats' => $current_cats,
+                'new_cats'     => $term_ids,
+            ));
+            $field_id = me_cf_update_field($field_data, true);
+        }
 
-    public static function init()
-    {
-        add_action('marketengine_section', array(__CLASS__, 'marketengine_add_custom_field_section'));
-
-        add_action('wp_loaded', array(__CLASS__, 'marketengine_add_actions'));
-        add_action('wp_loaded', array(__CLASS__, 'insert'));
-        add_action('wp_loaded', array(__CLASS__, 'delete'));
-        add_action('wp_loaded', array(__CLASS__, 'remove_from_category'));
-
-        add_action('me_load_cf_input', array(__CLASS__, 'load_field_input'));
-        add_action('wp_ajax_me_cf_load_input_type', array(__CLASS__, 'load_field_input_ajax'));
-        add_action('wp_ajax_check_field_name', array(__CLASS__, 'check_field_name'));
-        add_action('wp_ajax_me_cf_sort', array(__CLASS__, 'me_cf_sort'));
+        return $field_id;
     }
 
     /**
-     * Prepares content of custom field section
+     * Deteles a custom field
      *
-     * @since     1.0.1
+     * @param   int $field_id
+     *
+     * @return  bool
+     *
+     * @since   1.0.1
      * @version 1.0.0
      */
-    public static function marketengine_add_actions()
+    public static function delete($field_id)
     {
-        if (is_admin() && isset($_REQUEST['section']) && $_REQUEST['section'] == 'custom-field') {
-            add_action('wp_print_scripts', array(__CLASS__, 'marketengine_print_script'), 100);
-            add_action('get_custom_field_template', 'marketengine_custom_field_template');
+        return me_cf_delete_field($field_id);
+    }
+
+    /**
+     * Removes a custom field from the category it affected,
+     * or deletes it if no remain category
+     *
+     * @param   int $field_id
+     * @param   int $category_id
+     *
+     * @return  bool
+     *
+     * @since   1.0.1
+     * @version 1.0.0
+     */
+    public static function remove_from_category($field_id, $category_id)
+    {
+        $term_ids = me_cf_get_field_categories($field_id);
+        if (count($term_ids) == 1) {
+            self::delete($field_id);
+        } else {
+            me_cf_remove_field_category($field_id, $category_id);
         }
     }
 
     /**
-     * Removes ajax handle of option
+     * Loads field input to set field attributes.
+     * Fires when a field type is chosen.
      *
-     * @since     1.0.1
+     * @since   1.0.1
      * @version 1.0.0
      */
-    public static function marketengine_print_script()
-    {
-        wp_dequeue_script('option-view');
-        if (is_admin() && isset($_REQUEST['view']) && $_REQUEST['view'] == 'group-by-category') {
-            wp_enqueue_script('cf_sort', ME_PLUGIN_URL . "assets/admin/custom-field-sort.js", array('jquery-ui'));
-        }
-    }
-
-    public static function insert()
-    {
-        if (is_admin() && isset($_REQUEST['view']) && ($_REQUEST['view'] == 'add' || $_REQUEST['view'] == 'edit') && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert_custom_field')) {
-            $term_ids       = isset($_POST['field_for_categories']) ? $_POST['field_for_categories'] : array();
-            $_POST['count'] = count($term_ids);
-
-            $attributes                = self::filter_field_attribute();
-            $_POST['field_constraint'] = $attributes;
-
-            if ($_REQUEST['view'] == 'add') {
-                $field_id = me_cf_insert_field($_POST, true);
-            } else {
-                $_POST['field_id'] = $_REQUEST['custom-field-id'];
-                $current_cats      = me_cf_get_field_categories($_REQUEST['custom-field-id']);
-                self::remove_categories(array(
-                    'field_id'     => $_POST['field_id'],
-                    'current_cats' => $current_cats,
-                    'new_cats'     => $term_ids,
-                ));
-
-                $field_id = me_cf_update_field($_POST, true);
-            }
-
-            if (is_wp_error($field_id)) {
-                me_wp_error_to_notices($field_id);
-            } else {
-
-                $result = self::set_field_category($field_id, $term_ids);
-
-                if (is_wp_error($result)) {
-                    me_wp_error_to_notices($result);
-                    return;
-                }
-
-                self::add_field_taxonomy_options($_POST);
-
-                if ($_POST['redirect']) {
-                    wp_redirect($_POST['redirect']);
-                    exit;
-                }
-            }
-        }
-    }
-
-    public static function delete()
-    {
-        if (is_admin() && isset($_REQUEST['action']) && $_REQUEST['action'] == 'delete-custom-field' && isset($_REQUEST['_wp_nonce']) && wp_verify_nonce($_REQUEST['_wp_nonce'], 'delete-custom-field') && isset($_REQUEST['custom-field-id'])) {
-            $result = me_cf_delete_field($_REQUEST['custom-field-id']);
-            if (is_wp_error($result)) {
-                me_wp_error_to_notices($result);
-                return;
-            }
-
-            $redirect = remove_query_arg(array('action', '_wp_nonce', 'custom-field-id'));
-            wp_redirect($redirect);
-            exit;
-        }
-    }
-
-    public static function remove_from_category()
-    {
-        if (is_admin() && isset($_REQUEST['action']) && $_REQUEST['action'] == 'remove-from-category' && isset($_REQUEST['_wp_nonce']) && wp_verify_nonce($_REQUEST['_wp_nonce'], 'remove-from-category') && isset($_REQUEST['custom-field-id'])) {
-
-            $term_ids = me_cf_get_field_categories($_REQUEST['custom-field-id']);
-            if (count($term_ids) == 1) {
-                $result = me_cf_delete_field($_REQUEST['custom-field-id']);
-                if (is_wp_error($result)) {
-                    me_wp_error_to_notices($result);
-                    return;
-                }
-            } else {
-                me_cf_remove_field_category($_REQUEST['custom-field-id'], $_REQUEST['category-id']);
-            }
-
-            $redirect = remove_query_arg(array('action', '_wp_nonce', 'custom-field-id'));
-            wp_redirect($redirect);
-            exit;
-        }
-    }
-
     public static function load_field_input_ajax()
     {
         $options = marketengine_load_input_by_field_type($_POST);
@@ -163,12 +108,29 @@ class ME_Custom_Field_Handle
         ));
     }
 
+    /**
+     * Renders field attributes for editing.
+     *
+     * @since   1.0.1
+     * @version 1.0.0
+     */
     public static function load_field_input()
     {
         $options = marketengine_load_input_by_field_type($_POST);
         echo $options;
     }
 
+    /**
+     * Set categories for a custom field.
+     *
+     * @param   int $field_id
+     * @param   array $term_ids
+     *
+     * @return  WP_Error if set categories failed,
+     *
+     * @since   1.0.1
+     * @version 1.0.0
+     */
     public static function set_field_category($field_id, $term_ids)
     {
         $result = '';
@@ -188,6 +150,14 @@ class ME_Custom_Field_Handle
         return $result;
     }
 
+    /**
+     * Removes unuse categories of a custom field.
+     *
+     * @param   array $args list of current categories, new categories, and custom field id.
+     *
+     * @since   1.0.1
+     * @version 1.0.0
+     */
     public static function remove_categories($args)
     {
         extract($args);
@@ -202,32 +172,48 @@ class ME_Custom_Field_Handle
         }
     }
 
-    public static function filter_field_attribute()
+    /**
+     * Prepares the string of field constraint.
+     *
+     * @param   array $field
+     *
+     * @return  string $constraint
+     *
+     * @since   1.0.1
+     * @version 1.0.0
+     */
+    public static function filter_field_attribute($field)
     {
         $constraint = '';
-        if (isset($_POST['field_constraint']) && !empty($_POST['field_constraint'])) {
+        if (isset($field['field_constraint']) && !empty($field['field_constraint'])) {
             $constraint .= 'required';
         }
 
-        if (isset($_POST['field_minimum_value']) && !empty($_POST['field_minimum_value'])) {
+        if (isset($field['field_minimum_value']) && !empty($field['field_minimum_value'])) {
             $constraint .= '|min:' . $_POST['field_minimum_value'];
         }
 
-        if (isset($_POST['field_maximum_value']) && !empty($_POST['field_maximum_value'])) {
+        if (isset($field['field_maximum_value']) && !empty($field['field_maximum_value'])) {
             $constraint .= '|max:' . $_POST['field_maximum_value'];
         }
 
-        if (isset($_POST['field_type']) && $_POST['field_type'] == 'date') {
+        if (isset($field['field_type']) && $field['field_type'] == 'date') {
             $constraint .= '|date';
         }
 
-        if (isset($_POST['field_type']) && $_POST['field_type'] == 'number') {
+        if (isset($field['field_type']) && $field['field_type'] == 'number') {
             $constraint .= '|numeric';
         }
 
         return apply_filters('marketengine_add_field_contraints', $constraint);
     }
 
+    /**
+     * Check if the field name is exists.
+     *
+     * @since   1.0.1
+     * @version 1.0.0
+     */
     public static function check_field_name()
     {
         if ($_POST['current_field_id'] != -1) {
@@ -257,21 +243,14 @@ class ME_Custom_Field_Handle
         ));
     }
 
-    public static function marketengine_add_custom_field_section($sections)
-    {
-        if (!isset($_REQUEST['tab']) || $_REQUEST['tab'] == 'marketplace-settings') {
-            $sample_data              = $sections['sample-data'];
-            $sections['custom-field'] = array(
-                'title' => __('Custom Fields', 'enginethemes'),
-                'slug'  => 'custom-field',
-                'type'  => 'section',
-            );
-            unset($sections['sample-data']);
-            $sections['sample-data'] = $sample_data;
-        }
-        return $sections;
-    }
-
+    /**
+     * Add field taxonomy options
+     *
+     * @param   array $field_data
+     *
+     * @since   1.0.1
+     * @version 1.0.0
+     */
     public static function add_field_taxonomy_options($field_data)
     {
         if (isset($field_data['field_options']) && empty($field_data['field_options'])) {
@@ -293,26 +272,43 @@ class ME_Custom_Field_Handle
         	}else {
         		$term_id = wp_insert_term($option, $field_name, array('slug' => sanitize_title(trim($key))));
         	}
-            
+
             if(!is_wp_error( $term_id )) {
                 update_term_meta( $term_id['term_id'], '_field_option_order', $order );
-                $order++;    
+                $order++;
             }
-            
+
         }
     }
 
-    private static function remove_unused_field_options($field, $new_options)
+    /**
+     * Removes unuse field options.
+     *
+     * @param   string $field_name the field name
+     * @param   array $new_options
+     *
+     * @since   1.0.1
+     * @version 1.0.0
+     */
+    private static function remove_unused_field_options($field_name, $new_options)
     {
-        $existed_options = me_cf_get_field_options($field);
+        $existed_options = me_cf_get_field_options($field_name);
         $options_remove = array_diff_key($existed_options, $new_options);
 
         foreach ($options_remove as $key => $option) {
-            $term = get_term_by('slug', $key, $field);
-            wp_delete_term($term->term_id, $field);
+            $term = get_term_by('slug', $key, $field_name);
+            wp_delete_term($term->term_id, $field_name);
         }
     }
 
+    /**
+     * Converts the string of the field options to array
+     *
+     * @param   string $options
+     *
+     * @since   1.0.1
+     * @version 1.0.0
+     */
     private static function field_options_to_array($options)
     {
         $options = explode(PHP_EOL, $options);
@@ -325,6 +321,16 @@ class ME_Custom_Field_Handle
         return $array;
     }
 
+    /**
+     * Generates and fill in the empty parts of field options array
+     *
+     * @param   array $options
+     *
+     * @return  array $options fully field options array
+     *
+     * @since   1.0.1
+     * @version 1.0.0
+     */
     private static function sanitize_field_options_array($options)
     {
         if (sizeof($options) == 1) {
@@ -339,31 +345,5 @@ class ME_Custom_Field_Handle
             }
         }
         return $options;
-    }
-
-    public static function me_cf_sort()
-    {
-        if (is_admin()) {
-            parse_str($_POST['order'], $fields);
-            $fields = $fields['me-cf-item'];
-            foreach ($fields as $order => $field_id) {
-                $result = me_cf_set_field_category($field_id, $_POST['category_id'], $order);
-                if (is_wp_error($result)) {
-                    wp_send_json(array(
-                        'status'  => false,
-                        'message' => $result,
-                    ));
-                }
-            }
-
-            wp_send_json(array(
-                'status'   => true,
-                'message'  => 'Sort custom fields successfully',
-                'asd'      => $result,
-                'field_id' => $field_id,
-                'category' => $_POST['category_id'],
-                'order'    => $order,
-            ));
-        }
     }
 }

@@ -125,7 +125,6 @@ $(document).ready(function() {
 			    },
 	    	},
 	    	field_minimum_value: {
-	    		// max: parseInt($('#field_maximum_value').val()) - 1 | true,
 	    		meMax: true,
 	    	},
 	    	field_maximum_value: {
