@@ -93,6 +93,7 @@
                 }
             });
             $('.marketengine-date-field input').datepicker();
+            $('#post-listing-form .me-parent-category').trigger('loaded_field_form');
         });
     });
     $('#listing-type-select').on('change', function() {
