@@ -30,7 +30,7 @@ if(me_option('user-email-confirmation')) {
 
 <div id="marketengine-wrapper" class="marketengine">
 	<div class="marketengine-post-listing-wrap">
-		<form  id="post-listing-form" class="post-listing-form" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+		<form  id="post-listing-form" class="post-listing-form" method="post" accept-charset="utf-8" enctype="multipart/form-data" novalidate>
 			<h3><?php _e('Post a Listing', 'enginethemes'); ?></h3>
 			<?php me_print_notices(); ?>
 
