@@ -30,6 +30,5 @@ if(empty($options)) return;
 	    		</label>	
 		    </div>
 	    <?php endforeach; ?>
-	    <input type="hidden" name="<?php echo $field['field_name'] ?>[]" value="-1" />
 	</div>
 </div>

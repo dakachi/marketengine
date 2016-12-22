@@ -175,13 +175,13 @@ class ME_Handle_CF
 
         foreach ($fields as $field) {
             $field_name = $field['field_name'];
-            if (isset($data[$field_name])) {
+            //if (isset($data[$field_name])) {
                 if (taxonomy_exists($field_name)) {
                     $this->update_field_taxonomy($post, $field, $data);
                 } else {
                     $this->update_field_meta($post, $field, $data);
                 }
-            }
+            //}
         }
         
     }
