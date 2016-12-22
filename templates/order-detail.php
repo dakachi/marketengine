@@ -26,7 +26,7 @@ if( !$buyer && !($seller == $user_data->user_login) ) {
     return load_template(get_404_template());
 }
 
-$title = $buyer ? __('My Transactions') : __('My Orders');
+$title = $buyer ? __('MY TRANSACTIONS', 'enginethemes') : __('MY ORDERS', 'enginethemes');
 $url = $buyer ? me_get_auth_url('purchases') : me_get_auth_url('orders');
 get_header();
 ?>
@@ -35,8 +35,8 @@ get_header();
         <div class="marketengine-content-wrap">
 
             <div class="marketengine-page-title me-have-breadcrumb">
-                <h2><?php echo strtoupper($title); ?></h2>
-                <a href="<?php echo $url; ?>"><?php echo strtoupper($title); ?></a>
+                <h2><?php echo $title; ?></h2>
+                <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
                 <ol class="me-breadcrumb">
                     <li><a href="<?php echo $url; ?>"><?php echo $title; ?></a></li>
                     <li><a href="#"><?php printf( '#%s', $order->id ); ?></a></li>
