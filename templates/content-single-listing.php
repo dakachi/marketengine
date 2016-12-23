@@ -30,16 +30,17 @@ $is_owner = $listing->post_author == get_current_user_id();
 					<?php do_action('marketengine_before_single_listing_information'); ?>
 
 					<div class="marketengine-content-detail">
+
 						<?php me_get_template('single-listing/gallery', array('listing' => $listing));?>
 
 						<div class="me-visible-sm me-visible-xs">
+
 							<?php me_get_template('single-listing/notices'); ?>
-
-							<div class="me-status-action">
-								<?php me_get_template('single-listing/control', array('listing' => $listing) ); ?>
-							</div>
-
+							
+							<?php me_get_template('single-listing/control', array('listing' => $listing) ); ?>
+							
 							<?php me_get_template('single-listing/category', array('listing' => $listing));?>
+
 						</div>
 
 
@@ -47,13 +48,15 @@ $is_owner = $listing->post_author == get_current_user_id();
 							<?php me_get_template('single-listing/description', array('listing' => $listing));?>
 							<?php me_get_template('single-listing/rating', array('listing' => $listing));?>
 						</div>
+
+						<?php if( !$is_owner ) : ?>	
+
 						<div class="me-visible-sm me-visible-xs">
-							<?php
-								if( !$is_owner ) :
-									me_get_template('user-info', array('author_id' => $listing->post_author));
-								endif;
-							?>
+							<?php me_get_template('user-info', array('author_id' => $listing->post_author)); ?>
 						</div>
+
+						<?php endif; ?>
+
 					</div>
 
 					<?php do_action('marketengine_after_single_listing_information'); ?>
@@ -74,7 +77,6 @@ $is_owner = $listing->post_author == get_current_user_id();
 						<?php
 						if( !$is_owner ) :
 							me_get_template('user-info', array('author_id' => $listing->post_author));
-							// me_get_template('single-listing/report');
 						endif;
 						?>
 

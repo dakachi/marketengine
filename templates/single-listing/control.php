@@ -19,7 +19,7 @@ $listing_type = $listing->get_listing_type();
 $is_owner = $listing->post_author == get_current_user_id();
 $listing_status = get_post_status_object($listing->post_status);
 ?>
-
+<div class="me-status-action">
 <?php
 	if($listing_type) :
 		me_get_template('single-listing/status', array('listing' => $listing) );
@@ -30,3 +30,4 @@ $listing_status = get_post_status_object($listing->post_status);
 		endif;
 	endif;
 ?>
+</div>
