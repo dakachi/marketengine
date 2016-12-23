@@ -56,7 +56,7 @@ class ME_Handle_CF
         add_action('marketengine_after_insert_listing', array($this, 'update_fields'), 10, 2);
 
         // custom field in listing details
-        add_action('marketengine_after_single_listing_details', array($this, 'field_details'));
+        add_action('marketengine_after_single_listing_description', array($this, 'field_details'));
     }
 
     /**
@@ -255,6 +255,11 @@ class ME_Handle_CF
         }
 
         $fields = me_cf_get_fields($category[0]);
+
+        if(empty($fields)) {
+            return;
+        }
+
         me_get_template('custom-fields/field-details', array('fields' => $fields));
     }
 }
