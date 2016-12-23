@@ -13,9 +13,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$listing_type = $listing->get_listing_type();
 $is_owner = $listing->post_author == get_current_user_id();
-$listing_status = get_post_status_object($listing->post_status);
 ?>
 <div id="marketengine-page">
 	<div class="marketengine me-container">
@@ -53,7 +51,6 @@ $listing_status = get_post_status_object($listing->post_status);
 							<?php
 								if( !$is_owner ) :
 									me_get_template('user-info', array('author_id' => $listing->post_author));
-									//me_get_template('single-listing/report');
 								endif;
 							?>
 						</div>
