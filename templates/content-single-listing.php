@@ -13,9 +13,6 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$listing_type = $listing->get_listing_type();
-$is_owner = $listing->post_author == get_current_user_id();
-$listing_status = get_post_status_object($listing->post_status);
 ?>
 <div id="marketengine-page">
 	<div class="marketengine me-container">
@@ -32,31 +29,33 @@ $listing_status = get_post_status_object($listing->post_status);
 					<?php do_action('marketengine_before_single_listing_information'); ?>
 
 					<div class="marketengine-content-detail">
+
 						<?php me_get_template('single-listing/gallery', array('listing' => $listing));?>
 
 						<div class="me-visible-sm me-visible-xs">
+
 							<?php me_get_template('single-listing/notices'); ?>
-
-							<div class="me-status-action">
-								<?php me_get_template('single-listing/control', array('listing' => $listing) ); ?>
-							</div>
-
+							
+							<?php me_get_template('single-listing/control', array('listing' => $listing) ); ?>
+							
 							<?php me_get_template('single-listing/category', array('listing' => $listing));?>
+
 						</div>
 
 
 						<div class="me-box-shadow">
-							<?php me_get_template('single-listing/description', array('listing' => $listing));?>
+							<?php me_get_template('single-listing/description', array('listing' => $listing)); ?>
 							<?php me_get_template('single-listing/rating', array('listing' => $listing));?>
 						</div>
+
+						<?php if( $listing->post_author != get_current_user_id() ) : ?>	
+
 						<div class="me-visible-sm me-visible-xs">
-							<?php
-								if( !$is_owner ) :
-									me_get_template('user-info', array('author_id' => $listing->post_author));
-									//me_get_template('single-listing/report');
-								endif;
-							?>
+							<?php me_get_template('user-info', array('author_id' => $listing->post_author)); ?>
 						</div>
+
+						<?php endif; ?>
+
 					</div>
 
 					<?php do_action('marketengine_after_single_listing_information'); ?>
@@ -75,9 +74,8 @@ $listing_status = get_post_status_object($listing->post_status);
 
 						<?php me_get_template('single-listing/category');?>
 						<?php
-						if( !$is_owner ) :
+						if( $listing->post_author != get_current_user_id() ) :
 							me_get_template('user-info', array('author_id' => $listing->post_author));
-							// me_get_template('single-listing/report');
 						endif;
 						?>
 
