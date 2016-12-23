@@ -44,7 +44,7 @@ if (!defined('ABSPATH')) {
 
 
 						<div class="me-box-shadow">
-							<?php me_get_template('single-listing/description', array('listing' => $listing));?>
+							<?php me_get_template('single-listing/description', array('listing' => $listing)); ?>
 							<?php me_get_template('single-listing/rating', array('listing' => $listing));?>
 						</div>
 
