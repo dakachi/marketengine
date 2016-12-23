@@ -38,10 +38,9 @@ class ME_Custom_Field_Form {
         add_action('admin_init', array(__CLASS__, 'marketengine_add_actions'));
         add_action('wp_ajax_me_cf_sort', array(__CLASS__, 'me_cf_sort'));
 
-        add_action('wp_ajax_check_field_name', array('ME_Custom_Field_Handle', 'check_field_name'));
+        add_action('wp_ajax_check_field_name', array('ME_Custom_Field_Handle', 'is_field_name_exists'));
         add_action('me_load_cf_input', array('ME_Custom_Field_Handle', 'load_field_input'));
         add_action('wp_ajax_me_cf_load_input_type', array('ME_Custom_Field_Handle', 'load_field_input_ajax'));
-        add_action('wp_ajax_check_field_name', array('ME_Custom_Field_Handle', 'check_field_name'));
 
     }
 
@@ -109,16 +108,6 @@ class ME_Custom_Field_Form {
     			return;
     		}
 
-    		$result = ME_Custom_Field_Handle::set_field_category($field_id, $_POST['field_for_categories']);
-    		if (is_wp_error($result)) {
-                me_wp_error_to_notices($result);
-                return;
-            }
-
-            if(isset($_POST['field_options'])) {
-                ME_Custom_Field_Handle::add_field_taxonomy_options($_POST);
-            }
-
             $redirect = apply_filters('me_after_create_custom_field_redirect', $_POST['redirect']);
 
             if ($redirect) {
@@ -143,16 +132,6 @@ class ME_Custom_Field_Form {
             if(is_wp_error($field_id)) {
                 me_wp_error_to_notices($field_id);
                 return;
-            }
-
-            $result = ME_Custom_Field_Handle::set_field_category($field_id, $_POST['field_for_categories']);
-            if (is_wp_error($result)) {
-                me_wp_error_to_notices($result);
-                return;
-            }
-
-            if(isset($_POST['field_options'])) {
-                ME_Custom_Field_Handle::add_field_taxonomy_options($_POST);
             }
 
             $redirect = apply_filters('me_after_create_custom_field_redirect', $_POST['redirect']);

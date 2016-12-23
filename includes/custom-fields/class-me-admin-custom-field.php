@@ -53,6 +53,15 @@ class ME_Custom_Field_Handle {
             $field_id = me_cf_update_field($field_data, true);
         }
 
+        $result = self::set_field_category($field_id, $field_data['field_for_categories']);
+        if (is_wp_error($result)) {
+            return $result;
+        }
+
+        if(isset($field_data['field_options'])) {
+            self::add_field_taxonomy_options($field_data);
+        }
+
         return $field_id;
     }
 
@@ -214,7 +223,7 @@ class ME_Custom_Field_Handle {
      * @since   1.0.1
      * @version 1.0.0
      */
-    public static function check_field_name()
+    public static function is_field_name_exists()
     {
         if ($_POST['current_field_id'] != -1) {
             $field = me_cf_get_field($_POST['current_field_id']);
