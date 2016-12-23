@@ -34,7 +34,7 @@ class ME_Custom_Field_Handle {
      */
     public static function insert($field_data, $is_update = false)
     {
-        $term_ids                   = $field_data['field_for_categories'];
+        $term_ids            = isset($field_data['field_for_categories']) ? $field_data['field_for_categories'] : array();
         $field_data['count'] = count($term_ids);
 
         $attributes                            = self::filter_field_attribute($field_data);
@@ -53,7 +53,7 @@ class ME_Custom_Field_Handle {
             $field_id = me_cf_update_field($field_data, true);
         }
 
-        $result = self::set_field_category($field_id, $field_data['field_for_categories']);
+        $result = self::set_field_category($field_id, $term_ids);
         if (is_wp_error($result)) {
             return $result;
         }
