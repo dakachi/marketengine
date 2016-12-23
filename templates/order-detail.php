@@ -30,6 +30,7 @@ $title = $buyer ? __('MY TRANSACTIONS', 'enginethemes') : __('MY ORDERS', 'engin
 $url = $buyer ? me_get_auth_url('purchases') : me_get_auth_url('orders');
 get_header();
 ?>
+
 <div id="marketengine-page">
     <div class="me-container">
         <div class="marketengine-content-wrap">
@@ -62,4 +63,5 @@ get_header();
         </div>
     </div>
 </div>
+
 <?php get_footer();
