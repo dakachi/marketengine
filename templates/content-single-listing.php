@@ -13,7 +13,6 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$is_owner = $listing->post_author == get_current_user_id();
 ?>
 <div id="marketengine-page">
 	<div class="marketengine me-container">
@@ -49,7 +48,7 @@ $is_owner = $listing->post_author == get_current_user_id();
 							<?php me_get_template('single-listing/rating', array('listing' => $listing));?>
 						</div>
 
-						<?php if( !$is_owner ) : ?>	
+						<?php if( $listing->post_author != get_current_user_id() ) : ?>	
 
 						<div class="me-visible-sm me-visible-xs">
 							<?php me_get_template('user-info', array('author_id' => $listing->post_author)); ?>
@@ -75,7 +74,7 @@ $is_owner = $listing->post_author == get_current_user_id();
 
 						<?php me_get_template('single-listing/category');?>
 						<?php
-						if( !$is_owner ) :
+						if( $listing->post_author != get_current_user_id() ) :
 							me_get_template('user-info', array('author_id' => $listing->post_author));
 						endif;
 						?>
