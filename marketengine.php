@@ -285,14 +285,14 @@ class MarketEngine
         wp_enqueue_style('me_font_icon', $this->plugin_url() . '/assets/css/marketengine-font-icon.css');
         wp_enqueue_style('flexslider', $this->plugin_url() . '/assets/css/flexslider.css');
 
-        // wp_enqueue_script('jquery');
-        wp_enqueue_script(array('jquery', 'jquery-ui-core', 'jquery-ui-widget'));
+        wp_enqueue_script('jquery');
+        // wp_enqueue_script(array('jquery', 'jquery-ui-core', 'jquery-ui-tooltip', 'jquery-ui-datepicker', 'jquery-ui-slider'));
         wp_enqueue_script('plupload-all');
         wp_enqueue_script('muploader.js', $this->plugin_url() . "/assets/js/muploader$suffix.js", array('jquery', 'plupload-all'), $this->version, true);
 
         // lib
-        //wp_enqueue_script('jquery-ui', $this->plugin_url() . "/assets/js/jquery-ui.js", array('jquery'), $this->version, true);
-        //wp_enqueue_script('jquery.slider', $this->plugin_url() . "/assets/js/jquery.slider.js", array('jquery', 'jquery-ui'), $this->version, true);
+        wp_enqueue_script('jquery-ui', $this->plugin_url() . "/assets/js/jquery-ui.js", array('jquery'), $this->version, true);
+        // wp_enqueue_script('jquery.slider', $this->plugin_url() . "/assets/js/jquery.slider.js", array('jquery', 'jquery-ui'), $this->version, true);
         wp_enqueue_script('magnific_popup', $this->plugin_url() . "/assets/js/jquery.magnific-popup.min.js", array('jquery'), $this->version, true);
         wp_enqueue_script('flexslider-js', $this->plugin_url() . "/assets/js/jquery.flexslider-min.js", array('jquery'), $this->version, true);
         wp_enqueue_script('raty.js', $this->plugin_url() . "/assets/js/jquery.raty$suffix.js", array('jquery'), $this->version, true);
@@ -303,7 +303,7 @@ class MarketEngine
         wp_enqueue_script('post_listing', $this->plugin_url() . "/assets/js/post-listing$suffix.js", array('jquery', 'tag_box'), $this->version, true);
 
         wp_enqueue_script('me.sliderthumbs', $this->plugin_url() . "/assets/js/me.sliderthumbs$suffix.js", array('jquery'), $this->version, true);
-        wp_enqueue_script('script.js', $this->plugin_url() . "/assets/js/script$suffix.js", array('jquery', 'jquery-ui-core', 'jquery-ui-widget'), $this->version, true);
+        wp_enqueue_script('script.js', $this->plugin_url() . "/assets/js/script$suffix.js", array('jquery'), $this->version, true);
         wp_enqueue_script('message.js', $this->plugin_url() . "/assets/js/message$suffix.js", array('jquery'), $this->version, true);
         wp_enqueue_script('index', $this->plugin_url() . "/assets/js/index$suffix.js", array('jquery', 'message.js'), $this->version, true);
         wp_enqueue_script('my-listings.js', $this->plugin_url() . "/assets/js/my-listings$suffix.js", array('jquery'), $this->version, true);
