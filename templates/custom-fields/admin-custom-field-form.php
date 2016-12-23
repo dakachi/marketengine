@@ -116,7 +116,11 @@ $constraint = me_field_attribute_array($_POST);
 			<textarea class="me-textarea-field" name="field_description"><?php echo isset($_POST['field_description']) ? $_POST['field_description'] : ''; ?></textarea>
 		</div>
 
-		<?php wp_nonce_field( 'me-insert_custom_field' ); ?>
+		<?php if(isset($_REQUEST['view']) && $_REQUEST['view'] == 'edit') {
+			wp_nonce_field( 'me-update_custom_field' );
+		} else {
+			wp_nonce_field( 'me-insert_custom_field' );
+		} ?>
 
 		<input type="submit" class="me-cf-save-btn" name="insert-custom-field" value="<?php _e('Save', 'enginethemes'); ?>"><a href="<?php echo isset($_REQUEST['category-id']) ? add_query_arg('view', 'group-by-category', remove_query_arg('custom-field-id')) : remove_query_arg(array('view', 'custom-field-id')); ?>" class="me-cf-cancel-btn"><?php _e('Cancel', 'enginethemes'); ?></a>
 

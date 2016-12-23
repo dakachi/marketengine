@@ -33,7 +33,7 @@ add_action('init', 'me_cf_register_field_taxonomies');
 
 /**
  * Register taxonomy to control a field value
- * 
+ *
  * @param array $field The field data
  * @see register_taxonomy()
  *
@@ -63,10 +63,10 @@ function me_cf_register_field_taxonomy($field)
 
 /**
  * Get field taxonomy option value list
- * 
+ *
  * @param string $field_name The field name
  * @param array $args Get terms args @see get_terms()
- * 
+ *
  * @since 1.0.1
  * @return array Array of option value
  */
@@ -95,7 +95,7 @@ function me_cf_get_field_options($field_name, $args = array())
 /**
  * Hook to filter me_field taxonomy args
  * @param array $args
- * @return array 
+ * @return array
  */
 function me_field_taxonomy_args($args) {
     $defaults = array('meta_key' => '_field_option_order', 'orderby' => 'meta_value_num');
