@@ -285,39 +285,53 @@ class MarketEngine
         wp_enqueue_style('me_font_icon', $this->plugin_url() . '/assets/css/marketengine-font-icon.css');
         wp_enqueue_style('flexslider', $this->plugin_url() . '/assets/css/flexslider.css');
 
-        wp_enqueue_script('jquery');
-        // wp_enqueue_script(array('jquery', 'jquery-ui-core', 'jquery-ui-tooltip', 'jquery-ui-datepicker', 'jquery-ui-slider'));
-        wp_enqueue_script('plupload-all');
-        wp_enqueue_script('muploader.js', $this->plugin_url() . "/assets/js/muploader$suffix.js", array('jquery', 'plupload-all'), $this->version, true);
+        wp_enqueue_script(array('jquery', 'plupload-all'));
 
-        // lib
-        wp_enqueue_script('jquery-ui', $this->plugin_url() . "/assets/js/jquery-ui.js", array('jquery'), $this->version, true);
-        // wp_enqueue_script('jquery.slider', $this->plugin_url() . "/assets/js/jquery.slider.js", array('jquery', 'jquery-ui'), $this->version, true);
-        wp_enqueue_script('magnific_popup', $this->plugin_url() . "/assets/js/jquery.magnific-popup.min.js", array('jquery'), $this->version, true);
-        wp_enqueue_script('flexslider-js', $this->plugin_url() . "/assets/js/jquery.flexslider-min.js", array('jquery'), $this->version, true);
-        wp_enqueue_script('raty.js', $this->plugin_url() . "/assets/js/jquery.raty$suffix.js", array('jquery'), $this->version, true);
+        if(ME_SCRIPT_DEBUG) {
+            wp_enqueue_script('muploader.js', $this->plugin_url() . "/assets/js/muploader$suffix.js", array('jquery', 'plupload-all'), $this->version, true);
 
+            // lib
+            wp_enqueue_script('jquery-ui', $this->plugin_url() . "/assets/js/jquery-ui.js", array('jquery'), $this->version, true);
+            wp_enqueue_script('magnific_popup', $this->plugin_url() . "/assets/js/jquery.magnific-popup.min.js", array('jquery'), $this->version, true);
+            wp_enqueue_script('flexslider-js', $this->plugin_url() . "/assets/js/jquery.flexslider-min.js", array('jquery'), $this->version, true);
+            wp_enqueue_script('raty.js', $this->plugin_url() . "/assets/js/jquery.raty$suffix.js", array('jquery'), $this->version, true);
 
-        wp_enqueue_script('user_profile', $this->plugin_url() . "/assets/js/user-profile$suffix.js", array('jquery'), $this->version, true);
-        wp_enqueue_script('tag_box', $this->plugin_url() . "/assets/js/tag-box$suffix.js", array('jquery', 'suggest'), $this->version, true);
-        wp_enqueue_script('post_listing', $this->plugin_url() . "/assets/js/post-listing$suffix.js", array('jquery', 'tag_box'), $this->version, true);
+            wp_enqueue_script('user_profile', $this->plugin_url() . "/assets/js/user-profile$suffix.js", array('jquery'), $this->version, true);
+            wp_enqueue_script('tag_box', $this->plugin_url() . "/assets/js/tag-box$suffix.js", array('jquery', 'suggest'), $this->version, true);
+            wp_enqueue_script('post_listing', $this->plugin_url() . "/assets/js/post-listing$suffix.js", array('jquery', 'tag_box'), $this->version, true);
 
-        wp_enqueue_script('me.sliderthumbs', $this->plugin_url() . "/assets/js/me.sliderthumbs$suffix.js", array('jquery'), $this->version, true);
-        wp_enqueue_script('script.js', $this->plugin_url() . "/assets/js/script$suffix.js", array('jquery'), $this->version, true);
-        wp_enqueue_script('message.js', $this->plugin_url() . "/assets/js/message$suffix.js", array('jquery'), $this->version, true);
-        wp_enqueue_script('index', $this->plugin_url() . "/assets/js/index$suffix.js", array('jquery', 'message.js'), $this->version, true);
-        wp_enqueue_script('my-listings.js', $this->plugin_url() . "/assets/js/my-listings$suffix.js", array('jquery'), $this->version, true);
-        wp_enqueue_script('listing-review', $this->plugin_url() . "/assets/js/listing-review$suffix.js", array('jquery'), $this->version, true);
+            wp_enqueue_script('me.sliderthumbs', $this->plugin_url() . "/assets/js/me.sliderthumbs$suffix.js", array('jquery'), $this->version, true);
+            wp_enqueue_script('script.js', $this->plugin_url() . "/assets/js/script$suffix.js", array('jquery'), $this->version, true);
+            wp_enqueue_script('message.js', $this->plugin_url() . "/assets/js/message$suffix.js", array('jquery'), $this->version, true);
+            wp_enqueue_script('index', $this->plugin_url() . "/assets/js/index$suffix.js", array('jquery', 'message.js'), $this->version, true);
+            wp_enqueue_script('my-listings.js', $this->plugin_url() . "/assets/js/my-listings$suffix.js", array('jquery'), $this->version, true);
+            wp_enqueue_script('listing-review', $this->plugin_url() . "/assets/js/listing-review$suffix.js", array('jquery'), $this->version, true);
 
-        wp_localize_script(
-            'post_listing',
-            'me_globals',
-            array(
-                'ajaxurl'   => admin_url('admin-ajax.php'),
-                'limitFile' => __("Exceed number of allowed file upload. Max file upload is ", "enginethemes"),
-                'date_format' => get_option( 'date_format' ),
-            )
-        );
+            wp_localize_script(
+                'post_listing',
+                'me_globals',
+                array(
+                    'ajaxurl'   => admin_url('admin-ajax.php'),
+                    'limitFile' => __("Exceed number of allowed file upload. Max file upload is ", "enginethemes"),
+                    'date_format' => get_option( 'date_format' ),
+                )
+            );
+
+        } else {
+
+            wp_enqueue_script('me-vendor', $this->plugin_url() . "/assets/js/me.vendor.js", array('jquery', 'plupload-all', 'suggest'), $this->version, true);
+            
+            wp_localize_script(
+                'me-vendor',
+                'me_globals',
+                array(
+                    'ajaxurl'   => admin_url('admin-ajax.php'),
+                    'limitFile' => __("Exceed number of allowed file upload. Max file upload is ", "enginethemes"),
+                    'date_format' => get_option( 'date_format' ),
+                )
+            );
+        }
+
 
         $max_files   = apply_filters('marketengine_plupload_max_files', 2);
         $post_params = array(
