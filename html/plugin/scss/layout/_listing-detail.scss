@@ -349,8 +349,17 @@
 		}
 	}
 	.me-description {
+		background: #FFF;
 		padding: 30px;
 		margin-top: 20px;
+		border: 1px solid $color_border_base;
+		border-bottom: none;
+		-webkit-border-top-left-radius: 4px;
+		-webkit-border-top-right-radius: 4px;
+		-moz-border-radius-topleft: 4px;
+		-moz-border-radius-topright: 4px;
+		border-top-left-radius: 4px;
+		border-top-right-radius: 4px;
 		line-height: 1.58em;
 		h3 {
 			margin: 0 0 18px;
@@ -379,8 +388,15 @@
 		}
 	}
 	.me-comments {
-		border-top: 1px solid $color_border_base;
+		background: #FFF;
+		border: 1px solid $color_border_base;
 		padding: 20px 30px;
+		-webkit-border-bottom-right-radius: 4px;
+		-webkit-border-bottom-left-radius: 4px;
+		-moz-border-radius-bottomright: 4px;
+		-moz-border-radius-bottomleft: 4px;
+		border-bottom-right-radius: 4px;
+		border-bottom-left-radius: 4px;
 	}
 	.me-author {
 		background: #FFF;
