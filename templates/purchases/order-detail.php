@@ -7,7 +7,7 @@ $order_status = get_post_status( $transaction->id );
 $listing_items = $transaction->get_listing_items();
 $order_item = array_pop($listing_items);
 
-$listing = me_get_listing($listing['ID']);
+$listing = me_get_listing($order_item['ID']);
 
 me_get_template( 'purchases/transaction-info', array( 'order_number' => $order_number, 'payment_date' => $payment_date ) );
 me_get_template( 'purchases/order-status', array( 'order_status' => $order_status ) );
