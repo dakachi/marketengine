@@ -186,8 +186,14 @@ add_action('me_load_inputs_for_view', 'marketengine_load_inputs_for_view');
  */
 function me_field_option_to_string($options) {
     $str = '';
+    $count = 0;
     foreach($options as $key => $option) {
-        $str .= sprintf("%s : %s\n", $option['key'], $option['label']);
+        if($count == (count($options) -1) ) {
+            $str .= sprintf("%s : %s", $option['key'], $option['label']);
+        } else {
+            $str .= sprintf("%s : %s". PHP_EOL, $option['key'], $option['label']);
+        }
+        $count++;
     }
     return $str;
 }

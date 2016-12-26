@@ -37,7 +37,10 @@ class ME_Custom_Field_Handle {
         $term_ids            = isset($field_data['field_for_categories']) ? $field_data['field_for_categories'] : array();
         $field_data['count'] = count($term_ids);
 
-        $attributes                            = self::filter_field_attribute($field_data);
+        $attributes                     = self::filter_field_attribute($field_data);
+        if(is_wp_error($attributes)) {
+            return $attributes;
+        }
         $field_data['field_constraint'] = $attributes;
 
         if(!$is_update) {
@@ -59,7 +62,10 @@ class ME_Custom_Field_Handle {
         }
 
         if(isset($field_data['field_options'])) {
-            self::add_field_taxonomy_options($field_data);
+            $result = self::add_field_taxonomy_options($field_data);
+            if (is_wp_error($result)) {
+                return $result;
+            }
         }
 
         return $field_id;
@@ -198,12 +204,18 @@ class ME_Custom_Field_Handle {
             $constraint .= 'required';
         }
 
+        if(isset($field['field_minimum_value']) && isset($field['field_maximum_value']) && !empty($field['field_minimum_value']) && !empty($field['field_maximum_value'])) {
+            if($field['field_minimum_value'] >= $field['field_maximum_value']) {
+                return new WP_Error('number_field_attributes_invalid', __('Maximum value must be greater than minimum value.', 'enginethemes'));
+            }
+        }
+
         if (isset($field['field_minimum_value']) && !empty($field['field_minimum_value'])) {
-            $constraint .= '|min:' . $_POST['field_minimum_value'];
+            $constraint .= '|min:' . $field['field_minimum_value'];
         }
 
         if (isset($field['field_maximum_value']) && !empty($field['field_maximum_value'])) {
-            $constraint .= '|max:' . $_POST['field_maximum_value'];
+            $constraint .= '|max:' . $field['field_maximum_value'];
         }
 
         if (isset($field['field_type']) && $field['field_type'] == 'date') {
