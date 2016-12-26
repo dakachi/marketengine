@@ -212,6 +212,9 @@
 				}
 			}
 		}
+		.me-rating-contact {
+			margin: 8px 0;
+		}
 		.me-item-archive {
 			margin-top: 20px;
 			text-align: right;
@@ -225,12 +228,13 @@
 		}
 		+ .me-item-archive {
 			padding-left: 95px;
+			margin-top: 0;
 		}
 	}
 	.me-listing-info-archive {
 		span {
 			font-size: $font_size_medium;
-			font-weight: 800;
+			// font-weight: 800;
 			color: $color_label_2;
 		}
 	}

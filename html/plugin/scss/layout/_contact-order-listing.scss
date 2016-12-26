@@ -363,6 +363,12 @@
 		right: 2px;
 	}
 }
+.me-message-typing-archive {
+	font-size: $font_size_medium;
+	height: 40px;
+	line-height: 38px;
+	text-align: center;
+}
 #me-message-send-btn-disabled {
 	cursor: default;
 }
