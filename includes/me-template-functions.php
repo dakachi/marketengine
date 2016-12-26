@@ -683,7 +683,7 @@ function marketengine_get_the_archive_title()
     /**
      * Filters the archive title.
      *
-     * @since 4.1.0
+     * @since 1.0
      *
      * @param string $title Archive title to be displayed.
      */

@@ -50,7 +50,7 @@ class ME_Paypal_Simple extends ME_Payment {
     }
 
     public function __construct() {
-        $api = me_get_option('simple_paypal_api', array('receiver_email' => 'david87dang@gmail.com'));
+        $api = me_option('simple_paypal_api', array('receiver_email' => 'david87dang@gmail.com'));
 
         // $this->receiver_email = 'dinhle1987-biz@yahoo.com';
         $this->receiver_email = me_option('paypal-receiver-email');

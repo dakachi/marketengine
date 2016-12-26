@@ -11,6 +11,10 @@ if (!defined('ABSPATH')) {
 /**
  * Retrieve page id base on option name
  *
+ *
+ * @package Includes/Helper
+ * @category Function
+ * 
  * @access public
  * @param  string $page_option_name The page option name
  * @package Includes/Helper
@@ -32,6 +36,10 @@ function me_get_option_page_id($page_option_name)
  * Returns the endpoint name by query_var.
  *
  * @access public
+ *
+ * @package Includes/Helper
+ * @category Function
+ * 
  * @param  string $query_var
  * @return string
  */
@@ -47,7 +55,10 @@ function me_get_endpoint_name($query_var)
 
 /**
  * Returns the default endpoints.
- *
+ * 
+ * @package Includes/Helper
+ * @category Function
+ * 
  * @access public
  * @return array of endpoints
  */
@@ -70,23 +81,51 @@ function me_default_endpoints()
     return $endpoint_arr;
 }
 
-function me_get_option($option, $default = '')
-{
-    return get_option($option, $default);
-}
-
+/**
+ * Get the option value
+ * 
+ * @param string $option The option name
+ * @param mix $default The option default value
+ *
+ * @package Includes/Helper
+ * @category Function
+ * 
+ * @since 1.0
+ * @return string
+ */
 function me_option($option, $default = '')
 {
     $options = ME_Options::get_instance();
     return $options->get_option($option, $default);
 }
 
+/**
+ * Update option value
+ * 
+ * @param string $option The option name
+ * @param mix $value The option value
+ *
+ * @package Includes/Helper
+ * @category Function
+ * 
+ * @since 1.0
+ * @return string
+ */
 function me_update_option($option, $value)
 {
     $options = ME_Options::get_instance();
     return $options->update_option($option, $value);
 }
 
+/**
+ * Retrieve the client ip
+ * 
+ * @package Includes/Helper
+ * @category Function
+ * 
+ * @since 1.0
+ * @return string
+ */
 function me_get_client_ip()
 {
     if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -98,7 +137,15 @@ function me_get_client_ip()
     }
     return $ip;
 }
-
+/**
+ * Retrieve the client agent
+ * 
+ * @package Includes/Helper
+ * @category Function
+ * 
+ * @since 1.0
+ * @return string
+ */
 function me_get_client_agent()
 {
     return !empty($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : '';
@@ -110,6 +157,9 @@ function me_get_client_agent()
  * This function is localized. For languages that count 'words' by the individual
  * character (such as East Asian languages), the $num_words argument will apply
  * to the number of individual characters.
+ * 
+ * @package Includes/Helper
+ * @category Function
  *
  * @since 1.0
  *
@@ -165,6 +215,9 @@ function me_trim_words($text, $num_words = 55, $more = null)
 
 /**
  * Format file size Unit
+ *
+ * @package Includes/Helper
+ * @category Function
  *
  * @param int $bytes
  * @return string
