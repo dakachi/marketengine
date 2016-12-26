@@ -25,7 +25,7 @@ if (!defined('ABSPATH')) {
 				<div class="me-col-md-8">
 
 					<h2>
-						<a href="<?php echo $listing_obj && (($listing_obj->get_author() == get_current_user_id()) || $listing_obj->is_available()) ? $listing_obj->get_permalink() : 'javascript:void(0)'; ?>">
+						<a href="<?php echo $listing_obj->get_permalink(false, 'javascript:void(0)'); ?>">
 							<?php echo esc_html($cart_listing['title']); ?>
 						</a>
 					</h2>
