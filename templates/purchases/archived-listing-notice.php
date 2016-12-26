@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 
 <?php if($listing_obj ) : ?>
 	<?php if ( !$listing_obj->is_available() ) : ?>
-<p class="me-item-archive"><i class="icon-me-info-circle"></i><?php _e('This listing has been archived.', 'enginethemes'); ?></p>
+	<p class="me-item-archive"><i class="icon-me-info-circle"></i><?php _e('This listing has been archived.', 'enginethemes'); ?></p>
 	<?php endif; ?>
 <?php else: ?>
 	<p class="me-item-archive"><i class="icon-me-info-circle"></i><?php _e('This listing has been deleted.', 'enginethemes'); ?></p>

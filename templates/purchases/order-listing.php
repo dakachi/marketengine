@@ -42,6 +42,8 @@ if (!defined('ABSPATH')) {
 					</a>
 				<?php endif; ?>
 
+				<?php me_get_template('purchases/archived-listing-notice', array('listing_obj' => $listing_obj) ); ?>
+
 			</div>
 		</div>
 
@@ -61,5 +63,4 @@ if (!defined('ABSPATH')) {
 
 <?php endif; ?>
 
-	<?php me_get_template('purchases/archived-listing-notice', array('listing_obj' => $listing_obj) ); ?>
 </div>
