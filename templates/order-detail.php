@@ -45,19 +45,16 @@ get_header();
             </div>
 
             <?php
-            if( $buyer ) {
-                if(!empty($_GET['action']) && 'review' == $_GET['action'] && !empty($_GET['id'])) {
-                    me_get_template('purchases/review', 
-                        array(
-                            'transaction' => $order, 
-                            'listing_id' => $_GET['id']
-                        )
-                    );
-                }else {
-                    me_get_template('purchases/transaction', array('transaction' => $order));
-                }
-            } else {
-                me_get_template('purchases/order', array('order' => $order));
+            
+            if( $buyer && !empty($_GET['action']) && 'review' == $_GET['action'] && !empty($_GET['id'])) {
+                me_get_template('purchases/review', 
+                    array(
+                        'transaction' => $order, 
+                        'listing_id' => $_GET['id']
+                    )
+                );
+            }else {
+                me_get_template('purchases/transaction', array('transaction' => $order));
             }
             ?>
         </div>
