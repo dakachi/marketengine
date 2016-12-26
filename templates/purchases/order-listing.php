@@ -16,34 +16,34 @@ if (!defined('ABSPATH')) {
 ?>
 <div class="me-orderlisting-info">
 	
-	<?php if ($listing_obj) : ?>
+	<?php if ($listing) : ?>
 
-		<?php me_get_template('purchases/order-listing-image', array('listing_obj' => $listing_obj)); ?>
+		<?php me_get_template('purchases/order-listing-image', array('listing' => $listing)); ?>
 
 		<div class="me-listing-info">
 			<div class="me-row">
 				<div class="me-col-md-8">
 
 					<h2>
-						<a href="<?php echo $listing_obj->get_permalink(false, 'javascript:void(0)'); ?>">
+						<a href="<?php echo $listing->get_permalink(false, 'javascript:void(0)'); ?>">
 							<?php echo esc_html($cart_listing['title']); ?>
 						</a>
 					</h2>
 					<div class="me-rating">
-						<div class="result-rating" data-score="<?php echo $listing_obj->get_review_score(); ?>"></div>
+						<div class="result-rating" data-score="<?php echo $listing->get_review_score(); ?>"></div>
 					</div>
 					<div class="me-count-purchases-review">
-						<span><?php printf(_n('%d Purchase', '%d Purchases', $listing_obj->get_order_count(), 'enginethemes'), $listing_obj->get_order_count()); ?></span>
-						<span><?php printf(_n('%d Review', '%d Reviews', $listing_obj->get_review_count(), 'enginethemes'), $listing_obj->get_review_count()); ?></span>
+						<span><?php printf(_n('%d Purchase', '%d Purchases', $listing->get_order_count(), 'enginethemes'), $listing->get_order_count()); ?></span>
+						<span><?php printf(_n('%d Review', '%d Reviews', $listing->get_review_count(), 'enginethemes'), $listing->get_review_count()); ?></span>
 					</div>
 				</div>
 				<div class="me-col-md-4">
 					<?php
-						$seller = $listing_obj->get_author();
-						$can_rate = $seller != get_current_user_id() && $listing_obj->is_available();
+						$seller = $listing->get_author();
+						$can_rate = $seller != get_current_user_id() && $listing->is_available();
 					?>
-					<?php if( $can_rate  && !me_get_user_rate_listing_score($listing_obj->ID, $transaction->post_author) && !$transaction->has_status('me-pending') ) : ?>
-						<a class="me-orderlisting-review" href="<?php echo add_query_arg(array('id' => $listing_obj->ID, 'action' => 'review')); ?>">
+					<?php if( $can_rate  && !me_get_user_rate_listing_score($listing->ID, $transaction->post_author) && !$transaction->has_status('me-pending') ) : ?>
+						<a class="me-orderlisting-review" href="<?php echo add_query_arg(array('id' => $listing->ID, 'action' => 'review')); ?>">
 							<?php _e('RATE &amp; REVIEW NOW', 'enginethemes'); ?>
 						</a>
 					<?php endif; ?>
@@ -52,7 +52,7 @@ if (!defined('ABSPATH')) {
 			</div>	
 		</div>
 
-		<?php me_get_template('purchases/listing-deleted', array('listing' => $listing_obj)) ?>
+		<?php me_get_template('purchases/listing-deleted', array('listing' => $listing)) ?>
 
 	<?php else : ?>
 

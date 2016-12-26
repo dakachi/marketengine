@@ -3,10 +3,10 @@
 $args = array(
 	'posts_per_page'	=> 12,
 	'post_type' 		=> 'listing',
-	'exclude'			=> $curr_listing,
+	'exclude'			=> $current_listing,
 );
 
-$listing_cat = wp_get_post_terms($curr_listing, 'listing_category');
+$listing_cat = wp_get_post_terms($current_listing, 'listing_category');
 
 if(!empty($listing_cat)) {
 	$args['tax_query'] = array();
