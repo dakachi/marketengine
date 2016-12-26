@@ -24,7 +24,11 @@ if (!defined('ABSPATH')) {
 			<div class="me-row">
 				<div class="me-col-md-8">
 
-					<h2><a href="<?php echo $listing_obj && (($listing_obj->get_author() == get_current_user_id()) || $listing_obj->is_available()) ? $listing_obj->get_permalink() : 'javascript:void(0)'; ?>"><?php echo esc_html($cart_listing['title']); ?></a></h2>
+					<h2>
+						<a href="<?php echo $listing_obj && (($listing_obj->get_author() == get_current_user_id()) || $listing_obj->is_available()) ? $listing_obj->get_permalink() : 'javascript:void(0)'; ?>">
+							<?php echo esc_html($cart_listing['title']); ?>
+						</a>
+					</h2>
 					<div class="me-rating">
 						<div class="result-rating" data-score="<?php echo $listing_obj->get_review_score(); ?>"></div>
 					</div>
@@ -48,17 +52,11 @@ if (!defined('ABSPATH')) {
 			</div>	
 		</div>
 
-		<?php if ( !$listing_obj->is_available() ) : ?>
-	
-			<p class="me-item-archive">
-				<i class="icon-me-info-circle"></i><?php _e('This listing has been archived.', 'enginethemes'); ?>
-			</p>
-
-		<?php endif; ?>
+		<?php me_get_template('purchases/listing-deleted', array('listing' => $listing_obj)) ?>
 
 	<?php else : ?>
 
-		<?php me_get_template('purchases/archived-listing-notice'); ?>
+		<?php me_get_template('purchases/listing-deleted'); ?>
 	
 	<?php endif; ?>
 </div>

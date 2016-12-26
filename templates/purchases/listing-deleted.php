@@ -1,8 +1,8 @@
 <?php
 /**
- * The template for displaying a notice when listing has been archived.
+ * The template for displaying a notice when listing has been deleted.
  *
- * This template can be overridden by copying it to yourtheme/marketengine/purchases/archived-listing-notice.php.
+ * This template can be overridden by copying it to yourtheme/marketengine/purchases/listing-deleted.php.
  *
  * @package     MarketEngine/Templates
  * @since 		1.0.1
