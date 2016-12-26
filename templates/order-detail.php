@@ -31,6 +31,8 @@ $url = $buyer ? me_get_auth_url('purchases') : me_get_auth_url('orders');
 get_header();
 ?>
 
+<?php do_action('marketengine_before_main_content');?>
+
 <div id="marketengine-page">
     <div class="me-container">
         <div class="marketengine-content-wrap">
@@ -60,5 +62,7 @@ get_header();
         </div>
     </div>
 </div>
+
+<?php do_action('marketengine_after_main_content');?>
 
 <?php get_footer();
