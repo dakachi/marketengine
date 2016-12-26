@@ -52,7 +52,7 @@ if (!defined('ABSPATH')) {
 			</div>	
 		</div>
 
-		<?php me_get_template('purchases/listing-deleted', array('listing' => $listing)) ?>
+		<?php me_get_template('purchases/listing-archived', array('listing' => $listing)) ?>
 
 	<?php else : ?>
 
