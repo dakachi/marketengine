@@ -32,26 +32,22 @@ if (!defined('ABSPATH')) {
 
 						<?php me_get_template('single-listing/gallery', array('listing' => $listing));?>
 						
-						<!-- me-visible-sm me-visible-xs -->
 						<?php me_get_template('single-listing/notices'); ?>
 							
 						<?php me_get_template('single-listing/control', array('listing' => $listing) ); ?>
 							
 						<?php me_get_template('single-listing/category', array('listing' => $listing));?>
-						<!-- // me-visible-sm me-visible-xs -->
 						
 						<?php me_get_template('single-listing/description', array('listing' => $listing)); ?>
 
 						<?php me_get_template('single-listing/rating', array('listing' => $listing));?>
 						
+						<?php if( $listing->post_author != get_current_user_id() ) {
 
-						<?php if( $listing->post_author != get_current_user_id() ) : ?>	
+							me_get_template('user-info', array('author_id' => $listing->post_author));
 
-						<div class="me-visible-sm me-visible-xs">
-							<?php me_get_template('user-info', array('author_id' => $listing->post_author)); ?>
-						</div>
+						} ?>	
 
-						<?php endif; ?>
 
 					</div>
 
