@@ -148,6 +148,8 @@ class MarketEngine
         require_once ME_PLUGIN_PATH . '/admin/index.php';
         require_once ME_PLUGIN_PATH . '/includes/custom-fields/index.php';
 
+        require_once ME_PLUGIN_PATH . '/includes/resolution/index.php';
+
         require_once ME_PLUGIN_PATH . '/includes/class-me-install.php';
         require_once ME_PLUGIN_PATH . '/includes/class-me-session.php';
         require_once ME_PLUGIN_PATH . '/includes/class-me-validator.php';

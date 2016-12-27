@@ -22,8 +22,10 @@
 	<div class="me-table-col me-rslt-related">Jacqueline Anne Hathaway</div>
 	<div class="me-table-col me-rslt-amount">$10000.00</div>
 </div>
+<?php /*
 <div class="me-table-row-empty">
 	<div>
 		<span><?php _e('There are no cases.', 'enginethemes'); ?></span>
 	</div>
 </div>
+*/ ?>

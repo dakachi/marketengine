@@ -1,8 +1,9 @@
-<select>
-	<option><?php _e('All', 'enginethemes'); ?></option>
-	<option><?php _e('Open', 'enginethemes'); ?></option>
-	<option><?php _e('Waiting...', 'enginethemes'); ?></option>
-	<option><?php _e('Escalated', 'enginethemes'); ?></option>
-	<option><?php _e('Closed', 'enginethemes'); ?></option>
-	<option><?php _e('Resolved', 'enginethemes'); ?></option>
+<select name="status">
+	<option value=""><?php _e('All', 'enginethemes'); ?></option>
+<?php
+	$statuses = me_rc_status_list();
+	foreach ($statuses as $key => $status) :
+?>
+	<option <?php selected($_GET['status'], $key); ?> value="<?php echo $key; ?>"><?php echo $status; ?></option>
+<?php endforeach; ?>
 </select>
