@@ -1,8 +1,10 @@
 //=== Layout custom field
 //
 .me-custom-field {
-	padding: 0px 0 0px 30px; 
-	border-top: 1px solid $color_border_base;
+	background: #FFF;
+	padding: 0px 0 0px 30px;
+	border: 1px solid $color_border_base;
+	border-bottom: none;
 	> .me-row {
 		&:first-of-type {
 			.me-cf-content {
