@@ -28,4 +28,3 @@ $transaction->update_listings();
 	?>
 
 </div>
-<!--// marketengine-content -->

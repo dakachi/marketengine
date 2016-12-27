@@ -7,12 +7,7 @@
  * @package     MarketEngine/Templates
  * @version     1.0.0
  */
-
 $order = me_get_order();
-$is_buyer = ($order->post_author == get_current_user_id());
-
-$title = $is_buyer ? __('MY TRANSACTIONS', 'enginethemes') : __('MY ORDERS', 'enginethemes');
-$url = $is_buyer ? me_get_auth_url('purchases') : me_get_auth_url('orders');
 get_header();
 ?>
 
@@ -22,18 +17,11 @@ get_header();
     <div class="me-container">
         <div class="marketengine-content-wrap">
 
-            <div class="marketengine-page-title me-have-breadcrumb">
-                <h2><?php echo $title; ?></h2>
-                <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
-                <ol class="me-breadcrumb">
-                    <li><a href="<?php echo $url; ?>"><?php echo $title; ?></a></li>
-                    <li><a href="#"><?php printf( '#%s', $order->id ); ?></a></li>
-                </ol>
-            </div>
+            <?php me_get_template('purchases/transaction-heading', array('transaction' => $order)); ?>
 
             <?php
             
-            if( $is_buyer && !empty($_GET['action']) && 'review' == $_GET['action'] && !empty($_GET['id'])) {
+            if( $order->post_author == get_current_user_id() && !empty($_GET['action']) && 'review' == $_GET['action'] && !empty($_GET['id'])) {
                 me_get_template('purchases/review', 
                     array(
                         'transaction' => $order, 
