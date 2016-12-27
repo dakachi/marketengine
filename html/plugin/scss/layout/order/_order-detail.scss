@@ -452,6 +452,9 @@
 		}
 		.me-listing-info {
 			padding: 0;
+			+ .me-item-archive {
+				padding: 0;
+			}
 		}
 	}
 
