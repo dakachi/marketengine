@@ -18,7 +18,6 @@ if (!defined('ABSPATH')) {
 }
 
 ?>
-<div class="me-custom-field">
 <?php
 foreach ($fields as $field):
     switch ($field['field_type']) {
@@ -72,4 +71,3 @@ foreach ($fields as $field):
     }
 endforeach;
 ?>
-</div>
