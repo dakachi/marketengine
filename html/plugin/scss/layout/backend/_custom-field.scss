@@ -116,9 +116,14 @@
 .me-cf-row, .me-cf-row-header {
 	margin: 0 23px;
 	font-size: 0;
+	.me-cf-col-name {
+		display: inline-block;
+		width: 30%;
+		font-size: 16px;
+	}
 	.me-cf-col-title {
 		display: inline-block;
-		width: 60%;
+		width: 30%;
 		font-size: 16px;
 	}
 	.me-cf-col-number {

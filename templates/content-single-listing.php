@@ -31,20 +31,17 @@ if (!defined('ABSPATH')) {
 					<div class="marketengine-content-detail">
 
 						<?php me_get_template('single-listing/gallery', array('listing' => $listing));?>
-
-						<div class="me-visible-sm me-visible-xs">
-
-							<?php me_get_template('single-listing/notices'); ?>
+						
+						<!-- me-visible-sm me-visible-xs -->
+						<?php me_get_template('single-listing/notices'); ?>
 							
-							<?php me_get_template('single-listing/control', array('listing' => $listing) ); ?>
+						<?php me_get_template('single-listing/control', array('listing' => $listing) ); ?>
 							
-							<?php me_get_template('single-listing/category', array('listing' => $listing));?>
-
-						</div>
-
+						<?php me_get_template('single-listing/category', array('listing' => $listing));?>
+						<!-- // me-visible-sm me-visible-xs -->
 						
 						<?php me_get_template('single-listing/description', array('listing' => $listing)); ?>
-						
+
 						<?php me_get_template('single-listing/rating', array('listing' => $listing));?>
 						
 
