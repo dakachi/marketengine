@@ -1,5 +1,5 @@
 <div class="me-resolution">
-	<?php me_get_template('resolution/resolution-filter'); ?>
+	<?php me_get_template('resolution/cases-filter'); ?>
 
 	<?php me_get_template('resolution/dispute-case-list'); ?>
 
