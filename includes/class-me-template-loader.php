@@ -12,13 +12,16 @@ if (!defined('ABSPATH')) {
  * @author      Dakachi
  * @category    Class
  */
-class ME_Template_Loader {
+class ME_Template_Loader
+{
 
-    public static function init_hooks() {
+    public static function init_hooks()
+    {
         add_filter('template_include', array(__CLASS__, 'template_include'));
     }
 
-    public static function template_include($template) {
+    public static function template_include($template)
+    {
         $find = array();
         $file = '';
         if (is_embed()) {
@@ -27,11 +30,11 @@ class ME_Template_Loader {
 
         if (is_author()) {
 
-            $file = 'seller-profile/seller-profile.php';
+            $file   = 'seller-profile/seller-profile.php';
             $find[] = $file;
             $find[] = ME()->template_path() . $file;
         } elseif (is_single() && get_post_type() == 'listing') {
-            $file = 'single-listing.php';
+            $file   = 'single-listing.php';
             $find[] = $file;
             $find[] = ME()->template_path() . $file;
 
@@ -39,16 +42,20 @@ class ME_Template_Loader {
 
             global $current_user;
             $order_id = get_the_ID();
-            $order = me_get_order($order_id);
-            $is_buyer = $order->post_author == $user_id;
-            $seller_name = me_get_order_items($order_id, 'receiver_item')[0]->order_item_name;
-            if( !$is_buyer && $seller_name != $current_user->user_login ) {
-                return get_404_template();
-            }
+            $order    = me_get_order($order_id);
 
-            $file = 'order-detail.php';
-            $find[] = $file;
-            $find[] = ME()->template_path() . $file;
+            $is_buyer    = ($order->post_author == $current_user->ID);
+            $seller_name = me_get_order_items($order_id, 'receiver_item')[0]->order_item_name;
+
+            if (!$is_buyer && $seller_name != $current_user->user_login) {
+                $file   = '404.php';
+                $find[] = $file;
+                $find[] = get_404_template();
+            } else {
+                $file   = 'order-detail.php';
+                $find[] = $file;
+                $find[] = ME()->template_path() . $file;
+            }
 
         } elseif (is_tax(get_object_taxonomies('listing_category'))) {
 
@@ -69,7 +76,7 @@ class ME_Template_Loader {
 
         } elseif (is_post_type_archive('listing')) {
 
-            $file = 'archive-listing.php';
+            $file   = 'archive-listing.php';
             $find[] = $file;
             $find[] = ME()->template_path() . $file;
 
