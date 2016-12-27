@@ -18,7 +18,7 @@ $is_buyer = $order->post_author == $user_id;
 
 $is_seller = me_get_order_items($order_id)[1]->order_item_name;
 
-if( !$buyer && !($is_seller == $user_data->user_login) ) {
+if( !$is_buyer && !($is_seller == $user_data->user_login) ) {
     return load_template(get_404_template());
 }
 
