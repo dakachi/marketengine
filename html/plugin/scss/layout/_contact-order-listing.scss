@@ -364,8 +364,9 @@
 	}
 }
 .me-message-typing-archive {
+	padding: 0 15px;
+	min-height: 40px;
 	font-size: $font_size_medium;
-	height: 40px;
 	line-height: 38px;
 	text-align: center;
 }
