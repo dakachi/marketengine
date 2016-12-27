@@ -7,27 +7,23 @@
  * @package     MarketEngine/Templates
  * @version     1.0.0
  */
-//TODO: tam thoi lam the nay
-if( !current_user_can('edit_posts') ) {
-    $login_url = me_get_auth_url();
-    wp_redirect( $login_url );
-}
+
 $user_id = get_current_user_id();
 $user_data = get_userdata($user_id);
 
 $order_id = get_the_ID();
 $order = new ME_Order($order_id);
 
-$buyer = $order->post_author == $user_id;
+$is_buyer = $order->post_author == $user_id;
 
-$seller = me_get_order_items($order_id)[1]->order_item_name;
+$is_seller = me_get_order_items($order_id)[1]->order_item_name;
 
-if( !$buyer && !($seller == $user_data->user_login) ) {
+if( !$buyer && !($is_seller == $user_data->user_login) ) {
     return load_template(get_404_template());
 }
 
-$title = $buyer ? __('MY TRANSACTIONS', 'enginethemes') : __('MY ORDERS', 'enginethemes');
-$url = $buyer ? me_get_auth_url('purchases') : me_get_auth_url('orders');
+$title = $is_buyer ? __('MY TRANSACTIONS', 'enginethemes') : __('MY ORDERS', 'enginethemes');
+$url = $is_buyer ? me_get_auth_url('purchases') : me_get_auth_url('orders');
 get_header();
 ?>
 
@@ -48,7 +44,7 @@ get_header();
 
             <?php
             
-            if( $buyer && !empty($_GET['action']) && 'review' == $_GET['action'] && !empty($_GET['id'])) {
+            if( $is_buyer && !empty($_GET['action']) && 'review' == $_GET['action'] && !empty($_GET['id'])) {
                 me_get_template('purchases/review', 
                     array(
                         'transaction' => $order, 

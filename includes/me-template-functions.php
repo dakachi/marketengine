@@ -722,3 +722,20 @@ function me_auth_page_title( $title, $id = null ) {
     return $title;
 }
 add_filter( 'the_title', 'me_auth_page_title', 10, 2 );
+
+/**
+ * Redirect user to login when access order details without login
+ * 
+ * @package Includes/Template
+ * @category Function
+ * 
+ * @since 1.0.1
+ */
+function me_prevent_access_order_details() {
+    if(is_singular( 'me_order' ) && !is_user_logged_in()) {
+        $login_url = me_get_auth_url();
+        wp_redirect( $login_url );
+        exit;
+    }
+}
+add_action( 'template_redirect', 'me_prevent_access_order_details' );

@@ -161,6 +161,26 @@ function me_close_order($order_id) {
     return $order_id;
 }
 
+function me_get_order($order) {
+    return new ME_Order($order);
+}
+
+function me_get_order_ids($value, $type) {
+    global $wpdb;
+    $operator = '=';
+    if ($type == 'listing_item') {
+        $operator = 'LIKE';
+        $value    = "%{$value}%";
+    }
+    $query = "SELECT order_items.order_id
+            FROM $wpdb->marketengine_order_items as order_items
+            WHERE order_items.order_item_type = '{$type}' AND
+                order_items.order_item_name {$operator} '{$value}'";
+
+    $results = $wpdb->get_col($query);
+    return $results;
+}
+
 /**
  * Run cron job to collection expired order to close
  * @since 1.0
@@ -184,26 +204,6 @@ function me_cron_close_order() {
 
 }
 add_action('marketengine_cron_execute', 'me_cron_close_order');
-
-function me_get_order($order) {
-    return new ME_Order($order);
-}
-
-function me_get_order_ids($value, $type) {
-    global $wpdb;
-    $operator = '=';
-    if ($type == 'listing_item') {
-        $operator = 'LIKE';
-        $value    = "%{$value}%";
-    }
-    $query = "SELECT order_items.order_id
-            FROM $wpdb->marketengine_order_items as order_items
-            WHERE order_items.order_item_type = '{$type}' AND
-                order_items.order_item_name {$operator} '{$value}'";
-
-    $results = $wpdb->get_col($query);
-    return $results;
-}
 
 /**
  *  Returns order query args
