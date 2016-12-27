@@ -8,20 +8,15 @@
  * @version     1.0.0
  */
 
-$user_id = get_current_user_id();
-$order_id = get_the_ID();
-$order = new ME_Order($order_id);
-
-$is_buyer = $order->post_author == $user_id;
-
-$is_seller = me_get_order_items($order_id)[1]->order_item_name;
+$order = me_get_order();
+$is_buyer = ($order->post_author == get_current_user_id());
 
 $title = $is_buyer ? __('MY TRANSACTIONS', 'enginethemes') : __('MY ORDERS', 'enginethemes');
 $url = $is_buyer ? me_get_auth_url('purchases') : me_get_auth_url('orders');
 get_header();
 ?>
 
-<?php do_action('marketengine_before_main_content');?>
+<?php do_action('marketengine_before_main_content'); ?>
 
 <div id="marketengine-page">
     <div class="me-container">
@@ -48,6 +43,7 @@ get_header();
             }else {
                 me_get_template('purchases/transaction', array('transaction' => $order));
             }
+            
             ?>
         </div>
     </div>
