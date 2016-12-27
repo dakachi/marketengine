@@ -64,16 +64,16 @@ function me_get_field_type_label($field_type) {
 function marketengine_custom_field_template() {
     if(isset($_REQUEST['view'])) {
         if($_REQUEST['view'] == 'add') {
-            me_get_template('custom-fields/admin-custom-field-form');
+            me_get_template('custom-fields/admin-templates/admin-custom-field-form');
         } elseif($_REQUEST['view'] == 'edit') {
             $field_obj = me_cf_get_field($_REQUEST['custom-field-id']);
             $field_obj['field_for_categories'] = me_cf_get_field_categories($_REQUEST['custom-field-id']);
-            me_get_template('custom-fields/admin-custom-field-form', array('field_obj' => $field_obj));
+            me_get_template('custom-fields/admin-templates/admin-custom-field-form', array('field_obj' => $field_obj));
         } elseif($_REQUEST['view'] == 'group-by-category') {
-            me_get_template('custom-fields/admin-custom-field');
+            me_get_template('custom-fields/admin-templates/admin-custom-field');
         }
     } else {
-        me_get_template('custom-fields/admin-custom-field');
+        me_get_template('custom-fields/admin-templates/admin-custom-field');
     }
 }
 
@@ -92,17 +92,17 @@ function marketengine_load_input_by_field_type($args) {
         case 'text':
         case 'textarea':
             ob_start();
-            me_get_template('custom-fields/admin-field-placeholder', array('placeholder' => $placeholder));
+            me_get_template('custom-fields/admin-templates/admin-field-placeholder', array('placeholder' => $placeholder));
             $options = ob_get_clean();
             break;
 
         case 'number':
             ob_start();
-            me_get_template('custom-fields/admin-field-placeholder', array('placeholder' => $placeholder));
+            me_get_template('custom-fields/admin-templates/admin-field-placeholder', array('placeholder' => $placeholder));
 
-            me_get_template('custom-fields/admin-field-minimum-value', array('min' => $attribute['min']));
+            me_get_template('custom-fields/admin-templates/admin-field-minimum-value', array('min' => $attribute['min']));
 
-            me_get_template('custom-fields/admin-field-maximum-value', array('max' => $attribute['max']));
+            me_get_template('custom-fields/admin-templates/admin-field-maximum-value', array('max' => $attribute['max']));
             $options = ob_get_clean();
             break;
         case 'date':
@@ -111,16 +111,16 @@ function marketengine_load_input_by_field_type($args) {
         case 'checkbox':
         case 'radio':
             ob_start();
-            me_get_template('custom-fields/admin-field-option', $args);
+            me_get_template('custom-fields/admin-templates/admin-field-option', $args);
             $options = ob_get_clean();
             break;
 
         case 'single-select':
         case 'multi-select':
             ob_start();
-            me_get_template('custom-fields/admin-field-option-none', array('options_none_text' => $placeholder));
+            me_get_template('custom-fields/admin-templates/admin-field-option-none', array('options_none_text' => $placeholder));
 
-            me_get_template('custom-fields/admin-field-option', $args);
+            me_get_template('custom-fields/admin-templates/admin-field-option', $args);
             $options = ob_get_clean();
             break;
 
@@ -186,8 +186,14 @@ add_action('me_load_inputs_for_view', 'marketengine_load_inputs_for_view');
  */
 function me_field_option_to_string($options) {
     $str = '';
+    $count = 0;
     foreach($options as $key => $option) {
-        $str .= sprintf("%s : %s\n", $option['key'], $option['label']);
+        if($count == (count($options) -1) ) {
+            $str .= sprintf("%s : %s", $option['key'], $option['label']);
+        } else {
+            $str .= sprintf("%s : %s". PHP_EOL, $option['key'], $option['label']);
+        }
+        $count++;
     }
     return $str;
 }

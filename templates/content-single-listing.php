@@ -42,11 +42,11 @@ if (!defined('ABSPATH')) {
 
 						</div>
 
-
-						<div class="me-box-shadow">
-							<?php me_get_template('single-listing/description', array('listing' => $listing)); ?>
-							<?php me_get_template('single-listing/rating', array('listing' => $listing));?>
-						</div>
+						
+						<?php me_get_template('single-listing/description', array('listing' => $listing)); ?>
+						
+						<?php me_get_template('single-listing/rating', array('listing' => $listing));?>
+						
 
 						<?php if( $listing->post_author != get_current_user_id() ) : ?>	
 
