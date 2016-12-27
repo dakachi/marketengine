@@ -65,18 +65,19 @@ function me_get_endpoint_name($query_var)
 function me_default_endpoints()
 {
     $endpoint_arr = array(
-        'forgot_password' => 'forgot-password',
-        'reset_password'  => 'reset-password',
-        'register'        => 'register',
-        'edit_profile'    => 'edit-profile',
-        'change_password' => 'change-password',
-        'listings'        => 'listings',
-        'orders'          => 'orders',
-        'order_id'        => 'order',
-        'purchases'       => 'purchases',
-        'pay'             => 'pay',
-        'listing_id'      => 'listing-id',
-        'seller_id'       => 'seller',
+        'forgot_password'       => 'forgot-password',
+        'reset_password'        => 'reset-password',
+        'register'              => 'register',
+        'edit_profile'          => 'edit-profile',
+        'change_password'       => 'change-password',
+        'listings'              => 'listings',
+        'orders'                => 'orders',
+        'order_id'              => 'order',
+        'purchases'             => 'purchases',
+        'pay'                   => 'pay',
+        'listing_id'            => 'listing-id',
+        'seller_id'             => 'seller',
+        'resolution_center'       => 'resolution-center',
     );
     return $endpoint_arr;
 }

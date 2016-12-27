@@ -27,6 +27,8 @@ class ME_Shortcodes_Auth {
             return self::me_user_purchases();
         }elseif (isset($wp->query_vars['listing-id'])) {
             return self::me_user_edit_listing();
+        }elseif (isset($wp->query_vars['resolution-center'])) {
+            return self::me_resolution_center();
         }
         return self::me_user_profile();
     }
@@ -135,6 +137,12 @@ class ME_Shortcodes_Auth {
     public static function me_confirm_email() {
         ob_start();
         me_get_template('account/confirm-email');
+        $content = ob_get_clean();
+        return $content;
+    }
+    public static function me_resolution_center() {
+        ob_start();
+        me_get_template('account/resolution-center');
         $content = ob_get_clean();
         return $content;
     }

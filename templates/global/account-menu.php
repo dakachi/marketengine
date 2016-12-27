@@ -22,6 +22,7 @@ if (!defined('ABSPATH')) {
 		<li><a href="<?php echo me_get_auth_url( 'listings' ); ?>"><?php echo __('My Listings', 'enginethemes'); ?></a></li>
 		<li><a href="<?php echo me_get_auth_url( 'orders' ); ?>"><?php echo __('My Orders', 'enginethemes'); ?></a></li>
 		<li><a href="<?php echo me_get_auth_url( 'purchases' ); ?>"><?php echo __('My Purchases', 'enginethemes'); ?></a></li>
+		<li><a href="<?php echo me_get_auth_url( 'resolution-center' ); ?>"><?php echo __('Resolution Center', 'enginethemes'); ?></a></li>
 		<li><a href="<?php echo me_get_page_permalink( 'user_account' ); ?>"><?php echo __('My Profile', 'enginethemes'); ?></a></li>
 		<li><a href="<?php echo wp_logout_url( get_the_permalink() ); ?>"><?php echo __('Logout', 'enginethemes'); ?></a></li>
 	</ul>
