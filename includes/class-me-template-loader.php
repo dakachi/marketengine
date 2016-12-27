@@ -31,12 +31,20 @@ class ME_Template_Loader {
             $find[] = $file;
             $find[] = ME()->template_path() . $file;
         } elseif (is_single() && get_post_type() == 'listing') {
-
             $file = 'single-listing.php';
             $find[] = $file;
             $find[] = ME()->template_path() . $file;
 
         } elseif (is_single() && get_post_type() == 'me_order') {
+
+            global $current_user;
+            $order_id = get_the_ID();
+            $order = me_get_order($order_id);
+            $is_buyer = $order->post_author == $user_id;
+            $seller_name = me_get_order_items($order_id, 'receiver_item')[0]->order_item_name;
+            if( !$is_buyer && $seller_name != $current_user->user_login ) {
+                return get_404_template();
+            }
 
             $file = 'order-detail.php';
             $find[] = $file;

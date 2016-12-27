@@ -39,7 +39,7 @@ $unit = ($order_item['qty']) ? $order_item['qty'][0] : 1;
 						<span><?php echo esc_html($order_item['title']); ?></span>
 					</a>
 
-				<?php me_get_template('purchases/archived-listing-notice', array('listing' => $listing) ); ?>
+				<?php me_get_template('purchases/listing-archived', array('listing' => $listing) ); ?>
 				</div>
 			</div>
 			<div class="me-table-col me-cart-price">

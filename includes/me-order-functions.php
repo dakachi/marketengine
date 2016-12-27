@@ -161,7 +161,11 @@ function me_close_order($order_id) {
     return $order_id;
 }
 
-function me_get_order($order) {
+function me_get_order($order = null) {
+    if(!$order) {
+        global $post;
+        $order = $post;
+    }
     return new ME_Order($order);
 }
 
