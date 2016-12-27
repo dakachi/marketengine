@@ -142,7 +142,7 @@ class ME_Shortcodes_Auth {
     }
     public static function me_resolution_center() {
         ob_start();
-        me_get_template('account/resolution-center');
+        me_get_template('resolution/cases');
         $content = ob_get_clean();
         return $content;
     }
