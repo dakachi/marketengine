@@ -216,7 +216,7 @@ function me_post_tags_meta_box($default, $taxonomy)
             <div class="jaxtag">
             <div class="nojs-tags hide-if-js">
                 <label class="me-field-title" for="tax-input-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_or_remove_items; ?></label>
-                <textarea style="display:none;" name="<?php echo $tax_name; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled(!$user_can_assign_terms);?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace(',', $comma . ' ', $terms_to_edit); // textarea_escaped by esc_attr()         ?></textarea>
+                <textarea style="display:none;" name="<?php echo $tax_name; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled(!$user_can_assign_terms);?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace(',', $comma . ' ', $terms_to_edit); // textarea_escaped by esc_attr()          ?></textarea>
             </div>
 
             <div class="ajaxtag hide-if-no-js">
@@ -822,9 +822,24 @@ function me_order_related_listing($transaction)
         $listings = get_posts($args);
         // get the template
         me_get_template('purchases/listing-slider', array('listings' => $listings));
-       
+
         wp_reset_postdata();
     }
 }
-
 add_action('marketengine_after_order_extra', 'me_order_related_listing');
+
+function me_transaction_details($transaction)
+{
+    $transaction->update_listings();
+    if ($transaction->post_author == get_current_user_id() && !empty($_GET['action']) && 'review' == $_GET['action'] && !empty($_GET['id'])) {
+        me_get_template('purchases/review',
+            array(
+                'transaction' => $transaction,
+                'listing_id'  => $_GET['id'],
+            )
+        );
+    } else {
+        me_get_template('purchases/transaction', array('transaction' => $transaction));
+    }
+}
+add_action('marketengine_transaction_details', 'me_transaction_details', 10);

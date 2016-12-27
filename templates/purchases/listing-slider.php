@@ -1,4 +1,18 @@
 <?php
+/**
+ * The template for displaying order related listing slider
+ *
+ * This template can be overridden by copying it to yourtheme/marketengine/purchases/listing-slider.php.
+ *
+ * @package     MarketEngine/Templates
+ * @since 		1.0.0
+ * @version     1.0.0
+ */
+
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 
 if(!empty($listings)) :
@@ -53,4 +67,3 @@ if(!empty($listings)) :
 
 <?php endif; ?>
 
-<?php wp_reset_postdata(); ?>
