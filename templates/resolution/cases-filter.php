@@ -1,0 +1,56 @@
+<!-- mobile -->
+<div class="me-resolution-tab-filter">
+	<span class="me-switch-tab-filter-1"><?php _e('Filter', 'enginethemes'); ?></span>
+	<span class="me-switch-tab-filter-2"><?php _e('Filter list', 'enginethemes'); ?></span>
+</div>
+<!--//mobile-->
+<div class="me-resolution-filter">
+	<form id="me-resolution-filter-form" action="">
+ 		<div class="me-row">
+			<div class="me-col-md-5">
+				<div class="me-row">
+					<div class="me-col-md-5 me-col-sm-6">
+						<div class="me-status-filter">
+							<label><?php _e('Status','enginethemes'); ?></label>
+							<?php me_get_template('resolution/case-status-list'); ?>
+						</div>
+					</div>
+					<div class="me-col-md-7 me-col-sm-6">
+						<div class="me-open-date-filter">
+							<label><?php _e('Open date', 'enginethemes'); ?></label>
+							<div class="me-resolution-pick">
+								<input class="me-pick-date" id="me-pick-date-1" type="text" placeholder="<?php _e('Form date', 'enginethemes'); ?>" name="from_date" value="<?php echo isset($_GET['from_date']) ? $_GET['from_date'] : ''; ?>">
+								<input class="me-pick-date" id="me-pick-date-2" type="text" placeholder="<?php _e('To date', 'enginethemes'); ?>" name="to_date" value="<?php echo isset($_GET['to_date']) ? $_GET['to_date'] : ''; ?>">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="me-col-md-7">
+				<div class="me-row">
+					<?php /* <div class="me-col-md-5">
+						<div class="me-problem-filter">
+							<label>Problem</label>
+							<select>
+								<option>All</option>
+								<option>The item does not match description</option>
+							</select>
+						</div>
+					</div> */ ?>
+					<div class="me-col-md-7">
+						<div class="me-keyword-filter">
+							<label><?php _e('Keyword', 'enginethemes'); ?></label>
+							<div class="me-resolution-search">
+								<input type="text" placeholder="<?php _e('Search case, username...', 'enginethemes'); ?>" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>">
+								<div class="me-resolution-clear-filter">
+									<a href="#"><?php _e('Clear Filter', 'enginethemes'); ?></a>
+									<input class="me-resolution-filter-btn" type="submit" value="<?php _e('FILTER', 'enginethemes'); ?>">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
