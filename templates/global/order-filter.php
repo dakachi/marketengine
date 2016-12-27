@@ -46,7 +46,7 @@ $type = isset($type) ? $type : 'transaction';
 					<?php $page = ($type === 'order') ? 'orders' : 'purchases'; ?>
 				</div>
 				<div class="me-order-clear-filter">
-					<a href="<?php echo me_get_auth_url($page); ?>"><?php _e('Clear Filter'); ?></a>
+					<a href="<?php echo me_get_auth_url($page); ?>"><?php _e('Clear Filter', 'enginethemes'); ?></a>
 					<input class="me-order-filter-btn" type="submit" value="<?php _e('FILTER', 'enginethemes'); ?>">
 				</div>
 			</div>

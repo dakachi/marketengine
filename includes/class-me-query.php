@@ -142,7 +142,7 @@ class ME_Query
      */
     private function rewrite_user_account_url()
     {
-        $endpoints = array('orders', 'purchases', 'listings');
+        $endpoints = array('orders', 'purchases', 'listings', 'resolution-center');
         foreach ($endpoints as $endpoint) {
             add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
         }
