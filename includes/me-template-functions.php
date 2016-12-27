@@ -868,6 +868,8 @@ function me_transaction_details($transaction)
                 'listing_id'  => $_GET['id'],
             )
         );
+    } elseif($transaction->post_author == get_current_user_id() && !empty($_GET['action']) && 'dispute') {
+        me_get_template('resolution/dispute-form');
     } else {
         me_get_template('purchases/transaction', array('transaction' => $transaction));
     }

@@ -73,11 +73,11 @@
 			</ul>
 		</div>
 
-		<?php me_get_template('resolution/case-expectation'); ?>
+		<?php me_get_template('resolution/expected-resolution'); ?>
 
 		<div class="me-dispute-submit">
 			<input type="submit" class="me-dispute-submit-btn" value="<?php _e('SUBMIT', 'enginethemes'); ?>">
 		</div>
-		<a href="#" class="me-backlink"><?php _e('&lt; Back to transaction details', 'enginethemes'); ?></a>
+		<a href="<?php echo remove_query_arg('action'); ?>" class="me-backlink"><?php _e('&lt; Back to transaction details', 'enginethemes'); ?></a>
 	</form>
 </div>

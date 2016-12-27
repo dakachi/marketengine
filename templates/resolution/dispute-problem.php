@@ -15,10 +15,7 @@ $problems = me_rc_dispute_problems();
 	<h3><?php _e('What is your problem?', 'enginethemes'); ?></h3>
 	<select name="" id="">
 	<?php foreach ($problems as $key => $problem) : ?>
-		<option value=""><?php _e('Problem 001', 'enginethemes'); ?></option>
-		<option value=""><?php _e('Problem 002', 'enginethemes'); ?></option>
-		<option value=""><?php _e('Problem 003', 'enginethemes'); ?></option>
-		<option value=""><?php _e('Problem 004', 'enginethemes'); ?></option>
+		<option value="<?php echo $key; ?>"><?php echo $problem; ?></option>
 	<?php endforeach; ?>
 	</select>
 </div>

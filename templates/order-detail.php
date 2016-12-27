@@ -24,7 +24,7 @@ get_header();
     <div class="me-container">
 
     <?php do_action('marketengine_before_transaction_details', $transaction); ?>
-        
+
         <div class="marketengine-content-wrap">
 
             <?php do_action('marketengine_transaction_details_start', $transaction); ?>
