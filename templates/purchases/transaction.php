@@ -15,17 +15,7 @@ $transaction->update_listings();
 	<?php me_print_notices(); ?>
 
 	<?php me_get_template( 'purchases/order-detail', array('transaction' => $transaction) ); ?>
-	
 
 	<?php me_get_template( 'purchases/order-extra', array('transaction' => $transaction ) ); ?>
 
-	<?php
-
-	if(get_current_user_id() == $transaction->post_author) :
-		me_get_template( 'purchases/listing-slider', array('transaction' => $transaction) );
-	endif;
-
-	?>
-
 </div>
-<!--// marketengine-content -->

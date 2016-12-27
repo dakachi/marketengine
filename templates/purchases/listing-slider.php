@@ -1,31 +1,5 @@
 <?php
-$listing_items = $transaction->get_listing_items();
-$cart_item = array_pop($listing_items);
 
-$args = array(
-	'posts_per_page'	=> 12,
-	'post_type' 		=> 'listing',
-	'exclude'			=> $current_listing,
-);
-
-$listing_cat = wp_get_post_terms($current_listing, 'listing_category');
-
-if(!empty($listing_cat)) {
-	$args['tax_query'] = array();
-	foreach ($listing_cat as $key => $cat) {
-		if(!$cat->parent) {
-			$args['tax_query'][] = array(
-					'taxonomy' 	=> 'listing_category',
-					'field' 	=> 'slug',
-					'terms' 	=> $cat,
-				);
-		}
-	}
-}
-
-$args = apply_filters( 'me_related_listing_args', $args );
-
-$listings = get_posts( $args );
 
 if(!empty($listings)) :
 ?>

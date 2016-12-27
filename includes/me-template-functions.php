@@ -40,7 +40,7 @@ function me_locate_template($template_names)
         } elseif (file_exists(ME()->plugin_path() . '/templates/' . $template_name)) {
             $located = ME()->plugin_path() . '/templates/' . $template_name;
             break;
-        }else {
+        } else {
             $located = false;
         }
     }
@@ -92,7 +92,10 @@ function me_get_template($template_name, $args = array())
     }
 
     $located = me_locate_template($templates);
-    if(!$located) return;
+    if (!$located) {
+        return;
+    }
+
     include $located;
 }
 
@@ -213,7 +216,7 @@ function me_post_tags_meta_box($default, $taxonomy)
             <div class="jaxtag">
             <div class="nojs-tags hide-if-js">
                 <label class="me-field-title" for="tax-input-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_or_remove_items; ?></label>
-                <textarea style="display:none;" name="<?php echo $tax_name; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled(!$user_can_assign_terms);?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace(',', $comma . ' ', $terms_to_edit); // textarea_escaped by esc_attr()       ?></textarea>
+                <textarea style="display:none;" name="<?php echo $tax_name; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled(!$user_can_assign_terms);?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace(',', $comma . ' ', $terms_to_edit); // textarea_escaped by esc_attr()         ?></textarea>
             </div>
 
             <div class="ajaxtag hide-if-no-js">
@@ -343,12 +346,14 @@ function me_get_seller_profile_url($seller_id)
  * Adds an action to get shop categories selectbox template.
  *
  */
-function me_shop_categories_action( $device = '' )
+function me_shop_categories_action($device = '')
 {
-    if ( 'mobile' === $device )
+    if ('mobile' === $device) {
         me_get_template('global/shop-categories-mobile');
-    else
+    } else {
         me_get_template('global/shop-categories');
+    }
+
 }
 add_action('me_shop_categories', 'me_shop_categories_action');
 
@@ -358,12 +363,14 @@ add_action('me_shop_categories', 'me_shop_categories_action');
  * Adds an action to get account menu selectbox template.
  *
  */
-function me_account_menu_action( $device = '' )
+function me_account_menu_action($device = '')
 {
-    if ( 'mobile' === $device )
+    if ('mobile' === $device) {
         me_get_template('global/account-menu-mobile');
-    else
+    } else {
         me_get_template('global/account-menu');
+    }
+
 }
 add_action('me_account_menu', 'me_account_menu_action');
 
@@ -474,7 +481,7 @@ function me_print_order_status($status)
 function me_print_buyer_information($address)
 {
     foreach ($address as $key => $value) {
-        if( $key === 'first_name' ) {
+        if ($key === 'first_name') {
             echo $value . " ";
             continue;
         }
@@ -596,7 +603,7 @@ function marketengine_get_search_form($echo = true)
                 </div>
             </form>
             <form method="get" class="mobile-search-form" action="' . $url . '">
-                
+
                 <div class="me-search me-visible-xs">
                     <input type="search" name="s" value="' . esc_attr(get_query_var('keyword')) . '" placeholder="' . esc_attr(__("Type here and hit enter to search", "enginethemes")) . '">
                 </div>
@@ -609,7 +616,7 @@ function marketengine_get_search_form($echo = true)
                 </div>
             </form>
             <form method="get" class="mobile-search-form" action="' . $url . '">
-                
+
                 <div class="me-search me-visible-xs">
                     <input type="text" name="s" value="' . esc_attr(get_query_var('keyword')) . '" placeholder="' . esc_attr(__("Type here and hit enter to search", "enginethemes")) . '">
                 </div>
@@ -696,48 +703,128 @@ function marketengine_get_the_archive_title()
  * @param string $title, int $id
  * @return string
  */
-function me_auth_page_title( $title, $id = null ) {
+function me_auth_page_title($title, $id = null)
+{
 
     if (is_page() && in_the_loop() && $id === me_get_option_page_id('user_account')) {
         global $wp_query;
-        if(!is_user_logged_in() ) {
-            if( isset($wp_query->query_vars['register']) ) {
+        if (!is_user_logged_in()) {
+            if (isset($wp_query->query_vars['register'])) {
                 return __('Registration', 'enginethemes');
-            }
-            else {
+            } else {
                 return __('Member Login', 'enginethemes');
             }
         } else {
-            if( isset($wp_query->query_vars['listings']) ) {
+            if (isset($wp_query->query_vars['listings'])) {
                 return __('My Listings', 'enginethemes');
-            } elseif( isset($wp_query->query_vars['orders']) ) {
+            } elseif (isset($wp_query->query_vars['orders'])) {
                 return __('My Orders', 'enginethemes');
-            } elseif( isset($wp_query->query_vars['purchases']) ) {
+            } elseif (isset($wp_query->query_vars['purchases'])) {
                 return __('My Purchases', 'enginethemes');
-            } elseif( isset($wp_query->query_vars['change-password']) ) {
+            } elseif (isset($wp_query->query_vars['change-password'])) {
                 return __('CHANGE PASSWORD', 'enginethemes');
-            } elseif( isset($wp_query->query_vars['resolution-center']) ) {
+            } elseif (isset($wp_query->query_vars['resolution-center'])) {
                 return __('Resolution Center', 'enginethemes');
             }
         }
     }
     return $title;
 }
-add_filter( 'the_title', 'me_auth_page_title', 10, 2 );
+add_filter('the_title', 'me_auth_page_title', 10, 2);
 
 /**
  * Redirect user to login when access order details without login
- * 
+ *
  * @package Includes/Template
  * @category Function
- * 
+ *
  * @since 1.0.1
  */
-function me_prevent_access_order_details() {
-    if(is_singular( 'me_order' ) && !is_user_logged_in()) {
+function me_prevent_access_order_details()
+{
+    if (is_singular('me_order') && !is_user_logged_in()) {
         $login_url = me_get_auth_url();
-        wp_redirect( $login_url );
+        wp_redirect($login_url);
         exit;
     }
 }
-add_action( 'template_redirect', 'me_prevent_access_order_details' );
+add_action('template_redirect', 'me_prevent_access_order_details');
+
+function me_order_listing_info($transaction)
+{
+    $listing_items = $transaction->get_listing_items();
+    $cart_item     = array_pop($listing_items);
+    $listing       = me_get_listing($cart_item['ID']);
+
+    if ($transaction->post_author == get_current_user_id()) {
+        $author_id = $listing ? $listing->post_author : '';
+    } else {
+        $author_id = $transaction->post_author;
+    }
+
+    me_get_template('purchases/order-listing',
+        array(
+            'listing'      => $listing,
+            'transaction'  => $transaction,
+            'cart_listing' => $cart_item,
+            'seller'       => $transaction->post_author != get_current_user_id(),
+        )
+    );
+}
+add_action('marketengine_order_extra_content', 'me_order_listing_info', 10);
+
+function me_order_user_info($transaction)
+{
+    if ($transaction->post_author == get_current_user_id()) {
+        $listing_items = $transaction->get_listing_items();
+        $cart_item     = array_pop($listing_items);
+        $listing       = me_get_listing($cart_item['ID']);
+
+        $author_id = $listing ? $listing->post_author : '';
+    } else {
+        $author_id = $transaction->post_author;
+    }
+
+    me_get_template('user-info', array('author_id' => $author_id));
+}
+add_action('marketengine_order_extra_sidebar', 'me_order_user_info', 10);
+
+function me_order_related_listing($transaction)
+{
+    if (get_current_user_id() == $transaction->post_author) {
+        $listing_items   = $transaction->get_listing_items();
+        $cart_item       = array_pop($listing_items);
+        $current_listing = $cart_item;
+
+        $args = array(
+            'posts_per_page' => 12,
+            'post_type'      => 'listing',
+            'exclude'        => $current_listing,
+        );
+
+        $listing_cat = wp_get_post_terms($current_listing, 'listing_category');
+
+        if (!empty($listing_cat)) {
+            $args['tax_query'] = array();
+            foreach ($listing_cat as $key => $cat) {
+                if (!$cat->parent) {
+                    $args['tax_query'][] = array(
+                        'taxonomy' => 'listing_category',
+                        'field'    => 'slug',
+                        'terms'    => $cat,
+                    );
+                }
+            }
+        }
+
+        $args = apply_filters('me_related_listing_args', $args);
+
+        $listings = get_posts($args);
+        // get the template
+        me_get_template('purchases/listing-slider', array('listings' => $listings));
+       
+        wp_reset_postdata();
+    }
+}
+
+add_action('marketengine_after_order_extra', 'me_order_related_listing');
