@@ -14,7 +14,9 @@ get_header();
 <?php do_action('marketengine_before_main_content'); ?>
 
 <div id="marketengine-page">
+
     <div class="me-container">
+        
         <div class="marketengine-content-wrap">
 
             <?php me_get_template('purchases/transaction-heading', array('transaction' => $order)); ?>
@@ -34,7 +36,9 @@ get_header();
             
             ?>
         </div>
+
     </div>
+    
 </div>
 
 <?php do_action('marketengine_after_main_content');?>

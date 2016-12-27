@@ -1,41 +1,41 @@
 <?php
-$listing_items = $transaction->get_listing_items();
-$cart_item = array_pop($listing_items);
+/**
+ * The template for displaying order extra information.
+ *
+ * This template can be overridden by copying it to yourtheme/marketengine/purchases/order-extra.php.
+ *
+ * @package     MarketEngine/Templates
+ * @since 		1.0.0
+ * @version     1.0.0
+ */
 
-$listing = me_get_listing($cart_item['ID']);
-
-// $listing_cat = get_the_terms($listing->ID, 'listing_category');
-if($transaction->post_author == get_current_user_id()) {
-	$author_id = $listing ? $listing->post_author : '';	
-}else {
-	$author_id = $transaction->post_author;
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
 }
 ?>
+
+<?php  do_action('marketengine_before_order_extra', $transaction);  ?>
+
 <div class="me-row">
+
+	<?php  do_action('marketengine_order_extra_start', $transaction);  ?>	
+
 	<div class="me-col-md-9">
 
-		<?php
-		me_get_template( 'purchases/order-listing', 
-			array(
-				'listing' => $listing, 
-				'transaction' => $transaction, 
-				'cart_listing' => $cart_item,
-				'seller' => $transaction->post_author != get_current_user_id()
-			) 
-		);
-		me_get_template( 'user-info', 
-			array(
-				'class' => 'me-authors-xs me-visible-sm me-visible-xs', 
-				'author_id' => $author_id 
-				) 
-			);
-		me_get_template( 'purchases/order-action', array('order' => $transaction) );
-		?>
+		<?php  do_action('marketengine_order_extra_content', $transaction);  ?>
 
 	</div>
-	<div class="me-col-md-3 me-hidden-sm me-hidden-xs">
-		<?php
-			me_get_template( 'user-info', array('author_id' => $author_id)  );
-		?>
+
+	<div class="me-col-md-3">
+
+		<?php  do_action('marketengine_order_extra_sidebar', $transaction);  ?>
+
+
 	</div>
+
+	<?php  do_action('marketengine_order_extra_end', $transaction);  ?>
+
 </div>
+
+<?php  do_action('marketengine_after_order_extra', $transaction);  ?>
