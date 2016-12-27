@@ -259,8 +259,14 @@ class ME_Handle_CF
         if(empty($fields)) {
             return;
         }
-
+        
+        ob_start();
         me_get_template('custom-fields/field-details', array('fields' => $fields));
+        $content = ob_get_clean();
+
+        if($content != '') {
+            echo '<div class="me-custom-field">' . $content .'</div>';
+        }
     }
 }
 
