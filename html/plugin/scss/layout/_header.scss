@@ -482,6 +482,7 @@
 	position: absolute;
 	width: 100%;
 	box-shadow: 0 2px 8px 0 rgba(185,209,235,.6);
+	z-index: 20;
 	.me-search {
 		input {
 			padding: 0 20px;
