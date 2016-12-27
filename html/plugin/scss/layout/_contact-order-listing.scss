@@ -587,11 +587,21 @@ ul.me-contact-tabs {
 	}
 }
 
-@media (max-width: $screen_xs_max) {
+@media (max-width: $screen_sm_max) { //991px
+	.me-message-typing-archive {
+		line-height: 1.4em;
+		padding: 10px 15px;
+	}
+}
+
+@media (max-width: $screen_xs_max) {  // 767px
 	.me-contact-listing-wrap {
 		margin-top: 0;
 	}
 	.marketengine-contact {
+		.me-authors {
+			display: none;
+		}
 		.marketengine-header-bottom {
 			display: none;
 		}
@@ -673,9 +683,9 @@ ul.me-contact-tabs {
 			left: 0;
 			z-index: 1000;
 			box-shadow: none;
-			margin-left: 0;
+			margin-left: -15px;
 			padding-top: 10px;
-			margin-right: 0;
+			margin-right: -15px;
 			width: 100%;
 		}
 		.me-contact-messages, .me-message-typing {
@@ -707,7 +717,14 @@ ul.me-contact-tabs {
 			}
 		}
 		.me-authors {
+			display: block;
+			width: 100%;
+			position: absolute;
+			top: 60px;
+			left: 0;
+			z-index: 1000;
 			box-shadow: none;
+			margin: 0;
 		}
 	}
 }

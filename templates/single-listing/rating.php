@@ -18,7 +18,7 @@ $review_count_details = $listing->get_review_count_details();
 
 <?php do_action('marketengine_before_single_listing_rating', $listing); ?>
 
-<div class="me-comments">
+<div class="me-comments me-desc-box">
 	<div class="marketengine-comments">
 		<h3 class="me-title-comment"><?php printf(_n("Review (%d)", "Reviews (%d)", $review_count,"enginethemes"),$review_count ); ?></h3>
 

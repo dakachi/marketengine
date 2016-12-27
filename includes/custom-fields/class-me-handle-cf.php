@@ -265,7 +265,7 @@ class ME_Handle_CF
         $content = ob_get_clean();
 
         if($content != '') {
-            echo '<div class="me-custom-field">' . $content .'</div>';
+            echo '<div class="me-custom-field me-desc-box">' . $content .'</div>';
         }
     }
 }
