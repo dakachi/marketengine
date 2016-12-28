@@ -17,7 +17,9 @@ if (!defined('ABSPATH')) {
 $total = 0;
 $unit = ($order_item['qty']) ? $order_item['qty'][0] : 1;
 ?>
+
 <?php do_action( 'marketengine_before_checkout_form' ); ?>
+
 <div class="me-shopping-cart">
 	<h5><?php _e("Order Item", "enginethemes"); ?></h5>
 	<div class="me-table me-cart-table">
@@ -47,7 +49,7 @@ $unit = ($order_item['qty']) ? $order_item['qty'][0] : 1;
 						<a href="<?php echo $listing->get_permalink(false, 'javascript:void(0)'); ?>">
 							<span><?php echo esc_html($order_item['title']); ?></span>
 						</a>
-						
+
 						<?php me_get_template('purchases/listing-archived', array('listing' => $listing) ); ?>
 
 					<?php endif; ?>
