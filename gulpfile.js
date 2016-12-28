@@ -1,6 +1,6 @@
-const gulp 				= require('gulp');
-const zip 				= require('gulp-zip');
-const del 				= require('del');
+const gulp = require('gulp');
+const zip = require('gulp-zip');
+const del = require('del');
 
 // var gulp 				= require('gulp');
 // var sass 				= require('gulp-sass');
@@ -12,7 +12,6 @@ var uglify 				= require('gulp-uglify');
 // var connect             = require('gulp-connect');
 // var browserSync 		= require('browser-sync').create();
 var strip_comments      = require('gulp-strip-json-comments');
-
 
 /***************************
  *
@@ -176,7 +175,9 @@ gulp.task('watch', function () {
     gulp.watch(me_vendor_src, ['script-vendor']);
 });
 
+gulp.task('watch', function () {
+    gulp.watch('**/*.php', ['phpunit']);
+    gulp.watch(me_vendor_src, ['script-vendor']);
+});
+
 gulp.task('default', ['watch', 'script-vendor']);
-
-
-
