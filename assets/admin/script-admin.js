@@ -30,7 +30,10 @@ $(document).ready(function() {
 		$(target).parents('.me-cf-item').toggleClass('active');
 		$(this).me_tooltip();
 	});
-	$('.me-cf-show, .me-cf-edit, .me-cf-remove').tooltip({
+	$('.me-cf-show, .me-cf-edit, .me-cf-remove').tooltip( {
+		create: function( event, ui ) {
+			var target = event.currentTarget;
+		},
 		position: {
 			my: "center bottom-10",
 			at: "center top",

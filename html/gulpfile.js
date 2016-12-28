@@ -7,13 +7,14 @@ var uglify 				= require('gulp-uglify');
 var autoprefixer        = require('gulp-autoprefixer');
 var connect             = require('gulp-connect');
 var browserSync 		= require('browser-sync').create();
-var strip_comments = require('gulp-strip-json-comments');
+var strip_comments      = require('gulp-strip-json-comments');
 
 
 /**
  * Basic gulp
  */
 gulp.task('default', ['serve', 'scripts', 'script-vendor']);
+
 
 gulp.task('serve', ['sass'], function() {
     browserSync.init({
@@ -114,6 +115,7 @@ gulp.task('scripts', function() {
     .pipe(connect.reload());
 
 });
+
 var me_vendor_src               = 'C:/xampp/htdocs/me/wp-content/plugins/zeroengine/assets/js';
 var me_vendor_dest              = 'C:/xampp/htdocs/me/wp-content/plugins/zeroengine/assets/js';
 
@@ -152,6 +154,7 @@ gulp.task('script-vendor', function() {
         me_listing_review
     ])
     .pipe(uglify())
+    .pipe(strip_comments())
     .pipe(concat("me.vendor.js"))
     .pipe(gulp.dest(me_vendor_dest));
 });

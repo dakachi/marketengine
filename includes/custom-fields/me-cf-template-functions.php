@@ -136,7 +136,7 @@ function marketengine_load_inputs_for_view( $field ) {
         case 'text':
         case 'textarea':
             $field_placeholder = isset($field_placeholder) && !empty($field_placeholder) ? $field_placeholder : 'N/A';
-    		echo "<p><span>".__('Placeholder:', 'enginethemes')."</span>".$field_placeholder."</p>";
+    		echo "<tr><td><span>".__('Placeholder:', 'enginethemes')."</span></td><td>".$field_placeholder."</td></tr>";
 
             break;
 
@@ -145,9 +145,9 @@ function marketengine_load_inputs_for_view( $field ) {
         	$field_attribute = me_field_attribute_array($field);
             $field_attribute = wp_parse_args($field_attribute, array('min' => 'N/A', 'max' => 'N/A'));
 
-	        echo "<p><span>".__('Placeholder:', 'enginethemes')."</span>".$field_placeholder."</p>";
-	        echo "<p><span>".__('Minimum value:', 'enginethemes')."</span>".$field_attribute['min']."</p>";
-	        echo "<p><span>".__('Maximum value:', 'enginethemes')."</span>".$field_attribute['max']."</p>";
+	        echo "<tr><td><span>".__('Placeholder:', 'enginethemes')."</span></td><td>".$field_placeholder."</td></tr>";
+	        echo "<tr><td><span>".__('Minimum value:', 'enginethemes')."</span></td><td>".$field_attribute['min']."</td></tr>";
+	        echo "<tr><td><span>".__('Maximum value:', 'enginethemes')."</span></td><td>".$field_attribute['max']."</td></tr>";
 
             break;
 
@@ -158,7 +158,7 @@ function marketengine_load_inputs_for_view( $field ) {
             $field_options = me_cf_get_field_options($field_name);
             $field_options = me_render_field_option($field_options);
 
-            echo "<p><span>".__('Options:', 'enginethemes')."</span>".$field_options."</p>";
+            echo "<tr><td><span>".__('Options:', 'enginethemes')."</span></td><td>".$field_options."</td></tr>";
             break;
 
         case 'single-select':
@@ -167,8 +167,8 @@ function marketengine_load_inputs_for_view( $field ) {
             $field_options = me_render_field_option($field_options);
 
             $field_option_none = isset($field_placeholder) && !empty($field_placeholder) ? $field_placeholder : 'N/A';
-            echo "<p><span>".__('Option None Text:', 'enginethemes')."</span>".$field_option_none."</p>";
-            echo "<p><span>".__('Options:', 'enginethemes')."</span>".$field_options."</p>";
+            echo "<tr><td><span>".__('Option None Text:', 'enginethemes')."</span></td><td>".$field_option_none."</td></tr>";
+            echo "<tr><td><span>".__('Options:', 'enginethemes')."</span></td><td>".$field_options."</td></tr>";
             break;
 
         default:

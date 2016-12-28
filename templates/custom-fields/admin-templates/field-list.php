@@ -21,14 +21,32 @@
 			</div>
 		</div>
 		<div class="me-cf-row-content">
-			<p><span><?php _e('Field type:', 'enginethemes'); ?></span><?php echo me_get_field_type_label($field_type); ?></p>
+			<table>
+				<tr>
+					<td><span><?php _e('Field type:', 'enginethemes'); ?></span></td>
+					<td><?php echo me_get_field_type_label($field_type); ?></td>
+				</tr>
 
-			<?php do_action('me_load_inputs_for_view', $field); ?>
+				<?php do_action('me_load_inputs_for_view', $field); ?>
+				<tr>
+					<td><span><?php _e('Required:', 'enginethemes'); ?></span></td>
+					<td><?php echo (strpos($field_constraint, 'equired')) ? __('Yes', 'enginethemes') : __('No', 'enginethemes') ; ?></td>
+				</tr>
+				<tr>
+					<td><span><?php _e('Available in:', 'enginethemes'); ?></span></td>
+					<td><?php echo $affected_cats_name; ?></td>
+				</tr>
+				<tr>
+					<td><span><?php _e('Help text:', 'enginethemes'); ?></span></td>
+					<td></span><?php echo $field_help_text ? $field_help_text : 'N/A'; ?></td>
+				</tr>
+				<tr>
+					<td><span><?php _e('Description:', 'enginethemes'); ?></span></td>
+					<td><?php echo $field_description ? $field_description : 'N/A'; ?></td>
+				</tr>
 
-			<p><span><?php _e('Required:', 'enginethemes'); ?></span><?php echo (strpos($field_constraint, 'equired')) ? __('Yes', 'enginethemes') : __('No', 'enginethemes') ; ?></p>
-			<p><span><?php _e('Available in:', 'enginethemes'); ?></span><?php echo $affected_cats_name; ?></p>
-			<p><span><?php _e('Help text:', 'enginethemes'); ?></span><?php echo $field_help_text ? $field_help_text : 'N/A'; ?></p>
-			<p><span><?php _e('Description:', 'enginethemes'); ?></span><?php echo $field_description ? $field_description : 'N/A'; ?></p>
+			
+			</table>
 		</div>
 	</li>
 
