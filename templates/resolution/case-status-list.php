@@ -16,6 +16,6 @@
 	$statuses = me_rc_status_list();
 	foreach ($statuses as $key => $status) :
 ?>
-	<option <?php selected($_GET['status'], $key); ?> value="<?php echo $key; ?>"><?php echo $status; ?></option>
+	<option <?php selected(isset($_GET['status']) && $_GET['status'] == $key); ?> value="<?php echo $key; ?>"><?php echo $status; ?></option>
 <?php endforeach; ?>
 </select>
