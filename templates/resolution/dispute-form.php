@@ -9,8 +9,14 @@
  * @since 		1.0.1
  */
 ?>
+
+<?php do_action('marketengine_before_dispute_form'); ?>
+
 <div class="me-dispute-form">
-	<form id="me-dispute-form" action="">
+
+	<?php do_action('marketengine_start_dispute_form'); ?>
+
+	<form id="me-dispute-form" method="post" action="">
 
 		<?php me_get_template('resolution/disputed-product-info', array('transaction' => $transaction)); ?>
 
@@ -24,7 +30,7 @@
 
 		<div class="me-dispute-description">
 			<h3><?php _e('Please tell more about your problem', 'enginethemes'); ?></h3>
-			<textarea></textarea>
+			<textarea name="dispute-description"></textarea>
 		</div>
 
 		<div class="me-dispute-image">
@@ -66,7 +72,7 @@
 					<span class="me-gallery-img me-gallery-add-img">
 						<a class="me-add-img">
 							<i class="icon-me-add"></i>
-							<input type="file" value="">
+							<input type="file" name="dispute-media" value="">
 						</a>
 					</span>
 				</li>
@@ -80,4 +86,9 @@
 		</div>
 		<a href="<?php echo remove_query_arg('action'); ?>" class="me-backlink"><?php _e('&lt; Back to transaction details', 'enginethemes'); ?></a>
 	</form>
+
+	<?php do_action('marketengine_end_dispute_form'); ?>
+
 </div>
+
+<?php do_action('marketengine_after_dispute_form'); ?>
