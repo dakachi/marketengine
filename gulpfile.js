@@ -1,6 +1,17 @@
-const gulp = require('gulp');
-const zip = require('gulp-zip');
-const del = require('del');
+const gulp 				= require('gulp');
+const zip 				= require('gulp-zip');
+const del 				= require('del');
+
+// var gulp 				= require('gulp');
+// var sass 				= require('gulp-sass');
+// var minifyCSS 			= require('gulp-minify-css');
+var concat 				= require('gulp-concat');
+// var rename 				= require('gulp-rename');
+var uglify 				= require('gulp-uglify');
+// var autoprefixer        = require('gulp-autoprefixer');
+// var connect             = require('gulp-connect');
+// var browserSync 		= require('browser-sync').create();
+var strip_comments      = require('gulp-strip-json-comments');
 
 
 /***************************
@@ -117,8 +128,55 @@ gulp.task('phpunit', function() {
     );
 });
 
-gulp.task('watch', function () {
-    gulp.watch('**/*.php', ['phpunit']);
+var me_vendor_src               = 'assets/js';
+var me_vendor_dest              = 'assets/js';
+
+var jquery_ui                   = me_vendor_src + '/jquery-ui.js';
+var muploader                   = me_vendor_src + '/muploader.js/';
+var jquery_magnific_popup       = me_vendor_src + '/jquery.magnific-popup.min.js';
+var jquery_flexslider           = me_vendor_src + '/jquery.flexslider-min.js';
+var jquery_raty                 = me_vendor_src + '/jquery.raty.js';
+
+var me_user_profile             = me_vendor_src + '/user-profile.js';
+var me_tag_box                  = me_vendor_src + '/tag-box.js';
+var me_post_listing             = me_vendor_src + '/post-listing.js';
+var me_me_sliderthumbs          = me_vendor_src + '/me.sliderthumbs.js';
+var me_script                   = me_vendor_src + '/script.js';
+var me_message                  = me_vendor_src + '/message.js';
+var me_index                    = me_vendor_src + '/index.js';
+var me_my_listings              = me_vendor_src + '/my-listings.js';
+var me_listing_review           = me_vendor_src + '/listing-review.js';
+
+gulp.task('script-vendor', function() {
+    gulp.src([
+        jquery_ui,
+        muploader,
+        jquery_magnific_popup,
+        jquery_flexslider,
+        jquery_raty,
+        me_user_profile,
+        me_tag_box,
+        me_post_listing,
+        me_me_sliderthumbs,
+        me_script,
+        me_message,
+        me_index,
+        me_my_listings,
+        me_my_listings,
+        me_listing_review
+    ])
+    .pipe(uglify())
+    .pipe(strip_comments())
+    .pipe(concat("me.vendor.js"))
+    .pipe(gulp.dest(me_vendor_dest));
 });
 
-gulp.task('default', ['watch']);
+gulp.task('watch', function () {
+    gulp.watch('**/*.php', ['phpunit']);
+    gulp.watch(me_vendor_src, ['script-vendor']);
+});
+
+gulp.task('default', ['watch', 'script-vendor']);
+
+
+

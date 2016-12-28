@@ -1,4 +1,6 @@
 /* global me_globals.ajaxurl, wpAjax*/
+
+
 (function($) {
     $(document).ready(function() {
         $('.me-help-text').tooltip({
