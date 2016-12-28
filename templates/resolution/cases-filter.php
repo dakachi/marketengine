@@ -1,3 +1,14 @@
+<?php
+/**
+ * The template for displaying the filter for cases.
+ * This template can be overridden by copying it to yourtheme/marketengine/resolution/cases-filter.php.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ * @version     1.0.0
+ * @since 		1.0.1
+ */
+?>
 <!-- mobile -->
 <div class="me-resolution-tab-filter">
 	<span class="me-switch-tab-filter-1"><?php _e('Filter', 'enginethemes'); ?></span>
@@ -43,7 +54,7 @@
 							<div class="me-resolution-search">
 								<input type="text" placeholder="<?php _e('Search case, username...', 'enginethemes'); ?>" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>">
 								<div class="me-resolution-clear-filter">
-									<a href="#"><?php _e('Clear Filter', 'enginethemes'); ?></a>
+									<a href="<?php echo me_resolution_center_url() ; ?>"><?php _e('Clear Filter', 'enginethemes'); ?></a>
 									<input class="me-resolution-filter-btn" type="submit" value="<?php _e('FILTER', 'enginethemes'); ?>">
 								</div>
 							</div>

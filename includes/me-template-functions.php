@@ -216,7 +216,7 @@ function me_post_tags_meta_box($default, $taxonomy)
             <div class="jaxtag">
             <div class="nojs-tags hide-if-js">
                 <label class="me-field-title" for="tax-input-<?php echo $tax_name; ?>"><?php echo $taxonomy->labels->add_or_remove_items; ?></label>
-                <textarea style="display:none;" name="<?php echo $tax_name; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled(!$user_can_assign_terms);?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace(',', $comma . ' ', $terms_to_edit); // textarea_escaped by esc_attr()         ?></textarea>
+                <textarea style="display:none;" name="<?php echo $tax_name; ?>" rows="3" cols="20" class="the-tags" id="tax-input-<?php echo $tax_name; ?>" <?php disabled(!$user_can_assign_terms);?> aria-describedby="new-tag-<?php echo $tax_name; ?>-desc"><?php echo str_replace(',', $comma . ' ', $terms_to_edit); // textarea_escaped by esc_attr()           ?></textarea>
             </div>
 
             <div class="ajaxtag hide-if-no-js">
@@ -750,6 +750,14 @@ function me_prevent_access_order_details()
 }
 add_action('template_redirect', 'me_prevent_access_order_details');
 
+
+
+/**
+ * Transaction listing info
+ * 
+ * @param ME_Order $transaction 
+ * @since 1.1
+ */
 function me_order_listing_info($transaction)
 {
     $listing_items = $transaction->get_listing_items();
@@ -773,6 +781,14 @@ function me_order_listing_info($transaction)
 }
 add_action('marketengine_order_extra_content', 'me_order_listing_info', 10);
 
+
+
+/**
+ * Transaction user info
+ * 
+ * @param ME_Order $transaction 
+ * @since 1.1
+ */
 function me_order_user_info($transaction)
 {
     if ($transaction->post_author == get_current_user_id()) {
@@ -789,6 +805,14 @@ function me_order_user_info($transaction)
 }
 add_action('marketengine_order_extra_sidebar', 'me_order_user_info', 10);
 
+
+
+/**
+ * Transaction related listing slider
+ * 
+ * @param ME_Order $transaction 
+ * @since 1.1
+ */
 function me_order_related_listing($transaction)
 {
     if (get_current_user_id() == $transaction->post_author) {
@@ -822,9 +846,88 @@ function me_order_related_listing($transaction)
         $listings = get_posts($args);
         // get the template
         me_get_template('purchases/listing-slider', array('listings' => $listings));
-       
+
         wp_reset_postdata();
     }
 }
-
 add_action('marketengine_after_order_extra', 'me_order_related_listing');
+
+/**
+ * Transaction details
+ * 
+ * @param ME_Order $transaction 
+ * @since 1.1
+ */
+function me_transaction_details($transaction)
+{
+    $transaction->update_listings();
+    if ($transaction->post_author == get_current_user_id() && !empty($_GET['action']) && 'review' == $_GET['action'] && !empty($_GET['id'])) {
+        me_get_template('purchases/review',
+            array(
+                'transaction' => $transaction,
+                'listing_id'  => $_GET['id'],
+            )
+        );
+    } elseif($transaction->post_author == get_current_user_id() && $transaction->post_status == 'me-complete' && !empty($_GET['action']) && 'dispute') {
+        me_get_template('resolution/dispute-form', array('transaction' => $transaction));
+    } else {
+        me_get_template('purchases/transaction', array('transaction' => $transaction));
+    }
+}
+add_action('marketengine_transaction_details', 'me_transaction_details', 10);
+
+/**
+ * Transaction items details heading template
+ * 
+ * @param ME_Order $transaction
+ * @since 1.1
+ */
+function me_transaction_items_heading($transaction)
+{
+    $payment_date = date_i18n(get_option('date_format'), strtotime($transaction->post_date));
+    $order_number = '#' . $transaction->get_order_number();
+    me_get_template('purchases/order-info', array('order_number' => $order_number, 'payment_date' => $payment_date));
+}
+add_action('marketengine_transaction_items_details', 'me_transaction_items_heading', 10);
+
+/**
+ * Transaction items details status template
+ * 
+ * @param ME_Order $transaction
+ * @since 1.1
+ */
+function me_transaction_items_status($transaction)
+{
+    $order_status = get_post_status($transaction->id);
+    me_get_template('purchases/order-status', array('order_status' => $order_status));
+}
+add_action('marketengine_transaction_items_details', 'me_transaction_items_status', 11);
+
+/**
+ * Transaction items details items list template
+ * 
+ * @param ME_Order $transaction
+ * @since 1.1
+ */
+function me_transaction_items_details($transaction)
+{
+    $listing_items = $transaction->get_listing_items();
+    $order_item    = array_pop($listing_items);
+
+    $listing = me_get_listing($order_item['ID']);
+    me_get_template('purchases/order-item', array('order_item' => $order_item, 'listing' => $listing, 'transaction' => $transaction));
+
+}
+add_action('marketengine_transaction_items_details', 'me_transaction_items_details', 12);
+
+/**
+ * Transaction items details billing info template
+ * 
+ * @param ME_Order $transaction
+ * @since 1.1
+ */
+function me_transaction_items_billing_info($transaction)
+{
+    me_get_template( 'purchases/order-bill-info', array('transaction' => $transaction) );
+}
+add_action('marketengine_transaction_items_details', 'me_transaction_items_billing_info', 12);

@@ -1,3 +1,14 @@
+<?php
+/**
+ * The template for displaying dispute cases.
+ * This template can be overridden by copying it to yourtheme/marketengine/resolution/cases-rows.php.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ * @version     1.0.0
+ * @since 		1.0.1
+ */
+?>
 <div class="me-table-row">
 	<div class="me-table-col me-rslt-case">#CA123456</div>
 	<div class="me-table-col me-rslt-status">Negotiating</div>
@@ -22,8 +33,10 @@
 	<div class="me-table-col me-rslt-related">Jacqueline Anne Hathaway</div>
 	<div class="me-table-col me-rslt-amount">$10000.00</div>
 </div>
+<?php /*
 <div class="me-table-row-empty">
 	<div>
 		<span><?php _e('There are no cases.', 'enginethemes'); ?></span>
 	</div>
 </div>
+*/ ?>

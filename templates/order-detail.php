@@ -7,7 +7,13 @@
  * @package     MarketEngine/Templates
  * @version     1.0.0
  */
-$order = me_get_order();
+
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+$transaction = me_get_order();
 get_header();
 ?>
 
@@ -16,29 +22,29 @@ get_header();
 <div id="marketengine-page">
 
     <div class="me-container">
-        
+
+    <?php do_action('marketengine_before_transaction_details', $transaction); ?>
+
         <div class="marketengine-content-wrap">
 
-            <?php me_get_template('purchases/transaction-heading', array('transaction' => $order)); ?>
+            <?php do_action('marketengine_transaction_details_start', $transaction); ?>
 
-            <?php
-            
-            if( $order->post_author == get_current_user_id() && !empty($_GET['action']) && 'review' == $_GET['action'] && !empty($_GET['id'])) {
-                me_get_template('purchases/review', 
-                    array(
-                        'transaction' => $order, 
-                        'listing_id' => $_GET['id']
-                    )
-                );
-            }else {
-                me_get_template('purchases/transaction', array('transaction' => $order));
-            }
-            
-            ?>
+            <?php me_get_template('purchases/order-heading', array('transaction' => $transaction)); ?>
+
+            <div class="marketengine-content">
+
+            <?php do_action('marketengine_transaction_details', $transaction); ?>
+
+            </div>
+
+            <?php do_action('marketengine_transaction_details_end', $transaction); ?>
+
         </div>
 
+    <?php do_action('marketengine_after_transaction_details', $transaction); ?>
+
     </div>
-    
+
 </div>
 
 <?php do_action('marketengine_after_main_content');?>

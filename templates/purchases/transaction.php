@@ -8,14 +8,12 @@
  * @version       1.0
  */
 
-$transaction->update_listings();
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
 ?>
-<div class="marketengine-content">
+<?php me_print_notices(); ?>
+<?php me_get_template( 'purchases/order-detail', array('transaction' => $transaction) ); ?>
+<?php me_get_template( 'purchases/order-extra', array('transaction' => $transaction ) ); ?>
 
-	<?php me_print_notices(); ?>
-
-	<?php me_get_template( 'purchases/order-detail', array('transaction' => $transaction) ); ?>
-
-	<?php me_get_template( 'purchases/order-extra', array('transaction' => $transaction ) ); ?>
-
-</div>

@@ -103,7 +103,6 @@ class MarketEngine
         $this->define();
         $this->include_files();
         $this->init_hooks();
-        $this->add_ajax();
         /**
          * Fires after the plugin is loaded.
          *
@@ -147,6 +146,8 @@ class MarketEngine
 
         require_once ME_PLUGIN_PATH . '/admin/index.php';
         require_once ME_PLUGIN_PATH . '/includes/custom-fields/index.php';
+
+        require_once ME_PLUGIN_PATH . '/includes/resolution/index.php';
 
         require_once ME_PLUGIN_PATH . '/includes/class-me-install.php';
         require_once ME_PLUGIN_PATH . '/includes/class-me-session.php';
@@ -271,7 +272,7 @@ class MarketEngine
      */
     public function add_scripts()
     {
-        $develop_src = true;
+        $develop_src = false;
 
         if (!defined('ME_SCRIPT_DEBUG')) {
             define('ME_SCRIPT_DEBUG', $develop_src);
@@ -376,14 +377,6 @@ class MarketEngine
         wp_enqueue_style('me-option-css', ME_PLUGIN_URL . 'assets/admin/menu.css');
         wp_enqueue_script('jquery-ui', $this->plugin_url() . "/assets/js/jquery-ui$suffix.js", array('jquery'), $this->version, true);
         wp_enqueue_script('jquery-validation', 'http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js');
-    }
-
-    /**
-     * Add ajax for front-end
-     */
-    public function add_ajax()
-    {
-        // TODO: move to admin package
     }
 
     /**
