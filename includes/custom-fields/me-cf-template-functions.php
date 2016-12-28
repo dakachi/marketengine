@@ -136,11 +136,8 @@ function marketengine_load_inputs_for_view( $field ) {
         case 'text':
         case 'textarea':
             $field_placeholder = isset($field_placeholder) && !empty($field_placeholder) ? $field_placeholder : 'N/A';
-<<<<<<< HEAD
-    		echo "<tr><td><span>".__('Placeholder:', 'enginethemes')."</span></td><td>".$field_placeholder."</td></tr>";
-=======
+            
             echo "<tr><td><span>".__('Placeholder:', 'enginethemes')."</span></td><td>".$field_placeholder."</td></tr>";
->>>>>>> me-plugin
 
             break;
 
@@ -149,15 +146,10 @@ function marketengine_load_inputs_for_view( $field ) {
             $field_attribute = me_field_attribute_array($field);
             $field_attribute = wp_parse_args($field_attribute, array('min' => 'N/A', 'max' => 'N/A'));
 
-<<<<<<< HEAD
-	        echo "<tr><td><span>".__('Placeholder:', 'enginethemes')."</span></td><td>".$field_placeholder."</td></tr>";
-	        echo "<tr><td><span>".__('Minimum value:', 'enginethemes')."</span></td><td>".$field_attribute['min']."</td></tr>";
-	        echo "<tr><td><span>".__('Maximum value:', 'enginethemes')."</span></td><td>".$field_attribute['max']."</td></tr>";
-=======
+
             echo "<tr><td><span>".__('Placeholder:', 'enginethemes')."</span></td><td>".$field_placeholder."</td></tr>";
             echo "<tr><td><span>".__('Minimum value:', 'enginethemes')."</span></td><td>".$field_attribute['min']."</td></tr>";
             echo "<tr><td><span>".__('Maximum value:', 'enginethemes')."</span></td><td>".$field_attribute['max']."</td></tr>";
->>>>>>> me-plugin
 
             break;
 
