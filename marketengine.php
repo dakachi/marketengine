@@ -272,7 +272,7 @@ class MarketEngine
      */
     public function add_scripts()
     {
-        $develop_src = true;
+        $develop_src = false;
 
         if (!defined('ME_SCRIPT_DEBUG')) {
             define('ME_SCRIPT_DEBUG', $develop_src);
