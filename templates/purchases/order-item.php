@@ -31,15 +31,27 @@ $unit = ($order_item['qty']) ? $order_item['qty'][0] : 1;
 		<?php do_action( 'marketengine_before_cart_item_list' ); ?>
 
 		<div class="me-table-row me-cart-item">
+
 			<div class="me-table-col me-cart-name">
 				<div class="me-cart-listing">
-				<?php me_get_template('purchases/order-listing-image', array('listing' => $listing) ); ?>
+				
+					<?php me_get_template('purchases/order-listing-image', array('listing' => $listing) ); ?>
 
-					<a href="<?php echo $listing->get_permalink(false, 'javascript:void(0)'); ?>">
+					<?php if(!$listing) : ?> 
+
 						<span><?php echo esc_html($order_item['title']); ?></span>
-					</a>
+						<?php me_get_template('purchases/listing-deleted', array('listing' => $listing) ); ?>
 
-				<?php me_get_template('purchases/listing-archived', array('listing' => $listing) ); ?>
+					<?php else : ?>
+
+						<a href="<?php echo $listing->get_permalink(false, 'javascript:void(0)'); ?>">
+							<span><?php echo esc_html($order_item['title']); ?></span>
+						</a>
+						
+						<?php me_get_template('purchases/listing-archived', array('listing' => $listing) ); ?>
+
+					<?php endif; ?>
+
 				</div>
 			</div>
 			<div class="me-table-col me-cart-price">
@@ -66,7 +78,7 @@ $unit = ($order_item['qty']) ? $order_item['qty'][0] : 1;
 		</div>
 	</div>
 	<div class="me-checkout-submit">
-	<?php if( $transaction->post_status === 'me-pending' && $listing && $listing->is_available() ) : ?>
+	<?php if( $listing && $transaction->post_status === 'me-pending' && $listing->is_available() ) : ?>
 		<form method="post">
 			<?php wp_nonce_field('me-pay'); ?>
 			<input type="hidden" name="order_id" value="<?php echo $transaction->id; ?>" />
