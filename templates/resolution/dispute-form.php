@@ -12,7 +12,7 @@
 <div class="me-dispute-form">
 	<form id="me-dispute-form" action="">
 
-		<?php me_get_template('resolution/disputed-product-info'); ?>
+		<?php me_get_template('resolution/disputed-product-info', array('transaction' => $transaction)); ?>
 
 		<div class="me-receive-item">
 			<h3><?php _e('Did you receive your item?', 'enginethemes'); ?></h3>
