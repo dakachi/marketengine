@@ -103,7 +103,6 @@ class MarketEngine
         $this->define();
         $this->include_files();
         $this->init_hooks();
-        $this->add_ajax();
         /**
          * Fires after the plugin is loaded.
          *
@@ -378,14 +377,6 @@ class MarketEngine
         wp_enqueue_style('me-option-css', ME_PLUGIN_URL . 'assets/admin/menu.css');
         wp_enqueue_script('jquery-ui', $this->plugin_url() . "/assets/js/jquery-ui$suffix.js", array('jquery'), $this->version, true);
         wp_enqueue_script('jquery-validation', 'http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js');
-    }
-
-    /**
-     * Add ajax for front-end
-     */
-    public function add_ajax()
-    {
-        // TODO: move to admin package
     }
 
     /**
