@@ -43,7 +43,7 @@ function me_rc_dispute_problems() {
 	return apply_filters('me_rc_dispute_problems', $problems);
 }
 
-function me_rc_expected_resolutions( $is_received_item = false ) {
+function me_rc_expected_solutions( $is_received_item = false ) {
 	if($is_received_item) {
 		$resolutions = array(
 			'partial-refund' 	=> array(
@@ -59,7 +59,7 @@ function me_rc_expected_resolutions( $is_received_item = false ) {
 				'description'	=> __('(get a replaced item without refund)', 'enginethemes'),
 			),
 		);
-		$resolutions = apply_filters('me_rc_expected_resolutions_if_received_item', $resolutions);
+
 	} else {
 		$resolutions = array(
 			'full-refund' 	=> array(
@@ -71,7 +71,8 @@ function me_rc_expected_resolutions( $is_received_item = false ) {
 				'description'	=> __('(request the item shipped)', 'enginethemes'),
 			),
 		);
-		$resolutions = apply_filters('me_rc_expected_resolutions_if_no_received_item', $resolutions);
+		
 	}
-	return $resolutions;
+
+	return apply_filters('me_rc_expected_solutions', $resolutions, $is_received_item);
 }
