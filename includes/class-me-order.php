@@ -619,17 +619,18 @@ class ME_Order {
     public function get_dispute_time_limit() {
         $remaining = 0;
         if( $this->has_status('me-complete') ) {
-            $completed_date = date(get_option('date_format'), strtotime($this->post_modified));
-            $limit = me_get_dispute_time_limit();
-            $now = date(get_option('date_format'));
+            
+            $order_close_date = strtotime(get_post_meta( $this->id, '_me_order_closed_time', true ));
+            $now  = time();
 
-            $date = date(get_option('date_format'), strtotime( $completed_date . ' +'. $limit.' days'));
-            $remaining = (strtotime($date) - strtotime($now)) / 86400;
+            $remaining = $order_close_date - $now;
+            if($remaining < 0) return false; 
 
-            $remaining = ($remaining < 0) ? 0 : $remaining;
+            return human_time_diff( $now, $order_close_date );
+
         }
 
-        return $remaining;
+        return false;
     }
 
 }
