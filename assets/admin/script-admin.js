@@ -28,21 +28,23 @@ $(document).ready(function() {
 		var target = event.currentTarget;
 		$('.me-cf-item').not($(target).parents('.me-cf-item')).removeClass('active');
 		$(target).parents('.me-cf-item').toggleClass('active');
-		$(this).me_tooltip();
 	});
-	$('.me-cf-show, .me-cf-edit, .me-cf-remove').tooltip({
-		position: {
-			my: "center bottom-10",
-			at: "center top",
-			using: function( position, feedback ) {
-				$( this ).css( position );
-				$( "<div>" )
-				.addClass( "arrow" )
-				.addClass( feedback.vertical )
-				.addClass( feedback.horizontal )
-				.appendTo( this );
+
+	$('.me-cf-show, .me-cf-edit, .me-cf-remove').each(function(index, el) {
+		var _this = this;
+		$(this).tooltip({
+			position: {
+				my: "center bottom-10",
+				at: "center top",
+				of: _this,
+				using: function( position, feedback ) {
+					$( "<div>" )
+					.addClass( "arrow" )
+					.appendTo( this );
+					$( _this ).append( this );
+				}
 			}
-		}
+		});
 	});
 
 	$('#me-cf-by-category').sortable({

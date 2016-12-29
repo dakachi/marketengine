@@ -1,27 +1,5 @@
 jQuery(document).ready(function($) {
-
-	/*$('#terms-service').on('click', function() {
-		if($(this).is(':checked')) {
-			$('.submit-signup').find('input').removeClass('disable');
-		} else {
-			$('.submit-signup').find('input').addClass('disable');
-		}
-	});*/
-
-	/*$('.marketengine-continue-btn, .me-forward-section').on('click', function(ev) {
-		ev.preventDefault();
-		var target = ev.currentTarget;
-		var data_active = $(target).attr('data-active');
-		$('.marketengine-post-step').removeClass('active');
-		$('#marketengine-post-step-'+data_active).addClass('active');
-		$('.me-post-step').removeClass('active');
-		for (var i = 1; i <= data_active; i++) {
-			$('.me-post-step-'+i).addClass('active');
-		}
-	});*/
-
 	$('.me-list-thumbs').meSliderThumbs();
-
 
 	var magnificInstance = true;
 	var magnificItem = 0;
@@ -229,6 +207,7 @@ jQuery(document).ready(function($) {
 		$('#dispute-get-refund-yes').removeClass('active');
 		$('#dispute-get-refund-no').removeClass('active');
 		$(document.getElementById(get_refund_block_id)).addClass('active');
+		$('.me-solution-item').attr('checked', false);
 	});
 
 
