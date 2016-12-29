@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
  */
 function me_rc_dispute_button($transaction) {
 	$dispute_time_limit = $transaction->get_dispute_time_limit() ;
-	if ('me-pending' !== $transaction->post_status && $dispute_time_limit) {
+	if ( $transaction->post_author == get_current_user_id() && 'me-pending' !== $transaction->post_status && $dispute_time_limit) {
 		echo '<div class="me-hidden-sm me-hidden-xs">';
 		me_get_template('resolution/dispute-button', array('transaction' => $transaction, 'dispute_time_limit' => $dispute_time_limit));	
 		echo '</div>';
@@ -17,6 +17,19 @@ function me_rc_dispute_button($transaction) {
 }
 add_action( 'marketengine_order_extra_content', 'me_rc_dispute_button', 11);
 
+/**
+ * Render order resolution center link
+ * @since 1.1
+ */
+function me_rc_center_link($transaction) {
+	if ('me-disputed' === $transaction->post_status ) {
+		$case = '';
+		echo '<div class="me-hidden-sm me-hidden-xs">';
+		me_get_template('resolution/resolution-link', array('transaction' => $transaction , 'case' => $case));	
+		echo '</div>';
+	}
+}
+add_action( 'marketengine_order_extra_content', 'me_rc_center_link', 11);
 
 /**
  * Render order dispute button link on mobile
@@ -24,7 +37,7 @@ add_action( 'marketengine_order_extra_content', 'me_rc_dispute_button', 11);
  */
 function me_rc_mobile_dispute_button($transaction) {
 	$dispute_time_limit = $transaction->get_dispute_time_limit() ;
-	if ('me-pending' !== $transaction->post_status && $dispute_time_limit) {
+	if ( $transaction->post_author == get_current_user_id() && 'me-pending' !== $transaction->post_status && $dispute_time_limit) {
 		echo '<div class="me-visible-sm me-visible-xs">';
 		me_get_template('resolution/dispute-button', array('transaction' => $transaction, 'dispute_time_limit' => $dispute_time_limit));	
 		echo '</div>';
@@ -36,10 +49,12 @@ add_action( 'marketengine_order_extra_end', 'me_rc_mobile_dispute_button', 11);
  * Render order resolution center link
  * @since 1.1
  */
-function me_rc_center_link($transaction) {
+function me_rc_mobile_center_link($transaction) {
 	if ('me-disputed' === $transaction->post_status ) {
 		$case = '';
+		echo '<div class="me-visible-sm me-visible-xs">';
 		me_get_template('resolution/resolution-link', array('transaction' => $transaction , 'case' => $case));	
+		echo '</div>';
 	}
 }
-add_action( 'marketengine_order_extra_content', 'me_rc_center_link', 11);
+add_action( 'marketengine_order_extra_end', 'me_rc_mobile_center_link', 11);

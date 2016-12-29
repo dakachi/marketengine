@@ -764,8 +764,7 @@ function me_order_listing_info($transaction)
         array(
             'listing'      => $listing,
             'transaction'  => $transaction,
-            'cart_listing' => $cart_item,
-            'seller'       => $transaction->post_author != get_current_user_id(),
+            'cart_listing' => $cart_item
         )
     );
 }
@@ -858,7 +857,7 @@ function me_transaction_details($transaction)
                 'listing_id'  => $_GET['id'],
             )
         );
-    } elseif($transaction->post_author == get_current_user_id() && $transaction->post_status == 'me-complete' && !empty($_GET['action']) && 'dispute') {
+    } elseif($transaction->post_author == get_current_user_id() && $transaction->post_status == 'me-complete' && !empty($_GET['action']) && $_GET['action'] == 'dispute') {
         me_get_template('resolution/dispute-form', array('transaction' => $transaction));
     } else {
         me_get_template('purchases/transaction', array('transaction' => $transaction));

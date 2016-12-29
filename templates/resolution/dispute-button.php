@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 	<p>
 		<?php printf( __('You have %s to dispute this order.', 'enginethemes'), $dispute_time_limit); ?>
 	</p>
-	<a href="<?php echo me_get_page_permalink('dispute'); ?>" >
+	<a href="<?php echo add_query_arg('action', 'dispute'); ?>" >
 		<?php _e('DISPUTE', 'enginethemes'); ?>
 	</a>
 
