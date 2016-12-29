@@ -197,7 +197,7 @@
 		padding-left: 95px;
 		a {
 			font-size: $font_size_medium;
-			font-weight: 800;
+			font-weight: $font_weight_bold;
 			color: $color_text;
 			&.me-orderlisting-review {
 				display: inline-block;
@@ -232,9 +232,11 @@
 		}
 	}
 	.me-listing-info-archive {
+		> span {
+			font-weight: $font_weight_bold;
+		}
 		span {
 			font-size: $font_size_medium;
-			// font-weight: 800;
 			color: $color_label_2;
 		}
 	}
