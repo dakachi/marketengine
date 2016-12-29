@@ -138,11 +138,7 @@ $(document).ready(function() {
 			        return $.trim( value );
 			    },
 	    	}
-	    },
-	    highlight: function(element, errorClass) {
-	    	$(element).parent().children('div').remove();
-	    	$(element).removeClass(errorClass)
-	    },
+	    }
     });
 
     $('.me-cf-remove').on('click', function(e) {
