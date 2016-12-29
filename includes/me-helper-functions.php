@@ -17,8 +17,6 @@ if (!defined('ABSPATH')) {
  * 
  * @access public
  * @param  string $page_option_name The page option name
- * @package Includes/Helper
- * @category Function
  *
  * @return int| null Page Id if exist or null if page not existed
  */
@@ -30,6 +28,28 @@ function me_get_option_page_id($page_option_name)
         return -1;
     }
     return $page_id;
+}
+
+if (!function_exists('me_get_page_permalink')) {
+    /**
+     * Retrieve page url base on page option name
+     *
+     *
+     * @package Includes/Helper
+     * @category Function
+     * 
+     * @access public
+     * @param  string $page_option_name The page option name
+     * @return string
+     */
+    function me_get_page_permalink($page_name)
+    {
+        $page = me_option('me_' . $page_name . '_page_id');
+        if (!$page = get_post($page)) {
+            return home_url();
+        }
+        return get_permalink($page);
+    }
 }
 
 /**

@@ -125,17 +125,7 @@ function me_get_sidebar()
     me_locate_template($templates, true);
 }
 
-// TODO: can dat ham nay cho dung vi tri file
-if (!function_exists('me_get_page_permalink')) {
-    function me_get_page_permalink($page_name)
-    {
-        $page = me_option('me_' . $page_name . '_page_id');
-        if (!$page = get_post($page)) {
-            return home_url();
-        }
-        return get_permalink($page);
-    }
-}
+
 
 /**
  * Returns the url to the lost password endpoint url.

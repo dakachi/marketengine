@@ -624,13 +624,13 @@ class ME_Order {
             $now  = time();
 
             $remaining = $order_close_date - $now;
-            if($remaining < 0) return 0; 
+            if($remaining < 0) return false; 
 
             return human_time_diff( $now, $order_close_date );
 
         }
 
-        return $remaining;
+        return false;
     }
 
 }
