@@ -138,14 +138,14 @@ form {
 		padding: 30px 0 30px 60px;
 		&.me-authen-inactive {
 			&:before {
-				background: #53a554;
+				background: $color_notifi_success;
 			}
 		}
 		&:before {
 			content: '';
 			width: 4px;
 			height: 100%;
-			background: $color_skin;
+			background: $color_notifi_success;
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -184,7 +184,7 @@ form {
 			content: '';
 			width: 4px;
 			height: 100%;
-			background: $color_skin;
+			background: $color_notifi_success;
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -209,7 +209,7 @@ form {
 	}
 }
 
-@media (max-width: $screen_xs_max) {
+@media (max-width: $screen_xs_max) { //767px
 	.me-authen-success {
 		width: auto;
 		margin: 0 -15px 20px -15px; 
@@ -227,30 +227,30 @@ form {
 		padding: 35px 15px 25px 15px;
 		&.me-authen-login {
 			margin-top: 0;
-			// padding: 25px 15px;
+			padding: 25px 15px;
 		}
 		&.me-authen-register {
 			margin-top: 0;
-			// padding: 25px 15px;
+			padding: 25px 15px;
 		}
 		&.me-authen-profile {
 			margin-top: 0;
-			// padding: 25px 15px;
+			padding: 25px 15px;
 		}
 		&.me-authen-change {
 			width: auto;
 			margin-top: 0;
-			// padding: 25px 15px;
+			padding: 25px 15px;
 		}
 		&.me-authen-forgot {
 			width: auto;
 			margin-top: 0;
-			// padding: 25px 15px;
+			padding: 25px 15px;
 		}
 		&.me-authen-reset {
 			width: auto;
 			margin-top: 0;
-			// padding: 25px 15px;
+			padding: 25px 15px;
 		}
 	}
 	.me-account-register {
@@ -267,4 +267,20 @@ form {
 			padding: 0;
 		}
 	}
+	form {
+		.marketengine-group-field {
+			.forgot-pass {
+			}
+			&.me-submit-signup {
+				margin-bottom: 30px;
+			}
+			&.me-submit-sigin {
+				margin-bottom: 30px;
+			}
+			&.forgot-sigin {
+				margin-bottom: 30px;
+			}
+		}
+	}
+	
 }
