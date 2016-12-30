@@ -51,7 +51,7 @@ function me_rc_statuses() {
  */
 function me_rc_status_label($status_name) {
 	$statuses = me_rc_statuses();
-	return $statuses[$status_name];
+	return $status_name ? $statuses[$status_name] : '';
 }
 
 /**
@@ -84,7 +84,7 @@ function me_rc_dispute_problems() {
  */
 function me_rc_dispute_problem_label($problem_name) {
 	$problems = me_rc_dispute_problems();
-	return $problems[$problem_key];
+	return $problem_name ? $problems[$problem_name] : '';
 }
 
 /**

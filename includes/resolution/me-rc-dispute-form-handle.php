@@ -57,17 +57,17 @@ class ME_Dispute_Form_Handle {
 
 	public static function update_dispute_case_meta($case_id, $data) {
 		//TODO: luu bang message itemmeta
-		update_post_meta($case_id, '_case_problem', $data['me-dispute-problem']);
-		update_post_meta($case_id, '_case_problem_description', $data['me-dispute-problem-description']);
-		update_post_meta($case_id, '_case_expected_resolution', $data['me-dispute-get-refund']);
+		me_update_message_meta($case_id, '_case_problem', $data['me-dispute-problem']);
+		me_update_message_meta($case_id, '_case_problem_description', $data['me-dispute-problem-description']);
+		me_update_message_meta($case_id, '_case_expected_resolution', $data['me-dispute-get-refund']);
 
 		if($data['me-receive-item']) {
-			update_post_meta($case_id, '_case_is_received_item', $data['me-receive-item']);
+			me_update_message_meta($case_id, '_case_is_received_item', $data['me-receive-item']);
 		}
 
 		//TODO: process case media
 		if(!empty($data['me-dispute-media'])) {
-			// update_post_meta($case_id, '_case_media', $data['me-dispute-media']);
+			// me_update_message_meta($case_id, '_case_media', $data['me-dispute-media']);
 		}
 	}
 }
