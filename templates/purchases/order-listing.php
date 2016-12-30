@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) {
 
 	<div class="me-listing-info">
 		<div class="me-row">
-			<div class="me-col-md-8">
+			<div class="me-col-md-8 me-col-sm-8">
 
 				<h2><a href="<?php echo $listing_obj && (($listing_obj->get_author() == get_current_user_id()) || $listing_obj->is_available()) ? $listing_obj->get_permalink() : 'javascript:void(0)'; ?>"><?php echo esc_html($cart_listing['title']); ?></a></h2>
 				<div class="me-rating">
@@ -31,7 +31,7 @@ if (!defined('ABSPATH')) {
 					<span><?php printf(_n('%d Review', '%d Reviews', $listing_obj->get_review_count(), 'enginethemes'), $listing_obj->get_review_count()); ?></span>
 				</div>
 			</div>
-			<div class="me-col-md-4">
+			<div class="me-col-md-4 me-col-sm-4">
 				<?php
 					$seller = $listing_obj->get_author();
 					$can_rate = $seller != get_current_user_id() && $listing_obj->is_available();
