@@ -11,7 +11,7 @@ function me_rc_dispute_button($transaction) {
 	$dispute_time_limit = $transaction->get_dispute_time_limit() ;
 	if ( $transaction->post_author == get_current_user_id() && 'me-pending' !== $transaction->post_status && $dispute_time_limit) {
 		echo '<div class="me-hidden-sm me-hidden-xs">';
-		me_get_template('resolution/dispute-button', array('transaction' => $transaction, 'dispute_time_limit' => $dispute_time_limit));
+		me_get_template('resolution/order/dispute-button', array('transaction' => $transaction, 'dispute_time_limit' => $dispute_time_limit));
 		echo '</div>';
 	}
 }
@@ -25,7 +25,7 @@ function me_rc_center_link($transaction) {
 	if ('me-disputed' === $transaction->post_status ) {
 		$case = '';
 		echo '<div class="me-hidden-sm me-hidden-xs">';
-		me_get_template('resolution/resolution-link', array('transaction' => $transaction , 'case' => $case));
+		me_get_template('resolution/order/resolution-link', array('transaction' => $transaction , 'case' => $case));
 		echo '</div>';
 	}
 }
@@ -39,7 +39,7 @@ function me_rc_mobile_dispute_button($transaction) {
 	$dispute_time_limit = $transaction->get_dispute_time_limit() ;
 	if ( $transaction->post_author == get_current_user_id() && 'me-pending' !== $transaction->post_status && $dispute_time_limit) {
 		echo '<div class="me-visible-sm me-visible-xs">';
-		me_get_template('resolution/dispute-button', array('transaction' => $transaction, 'dispute_time_limit' => $dispute_time_limit));
+		me_get_template('resolution/order/dispute-button', array('transaction' => $transaction, 'dispute_time_limit' => $dispute_time_limit));
 		echo '</div>';
 	}
 }
@@ -53,7 +53,7 @@ function me_rc_mobile_center_link($transaction) {
 	if ('me-disputed' === $transaction->post_status ) {
 		$case = '';
 		echo '<div class="me-visible-sm me-visible-xs">';
-		me_get_template('resolution/resolution-link', array('transaction' => $transaction , 'case' => $case));
+		me_get_template('resolution/order/resolution-link', array('transaction' => $transaction , 'case' => $case));
 		echo '</div>';
 	}
 }
