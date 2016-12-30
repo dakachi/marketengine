@@ -9,7 +9,7 @@
  * @since 		1.0.1
  */
 
-$query = me_rc_dispute_case_query();
+$query = me_rc_dispute_case_query($_GET);
 ?>
 
 <div class="me-resolution">

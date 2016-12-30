@@ -16,7 +16,7 @@
 </div>
 <!--//mobile-->
 <div class="me-resolution-filter">
-	<form id="me-resolution-filter-form" action="">
+	<form id="me-resolution-filter-form" action="<?php me_dispute_case_filter_form_action(); ?>">
  		<div class="me-row">
 			<div class="me-col-md-5">
 				<div class="me-row">

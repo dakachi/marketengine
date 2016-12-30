@@ -132,7 +132,7 @@ function me_rc_expected_solutions( $is_received_item = false ) {
  * @since 	1.1.0
  * @version 1.0.0
  */
-function me_rc_dispute_case_query() {
+function me_rc_dispute_case_query($query) {
 	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
 	$args = array(
 		'post_type'		=> 'dispute',
@@ -141,8 +141,57 @@ function me_rc_dispute_case_query() {
 		'receiver'		=> get_current_user_id(),
 	);
 
-	// $args = array_merge(apply_filters( 'me_filter_inquiry', $_GET, $role ), $args);
+	$args = array_merge(apply_filters( 'me_filter_dispute_case', $query), $args);
 	$query = new ME_Message_Query($args);
 
 	return $query;
+}
+
+function me_filter_dispute_case( $query ) {
+	$args = array();
+	if(!empty($query['status']) && $query['status'] !== 'any') {
+		$args['post_status'] = $query['status'];
+	}
+
+	if (isset($query['from_date']) || isset($query['to_date'])) {
+        $before = $after = '';
+        if (isset($query['from_date']) && !empty($query['from_date'])) {
+            if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $query['from_date'])) {
+                $after = $query['from_date'] . ' 0:0:1';
+            } else {
+                $args['post__in'][] = -1;
+                return $args;
+            }
+        }
+
+        if (isset($query['to_date']) && !empty($query['to_date'])) {
+            if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $query['to_date'])) {
+                $before = $query['to_date'] . ' 23:59:59';
+            } else {
+                $args['post__in'][] = -1;
+                return $args;
+            }
+        }
+
+        $args['date_query'] = array(
+            array(
+                'after'  => $after,
+                'before' => $before,
+            ),
+        );
+    }
+
+	return $args;
+}
+add_filter('me_filter_dispute_case', 'me_filter_dispute_case');
+
+function me_dispute_case_filter_form_action() {
+	global $wp;
+	if ('' === get_option('permalink_structure')) {
+	    $form_action = remove_query_arg(array('page', 'paged'), add_query_arg($wp->query_string, '', home_url($wp->request)));
+	} else {
+	    $form_action = preg_replace('%\/page/[0-9]+%', '', home_url(trailingslashit($wp->request)));
+	}
+	echo $form_action;
+	return $form_action;
 }

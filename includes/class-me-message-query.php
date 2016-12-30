@@ -965,7 +965,12 @@ class ME_Message_Query {
 			$where .= " AND {$this->table}.post_author NOT IN ($author__not_in) ";
 		} elseif ( ! empty( $q['author__in'] ) ) {
 			$author__in = implode( ',', array_map( 'absint', array_unique( (array) $q['author__in'] ) ) );
-			$where .= " AND {$this->table}.sender IN ($author__in) ";
+			if(!empty($q['receiver']) && $q['receiver'] != '0') {
+				$where .= " AND ({$this->table}.sender IN ($author__in) ";
+			} else {
+				$where .= " AND {$this->table}.sender IN ($author__in) ";
+			}
+
 		}
 
 		// Author stuff for nice URLs
@@ -1000,7 +1005,11 @@ class ME_Message_Query {
 				$where .= " AND {$this->table}.post_author NOT IN ($author__not_in) ";
 			} elseif ( ! empty( $q['author__in'] ) ) {
 				$author__in = implode( ',', array_map( 'absint', array_unique( (array) $q['author__in'] ) ) );
-				$where .= " AND {$this->table}.receiver IN ($author__in) ";
+				if(!empty($q['sender']) && $q['sender'] != '0') {
+					$where .= " OR {$this->table}.receiver IN ($author__in) ) ";
+				} else {
+					$where .= " AND {$this->table}.receiver IN ($author__in) ";
+				}
 			}
 		}
 
@@ -1021,11 +1030,7 @@ class ME_Message_Query {
 			$whichauthor .= " AND ($this->table.receiver = " . absint($q['receiver']) . ')';
 		}
 
-		if(!empty($q['sender']) && $q['sender'] != '0' && !empty($q['receiver']) && $q['receiver'] != '0') {
-			$where = str_replace("AND {$this->table}.receiver", "OR {$this->table}.receiver", $where);
-		} else {
-			$where .= $search . $whichauthor;
-		}
+		$where .= $search . $whichauthor;
 
 		if ( ! empty( $this->meta_query->queries ) ) {
 			$clauses = $this->meta_query->get_sql( 'post', $this->table, 'ID', $this );
@@ -1171,14 +1176,16 @@ class ME_Message_Query {
 			$p_status = array();
 			$e_status = array();
 
-			foreach ( get_post_stati() as $status ) {
-				if ( in_array( $status, $q_status ) ) {
-					if ( 'private' == $status )
-						$p_status[] = "$this->table.post_status = '$status'";
-					else
-						$r_status[] = "$this->table.post_status = '$status'";
-				}
+			// foreach ( get_post_stati() as $status ) {
+			// 	if ( in_array( $status, $q_status ) ) {
+			foreach($q_status as $status) {
+				if ( 'private' == $status )
+					$p_status[] = "$this->table.post_status = '$status'";
+				else
+					$r_status[] = "$this->table.post_status = '$status'";
 			}
+			// 	}
+			// }
 
 			if ( empty($q['perm'] ) || 'readable' != $q['perm'] ) {
 				$r_status = array_merge($r_status, $p_status);
