@@ -454,8 +454,10 @@
 		}
 		.me-listing-info {
 			padding: 0;
-			+ .me-item-archive {
+			.me-item-archive {
+				margin: 10px 0 0;
 				padding: 0;
+				text-align: left;
 			}
 		}
 	}
@@ -522,7 +524,7 @@
 					font-variant: normal;
 					text-transform: none;
 					line-height: 1;
-					content: '\e91a';
+					content: '\e925';
 					display: table-cell;
 					font-size: $font_size_small;
 					padding-left: 14px;
@@ -530,6 +532,25 @@
 				}
 				span {
 					color: $color_text;
+				}
+				+ .me-line-step-order {
+					span {
+						color: $color_text;
+					}
+					&:after {
+						font-family: 'me-icomoon' !important;
+						speak: none;
+						font-style: normal;
+						font-weight: normal;
+						font-variant: normal;
+						text-transform: none;
+						line-height: 1;
+						content: '\e920';
+						display: table-cell;
+						font-size: $font_size_small;
+						padding-left: 14px;
+						color: $color_text;
+					}
 				}
 			}
 			&.current {
