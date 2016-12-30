@@ -99,9 +99,9 @@ function prefix_url_rewrite_templates() {
  
     if ( get_query_var( 'message_type' ) ) {
         add_filter( 'template_include', function() {
-            return ME()->plugin_path() . '/templates/inquiry/inquiry-message.php';
+            return ME()->plugin_path() . '/templates/me-single-inquiry.php';
         });
     }
 }
  
-// add_action( 'template_redirect', 'prefix_url_rewrite_templates' );
+add_action( 'template_redirect', 'prefix_url_rewrite_templates' );
