@@ -147,6 +147,21 @@ function me_rc_dispute_case_query($query) {
 	return $query;
 }
 
+function me_dispute_case_id_by_user( $user ) {
+    global $wpdb;
+    $query = "SELECT $wpdb->marketengine_message_item.ID
+        FROM $wpdb->marketengine_message_item
+        LEFT JOIN $wpdb->users
+        ON ($wpdb->marketengine_message_item.sender = $wpdb->users.ID
+        	OR $wpdb->marketengine_message_item.receiver = $wpdb->users.ID)
+        WHERE $wpdb->marketengine_message_item.post_type = 'dispute'
+        AND $wpdb->users.display_name LIKE '%{$user}%'";
+
+    $results = $wpdb->get_col($query);
+
+    return $results;
+}
+
 function me_filter_dispute_case( $query ) {
 	$args = array();
 	if(!empty($query['status']) && $query['status'] !== 'any') {
@@ -179,6 +194,21 @@ function me_filter_dispute_case( $query ) {
                 'before' => $before,
             ),
         );
+    }
+
+    if( !empty($query['keyword']) ) {
+        $case_id = is_numeric( $query['keyword'] ) ? $query['keyword'] : '';
+
+        $ids = me_dispute_case_id_by_user($query['keyword']);
+        if($case_id) {
+        	$ids = array_merge($ids, array($case_id));
+        }
+
+        if(empty($ids)) {
+        	$args['post__in'][] = -1;
+        } else {
+        	$args['post__in'] = $ids;
+        }
     }
 
 	return $args;
