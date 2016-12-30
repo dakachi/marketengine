@@ -20,7 +20,7 @@ return array(
         'slug'     => 'authentication',
         'type'     => 'section',
         'template' => array(
-            'user-account-page' => array(
+            'user-account-page'     => array(
                 'label'       => __("User Account Page", "enginethemes"),
                 'description' => __("Choose a page displaying as User Account Page (only pages having shortcode [me_user_account] are displayed here)", "enginethemes"),
                 'slug'        => 'user-account-page',
@@ -37,7 +37,7 @@ return array(
                 'name'        => 'user-account-endpoint',
                 'data'        => marketengine_get_list_of_page(),
                 'template'    => array(
-                    'ep-register' => array(
+                    'ep-register'        => array(
                         'label'       => __("Register", "enginethemes"),
                         'description' => __("Endpoint for the User Account -> Register page", "enginethemes"),
                         'slug'        => 'ep-register',
@@ -46,7 +46,7 @@ return array(
                         'placeholder' => 'register',
                         'template'    => array(),
                     ),
-                    'ep-edit-profile' => array(
+                    'ep-edit-profile'    => array(
                         'label'       => __("Edit Profile", "enginethemes"),
                         'description' => __("Endpoint for the User Account -> Edit Profile page", "enginethemes"),
                         'slug'        => 'ep-edit-profile',
@@ -73,7 +73,7 @@ return array(
                         'placeholder' => 'forgot-password',
                         'template'    => array(),
                     ),
-                    'ep-reset-password' => array(
+                    'ep-reset-password'  => array(
                         'label'       => __("Reset Password", "enginethemes"),
                         'description' => __("Endpoint for the User Account -> Reset Password page", "enginethemes"),
                         'slug'        => 'ep-reset-password',
@@ -82,7 +82,7 @@ return array(
                         'placeholder' => 'reset-password',
                         'template'    => array(),
                     ),
-                    'ep-listings' => array(
+                    'ep-listings'        => array(
                         'label'       => __("My Listings", "enginethemes"),
                         'description' => __("Endpoint for the User Account -> My Listings page", "enginethemes"),
                         'slug'        => 'ep-listings',
@@ -91,7 +91,7 @@ return array(
                         'placeholder' => 'listings',
                         'template'    => array(),
                     ),
-                    'ep-orders' => array(
+                    'ep-orders'          => array(
                         'label'       => __("My Orders", "enginethemes"),
                         'description' => __("Endpoint for the User Account -> My Orders page", "enginethemes"),
                         'slug'        => 'ep-orders',
@@ -100,7 +100,7 @@ return array(
                         'placeholder' => 'orders',
                         'template'    => array(),
                     ),
-                    'ep-purchases' => array(
+                    'ep-purchases'       => array(
                         'label'       => __("My Purchases", "enginethemes"),
                         'description' => __("Endpoint for the User Account -> My Purchases page", "enginethemes"),
                         'slug'        => 'ep-purchases',
@@ -113,37 +113,37 @@ return array(
             ),
         ),
     ),
-    'listings' => array(
+    'listings'       => array(
         'title'    => __("Listings", "enginethemes"),
         'slug'     => 'listings',
         'type'     => 'section',
         'template' => array(
             'post-listings-page' => array(
-                'label'         => __("Post Listing Page", "enginethemes"),
-                'description'   => __("Choose a page displaying as Post Listing Page", "enginethemes"),
-                'slug'          => 'me_post_listing_form',
-                'name'          => 'me_post_listing_page_id',
-                'type'          => 'select',
-                'data'          => marketengine_get_list_of_page(),
-                'template'      => array(),
+                'label'       => __("Post Listing Page", "enginethemes"),
+                'description' => __("Choose a page displaying as Post Listing Page", "enginethemes"),
+                'slug'        => 'me_post_listing_form',
+                'name'        => 'me_post_listing_page_id',
+                'type'        => 'select',
+                'data'        => marketengine_get_list_of_page(),
+                'template'    => array(),
             ),
             'edit-listings-page' => array(
-                'label'         => __("Edit Listing Page", "enginethemes"),
-                'description'   => __("Choose a page displaying as Edit Listing Page", "enginethemes"),
-                'slug'          => 'me_listings',
-                'name'          => 'me_edit_listing_page_id',
-                'type'          => 'select',
-                'data'          => marketengine_get_list_of_page(),
-                'template'      => array(),
+                'label'       => __("Edit Listing Page", "enginethemes"),
+                'description' => __("Choose a page displaying as Edit Listing Page", "enginethemes"),
+                'slug'        => 'me_listings',
+                'name'        => 'me_edit_listing_page_id',
+                'type'        => 'select',
+                'data'        => marketengine_get_list_of_page(),
+                'template'    => array(),
             ),
         ),
     ),
-    'payment-flow' => array(
+    'payment-flow'   => array(
         'title'    => __("Payment Flow", "enginethemes"),
         'slug'     => 'payment-flow',
         'type'     => 'section',
         'template' => array(
-            'checkout-page' => array(
+            'checkout-page'         => array(
                 'label'       => __("Check Out Page", "enginethemes"),
                 'description' => __("Choose a page displaying as Check Out Page", "enginethemes"),
                 'slug'        => 'me_checkout_form',
@@ -152,7 +152,7 @@ return array(
                 'data'        => marketengine_get_list_of_page(),
                 'template'    => array(),
             ),
-            'confirm-order-page' => array(
+            'confirm-order-page'    => array(
                 'label'       => __("Confirm Order Page", "enginethemes"),
                 'description' => __("Choose a page displaying as Confirm Order Page", "enginethemes"),
                 'slug'        => 'me_confirm_order',
@@ -162,7 +162,7 @@ return array(
                 'template'    => array(),
             ),
 
-            'cancel-order-page' => array(
+            'cancel-order-page'     => array(
                 'label'       => __("Cancel Order Page", "enginethemes"),
                 'description' => __("Choose a page displaying as Cancel Order Page", "enginethemes"),
                 'slug'        => 'me_cancel_order',
@@ -187,12 +187,12 @@ return array(
                         'name'        => 'ep_order_id',
                         'placeholder' => 'order',
                         'template'    => array(),
-                    )
+                    ),
                 ),
             ),
         ),
     ),
-    'other' => array(
+    'other'          => array(
         'title'    => __("Others", "enginethemes"),
         'slug'     => 'other',
         'type'     => 'section',
@@ -204,7 +204,16 @@ return array(
                 'type'        => 'select',
                 'name'        => 'me_inquiry_page_id',
                 'data'        => marketengine_get_list_of_page(),
-            )
+            ),
+            'ep-inquiry'     => array(
+                'label'       => __("Inquiry Details", "enginethemes"),
+                'description' => __("Endpoint for the Inquiry Details page -> Inquiry ID page", "enginethemes"),
+                'slug'        => 'ep-orderid',
+                'type'        => 'textbox',
+                'name'        => 'ep_inquiry',
+                'placeholder' => 'inquiry',
+                'template'    => array(),
+            ),
         ),
-    )
+    ),
 );
