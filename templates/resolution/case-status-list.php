@@ -13,7 +13,7 @@
 <select name="status">
 	<option value=""><?php _e('All', 'enginethemes'); ?></option>
 <?php
-	$statuses = me_rc_status_list();
+	$statuses = me_rc_statuses();
 	foreach ($statuses as $key => $status) :
 ?>
 	<option <?php selected(isset($_GET['status']) && $_GET['status'] == $key); ?> value="<?php echo $key; ?>"><?php echo $status; ?></option>

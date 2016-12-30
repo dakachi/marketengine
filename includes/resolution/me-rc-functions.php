@@ -7,20 +7,28 @@
  * @category 	Functions
  *
  * @version     1.0.0
- * @since 		1.0.1
+ * @since 		1.1.0
  */
 
 /**
  * Returns the url of resolution center
  *
- * @since 	1.0.1
+ * @since 	1.1.0
  * @version 1.0.0
  */
 function me_resolution_center_url() {
 	return me_get_auth_url('resolution-center');
 }
 
-function me_rc_status_list() {
+/**
+ * Returns dispute case statuses.
+ *
+ * @return array $statuses
+ *
+ * @since 	1.1.0
+ * @version 1.0.0
+ */
+function me_rc_statuses() {
 	$statuses = array(
 		'me-open'		=> __('Open', 'enginethemes'),
 		'me-waiting'	=> __('Waiting', 'enginethemes'),
@@ -32,6 +40,28 @@ function me_rc_status_list() {
 	return apply_filters('me_rc_statuses', $statuses);
 }
 
+/**
+ * Returns the label of a dispute case status.
+ *
+ * @param 	string $status_name
+ * @return 	string status label
+ *
+ * @since 	1.1.0
+ * @version 1.0.0
+ */
+function me_rc_status_label($status_name) {
+	$statuses = me_rc_statuses();
+	return $statuses[$status_name];
+}
+
+/**
+ * Returns dispute problem options.
+ *
+ * @return 	array $problems
+ *
+ * @since 	1.1.0
+ * @version 1.0.0
+ */
 function me_rc_dispute_problems() {
 	$problems =  array(
 		'problem-1'		=> __('Problem 1', 'enginethemes'),
@@ -43,6 +73,26 @@ function me_rc_dispute_problems() {
 	return apply_filters('me_rc_dispute_problems', $problems);
 }
 
+/**
+ * Returns the label of a problem.
+ *
+ * @param 	string $problem_name
+ * @return 	string problem label
+ *
+ * @since 	1.1.0
+ * @version 1.0.0
+ */
+function me_rc_dispute_problem_label($problem_name) {
+	$problems = me_rc_dispute_problems();
+	return $problems[$problem_key];
+}
+
+/**
+ * @todo chia ra thanh 2 ham
+ *
+ * @since 	1.1.0
+ * @version 1.0.0
+ */
 function me_rc_expected_solutions( $is_received_item = false ) {
 	if($is_received_item) {
 		$resolutions = array(
@@ -71,8 +121,28 @@ function me_rc_expected_solutions( $is_received_item = false ) {
 				'description'	=> __('(request the item shipped)', 'enginethemes'),
 			),
 		);
-		
 	}
 
 	return apply_filters('me_rc_expected_solutions', $resolutions, $is_received_item);
+}
+
+/**
+ * Returns the dispute case query.
+ *
+ * @since 	1.1.0
+ * @version 1.0.0
+ */
+function me_rc_dispute_case_query() {
+	$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+	$args = array(
+		'post_type'		=> 'dispute',
+		'paged'			=> $paged,
+		'sender'		=> get_current_user_id(),
+		'receiver'		=> get_current_user_id(),
+	);
+
+	// $args = array_merge(apply_filters( 'me_filter_inquiry', $_GET, $role ), $args);
+	$query = new ME_Message_Query($args);
+
+	return $query;
 }

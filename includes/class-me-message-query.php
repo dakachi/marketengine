@@ -1021,7 +1021,11 @@ class ME_Message_Query {
 			$whichauthor .= " AND ($this->table.receiver = " . absint($q['receiver']) . ')';
 		}
 
-		$where .= $search . $whichauthor;
+		if(!empty($q['sender']) && $q['sender'] != '0' && !empty($q['receiver']) && $q['receiver'] != '0') {
+			$where = str_replace("AND {$this->table}.receiver", "OR {$this->table}.receiver", $where);
+		} else {
+			$where .= $search . $whichauthor;
+		}
 
 		if ( ! empty( $this->meta_query->queries ) ) {
 			$clauses = $this->meta_query->get_sql( 'post', $this->table, 'ID', $this );

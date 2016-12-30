@@ -14,6 +14,18 @@
 
 	<?php me_get_template('resolution/cases-table-header'); ?>
 
-	<?php me_get_template('resolution/cases-rows'); ?>
+	<?php if($query->found_posts) : ?>
+
+		<?php foreach ($query->posts as $case) : ?>
+
+		<?php me_get_template('resolution/cases-rows', array('case' => $case)); ?>
+
+		<?php endforeach; ?>
+
+	<?php else: ?>
+
+		<?php me_get_template('resolution/no-cases'); ?>
+
+	<?php endif; ?>
 
 </div>
