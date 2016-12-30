@@ -197,7 +197,7 @@
 		padding-left: 95px;
 		a {
 			font-size: $font_size_medium;
-			font-weight: 800;
+			font-weight: $font_weight_bold;
 			color: $color_text;
 			&.me-orderlisting-review {
 				display: inline-block;
@@ -232,9 +232,11 @@
 		}
 	}
 	.me-listing-info-archive {
+		> span {
+			font-weight: $font_weight_bold;
+		}
 		span {
 			font-size: $font_size_medium;
-			// font-weight: 800;
 			color: $color_label_2;
 		}
 	}
@@ -399,7 +401,13 @@
 //=== Large grid
 // Columns, offsets, pushes, and pulls for the desktop device range.
 @media (max-width: $screen_md_max) { //1199px
-	
+	.me-orderlisting-info {
+		.me-listing-info {
+			.me-item-archive {
+				text-align: left;
+			}
+		}
+	}
 }
 
 // Small grid
@@ -452,7 +460,8 @@
 		}
 		.me-listing-info {
 			padding: 0;
-			+ .me-item-archive {
+			.me-item-archive {
+				margin: 10px 0 0;
 				padding: 0;
 			}
 		}
@@ -520,7 +529,7 @@
 					font-variant: normal;
 					text-transform: none;
 					line-height: 1;
-					content: '\e91a';
+					content: '\e925';
 					display: table-cell;
 					font-size: $font_size_small;
 					padding-left: 14px;
@@ -528,6 +537,25 @@
 				}
 				span {
 					color: $color_text;
+				}
+				+ .me-line-step-order {
+					span {
+						color: $color_text;
+					}
+					&:after {
+						font-family: 'me-icomoon' !important;
+						speak: none;
+						font-style: normal;
+						font-weight: normal;
+						font-variant: normal;
+						text-transform: none;
+						line-height: 1;
+						content: '\e920';
+						display: table-cell;
+						font-size: $font_size_small;
+						padding-left: 14px;
+						color: $color_text;
+					}
 				}
 			}
 			&.current {

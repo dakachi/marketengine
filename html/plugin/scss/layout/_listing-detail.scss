@@ -237,6 +237,9 @@
 		border: 1px solid $color_border_base;
 		border-radius: $border_radius_base;
 	}
+	.me-inactive {
+		display: none;
+	}
 	.me-images {
 		position: relative;
 		width: 100%;
@@ -818,6 +821,10 @@ ul.me-comment-list {
 		}
 	}
 	.marketengine-content-detail {
+		.me-inactive {
+			display: block;
+			margin-bottom: 20px;
+		}
 		.me-images {
 			padding-right: 0;
 			.me-image-thumbs {
