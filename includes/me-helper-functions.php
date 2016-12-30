@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
  *
  * @package Includes/Helper
  * @category Function
- * 
+ *
  * @access public
  * @param  string $page_option_name The page option name
  *
@@ -37,7 +37,7 @@ if (!function_exists('me_get_page_permalink')) {
      *
      * @package Includes/Helper
      * @category Function
-     * 
+     *
      * @access public
      * @param  string $page_option_name The page option name
      * @return string
@@ -59,7 +59,7 @@ if (!function_exists('me_get_page_permalink')) {
  *
  * @package Includes/Helper
  * @category Function
- * 
+ *
  * @param  string $query_var
  * @return string
  */
@@ -75,42 +75,43 @@ function me_get_endpoint_name($query_var)
 
 /**
  * Returns the default endpoints.
- * 
+ *
  * @package Includes/Helper
  * @category Function
- * 
+ *
  * @access public
  * @return array of endpoints
  */
 function me_default_endpoints()
 {
     $endpoint_arr = array(
-        'forgot_password'       => 'forgot-password',
-        'reset_password'        => 'reset-password',
-        'register'              => 'register',
-        'edit_profile'          => 'edit-profile',
-        'change_password'       => 'change-password',
-        'listings'              => 'listings',
-        'orders'                => 'orders',
-        'order_id'              => 'order',
-        'purchases'             => 'purchases',
-        'pay'                   => 'pay',
-        'listing_id'            => 'listing-id',
-        'seller_id'             => 'seller',
-        'resolution_center'       => 'resolution-center',
+        'forgot_password'   => 'forgot-password',
+        'reset_password'    => 'reset-password',
+        'register'          => 'register',
+        'edit_profile'      => 'edit-profile',
+        'change_password'   => 'change-password',
+        'listings'          => 'listings',
+        'orders'            => 'orders',
+        'order_id'          => 'order',
+        'purchases'         => 'purchases',
+        'pay'               => 'pay',
+        'listing_id'        => 'listing-id',
+        'seller_id'         => 'seller',
+        'resolution_center' => 'resolution-center',
+        'inquiry'           => 'inquiry',
     );
     return $endpoint_arr;
 }
 
 /**
  * Get the option value
- * 
+ *
  * @param string $option The option name
  * @param mix $default The option default value
  *
  * @package Includes/Helper
  * @category Function
- * 
+ *
  * @since 1.0
  * @return string
  */
@@ -122,13 +123,13 @@ function me_option($option, $default = '')
 
 /**
  * Update option value
- * 
+ *
  * @param string $option The option name
  * @param mix $value The option value
  *
  * @package Includes/Helper
  * @category Function
- * 
+ *
  * @since 1.0
  * @return string
  */
@@ -140,10 +141,10 @@ function me_update_option($option, $value)
 
 /**
  * Retrieve the client ip
- * 
+ *
  * @package Includes/Helper
  * @category Function
- * 
+ *
  * @since 1.0
  * @return string
  */
@@ -160,10 +161,10 @@ function me_get_client_ip()
 }
 /**
  * Retrieve the client agent
- * 
+ *
  * @package Includes/Helper
  * @category Function
- * 
+ *
  * @since 1.0
  * @return string
  */
@@ -178,7 +179,7 @@ function me_get_client_agent()
  * This function is localized. For languages that count 'words' by the individual
  * character (such as East Asian languages), the $num_words argument will apply
  * to the number of individual characters.
- * 
+ *
  * @package Includes/Helper
  * @category Function
  *
