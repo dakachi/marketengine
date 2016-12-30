@@ -68,6 +68,14 @@
 				border-bottom: 1px solid #ededed;
 			}
 		}
+		&.me-no-custom-fields {
+			text-align: center;
+			margin: 0 23px;
+			padding: 50px 0 20px 0;
+			font-size: 16px;
+			color: #919191;
+			border-top: 1px solid #ededed;
+		}
 	}
 }
 
@@ -84,12 +92,14 @@
 			border-top: 1px solid #ededed;
 		}
 		.me-cf-show {
-			i {
-				&:first-child {
-					display: none;
-				}
-				&:last-child {
-					display: block;
+			> span {
+				i {
+					&:first-child {
+						display: none;
+					}
+					&:last-child {
+						display: block;
+					}
 				}
 			}
 		}
@@ -154,27 +164,41 @@
 }
 
 .me-cf-row-wrap {
-	padding: 20px 0;
+	padding: 20px 0 16px 0;
 	border-top: 1px solid #ededed; 
 }
 .me-cf-action {
 	position: relative;
 	float: right;
 	z-index: 20;
+	margin-right: 10px;
 	> a {
 		position: relative;
 		display: inline-block;
-		margin: 0 6px;
+		height: 14px;
+		margin: 0 10px;
 		font-size: 14px;
 		text-decoration: none;
 		color: #555555;
 	}
+	.ui-tooltip {
+		bottom: 26px;
+		left: 50%;
+		transform: translateX(-50%);
+		min-width: 120px;
+		text-align: center;
+	}
 }
 .me-cf-show {
-	i {
-		&:last-child {
-			display: none;
+	> span  {
+		i {
+			&:last-child {
+				display: none;
+			}
 		}
+	}
+	.ui-tooltip {
+		min-width: 160px;
 	}
 }
 .me-cf-row-content {
