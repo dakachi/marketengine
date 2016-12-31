@@ -42,8 +42,6 @@ if (!defined('ABSPATH')) {
 					</a>
 				<?php endif; ?>
 
-				<?php me_get_template('purchases/archived-listing-notice', array('listing_obj' => $listing_obj) ); ?>
-
 			</div>
 		</div>
 
@@ -58,9 +56,10 @@ if (!defined('ABSPATH')) {
 		</div>
 		<a class="me-listing-info-view"><span><?php _e('view more', 'enginethemes'); ?></span><span><?php _e('view less', 'enginethemes'); ?></span></a>
 		*/ ?>
-	
-	</div>
 
+	</div>
+<?php else : ?>
+	<?php me_get_template('purchases/archived-listing-notice', array('listing_obj' => $listing_obj) ); ?>
 <?php endif; ?>
 
 </div>
