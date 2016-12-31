@@ -417,7 +417,10 @@ function me_cf_fields_query($args)
         $where      = ' WHERE field_type IN ("' . $field_type . '")';
     }
 
+    $order = " ORDER BY C.field_id DESC";
+
     $sql .= $where;
+    $sql .= $order;
     $sql .= $limit;
 
     $results = $wpdb->get_results($sql, ARRAY_A);
