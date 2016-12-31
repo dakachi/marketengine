@@ -744,8 +744,8 @@ add_action('template_redirect', 'me_prevent_access_order_details');
 
 /**
  * Transaction listing info
- * 
- * @param ME_Order $transaction 
+ *
+ * @param ME_Order $transaction
  * @since 1.1
  */
 function me_order_listing_info($transaction)
@@ -774,8 +774,8 @@ add_action('marketengine_order_extra_content', 'me_order_listing_info', 10);
 
 /**
  * Transaction user info
- * 
- * @param ME_Order $transaction 
+ *
+ * @param ME_Order $transaction
  * @since 1.1
  */
 function me_order_user_info($transaction)
@@ -798,8 +798,8 @@ add_action('marketengine_order_extra_sidebar', 'me_order_user_info', 10);
 
 /**
  * Transaction related listing slider
- * 
- * @param ME_Order $transaction 
+ *
+ * @param ME_Order $transaction
  * @since 1.1
  */
 function me_order_related_listing($transaction)
@@ -843,8 +843,8 @@ add_action('marketengine_after_order_extra', 'me_order_related_listing');
 
 /**
  * Transaction details
- * 
- * @param ME_Order $transaction 
+ *
+ * @param ME_Order $transaction
  * @since 1.1
  */
 function me_transaction_details($transaction)
@@ -867,7 +867,7 @@ add_action('marketengine_transaction_details', 'me_transaction_details', 10);
 
 /**
  * Transaction items details heading template
- * 
+ *
  * @param ME_Order $transaction
  * @since 1.1
  */
@@ -875,13 +875,15 @@ function me_transaction_items_heading($transaction)
 {
     $payment_date = date_i18n(get_option('date_format'), strtotime($transaction->post_date));
     $order_number = '#' . $transaction->get_order_number();
-    me_get_template('purchases/order-info', array('order_number' => $order_number, 'payment_date' => $payment_date));
+    $current_user = get_current_user_id();
+    $transaction_label = ($transaction->post_author == $current_user) ? __('Transaction ID:', 'enginethemes') : __('Order ID:', 'enginethemes');
+    me_get_template('purchases/order-info', array('transaction_label' => $transaction_label, 'order_number' => $order_number, 'payment_date' => $payment_date));
 }
 add_action('marketengine_transaction_items_details', 'me_transaction_items_heading', 10);
 
 /**
  * Transaction items details status template
- * 
+ *
  * @param ME_Order $transaction
  * @since 1.1
  */
@@ -894,7 +896,7 @@ add_action('marketengine_transaction_items_details', 'me_transaction_items_statu
 
 /**
  * Transaction items details items list template
- * 
+ *
  * @param ME_Order $transaction
  * @since 1.1
  */
@@ -911,7 +913,7 @@ add_action('marketengine_transaction_items_details', 'me_transaction_items_detai
 
 /**
  * Transaction items details billing info template
- * 
+ *
  * @param ME_Order $transaction
  * @since 1.1
  */

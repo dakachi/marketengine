@@ -4,7 +4,7 @@
 			<div class="me-row">
 				<div class="me-col-md-6 me-col-sm-6 me-col-xs-12">
 					<div class="me-orderid-info">
-						<h5><?php echo __( 'Transaction ID:', 'enginethemes' ); ?></h5>
+						<h5><?php echo $transaction_label; ?></h5>
 						<p><?php echo $order_number; ?></p>
 					</div>
 				</div>
