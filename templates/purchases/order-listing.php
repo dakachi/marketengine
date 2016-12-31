@@ -15,8 +15,8 @@ if (!defined('ABSPATH')) {
 }
 ?>
 <div class="me-orderlisting-info">
-	
-	<?php if ($listing) : ?>
+
+	<?php if ($listing && $listing->is_available()) : ?>
 
 		<?php me_get_template('purchases/order-listing-image', array('listing' => $listing)); ?>
 
@@ -49,14 +49,14 @@ if (!defined('ABSPATH')) {
 					<?php endif; ?>
 
 				</div>
-			</div>	
+			</div>
 		</div>
 
-		<?php me_get_template('purchases/listing-archived', array('listing' => $listing)) ?>
+		<?php // me_get_template('purchases/listing-archived', array('listing' => $listing)) ?>
 
 	<?php else : ?>
 
-		<?php me_get_template('purchases/listing-deleted'); ?>
-	
+		<?php me_get_template('purchases/archived-listing-notice', array('listing' => $listing)); ?>
+
 	<?php endif; ?>
 </div>
