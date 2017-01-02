@@ -259,6 +259,7 @@ function me_paginate_link($me_query = array())
         'next_text' => __('&gt;', "enginethemes"),
         'type'      => 'plain',
         'add_args'  => false,
+        'before_page_number' => '<span>Page</span>'
     );
 
     echo paginate_links($args) ? '<div>' . paginate_links($args) . '</div>' : '';
