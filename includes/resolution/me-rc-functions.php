@@ -28,7 +28,7 @@ function me_resolution_center_url() {
  * @since 	1.1.0
  * @version 1.0.0
  */
-function me_rc_statuses() {
+function me_dispute_statuses() {
 	$statuses = array(
 		'me-open'		=> __('Open', 'enginethemes'),
 		'me-waiting'	=> __('Waiting', 'enginethemes'),
@@ -37,7 +37,7 @@ function me_rc_statuses() {
 		'me-resolved'	=> __('Resolved', 'enginethemes'),
 	);
 
-	return apply_filters('me_rc_statuses', $statuses);
+	return apply_filters('me_dispute_statuses', $statuses);
 }
 
 /**
@@ -49,7 +49,7 @@ function me_rc_statuses() {
  * @since 	1.1.0
  * @version 1.0.0
  */
-function me_rc_status_label($status_name) {
+function me_dispute_status_label($status_name) {
 	$statuses = me_rc_statuses();
 	return $status_name ? $statuses[$status_name] : '';
 }
@@ -225,3 +225,18 @@ function me_dispute_case_filter_form_action() {
 	echo $form_action;
 	return $form_action;
 }
+
+/**
+ * Transaction dispute form
+ *
+ * @param string $action The action dispute user send
+ * @param object $transaction The current transaction user want to dispute
+ * 
+ * @since 1.1 
+ */
+function me_transaction_dispute_form($action, $transaction) {
+    if('dispute' === $action ) {
+        me_get_template('resolution/dispute-form', array('transaction' => $transaction));
+    }
+}
+add_action( 'marketengine_order_details_action', 'me_transaction_dispute_form', 10, 2 );

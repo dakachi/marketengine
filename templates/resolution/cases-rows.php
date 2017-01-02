@@ -19,7 +19,7 @@ $userdata = get_userdata($related_party);
 ?>
 <div class="me-table-row">
 	<div class="me-table-col me-rslt-case"><?php printf("#%s", $case->ID); ?></div>
-	<div class="me-table-col me-rslt-status"><?php echo me_rc_status_label($case->post_status); ?></div>
+	<div class="me-table-col me-rslt-status"><?php echo me_dispute_status_label($case->post_status); ?></div>
 	<div class="me-table-col me-rslt-problem"><?php echo me_rc_dispute_problem_label($problem); ?></div>
 	<div class="me-table-col me-rslt-date"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $case->post_date ) ); ?></div>
 	<div class="me-table-col me-rslt-related"><?php echo $userdata->display_name; ?></div>

@@ -32,8 +32,13 @@ get_header();
             <?php me_get_template('purchases/order-heading', array('transaction' => $transaction)); ?>
 
             <div class="marketengine-content">
-
-            <?php do_action('marketengine_transaction_details', $transaction); ?>
+            <?php 
+                if ($transaction->post_author == get_current_user_id() && !empty($_GET['action']) ) {
+                    do_action('marketengine_order_details_action', $_GET['action'], $transaction );
+                } else {
+                     do_action('marketengine_transaction_details', $transaction);
+                }
+            ?>
 
             </div>
 

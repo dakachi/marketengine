@@ -850,20 +850,29 @@ add_action('marketengine_after_order_extra', 'me_order_related_listing');
 function me_transaction_details($transaction)
 {
     $transaction->update_listings();
-    if ($transaction->post_author == get_current_user_id() && !empty($_GET['action']) && 'review' == $_GET['action'] && !empty($_GET['id'])) {
+    me_get_template('purchases/transaction', array('transaction' => $transaction));
+}
+add_action('marketengine_transaction_details', 'me_transaction_details', 10);
+
+/**
+ * Transaction review form
+ *
+ * @param string $action The action review user send
+ * @param object $transaction The current transaction user want to review
+ * 
+ * @since 1.1 
+ */
+function me_transaction_review_form($action, $transaction) {
+    if('review' === $action && !empty($_GET['id']) ) {
         me_get_template('purchases/review',
             array(
                 'transaction' => $transaction,
                 'listing_id'  => $_GET['id'],
             )
         );
-    } elseif($transaction->post_author == get_current_user_id() && $transaction->post_status == 'me-complete' && !empty($_GET['action']) && $_GET['action'] == 'dispute') {
-        me_get_template('resolution/dispute-form', array('transaction' => $transaction));
-    } else {
-        me_get_template('purchases/transaction', array('transaction' => $transaction));
     }
 }
-add_action('marketengine_transaction_details', 'me_transaction_details', 10);
+add_action( 'marketengine_order_details_action', 'me_transaction_review_form', 10, 2 );
 
 /**
  * Transaction items details heading template
