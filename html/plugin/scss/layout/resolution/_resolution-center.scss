@@ -16,7 +16,7 @@
 		display: table;
 		clear: both;
 	}
-	.me-status-filter, .me-problem-filter, .me-open-date-filter, .me-keyword-filter  {
+	.me-status-filter, .me-open-date-filter, .me-keyword-filter  {
 		> label {
 			display: block;
 			margin-bottom: 10px;
@@ -38,18 +38,24 @@
 	.me-status-filter {
 		margin-right: -15px;
 	}
-	.me-open-date-filter, .me-problem-filter {
+	.me-open-date-filter {
 		margin-right: -15px;
 	}
 	.me-resolution-filter-btn {
-		position: absolute;
-		right: 0;
-		bottom: 0;
-		width: 94px;
-		height: 32px;
+		padding: 0 20px;
+		height: 28px;
 	}
 }
-
+.me-resolution-clear-filter {
+	float: right;
+	margin-top: 15px;
+	a {
+		display: inline-block;
+	    margin-right: 24px;
+	    color: $color_label_3;
+	    text-decoration: underline;
+	}
+}
 
 .me-resolution-pick {
 	position: relative;
@@ -92,9 +98,7 @@
 }
 
 .me-resolution-search {
-	position: relative;
 	font-size: $font_size_base;
-	padding-right: 119px;
 	input[type="text"] {
 		width: 100%;
 		height: 32px;
@@ -179,10 +183,7 @@
 			margin-left: 0;
 			margin-right: 0;
 		}
-		.me-problem-filter {
-			margin-right: 0;
-		}
-		.me-problem-filter, .me-keyword-filter {
+		.me-keyword-filter {
 			margin-top: 15px;
 		}
 	}
@@ -193,6 +194,10 @@
 		margin-top: 0;
 		margin-left: -15px;
 		margin-right: -15px;
+		.me-paginations {
+			margin-left: 15px;
+			margin-right: 15px;
+		}
 	}
 	.me-resolution-tab-filter {
 		background: #FFF;
@@ -288,7 +293,7 @@
 				padding-left: 10px;
 			}
 		}
-		.me-problem-filter, .me-open-date-filter, .me-keyword-filter  {
+		.me-open-date-filter, .me-keyword-filter  {
 			margin-top: 20px;
 			select {
 				padding-left: 10px;
@@ -306,6 +311,7 @@
 
 	.me-table-resolution {
 		border: none;
+		border-bottom: 1px solid $color_border_1;
 		margin-top: 0;
 		.me-table-rhead {
 			display: none;
