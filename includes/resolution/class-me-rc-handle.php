@@ -11,14 +11,13 @@ class ME_RC_Form_Handle
     public static function insert($case_data)
     {
         $sender = get_current_user_id();
-
+        
         $transaction = me_get_order($case_data['transaction-id']);
+        $receiver = $transaction->get_seller();
 
-        $listings     = $transaction->get_listing_items();
-        $listing_item = array_pop($listings);
-        $listing_obj  = me_get_listing($listing_item['ID']);
-
-        $receiver = $listing_obj->post_author;
+        if (!$receiver || is_wp_error($receiver)) {
+            return new WP_Error('user_not_exists', __('You can not dispute because this user has already remove from system.', 'enginethemes'));
+        }
 
         if (empty($case_data['me-receive-item'])) {
             return new WP_Error('invalid_received_item_option', __('Did you receive the item?', 'enginethemes'));
@@ -36,11 +35,12 @@ class ME_RC_Form_Handle
             return new WP_Error('empty_expected_solution', __('Please choose a resolution you want.', 'enginethemes'));
         }
 
+        $receiver_id = $receiver->ID;
         $default = array(
-            'post_content' => sanitize_text_field($case_data['me-dispute-problem-description']),
+            'post_content' => wp_kses_post($case_data['me-dispute-problem-description']),
             'post_title'   => 'Dispute transaction #' . $transaction->id,
             'post_type'    => 'dispute',
-            'receiver'     => $receiver,
+            'receiver'     => $receiver_id,
             'post_parent'  => $transaction->id,
             'sender'       => $sender,
             'post_status'  => 'me-open',

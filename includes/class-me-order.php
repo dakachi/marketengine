@@ -4,7 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class ME_Order {
+class ME_Order
+{
     /**
      * Order ID.
      *
@@ -137,29 +138,33 @@ class ME_Order {
     /**
      *
      */
-    public function __construct($order_id = 0) {
+    public function __construct($order_id = 0)
+    {
 
-        if(is_numeric($order_id)) {
-            $order_id = (int) $order_id;    
-            $post = get_post($order_id);
-        }else {
+        if (is_numeric($order_id)) {
+            $order_id = (int) $order_id;
+            $post     = get_post($order_id);
+        } else {
             $post = $order_id;
         }
 
-        if(!$post || $post->post_type != 'me_order') return false;
+        if (!$post || $post->post_type != 'me_order') {
+            return false;
+        }
 
         foreach (get_object_vars($post) as $key => $value) {
             $this->$key = $value;
         }
 
-        $this->id = $this->ID;
+        $this->id    = $this->ID;
         $this->order = $post;
 
         $this->caculate_subtotal();
         $this->caculate_total();
     }
 
-    public function __get($name) {
+    public function __get($name)
+    {
         if (strrpos($name, 'billing') !== false) {
             $billing_address = $this->get_address('billing');
             $name            = str_replace('billing_', '', $name);
@@ -183,23 +188,27 @@ class ME_Order {
         return '';
     }
 
-    public function has_status($status) {
-        if(is_array($status)) {
+    public function has_status($status)
+    {
+        if (is_array($status)) {
             return in_array($this->post_status, $status);
         }
         return $this->post_status === $status;
     }
 
-    public function get_confirm_url() {
-        return me_get_order_url( 'confirm_order', 'order-id', $this->id);
+    public function get_confirm_url()
+    {
+        return me_get_order_url('confirm_order', 'order-id', $this->id);
     }
 
-    public function get_order_detail_url() {
+    public function get_order_detail_url()
+    {
         return get_the_permalink($this->id);
     }
 
-    public function get_cancel_url() {
-        return me_get_order_url( 'cancel_order', 'order-id', $this->id);
+    public function get_cancel_url()
+    {
+        return me_get_order_url('cancel_order', 'order-id', $this->id);
     }
 
     /**
@@ -207,13 +216,28 @@ class ME_Order {
      * @return String
      * @since 1.0
      */
-    public function get_currency_code() {
+    public function get_currency_code()
+    {
         return get_post_meta($this->ID, '_order_currency_code', true);
     }
 
-
-    public function get_currency() {
+    public function get_currency()
+    {
         return get_post_meta($this->ID, '_order_currency', true);
+    }
+
+    /**
+     * Get the seller info
+     *
+     * @since 1.1
+     * @return WP_User | WP_Error
+     */
+    public function get_seller()
+    {
+        $receiver_item = me_get_order_items($this->id, 'receiver_item');
+        $user_name     = $receiver_item[0]->order_item_name;
+        $user          = get_user_by('login', $user_name);
+        return $user;
     }
 
     /**
@@ -225,7 +249,8 @@ class ME_Order {
      * @since 1.0
      * @return int|bool Return order item id if sucess, if not success return false
      */
-    public function add_listing($listing, $qty = 1) {
+    public function add_listing($listing, $qty = 1)
+    {
         if (!is_object($listing)) {
             return false;
         }
@@ -239,14 +264,14 @@ class ME_Order {
             me_add_order_item_meta($order_item_id, '_listing_price', $listing->get_price());
         }
 
-        $seller = get_userdata( $listing->post_author );
+        $seller = get_userdata($listing->post_author);
 
         $this->caculate_subtotal();
         $this->caculate_total();
 
         // TODO: neu add nhieu listing thi de o day khong on
         $receiver_0 = (object) array(
-            'user_name'  =>  $seller->user_login,
+            'user_name'  => $seller->user_login,
             'email'      => get_user_meta($seller->ID, 'paypal_email', true),
             'amount'     => $this->get_total(),
             'is_primary' => false,
@@ -266,7 +291,8 @@ class ME_Order {
      *
      * @since 1.0
      */
-    public function update_listing($item_id, $args) {
+    public function update_listing($item_id, $args)
+    {
         $item_id = absint($item_id);
 
         if (!$item_id) {
@@ -277,7 +303,7 @@ class ME_Order {
             me_update_order_item_meta($item_id, '_qty', $args['qty']);
         }
 
-        if(isset($args['price'])) {
+        if (isset($args['price'])) {
             me_update_order_item_meta($item_id, '_listing_price', $args['price']);
         }
 
@@ -289,39 +315,40 @@ class ME_Order {
     /**
      * Update order listing when it is pending
      */
-    public function update_listings() {
-        if($this->has_status('me-pending')) {
+    public function update_listings()
+    {
+        if ($this->has_status('me-pending')) {
             $listing_items = $this->get_listing_items();
             foreach ($listing_items as $key => $item) {
                 // update listing item price
                 $listing = me_get_listing($item['ID']);
-                if($listing && $listing->is_available()) {
-                    $this->update_listing($item['order_item_id'], array('price' => $listing->get_price() ));    
+                if ($listing && $listing->is_available()) {
+                    $this->update_listing($item['order_item_id'], array('price' => $listing->get_price()));
                 }
                 // listing da bi xoa hoac ko ban nua
             }
         }
     }
 
-
     /**
      * Retrieve ordered listing items
      * @return array
      * @since 1.0
      */
-    public function get_listing_items() {
+    public function get_listing_items()
+    {
         $order_listing_item = me_get_order_items($this->id, 'listing_item');
-        $listing_items = array();
-        if(!empty($order_listing_item)) {
+        $listing_items      = array();
+        if (!empty($order_listing_item)) {
             foreach ($order_listing_item as $key => $item) {
-                $id = me_get_order_item_meta($item->order_item_id, '_listing_id', true);
+                $id                 = me_get_order_item_meta($item->order_item_id, '_listing_id', true);
                 $listing_items[$id] = array(
-                    'ID' => $id,
-                    'title' =>  $item->order_item_name,
-                    'qty' => me_get_order_item_meta($item->order_item_id, '_qty', true),
-                    'price' => me_get_order_item_meta($item->order_item_id, '_listing_price', true),
-                    'description' => me_get_order_item_meta($item->order_item_id, '_listing_description', true), 
-                    'order_item_id' => $item->order_item_id
+                    'ID'            => $id,
+                    'title'         => $item->order_item_name,
+                    'qty'           => me_get_order_item_meta($item->order_item_id, '_qty', true),
+                    'price'         => me_get_order_item_meta($item->order_item_id, '_listing_price', true),
+                    'description'   => me_get_order_item_meta($item->order_item_id, '_listing_description', true),
+                    'order_item_id' => $item->order_item_id,
                 );
             }
         }
@@ -337,7 +364,8 @@ class ME_Order {
      *
      * @return listing item
      */
-    public function get_listing() {
+    public function get_listing()
+    {
         $order_listing_item = me_get_order_items($this->id, 'listing_item');
         $listing_item       = me_get_order_item_meta($order_listing_item[0]->order_item_id);
         return $listing_item;
@@ -351,7 +379,8 @@ class ME_Order {
      * @since 1.0
      * @return int|bool Return order item id if sucess, if not success return false
      */
-    public function add_receiver($receiver) {
+    public function add_receiver($receiver)
+    {
         if (!is_object($receiver)) {
             return false;
         }
@@ -374,7 +403,8 @@ class ME_Order {
      * @since 1.0
      * @return int|bool Return order item id if sucess, if not success return false
      */
-    public function update_receiver($item_id, $receiver) {
+    public function update_receiver($item_id, $receiver)
+    {
         $order_item_id = absint($item_id);
 
         if (!$order_item_id) {
@@ -388,7 +418,8 @@ class ME_Order {
         return $order_item_id;
     }
 
-    public function add_commission($receiver) {
+    public function add_commission($receiver)
+    {
         if (!is_object($receiver)) {
             return false;
         }
@@ -402,7 +433,8 @@ class ME_Order {
         return $order_item_id;
     }
 
-    public function update_commission($item_id, $receiver) {
+    public function update_commission($item_id, $receiver)
+    {
         $order_item_id = absint($item_id);
 
         if (!$order_item_id) {
@@ -425,7 +457,8 @@ class ME_Order {
      *
      * @return array Array of address details
      */
-    public function get_address($type) {
+    public function get_address($type)
+    {
         $address_fields = array('first_name', 'last_name', 'phone', 'email', 'address', 'city', 'country', 'postcode');
         $address        = array();
         foreach ($address_fields as $field) {
@@ -444,7 +477,8 @@ class ME_Order {
      *
      * @return array Array of address details
      */
-    public function set_address($address, $type = 'billing') {
+    public function set_address($address, $type = 'billing')
+    {
         $address_fields = array('first_name', 'last_name', 'phone', 'email', 'postcode', 'address', 'city', 'country');
         foreach ($address_fields as $field) {
             if (isset($address[$field])) {
@@ -453,13 +487,15 @@ class ME_Order {
         }
     }
 
-    public function add_shipping($shipping_name) {
+    public function add_shipping($shipping_name)
+    {
         update_post_meta($this->id, '_shipping_method', $shipping_name);
         $this->shipping_info['name'] = $shipping_name;
         $this->caculate_total();
     }
 
-    public function update_shipping($item_id, $args) {
+    public function update_shipping($item_id, $args)
+    {
 
     }
 
@@ -473,7 +509,8 @@ class ME_Order {
      * @since 1.0
      * @return int
      */
-    public function add_fee($fee) {
+    public function add_fee($fee)
+    {
         $item_id = me_add_order_item($this->id, $fee['name'], '_order_fee');
         if ($item_id) {
             me_add_order_item_meta($item_id, '_fee_amount', $fee['amount']);
@@ -495,7 +532,8 @@ class ME_Order {
      * @since 1.0
      * @return int
      */
-    public function update_fee($item_id, $args) {
+    public function update_fee($item_id, $args)
+    {
         if (!empty($args['name'])) {
             me_update_order_item($item_id, array('order_item_name' => $args['name']));
         }
@@ -517,7 +555,8 @@ class ME_Order {
      * @since 1.0
      * @return int
      */
-    public function caculate_subtotal() {
+    public function caculate_subtotal()
+    {
         $listing_items = me_get_order_items($this->id, 'listing_item');
         $subtotal      = 0;
 
@@ -532,7 +571,8 @@ class ME_Order {
         return $this->subtotal;
     }
 
-    public function caculate_fee() {
+    public function caculate_fee()
+    {
         return 0;
     }
 
@@ -542,7 +582,8 @@ class ME_Order {
      * @since 1.0
      * @return double
      */
-    public function caculate_shipping() {
+    public function caculate_shipping()
+    {
         if (!empty($this->shipping_info['name'])) {
             $shipping_class = me_get_shipping_class($this->shipping_info['name'], $this);
             return $shipping_class->caculate_fee();
@@ -555,7 +596,8 @@ class ME_Order {
      * @since 1.0
      * @return double
      */
-    public function caculate_total() {
+    public function caculate_total()
+    {
         $this->shipping_fee = $this->caculate_shipping();
         $this->payment_fee  = $this->caculate_fee();
         $this->total        = $this->subtotal + $this->shipping_fee + $this->payment_fee;
@@ -564,7 +606,8 @@ class ME_Order {
         return $this->total;
     }
 
-    public function get_total() {
+    public function get_total()
+    {
         return get_post_meta($this->id, '_order_total', true);
     }
 
@@ -573,7 +616,8 @@ class ME_Order {
      * @since 1.0
      * @return string
      */
-    public function get_transaction_id() {
+    public function get_transaction_id()
+    {
         return get_post_meta($this->id, '_me_transation_id', true);
     }
 
@@ -582,27 +626,33 @@ class ME_Order {
      * @since 1.0
      * @return string
      */
-    public function get_payment_key() {
+    public function get_payment_key()
+    {
         return get_post_meta($this->id, '_me_payment_key', true);
     }
 
-    public function get_order_details() {
+    public function get_order_details()
+    {
 
     }
 
-    public function get_order_number() {
+    public function get_order_number()
+    {
         return $this->id;
     }
 
-    public function get_buyer() {
+    public function get_buyer()
+    {
 
     }
 
-    public function get_payment_info() {
+    public function get_payment_info()
+    {
 
     }
 
-    public function set_payment_method($payment) {
+    public function set_payment_method($payment)
+    {
         if (is_object($payment)) {
             update_post_meta($this->id, '_me_payment_gateway', $payment->name);
             update_post_meta($this->id, '_me_gateway_title', $payment->title);
@@ -612,21 +662,25 @@ class ME_Order {
         }
     }
 
-    public function get_payment_method() {
+    public function get_payment_method()
+    {
         return get_post_meta($this->id, '_me_payment_gateway', true);
     }
 
-    public function get_dispute_time_limit() {
+    public function get_dispute_time_limit()
+    {
         $remaining = 0;
-        if( $this->has_status('me-complete') ) {
-            
-            $order_close_date = strtotime(get_post_meta( $this->id, '_me_order_closed_time', true ));
-            $now  = time();
+        if ($this->has_status('me-complete')) {
+
+            $order_close_date = strtotime(get_post_meta($this->id, '_me_order_closed_time', true));
+            $now              = time();
 
             $remaining = $order_close_date - $now;
-            if($remaining < 0) return false; 
+            if ($remaining < 0) {
+                return false;
+            }
 
-            return human_time_diff( $now, $order_close_date );
+            return human_time_diff($now, $order_close_date);
 
         }
 
