@@ -23,12 +23,15 @@ var project = {
 		settings: {
 			name: "MarketEngine",
 			slug: 'marketengine',
-			src: 'E:/xampp/htdocs/sites/wp-content/plugins/zeroengine/',
+			src: 'D:/xampp/htdocs/wp/wp-content/plugins/marketengine',
 			version: '2.0',
 			struct: [
 				'**',
 				'!.git/**',
 				'!tests/**',
+				'!wordpress-developer/**',
+				'!node_modules/**',
+				'!vendor/**',
 				'!.gitignore',
 				'!bootstrap.php',
 				'!composer.json',
@@ -43,7 +46,7 @@ var project = {
 		settings: {
 			name: "ZeroEngine",
 			slug: 'zeroengine',
-			src: 'C:/xampp/htdocs/sites/wp-content/themes/zeroengine/',
+			src: 'D:/xampp/htdocs/wp/wp-content/themes/zeroengine',
 			version: '1.0',
 			struct: [
 				'**',
@@ -80,13 +83,13 @@ var get_struct = function() {
 	return struct;
 }
 
-var get_task_dist = function(folder = '') {
+var get_task_dist = function(folder) {
 	var task_dist = dist + folder + '/' + curr_project.settings.slug + '/';
 	return task_dist;
 }
 
 gulp.task('clean:dist', () => {
-	var task_dist = get_task_dist();
+	var task_dist = get_task_dist('');
 
 	return del.sync(task_dist);
 })
