@@ -33,11 +33,11 @@ class ME_RC_Form_Handle
         }
 
         if (empty($case_data['me-dispute-get-refund'])) {
-            return new WP_Error('empty_expected_solution', __('Please choose a resolution you want.'));
+            return new WP_Error('empty_expected_solution', __('Please choose a resolution you want.', 'enginethemes'));
         }
 
         $default = array(
-            'post_content' => 'Dispute transaction #' . $transaction->id,
+            'post_content' => sanitize_text_field($case_data['me-dispute-problem-description']),
             'post_title'   => 'Dispute transaction #' . $transaction->id,
             'post_type'    => 'dispute',
             'receiver'     => $receiver,
