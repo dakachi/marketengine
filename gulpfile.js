@@ -56,7 +56,7 @@ var project = {
 		},
 	},
 }
-const dist = 'backups/';
+const dist = '../../backups/';
 
 /* Declare current project */
 
