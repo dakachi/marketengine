@@ -90,6 +90,11 @@
 		&.prev {
 			border-top-left-radius: 2px;
 			border-bottom-left-radius: 2px;
+			i {
+				font-size: 10px;
+				font-weight: 800;
+				// color: $color_text;
+			}
 		}
 		&.current {
 			background: #555555;
@@ -98,6 +103,11 @@
 		&.next {
 			border-top-right-radius: 2px;
 			border-bottom-right-radius: 2px;
+			i {
+				font-size: 10px;
+				font-weight: 800;
+				// color: $color_text;
+			}
 		}
 		&:last-child {
 			border-right: 1px solid $color_border_1;
@@ -106,10 +116,13 @@
 			// background: #555555;
 			// color: #FFF;
 		}
+		> span {
+			display: none;
+		}
 	}
 }
 
-.marketengine-loadmore {
+/* .marketengine-loadmore {
 	display: none;
 	.me-loadmore{
 		display: block;
@@ -119,7 +132,7 @@
 		color: $color_text;
 		border: 1px solid $color_border_base;
 	}
-}
+} */
 
 //=== Layout basic plugin
 //
@@ -391,10 +404,10 @@
 			}
 		}
 		.me-tabs-container {
-			background: #FFF;
+			// background: #FFF;
 			// padding: 30px 24px;
 			// @include box-shadow(0, 0, 14px, 1px, rgba($color_border_base, 0.6));
-			border: 1px solid $color_border_1;
+			// border: 1px solid $color_border_1;
 			border-top: none;
 		}
 	}
@@ -405,9 +418,59 @@
 	}
 
 	.me-paginations {
-		// display: none;
+		position: relative;
+		> div {
+			box-shadow: none;
+		}
+		.page-numbers {
+			display: none;
+			&.prev {
+				display: inline-block;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				border: 1px solid #dbdbdb;
+				border-radius: 2px;
+				i {
+					font-size: 12px;
+					color: #000;
+				}
+			}
+			&.current {
+				display: inline-block;
+				width: auto;
+				background: none;
+				font-weight: $font_weight_bold;
+				color: $color_text;
+				border: none;
+				> span {
+					display: inline-block;
+					margin-right: 5px;
+				}
+				
+			}
+			&.next {
+				display: inline-block;
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				border: 1px solid #dbdbdb;
+				border-radius: 2px;
+				i {
+					font-size: 12px;
+					color: #000;
+				}
+			}
+			&:last-child {
+				
+			}
+			&:hover {
+				// background: #555555;
+				// color: #FFF;
+			}
+		}
 	}
-	.marketengine-loadmore {
+	/* .marketengine-loadmore {
 		display: block;
-	}
+	} */
 }

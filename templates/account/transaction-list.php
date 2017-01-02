@@ -69,10 +69,11 @@ $query = new WP_Query( $args );
 <div class="me-paginations">
 	<?php me_paginate_link( $query ); ?>
 </div>
+<?php /*
 <div class="marketengine-loadmore">
 	<a href="" class="me-loadmore me-loadmore-order"><?php _e("Load more", "enginethemes"); ?></a>
 </div>
-
+*/ ?>
 <?php
 	else:
 ?>

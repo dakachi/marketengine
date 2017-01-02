@@ -78,9 +78,11 @@ $query = new ME_Message_Query($args);
 	<div class="me-paginations">
 		<?php me_paginate_link($query); ?>
 	</div>
+	<?php /*
 	<div class="marketengine-loadmore">
 		<a href="" class="me-loadmore me-loadmore-order-inquiries"><?php echo __('Load more', 'enginethemes'); ?></a>
 	</div>
+	*/ ?>
 	<?php
 	else:
 	?>
