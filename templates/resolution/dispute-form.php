@@ -8,6 +8,7 @@
  * @version     1.0.0
  * @since 		1.0.1
  */
+$dispute_files = !empty($_POST['dispute_file']) ? $_POST['dispute_file'] : array();
 ?>
 
 <?php do_action('marketengine_before_dispute_form'); ?>
@@ -33,53 +34,37 @@
 
 		<div class="me-dispute-image">
 			<h3><?php _e('Attachments (video or images)', 'enginethemes'); ?></h3>
-			<?php /*
-			<ul class="marketengine-gallery-img">
-				<li class="me-item-img">
-					<span class="me-gallery-img">
-						<img src="assets/img/1.jpg" alt="">
-						<a class="me-delete-img"></a>
-					</span>
-					<div class="me-gallery-radio">
-						<input type="radio" name="featured_image" id="radio-img-1">
-						<label for="radio-img-1"></label>
-					</div>
-				</li>
-				<li class="me-item-img">
-					<span class="me-gallery-img">
-						<img src="assets/img/1.jpg" alt="">
-						<a class="me-delete-img"></a>
-					</span>
-					<div class="me-gallery-radio">
-						<input type="radio" name="featured_image" id="radio-img-2">
-						<label for="radio-img-2"></label>
-					</div>
-				</li>
-				<li class="me-item-img">
-					<span class="me-gallery-img me-gallery-add-img">
-						<a class="me-add-img">
-							<i class="icon-me-add"></i>
-							<input type="file" value="">
-						</a>
-					</span>
-				</li>
-			</ul>
-			*/ ?>
-			<ul class="marketengine-gallery-img">
-				<li class="me-item-img">
-					<span class="me-gallery-img me-gallery-add-img">
-						<a class="me-add-img">
-							<i class="icon-me-add"></i>
-							<input type="file" name="me-dispute-media" value="">
-						</a>
-					</span>
-				</li>
-			</ul>
+			<?php
+
+	        ob_start();
+	        if($dispute_files) {
+	            foreach($dispute_files as $gallery) {
+	                me_get_template('upload-file/multi-file-form', array(
+	                    'image_id' => $gallery,
+	                    'filename' => 'dispute_file',
+	                    'close' => true
+	                ));
+	            }
+	        }
+	        $dispute_files = ob_get_clean();
+
+	        me_get_template('upload-file/upload-form', array(
+	            'id' => 'dispute-file',
+	            'name' => 'dispute_file',
+	            'source' => $dispute_files,
+	            'button' => 'me-dipute-upload',
+	            'multi' => true,
+	            'maxsize' => esc_html( '2mb' ),
+	            'maxcount' => 5,
+	            'close' => true
+	        ));
+	        ?>
 		</div>
 
 		<?php me_get_template('resolution/expected-resolution'); ?>
 
 		<?php wp_nonce_field('me-open_dispute_case'); ?>
+		<?php wp_nonce_field('marketengine', 'me-dispute-file'); ?>
 
 		<div class="me-dispute-submit">
 			<input type="submit" class="me-dispute-submit-btn" name="me-open-dispute-case" value="<?php _e('SUBMIT', 'enginethemes'); ?>">

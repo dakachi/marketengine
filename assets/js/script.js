@@ -212,6 +212,16 @@ jQuery(document).ready(function($) {
 	});
 
 
+	$('#dispute-file').jUploader({
+            browse_button: 'me-dipute-upload',
+            multi: true,
+            name: 'dispute_file',
+            extension: 'jpg,jpeg,gif,png',
+            upload_url: me_globals.ajaxurl + '?nonce=' + $('#me-dispute-file').val(),
+            maxsize: '2mb',
+            maxcount: 5,
+        });
+
 	/**
 	 * [marketengine_snap_column description]
 	 * @return {[type]} [description]

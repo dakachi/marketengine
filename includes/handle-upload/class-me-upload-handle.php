@@ -5,12 +5,12 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * ME Authentication Form
+ * ME Upload File Handle
  *
- * Class control user data in authentication form
+ * Class handle file upload by user
  *
  * @version     1.0
- * @package     Includes/Authentication
+ * @package     Includes/Uploader
  * @author      Dakachi
  * @category    Class
  */
