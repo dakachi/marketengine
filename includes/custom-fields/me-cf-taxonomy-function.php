@@ -56,6 +56,7 @@ function me_cf_register_field_taxonomy($field)
         'show_admin_column' => false,
         'query_var'         => true,
         'rewrite'           => false,
+        'show_in_nav_menus' => false
     );
     $args = apply_filters('marketengine_register_field_taxonomy_args', $args, $field);
     register_taxonomy($field['field_name'], 'listing', $args);
