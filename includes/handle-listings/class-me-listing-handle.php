@@ -343,7 +343,7 @@ class ME_Listing_Handle
 
         $listing_data['listing_title'] = sanitize_title( $listing_data['listing_title'] );
         $listing_data['listing_description'] = wp_kses($listing_data['listing_description'], '<p><a><ul><ol><li><h6><span><b><em><strong><br>');
-
+        $listing_data['listing_description'] = wp_rel_nofollow($listing_data['listing_description']);
         /**
          * Filter validate listing data result
          *
