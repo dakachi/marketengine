@@ -28,8 +28,6 @@
 ul.me-listing-post {
 	list-style-type: none;
 	.me-item-post {
-		// float: left;
-		// width: 292.5px;
 		margin-top: 20px;
 		transition: 0.2s all ease;
 	}
@@ -262,7 +260,7 @@ ul.me-listing-post {
 // column - 2: < 870px;
 // column - 3: < 1160px;
 //
-.marketengine-snap-column-3 {
+/* .marketengine-snap-column-3 {
 	.marketengine-listing-post {
 		width: 850px;
 	}
@@ -276,10 +274,10 @@ ul.me-listing-post {
 	.marketengine-listing-post {
 		width: 270px;
 	}
-}
+} */
 
-@media (max-width: $screen_xs_max) {
-	.marketengine-snap-column-2 {
+@media (max-width: $screen_xs_max) { // 767px
+	/* .marketengine-snap-column-2 {
 		.marketengine-listing-post {
 			width: 100%;
 		}
@@ -288,6 +286,16 @@ ul.me-listing-post {
 		.marketengine-listing-post {
 			width: 100%;
 			margin-bottom: 0;
+		}
+	} */
+	.marketengine-listing-post {
+		margin-top: 0;
+	}
+	ul.me-listing-post {
+		.me-item-post {
+			&:first-child {
+				margin-top: 0;
+			}
 		}
 	}
 	.me-my-listing-none {
