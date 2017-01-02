@@ -50,7 +50,7 @@ function me_dispute_statuses() {
  * @version 1.0.0
  */
 function me_dispute_status_label($status_name) {
-	$statuses = me_rc_statuses();
+	$statuses = me_dispute_statuses();
 	return $status_name ? $statuses[$status_name] : '';
 }
 
