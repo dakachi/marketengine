@@ -1,5 +1,8 @@
 <?php
-
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
 /**
  * MarketEngine Dispute Form Handle Class
  *
@@ -13,8 +16,16 @@ class ME_RC_Form_Handle
         $sender = get_current_user_id();
         
         $transaction = me_get_order($case_data['transaction-id']);
-        $receiver = $transaction->get_seller();
 
+        if(!$transaction) {
+        	return new WP_Error('order_not_found', __('The transaction does not exist.', 'enginethemes'));
+        }
+
+        if($sender != $transaction->post_author) {
+        	return new WP_Error('permission_dined', __('You can not dispute this transaction.', 'enginethemes'));
+        }
+
+        $receiver = $transaction->get_seller();
         if (!$receiver || is_wp_error($receiver)) {
             return new WP_Error('user_not_exists', __('You can not dispute because this user has already remove from system.', 'enginethemes'));
         }
@@ -37,7 +48,7 @@ class ME_RC_Form_Handle
 
         $receiver_id = $receiver->ID;
         $default = array(
-            'post_content' => wp_kses_post($case_data['me-dispute-problem-description']),
+            'post_content' => wp_kses_post($case_data['dispute_content']),
             'post_title'   => 'Dispute transaction #' . $transaction->id,
             'post_type'    => 'dispute',
             'receiver'     => $receiver_id,
