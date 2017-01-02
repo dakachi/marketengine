@@ -90,6 +90,11 @@
 		&.prev {
 			border-top-left-radius: 2px;
 			border-bottom-left-radius: 2px;
+			i {
+				font-size: 10px;
+				font-weight: 800;
+				// color: $color_text;
+			}
 		}
 		&.current {
 			background: #555555;
@@ -98,6 +103,11 @@
 		&.next {
 			border-top-right-radius: 2px;
 			border-bottom-right-radius: 2px;
+			i {
+				font-size: 10px;
+				font-weight: 800;
+				// color: $color_text;
+			}
 		}
 		&:last-child {
 			border-right: 1px solid $color_border_1;
@@ -421,6 +431,10 @@
 				left: 0;
 				border: 1px solid #dbdbdb;
 				border-radius: 2px;
+				i {
+					font-size: 12px;
+					color: #000;
+				}
 			}
 			&.current {
 				display: inline-block;
@@ -442,6 +456,10 @@
 				right: 0;
 				border: 1px solid #dbdbdb;
 				border-radius: 2px;
+				i {
+					font-size: 12px;
+					color: #000;
+				}
 			}
 			&:last-child {
 				
