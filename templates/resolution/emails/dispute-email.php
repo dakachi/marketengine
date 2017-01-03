@@ -15,7 +15,6 @@ if (!defined('ABSPATH')) {
 
 <p><?php printf(__("Buyer %s has sent a dispute for your transaction.  Here’re the case details:", "enginethemes"), $buyer_name);?></p>
 <ol>
-<li><?php printf(__("Listing name: %s", "enginethemes"), $listing_name);?></li>
 <li><?php printf(__("Order ID: #%d", "enginethemes"), $order_id);?></li>
 <li><?php printf(__("Permalink: %s", "enginethemes"), $order_link)?></li>
 </ol>

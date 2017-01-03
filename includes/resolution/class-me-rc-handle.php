@@ -67,8 +67,8 @@ class ME_RC_Form_Handle
             'post_status'  => 'me-open',
         );
 
-        $data = array_merge($data, $case_data);
-        $case_id = self::create_dispute($data);
+        $data    = array_merge($data, $case_data);
+        $case_id = self::create_dispute($data, $transaction);
 
         do_action('marketengine_after_dispute', $case_id, $transaction->id, $transaction);
 
@@ -88,13 +88,13 @@ class ME_RC_Form_Handle
                 me_update_message_meta($case_id, '_case_is_received_item', $data['is_received_item']);
             }
             $data['post_parent'] = $case_id;
-            self::create_debate($data);
-            self::email_seller($data);
+            self::create_debate($data, $transaction);
+            self::email_seller($data, $transaction);
         }
         return $case_id;
     }
 
-    public static function create_debate($data)
+    public static function create_debate($data, $transaction)
     {
         $data['post_type'] = 'message';
         if (!empty($data['dispute_file'])) {
@@ -105,7 +105,33 @@ class ME_RC_Form_Handle
 
     }
 
-    public static function email_seller() {
+    public static function email_seller($data, $transaction)
+    {
         $subject = __("There is a dispute for your transaction.", "enginethemes");
+        $args    = array(
+            'display_name' => get_the_author_meta('display_name', $data['receiver']),
+            'buyer_name'   => get_the_author_meta('display_name', $data['sender']),
+            'blogname'     => get_bloginfo('blogname'),
+            'order_link'   => $transaction->get_order_detail_url(),
+            'order'        => $transaction,
+            'order_id'     => $transaction->id
+            'dispute_link' => 'http:://disputelink.com',
+        );
+        // get activation mail content from template
+        ob_start();
+        me_get_template('resolution/emails/dispute-email', $args);
+        $dispute_mail_content = ob_get_clean();
+
+        /**
+         * Filter user activation email content
+         *
+         * @param String $mail_content
+         * @param Object $user
+         *
+         * @since 1.0
+         */
+        $dispute_mail_content = apply_filters('marketengine_dispute_mail_content', $dispute_mail_content, $user);
+
+        return wp_mail($user->user_email, $subject, $dispute_mail_content);
     }
 }
