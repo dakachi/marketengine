@@ -18,13 +18,13 @@
 
 		<?php foreach ($query->posts as $case) : ?>
 
-		<?php me_get_template('resolution/cases-rows', array('case' => $case)); ?>
+		<?php me_get_template('resolution/cases/cases-rows', array('case' => $case)); ?>
 
 		<?php endforeach; ?>
 
 	<?php else: ?>
 
-		<?php me_get_template('resolution/no-cases'); ?>
+		<?php me_get_template('resolution/cases/no-cases'); ?>
 
 	<?php endif; ?>
 
