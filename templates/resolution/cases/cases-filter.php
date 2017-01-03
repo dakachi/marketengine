@@ -23,7 +23,7 @@
 					<div class="me-col-md-5 me-col-sm-6">
 						<div class="me-status-filter">
 							<label><?php _e('Status','enginethemes'); ?></label>
-							<?php me_get_template('resolution/case-status-list'); ?>
+							<?php me_get_template('resolution/cases/case-status-list'); ?>
 						</div>
 					</div>
 					<div class="me-col-md-7 me-col-sm-6">
