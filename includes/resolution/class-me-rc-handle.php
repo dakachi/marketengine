@@ -48,7 +48,7 @@ class ME_RC_Form_Handle
             $error_data['empty_expect_solution'] = __('Please choose a resolution you want.', 'enginethemes');
         }
 
-        if(!empty($error_data)) {
+        if (!empty($error_data)) {
             $wp_error = new WP_Error();
             foreach ($error_data as $key => $value) {
                 $wp_error->add($key, $value);
@@ -57,7 +57,7 @@ class ME_RC_Form_Handle
         }
 
         $receiver_id = $receiver->ID;
-        $default     = array(
+        $data        = array(
             'post_content' => wp_kses_post($case_data['dispute_content']),
             'post_title'   => 'Dispute transaction #' . $transaction->id,
             'post_type'    => 'dispute',
@@ -67,31 +67,45 @@ class ME_RC_Form_Handle
             'post_status'  => 'me-open',
         );
 
-        $case = me_insert_message($default);
+        $data = array_merge($data, $case_data);
+        $case_id = self::create_dispute($data);
 
-        //TODO: change order status
-        //TODO: add dispute case meta
-        self::update_dispute_case_meta($case, $case_data);
+        do_action('marketengine_after_dispute', $case_id, $transaction->id, $transaction);
 
-        do_action('marketengine_after_insert_dispute_case', $case, $transaction);
-
-        return $case;
+        return $case_id;
     }
 
-    public static function update_dispute_case_meta($case_id, $data)
+    public static function create_dispute($data)
     {
-        //TODO: luu bang message itemmeta
-        me_update_message_meta($case_id, '_case_problem', $data['dispute_problem']);
-        me_update_message_meta($case_id, '_case_problem_description', $data['dispute_content']);
-        me_update_message_meta($case_id, '_case_expected_resolution', $data['expect_solution']);
+        $case_id = me_insert_message($data);
+        if ($case_id) {
 
-        if ($data['is_received_item']) {
-            me_update_message_meta($case_id, '_case_is_received_item', $data['is_received_item']);
+            me_update_message_meta($case_id, '_case_problem', $data['dispute_problem']);
+            me_update_message_meta($case_id, '_case_problem_description', $data['dispute_content']);
+            me_update_message_meta($case_id, '_case_expected_resolution', $data['expect_solution']);
+
+            if ($data['is_received_item']) {
+                me_update_message_meta($case_id, '_case_is_received_item', $data['is_received_item']);
+            }
+            $data['post_parent'] = $case_id;
+            self::create_debate($data);
+            self::email_seller($data);
         }
+        return $case_id;
+    }
 
-        //TODO: process case media
+    public static function create_debate($data)
+    {
+        $data['post_type'] = 'message';
         if (!empty($data['dispute_file'])) {
-            // me_update_message_meta($case_id, '_case_media', $data['me-dispute-media']);
+            $data['post_content'] .= '[me_message_file id=' . join(',', $data['dispute_file']) . ' ]';
         }
+
+        return me_insert_message($data);
+
+    }
+
+    public static function email_seller() {
+        $subject = __("There is a dispute for your transaction.", "enginethemes");
     }
 }

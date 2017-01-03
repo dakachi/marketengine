@@ -127,6 +127,18 @@ function me_rc_expected_solutions( $is_received_item = false ) {
 }
 
 /**
+ * Check is user dispute the order or not
+ * 
+ * @param int $order_id The order id
+ * @since 1.1
+ *
+ * @return bool
+ */
+function is_order_disputed($order_id) {
+
+}
+
+/**
  * Returns the dispute case query.
  *
  * @since 	1.1.0

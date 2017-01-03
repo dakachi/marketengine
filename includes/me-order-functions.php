@@ -134,7 +134,21 @@ function me_active_order($order_id) {
     do_action('marketengine_active_order', $order_id);
 }
 
-function me_dispute_order($order_id) {}
+function me_dispute_order($case_id, $order_id) {
+    $post_status = get_post_status($order_id);
+
+    if ($post_status == 'me-disputed') {
+        return;
+    }
+
+    wp_update_post(array(
+        'ID'          => $order_id,
+        'post_status' => 'me-disputed',
+    ));
+
+    do_action('marketengine_dispute_order', $order_id);
+}
+add_action('marketengine_after_dispute', 'me_dispute_order', 10, 2);
 
 /**
  * Close order to finish the transaction process
@@ -309,9 +323,9 @@ function me_get_order_status_list() {
         'publish'     => __("Actived", "enginethemes"), // mainly intended for technical case, when an error occurs payment, or payment by bank transfer confirmation to admin
         // 'me-active'   => __("Finished", "enginethemes"), // Status of payment order was not yet eligible to transfer money to the account Seller.
         'me-complete' => __("Completed", "enginethemes"), // State order has been completed and is paid to the target account Seller & Admin.
-        // 'me-disputed' => __("Disputed", "enginethemes"), // Order status are taken into account when processing complaints occur
+        'me-disputed' => __("Disputed", "enginethemes"), // Order status are taken into account when processing complaints occur
         'me-closed'   => __("Closed", "enginethemes"), // The end of the first order, while moving through this state can not be anymore Dispute
-        // 'me-resolved' => __("Resolved", "enginethemes"), // Similar "closed", the end point of the first order, after the complaint was handled.
+        'me-resolved' => __("Resolved", "enginethemes"), // Similar "closed", the end point of the first order, after the complaint was handled.
     );
     return apply_filters('marketengine_get_order_status_list', $order_status);
 }

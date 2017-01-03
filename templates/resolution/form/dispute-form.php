@@ -29,7 +29,7 @@ $dispute_files = !empty($_POST['dispute_file']) ? $_POST['dispute_file'] : array
 
 		<div class="me-dispute-description">
 			<h3><?php _e('Please tell more about your problem', 'enginethemes'); ?></h3>
-			<textarea name="me-dispute-problem-description"><?php echo isset($_POST['me-dispute-problem-description']) ? esc_js($_POST['me-dispute-problem-description']) : ''; ?></textarea>
+			<textarea name="dispute_content"><?php echo isset($_POST['dispute_content']) ? esc_js($_POST['dispute_content']) : ''; ?></textarea>
 		</div>
 
 		<div class="me-dispute-image">
