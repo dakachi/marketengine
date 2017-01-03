@@ -13,6 +13,7 @@
 .me-disputed-product-order {
 	position: relative;
 	border-bottom: 1px solid $color_border_input_text;
+	padding: 0 15px;
 	&:after {
 		content: '';
 		display: block;
@@ -51,6 +52,7 @@
 		}
 	}
 }
+
 .me-disputed-product {
 	padding-left: 90px;
 	h2 {
@@ -77,7 +79,7 @@
 }
 
 .me-disputed-order-info {
-	padding: 25px 25px 25px 10px;
+	padding: 25px 10px;
 	> h3 {
 		margin: 0;
 		font-size: $font_size_medium;
@@ -89,7 +91,7 @@
 	> p {
 		line-height: 1.2em;
 		color: $color_text;
-		margin-bottom: 6px;
+		margin-bottom: 8px;
 		&:last-child {
 			margin-bottom: 0;
 		}
@@ -104,14 +106,14 @@
 //
 .me-disputed-action {
 	padding: 25px;
-	> h3 {
+	/* > h3 {
 		margin: 0;
 		font-size: $font_size_medium;
 		font-weight: $font_weight_bold;
 		color: $color_text;
 		line-height: 1em;
 		margin-bottom: 16px;
-	}
+	} */
 	textarea {
 		width: 100%;
 		max-width: 100%;
@@ -143,17 +145,27 @@
 }
 .me-disputed-close {
 	padding-right: 10px;
-	h4 {
+	a {
+		display: inline-block;
+		margin-bottom: 15px;
+		min-width: 136px;
+		height: 36px;
+		font-size: $font_size_medium;
+		color: $color_skin;
+		text-align: center;
+		line-height: 34px;
+		border: 1px solid $color_skin;
+		border-radius: 2px;
+	}
+	/* h4 {
 		font-size: $font_size_medium;
 		font-weight: normal;
 		margin: 0 0 10px;
-		a {
-			color: #e84a5f;
-		}
+		
 		span {
 			color: $color_label_1;
 		}
-	}
+	} */
 	p {
 		color: $color_label_2;
 		margin: 0;
@@ -164,6 +176,19 @@
 }
 .me-disputed-escalate {
 	padding-left: 10px;
+	a {
+		display: inline-block;
+		margin-bottom: 15px;
+		min-width: 136px;
+		height: 36px;
+		font-size: $font_size_medium;
+		color: #10a2ef;
+		text-align: center;
+		line-height: 34px;
+		border: 1px solid #10a2ef;
+		border-radius: 2px;
+	}
+	/* 
 	h4 {
 		font-size: $font_size_medium;
 		font-weight: normal;
@@ -174,7 +199,7 @@
 		span {
 			color: $color_label_1;
 		}
-	}
+	} */
 	p {
 		color: $color_label_2;
 		margin: 0;
@@ -205,12 +230,138 @@
 }
 
 .me-disputed-conversation {
-	.me-sidebar-contact {
+	.me-contact-messages-wrap {
 		background: none;
-		box-shadow: none;
+	}
+	.me-contact-header {
+		background: #FFF;
+	}
+	.me-contact-message-user {
+		margin-bottom: 0;
+	}
+	.me-contact-messages {
+		background: #FFF;
+		padding: 15px 0;
+	}
+	.me-sidebar-contact {
 	}
 }
 
+.me-dispute-contact-tabs {
+	display: block;
+	> li {
+		display: block;
+		width: 100%;
+		height: 40px;
+		padding-left: 15px;
+		border-bottom: 1px solid $color_border_1;
+		&.active {
+			span:before {
+				display: block;
+			}
+			span:after {
+				display: none;
+			}
+		}
+		span {
+			position: relative;
+			display: block;
+			width: 100%;
+			line-height: 38px;
+			font-size: $font_size_base;
+			font-weight: $font_weight_bold;
+			color: $color_text;
+			&:before {
+				font-family: 'me-icomoon' !important;
+			    speak: none;
+			    font-style: normal;
+			    font-weight: normal;
+			    font-variant: normal;
+			    text-transform: none;
+			    line-height: 1;
+				content: '\e91e';
+				display: none;
+				position: absolute;
+				top: 50%;
+				left: 12px;
+				transform: translateY(-50%);
+			}
+			&:after {
+				font-family: 'me-icomoon' !important;
+			    speak: none;
+			    font-style: normal;
+			    font-weight: normal;
+			    font-variant: normal;
+			    text-transform: none;
+			    line-height: 1;
+				content: '\e90b';
+				display: block;
+				position: absolute;
+				top: 50%;
+				right: 12px;
+				transform: translateY(-50%);
+			}
+		}
+	}
+}
+
+.me-party-involve {
+	padding: 0 20px 20px;
+	border-bottom: 1px solid $color_border_1;
+	h3 {
+		margin: 0;
+		font-size: $font_size_medium;
+		color: $color_text;
+		line-height: 44px;
+	}
+	p {
+		margin: 0;
+		color: $color_label_2;
+		line-height: 1.7em;
+		span {
+			color: $color_text;
+			margin-left: 5px;
+		}
+	}
+}
+.me-dispute-event {
+	padding: 0 20px 10px;
+	h3 {
+		margin: 10px 0 0;
+		font-size: $font_size_medium;
+		color: $color_text;
+	}
+	> a {
+		position: relative;
+		display: block;
+		font-size: $font_size_base;
+		padding: 10px 0;
+		color: $color_text_2;
+		border-bottom: 1px solid $color_border_1;
+		&:last-child {
+			border: none;
+		}
+		&:after {
+			content: '\e934';
+			font-family: 'me-icomoon';
+			display: block;
+			position: absolute;
+			right: 0;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+		span {
+			display: block;
+			line-height: 1.5em;
+			&:first-child {
+				color: $color_text;
+			}
+			&:last-child {
+				color: $color_label_2;
+			}
+		}
+	}
+}
 .me-disputed-notifi {
 	
 	text-align: center;
@@ -233,6 +384,51 @@
 	}
 }
 
+// Form submit message
+.me-message-typing-form {
+	padding: 20px;
+	border-top: 1px solid $color_border_1;
+	textarea {
+		background: #FFF;
+		padding: 10px 12px; 
+		width: 100%;
+		height: 96px;
+		max-width: 100%;
+		border: 1px solid $color_border_1;
+		border-radius: 2px;
+		resize: none;
+	}
+}
+.me-dispute-message-btn {
+	text-transform: uppercase;
+}
+.me-dispute-attachment {
+	margin: 18px 0 0;
+}
+.me-dispute-attach-file {
+	color: $color_text_2;
+	cursor: pointer;
+	input[type="file"] {
+		display: none;
+	}
+	i {
+		margin-right: 5px;
+	}
+}
+.me-list-dispute-attach {
+	margin: 0 0 20px;
+	> li {
+		display: inline-block;
+		margin: 4px 20px 4px 0;
+		color: $color_text_2;
+		span {
+			margin-left: 5px;
+			font-size: $font_size_small;
+			font-weight: 800;
+		}
+	}
+}
+
 @media (max-width: $screen_md_max) {
 	.me-disputed-product {
 		h2 {
@@ -246,18 +442,21 @@
 		&:after {
 			display: none;
 		}
+		> .me-row > .me-col-md-6:first-child {
+			border-bottom: 1px solid $color_border_1;
+		}
 	}
 	.me-disputed-order-info {
-		padding-left: 25px;
-		border-top: 1px solid $color_border_input_text;
+		padding-left: 10px;
 	}
 	.me-disputed-escalate {
-		margin-top: 20px;
+		margin-top: 30px;
 		padding-left: 0;
 	}
 }
 
 @media (max-width:  $screen_xs_max) { // 767px
+	/* 
 	.marketengine-disputed {
 		.marketengine-header-bottom {
 			display: none;
@@ -285,6 +484,12 @@
 					padding-bottom: 10px;
 				}
 			}
+		}
+	} */
+
+	.me-disputed-conversation {
+		.me-contact-message-user {
+			display: none;
 		}
 	}
 
@@ -321,9 +526,9 @@
 	.me-disputed-action {
 		display: none;
 		padding-top: 15px; 
-		> h3 {
+		/* > h3 {
 			// display: none;
-		}
+		} */
 		.me-arbitrate-btn {
 			width: 100%;
 		}
@@ -340,7 +545,7 @@
 		.me-contact-messages-wrap {
 			margin-top: 0;
 		}
-		.me-col-md-9, .me-col-sm-8 {
+		> .me-row > .me-col-md-9, > .me-row > .me-col-sm-8 {
 			padding-left: 0;
 			padding-right: 0;
 		}
