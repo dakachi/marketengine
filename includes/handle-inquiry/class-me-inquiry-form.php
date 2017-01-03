@@ -41,6 +41,32 @@ class ME_Inquiry_Form
         add_action('save_message_message', array(__CLASS__, 'new_message_in_inquiry'), 10, 2);
         add_action('marketengine_after_inquiry_form', array(__CLASS__, 'clear_unread_message_count'));
 
+        add_action('init', array(__CLASS__, 'rewrite_inquiry_detail_url'));
+        add_action('template_redirect', array(__CLASS__, 'rewrite_templates'));
+    }
+
+
+    /**
+     * Rewrite inquiry details url rule
+     * @since 1.0
+     */
+    public static function  rewrite_inquiry_detail_url()
+    {
+        $inquiry_endpoint = me_get_endpoint_name('inquiry');
+        add_rewrite_rule($inquiry_endpoint . '/([0-9]+)/?$', 'index.php?message_type=inquiry&p=$matches[1]', 'top');
+    }
+
+    public static function rewrite_templates()
+    {
+
+        if (get_query_var('message_type')) {
+            add_filter('template_include', array(__CLASS__, 'include_inquiry_template'));
+        }
+    }
+
+    public static function include_inquiry_template()
+    {
+        return ME()->plugin_path() . '/templates/me-single-inquiry.php';
     }
 
     /**

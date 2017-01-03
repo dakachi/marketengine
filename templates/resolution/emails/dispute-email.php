@@ -21,6 +21,4 @@ if (!defined('ABSPATH')) {
 <p><?php printf(__("You can review it <a href='%s' >here</a> for further details. Also, you should work directly with the buyer to resolve the
 problem to avoid the dispute ending in a chargeback.", "enginethemes"), $dispute_link);?></p>
 
-<p>
-	<?php printf(__("Regards, <br/> %s", "enginethemes"), $blogname);?>
-</p>
+<p><?php printf(__("Regards, <br/> %s", "enginethemes"), $blogname);?></p>

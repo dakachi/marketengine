@@ -86,8 +86,6 @@ class ME_Query
         $this->rewrite_edit_listing_url();
 
         $this->rewrite_order_detail_url();
-
-        $this->rewrite_inquiry_detail_url();
     }
 
     /**
@@ -171,16 +169,6 @@ class ME_Query
     {
         $order_endpoint = me_get_endpoint_name('order_id');
         add_rewrite_rule($order_endpoint . '/([0-9]+)/?$', 'index.php?post_type=me_order&p=$matches[1]', 'top');
-    }
-
-    /**
-     * Rewrite inquiry details url rule
-     * @since 1.0
-     */
-    private function rewrite_inquiry_detail_url()
-    {
-        $inquiry_endpoint = me_get_endpoint_name('inquiry');
-        add_rewrite_rule($inquiry_endpoint . '/([0-9]+)/?$', 'index.php?message_type=inquiry&p=$matches[1]', 'top');
     }
 
     /**

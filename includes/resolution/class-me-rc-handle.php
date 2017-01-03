@@ -6,8 +6,10 @@ if (!defined('ABSPATH')) {
 /**
  * MarketEngine Dispute Form Handle Class
  *
- * @author         EngineThemes
- * @package         MarketEngine/Includes
+ * @package Includes/Resolution
+ * @category Class
+ * @version 1.0
+ * @since 1.1
  */
 class ME_RC_Form_Handle
 {
@@ -105,6 +107,12 @@ class ME_RC_Form_Handle
 
     }
 
+    /**
+     * Send mail to seller after buyer dispute
+     *
+     * @param array $data The dispute data
+     * @param object $transaction The order buyer request dispute
+     */
     public static function email_seller($data, $transaction)
     {
         $subject = __("There is a dispute for your transaction.", "enginethemes");
@@ -114,23 +122,23 @@ class ME_RC_Form_Handle
             'blogname'     => get_bloginfo('blogname'),
             'order_link'   => $transaction->get_order_detail_url(),
             'order'        => $transaction,
-            'order_id'     => $transaction->id
+            'order_id'     => $transaction->id,
             'dispute_link' => 'http:://disputelink.com',
         );
-        // get activation mail content from template
+        // get dispute mail content from template
         ob_start();
         me_get_template('resolution/emails/dispute-email', $args);
         $dispute_mail_content = ob_get_clean();
 
         /**
-         * Filter user activation email content
+         * Filter user dispute email content
          *
-         * @param String $mail_content
-         * @param Object $user
+         * @param String $dispute_mail_content
+         * @param Object $transaction
          *
          * @since 1.0
          */
-        $dispute_mail_content = apply_filters('marketengine_dispute_mail_content', $dispute_mail_content, $user);
+        $dispute_mail_content = apply_filters('marketengine_dispute_mail_content', $dispute_mail_content, $transaction);
 
         return wp_mail($user->user_email, $subject, $dispute_mail_content);
     }

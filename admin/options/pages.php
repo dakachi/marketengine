@@ -214,6 +214,14 @@ return array(
                 'placeholder' => 'inquiry',
                 'template'    => array(),
             ),
+            'dispute-page' => array(
+                'label'       => __("Resolution Center", "enginethemes"),
+                'description' => __("Choose a page displaying as Resolution Details Page", "enginethemes"),
+                'slug'        => 'me_dispute_form',
+                'type'        => 'select',
+                'name'        => 'me_dispute_page_id',
+                'data'        => marketengine_get_list_of_page(),
+            ),
         ),
     ),
 );
