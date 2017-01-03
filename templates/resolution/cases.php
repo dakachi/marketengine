@@ -14,10 +14,10 @@ $query = me_rc_dispute_case_query($_GET);
 
 <div class="me-resolution">
 
-	<?php me_get_template('resolution/cases-filter'); ?>
+	<?php me_get_template('resolution/cases/cases-filter'); ?>
 
-	<?php me_get_template('resolution/dispute-case-list', array('query' => $query)); ?>
+	<?php me_get_template('resolution/cases/dispute-case-list', array('query' => $query)); ?>
 
-	<?php me_get_template('resolution/cases-pagination', array('query' => $query)); ?>
+	<?php me_get_template('resolution/cases/cases-pagination', array('query' => $query)); ?>
 
 </div>
