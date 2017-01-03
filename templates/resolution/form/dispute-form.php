@@ -17,15 +17,15 @@ $dispute_files = !empty($_POST['dispute_file']) ? $_POST['dispute_file'] : array
 
 	<?php me_print_notices(); ?>
 
-	<?php do_action('marketengine_start_dispute_form'); ?>
-
 	<form id="me-dispute-form" method="post" action="" enctype="multipart/form-data">
+		
+		<?php do_action('marketengine_dispute_form_start'); ?>
 
-		<?php me_get_template('resolution/disputed-product-info', array('transaction' => $transaction)); ?>
+		<?php me_get_template('resolution/form/disputed-product-info', array('transaction' => $transaction)); ?>
 
-		<?php me_get_template('resolution/dispute-received-item'); ?>
+		<?php me_get_template('resolution/form/dispute-received-item'); ?>
 
-		<?php me_get_template('resolution/dispute-problem'); ?>
+		<?php me_get_template('resolution/form/dispute-problem'); ?>
 
 		<div class="me-dispute-description">
 			<h3><?php _e('Please tell more about your problem', 'enginethemes'); ?></h3>
@@ -33,7 +33,7 @@ $dispute_files = !empty($_POST['dispute_file']) ? $_POST['dispute_file'] : array
 		</div>
 
 		<div class="me-dispute-image">
-			<h3><?php _e('Attachments (video or images)', 'enginethemes'); ?></h3>
+			<h3><?php _e('Attachments (optional)', 'enginethemes'); ?></h3>
 			<?php
 
 	        ob_start();
@@ -61,7 +61,7 @@ $dispute_files = !empty($_POST['dispute_file']) ? $_POST['dispute_file'] : array
 	        ?>
 		</div>
 
-		<?php me_get_template('resolution/expected-resolution'); ?>
+		<?php me_get_template('resolution/form/expected-resolution'); ?>
 
 		<?php wp_nonce_field('me-open_dispute_case'); ?>
 		<?php wp_nonce_field('marketengine', 'me-dispute-file'); ?>
@@ -74,9 +74,9 @@ $dispute_files = !empty($_POST['dispute_file']) ? $_POST['dispute_file'] : array
 		<input type="hidden" name="transaction-id" value="<?php echo $transaction->id; ?>">
 		<input type="hidden" name="redirect" value="<?php echo get_the_permalink($transaction->id); ?>">
 
-	</form>
+		<?php do_action('marketengine_dispute_form_end'); ?>
 
-	<?php do_action('marketengine_end_dispute_form'); ?>
+	</form>
 
 </div>
 

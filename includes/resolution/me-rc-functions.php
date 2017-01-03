@@ -236,7 +236,7 @@ function me_dispute_case_filter_form_action() {
  */
 function me_transaction_dispute_form($action, $transaction) {
     if('dispute' === $action ) {
-        me_get_template('resolution/dispute-form', array('transaction' => $transaction));
+        me_get_template('resolution/form/dispute-form', array('transaction' => $transaction));
     }
 }
 add_action( 'marketengine_order_details_action', 'me_transaction_dispute_form', 10, 2 );

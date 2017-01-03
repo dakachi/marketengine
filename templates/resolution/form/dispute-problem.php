@@ -13,7 +13,7 @@ $problems = me_rc_dispute_problems();
 
 <div class="me-dispute-problem">
 	<h3><?php _e('What is your problem?', 'enginethemes'); ?></h3>
-	<select name="me-dispute-problem" id="">
+	<select name="dispute_problem" >
 	<?php foreach ($problems as $key => $problem) : ?>
 		<option <?php selected(isset($_POST['me-dispute-problem']) && $_POST['me-dispute-problem'] == $key); ?> value="<?php echo $key; ?>"><?php echo $problem; ?></option>
 	<?php endforeach; ?>
