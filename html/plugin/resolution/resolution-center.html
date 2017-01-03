@@ -12,6 +12,7 @@
 	<script src="../assets/js/jquery.min.js" type="text/javascript"></script>
 	<script src="../assets/js/jquery-ui.js" type="text/javascript"></script>
 	<script src="../assets/js/me.sliderthumbs.js" type="text/javascript"></script>
+	<script src="../assets/js/chosen.jquery.min.js" type="text/javascript"></script>
 	<script src="../assets/js/jquery.magnific-popup.min.js" type="text/javascript"></script>
 	<script src="../assets/js/jquery.flexslider-min.js" type="text/javascript"></script>
 	<script src="../assets/js/jquery.mCustomScrollbar.min.js" type="text/javascript"></script>
@@ -153,25 +154,15 @@
 											</div>
 										</div>
 										<div class="me-col-md-7">
-											<div class="me-row">
-												<div class="me-col-md-5">
-													<div class="me-problem-filter">
-														<label>Problem</label>
-														<select>
-															<option>All</option>
-															<option>The item does not match description</option>
-														</select>
-													</div>
+											<div class="me-keyword-filter">
+												<label>Keyword</label>
+												<div class="me-resolution-search">
+													<input type="text" placeholder="Search case, username...">
 												</div>
-												<div class="me-col-md-7">
-													<div class="me-keyword-filter">
-														<label>Keyword</label>
-														<div class="me-resolution-search">
-															<input type="text" placeholder="Search case, username...">
-															<input class="me-resolution-filter-btn" type="submit" value="FILTER">
-														</div>
-													</div>
-												</div>
+											</div>
+											<div class="me-resolution-clear-filter">
+												<a href="#">Clear Filter</a>
+												<input class="me-resolution-filter-btn" type="submit" value="FILTER">
 											</div>
 										</div>
 									</div>
@@ -212,15 +203,14 @@
 									<div class="me-table-col me-rslt-amount">$10000.00</div>
 								</div>
 							</div>
-							<div class="marketengine-paginations">
-								<a class="prev page-numbers" href="#">&lt;</a>
-								<a class="page-numbers" href="#">1</a>
-								<span class="page-numbers current">2</span>
-								<a class="page-numbers" href="#">3</a>
-								<a class="next page-numbers" href="">&gt;</a>
-							</div>
-							<div class="marketengine-loadmore">
-								<a href="" class="me-loadmore me-loadmore-order">Load more</a>
+							<div class="me-paginations">
+								<div>
+									<a class="prev page-numbers" href="#"><i class="icon-me-angle-left"></i></a>
+									<a class="page-numbers" href="#"><span>Page</span>1</a>
+									<span class="page-numbers current"><span>Page</span>2</span>
+									<a class="page-numbers" href="#"><span>Page</span>3</a>
+									<a class="next page-numbers" href=""><i class="icon-me-angle-right"></i></a>
+								</div>
 							</div>
 						</div>
 					</div>

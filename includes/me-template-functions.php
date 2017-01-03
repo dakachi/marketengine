@@ -255,10 +255,11 @@ function me_paginate_link($me_query = array())
         'end_size'  => 1,
         'mid_size'  => 2,
         'prev_next' => true,
-        'prev_text' => __("&lt;", "enginethemes"),
-        'next_text' => __('&gt;', "enginethemes"),
+        'prev_text' => __('<i class="icon-me-angle-left"></i>', "enginethemes"),
+        'next_text' => __('<i class="icon-me-angle-right"></i>', "enginethemes"),
         'type'      => 'plain',
         'add_args'  => false,
+        'before_page_number' => '<span>Page</span>'
     );
 
     echo paginate_links($args) ? '<div>' . paginate_links($args) . '</div>' : '';

@@ -13,6 +13,7 @@
 	<script src="../assets/js/jquery.min.js" type="text/javascript"></script>
 	<script src="../assets/js/jquery-ui.js" type="text/javascript"></script>
 	<script src="../assets/js/me.sliderthumbs.js" type="text/javascript"></script>
+	<script src="../assets/js/chosen.jquery.min.js" type="text/javascript"></script>
 	<script src="../assets/js/jquery.magnific-popup.min.js" type="text/javascript"></script>
 	<script src="../assets/js/jquery.flexslider-min.js" type="text/javascript"></script>
 	<script src="../assets/js/jquery.mCustomScrollbar.min.js" type="text/javascript"></script>
@@ -104,7 +105,6 @@
 								</div>
 							</li>
 							<li><a href="#" class="me-post-listing"><i class="icon-me-add-circle"></i><span class="me-hidden-xs">Post Listing</span></a></li>
-							<!-- <li><a href=""><i class="icon-me-cart"></i>(0) item</a></li> -->
 						</ul>
 					</nav>
 				</div>
@@ -139,13 +139,18 @@
 								</div>
 								<div class="me-receive-item">
 									<h3>Did you receive your item?</h3>
-									<label for="me-receive-item-yes"><input class="me-receive-item-field" id="me-receive-item-yes" type="radio" data-get-refund-block="dispute-get-refund-yes" name="me-receive-item" checked>Yes</label>
-									<label for="me-receive-item-no"><input class="me-receive-item-field" id="me-receive-item-no" type="radio" data-get-refund-block="dispute-get-refund-no" name="me-receive-item">No</label>
+									
+									<div class="marketengine-radio-field">
+									    <div>
+									    	<label class="me-radio" for="me-receive-item-yes"><input class="me-receive-item-field" id="me-receive-item-yes" name="me-receive-item" type="radio" data-get-refund-block="dispute-get-refund-yes" checked><span>Yes</span></label>	
+										    <label class="me-radio" for="me-receive-item-no"><input class="me-receive-item-field" id="me-receive-item-no" name="me-receive-item" type="radio" data-get-refund-block="dispute-get-refund-no"><span>No</span></label>	
+										</div>
+									</div>
 								</div>
 
 								<div class="me-dispute-problem">
 									<h3>What is your problem?</h3>
-									<select name="" id="">
+									<select class="me-chosen-select" name="" id="">
 										<option value="">Problem 001</option>
 										<option value="">Problem 002</option>
 										<option value="">Problem 003</option>
@@ -158,83 +163,58 @@
 								</div>
 								<div class="me-dispute-image">
 									<h3>Attachments (video or images)</h3>
-									<!--
-									<ul class="marketengine-gallery-img">
-										<li class="me-item-img">
-											<span class="me-gallery-img">
-												<img src="assets/img/1.jpg" alt="">
-												<a class="me-delete-img"></a>
-											</span>
-											<div class="me-gallery-radio">
-												<input type="radio" name="featured_image" id="radio-img-1">
-												<label for="radio-img-1"></label>
-											</div>
-										</li>
-										<li class="me-item-img">
-											<span class="me-gallery-img">
-												<img src="assets/img/1.jpg" alt="">
-												<a class="me-delete-img"></a>
-											</span>
-											<div class="me-gallery-radio">
-												<input type="radio" name="featured_image" id="radio-img-2">
-												<label for="radio-img-2"></label>
-											</div>
-										</li>
-										<li class="me-item-img">
-											<span class="me-gallery-img me-gallery-add-img">
-												<a class="me-add-img">
-													<i class="icon-me-add"></i>
-													<input type="file" value="">
-												</a>
-											</span>
-										</li>
-									</ul>
-									-->
-									<ul class="marketengine-gallery-img">
-										<li class="me-item-img">
-											<span class="me-gallery-img me-gallery-add-img">
-												<a class="me-add-img">
-													<i class="icon-me-add"></i>
-													<input type="file" value="">
-												</a>
-											</span>
-										</li>
-									</ul>
+									<div id="upload_listing_gallery" class="me-upload-wrapper ">
+									    <div class="upload_preview_container">
+									        <ul class="marketengine-gallery-img ui-sortable">
+									            
+									        </ul>
+									    </div>
+									    <div class="upload-container" style="position: relative;">
+									        <span id="me-btn-upload" class="me-btn-upload me-gallery-add-img" style="position: relative; z-index: 1;">
+									            Choose image        </span>
+										</div>
+									</div>
 								</div>
 								<div class="me-dispute-refund">
 									<h3>You want to:</h3>
 									<div id="dispute-get-refund-yes" class="active">
-										<div class="dispute-get-refund">
-											<label for="dispute-get-refund-only">
-												<input id="dispute-get-refund-only" type="radio" name="dispute-get-refund">Get refund only
-											</label>
-											<span>(keep the item and negotiate a partial refund with the seller)</span>
+										
+										<div class="marketengine-radio-field dispute-get-refund">
+									    	<label class="me-radio" for="dispute-get-refund-only">
+										    	<input id="dispute-get-refund-only" name="dispute-get-refund" type="radio">
+										    	<span>Get refund only</span>
+									    	</label>
+									    	<span>(keep the item and negotiate a partial refund with the seller)</span>
 										</div>
-										<div class="dispute-get-refund">
-											<label for="dispute-get-return-refund">
-												<input id="dispute-get-return-refund" type="radio" name="dispute-get-refund">Return &amp; get refund 
-											</label>
-											<span>(return the item and request a full refund)</span>
+										<div class="marketengine-radio-field dispute-get-refund">
+									    	<label class="me-radio" for="dispute-get-return-refund">
+										    	<input id="dispute-get-return-refund" name="dispute-get-refund" type="radio">
+										    	<span>Return &amp; get refund</span>
+									    	</label>
+									    	<span>(return the item and request a full refund)</span>
 										</div>
-										<div class="dispute-get-refund">
-											<label for="dispute-get-replaced">
-												<input id="dispute-get-replaced" type="radio" name="dispute-get-refund">Get item replaced
-											</label>
-											<span>(get a replaced item without refund)</span>
+										<div class="marketengine-radio-field dispute-get-refund">
+									    	<label class="me-radio" for="dispute-get-replaced">
+										    	<input id="dispute-get-replaced" name="dispute-get-refund" type="radio">
+										    	<span>Get item replaced</span>
+									    	</label>
+									    	<span>(get a replaced item without refund)</span>
 										</div>
 									</div>
 									<div id="dispute-get-refund-no">
-										<div class="dispute-get-refund">
-											<label for="dispute-get-refund">
-												<input id="dispute-get-refund" type="radio" name="dispute-get-refund">Get full refund
-											</label>
-											<span>(request the money back for item not received)</span>
+										<div class="marketengine-radio-field dispute-get-refund">
+									    	<label class="me-radio" for="dispute-get-refund">
+										    	<input id="dispute-get-refund" name="dispute-get-refund" type="radio">
+										    	<span>Get full refund</span>
+									    	</label>
+									    	<span>(request the money back for item not received)</span>
 										</div>
-										<div class="dispute-get-refund">
-											<label for="dispute-get-item">
-												<input id="dispute-get-item" type="radio" name="dispute-get-refund">Get the item
-											</label>
-											<span>(request the item shipped)</span>
+										<div class="marketengine-radio-field dispute-get-refund">
+									    	<label class="me-radio" for="dispute-get-item">
+										    	<input id="dispute-get-item" name="dispute-get-refund" type="radio">
+										    	<span>Get the item</span>
+									    	</label>
+									    	<span>(request the item shipped)</span>
 										</div>
 									</div>
 								</div>

@@ -640,6 +640,7 @@
 	}
 
 	.me-orderlist-filter-tabs, .me-inquiries-filter-tabs {
+		background: #FFF;
 		display: block;
 		margin-top: 15px;
 		padding: 0  15px;
@@ -666,6 +667,7 @@
 	.me-orderlist-table {
 		display: block;
 		border: none;
+		border-bottom: 1px solid $color_border_base;
 		margin-top: 0;
 		.me-table-rhead {
 			display: none;
@@ -762,7 +764,7 @@
 		transform: translate(0);
 	}
 	.me-order-inquiries-table {
-		border-bottom: none;
+		// border-bottom: none;
 		border-left: none;
 		border-right: none;
 		border-radius: 0;
