@@ -4,7 +4,7 @@
 * MarketEngine Dispute Form Class
 *
 * @author 		EngineThemes
-* @package 		MarketEngine/Includes
+* @package 		Includes/Resolution
 */
 class ME_RC_Form {
 	public static function init() {

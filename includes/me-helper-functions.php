@@ -97,7 +97,6 @@ function me_default_endpoints()
         'pay'               => 'pay',
         'listing_id'        => 'listing-id',
         'seller_id'         => 'seller',
-        'resolution_center' => 'resolution-center',
         'inquiry'           => 'inquiry',
     );
     return $endpoint_arr;

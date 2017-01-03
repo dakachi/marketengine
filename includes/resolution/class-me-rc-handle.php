@@ -136,7 +136,7 @@ class ME_RC_Form_Handle
          * @param String $dispute_mail_content
          * @param Object $transaction
          *
-         * @since 1.0
+         * @since 1.1
          */
         $dispute_mail_content = apply_filters('marketengine_dispute_mail_content', $dispute_mail_content, $transaction);
 
