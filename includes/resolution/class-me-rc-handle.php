@@ -89,7 +89,7 @@ class ME_RC_Form_Handle
             if ($data['is_received_item']) {
                 me_update_message_meta($case_id, '_case_is_received_item', $data['is_received_item']);
             }
-            
+
             $data['post_parent'] = $case_id;
             self::create_dispute_message($data, $transaction);
             self::email_seller($data, $transaction);
