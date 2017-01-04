@@ -42,6 +42,9 @@ class ME_RC_Query
     {
         add_action('init', array($this, 'add_enpoint'));
         add_filter('query_vars', array($this, 'add_query_vars'));
+
+        add_action('init', array($this, 'rewrite_case_detail_url'));
+        add_action('template_redirect', array($this, 'rewrite_templates'));
     }
 
     /**
@@ -51,11 +54,10 @@ class ME_RC_Query
     public function add_enpoint()
     {
         $option_value = me_option('ep_resolution-center');
-        if(!$option_value) {
+        if (!$option_value) {
             $option_value = 'resolution-center';
         }
         add_rewrite_endpoint($option_value, EP_ROOT | EP_PAGES, 'resolution-center');
-
 
         $this->rewrite_user_account_url();
     }
@@ -72,7 +74,7 @@ class ME_RC_Query
 
     /**
      * Add query order-id, keyword
-     * 
+     *
      * @param array $vars WP query var list
      * @since 1.0
      */
@@ -81,5 +83,45 @@ class ME_RC_Query
         $vars[] = 'resolution-center';
 
         return $vars;
+    }
+
+    /**
+     * Rewrite inquiry details url rule
+     * @since 1.0
+     */
+    public function rewrite_case_detail_url()
+    {
+        $endpoint = me_option('ep_case');
+        $enpoint  = $endpoint ? $endpoint : 'case';
+        add_rewrite_rule($enpoint . '/([0-9]+)/?$', 'index.php?message_type=dispute&p=$matches[1]', 'top');
+    }
+
+    public function rewrite_templates()
+    {
+
+        if (get_query_var('message_type')) {
+            add_filter('template_include', array($this, 'include_inquiry_template'));
+            add_filter('document_title_parts', array($this, 'the_dispute_title'));
+            add_filter('body_class', array($this, 'the_dispute_body_class'));
+        }
+    }
+
+    public function include_inquiry_template()
+    {
+        global $wp_query;
+        $wp_query->is_404 = 0;
+        return ME()->plugin_path() . '/templates/resolution/me-single-case.php';
+    }
+
+    public function the_dispute_title($title)
+    {
+        $title['title'] = sprintf(__("Dispute case #%d", "enginethemes"), get_query_var('p'));
+        $title['site']  = get_bloginfo('name', 'display');
+        return $title;
+    }
+
+    public function the_dispute_body_class($classes) {
+        $classes[] = 'dispute-case-'.get_query_var( 'p' ).' single-dispute ';
+        return $classes;
     }
 }

@@ -181,7 +181,18 @@ class ME_RC_Form_Handle
 
     }
 
-    public static function close() {
+    public static function close($case_data) {
 
+    }
+
+    public static function escalate($case_data) {
+
+    }
+
+
+    public static function resolve($case_data) {
+        if(!current_user_can( 'manage_options' )) {
+            return new WP_Error('permission_denied', __("You do not have permission to resolve case.", "enginethemes"));   
+        }
     }
 }
