@@ -12,6 +12,3 @@
 <div class="me-paginations">
 	<?php me_paginate_link($query); ?>
 </div>
-<div class="marketengine-loadmore">
-	<a href="" class="me-loadmore me-loadmore-order"><?php _e('Load more', 'enginethemes'); ?></a>
-</div>

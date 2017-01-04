@@ -81,9 +81,9 @@ class ME_RC_Query
      */
     public function rewrite_case_detail_url()
     {
-        $endpoint = me_option('ep_case');
-        $enpoint  = $endpoint ? $endpoint : 'case';
-        add_rewrite_rule($enpoint . '/([0-9]+)/?$', 'index.php?case_type=dispute&p=$matches[1]', 'top');
+        $endpoint = trim(me_option('ep_case'));
+        $endpoint  = $endpoint ? $endpoint : 'case';
+        add_rewrite_rule($endpoint . '/([0-9]+)/?$', 'index.php?case_type=dispute&p=$matches[1]', 'top');
     }
 
     public function rewrite_templates()

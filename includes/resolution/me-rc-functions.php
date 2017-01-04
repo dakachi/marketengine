@@ -36,6 +36,12 @@ function me_resolution_center_url()
     return $url;
 }
 
+function me_rc_dispute_link($case_id) {
+    $endpoint = trim(me_option('ep_case'));
+    $endpoint  = !empty($endpoint) ? $endpoint : 'case';
+    return home_url( $endpoint .'/'. $case_id );
+}
+
 /**
  * Returns dispute case statuses.
  *
