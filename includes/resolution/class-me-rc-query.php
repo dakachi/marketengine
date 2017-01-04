@@ -58,18 +58,7 @@ class ME_RC_Query
             $option_value = 'resolution-center';
         }
         add_rewrite_endpoint($option_value, EP_ROOT | EP_PAGES, 'resolution-center');
-
-        $this->rewrite_user_account_url();
-    }
-
-    /**
-     * Rewrite user account url rule
-     * @since 1.0
-     */
-    private function rewrite_user_account_url()
-    {
-        $endpoint = 'resolution-center';
-        add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
+        add_rewrite_rule('^(.?.+?)/' . $option_value . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $option_value, 'top');
     }
 
     /**
