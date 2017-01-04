@@ -37,12 +37,12 @@ $item = array_pop($items);
                                         <h3>
                                             <?php _e("Product infomation", "enginethemes"); ?>
                                         </h3>
-                                        <a href="">
-                                            <img alt="" src="../assets/img/2.jpg"/>
+                                        <a href="<?php echo get_permalink( $item['ID'] ); ?>">
+                                            <?php echo get_the_post_thumbnail($item['ID']) ?>
                                         </a>
                                         <div class="me-disputed-product">
                                             <h2>
-                                                <a href="#">
+                                                <a href="<?php echo get_permalink( $item['ID'] ); ?>">
                                                     <?php echo $item['title']; ?>
                                                 </a>
                                             </h2>
