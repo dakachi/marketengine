@@ -70,6 +70,7 @@ class ME_RC_Query
     public function add_query_vars($vars)
     {
         $vars[] = 'resolution-center';
+        $vars[] = 'case_type';
 
         return $vars;
     }
@@ -82,24 +83,34 @@ class ME_RC_Query
     {
         $endpoint = me_option('ep_case');
         $enpoint  = $endpoint ? $endpoint : 'case';
-        add_rewrite_rule($enpoint . '/([0-9]+)/?$', 'index.php?message_type=dispute&p=$matches[1]', 'top');
+        add_rewrite_rule($enpoint . '/([0-9]+)/?$', 'index.php?case_type=dispute&p=$matches[1]', 'top');
     }
 
     public function rewrite_templates()
     {
+        if (get_query_var('case_type')) {
+            $current_user_id = get_current_user_id();
+            $case_id         = get_query_var('p');
+            $case            = me_get_message($case_id);
 
-        if (get_query_var('message_type')) {
-            add_filter('template_include', array($this, 'include_inquiry_template'));
-            add_filter('document_title_parts', array($this, 'the_dispute_title'));
-            add_filter('body_class', array($this, 'the_dispute_body_class'));
+            if (!$case) {
+                return;
+            }
+
+            if (current_user_can('manage_options') || $current_user_id == $case->receiver || $current_user_id == $case->sender) {
+                add_filter('template_include', array($this, 'include_inquiry_template'));
+                add_filter('document_title_parts', array($this, 'the_dispute_title'));
+                add_filter('body_class', array($this, 'the_dispute_body_class'));
+            }
         }
     }
 
-    public function include_inquiry_template()
+    public function include_inquiry_template($template)
     {
         global $wp_query;
         $wp_query->is_404 = 0;
         return ME()->plugin_path() . '/templates/resolution/me-single-case.php';
+
     }
 
     public function the_dispute_title($title)
@@ -109,8 +120,9 @@ class ME_RC_Query
         return $title;
     }
 
-    public function the_dispute_body_class($classes) {
-        $classes[] = 'dispute-case-'.get_query_var( 'p' ).' single-dispute ';
+    public function the_dispute_body_class($classes)
+    {
+        $classes[] = 'dispute-case-' . get_query_var('p') . ' single-dispute ';
         return $classes;
     }
 }
