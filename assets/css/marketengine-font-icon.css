@@ -27,7 +27,15 @@
   font-family: inherit !important;
 }
 
-
+.icon-me-chevron-circle-right:before {
+  content: "\e934";
+}
+.icon-me-angle-double-left:before {
+  content: "\e933";
+}
+.icon-me-angle-double-right:before {
+  content: "\e932";
+}
 .icon-me-calendar:before {
   content: "\e931";
 }
@@ -178,4 +186,3 @@
 .icon-me-upload:before {
   content: "\e918";
 }
-
