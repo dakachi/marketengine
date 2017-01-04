@@ -11,14 +11,14 @@
  */
 
 /**
- * Returns the url of resolution center
+ * Returns the url of resolution center list
  *
  * @since     1.1.0
  * @version 1.0.0
  */
 function me_resolution_center_url()
 {
-	global $wp_rewrite;
+    global $wp_rewrite;
     $url = me_get_page_permalink('user_account');
 
     if (!$url) {
@@ -27,7 +27,7 @@ function me_resolution_center_url()
 
     $endpoint = me_option('ep_resolution-center');
     $endpoint = $endpoint ? $endpoint : 'resolution-center';
-    
+
     if ($wp_rewrite->using_permalinks()) {
         $url = trailingslashit($url) . $endpoint;
     } else {
@@ -47,7 +47,7 @@ function me_resolution_center_url()
 function me_dispute_statuses()
 {
     $statuses = array(
-        'me-open'      => __('Open', 'enginethemes'),
+        'me-open'      => __('Negotiating', 'enginethemes'),
         'me-waiting'   => __('Waiting', 'enginethemes'),
         'me-escalated' => __('Escalated', 'enginethemes'),
         'me-closed'    => __('Closed', 'enginethemes'),
@@ -101,9 +101,10 @@ function me_rc_dispute_problems()
  * @since     1.1.0
  * @version 1.0.0
  */
-function me_rc_dispute_problem_label($problem_name)
+function me_rc_dispute_problem_text($case_id)
 {
-    $problems = me_rc_dispute_problems();
+    $problems     = me_rc_dispute_problems();
+    $problem_name = me_get_message_meta($case_id, '_case_problem', true);
     return $problem_name ? $problems[$problem_name] : '';
 }
 
@@ -113,38 +114,46 @@ function me_rc_dispute_problem_label($problem_name)
  * @since     1.1.0
  * @version 1.0.0
  */
-function me_rc_expected_solutions($is_received_item = false)
+function me_rc_expected_solutions()
 {
-    if ($is_received_item) {
-        $resolutions = array(
-            'partial-refund' => array(
-                'label'       => __('Get refund only', 'enginethemes'),
-                'description' => __('(keep the item and negotiate a partial refund with the seller)', 'enginethemes'),
-            ),
-            'return-item'    => array(
-                'label'       => __('Return &amp; get refund', 'enginethemes'),
-                'description' => __('(return the item and request a full refund)', 'enginethemes'),
-            ),
-            'item-replaced'  => array(
-                'label'       => __('Get item replaced', 'enginethemes'),
-                'description' => __('(get a replaced item without refund)', 'enginethemes'),
-            ),
-        );
 
-    } else {
-        $resolutions = array(
-            'full-refund'  => array(
-                'label'       => __('Get full refund', 'enginethemes'),
-                'description' => __('(request the money back for item not received)', 'enginethemes'),
-            ),
-            'receive-item' => array(
-                'label'       => __('Get the item', 'enginethemes'),
-                'description' => __('(request the item shipped)', 'enginethemes'),
-            ),
-        );
-    }
+    $resolutions = array(
+        'partial-refund' => array(
+            'label'       => __('Get refund only', 'enginethemes'),
+            'description' => __('(keep the item and negotiate a partial refund with the seller)', 'enginethemes'),
+        ),
+        'return-item'    => array(
+            'label'       => __('Return &amp; get refund', 'enginethemes'),
+            'description' => __('(return the item and request a full refund)', 'enginethemes'),
+        ),
+        'item-replaced'  => array(
+            'label'       => __('Get item replaced', 'enginethemes'),
+            'description' => __('(get a replaced item without refund)', 'enginethemes'),
+        ),
+        'full-refund'    => array(
+            'label'       => __('Get full refund', 'enginethemes'),
+            'description' => __('(request the money back for item not received)', 'enginethemes'),
+        ),
+        'receive-item'   => array(
+            'label'       => __('Get the item', 'enginethemes'),
+            'description' => __('(request the item shipped)', 'enginethemes'),
+        ),
+    );
 
-    return apply_filters('me_rc_expected_solutions', $resolutions, $is_received_item);
+    return apply_filters('me_rc_expected_solutions', $resolutions);
+}
+
+/**
+ * Retrieve case expected solution label
+ * @param int $case_id The case id
+ * @return string
+ * @since 1.1
+ */
+function me_rc_case_expected_solution_label($case_id)
+{
+    $problems     = me_rc_expected_solutions();
+    $problem_name = me_get_message_meta($case_id, '_case_expected_resolution', true);
+    return $problem_name ? $problems[$problem_name]['label'] : '';
 }
 
 /**
