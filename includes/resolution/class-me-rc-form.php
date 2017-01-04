@@ -19,7 +19,7 @@ class ME_RC_Form {
 			if(is_wp_error($case)) {
 				me_wp_error_to_notices($case);
 			} else {
-				$redirect = isset($_POST['redirect']) ? $_POST['redirect'] : $_POST['_wp_http_referer'];
+				$redirect = me_rc_dispute_link($case_id);
 				wp_redirect($redirect);
 				exit;
 			}
