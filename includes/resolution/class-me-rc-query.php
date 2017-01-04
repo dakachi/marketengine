@@ -98,14 +98,14 @@ class ME_RC_Query
             }
 
             if (current_user_can('manage_options') || $current_user_id == $case->receiver || $current_user_id == $case->sender) {
-                add_filter('template_include', array($this, 'include_inquiry_template'));
+                add_filter('template_include', array($this, 'include_dispute_template'));
                 add_filter('document_title_parts', array($this, 'the_dispute_title'));
                 add_filter('body_class', array($this, 'the_dispute_body_class'));
             }
         }
     }
 
-    public function include_inquiry_template($template)
+    public function include_dispute_template($template)
     {
         global $wp_query;
         $wp_query->is_404 = 0;
