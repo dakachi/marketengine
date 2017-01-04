@@ -217,15 +217,21 @@ $(document).ready(function() {
 		$('.me-resolution').toggleClass('me-rslt-filter');
 	});
 
-	$('.me-disputed-case-tabs').on('click', function() {
+	$('.me-dispute-case-tabs').on('click', function() {
 		$(this).toggleClass('active');
-		$('body').toggleClass('me-disputed-case-tabs-active').removeClass('me-disputed-action-tabs-active');
+		$('body').toggleClass('me-dispute-case-tabs-active');
 		return false;
 	});
 	
-	$('.me-disputed-action-tabs').on('click', function() {
+	$('.me-dispute-action-tabs').on('click', function() {
 		$(this).toggleClass('active');
-		$('body').toggleClass('me-disputed-action-tabs-active').removeClass('me-disputed-case-tabs-active');
+		$('body').toggleClass('me-dispute-action-tabs-active');
+		return false;
+	});
+
+	$('.me-dispute-related-tabs').on('click', function() {
+		$(this).toggleClass('active');
+		$('body').toggleClass('me-dispute-related-tabs-active');
 		return false;
 	});
 

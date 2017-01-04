@@ -120,7 +120,7 @@
 						<ol class="me-breadcrumb">
 							<li><a href="#">Transaction</a></li>
 							<li><a href="#abc">#ME02123</a></li>
-							<li><a>Dispute</a></li>
+							<li><a>Dispute case</a></li>
 						</ol>
 					</div>
 					<!-- marketengine-content -->
@@ -128,70 +128,31 @@
 						<div class="me-escalate-form">
 							<form id="me-escalate-form" action="">
 								<div class="me-escalate-box">
-									<h3>Buyer's current situation:</h3>
+									<h3>Buyer,s current situation:</h3>
 									<ol class="">
-										<li>You already got the item</li>
-										<li>The item does not match description</li>
-										<li>You want to get full refund</li>
+										<li>Buyer already got the item</li>
+										<li>Received item does not match description</li>
+										<li>Buyer wants to get full refund</li>
 									</ol>
 								</div>
-								<div class="me-escalate-box">
-									<h3>Why do you escalate this dispute?</h3>
-									<select name="" id="">
-										<option value="">Reason 001</option>
-										<option value="">Reason 002</option>
-										<option value="">Reason 003</option>
-									</select>
-								</div>
+								
 								<div class="me-escalate-box">
 									<h3>Please tell more about your problem</h3>
 									<textarea name="" id="" cols="30" rows="10"></textarea>
 								</div>
 								<div class="me-escalate-box">
 									<h3>Attachments (video or images)</h3>
-									<!--
-									<ul class="marketengine-gallery-img">
-										<li class="me-item-img">
-											<span class="me-gallery-img">
-												<img src="assets/img/1.jpg" alt="">
-												<a class="me-delete-img"></a>
-											</span>
-											<div class="me-gallery-radio">
-												<input type="radio" name="featured_image" id="radio-img-1">
-												<label for="radio-img-1"></label>
-											</div>
-										</li>
-										<li class="me-item-img">
-											<span class="me-gallery-img">
-												<img src="assets/img/1.jpg" alt="">
-												<a class="me-delete-img"></a>
-											</span>
-											<div class="me-gallery-radio">
-												<input type="radio" name="featured_image" id="radio-img-2">
-												<label for="radio-img-2"></label>
-											</div>
-										</li>
-										<li class="me-item-img">
-											<span class="me-gallery-img me-gallery-add-img">
-												<a class="me-add-img">
-													<i class="icon-me-add"></i>
-													<input type="file" value="">
-												</a>
-											</span>
-										</li>
-									</ul>
-									-->
-
-									<ul class="marketengine-gallery-img">
-										<li class="me-item-img">
-											<span class="me-gallery-img me-gallery-add-img">
-												<a class="me-add-img">
-													<i class="icon-me-add"></i>
-													<input type="file" value="">
-												</a>
-											</span>
-										</li>
-									</ul>
+									<div id="upload_listing_gallery" class="me-upload-wrapper ">
+									    <div class="upload_preview_container">
+									        <ul class="marketengine-gallery-img ui-sortable">
+									            
+									        </ul>
+									    </div>
+									    <div class="upload-container" style="position: relative;">
+									        <span id="me-btn-upload" class="me-btn-upload me-gallery-add-img" style="position: relative; z-index: 1;">
+									            Choose image        </span>
+										</div>
+									</div>
 								</div>
 								<div class="me-escalate-submit">
 									<input type="submit" class="me-escalate-submit-btn">
@@ -280,10 +241,5 @@
 		</footer>
 
 	</div>
-	<!-- notification
-	<div class="marketengine-notification me-notification-success">
-		<p><b>Thank You!</b> Please check mail box to active your account.</p>
-	</div>
-	-->
 </body>
 </html>

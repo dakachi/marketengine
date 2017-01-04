@@ -105,7 +105,6 @@
 								</div>
 							</li>
 							<li><a href="#" class="me-post-listing"><i class="icon-me-add-circle"></i><span class="me-hidden-xs">Post Listing</span></a></li>
-							<!-- <li><a href=""><i class="icon-me-cart"></i>(0) item</a></li> -->
 						</ul>
 					</nav>
 				</div>
@@ -129,7 +128,7 @@
 								<!-- <a href="#">DISPUTED CASE</a> -->
 								<ul class="me-dispute-contact-tabs">
 									<li class="me-dispute-case-tabs"><span>Case Info</span></li>
-									<li class="me-dispute-action-tabs"><span>Arbitrate Info</span></li>
+									<li class="me-dispute-action-tabs"><span>Action Info</span></li>
 									<li class="me-dispute-related-tabs"><span>Related Party &amp; Event</span></li>
 								</ul>
 							</div>
@@ -157,21 +156,22 @@
 									</div>
 								</div>
 
-								<div class="me-disputed-action me-dispute-arbitrate">
-									<form id="me-dispute-arbitrate-form" action="">
-										<p>The Buyer has escalated the dispute. The final result of the dispute is your adjudication.</p>
-										<div class="marketengine-radio-field">
-											<span>Who would win the dispute:</span>
-											<div>
-												<label class="me-radio" for="me-dispute-win-buyer"><input class="me-receive-item-field" id="me-dispute-win-buyer" name="me-dispute-win" type="radio"><span>Supper Buyer</span></label>	
+								<div class="me-disputed-action">
+									<!-- <h3>Action</h3> -->
+									<div class="me-row">
+										<div class="me-col-md-6">
+											<div class="me-disputed-close">
+												<a href="#">Accept dispute</a>
+												<p>The seller has requested to close this dispute. In case you are not satisfied with the proposal, you can continue negotiating or escalate to the Admin.</p>
 											</div>
-									    	<div>
-									    		<label class="me-radio" for="me-dispute-win-seller"><input class="me-receive-item-field" id="me-dispute-win-seller" name="me-dispute-win" type="radio"><span>Supper Seller</span></label>	
-									    	</div>
 										</div>
-										<textarea name="" id="" cols="30" rows="10"></textarea>
-										<input type="submit" class="me-arbitrate-btn" value="ARBITRATE">
-									</form>
+										<div class="me-col-md-6">
+											<div class="me-disputed-escalate">
+												<a href="#">Escalate</a>
+												<p>In case you totally agree with what the Seller offer, you can close this dispute. Once the dispute is closed, it cannot be re-opened.</p>
+											</div>
+										</div>
+									</div>
 								</div>
 
 							</div>
@@ -183,7 +183,6 @@
 											<div class="me-party-involve">
 												<h3>Related Party</h3>
 												<p>Seller:<span>Supper seller</span></p>
-												<p>Buyer:<span>Supper seller buy</span></p>
 											</div>
 											<div class="me-dispute-event">
 												<h3>Dispute Event</h3>

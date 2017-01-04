@@ -129,7 +129,7 @@
 								<!-- <a href="#">DISPUTED CASE</a> -->
 								<ul class="me-dispute-contact-tabs">
 									<li class="me-dispute-case-tabs"><span>Case Info</span></li>
-									<li class="me-dispute-action-tabs"><span>Arbitrate Info</span></li>
+									<li class="me-dispute-action-tabs"><span>Action Info</span></li>
 									<li class="me-dispute-related-tabs"><span>Related Party &amp; Event</span></li>
 								</ul>
 							</div>
@@ -141,7 +141,7 @@
 												<h3>Case information</h3>
 												<p><span>Case status:</span>Open</p>
 												<p><span>Open date:</span>02/01/2017</p>
-												<p><span>Listing:</span>The item blue description</p>
+												<p><span>Listing:</span><a href="#">The item blue description</a></p>
 												<p><span>Problem:</span>Received item does not match description</p>
 												<p><span>You want to:</span>Get full refund</p>
 											</div>
@@ -157,23 +157,23 @@
 									</div>
 								</div>
 
-								<div class="me-disputed-action me-dispute-arbitrate">
-									<form id="me-dispute-arbitrate-form" action="">
-										<p>The Buyer has escalated the dispute. The final result of the dispute is your adjudication.</p>
-										<div class="marketengine-radio-field">
-											<span>Who would win the dispute:</span>
-											<div>
-												<label class="me-radio" for="me-dispute-win-buyer"><input class="me-receive-item-field" id="me-dispute-win-buyer" name="me-dispute-win" type="radio"><span>Supper Buyer</span></label>	
+								<div class="me-disputed-action">
+									<!-- <h3>Action</h3> -->
+									<div class="me-row">
+										<div class="me-col-md-6">
+											<div class="me-disputed-request-close">
+												<h4>Waiting for Buyer,s respond</h4>
+												<p>You have already sent request to close dispute to the Buyer. Whenever the Buyer accept your request, the dispute will be closed.</p>
 											</div>
-									    	<div>
-									    		<label class="me-radio" for="me-dispute-win-seller"><input class="me-receive-item-field" id="me-dispute-win-seller" name="me-dispute-win" type="radio"><span>Supper Seller</span></label>	
-									    	</div>
 										</div>
-										<textarea name="" id="" cols="30" rows="10"></textarea>
-										<input type="submit" class="me-arbitrate-btn" value="ARBITRATE">
-									</form>
+										<div class="me-col-md-6">
+											<div class="me-disputed-escalate">
+												<a href="#">Escalate</a>
+												<p>In case you totally agree with what the Seller offer, you can close this dispute. Once the dispute is closed, it cannot be re-opened.</p>
+											</div>
+										</div>
+									</div>
 								</div>
-
 							</div>
 
 							<div class="me-disputed-conversation">
@@ -182,19 +182,10 @@
 										<div class="me-sidebar-contact">
 											<div class="me-party-involve">
 												<h3>Related Party</h3>
-												<p>Seller:<span>Supper seller</span></p>
 												<p>Buyer:<span>Supper seller buy</span></p>
 											</div>
 											<div class="me-dispute-event">
 												<h3>Dispute Event</h3>
-												<a href="#">
-													<span>Escalate dispute</span>
-													<span>03/01/2017</span>
-												</a>
-												<a href="#">
-													<span>Close dispute request</span>
-													<span>02/01/2017</span>
-												</a>
 												<a href="#">
 													<span>Dispute started</span>
 													<span>01/01/2017</span>
@@ -356,12 +347,6 @@
 				<p>MarketEngine &copy; 2016 Powered by <b>EngineThemes</b></p>
 			</div>
 		</footer>
-
 	</div>
-	<!-- notification
-	<div class="marketengine-notification me-notification-success">
-		<p><b>Thank You!</b> Please check mail box to active your account.</p>
-	</div>
-	-->
 </body>
 </html>
