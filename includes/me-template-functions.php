@@ -714,8 +714,6 @@ function me_auth_page_title($title, $id = null)
                 return __('My Purchases', 'enginethemes');
             } elseif (isset($wp_query->query_vars['change-password'])) {
                 return __('CHANGE PASSWORD', 'enginethemes');
-            } elseif (isset($wp_query->query_vars['resolution-center'])) {
-                return __('Resolution Center', 'enginethemes');
             }
         }
     }

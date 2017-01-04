@@ -24,7 +24,7 @@ class ME_RC_Form_Handle
         }
 
         if ($sender != $transaction->post_author) {
-            return new WP_Error('permission_dined', __('You can not dispute this transaction.', 'enginethemes'));
+            return new WP_Error('permission_denied', __('You can not dispute this transaction.', 'enginethemes'));
         }
 
         $receiver = $transaction->get_seller();
@@ -77,7 +77,15 @@ class ME_RC_Form_Handle
         return $case_id;
     }
 
-    public static function create_dispute($data)
+    /**
+     * Create a dispute case
+     *
+     * @param array $data The dispute data
+     * @param object $transaction The ME_Order object
+     *
+     * @return int
+     */
+    public static function create_dispute($data, $transaction)
     {
         $case_id = me_insert_message($data);
         if ($case_id) {
@@ -92,11 +100,17 @@ class ME_RC_Form_Handle
 
             $data['post_parent'] = $case_id;
             self::create_dispute_message($data, $transaction);
-            self::email_seller($data, $transaction);
+            self::new_dispute_notify($data, $transaction);
         }
         return $case_id;
     }
 
+    /**
+     * Insert message to dispute case
+     * @param array $data Message data
+     * @param object $transaction The ME_Order object
+     * @return int
+     */
     public static function create_dispute_message($data, $transaction)
     {
         $data['post_type'] = 'message';
@@ -114,7 +128,7 @@ class ME_RC_Form_Handle
      * @param array $data The dispute data
      * @param object $transaction The order buyer request dispute
      */
-    public static function email_seller($data, $transaction)
+    public static function new_dispute_notify($data, $transaction)
     {
         $subject = __("There is a dispute for your transaction.", "enginethemes");
         $args    = array(
@@ -142,5 +156,32 @@ class ME_RC_Form_Handle
         $dispute_mail_content = apply_filters('marketengine_dispute_mail_content', $dispute_mail_content, $transaction);
 
         return wp_mail($user->user_email, $subject, $dispute_mail_content);
+    }
+
+    /**
+     * Seller request buyer to close dispute
+     * @param int $dispute_id
+     * @return int | WP_Error
+     */
+    public static function request_close($dispute_id) {
+        $dispute = me_get_message($dispute_id);
+        if(!$dispute) {
+            return new WP_Error('invalid_case', __("Invalid case id.", "enginethemes"));
+        }
+
+        if($dispute->post_status !== 'me-open' || get_current_user_id() != $dispute->receiver) {
+            return new WP_Error('permission_denied', __("You can not request close this case.", "enginethemes"));   
+        }
+
+        $id = me_update_message(array('ID' => $dispute_id, 'post_status' => 'me-waiting'));
+        self::request_close_notify($dispute);
+    }
+
+    public static function request_close_notify($dispute) {
+
+    }
+
+    public static function close() {
+
     }
 }

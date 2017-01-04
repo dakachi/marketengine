@@ -2,8 +2,9 @@
 /**
  * MarketEngine Resolution Center Query
  *
- * @author         EngineThemes
- * @package         Includes/Resolution
+ * @author EngineThemes
+ * @package  Includes/Resolution
+ * @category Class
  */
 class ME_RC_Query
 {
