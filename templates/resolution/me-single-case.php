@@ -22,23 +22,38 @@ $case = me_get_message($case_id);
                             <div class="me-col-md-3 me-col-md-pull-9 me-col-sm-4 me-col-sm-pull-8">
                                 <div class="me-sidebar-contact">
                                     <div class="me-party-involve">
-                                        <h3>Related Party</h3>
+                                        <h3><?php _e("Related Party", "enginethemes"); ?></h3>
                                         <p>Seller:<span>Supper seller</span></p>
                                         <p>Buyer:<span>Supper seller buy</span></p>
                                     </div>
                                     <div class="me-dispute-event">
-                                        <h3>Dispute Event</h3>
+                                        <h3><?php _e("Dispute Event", "enginethemes"); ?></h3>
+                                        <?php
+                                            $message_query = new ME_Message_Query(array('post_type' => 'revision', 'post_parent' => $case->ID, 'showposts' => 12));
+                                            $revisions = array_reverse ($message_query->posts);
+                                        ?>
+
+                                        <?php foreach ($revisions  as $key => $message) : ?>
                                         <a href="#">
-                                            <span>Escalate dispute</span>
-                                            <span>03/01/2017</span>
+                                            <?php switch ($message->post_status) {
+                                                case 'me-closed':
+                                                    _e("<span>Close dispute</span>", "enginethemes");
+                                                    break;
+                                                case 'me-escalated' :
+                                                    _e("<span>Escalate dispute</span>", "enginethemes");
+                                                    break;
+                                                case 'me-waiting' :
+                                                        _e("<span>Close dispute request</span>", "enginethemes");
+                                                    break;
+                                            }
+                                            ?>
+                                            <span><?php echo date_i18n( get_option('date_format'),  strtotime($message->post_date) ); ?></span>
                                         </a>
+                                        <?php endforeach; ?>
+                                        
                                         <a href="#">
-                                            <span>Close dispute request</span>
-                                            <span>02/01/2017</span>
-                                        </a>
-                                        <a href="#">
-                                            <span>Dispute started</span>
-                                            <span>01/01/2017</span>
+                                            <span><?php _e("Dispute started", "enginethemes"); ?></span>
+                                            <span><?php echo date_i18n( get_option('date_format'),  strtotime($case->post_date) ); ?></span>
                                         </a>
                                     </div>
                                 </div>
@@ -47,7 +62,13 @@ $case = me_get_message($case_id);
                                 <div class="me-contact-messages-wrap">
                                     <div class="me-contact-message-user">
                                         <p>
-                                            David Copperfield
+                                            <?php 
+                                            if(get_current_user_id() == $case->sender) {
+                                                echo get_the_author_meta( 'display_name', $case->receiver );
+                                            }else {
+                                                echo get_the_author_meta( 'display_name', $case->sender );
+                                            }
+                                            ?>
                                         </p>
                                     </div>
 
