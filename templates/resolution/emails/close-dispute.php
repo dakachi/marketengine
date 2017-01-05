@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
 <p><?php printf(__("Hi %s,", "enginethemes"), $display_name);?></p>
 <p>
 <?php 
-printf(__("Buyer %s has closed the dispute for your transaction.  You can review it <a href='%s' >here</a> for further details. ", "enginethemes"), 
+printf(__("Buyer %s has closed the dispute for your order.  You can review it <a href='%s' >here</a> for further details. ", "enginethemes"), 
 	$buyer_name, $dispute_link); 
 ?>
 </p>
