@@ -79,7 +79,8 @@ me_print_notices();
         <div class="me-row">
             <div class="me-col-md-6">
                 <div class="me-disputed-close">
-                    <a href="<?php echo wp_nonce_url(add_query_arg(array('close' => $case->ID) ), 'me-close_dispute' ,'wpnonce' ) ?>">
+                    <a onclick="if(!confirm('<?php _e("Are you sure?", "enginethemes"); ?>')) return false;" 
+                    href="<?php echo wp_nonce_url(add_query_arg(array('close' => $case->ID) ), 'me-close_dispute' ,'wpnonce' ) ?>">
                         <?php _e("Close dispute", "enginethemes"); ?>
                     </a>
                     <p>
