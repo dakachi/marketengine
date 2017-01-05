@@ -2,8 +2,8 @@
 /**
  * MarketEngine Resolution Center Functions
  *
- * @author         EngineThemes
- * @package     MarketEngine/Includes
+ * @author     EngineThemes
+ * @package     Includes/Resolution
  * @category     Functions
  *
  * @version     1.0.0
@@ -115,15 +115,14 @@ function me_rc_dispute_problem_text($case_id)
 }
 
 /**
- * @todo chia ra thanh 2 ham
+ * MarketEngine user received item expected solution
  *
  * @since     1.1.0
- * @version 1.0.0
  */
-function me_rc_expected_solutions()
+function me_rc_item_received_expected_solutions()
 {
 
-    $resolutions = array(
+    $solution = array(
         'partial-refund' => array(
             'label'       => __('Get refund only', 'enginethemes'),
             'description' => __('(keep the item and negotiate a partial refund with the seller)', 'enginethemes'),
@@ -136,6 +135,18 @@ function me_rc_expected_solutions()
             'label'       => __('Get item replaced', 'enginethemes'),
             'description' => __('(get a replaced item without refund)', 'enginethemes'),
         ),
+    );
+
+    return apply_filters('me_rc_yes_expected_solutions', $solution);
+}
+
+/**
+ * MarketEngine user not received item expected solution
+ *
+ * @since     1.1.0
+ */
+function me_rc_item_not_received_expected_solutions() {
+    return apply_filters('me_rc_no_expected_solutions',array(
         'full-refund'    => array(
             'label'       => __('Get full refund', 'enginethemes'),
             'description' => __('(request the money back for item not received)', 'enginethemes'),
@@ -143,10 +154,8 @@ function me_rc_expected_solutions()
         'receive-item'   => array(
             'label'       => __('Get the item', 'enginethemes'),
             'description' => __('(request the item shipped)', 'enginethemes'),
-        ),
-    );
-
-    return apply_filters('me_rc_expected_solutions', $resolutions);
+        )
+    ));
 }
 
 /**
@@ -157,7 +166,7 @@ function me_rc_expected_solutions()
  */
 function me_rc_case_expected_solution_label($case_id)
 {
-    $problems     = me_rc_expected_solutions();
+    $problems     = array_merge(me_rc_item_received_expected_solutions(), me_rc_item_not_received_expected_solutions() );
     $problem_name = me_get_message_meta($case_id, '_case_expected_resolution', true);
     return $problem_name ? $problems[$problem_name]['label'] : '';
 }
