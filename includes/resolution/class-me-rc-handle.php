@@ -99,6 +99,7 @@ class ME_RC_Form_Handle
             }
 
             $data['post_parent'] = $case_id;
+            $data['case_id'] = $case_id;
             self::create_dispute_message($data, $transaction);
             self::new_dispute_notify($data, $transaction);
         }
@@ -138,7 +139,7 @@ class ME_RC_Form_Handle
             'order_link'   => $transaction->get_order_detail_url(),
             'order'        => $transaction,
             'order_id'     => $transaction->id,
-            'dispute_link' => 'http:://disputelink.com',
+            'dispute_link' => me_rc_dispute_link($data['case_id']),
         );
         // get dispute mail content from template
         ob_start();
