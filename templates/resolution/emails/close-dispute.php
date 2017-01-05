@@ -20,5 +20,5 @@ printf(__("Buyer %s has closed the dispute for your transaction.  You can review
 ?>
 </p>
 <p><?php _e("Thank you for your cooperation.", "enginethemes"); ?><br/>
-<?php printf(__("Regards, <br/> %s", "enginethemes"), $blogname)); ?>
+<?php printf(__("Regards, <br/> %s", "enginethemes"), $blogname); ?>
 </p>

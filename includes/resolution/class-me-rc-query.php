@@ -71,6 +71,7 @@ class ME_RC_Query
     {
         $vars[] = 'resolution-center';
         $vars[] = 'case_type';
+        $vars[] = 'case_id';
 
         return $vars;
     }
@@ -83,14 +84,14 @@ class ME_RC_Query
     {
         $endpoint = trim(me_option('ep_case'));
         $endpoint  = $endpoint ? $endpoint : 'case';
-        add_rewrite_rule($endpoint . '/([0-9]+)/?$', 'index.php?case_type=dispute&p=$matches[1]', 'top');
+        add_rewrite_rule($endpoint . '/([0-9]+)/?$', 'index.php?case_type=dispute&case_id=$matches[1]', 'top');
     }
 
     public function rewrite_templates()
     {
         if (get_query_var('case_type')) {
             $current_user_id = get_current_user_id();
-            $case_id         = get_query_var('p');
+            $case_id         = get_query_var('case_id');
             $case            = me_get_message($case_id);
 
             if (!$case) {
@@ -115,14 +116,14 @@ class ME_RC_Query
 
     public function the_dispute_title($title)
     {
-        $title['title'] = sprintf(__("Dispute case #%d", "enginethemes"), get_query_var('p'));
+        $title['title'] = sprintf(__("Dispute case #%d", "enginethemes"), get_query_var('case_id'));
         $title['site']  = get_bloginfo('name', 'display');
         return $title;
     }
 
     public function the_dispute_body_class($classes)
     {
-        $classes[] = 'dispute-case-' . get_query_var('p') . ' single-dispute ';
+        $classes[] = 'dispute-case-' . get_query_var('case_id') . ' single-dispute ';
         return $classes;
     }
 }

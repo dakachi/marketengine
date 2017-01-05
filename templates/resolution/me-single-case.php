@@ -1,8 +1,7 @@
 <?php 
 get_header();
-$case_id = get_query_var( 'p' );
+$case_id = get_query_var( 'case_id' );
 $case = me_get_message($case_id);
-
 ?>
 <div id="marketengine-page">
     <div class="me-container">

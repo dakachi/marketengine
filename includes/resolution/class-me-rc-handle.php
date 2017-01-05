@@ -146,6 +146,7 @@ class ME_RC_Form_Handle
         me_get_template('resolution/emails/dispute-email', $args);
         $dispute_mail_content = ob_get_clean();
 
+        $user = get_userdata($data['receiver']);
         /**
          * Filter user dispute email content
          *
@@ -188,7 +189,7 @@ class ME_RC_Form_Handle
      * @param int $case_id The dispute case id
      */
     public static function close($case_id) {
-        $dispute = me_get_message($dispute_id);
+        $dispute = me_get_message($case_id);
         if(!$dispute) {
             return new WP_Error('invalid_case', __("Invalid case id.", "enginethemes"));
         }
@@ -197,9 +198,10 @@ class ME_RC_Form_Handle
             return new WP_Error('permission_denied', __("You can not close this case.", "enginethemes"));   
         }
 
-        $id = me_update_message(array('ID' => $dispute_id, 'post_status' => 'me-closed'));
+        $case_id = me_update_message(array('ID' => $case_id, 'post_status' => 'me-closed'));
+        // add revision 
         self::close_notify($dispute);
-        return $id;
+        return $case_id;
 
     }
 
@@ -207,7 +209,7 @@ class ME_RC_Form_Handle
         $subject = __("Your dispute has been closed.", "enginethemes");
         $args    = array(
             'display_name' => get_the_author_meta('display_name', $dispute->receiver),
-            'buyer_name'   => get_the_author_meta('display_name', $data->sender),
+            'buyer_name'   => get_the_author_meta('display_name', $dispute->sender),
             'blogname'     => get_bloginfo('blogname'),
             'dispute_link' => me_rc_dispute_link($dispute->ID),
         );
@@ -216,6 +218,7 @@ class ME_RC_Form_Handle
         me_get_template('resolution/emails/close-dispute', $args);
         $close_dispute_mail_content = ob_get_clean();
 
+        $user = get_userdata($dispute->receiver);
         /**
          * Filter user close dispute email content
          *
@@ -225,7 +228,6 @@ class ME_RC_Form_Handle
          * @since 1.1
          */
         $close_dispute_mail_content = apply_filters('marketengine_close_dispute_mail_content', $close_dispute_mail_content, $dispute);
-
         return wp_mail($user->user_email, $subject, $close_dispute_mail_content);
     }
 

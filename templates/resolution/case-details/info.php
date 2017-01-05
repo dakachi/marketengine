@@ -2,6 +2,7 @@
 $transaction = me_get_order($case->post_parent);
 $items = $transaction->get_listing_items();
 $item = array_pop($items);
+me_print_notices();
 ?>
 <div class="me-disputed-info">
     <div class="me-disputed-product-order">
@@ -72,17 +73,17 @@ $item = array_pop($items);
             </div>
         </div>
     </div>
-
+    <?php if('me-closed' !== $case->post_status ) : ?>
     <div class="me-disputed-action">
     <?php if(get_current_user_id() == $case->sender) : ?>
         <div class="me-row">
             <div class="me-col-md-6">
                 <div class="me-disputed-close">
-                    <a href="#">
-                        Close dispute
+                    <a href="<?php echo wp_nonce_url(add_query_arg(array('close' => $case->ID) ), 'me-close_dispute' ,'wpnonce' ) ?>">
+                        <?php _e("Close dispute", "enginethemes"); ?>
                     </a>
                     <p>
-                        In case you totally agree with what the Seller offer, you can close this dispute. Once the dispute is closed, it cannot be re-opened.
+                        <?php _e("In case you totally agree with what the Seller offer, you can close this dispute. Once the dispute is closed, it cannot be re-opened.", "enginethemes"); ?>
                     </p>
                 </div>
             </div>
@@ -114,5 +115,5 @@ $item = array_pop($items);
         </div>
     <?php endif; ?>
     </div>
-
+    <?php endif; ?>
 </div>
