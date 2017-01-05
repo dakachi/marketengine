@@ -52,7 +52,7 @@ $case = me_get_message($case_id);
                                     </div>
 
                                     <?php 
-                                        $message_query = new ME_Message_Query(array('post_type' => 'message', 'post_parent' => $case->ID, 'showposts' => 12));
+                                        $message_query = new ME_Message_Query(array('post_type' => array('message', 'revision'), 'post_parent' => $case->ID, 'showposts' => 12));
                                         	$messages = array_reverse ($message_query->posts);
                                     ?>
                                     
@@ -60,7 +60,13 @@ $case = me_get_message($case_id);
                                         <ul class="me-contact-messages-list">
                                         <?php if( $messages ) : ?>
 										<?php foreach ($messages  as $key => $message) : ?>
-											<?php me_get_template('resolution/message-item', array('message' => $message)); ?>
+											<?php 
+                                            if($message->post_type == 'revision') {
+                                                me_get_template('resolution/revision-item', array('message' => $message));
+                                            }else {
+                                                me_get_template('resolution/message-item', array('message' => $message));    
+                                            }
+                                             ?>
 										<?php endforeach; ?>
 										<?php endif; ?>
                                             

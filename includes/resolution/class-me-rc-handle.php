@@ -99,7 +99,7 @@ class ME_RC_Form_Handle
             }
 
             $data['post_parent'] = $case_id;
-            $data['case_id'] = $case_id;
+            $data['case_id']     = $case_id;
             self::create_dispute_message($data, $transaction);
             self::new_dispute_notify($data, $transaction);
         }
@@ -165,14 +165,15 @@ class ME_RC_Form_Handle
      * @param int $dispute_id
      * @return int | WP_Error
      */
-    public static function request_close($dispute_id) {
+    public static function request_close($dispute_id)
+    {
         $dispute = me_get_message($dispute_id);
-        if(!$dispute) {
+        if (!$dispute) {
             return new WP_Error('invalid_case', __("Invalid case id.", "enginethemes"));
         }
 
-        if($dispute->post_status !== 'me-open' || get_current_user_id() != $dispute->receiver) {
-            return new WP_Error('permission_denied', __("You can not request to close this case.", "enginethemes"));   
+        if ($dispute->post_status !== 'me-open' || get_current_user_id() != $dispute->receiver) {
+            return new WP_Error('permission_denied', __("You can not request to close this case.", "enginethemes"));
         }
 
         $id = me_update_message(array('ID' => $dispute_id, 'post_status' => 'me-waiting'));
@@ -180,7 +181,8 @@ class ME_RC_Form_Handle
         return $id;
     }
 
-    public static function request_close_notify($dispute) {
+    public static function request_close_notify($dispute)
+    {
 
     }
 
@@ -188,24 +190,27 @@ class ME_RC_Form_Handle
      * Buyer close the dispute case
      * @param int $case_id The dispute case id
      */
-    public static function close($case_id) {
+    public static function close($case_id)
+    {
         $dispute = me_get_message($case_id);
-        if(!$dispute) {
+        if (!$dispute) {
             return new WP_Error('invalid_case', __("Invalid case id.", "enginethemes"));
         }
 
-        if($dispute->post_status !== 'me-open' || get_current_user_id() != $dispute->sender) {
-            return new WP_Error('permission_denied', __("You can not close this case.", "enginethemes"));   
+        if ($dispute->post_status !== 'me-open' || get_current_user_id() != $dispute->sender) {
+            return new WP_Error('permission_denied', __("You can not close this case.", "enginethemes"));
         }
 
         $case_id = me_update_message(array('ID' => $case_id, 'post_status' => 'me-closed'));
-        // add revision 
+        // add revision
+        self::add_dispute_revision('me-closed', $dispute);
         self::close_notify($dispute);
         return $case_id;
 
     }
 
-    public static function close_notify($dispute) {
+    public static function close_notify($dispute)
+    {
         $subject = __("Your dispute has been closed.", "enginethemes");
         $args    = array(
             'display_name' => get_the_author_meta('display_name', $dispute->receiver),
@@ -231,14 +236,30 @@ class ME_RC_Form_Handle
         return wp_mail($user->user_email, $subject, $close_dispute_mail_content);
     }
 
-    public static function escalate($case_data) {
+    public static function escalate($case_data)
+    {
 
     }
 
-
-    public static function resolve($case_data) {
-        if(!current_user_can( 'manage_options' )) {
-            return new WP_Error('permission_denied', __("You do not have permission to resolve case.", "enginethemes"));   
+    public static function resolve($case_data)
+    {
+        if (!current_user_can('manage_options')) {
+            return new WP_Error('permission_denied', __("You do not have permission to resolve case.", "enginethemes"));
         }
+    }
+
+    public static function add_dispute_revision($state, $dispute)
+    {
+        $current_user_id = get_current_user_id();
+        $data = array(
+            'post_parent' => $dispute->ID, 
+            'post_type' => 'revision',
+            'sender' => $current_user_id,
+            'receiver' => $dispute->receiver,
+            'post_status' => $state,
+            'post_title' => 'Revision #' . $dispute->ID,
+            'post_content' => 'Revision #' . $dispute->ID,
+        );
+        me_insert_message($data);
     }
 }
