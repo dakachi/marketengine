@@ -171,7 +171,7 @@ class ME_RC_Form_Handle
         }
 
         if($dispute->post_status !== 'me-open' || get_current_user_id() != $dispute->receiver) {
-            return new WP_Error('permission_denied', __("You can not request close this case.", "enginethemes"));   
+            return new WP_Error('permission_denied', __("You can not request to close this case.", "enginethemes"));   
         }
 
         $id = me_update_message(array('ID' => $dispute_id, 'post_status' => 'me-waiting'));
@@ -188,11 +188,45 @@ class ME_RC_Form_Handle
      * @param int $case_id The dispute case id
      */
     public static function close($case_id) {
+        $dispute = me_get_message($dispute_id);
+        if(!$dispute) {
+            return new WP_Error('invalid_case', __("Invalid case id.", "enginethemes"));
+        }
+
+        if($dispute->post_status !== 'me-open' || get_current_user_id() != $dispute->sender) {
+            return new WP_Error('permission_denied', __("You can not close this case.", "enginethemes"));   
+        }
+
+        $id = me_update_message(array('ID' => $dispute_id, 'post_status' => 'me-closed'));
+        self::close_notify($dispute);
+        return $id;
 
     }
 
-    public static function close_notify($case_data) {
+    public static function close_notify($dispute) {
+        $subject = __("Your dispute has been closed.", "enginethemes");
+        $args    = array(
+            'display_name' => get_the_author_meta('display_name', $dispute->receiver),
+            'buyer_name'   => get_the_author_meta('display_name', $data->sender),
+            'blogname'     => get_bloginfo('blogname'),
+            'dispute_link' => me_rc_dispute_link($dispute->ID),
+        );
+        // get dispute mail content from template
+        ob_start();
+        me_get_template('resolution/emails/close-dispute', $args);
+        $close_dispute_mail_content = ob_get_clean();
 
+        /**
+         * Filter user close dispute email content
+         *
+         * @param String $close_dispute_mail_content
+         * @param Object $dispute The dispute object
+         *
+         * @since 1.1
+         */
+        $close_dispute_mail_content = apply_filters('marketengine_close_dispute_mail_content', $close_dispute_mail_content, $dispute);
+
+        return wp_mail($user->user_email, $subject, $close_dispute_mail_content);
     }
 
     public static function escalate($case_data) {
