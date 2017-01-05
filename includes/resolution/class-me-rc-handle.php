@@ -176,13 +176,22 @@ class ME_RC_Form_Handle
 
         $id = me_update_message(array('ID' => $dispute_id, 'post_status' => 'me-waiting'));
         self::request_close_notify($dispute);
+        return $id;
     }
 
     public static function request_close_notify($dispute) {
 
     }
 
-    public static function close($case_data) {
+    /**
+     * Buyer close the dispute case
+     * @param int $case_id The dispute case id
+     */
+    public static function close($case_id) {
+
+    }
+
+    public static function close_notify($case_data) {
 
     }
 

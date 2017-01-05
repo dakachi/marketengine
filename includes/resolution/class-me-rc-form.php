@@ -26,20 +26,28 @@ class ME_RC_Form {
 		}
 	}
 
-	public static function request_close($dispute_id) {
-		if (!empty($_GET['request-close']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-close_dispute')) {
+	public static function request_close() {
+		if (!empty($_GET['request-close']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-request_close_dispute')) {
 			$case = ME_RC_Form_Handle::request_close($_POST['request-close']);
 			if($is_wp_error( $case )) {
 				me_wp_error_to_notices($case);
 			}else {
-				// wp_redirect($redirect);
-				// exit;			
+				wp_redirect(me_rc_dispute_link($case));
+				exit;			
 			}
 		}
 	}
 
-	public static function close($dispute_id) {
-
+	public static function close() {
+		if (!empty($_GET['close']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-close_dispute')) {
+			$case = ME_RC_Form_Handle::close($_POST['close']);
+			if($is_wp_error( $case )) {
+				me_wp_error_to_notices($case);
+			}else {
+				wp_redirect(me_rc_dispute_link($case));
+				exit;			
+			}
+		}
 	}
 
 	public static function escalate($dispute_id) {
