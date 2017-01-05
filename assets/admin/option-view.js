@@ -147,8 +147,6 @@ _.templateSettings = {
                 }
             }
 
-            
-
             view.option.set('name', $target.attr('name'));
             view.option.set('value', $target.val());
             view.option.set('type', $target.attr('type'));
