@@ -74,6 +74,7 @@ $item = array_pop($items);
     </div>
 
     <div class="me-disputed-action">
+    <?php if(get_current_user_id() == $case->sender) : ?>
         <div class="me-row">
             <div class="me-col-md-6">
                 <div class="me-disputed-close">
@@ -96,6 +97,22 @@ $item = array_pop($items);
                 </div>
             </div>
         </div>
+    <?php else : ?>
+        <div class="me-row">
+            <div class="me-col-md-6">
+                <div class="me-disputed-close">
+                    <a href="#">Request To Close</a>
+                    <p>In case both the Buyer and you agree with the deal, you can request to finish the dispute.</p>
+                </div>
+            </div>
+            <div class="me-col-md-6">
+                <div class="me-disputed-escalate">
+                    <a href="#">Escalate</a>
+                    <p>In case you totally agree with what the Seller offer, you can close this dispute. Once the dispute is closed, it cannot be re-opened.</p>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
     </div>
 
 </div>
