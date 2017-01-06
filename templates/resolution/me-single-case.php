@@ -43,7 +43,7 @@ $case = me_get_message($case_id);
 
                                     <?php 
                                         $message_query = new ME_Message_Query(array('post_type' => array('message', 'revision'), 'post_parent' => $case->ID, 'showposts' => 12));
-                                        	$messages = array_reverse ($message_query->posts);
+                                        $messages = array_reverse ($message_query->posts);
                                     ?>
                                     
                                     <div class="me-contact-messages">
