@@ -44,7 +44,7 @@ $case = me_get_message($case_id);
                                                         _e("<span>Close dispute request</span>", "enginethemes");
                                                     break;
                                                 case 'me-open' :
-                                                    _e("Dispute started", "enginethemes");
+                                                    _e("<span>Dispute started</span>", "enginethemes");
                                             }
                                             ?>
                                             <span><?php echo date_i18n( get_option('date_format'),  strtotime($message->post_date) ); ?></span>

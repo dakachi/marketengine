@@ -1,3 +1,9 @@
+<?php 
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+?>
 <div class="me-party-involve">
     <h3><?php _e("Related Party", "enginethemes"); ?></h3>
     
