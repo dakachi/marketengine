@@ -55,7 +55,9 @@ me_print_notices();
                         <span>
                             <?php _e("Order ID:", "enginethemes");?>
                         </span>
-                        #<?php echo $transaction->ID; ?>
+                        <a href="<?php echo $transaction->get_order_detail_url(); ?>">
+                            #<?php echo $transaction->ID; ?>
+                        </a>
                     </p>
                     <p>
                         <span>

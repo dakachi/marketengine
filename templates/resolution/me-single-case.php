@@ -23,8 +23,8 @@ $case = me_get_message($case_id);
                                 <div class="me-sidebar-contact">
                                     <div class="me-party-involve">
                                         <h3><?php _e("Related Party", "enginethemes"); ?></h3>
-                                        <p>Seller:<span>Supper seller</span></p>
-                                        <p>Buyer:<span>Supper seller buy</span></p>
+                                        <p><?php _e("Seller:", "enginethemes"); ?><span><?php echo get_the_author_meta( 'display_name', $case->receiver ); ?></span></p>
+                                        <p><?php _e("Buyer:", "enginethemes"); ?><span><?php echo get_the_author_meta( 'display_name', $case->sender ); ?></span></p>
                                     </div>
                                     <div class="me-dispute-event">
                                         <h3><?php _e("Dispute Event", "enginethemes"); ?></h3>
