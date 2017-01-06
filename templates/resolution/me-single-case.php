@@ -23,34 +23,8 @@ $case = me_get_message($case_id);
                                 <div class="me-sidebar-contact">
                                         
                                     <?php me_get_template('resolution/case-details/related-party', array('case' => $case)); ?>
-
-                                    <div class="me-dispute-event">
-                                        <h3><?php _e("Dispute Event", "enginethemes"); ?></h3>
-                                        <?php
-                                            $message_query = new ME_Message_Query(array('post_type' => 'revision', 'post_parent' => $case->ID, 'showposts' => 12));
-                                            $revisions = $message_query->posts;
-                                        ?>
-
-                                        <?php foreach ($revisions  as $key => $message) : ?>
-                                        <a href="#">
-                                            <?php switch ($message->post_status) {
-                                                case 'me-closed':
-                                                    _e("<span>Close dispute</span>", "enginethemes");
-                                                    break;
-                                                case 'me-escalated' :
-                                                    _e("<span>Escalate dispute</span>", "enginethemes");
-                                                    break;
-                                                case 'me-waiting' :
-                                                        _e("<span>Close dispute request</span>", "enginethemes");
-                                                    break;
-                                                case 'me-open' :
-                                                    _e("<span>Dispute started</span>", "enginethemes");
-                                            }
-                                            ?>
-                                            <span><?php echo date_i18n( get_option('date_format'),  strtotime($message->post_date) ); ?></span>
-                                        </a>
-                                        <?php endforeach; ?>
-                                    </div>
+                                    <?php me_get_template('resolution/case-details/dispute-event', array('case' => $case)); ?>
+                                    
                                 </div>
                             </div>
                             <div class="me-col-md-9 me-col-md-push-3 me-col-sm-8 me-col-sm-push-4">
