@@ -73,8 +73,8 @@ $unit = ($order_item['qty']) ? $order_item['qty'][0] : 1;
 		<?php do_action( 'marketengine_after_cart_item_list' ); ?>
 
 		<div class="me-table-row me-cart-rtotals">
-			<div class="me-table-col me-table-empty"></div>
-			<div class="me-table-col me-table-empty"></div>
+			<div class="me-table-col me-table-col-empty"></div>
+			<div class="me-table-col me-table-col-empty"></div>
 			<div class="me-table-col me-cart-amount"><?php _e("Total amount:", "enginethemes"); ?></div>
 			<div class="me-table-col me-cart-totals"><?php echo me_price_html($order_item['price'] * $unit); ?></div>
 		</div>

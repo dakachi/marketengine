@@ -10,22 +10,28 @@
  */
 ?>
 
-<div class="me-table me-table-resolution">
+<?php if($query->found_posts) : ?>
 
-	<?php me_get_template('resolution/cases/cases-table-header'); ?>
+	<div class="me-table me-table-resolution">
 
-	<?php if($query->found_posts) : ?>
+		<?php me_get_template('resolution/cases/cases-table-header'); ?>
 
 		<?php foreach ($query->posts as $case) : ?>
 
 		<?php me_get_template('resolution/cases/cases-rows', array('case' => $case)); ?>
 
 		<?php endforeach; ?>
+	
+	</div>
 
-	<?php else: ?>
+<?php else: ?>
 
-		<?php me_get_template('resolution/cases/no-cases'); ?>
+	<div class="me-table me-table-empty me-table-resolution">
 
-	<?php endif; ?>
+		<?php me_get_template('resolution/cases/cases-table-header'); ?>
 
-</div>
+	</div>
+	
+	<?php me_get_template('resolution/cases/no-cases'); ?>
+	
+<?php endif; ?>

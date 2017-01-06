@@ -9,8 +9,6 @@
  * @since 		1.0.1
  */
 ?>
-<div class="me-table-row-empty">
-	<div>
-		<span><?php _e('There are no cases.', 'enginethemes'); ?></span>
-	</div>
+<div class="me-table-empty-none">
+	<span><?php _e('There are no cases.', 'enginethemes'); ?></span>
 </div>
