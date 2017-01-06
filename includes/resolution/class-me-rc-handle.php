@@ -156,7 +156,6 @@ class ME_RC_Form_Handle
          * @since 1.1
          */
         $dispute_mail_content = apply_filters('marketengine_dispute_mail_content', $dispute_mail_content, $transaction);
-
         return wp_mail($user->user_email, $subject, $dispute_mail_content);
     }
 
