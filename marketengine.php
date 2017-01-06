@@ -284,7 +284,6 @@ class MarketEngine
         wp_enqueue_style('me_layout', $this->plugin_url() . '/assets/css/marketengine-layout.css');
         wp_enqueue_style('magnific_popup_css', $this->plugin_url() . '/assets/css/magnific-popup.css');
         wp_enqueue_style('me_font_icon', $this->plugin_url() . '/assets/css/marketengine-font-icon.css');
-        wp_enqueue_style('flexslider', $this->plugin_url() . '/assets/css/flexslider.css');
 
         wp_enqueue_script(array('jquery', 'plupload-all'));
 
@@ -294,7 +293,7 @@ class MarketEngine
             // lib
             wp_enqueue_script('jquery-ui', $this->plugin_url() . "/assets/js/jquery-ui.js", array('jquery'), $this->version, true);
             wp_enqueue_script('magnific_popup', $this->plugin_url() . "/assets/js/jquery.magnific-popup.min.js", array('jquery'), $this->version, true);
-            wp_enqueue_script('flexslider-js', $this->plugin_url() . "/assets/js/jquery.flexslider-min.js", array('jquery'), $this->version, true);
+            wp_enqueue_script('owl-carousel-js', $this->plugin_url() . "/assets/js/owl.carousel.min.js", array('jquery'), $this->version, true);
             wp_enqueue_script('raty.js', $this->plugin_url() . "/assets/js/jquery.raty$suffix.js", array('jquery'), $this->version, true);
 
             wp_enqueue_script('user_profile', $this->plugin_url() . "/assets/js/user-profile$suffix.js", array('jquery'), $this->version, true);

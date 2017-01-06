@@ -136,7 +136,7 @@ var me_vendor_dest              = 'assets/js';
 var jquery_ui                   = me_vendor_src + '/jquery-ui.js';
 var muploader                   = me_vendor_src + '/muploader.js/';
 var jquery_magnific_popup       = me_vendor_src + '/jquery.magnific-popup.min.js';
-var jquery_flexslider           = me_vendor_src + '/jquery.flexslider-min.js';
+var jquery_owl_carousel         = me_vendor_src + '/owl.carousel.min.js';
 var jquery_raty                 = me_vendor_src + '/jquery.raty.js';
 
 var me_user_profile             = me_vendor_src + '/user-profile.js';
@@ -154,7 +154,7 @@ gulp.task('script-vendor', function() {
         jquery_ui,
         muploader,
         jquery_magnific_popup,
-        jquery_flexslider,
+        jquery_owl_carousel,
         jquery_raty,
         me_user_profile,
         me_tag_box,

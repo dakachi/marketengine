@@ -24,17 +24,29 @@ jQuery(document).ready(function($) {
 		magnificInstance = false;
 	});
 
-	$('.me-related-slider').flexslider({
-		slideshow: false,
-		animation: "slide",
-		animationLoop: false,
-		itemWidth: 248,
-		itemMargin: 30,
-		controlNav: false,
-		directionNav: true,
-		prevText: '',
-		nextText: ''
-	});
+	var owl_carousel = $("#me-related-slider");
+    owl_carousel.owlCarousel({
+		items : 2,
+		margin: 30,
+		nav: true,
+		navText: ['<span></span>', '<span></span>'],
+		dots: false,
+		slideBy: 1,
+		responsive:{
+	        0:{
+	            items:1,
+	            nav:true,
+	        },
+	        992:{
+	        	items: 3,
+	        	nav: true
+	        },
+	        1200:{
+	            items:4,
+	            nav:true
+	        }
+	    },
+  	});
 
 	/**
 	 * Hover category show/hide

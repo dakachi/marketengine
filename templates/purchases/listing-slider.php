@@ -21,14 +21,14 @@ if(!empty($listings)) :
 <div class="marketengine-related-wrap">
 	<?php ?>
 	<h2><?php _e('You may like these listings', 'enginethemes'); ?></h2>
-	<div class="me-related-slider flexslider">
-		<ul class="me-related slides">
+	<div id="me-related-slider" class="me-related-slider">
+
 		<?php
 			foreach( $listings as $listing ) :
 				$listing = me_get_listing($listing);
 				$listing_type = $listing->get_listing_type();
 		?>
-			<li class="me-item-post">
+			<div class="me-item-post">
 
 				<div class="me-item-wrap">
 
@@ -58,10 +58,10 @@ if(!empty($listings)) :
 
 				</div>
 
-			</li>
+			</div>
 
 		<?php endforeach; ?>
-		</ul>
+
 	</div>
 </div>
 
