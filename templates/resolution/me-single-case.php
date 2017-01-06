@@ -45,16 +45,13 @@ $case = me_get_message($case_id);
                                                 case 'me-waiting' :
                                                         _e("<span>Close dispute request</span>", "enginethemes");
                                                     break;
+                                                case 'me-open' :
+                                                    _e("Dispute started", "enginethemes");
                                             }
                                             ?>
                                             <span><?php echo date_i18n( get_option('date_format'),  strtotime($message->post_date) ); ?></span>
                                         </a>
                                         <?php endforeach; ?>
-                                        
-                                        <a href="#">
-                                            <span><?php _e("Dispute started", "enginethemes"); ?></span>
-                                            <span><?php echo date_i18n( get_option('date_format'),  strtotime($case->post_date) ); ?></span>
-                                        </a>
                                     </div>
                                 </div>
                             </div>

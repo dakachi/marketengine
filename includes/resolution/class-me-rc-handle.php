@@ -101,6 +101,9 @@ class ME_RC_Form_Handle
             $data['post_parent'] = $case_id;
             $data['case_id']     = $case_id;
             self::create_dispute_message($data, $transaction);
+            // add revision
+            self::add_dispute_revision('me-open', me_get_message($case_id));
+            // email seller
             self::new_dispute_notify($data, $transaction);
         }
         return $case_id;
