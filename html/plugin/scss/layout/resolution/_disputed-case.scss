@@ -523,8 +523,6 @@
 
 	.me-disputed-case {
 		margin-top: 0;
-		// margin-left: -15px;
-		// margin-right: -15px;
 	}
 
 	.me-disputed-info {
@@ -548,6 +546,12 @@
 			p {
 				margin-bottom: 8px;
 			}
+		}
+	}
+
+	.me-disputed-product {
+		h2 {
+			font-weight: $font_weight_bold;
 		}
 	}
 	.me-disputed-order-info {
