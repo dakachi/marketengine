@@ -59,7 +59,7 @@ function me_rc_dispute_link($case_id) {
 function me_dispute_statuses()
 {
     $statuses = array(
-        'me-open'      => __('Negotiating', 'enginethemes'),
+        'me-open'      => __('Open', 'enginethemes'),
         'me-waiting'   => __('Waiting', 'enginethemes'),
         'me-escalated' => __('Escalated', 'enginethemes'),
         'me-closed'    => __('Closed', 'enginethemes'),

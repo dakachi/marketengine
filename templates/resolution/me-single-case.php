@@ -21,41 +21,10 @@ $case = me_get_message($case_id);
                         <div class="me-row">
                             <div class="me-col-md-3 me-col-md-pull-9 me-col-sm-4 me-col-sm-pull-8">
                                 <div class="me-sidebar-contact">
-                                    <div class="me-party-involve">
-                                        <h3><?php _e("Related Party", "enginethemes"); ?></h3>
-                                        <p>Seller:<span>Supper seller</span></p>
-                                        <p>Buyer:<span>Supper seller buy</span></p>
-                                    </div>
-                                    <div class="me-dispute-event">
-                                        <h3><?php _e("Dispute Event", "enginethemes"); ?></h3>
-                                        <?php
-                                            $message_query = new ME_Message_Query(array('post_type' => 'revision', 'post_parent' => $case->ID, 'showposts' => 12));
-                                            $revisions = $message_query->posts;
-                                        ?>
-
-                                        <?php foreach ($revisions  as $key => $message) : ?>
-                                        <a href="#">
-                                            <?php switch ($message->post_status) {
-                                                case 'me-closed':
-                                                    _e("<span>Close dispute</span>", "enginethemes");
-                                                    break;
-                                                case 'me-escalated' :
-                                                    _e("<span>Escalate dispute</span>", "enginethemes");
-                                                    break;
-                                                case 'me-waiting' :
-                                                        _e("<span>Close dispute request</span>", "enginethemes");
-                                                    break;
-                                            }
-                                            ?>
-                                            <span><?php echo date_i18n( get_option('date_format'),  strtotime($message->post_date) ); ?></span>
-                                        </a>
-                                        <?php endforeach; ?>
                                         
-                                        <a href="#">
-                                            <span><?php _e("Dispute started", "enginethemes"); ?></span>
-                                            <span><?php echo date_i18n( get_option('date_format'),  strtotime($case->post_date) ); ?></span>
-                                        </a>
-                                    </div>
+                                    <?php me_get_template('resolution/case-details/related-party', array('case' => $case)); ?>
+                                    <?php me_get_template('resolution/case-details/dispute-event', array('case' => $case)); ?>
+                                    
                                 </div>
                             </div>
                             <div class="me-col-md-9 me-col-md-push-3 me-col-sm-8 me-col-sm-push-4">
@@ -65,7 +34,7 @@ $case = me_get_message($case_id);
                                             <?php 
                                             if(get_current_user_id() == $case->sender) {
                                                 echo get_the_author_meta( 'display_name', $case->receiver );
-                                            }else {
+                                            }elseif(get_current_user_id() == $case->receiver) {
                                                 echo get_the_author_meta( 'display_name', $case->sender );
                                             }
                                             ?>
