@@ -234,7 +234,7 @@
 		position: relative;
 		font-weight: $font_weight_bold;
 		color: $color_text;
-		padding-left: 16px;
+		padding-left: 20px;
 		&:before {
 			content: '\e91e';
 			display: block;
@@ -401,7 +401,7 @@
 			}
 		}
 	}
-	.me-resolution-search {
+	/* .me-resolution-search {
 		width: 100%;
 		padding-right: 0;
 		input[type="text"] {
@@ -414,5 +414,5 @@
 			width: 100%;
 			font-size: $font_size_base;
 		}
-	}
+	} */
 }

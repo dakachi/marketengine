@@ -15,6 +15,9 @@ if($listings) :
 	foreach($listings as $id => $listing)
 ?>
 <div class="me-disputed-product-info">
+
+	<?php me_print_notices(); ?>
+	
 	<h3><?php _e('You purchased item:', 'enginethemes'); ?></h3>
 	<a href="#"><?php echo get_the_post_thumbnail($id); ?></a>
 	<div class="me-disputed-product">
