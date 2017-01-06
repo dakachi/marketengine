@@ -11,7 +11,10 @@ class ME_RC_Form
     public static function init()
     {
         add_action('wp_loaded', array(__CLASS__, 'dispute'));
+        add_action('wp_loaded', array(__CLASS__, 'request_close'));
         add_action('wp_loaded', array(__CLASS__, 'close'));
+        add_action('wp_loaded', array(__CLASS__, 'escalate'));
+        add_action('wp_loaded', array(__CLASS__, 'resolve'));
     }
 
     public static function dispute()
