@@ -142,6 +142,8 @@
 	border-top: none;
 	font-size: $font_size_medium;
 	text-align: center;
+	border-bottom-left-radius: $border_radius_medium;
+	border-bottom-right-radius: $border_radius_medium;
 }
 .me-table-row {
 	display: table-row;
@@ -153,26 +155,3 @@
 	display: table-cell;
 	padding: 0.1em 0.3em;
 }
-
-.me-table-row-empty {
-	position: relative;
-	display: table-row;
-	width: 100%	;
-	height: 214px;
-}
-.me-table-row-empty > div {
-	display: block;
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 40px;
-	left: 0;
-	text-align: center;
-	border-top: 1px solid $color_border_base;
-	> span {
-		display: inline-block;
-		margin-top: 100px;
-		font-size: $font_size_medium;
-	}
-}
-

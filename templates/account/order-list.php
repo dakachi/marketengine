@@ -28,61 +28,60 @@ $query = new WP_Query($args);
 <!--/Mobile-->
 <?php me_get_template('global/order-filter', array('type' => $type)); ?>
 
-<div class="me-table me-orderlist-table">
-	<div class="me-table-rhead">
-		<div class="me-table-col me-order-id"><?php _e("ORDER ID", "enginethemes"); ?></div>
-		<div class="me-table-col me-order-status"><?php _e("STATUS", "enginethemes"); ?></div>
-		<div class="me-table-col me-order-amount"><?php _e("AMOUNT", "enginethemes"); ?></div>
-		<div class="me-table-col me-order-date"><?php _e("DATE OF ORDER", "enginethemes"); ?></div>
-		<div class="me-table-col me-order-listing"><?php _e("LISTING", "enginethemes"); ?></div>
-	</div>
+
 <?php if( $query->have_posts() ) : ?>
-		
-	<?php
-		while($query->have_posts()) : $query->the_post(); ?>
+	<div class="me-table me-orderlist-table">
+		<div class="me-table-rhead">
+			<div class="me-table-col me-order-id"><?php _e("ORDER ID", "enginethemes"); ?></div>
+			<div class="me-table-col me-order-status"><?php _e("STATUS", "enginethemes"); ?></div>
+			<div class="me-table-col me-order-amount"><?php _e("AMOUNT", "enginethemes"); ?></div>
+			<div class="me-table-col me-order-date"><?php _e("DATE OF ORDER", "enginethemes"); ?></div>
+			<div class="me-table-col me-order-listing"><?php _e("LISTING", "enginethemes"); ?></div>
+		</div>
+		<?php
+			while($query->have_posts()) : $query->the_post(); ?>
 
-	<?php
-		$order = new ME_Order( get_the_ID() );
-		$order_total = $order->get_total();
+		<?php
+			$order = new ME_Order( get_the_ID() );
+			$order_total = $order->get_total();
 
-		$order_listing = me_get_order_items( get_the_ID() );
-		$listing_item = me_get_order_items(get_the_ID(), 'listing_item');
-	?>
-		<div class="me-table-row">
-			<div class="me-table-col me-order-id"><a href="<?php the_permalink(); ?>">#<?php the_ID(); ?></a></div>
-			<div class="me-table-col me-order-status">
-				<?php me_print_order_status( get_post_status( get_the_ID()) ); ?>
-			</div>
-			<div class="me-table-col me-order-amount"><?php echo me_price_html($order_total); ?></div>
-			<div class="me-table-col me-order-date"><?php echo get_the_date(get_option('date_format'), get_the_ID()); ?></div>
-			<div class="me-table-col me-order-listing">
-				<div class="me-order-listing-info">
-					<p><?php echo isset($order_listing[0]) ? esc_html($order_listing[0]->order_item_name) : '' ?></p>
+			$order_listing = me_get_order_items( get_the_ID() );
+			$listing_item = me_get_order_items(get_the_ID(), 'listing_item');
+		?>
+			<div class="me-table-row">
+				<div class="me-table-col me-order-id"><a href="<?php the_permalink(); ?>">#<?php the_ID(); ?></a></div>
+				<div class="me-table-col me-order-status">
+					<?php me_print_order_status( get_post_status( get_the_ID()) ); ?>
+				</div>
+				<div class="me-table-col me-order-amount"><?php echo me_price_html($order_total); ?></div>
+				<div class="me-table-col me-order-date"><?php echo get_the_date(get_option('date_format'), get_the_ID()); ?></div>
+				<div class="me-table-col me-order-listing">
+					<div class="me-order-listing-info">
+						<p><?php echo isset($order_listing[0]) ? esc_html($order_listing[0]->order_item_name) : '' ?></p>
+					</div>
 				</div>
 			</div>
-		</div>
 
-	<?php endwhile; ?>
-</div>
+		<?php endwhile; ?>
+	</div>
 
-<div class="me-paginations">
-	<?php me_paginate_link( $query ); ?>
-</div>
+	<div class="me-paginations">
+		<?php me_paginate_link( $query ); ?>
+	</div>
 
-<?php /*
-<div class="marketengine-loadmore">
-	<a href="" class="me-loadmore me-loadmore-order"><?php _e("Load more", "enginethemes"); ?></a>
-</div>
-*/ ?>
-<?php
-	else:
-?>
-	<div class="me-table-row-empty">
-		<div>
-			<span><?php _e('There are no orders yet.', 'enginethemes'); ?></span>
+<?php else : ?>
+	<div class="me-table me-table-empty me-orderlist-table">
+		<div class="me-table-rhead">
+			<div class="me-table-col me-order-id"><?php _e("ORDER ID", "enginethemes"); ?></div>
+			<div class="me-table-col me-order-status"><?php _e("STATUS", "enginethemes"); ?></div>
+			<div class="me-table-col me-order-amount"><?php _e("AMOUNT", "enginethemes"); ?></div>
+			<div class="me-table-col me-order-date"><?php _e("DATE OF ORDER", "enginethemes"); ?></div>
+			<div class="me-table-col me-order-listing"><?php _e("LISTING", "enginethemes"); ?></div>
 		</div>
 	</div>
-</div>
+	<div class="me-table-empty-none">
+		<span><?php _e('There are no conversations yet.', 'enginethemes'); ?></span>
+	</div>
 <?php
 	endif;
 	wp_reset_postdata();
