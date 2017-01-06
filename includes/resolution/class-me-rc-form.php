@@ -35,14 +35,13 @@ class ME_RC_Form
 
     public static function request_close()
     {
-        if (!empty($_GET['request-close']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-request_close_dispute')) {
-            $case = ME_RC_Form_Handle::request_close($_POST['request-close']);
+        if (!empty($_GET['request-close']) && !empty($_GET['wpnonce']) && wp_verify_nonce($_GET['wpnonce'], 'me-request_close_dispute')) {
+            $case = ME_RC_Form_Handle::request_close($_GET['request-close']);
             if (is_wp_error($case)) {
                 me_wp_error_to_notices($case);
-            } else {
-                wp_redirect(me_rc_dispute_link($case));
-                exit;
             }
+            wp_redirect(me_rc_dispute_link($_GET['request-close']));
+            exit;
         }
     }
 
@@ -63,7 +62,14 @@ class ME_RC_Form
 
     public static function escalate($dispute_id)
     {
-
+        if (!empty($_GET['close']) && !empty($_GET['wpnonce']) && wp_verify_nonce($_GET['wpnonce'], 'me-escalate_dispute')) {
+            $case = ME_RC_Form_Handle::close($_GET['escalate']);
+            if (is_wp_error($case)) {
+                me_wp_error_to_notices($case);
+            }
+            wp_redirect(me_rc_dispute_link($_GET['escalate']));
+            exit;
+        }
     }
 
     public static function resolve($dispute_id)

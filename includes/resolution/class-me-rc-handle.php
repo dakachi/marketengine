@@ -176,14 +176,40 @@ class ME_RC_Form_Handle
             return new WP_Error('permission_denied', __("You can not request to close this case.", "enginethemes"));
         }
 
-        $id = me_update_message(array('ID' => $dispute_id, 'post_status' => 'me-waiting'));
+        $dispute_id = me_update_message(array('ID' => $dispute_id, 'post_status' => 'me-waiting'));
+        
+        // add revision
+        self::add_dispute_revision('me-waiting', $dispute);
         self::request_close_notify($dispute);
-        return $id;
+
+        return $dispute_id;
     }
 
     public static function request_close_notify($dispute)
     {
+        $subject = __("A new request to close the dispute.", "enginethemes");
+        $args    = array(
+            'display_name' => get_the_author_meta('display_name', $dispute->sender),
+            'seller_name'  => get_the_author_meta('display_name', $dispute->receiver),
+            'blogname'     => get_bloginfo('blogname'),
+            'dispute_link' => me_rc_dispute_link($dispute->ID),
+        );
+        // get dispute mail content from template
+        ob_start();
+        me_get_template('resolution/emails/request-close', $args);
+        $request_close_mail_content = ob_get_clean();
 
+        $user = get_userdata($dispute->sender);
+        /**
+         * Filter user request close dispute email content
+         *
+         * @param String $request_close_mail_content
+         * @param Object $dispute The dispute object
+         *
+         * @since 1.1
+         */
+        $request_close_mail_content = apply_filters('marketengine_close_dispute_mail_content', $request_close_mail_content, $dispute);
+        return wp_mail($user->user_email, $subject, $request_close_mail_content);
     }
 
     /**
@@ -205,7 +231,7 @@ class ME_RC_Form_Handle
         // add revision
         self::add_dispute_revision('me-closed', $dispute);
         self::close_notify($dispute);
-        
+
         return $case_id;
 
     }
@@ -251,16 +277,26 @@ class ME_RC_Form_Handle
 
     public static function add_dispute_revision($state, $dispute)
     {
-        $current_user_id = get_current_user_id();
-        $data = array(
-            'post_parent' => $dispute->ID, 
-            'post_type' => 'revision',
-            'sender' => $current_user_id,
-            'receiver' => $dispute->receiver,
-            'post_status' => $state,
-            'post_title' => 'Revision #' . $dispute->ID,
+        $sender = get_current_user_id();
+        if($sender == $dispute->receiver) {
+            $receiver = $dispute->sender;
+        }else {
+            $receiver = $dispute->receiver;
+        }
+
+        $data            = array(
+            'post_parent'  => $dispute->ID,
+            'post_type'    => 'revision',
+            'sender'       => $sender,
+            'receiver'     => $receiver,
+            'post_status'  => $state,
+            'post_title'   => 'Revision #' . $dispute->ID,
             'post_content' => 'Revision #' . $dispute->ID,
         );
-        me_insert_message($data);
+        var_dump($data);
+        $revision = me_insert_message($data);
+        echo "<pre>";
+        print_r($revision);
+        echo "</pre>";
     }
 }

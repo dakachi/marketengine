@@ -103,7 +103,10 @@ me_print_notices();
         <div class="me-row">
             <div class="me-col-md-6">
                 <div class="me-disputed-close">
-                    <a href="#">Request To Close</a>
+                    <a onclick="if(!confirm('<?php _e("Are you sure you want to remind buyer of closing this dispute??", "enginethemes"); ?>')) return false;" 
+                    href="<?php echo wp_nonce_url(add_query_arg(array('request-close' => $case->ID) ), 'me-request_close_dispute' ,'wpnonce' ) ?>">
+                        Request To Close
+                    </a>
                     <p>In case both the Buyer and you agree with the deal, you can request to finish the dispute.</p>
                 </div>
             </div>

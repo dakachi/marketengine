@@ -10,7 +10,7 @@ switch ($message->post_status) :
 	<?php
 		break;
 	case 'me-waiting':
-		$name = get_the_author_meta( 'display_name', $message->receiver );
+		$name = get_the_author_meta( 'display_name', $message->sender );
 	?>
 		<p>			
 			<?php printf(__("<b>%s</b> <i>has requested to closed the dipute</i>", "enginethemes"), $name); ?>
