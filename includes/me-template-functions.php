@@ -874,6 +874,17 @@ function me_transaction_review_form($action, $transaction) {
 add_action( 'marketengine_order_details_action', 'me_transaction_review_form', 10, 2 );
 
 /**
+ * Add a review to the transaction breadcrum
+ * @since 1.1
+ */
+function me_transaction_review_breadcrumb() {
+    if(!empty($_GET['action']) && 'review' == $_GET['action'] ) : ?>
+        <li><a href="#"><?php _e("Rate & Review", "enginethemes"); ?></a></li>
+    <?php endif; 
+}
+add_action( 'marketengine_order_breadcrumb_end', 'me_transaction_review_breadcrumb' );
+
+/**
  * Transaction items details heading template
  *
  * @param ME_Order $transaction

@@ -18,9 +18,13 @@ $url = $is_buyer ? me_get_auth_url('purchases') : me_get_auth_url('orders');
     <h2><?php echo $title; ?></h2>
     <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
     <ol class="me-breadcrumb">
+    	
     	<?php do_action('marketengine_order_breadcrumb_start'); ?>
+        
         <li><a href="<?php echo $url; ?>"><?php echo $title; ?></a></li>
-        <li><a href="#"><?php printf( '#%s', $transaction->id ); ?></a></li>
+        <li><a href="<?php echo $transaction->get_order_detail_url(); ?>"><?php printf( '#%s', $transaction->id ); ?></a></li>
+        
         <?php do_action('marketengine_order_breadcrumb_end'); ?>
+
     </ol>
 </div>

@@ -293,19 +293,3 @@ function me_dispute_case_filter_form_action()
     echo $form_action;
     return $form_action;
 }
-
-/**
- * Transaction dispute form
- *
- * @param string $action The action dispute user send
- * @param object $transaction The current transaction user want to dispute
- *
- * @since 1.1
- */
-function me_transaction_dispute_form($action, $transaction)
-{
-    if ('dispute' === $action) {
-        me_get_template('resolution/form/dispute-form', array('transaction' => $transaction));
-    }
-}
-add_action('marketengine_order_details_action', 'me_transaction_dispute_form', 10, 2);

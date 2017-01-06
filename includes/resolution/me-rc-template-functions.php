@@ -60,3 +60,30 @@ function me_rc_mobile_center_link($transaction) {
 	}
 }
 add_action( 'marketengine_order_extra_end', 'me_rc_mobile_center_link', 11);
+
+/**
+ * Transaction dispute form
+ *
+ * @param string $action The action dispute user send
+ * @param object $transaction The current transaction user want to dispute
+ *
+ * @since 1.1
+ */
+function me_transaction_dispute_form($action, $transaction)
+{
+    if ('dispute' === $action) {
+        me_get_template('resolution/form/dispute-form', array('transaction' => $transaction));
+    }
+}
+add_action('marketengine_order_details_action', 'me_transaction_dispute_form', 10, 2);
+
+/**
+ * Add a dispute to the transaction breadcrum
+ * @since 1.1
+ */
+function me_transaction_dispute_breadcrumb() {
+    if(!empty($_GET['action']) && 'dispute' == $_GET['action'] ) : ?>
+        <li><a href="#"><?php _e("Dispute", "enginethemes"); ?></a></li>
+    <?php endif; 
+}
+add_action( 'marketengine_order_breadcrumb_end', 'me_transaction_dispute_breadcrumb' );
