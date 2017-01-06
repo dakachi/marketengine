@@ -30,7 +30,7 @@ $case = me_get_message($case_id);
                                         <h3><?php _e("Dispute Event", "enginethemes"); ?></h3>
                                         <?php
                                             $message_query = new ME_Message_Query(array('post_type' => 'revision', 'post_parent' => $case->ID, 'showposts' => 12));
-                                            $revisions = array_reverse ($message_query->posts);
+                                            $revisions = $message_query->posts;
                                         ?>
 
                                         <?php foreach ($revisions  as $key => $message) : ?>

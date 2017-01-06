@@ -102,13 +102,20 @@ me_print_notices();
     <?php else : ?>
         <div class="me-row">
             <div class="me-col-md-6">
+            <?php if($case->post_status == 'me-waiting') : ?>
+                <div class="me-disputed-request-close">
+                    <h4>Waiting for Buyer,s respond</h4>
+                    <p>You have already sent request to close dispute to the Buyer. Whenever the Buyer accept your request, the dispute will be closed.</p>
+                </div>
+            <?php else : ?>
                 <div class="me-disputed-close">
                     <a onclick="if(!confirm('<?php _e("Are you sure you want to remind buyer of closing this dispute??", "enginethemes"); ?>')) return false;" 
                     href="<?php echo wp_nonce_url(add_query_arg(array('request-close' => $case->ID) ), 'me-request_close_dispute' ,'wpnonce' ) ?>">
-                        Request To Close
+                        <?php _e("Request To Close", "enginethemes"); ?>
                     </a>
                     <p>In case both the Buyer and you agree with the deal, you can request to finish the dispute.</p>
                 </div>
+            <?php endif; ?>
             </div>
             <div class="me-col-md-6">
                 <div class="me-disputed-escalate">
