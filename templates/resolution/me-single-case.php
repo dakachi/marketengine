@@ -21,29 +21,9 @@ $case = me_get_message($case_id);
                         <div class="me-row">
                             <div class="me-col-md-3 me-col-md-pull-9 me-col-sm-4 me-col-sm-pull-8">
                                 <div class="me-sidebar-contact">
-                                    <div class="me-party-involve">
-                                        <h3><?php _e("Related Party", "enginethemes"); ?></h3>
                                         
-                                        <?php if(current_user_can( 'manage_options' ) || $case->sender == get_current_user_id()) : ?>
-                                            <p>
-                                                <?php _e("Seller:", "enginethemes"); ?>
-                                                 <a href="<?php get_author_posts_url( $case->receiver ); ?>">
-                                                    <?php echo get_the_author_meta( 'display_name', $case->receiver ); ?>
-                                                </a>
-                                            </p>
-                                        <?php endif; ?>
+                                    <?php me_get_template('resolution/case-details/related-party', array('case' => $case)); ?>
 
-                                        <?php if(current_user_can( 'manage_options' ) || $case->receiver == get_current_user_id()) : ?>
-                                            <p>
-                                                <?php _e("Buyer:", "enginethemes"); ?>
-                                                <a href="<?php get_author_posts_url( $case->sender ); ?>">
-                                                    <?php echo get_the_author_meta( 'display_name', $case->sender ); ?>
-                                                </a>
-                                            </p>
-                                        
-                                        <?php endif; ?>
-
-                                    </div>
                                     <div class="me-dispute-event">
                                         <h3><?php _e("Dispute Event", "enginethemes"); ?></h3>
                                         <?php
