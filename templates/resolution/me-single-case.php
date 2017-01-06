@@ -23,8 +23,26 @@ $case = me_get_message($case_id);
                                 <div class="me-sidebar-contact">
                                     <div class="me-party-involve">
                                         <h3><?php _e("Related Party", "enginethemes"); ?></h3>
-                                        <p><?php _e("Seller:", "enginethemes"); ?><span><?php echo get_the_author_meta( 'display_name', $case->receiver ); ?></span></p>
-                                        <p><?php _e("Buyer:", "enginethemes"); ?><span><?php echo get_the_author_meta( 'display_name', $case->sender ); ?></span></p>
+                                        
+                                        <?php if(current_user_can( 'manage_options' ) || $case->sender == get_current_user_id()) : ?>
+                                            <p>
+                                                <?php _e("Seller:", "enginethemes"); ?>
+                                                 <a href="<?php get_author_posts_url( $case->receiver ); ?>">
+                                                    <?php echo get_the_author_meta( 'display_name', $case->receiver ); ?>
+                                                </a>
+                                            </p>
+                                        <?php endif; ?>
+
+                                        <?php if(current_user_can( 'manage_options' ) || $case->receiver == get_current_user_id()) : ?>
+                                            <p>
+                                                <?php _e("Buyer:", "enginethemes"); ?>
+                                                <a href="<?php get_author_posts_url( $case->sender ); ?>">
+                                                    <?php echo get_the_author_meta( 'display_name', $case->sender ); ?>
+                                                </a>
+                                            </p>
+                                        
+                                        <?php endif; ?>
+
                                     </div>
                                     <div class="me-dispute-event">
                                         <h3><?php _e("Dispute Event", "enginethemes"); ?></h3>
@@ -62,7 +80,7 @@ $case = me_get_message($case_id);
                                             <?php 
                                             if(get_current_user_id() == $case->sender) {
                                                 echo get_the_author_meta( 'display_name', $case->receiver );
-                                            }else {
+                                            }elseif(get_current_user_id() == $case->receiver) {
                                                 echo get_the_author_meta( 'display_name', $case->sender );
                                             }
                                             ?>
