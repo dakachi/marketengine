@@ -205,6 +205,7 @@ class ME_RC_Form_Handle
         // add revision
         self::add_dispute_revision('me-closed', $dispute);
         self::close_notify($dispute);
+        
         return $case_id;
 
     }

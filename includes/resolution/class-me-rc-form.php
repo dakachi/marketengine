@@ -23,7 +23,7 @@ class ME_RC_Form
             if (is_wp_error($case)) {
                 me_wp_error_to_notices($case);
             } else {
-                $redirect = me_rc_dispute_link($case_id);
+                $redirect = me_rc_dispute_link($case);
                 wp_redirect($redirect);
                 exit;
             }

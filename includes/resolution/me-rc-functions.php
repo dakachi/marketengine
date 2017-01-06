@@ -37,9 +37,15 @@ function me_resolution_center_url()
 }
 
 function me_rc_dispute_link($case_id) {
+    global $wp_rewrite;
     $endpoint = trim(me_option('ep_case'));
     $endpoint  = !empty($endpoint) ? $endpoint : 'case';
-    return home_url( $endpoint .'/'. $case_id );
+    if($wp_rewrite->using_permalinks()) {
+        return home_url( $endpoint .'/'. $case_id );    
+    }else {
+        return add_query_arg(array('case_type' => 'dispute', 'case_id' => $case_id), home_url());
+    }
+    
 }
 
 /**
