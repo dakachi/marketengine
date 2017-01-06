@@ -15,8 +15,6 @@ $dispute_files = !empty($_POST['dispute_file']) ? $_POST['dispute_file'] : array
 
 <div class="me-dispute-form">
 
-	<?php me_print_notices(); ?>
-
 	<form id="me-dispute-form" method="post" action="" enctype="multipart/form-data">
 		
 		<?php do_action('marketengine_dispute_form_start'); ?>
