@@ -129,6 +129,19 @@
 	position: relative;
 	display: table;
 	padding: 0;
+	border-radius: $border_radius_medium;
+	&.me-table-empty {
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+}
+.me-table-empty-none {
+	background: #FFF;
+	padding: 80px 0;
+	border: 1px solid $color_border_base;
+	border-top: none;
+	font-size: $font_size_medium;
+	text-align: center;
 }
 .me-table-row {
 	display: table-row;

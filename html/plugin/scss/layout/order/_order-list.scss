@@ -352,7 +352,7 @@
 	margin-top: 20px;
 	background: #FFF;
 	border: 1px solid $color_border_base;
-	border-radius: 4px;
+	border-radius: $border_radius_medium;
 	&:after {
 		content: '';
 		display: table;
@@ -431,7 +431,6 @@
 	margin-top: 20px;
 	background: #FFF;
 	border: 1px solid $color_border_base;
-	border-radius: 4px;
 	.me-table-rhead {
 		font-size: $font_size_base;
 		font-weight: $font_weight_bold;

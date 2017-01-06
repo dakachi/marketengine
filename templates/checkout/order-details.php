@@ -69,16 +69,16 @@ $total = 0;
 		<?php do_action( 'marketengine_after_cart_item_list' ); ?>
 		<?php /* if( $listing->get_shipping_fee() ): ?>
 			<div class="me-table-row me-cart-rshippingfee">
-				<div class="me-table-col me-table-empty"></div>
-				<div class="me-table-col me-table-empty"></div>
+				<div class="me-table-col me-table-col-empty"></div>
+				<div class="me-table-col me-table-col-empty"></div>
 				<div class="me-table-col me-cart-shippingfee"><?php _e("Shipping fee:", "enginethemes"); ?></div>
 				<div class="me-table-col me-cart-shippingfee-price">$<?php echo $listing->get_shipping_fee(); ?></div>
 			</div>
 		<?php endif; */ ?>
 
 		<div class="me-table-row me-cart-rtotals">
-			<div class="me-table-col me-table-empty"></div>
-			<div class="me-table-col me-table-empty"></div>
+			<div class="me-table-col me-table-col-empty"></div>
+			<div class="me-table-col me-table-col-empty"></div>
 			<div class="me-table-col me-cart-amount"><?php _e("Total amount:", "enginethemes"); ?></div>
 			<div class="me-table-col me-cart-totals"><?php echo me_price_html( $listing->get_price() * $unit); ?></div>
 		</div>
