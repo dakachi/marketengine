@@ -18,20 +18,27 @@ function me_rc_dispute_button($transaction) {
 add_action( 'marketengine_order_extra_content', 'me_rc_dispute_button', 11);
 
 /**
- * Render order resolution center link
- * @since 1.1
+ * Load the resolution link template
+ * @param object $transaction The me order object
  */
 function me_rc_center_link($transaction) {
 	if ('me-disputed' === $transaction->post_status ) {
 		$case = new ME_Message_Query(array('post_type' => 'dispute', 'post_parent' => $transaction->id));
 		$case = array_pop($case->posts);
 		$case_id = $case->ID;
-		echo '<div class="me-hidden-sm me-hidden-xs">';
 		me_get_template('resolution/order/resolution-link', array('transaction' => $transaction , 'case' => $case_id));
-		echo '</div>';
 	}
 }
-add_action( 'marketengine_order_extra_content', 'me_rc_center_link', 11);
+/**
+ * Render order resolution center link
+ * @since 1.1
+ */
+function me_rc_center_desktop_link($transaction) {
+	echo '<div class="me-hidden-sm me-hidden-xs">';
+	me_rc_center_link($transaction);
+	echo '</div>';
+}
+add_action( 'marketengine_order_extra_content', 'me_rc_center_desktop_link', 11);
 
 /**
  * Render order dispute button link on mobile
@@ -51,17 +58,12 @@ add_action( 'marketengine_order_extra_end', 'me_rc_mobile_dispute_button', 11);
  * Render order resolution center link
  * @since 1.1
  */
-function me_rc_mobile_center_link($transaction) {
-	if ('me-disputed' === $transaction->post_status ) {
-		$case = new ME_Message_Query(array('post_type' => 'dispute', 'post_parent' => $transaction->id));
-		$case = array_pop($case->posts);
-		$case_id = $case->ID;
-		echo '<div class="me-visible-sm me-visible-xs">';
-		me_get_template('resolution/order/resolution-link', array('transaction' => $transaction , 'case' => $case_id));
-		echo '</div>';
-	}
+function me_rc_center_mobile_link($transaction) {
+	echo '<div class="me-visible-sm me-visible-xs">';
+	me_rc_center_link($transaction);
+	echo '</div>';
 }
-add_action( 'marketengine_order_extra_end', 'me_rc_mobile_center_link', 11);
+add_action( 'marketengine_order_extra_end', 'me_rc_center_mobile_link', 11);
 
 /**
  * Transaction dispute form
