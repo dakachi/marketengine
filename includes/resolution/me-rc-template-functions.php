@@ -53,9 +53,11 @@ add_action( 'marketengine_order_extra_end', 'me_rc_mobile_dispute_button', 11);
  */
 function me_rc_mobile_center_link($transaction) {
 	if ('me-disputed' === $transaction->post_status ) {
-		$case = '';
+		$case = new ME_Message_Query(array('post_type' => 'dispute', 'post_parent' => $transaction->id));
+		$case = array_pop($case->posts);
+		$case_id = $case->ID;
 		echo '<div class="me-visible-sm me-visible-xs">';
-		me_get_template('resolution/order/resolution-link', array('transaction' => $transaction , 'case' => $case));
+		me_get_template('resolution/order/resolution-link', array('transaction' => $transaction , 'case' => $case_id));
 		echo '</div>';
 	}
 }
