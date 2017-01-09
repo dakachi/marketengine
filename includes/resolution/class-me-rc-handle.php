@@ -77,6 +77,13 @@ class ME_RC_Form_Handle
         return $case_id;
     }
 
+    /**
+     * Create a message in dispute
+     *
+     * @param array $data The message data
+     *
+     * @return int | WP_Error
+     */
     public static function debate($data)
     {
         $case = me_get_message($data['dispute']);
