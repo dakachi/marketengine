@@ -34,6 +34,7 @@
             var uploading = null;
             var uploader = null;
             var upload_begin = function(files) {
+                upload_container.addClass('uploading');
                 $.each(files, function(file) {
                     var progress = "<li class='uploading'><div class='uploading-progress'></div></li>";
                     $(preview).prepend(progress);
@@ -92,6 +93,9 @@
                             $(preview).html(response.response);
                         }
                         $(preview).sortable();
+                    },
+                    UploadComplete : function(up, files) {
+                        upload_container.removeClass('uploading');
                     }
                 }
             });

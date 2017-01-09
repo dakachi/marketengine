@@ -28,7 +28,7 @@ jQuery(document).ready(function($) {
                 	if(res.success) {
                 		$('.me-contact-messages-list').append(res.html);
                 		$('#debate_content').val('');
-                		$('.me-list-dispute-attach').html('');
+                		$('.upload_preview_container').html('');
                 	}
                 }
             });
