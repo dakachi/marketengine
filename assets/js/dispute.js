@@ -19,12 +19,7 @@ jQuery(document).ready(function($) {
         } else {
             $.post({
                 url: me_globals.ajaxurl,
-                data: {
-                    action: 'me-dispute-debate',
-                    dispute: $('#dispute_id').val(),
-                    _wpnonce: $('#_debate_nonce').val(),
-                    post_content: content
-                },
+                data: $(this).serialize() + '&action=me-dispute-debate',
                 beforeSend : function() {
                 	// loading
                 },

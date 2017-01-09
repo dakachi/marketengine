@@ -103,7 +103,7 @@ class ME_RC_Form_Handle
             $receiver_id = $case->sender;
         }
 
-        $data = array(
+        $message_data = array(
             'post_content' => wp_kses_post($data['post_content']),
             'post_title'   => 'Message case #' . $case->ID,
             'post_type'    => 'message',
@@ -113,7 +113,11 @@ class ME_RC_Form_Handle
             'post_status'  => 'read',
         );
 
-        return self::create_dispute_message($data);
+        if (!empty($data['dispute_file'])) {
+            $message_data['dispute_file'] = $data['dispute_file'];
+        }
+
+        return self::create_dispute_message($message_data);
     }
 
     /**

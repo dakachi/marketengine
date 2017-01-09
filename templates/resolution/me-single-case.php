@@ -65,11 +65,11 @@ $case = me_get_message($case_id);
                                     
                                     <div class="me-message-typing-form">
                                         <form id="dispute-message-form" action="">
-                                            <textarea name="content" id="debate_content" placeholder="New message"></textarea>
+                                            <textarea name="post_content" id="debate_content" placeholder="New message"></textarea>
                                             <div class="me-dispute-attachment">
                                                 <div class="me-row">
                                                     <div class="me-col-lg-10 me-col-md-9">
-                                                        <p>
+                                                        <!-- <p>
                                                             <label class="me-dispute-attach-file" for="me-dispute-file">
                                                                 <input id="me-dispute-file" type="file">
                                                                 <i class="icon-me-attach"></i>
@@ -81,11 +81,26 @@ $case = me_get_message($case_id);
                                                             <li>ksafdkl.sf<span class="me-remove-dispute-attach"><i class="icon-me-remove"></i></span></li>
                                                             <li>Kronog backls<span class="me-remove-dispute-attach"><i class="icon-me-remove"></i></span></li>
                                                             <li>con duong mua dnoh nkd.sf<span class="me-remove-dispute-attach"><i class="icon-me-remove"></i></span></li>
-                                                        </ul>
+                                                        </ul> -->
+                                                        <?php 
+                                                            me_get_template('upload-file/upload-form', array(
+                                                                'id' => 'dispute-file',
+                                                                'name' => 'dispute_file',
+                                                                'source' => '',
+                                                                'button' => 'me-dipute-upload',
+                                                                'multi' => true,
+                                                                'maxsize' => esc_html( '2mb' ),
+                                                                'maxcount' => 5,
+                                                                'close' => true,
+                                                            ));
+
+                                                        ?>
+                                                        <?php wp_nonce_field('marketengine', 'me-dispute-file'); ?>
                                                     </div>
+                                                    
                                                     <div class="me-col-lg-2 me-col-md-3">
-                                                        <input type="hidden" name="dispute_id" id="dispute_id" value="<?php echo $case->ID; ?>">
-                                                        <?php wp_nonce_field( 'me-debate', "_debate_nonce"); ?>
+                                                        <input type="hidden" name="dispute" id="dispute_id" value="<?php echo $case->ID; ?>">
+                                                        <?php wp_nonce_field( 'me-debate'); ?>
                                                         <input class="marketengine-btn me-dispute-message-btn" type="submit" value="<?php _e("SUBMIT", "enginethemes"); ?>">
                                                     </div>
                                                 </div>
