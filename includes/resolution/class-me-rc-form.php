@@ -80,10 +80,16 @@ class ME_RC_Form
     }
 
     public static function debate() {
-        if (!empty($_POST['close']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-debate')) {
-            $case = ME_RC_Form_Handle::debate($_POST);
-            if (is_wp_error($case)) {
-                me_wp_error_to_notices($case);
+        if (!empty($_POST['dispute']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-debate')) {
+            $message = ME_RC_Form_Handle::debate($_POST);
+            if (!is_wp_error($case)) {
+                $message = me_get_message($message);
+                ob_start();
+                me_get_template('resolution/message-item', array('message' => $message)); 
+                $content = ob_get_clean();
+                wp_send_json(array('success' => true, 'html' => $content));
+            }else {
+                wp_send_json( array('success' => false) );
             }
         }
     }

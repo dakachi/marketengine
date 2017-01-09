@@ -77,8 +77,36 @@ class ME_RC_Form_Handle
         return $case_id;
     }
 
-    public static function debate($data) {
-        $data['post_parent'] = $data['dispute'];
+    public static function debate($data)
+    {
+        $case = me_get_message($data['dispute']);
+        if (!$case) {
+            return new WP_Error('invalid_case', __("Invalid case.", "enginethemes"));
+        }
+
+        $sender = get_current_user_id();
+
+        if ($sender != $case->sender && $sender != $case->receiver) {
+            return new WP_Error('permission_denied', __("You can not send message to this case.", "enginethemes"));
+        }
+
+        if ($sender == $case->sender) {
+            $receiver_id = $case->receiver;
+        } else {
+            $receiver_id = $case->sender;
+        }
+
+        $data = array(
+            'post_content' => wp_kses_post($data['post_content']),
+            'post_title'   => 'Message case #' . $case->ID,
+            'post_type'    => 'message',
+            'receiver'     => $receiver_id,
+            'post_parent'  => $case->ID,
+            'sender'       => $sender,
+            'post_status'  => 'read',
+        );
+
+        return self::create_dispute_message($data);
     }
 
     /**
@@ -104,7 +132,7 @@ class ME_RC_Form_Handle
 
             $data['post_parent'] = $case_id;
             $data['case_id']     = $case_id;
-            self::create_dispute_message($data, $transaction);
+            self::create_dispute_message($data);
             // add revision
             self::add_dispute_revision('me-open', me_get_message($case_id));
             // email seller
@@ -119,7 +147,7 @@ class ME_RC_Form_Handle
      * @param object $transaction The ME_Order object
      * @return int
      */
-    public static function create_dispute_message($data, $transaction)
+    public static function create_dispute_message($data)
     {
         $data['post_type'] = 'message';
         if (!empty($data['dispute_file'])) {
@@ -127,7 +155,6 @@ class ME_RC_Form_Handle
         }
 
         return me_insert_message($data);
-
     }
 
     /**
@@ -183,7 +210,7 @@ class ME_RC_Form_Handle
         }
 
         $dispute_id = me_update_message(array('ID' => $dispute_id, 'post_status' => 'me-waiting'));
-        
+
         // add revision
         self::add_dispute_revision('me-waiting', $dispute);
         self::request_close_notify($dispute);
@@ -228,8 +255,8 @@ class ME_RC_Form_Handle
         if (!$dispute) {
             return new WP_Error('invalid_case', __("Invalid case id.", "enginethemes"));
         }
-        
-        if ( 'me-resolved' === $dispute->post_status || 'me-closed' === $dispute->post_status || get_current_user_id() != $dispute->sender) {
+
+        if ('me-resolved' === $dispute->post_status || 'me-closed' === $dispute->post_status || get_current_user_id() != $dispute->sender) {
             return new WP_Error('permission_denied', __("You can not close this case.", "enginethemes"));
         }
 
@@ -284,13 +311,13 @@ class ME_RC_Form_Handle
     public static function add_dispute_revision($state, $dispute)
     {
         $sender = get_current_user_id();
-        if($sender == $dispute->receiver) {
+        if ($sender == $dispute->receiver) {
             $receiver = $dispute->sender;
-        }else {
+        } else {
             $receiver = $dispute->receiver;
         }
 
-        $data            = array(
+        $data = array(
             'post_parent'  => $dispute->ID,
             'post_type'    => 'revision',
             'sender'       => $sender,
@@ -299,10 +326,6 @@ class ME_RC_Form_Handle
             'post_title'   => 'Revision #' . $dispute->ID,
             'post_content' => 'Revision #' . $dispute->ID,
         );
-        var_dump($data);
         $revision = me_insert_message($data);
-        echo "<pre>";
-        print_r($revision);
-        echo "</pre>";
     }
 }
