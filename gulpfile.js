@@ -117,7 +117,6 @@ var gulp_path = 'C:/xampp/htdocs/gulp/';
 var shell = require('gulp-shell');
 gulp.task('phpdoc', shell.task([gulp_path + 'vendor/bin/phpdoc -d ' + curr_project.settings.src + ' -t ' + gulp_path + 'docs/phpdoc -i ' + curr_project.settings.src + 'vendor/,node_modules/,tests/,bootstrap.php --template="responsive-twig"']));
 
-var sys = require('sys');
 var gutil = require('gulp-util');
 var exec = require('gulp-exec');
 
@@ -148,6 +147,7 @@ var me_message                  = me_vendor_src + '/message.js';
 var me_index                    = me_vendor_src + '/index.js';
 var me_my_listings              = me_vendor_src + '/my-listings.js';
 var me_listing_review           = me_vendor_src + '/listing-review.js';
+var dispute           = me_vendor_src + '/dispute.js';
 
 gulp.task('script-vendor', function() {
     gulp.src([
@@ -165,7 +165,8 @@ gulp.task('script-vendor', function() {
         me_index,
         me_my_listings,
         me_my_listings,
-        me_listing_review
+        me_listing_review,
+        dispute 
     ])
     .pipe(uglify())
     .pipe(strip_comments())

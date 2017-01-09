@@ -1,4 +1,5 @@
 jQuery(document).ready(function($) {
+	
     $('#dispute-file').jUploader({
         browse_button: 'me-dipute-upload',
         multi: true,
@@ -8,6 +9,7 @@ jQuery(document).ready(function($) {
         maxsize: '2mb',
         maxcount: 5,
     });
+
     /* ajax send debate message in dispute details */
     $('#dispute-message-form').submit(function(e) {
         e.preventDefault();
