@@ -70,27 +70,34 @@ class ME_Shortcodes_Transaction {
 
     public static function me_message_file($atts) {
         if ($atts['id']) {
-            $file_id = absint($atts['id']);
+            $file_id = $atts['id'];
+
             if (!$file_id) {
                 return;
             }
-            $attached_file = get_attached_file($file_id);
-            $file_name     = basename($attached_file);
-            $file_size     = filesize($attached_file);
-            $file_type     = wp_check_filetype($file_name);
-            $file_url      = wp_get_attachment_url($file_id);
 
+            $files = explode(',', $file_id);
             ob_start();
-            me_get_template(
-                'inquiry/file-item',
-                array(
-                    'file_id'   => $file_id,
-                    'name'      => $file_name,
-                    'size'      => $file_size,
-                    'file_type' => $file_type,
-                    'url'       => $file_url,
-                )
-            );
+            foreach ($files as $file_id) {
+            
+                $attached_file = get_attached_file($file_id);
+                $file_name     = basename($attached_file);
+                $file_size     = filesize($attached_file);
+                $file_type     = wp_check_filetype($file_name);
+                $file_url      = wp_get_attachment_url($file_id);
+
+                me_get_template(
+                    'inquiry/file-item',
+                    array(
+                        'file_id'   => $file_id,
+                        'name'      => $file_name,
+                        'size'      => $file_size,
+                        'file_type' => $file_type,
+                        'url'       => $file_url,
+                    )
+                );
+            }
+            
             $content = ob_get_clean();
             return $content;
         }
