@@ -14,9 +14,16 @@ jQuery(document).ready(function($) {
     $('#dispute-message-form').submit(function(e) {
         e.preventDefault();
         var content = $('#debate_content').val();
+        
         if (!content) {
             $('#debate_content').focus();
-        } else {
+            return false;
+        } 
+
+        if($('.upload-container').hasClass('uploading')) {
+        	return false;
+        }
+
             $.post({
                 url: me_globals.ajaxurl,
                 data: $(this).serialize() + '&action=me-dispute-debate',
@@ -32,6 +39,6 @@ jQuery(document).ready(function($) {
                 	}
                 }
             });
-        }
+        
     });
 });
