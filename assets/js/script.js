@@ -222,49 +222,5 @@ jQuery(document).ready(function($) {
 		$(document.getElementById(get_refund_block_id)).addClass('active');
 		$('.me-solution-item').attr('checked', false);
 	});
-
-
-	$('#dispute-file').jUploader({
-            browse_button: 'me-dipute-upload',
-            multi: true,
-            name: 'dispute_file',
-            extension: 'jpg,jpeg,gif,png',
-            upload_url: me_globals.ajaxurl + '?nonce=' + $('#me-dispute-file').val(),
-            maxsize: '2mb',
-            maxcount: 5,
-        });
-
-	/**
-	 * [marketengine_snap_column description]
-	 * @return {[type]} [description]
-	 */
-	/*function marketengine_snap_column() {
-		var me_snap_column = $('.marketengine-snap-column').innerWidth();
-		// console.log(me_snap_column);
-		if(me_snap_column >= 1140) {
-			$('body').removeClass('marketengine-snap-column-3');
-		}
-		if((me_snap_column >= 850) && (me_snap_column < 1140)) {
-			$('body').addClass('marketengine-snap-column-3');
-			$('body').removeClass('marketengine-snap-column-2');
-			$('body').removeClass('marketengine-snap-column-1');
-		}
-		if((me_snap_column >= 556) && (me_snap_column < 850)) {
-			$('body').addClass('marketengine-snap-column-2');
-			$('body').removeClass('marketengine-snap-column-3');
-			$('body').removeClass('marketengine-snap-column-1');
-		}
-		if(me_snap_column < 556) {
-			$('body').addClass('marketengine-snap-column-1');
-			$('body').removeClass('marketengine-snap-column-3');
-			$('body').removeClass('marketengine-snap-column-2');
-		}
-	}*/
-
-	// me_snap_column < 1140px
-	// me_snap_column < 870px
-	// me_snap_column < 580px
-	// marketengine_snap_column();
-	// window.addEventListener("resize", marketengine_snap_column);
 });
 

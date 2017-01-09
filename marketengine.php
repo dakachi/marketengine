@@ -307,6 +307,8 @@ class MarketEngine
             wp_enqueue_script('my-listings.js', $this->plugin_url() . "/assets/js/my-listings$suffix.js", array('jquery'), $this->version, true);
             wp_enqueue_script('listing-review', $this->plugin_url() . "/assets/js/listing-review$suffix.js", array('jquery'), $this->version, true);
 
+            wp_enqueue_script( 'dispute', $this->plugin_url() . "/assets/js/dispute$suffix.js", array('jquery'), $this->version, true );
+
             wp_localize_script(
                 'post_listing',
                 'me_globals',

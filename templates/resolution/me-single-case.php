@@ -64,8 +64,8 @@ $case = me_get_message($case_id);
                                     </div>
                                     
                                     <div class="me-message-typing-form">
-                                        <form id="me-message-form" action="">
-                                            <textarea name="" placeholder="New message"></textarea>
+                                        <form id="dispute-message-form" action="">
+                                            <textarea name="content" id="debate_content" placeholder="New message"></textarea>
                                             <div class="me-dispute-attachment">
                                                 <div class="me-row">
                                                     <div class="me-col-lg-10 me-col-md-9">
@@ -73,7 +73,7 @@ $case = me_get_message($case_id);
                                                             <label class="me-dispute-attach-file" for="me-dispute-file">
                                                                 <input id="me-dispute-file" type="file">
                                                                 <i class="icon-me-attach"></i>
-                                                                Add attachment
+                                                                <?php _e("Add attachment", "enginethemes"); ?>
                                                             </label>
                                                         </p>
                                                         <ul class="me-list-dispute-attach">
@@ -84,7 +84,9 @@ $case = me_get_message($case_id);
                                                         </ul>
                                                     </div>
                                                     <div class="me-col-lg-2 me-col-md-3">
-                                                        <input class="marketengine-btn me-dispute-message-btn" type="submit" value="submit">
+                                                        <input type="hidden" name="dispute_id" value="<?php echo $case->ID; ?>">
+                                                        <?php wp_nonce_field( 'me-debate', "_debate_nonce"); ?>
+                                                        <input class="marketengine-btn me-dispute-message-btn" type="submit" value="<?php _e("SUBMIT", "enginethemes"); ?>">
                                                     </div>
                                                 </div>
                                             </div>
