@@ -84,7 +84,7 @@ $case = me_get_message($case_id);
                                                         </ul>
                                                     </div>
                                                     <div class="me-col-lg-2 me-col-md-3">
-                                                        <input type="hidden" name="dispute_id" value="<?php echo $case->ID; ?>">
+                                                        <input type="hidden" name="dispute_id" id="dispute_id" value="<?php echo $case->ID; ?>">
                                                         <?php wp_nonce_field( 'me-debate', "_debate_nonce"); ?>
                                                         <input class="marketengine-btn me-dispute-message-btn" type="submit" value="<?php _e("SUBMIT", "enginethemes"); ?>">
                                                     </div>

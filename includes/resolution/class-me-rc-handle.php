@@ -77,6 +77,10 @@ class ME_RC_Form_Handle
         return $case_id;
     }
 
+    public static function debate($data) {
+        $data['post_parent'] = $data['dispute'];
+    }
+
     /**
      * Create a dispute case
      *
@@ -224,8 +228,8 @@ class ME_RC_Form_Handle
         if (!$dispute) {
             return new WP_Error('invalid_case', __("Invalid case id.", "enginethemes"));
         }
-
-        if ($dispute->post_status !== 'me-open' || get_current_user_id() != $dispute->sender) {
+        
+        if ( 'me-resolved' === $dispute->post_status || 'me-closed' === $dispute->post_status || get_current_user_id() != $dispute->sender) {
             return new WP_Error('permission_denied', __("You can not close this case.", "enginethemes"));
         }
 

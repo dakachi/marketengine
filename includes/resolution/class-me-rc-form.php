@@ -15,6 +15,8 @@ class ME_RC_Form
         add_action('wp_loaded', array(__CLASS__, 'close'));
         add_action('wp_loaded', array(__CLASS__, 'escalate'));
         add_action('wp_loaded', array(__CLASS__, 'resolve'));
+
+        add_action('wp_ajax_me-dispute-debate', array(__CLASS__, 'debate'));
     }
 
     public static function dispute()
@@ -60,7 +62,7 @@ class ME_RC_Form
         }
     }
 
-    public static function escalate($dispute_id)
+    public static function escalate()
     {
         if (!empty($_GET['close']) && !empty($_GET['wpnonce']) && wp_verify_nonce($_GET['wpnonce'], 'me-escalate_dispute')) {
             $case = ME_RC_Form_Handle::close($_GET['escalate']);
@@ -72,8 +74,17 @@ class ME_RC_Form
         }
     }
 
-    public static function resolve($dispute_id)
+    public static function resolve()
     {
 
+    }
+
+    public static function debate() {
+        if (!empty($_POST['close']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-debate')) {
+            $case = ME_RC_Form_Handle::debate($_POST);
+            if (is_wp_error($case)) {
+                me_wp_error_to_notices($case);
+            }
+        }
     }
 }

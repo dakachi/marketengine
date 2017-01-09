@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-	
+
     $('#dispute-file').jUploader({
         browse_button: 'me-dipute-upload',
         multi: true,
@@ -20,10 +20,21 @@ jQuery(document).ready(function($) {
             $.post({
                 url: me_globals.ajaxurl,
                 data: {
-                    action: 'me_dispute_debate',
+                    action: 'me-dispute-debate',
                     dispute: $('#dispute_id').val(),
                     _wpnonce: $('#_debate_nonce').val(),
-                    content: content
+                    post_content: content
+                },
+                beforeSend : function() {
+                	// loading
+                },
+                success : function(res) {
+                	// remove loading
+                	if(res.success) {
+                		$('.me-contact-messages-list').append(res.html);
+                		$('#debate_content').val('');
+                		$('.me-list-dispute-attach').html('');
+                	}
                 }
             });
         }
