@@ -106,8 +106,8 @@ me_print_notices();
             <div class="me-col-md-6">
             <?php if($case->post_status == 'me-waiting') : ?>
                 <div class="me-disputed-request-close">
-                    <h4>Waiting for Buyer,s respond</h4>
-                    <p>You have already sent request to close dispute to the Buyer. Whenever the Buyer accept your request, the dispute will be closed.</p>
+                    <h4><?php _e("Waiting for Buyer's respond", "enginethemes"); ?></h4>
+                    <p><?php _e("You have already sent request to close dispute to the Buyer. Whenever the Buyer accept your request, the dispute will be closed.", "enginethemes"); ?></p>
                 </div>
             <?php else : ?>
                 <div class="me-disputed-close">
@@ -115,13 +115,13 @@ me_print_notices();
                     href="<?php echo wp_nonce_url(add_query_arg(array('request-close' => $case->ID) ), 'me-request_close_dispute' ,'wpnonce' ) ?>">
                         <?php _e("Request To Close", "enginethemes"); ?>
                     </a>
-                    <p>In case both the Buyer and you agree with the deal, you can request to finish the dispute.</p>
+                    <p><?php _e("In case both the Buyer and you agree with the deal, you can request to finish the dispute.", "enginethemes"); ?></p>
                 </div>
             <?php endif; ?>
             </div>
             <div class="me-col-md-6">
                 <div class="me-disputed-escalate">
-                    <a href="#">Escalate</a>
+                    <a href="#"><?php _e("Escalate", "enginethemes"); ?></a>
                     <p>In case you totally agree with what the Seller offer, you can close this dispute. Once the dispute is closed, it cannot be re-opened.</p>
                 </div>
             </div>

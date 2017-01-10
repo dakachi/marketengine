@@ -45,7 +45,7 @@ $case = me_get_message($case_id);
                                         $message_query = new ME_Message_Query(array('post_type' => array('message', 'revision'), 'post_parent' => $case->ID, 'showposts' => 12));
                                         $messages = array_reverse ($message_query->posts);
                                     ?>
-                                    
+                                    <div class="dispute-message-wrapper">
                                     <div class="me-contact-messages" id="messages-container" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
                                         <ul class="me-contact-messages-list">
                                         <?php if( $messages ) : ?>
@@ -66,7 +66,7 @@ $case = me_get_message($case_id);
                                         var objDiv = document.getElementById("messages-container");
                                         objDiv.scrollTop = objDiv.scrollHeight;
                                     </script>
-
+                                    </div>
                                     <?php if($case->post_status != 'me-closed') : ?>
 
                                         <div class="me-message-typing-form">

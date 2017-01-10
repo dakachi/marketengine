@@ -17,6 +17,7 @@ class ME_RC_Form
         add_action('wp_loaded', array(__CLASS__, 'resolve'));
 
         add_action('wp_ajax_me-dispute-debate', array(__CLASS__, 'debate'));
+        add_action('wp_ajax_get_messages', array(__CLASS__, 'fetch_messages'));
     }
 
     public static function dispute()
@@ -91,6 +92,29 @@ class ME_RC_Form
             }else {
                 wp_send_json( array('success' => false) );
             }
+        }
+    }
+
+    /**
+     * User fetch the older messages
+     */
+    public static function fetch_messages()
+    {
+        if (!empty($_GET['parent']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'me-debate')) {
+            $parent  = me_get_message($_GET['parent']);
+            $user_id = get_current_user_id();
+            if ($parent->receiver != $user_id && $parent->sender != $user_id) {
+                wp_send_json(array('success' => false));
+            }
+            $messages = me_get_messages(array('post_type' => array('message', 'revision'), 'showposts' => 12, 'post_parent' => $parent->ID, 'paged' => $_GET['paged']));
+            $messages = array_reverse($messages);
+            ob_start();
+            foreach ($messages as $key => $message) {
+                me_get_template('resolution/'.$message->post_type.'-item', array('message' => $message));
+            }
+            $content = ob_get_clean();
+
+            wp_send_json(array('success' => true, 'data' => $content));
         }
     }
 }

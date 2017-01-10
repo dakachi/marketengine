@@ -390,9 +390,6 @@ function me_get_messages($args = null) {
     );
 
     $r = wp_parse_args($args, $defaults);
-    if (empty($r['post_status'])) {
-        $r['post_status'] = 'sent';
-    }
 
     if (!empty($r['numberposts']) && empty($r['posts_per_page'])) {
         $r['posts_per_page'] = $r['numberposts'];

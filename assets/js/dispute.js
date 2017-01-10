@@ -65,4 +65,12 @@ jQuery(document).ready(function($) {
             }
         });
     });
+
+    // init message box
+    $('.dispute-message-wrapper').MEmessage({
+        paged: 2,
+        nonce: $('#_wpnonce').val(),
+        parent: $('input[name="dispute"]').val(),
+        type: 'dispute'
+    });
 });
