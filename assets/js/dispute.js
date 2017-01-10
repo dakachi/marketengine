@@ -1,4 +1,33 @@
 jQuery(document).ready(function($) {
+	$('.me-switch-tab-filter-1, .me-switch-tab-filter-2').on('click', function() {
+		$('.me-resolution').toggleClass('me-rslt-filter');
+	});
+
+	$('.me-dispute-case-tabs').on('click', function() {
+		$(this).toggleClass('active');
+		$('body').toggleClass('me-dispute-case-tabs-active');
+		return false;
+	});
+	
+	$('.me-dispute-action-tabs').on('click', function() {
+		$(this).toggleClass('active');
+		$('body').toggleClass('me-dispute-action-tabs-active');
+		return false;
+	});
+
+	$('.me-dispute-related-tabs').on('click', function() {
+		$(this).toggleClass('active');
+		$('body').toggleClass('me-dispute-related-tabs-active');
+		return false;
+	});
+
+	$('.me-receive-item-field').on('change', function(event) {
+		var get_refund_block_id = $(this).data('get-refund-block');
+		$('#dispute-get-refund-yes').removeClass('active');
+		$('#dispute-get-refund-no').removeClass('active');
+		$(document.getElementById(get_refund_block_id)).addClass('active');
+	});
+	
     $('#dispute-file').jUploader({
         browse_button: 'me-dipute-upload',
         multi: true,
