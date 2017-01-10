@@ -1,4 +1,4 @@
-<li>
+<li id="message-<?php echo $message->ID; ?>">
 	<a href="<?php echo get_author_posts_url($message->sender); ?>" >
 		<span class="me-mgs-author-avatar">
 			<?php echo me_get_avatar( $message->sender, '36'); ?>

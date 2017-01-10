@@ -1,33 +1,28 @@
 jQuery(document).ready(function($) {
-	$('.me-switch-tab-filter-1, .me-switch-tab-filter-2').on('click', function() {
-		$('.me-resolution').toggleClass('me-rslt-filter');
-	});
-
-	$('.me-dispute-case-tabs').on('click', function() {
-		$(this).toggleClass('active');
-		$('body').toggleClass('me-dispute-case-tabs-active');
-		return false;
-	});
-	
-	$('.me-dispute-action-tabs').on('click', function() {
-		$(this).toggleClass('active');
-		$('body').toggleClass('me-dispute-action-tabs-active');
-		return false;
-	});
-
-	$('.me-dispute-related-tabs').on('click', function() {
-		$(this).toggleClass('active');
-		$('body').toggleClass('me-dispute-related-tabs-active');
-		return false;
-	});
-
-	$('.me-receive-item-field').on('change', function(event) {
-		var get_refund_block_id = $(this).data('get-refund-block');
-		$('#dispute-get-refund-yes').removeClass('active');
-		$('#dispute-get-refund-no').removeClass('active');
-		$(document.getElementById(get_refund_block_id)).addClass('active');
-	});
-
+    $('.me-switch-tab-filter-1, .me-switch-tab-filter-2').on('click', function() {
+        $('.me-resolution').toggleClass('me-rslt-filter');
+    });
+    $('.me-dispute-case-tabs').on('click', function() {
+        $(this).toggleClass('active');
+        $('body').toggleClass('me-dispute-case-tabs-active');
+        return false;
+    });
+    $('.me-dispute-action-tabs').on('click', function() {
+        $(this).toggleClass('active');
+        $('body').toggleClass('me-dispute-action-tabs-active');
+        return false;
+    });
+    $('.me-dispute-related-tabs').on('click', function() {
+        $(this).toggleClass('active');
+        $('body').toggleClass('me-dispute-related-tabs-active');
+        return false;
+    });
+    $('.me-receive-item-field').on('change', function(event) {
+        var get_refund_block_id = $(this).data('get-refund-block');
+        $('#dispute-get-refund-yes').removeClass('active');
+        $('#dispute-get-refund-no').removeClass('active');
+        $(document.getElementById(get_refund_block_id)).addClass('active');
+    });
     $('#dispute-file').jUploader({
         browse_button: 'me-dipute-upload',
         multi: true,
@@ -65,12 +60,33 @@ jQuery(document).ready(function($) {
             }
         });
     });
-
     // init message box
     $('.dispute-message-wrapper').MEmessage({
         paged: 2,
         nonce: $('#_wpnonce').val(),
         parent: $('input[name="dispute"]').val(),
         type: 'dispute'
+    });
+    var scrollto = 0,
+        scroll_el = 0;
+    $('.me-dispute-event a').click(function(e) {
+        e.preventDefault();
+        scrollto = $(this).attr('href');
+        scroll_el = $(this);
+        var $container = $('#messages-container');
+        if ($(scrollto).length > 0) {
+            $container.scrollTop($container.scrollTop() + $(scrollto).position().top - 100);
+            scrollto = 0;
+            scroll_el = 0;
+        } else {
+            $container.scrollTop($container.find("li").eq(0).offset().top + 50);
+        }
+    });
+    
+    $('#messages-container').on('scroll', function() {
+        if (scrollto != 0) {
+            scroll_el.trigger('click');
+        }
+        scrollto = 0;
     });
 });

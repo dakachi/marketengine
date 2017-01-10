@@ -6,7 +6,7 @@
     ?>
 
     <?php foreach ($revisions  as $key => $message) : ?>
-    <a href="#">
+    <a href="#message-<?php echo $message->ID; ?>" id="event-<?php echo $message->ID; ?>">
         <?php switch ($message->post_status) {
             case 'me-closed':
                 _e("<span>Close dispute</span>", "enginethemes");
