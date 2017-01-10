@@ -89,7 +89,7 @@ $case = me_get_message($case_id);
                                                                 <li>con duong mua dnoh nkd.sf<span class="me-remove-dispute-attach"><i class="icon-me-remove"></i></span></li>
                                                             </ul> -->
                                                             <?php 
-                                                                me_get_template('upload-file/upload-form', array(
+                                                                me_get_template('upload-file/upload-form_2', array(
                                                                     'id' => 'dispute-file',
                                                                     'name' => 'dispute_file',
                                                                     'source' => '',
@@ -116,7 +116,7 @@ $case = me_get_message($case_id);
                                         </div>
 
                                     <?php endif; ?>
-                                    
+
                                 </div>
                             </div>
                         </div>

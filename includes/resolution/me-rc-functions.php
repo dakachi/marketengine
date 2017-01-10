@@ -95,10 +95,12 @@ function me_dispute_status_label($status_name)
 function me_rc_dispute_problems()
 {
     $problems = array(
-        'problem-1' => __('Problem 1', 'enginethemes'),
-        'problem-2' => __('Problem 2', 'enginethemes'),
-        'problem-3' => __('Problem 3', 'enginethemes'),
-        'problem-4' => __('Problem 4', 'enginethemes'),
+        'problem-1' => __('I no longer want this item.', 'enginethemes'),
+        'problem-2' => __('I was charged more than I expected.', 'enginethemes'),
+        'problem-3' => __('Item not as described.', 'enginethemes'),
+        'problem-4' => __('Item damaged during shipping.', 'enginethemes'),
+        'problem-5' => __('Missing parts or pieces.', 'enginethemes'),
+        'problem-6' => __('Item expired.', 'enginethemes'),
     );
 
     return apply_filters('me_rc_dispute_problems', $problems);

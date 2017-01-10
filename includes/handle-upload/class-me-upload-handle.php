@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
  * @author      Dakachi
  * @category    Class
  */
-class ME_Upload_Handle extends ME_Form {
+class ME_Upload_Handle {
 
     public static function init_hooks() {
         add_action('wp_ajax_upload_multi_file', array(__CLASS__, 'upload_multi_file'));
