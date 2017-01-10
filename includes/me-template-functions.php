@@ -92,9 +92,6 @@ function me_get_template($template_name, $args = array())
     }
 
     $located = me_locate_template($templates);
-    if (!$located) {
-        return;
-    }
 
     include $located;
 }
