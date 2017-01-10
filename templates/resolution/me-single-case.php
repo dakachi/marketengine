@@ -91,6 +91,7 @@ $case = me_get_message($case_id);
                                                                 'name' => 'dispute_file',
                                                                 'source' => '',
                                                                 'button' => 'me-dipute-upload',
+                                                                'button_text' => '<i class="icon-me-attach"></i>' . __("Add attachment", "enginethemes"),
                                                                 'multi' => true,
                                                                 'maxsize' => esc_html( '2mb' ),
                                                                 'maxcount' => 5,

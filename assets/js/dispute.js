@@ -27,12 +27,12 @@ jQuery(document).ready(function($) {
 		$('#dispute-get-refund-no').removeClass('active');
 		$(document.getElementById(get_refund_block_id)).addClass('active');
 	});
-	
+
     $('#dispute-file').jUploader({
         browse_button: 'me-dipute-upload',
         multi: true,
         name: 'dispute_file',
-        extension: 'jpg,jpeg,gif,png',
+        extension: 'jpg,jpeg,gif,png,pdf,doc,docx,xlsx,xls,zip',
         upload_url: me_globals.ajaxurl + '?nonce=' + $('#me-dispute-file').val(),
         maxsize: '2mb',
         maxcount: 5,

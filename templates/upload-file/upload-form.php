@@ -19,7 +19,7 @@
     </div>
     <div class="upload-container">
         <span id="<?php echo esc_attr($button); ?>" class="<?php echo esc_attr($button); ?> me-gallery-add-img">
-            <?php _e("Choose image", "enginethemes"); ?>
+            <?php if(isset($button_text)) :  echo $button_text; else : _e("Choose image", "enginethemes");  endif; ?>
         </span>
     </div>
 </div>
