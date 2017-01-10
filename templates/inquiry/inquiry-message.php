@@ -32,7 +32,11 @@
 						<div class="me-contact-messages-wrap">
 
 							<div class="me-contact-message-user">
-								<p><?php echo get_the_author_meta( 'display_name', $inquiry->receiver ); ?></p>
+								<?php if($inquiry->receiver == $user_id) : ?>
+									<p><?php echo get_the_author_meta( 'display_name', $inquiry->sender ); ?></p>
+								<?php else : ?>
+									<p><?php echo get_the_author_meta( 'display_name', $inquiry->receiver ); ?></p>
+								<?php endif; ?>
 							</div>
 
 							<div class="me-contact-header">
@@ -49,22 +53,18 @@
 
 									<ul class="me-contact-messages-list" >
 
-									<?php if( $messages ) : ?>
-										<?php foreach ($messages  as $key => $message) : ?>
-										<?php me_get_template('inquiry/message-item', array('message' => $message)); ?>
-										<?php endforeach; ?>
-									<?php elseif($listing) : ?>
-										<?php me_get_template('inquiry/message-item-notfound', array('author' => $listing->get_author()) ); ?>
-									<?php endif; ?>
-									<?php /*
-									<?php if( $listing ) : ?>
-										<?php if( !$listing->is_available() ) : ?>
-										<li class="me-inquires-listing-archived"><i class="icon-me-minus-circle"></i><span><?php _e('This listing has been archived', 'enginethemes'); ?></span></li>
+										<?php if( $messages ) : ?>
+
+											<?php foreach ($messages  as $key => $message) : ?>
+
+											<?php me_get_template('inquiry/message-item', array('message' => $message)); ?>
+											<?php endforeach; ?>
+
+										<?php elseif($listing) : ?>
+
+											<?php me_get_template('inquiry/message-item-notfound', array('author' => $listing->get_author()) ); ?>
+
 										<?php endif; ?>
-									<?php else : ?>
-										<li class="me-inquires-listing-archived"><i class="icon-me-minus-circle"></i><span><?php _e('This listing has been deleted', 'enginethemes'); ?></span></li>
-									<?php endif; ?>
-									*/ ?>
 									</ul>
 
 								</div>
@@ -91,22 +91,6 @@
 	<script type="text/javascript">
 		var objDiv = document.getElementById("messages-container");
 		objDiv.scrollTop = objDiv.scrollHeight;
-	</script>
-	<script>
-	    // (function ($) {
-	    //     $(document).ready(function(){
-	    //         $('#upload_message_file').messageUploader({
-	    //             multi: false,
-	    //             removable : false,
-	    //             name: 'message_file',
-	    //             maxsize : "2mb",
-	    //             listing_id : "<?php echo $listing ? $listing->get_id() : ''; ?>",
-	    //             inquiry_id : "<?php echo $inquiry->ID; ?>",
-	    //             extension: 'jpg,jpeg,gif,png,pdf,doc,docx,xls,xlsx,txt',
-	    //             upload_url: '<?php echo admin_url('admin-ajax.php') . '?nonce=' . wp_create_nonce('marketengine') ?>'
-	    //         });
-	    //     });
-	    // })(jQuery);
 	</script>
 
 <?php

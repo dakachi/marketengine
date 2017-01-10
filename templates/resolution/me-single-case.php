@@ -46,7 +46,7 @@ $case = me_get_message($case_id);
                                         $messages = array_reverse ($message_query->posts);
                                     ?>
                                     
-                                    <div class="me-contact-messages">
+                                    <div class="me-contact-messages" id="messages-container" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
                                         <ul class="me-contact-messages-list">
                                         <?php if( $messages ) : ?>
 										<?php foreach ($messages  as $key => $message) : ?>
@@ -62,7 +62,10 @@ $case = me_get_message($case_id);
                                             
                                         </ul>
                                     </div>
-                                    
+                                    <script type="text/javascript">
+                                        var objDiv = document.getElementById("messages-container");
+                                        objDiv.scrollTop = objDiv.scrollHeight;
+                                    </script>
                                     <div class="me-message-typing-form">
                                         <form id="dispute-message-form" action="">
                                             <textarea name="post_content" id="debate_content" placeholder="New message"></textarea>
