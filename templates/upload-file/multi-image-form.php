@@ -1,7 +1,7 @@
 <?php
 /**
  * 	The Template for displaying file uploader.
- * 	This template can be overridden by copying it to yourtheme/marketengine/upload-file/multi-file-form.php.
+ * 	This template can be overridden by copying it to yourtheme/marketengine/upload-file/multi-image-form.php.
  *
  * @author 		EngineThemes
  * @package 	MarketEngine/Templates

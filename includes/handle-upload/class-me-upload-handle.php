@@ -29,7 +29,7 @@ class ME_Upload_Handle {
             $file = $_FILES[$filename];
             $attachment = self::handle_file($file);
 
-            me_get_template('upload-file/multi-file-form', array(
+            me_get_template('upload-file/multi-image-form', array(
                 'image_id' => $attachment['id'],
                 'filename' => $filename,
                 'close' => true
@@ -59,7 +59,7 @@ class ME_Upload_Handle {
                 exit;
             }
 
-            me_get_template('upload-file/single-file-form', array(
+            me_get_template('upload-file/single-image-form', array(
                 'image_id' => $attachment['id'],
                 'filename' => $filename,
                 'close' => $close,
