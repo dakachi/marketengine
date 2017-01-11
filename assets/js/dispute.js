@@ -31,6 +31,7 @@ jQuery(document).ready(function($) {
         upload_url: me_globals.ajaxurl + '?nonce=' + $('#me-dispute-file').val(),
         maxsize: '2mb',
         maxcount: 5,
+        file : 1
     });
     /*submit dispute message form*/
     $('#dispute-message-form').submit(function(e) {

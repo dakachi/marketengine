@@ -18,7 +18,8 @@
             maxcount: 8,
             maxwidth: 0,
             maxheight: 0,
-            removable: true
+            removable: true,
+            file : false
         };
         if (options) {
             options = $.extend(setting, options);
@@ -48,7 +49,7 @@
                 flash_swf_url: options.swf,
                 file_data_name: options.name,
                 multi_selection: options.multi,
-                url: options.upload_url + "&filename=" + options.name + "&action=" + action + "&removable=" + removable,
+                url: options.upload_url + "&filename=" + options.name + "&is_file=" + options.file +  "&action=" + action + "&removable=" + removable,
                 filters: {
                     mime_types: [{
                         title: "extensions",
