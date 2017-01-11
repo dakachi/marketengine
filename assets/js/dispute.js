@@ -69,6 +69,7 @@ jQuery(document).ready(function($) {
         parent: $('input[name="dispute"]').val(),
         type: 'dispute'
     });
+
     var scrollto = 0,
         scroll_el = 0;
     $('.me-dispute-event a').click(function(e) {
@@ -78,16 +79,15 @@ jQuery(document).ready(function($) {
         var $container = $('#messages-container');
         if ($(scrollto).length != 0) {
             $container.scrollTop($container.scrollTop() + $(scrollto).position().top - 100);
-            // console.log($(scrollto).position().top);
             scrollto = 0;
             scroll_el = 0;
         } else {
-            $container.scrollTop($container.find("li").eq(0).offset().top + 50);
+            $container.scrollTop(0);
         }
     });
     
     $('#messages-container').on('scroll', function() {
-        if ( scrollto != 0 && $('#messages-container').scrollTop() >= 100) {
+        if ( scrollto != 0 && $('#messages-container').scrollTop() >= 50) {
             scroll_el.click();
         }
     });
