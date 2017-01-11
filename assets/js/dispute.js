@@ -54,7 +54,8 @@ jQuery(document).ready(function($) {
                 // remove loading
                 if (res.success) {
                     $('.me-contact-messages-list').append(res.html);
-                    $('#debate_content').val('');
+                    $('#messages-container').scrollTop($('#messages-container')[0].scrollHeight);
+                    $('#debate_content').val('').focus();
                     $('.upload_preview_container ul').html('');
                 }
             }
@@ -74,8 +75,9 @@ jQuery(document).ready(function($) {
         scrollto = $(this).attr('href');
         scroll_el = $(this);
         var $container = $('#messages-container');
-        if ($(scrollto).length > 0) {
+        if ($(scrollto).length != 0) {
             $container.scrollTop($container.scrollTop() + $(scrollto).position().top - 100);
+            // console.log($(scrollto).position().top);
             scrollto = 0;
             scroll_el = 0;
         } else {
@@ -84,9 +86,8 @@ jQuery(document).ready(function($) {
     });
     
     $('#messages-container').on('scroll', function() {
-        if (scrollto != 0) {
-            scroll_el.trigger('click');
+        if ( scrollto != 0 && $('#messages-container').scrollTop() >= 100) {
+            scroll_el.click();
         }
-        scrollto = 0;
     });
 });

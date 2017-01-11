@@ -1,4 +1,4 @@
-<li  id="message-<?php echo $message->ID; ?>" class="me-contact-dispute-event">
+<li  id="message-<?php echo $message->ID; ?>" class="me-contact-dispute-event <?php echo $message->post_status; ?>">
 <?php 
 switch ($message->post_status) :
 	case 'me-closed':
