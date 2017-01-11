@@ -67,56 +67,60 @@ $case = me_get_message($case_id);
                                         objDiv.scrollTop = objDiv.scrollHeight;
                                     </script>
                                     </div>
-                                    <?php if($case->post_status != 'me-closed') : ?>
 
-                                        <div class="me-message-typing-form">
-                                            <form id="dispute-message-form" action="">
-                                                <textarea name="post_content" id="debate_content" placeholder="New message"></textarea>
-                                                <div class="me-dispute-attachment">
-                                                    <div class="me-row">
-                                                        <div class="me-col-lg-10 me-col-md-9">
-                                                            <!-- <p>
-                                                                <label class="me-dispute-attach-file" for="me-dispute-file">
-                                                                    <input id="me-dispute-file" type="file">
-                                                                    <i class="icon-me-attach"></i>
-                                                                    <?php _e("Add attachment", "enginethemes"); ?>
-                                                                </label>
-                                                            </p>
-                                                            <ul class="me-list-dispute-attach">
-                                                                <li>abc.file<span class="me-remove-dispute-attach"><i class="icon-me-remove"></i></span></li>
-                                                                <li>ksafdkl.sf<span class="me-remove-dispute-attach"><i class="icon-me-remove"></i></span></li>
-                                                                <li>Kronog backls<span class="me-remove-dispute-attach"><i class="icon-me-remove"></i></span></li>
-                                                                <li>con duong mua dnoh nkd.sf<span class="me-remove-dispute-attach"><i class="icon-me-remove"></i></span></li>
-                                                            </ul> -->
-                                                            <?php 
-                                                                me_get_template('upload-file/upload-form_2', array(
-                                                                    'id' => 'dispute-file',
-                                                                    'name' => 'dispute_file',
-                                                                    'source' => '',
-                                                                    'button' => 'me-dipute-upload',
-                                                                    'button_text' => '<i class="icon-me-attach"></i>' . __("Add attachment", "enginethemes"),
-                                                                    'multi' => true,
-                                                                    'maxsize' => esc_html( '2mb' ),
-                                                                    'maxcount' => 5,
-                                                                    'close' => true,
-                                                                ));
+                                    <div class="me-message-typing-form">
+                                        <form id="dispute-message-form" action="">
+                                        
+                                        <?php if($case->post_status != 'me-closed') : ?>
+                                            
+                                            <textarea name="post_content" id="debate_content" placeholder="New message"></textarea>
+                                            <div class="me-dispute-attachment">
+                                                <div class="me-row">
+                                                    <div class="me-col-lg-10 me-col-md-9">
+                                                        <!-- <p>
+                                                            <label class="me-dispute-attach-file" for="me-dispute-file">
+                                                                <input id="me-dispute-file" type="file">
+                                                                <i class="icon-me-attach"></i>
+                                                                <?php _e("Add attachment", "enginethemes"); ?>
+                                                            </label>
+                                                        </p>
+                                                        <ul class="me-list-dispute-attach">
+                                                            <li>abc.file<span class="me-remove-dispute-attach"><i class="icon-me-remove"></i></span></li>
+                                                            <li>ksafdkl.sf<span class="me-remove-dispute-attach"><i class="icon-me-remove"></i></span></li>
+                                                            <li>Kronog backls<span class="me-remove-dispute-attach"><i class="icon-me-remove"></i></span></li>
+                                                            <li>con duong mua dnoh nkd.sf<span class="me-remove-dispute-attach"><i class="icon-me-remove"></i></span></li>
+                                                        </ul> -->
+                                                        <?php 
+                                                            me_get_template('upload-file/upload-form_2', array(
+                                                                'id' => 'dispute-file',
+                                                                'name' => 'dispute_file',
+                                                                'source' => '',
+                                                                'button' => 'me-dipute-upload',
+                                                                'button_text' => '<i class="icon-me-attach"></i>' . __("Add attachment", "enginethemes"),
+                                                                'multi' => true,
+                                                                'maxsize' => esc_html( '2mb' ),
+                                                                'maxcount' => 5,
+                                                                'close' => true,
+                                                            ));
 
-                                                            ?>
-                                                            <?php wp_nonce_field('marketengine', 'me-dispute-file'); ?>
-                                                        </div>
+                                                        ?>
+                                                        <?php wp_nonce_field('marketengine', 'me-dispute-file'); ?>
+                                                    </div>
+                                                    
+                                                    <div class="me-col-lg-2 me-col-md-3">
                                                         
-                                                        <div class="me-col-lg-2 me-col-md-3">
-                                                            <input type="hidden" name="dispute" id="dispute_id" value="<?php echo $case->ID; ?>">
-                                                            <?php wp_nonce_field( 'me-debate'); ?>
-                                                            <input class="marketengine-btn me-dispute-message-btn" type="submit" value="<?php _e("SUBMIT", "enginethemes"); ?>">
-                                                        </div>
+                                                        <input class="marketengine-btn me-dispute-message-btn" type="submit" value="<?php _e("SUBMIT", "enginethemes"); ?>">
                                                     </div>
                                                 </div>
-                                            </form>
-                                        </div>
+                                            </div>
 
-                                    <?php endif; ?>
-
+                                            <?php endif; ?>
+                                            
+                                            <?php wp_nonce_field( 'me-debate'); ?>
+                                            <input type="hidden" name="dispute" id="dispute_id" value="<?php echo $case->ID; ?>">
+                                        </form>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>

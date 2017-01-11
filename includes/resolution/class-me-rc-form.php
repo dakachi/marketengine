@@ -81,8 +81,8 @@ class ME_RC_Form
     }
 
     public static function debate() {
-        if (!empty($_POST['dispute']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-debate')) {
-            $message = ME_RC_Form_Handle::debate($_POST);
+        if (!empty($_REQUEST['dispute']) && !empty($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'me-debate')) {
+            $message = ME_RC_Form_Handle::debate($_REQUEST);
             if (!is_wp_error($case)) {
                 $message = me_get_message($message);
                 ob_start();
@@ -102,12 +102,14 @@ class ME_RC_Form
     {
         if (!empty($_GET['parent']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'me-debate')) {
             $parent  = me_get_message($_GET['parent']);
+            
             $user_id = get_current_user_id();
             if ($parent->receiver != $user_id && $parent->sender != $user_id) {
                 wp_send_json(array('success' => false));
             }
-            $messages = me_get_messages(array('post_type' => array('message', 'revision'), 'showposts' => 12, 'post_parent' => $parent->ID, 'paged' => $_GET['paged']));
+            $messages = me_get_messages(array('post_type' => array('message', 'revision'), 'showposts' => 12, 'post_parent' => $parent->ID, 'paged' =>$_GET['paged']));
             $messages = array_reverse($messages);
+
             ob_start();
             foreach ($messages as $key => $message) {
                 me_get_template('resolution/'.$message->post_type.'-item', array('message' => $message));

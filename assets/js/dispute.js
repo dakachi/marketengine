@@ -44,7 +44,7 @@ jQuery(document).ready(function($) {
             return false;
         }
         /* ajax send debate message in dispute details */
-        $.post({
+        $.get({
             url: me_globals.ajaxurl,
             data: $(this).serialize() + '&action=me-dispute-debate',
             beforeSend: function() {
