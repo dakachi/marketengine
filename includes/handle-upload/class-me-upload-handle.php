@@ -25,7 +25,7 @@ class ME_Upload_Handle
     public static function support_file_type($filename)
     {
         $file_types = array(
-            'dispute_file'    => 'jpg,jpeg,gif,png,pdf,doc,docx,xlsx,xls,zip',
+            'dispute_file'    => 'psd,jpg,jpeg,gif,png,pdf,doc,docx,xlsx,xls,zip',
             'message_file'    => 'jpg,jpeg,gif,png,pdf,doc,docx,xlsx,xls,zip',
             'listing_gallery' => 'jpg,jpeg,gif,png',
             'user_avatar'     => 'jpg,jpeg,gif,png',
@@ -40,7 +40,7 @@ class ME_Upload_Handle
         }
 
     }
-    
+
     public static function init_hooks()
     {
         add_action('wp_ajax_upload_multi_file', array(__CLASS__, 'upload_multi_file'));

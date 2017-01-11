@@ -27,7 +27,7 @@ jQuery(document).ready(function($) {
         browse_button: 'me-dipute-upload',
         multi: true,
         name: 'dispute_file',
-        extension: 'jpg,jpeg,gif,png,pdf,doc,docx,xlsx,xls,zip',
+        extension: 'psd,jpg,jpeg,gif,png,pdf,doc,docx,xlsx,xls,zip',
         upload_url: me_globals.ajaxurl + '?nonce=' + $('#me-dispute-file').val(),
         maxsize: '2mb',
         maxcount: 5,
