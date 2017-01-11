@@ -75,18 +75,21 @@ class ME_Upload_Handle
             $file       = $_FILES[$filename];
             $attachment = self::handle_file($file, $filename);
             $close      = intval($_REQUEST['removable']);
+
+
+            if ($attachment && $filename == 'message_file') {
+                $message_data = array(
+                    'listing_id' => $_REQUEST['listing_id'],
+                    'content'    => '[me_message_file id=' . $attachment['id'] . ' ]',
+                    'inquiry_id' => $_REQUEST['inquiry_id'],
+                );
+                $result  = ME_Inquiry_Handle::insert_message($message_data);
+                $message = me_get_message($result);
+                me_get_template('inquiry/message-item', array('message' => $message));
+                exit;
+            }
+
             if ($attachment) {
-                if ($filename == 'message_file') {
-                    $message_data = array(
-                        'listing_id' => $_REQUEST['listing_id'],
-                        'content'    => '[me_message_file id=' . $attachment['id'] . ' ]',
-                        'inquiry_id' => $_REQUEST['inquiry_id'],
-                    );
-                    $result  = ME_Inquiry_Handle::insert_message($message_data);
-                    $message = me_get_message($result);
-                    me_get_template('inquiry/message-item', array('message' => $message));
-                    exit;
-                }
 
                 if (!$_REQUEST['is_file']) {
                     me_get_template('upload-file/single-image-form', array(
