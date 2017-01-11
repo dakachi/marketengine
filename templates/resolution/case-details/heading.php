@@ -1,7 +1,7 @@
 
 <div class="marketengine-page-title">
     <h2>
-        <?php _e("DISPUTED CASE", "enginethemes"); ?>
+        <?php printf(__("CASE #%d", "enginethemes"), $case->ID); ?>
     </h2>
     <ol class="me-breadcrumb">
         <li>
