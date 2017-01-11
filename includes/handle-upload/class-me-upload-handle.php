@@ -9,21 +9,26 @@ if (!defined('ABSPATH')) {
  *
  * Class handle file upload by user
  *
- * @version     1.0
+ * @version     1.1
  * @package     Includes/Uploader
  * @author      Dakachi
  * @category    Class
  */
 class ME_Upload_Handle
 {
-
+    /**
+     * Get the file type marketengine support for each filename purpose
+     * @param string $filename The file name 
+     * @return array
+     * @since 1.1
+     */
     public static function support_file_type($filename)
     {
         $file_types = array(
             'dispute_file'    => 'jpg,jpeg,gif,png,pdf,doc,docx,xlsx,xls,zip',
             'message_file'    => 'jpg,jpeg,gif,png,pdf,doc,docx,xlsx,xls,zip',
             'listing_gallery' => 'jpg,jpeg,gif,png',
-            'user_avatar' => 'jpg,jpeg,gif,png',
+            'user_avatar'     => 'jpg,jpeg,gif,png',
             'default'         => 'jpg,jpeg,gif,png',
         );
 
@@ -35,7 +40,7 @@ class ME_Upload_Handle
         }
 
     }
-
+    
     public static function init_hooks()
     {
         add_action('wp_ajax_upload_multi_file', array(__CLASS__, 'upload_multi_file'));
@@ -76,7 +81,6 @@ class ME_Upload_Handle
             $file       = $_FILES[$filename];
             $attachment = self::handle_file($file, $filename);
             $close      = intval($_REQUEST['removable']);
-
 
             if ($attachment && $filename == 'message_file') {
                 $message_data = array(
