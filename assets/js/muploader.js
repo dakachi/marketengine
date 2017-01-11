@@ -19,7 +19,7 @@
             maxwidth: 0,
             maxheight: 0,
             removable: true,
-            file : false
+            file : 0
         };
         if (options) {
             options = $.extend(setting, options);
