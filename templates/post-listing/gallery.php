@@ -22,7 +22,7 @@ $listing_gallery = !empty($_POST['listing_gallery']) ? $_POST['listing_gallery']
         ob_start();
         if($listing_gallery) {
             foreach($listing_gallery as $gallery) {
-                me_get_template('upload-file/multi-file-form', array(
+                me_get_template('upload-file/multi-image-form', array(
                     'image_id' => $gallery,
                     'filename' => 'listing_gallery',
                     'close' => true

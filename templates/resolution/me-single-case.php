@@ -77,21 +77,8 @@ $case = me_get_message($case_id);
                                             <div class="me-dispute-attachment">
                                                 <div class="me-row">
                                                     <div class="me-col-lg-10 me-col-md-9">
-                                                        <!-- <p>
-                                                            <label class="me-dispute-attach-file" for="me-dispute-file">
-                                                                <input id="me-dispute-file" type="file">
-                                                                <i class="icon-me-attach"></i>
-                                                                <?php _e("Add attachment", "enginethemes"); ?>
-                                                            </label>
-                                                        </p>
-                                                        <ul class="me-list-dispute-attach">
-                                                            <li>abc.file<span class="me-remove-dispute-attach"><i class="icon-me-remove"></i></span></li>
-                                                            <li>ksafdkl.sf<span class="me-remove-dispute-attach"><i class="icon-me-remove"></i></span></li>
-                                                            <li>Kronog backls<span class="me-remove-dispute-attach"><i class="icon-me-remove"></i></span></li>
-                                                            <li>con duong mua dnoh nkd.sf<span class="me-remove-dispute-attach"><i class="icon-me-remove"></i></span></li>
-                                                        </ul> -->
                                                         <?php 
-                                                            me_get_template('upload-file/upload-form_2', array(
+                                                            me_get_template('upload-file/upload-file-form', array(
                                                                 'id' => 'dispute-file',
                                                                 'name' => 'dispute_file',
                                                                 'source' => '',

@@ -23,6 +23,7 @@ class ME_Upload_Handle
             'dispute_file'    => 'jpg,jpeg,gif,png,pdf,doc,docx,xlsx,xls,zip',
             'message_file'    => 'jpg,jpeg,gif,png,pdf,doc,docx,xlsx,xls,zip',
             'listing_gallery' => 'jpg,jpeg,gif,png',
+            'user_avatar' => 'jpg,jpeg,gif,png',
             'default'         => 'jpg,jpeg,gif,png',
         );
 
