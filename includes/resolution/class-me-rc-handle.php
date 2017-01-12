@@ -338,7 +338,29 @@ class ME_RC_Form_Handle
 
 
     public function escalate_notify_buyer($case) {
+        $subject = __("Your dispute has been escalated.", "enginethemes");
+        $args    = array(
+            'display_name' => get_the_author_meta('display_name', $dispute->receiver),
+            'buyer_name'   => get_the_author_meta('display_name', $dispute->sender),
+            'blogname'     => get_bloginfo('blogname'),
+            'dispute_link' => me_rc_dispute_link($dispute->ID),
+        );
+        // get dispute mail content from template
+        ob_start();
+        me_get_template('resolution/emails/close-dispute', $args);
+        $close_dispute_mail_content = ob_get_clean();
 
+        $user = get_userdata($dispute->receiver);
+        /**
+         * Filter user close dispute email content
+         *
+         * @param String $close_dispute_mail_content
+         * @param Object $dispute The dispute object
+         *
+         * @since 1.1
+         */
+        $close_dispute_mail_content = apply_filters('marketengine_close_dispute_mail_content', $close_dispute_mail_content, $dispute);
+        return wp_mail($user->user_email, $subject, $close_dispute_mail_content);
     }
 
     public function escalate_notify_seller($case) {
