@@ -96,11 +96,11 @@ me_print_notices();
                 </div>
                 <div class="me-col-md-6">
                     <div class="me-disputed-escalate">
-                        <a href="#">
-                            Escalate
+                        <a href="<?php echo add_query_arg('action', 'escalate'); ?>">
+                            <?php _e("Escalate", "enginethemes"); ?>
                         </a>
                         <p>
-                            In case you totally agree with what the Seller offer, you can close this dispute. Once the dispute is closed, it cannot be re-opened.
+                            <?php _e("In case you don't agree with the seller or cannot negotiate with him, press Escalate to let the Admin arbitrates.", "enginethemes"); ?>
                         </p>
                     </div>
                 </div>
@@ -133,8 +133,8 @@ me_print_notices();
                 </div>
                 <div class="me-col-md-6">
                     <div class="me-disputed-escalate">
-                        <a href="#"><?php _e("Escalate", "enginethemes"); ?></a>
-                        <p><?php _e("In case you totally agree with what the Seller offer, you can close this dispute. Once the dispute is closed, it cannot be re-opened.", "enginethemes"); ?></p>
+                        <a href="<?php echo add_query_arg('action', 'escalate'); ?>"><?php _e("Escalate", "enginethemes"); ?></a>
+                        <p><?php _e(" In case the Buyer has excessive request or both of you cannot negotiate, press Escalate to let the Admin arbitrates.", "enginethemes"); ?></p>
                     </div>
                 </div>
             </div>
