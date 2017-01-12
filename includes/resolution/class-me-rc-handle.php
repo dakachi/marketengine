@@ -319,7 +319,6 @@ class ME_RC_Form_Handle
             return new WP_Error('permission_denied', __("You do not have permission to escalate case.", "enginethemes"));
         }
 
-        // kiem tra content message
         if(empty($case_data['post_content'])) {
             return new WP_Error('permission_denied', __("The escalte content is required.", "enginethemes"));
         }
@@ -328,19 +327,25 @@ class ME_RC_Form_Handle
         self::add_dispute_revision('me-escalated', $case);
         self::debate($case_data);
         // gui mail
+        if($case->sender == $current_user_id) {
+            self::escalate_notify_seller($case);
+        }else {
+            self::escalate_notify_buyer($case)
+        }
 
+        self::escalate_notify_admin($case);
     }
 
 
-    public function escalate_notify_buyer() {
+    public function escalate_notify_buyer($case) {
 
     }
 
-    public function escalate_notify_seller() {
+    public function escalate_notify_seller($case) {
 
     }
 
-    public function escalate_notify_admin() {
+    public function escalate_notify_admin($case) {
         
     }
 
