@@ -1,5 +1,5 @@
 <div class="me-escalate-form">
-	<form id="me-escalate-form" action="">
+	<form id="me-escalate-form" method="post" action="<?php echo add_query_arg('action', 'escalate') ?>">
 		<div class="me-escalate-box">
 			<h3><?php _e("You tell us so far:", "enginethemes"); ?></h3>
 			<ol class="">
@@ -10,7 +10,7 @@
 		</div>
 		<div class="me-escalate-box">
 			<h3><?php _e("Please tell more about your problem", "enginethemes"); ?></h3>
-			<textarea name="content" id="escalate-content" cols="30" rows="10"></textarea>
+			<textarea name="post_content" id="escalate-content" cols="30" rows="10"></textarea>
 		</div>
 		<div class="me-escalate-box">
 			<h3><?php _e('Attachments (optional)', 'enginethemes'); ?></h3>
@@ -40,12 +40,12 @@
 		        ));
 		    ?>
 		</div>
-		
-		<?php wp_nonce_field('me-escalate_case'); ?>
-		<?php wp_nonce_field('marketengine', 'me-dispute-file'); ?>
 
 		<div class="me-escalate-submit">
-			<input type="submit" class="me-escalate-submit-btn">
+			<?php wp_nonce_field('me-escalate_case'); ?>
+			<?php wp_nonce_field('marketengine', 'me-dispute-file'); ?>
+			<input type="hidden" name="dispute" value="<?php echo $case->ID; ?>" />
+			<input type="submit" class="me-escalate-submit-btn" value="<?php _e("Submit", "enginethemes"); ?>">
 		</div>
 		<a href="<?php echo remove_query_arg( 'action' ); ?>" class="me-backlink">
 			&lt; <?php _e("Discard escalate", "enginethemes"); ?>

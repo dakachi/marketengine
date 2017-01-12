@@ -309,7 +309,39 @@ class ME_RC_Form_Handle
 
     public static function escalate($case_data)
     {
+        $case = me_get_message($case_data['dispute']);
+        if(!$case) {
+            return new WP_Error('invalid_case', __("Invalid case id.", "enginethemes"));
+        }
 
+        $current_user_id  = get_current_user_id();
+        if($current_user_id  != $case->sender && $current_user_id != $case->receiver) {
+            return new WP_Error('permission_denied', __("You do not have permission to escalate case.", "enginethemes"));
+        }
+
+        // kiem tra content message
+        if(empty($case_data['post_content'])) {
+            return new WP_Error('permission_denied', __("The escalte content is required.", "enginethemes"));
+        }
+
+        $case_id = me_update_message(array('ID' => $case->ID, 'post_status' => 'me-escalated'));
+        self::add_dispute_revision('me-escalated', $case);
+        self::debate($case_data);
+        // gui mail
+
+    }
+
+
+    public function escalate_notify_buyer() {
+
+    }
+
+    public function escalate_notify_seller() {
+
+    }
+
+    public function escalate_notify_admin() {
+        
     }
 
     public static function resolve($case_data)

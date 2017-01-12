@@ -17,6 +17,15 @@ switch ($message->post_status) :
 		</p>
 	<?php
 		break;
+	case 'me-escalated':
+		$name = get_the_author_meta( 'display_name', $message->sender );
+	?>
+		<p>			
+			<?php printf(__("<b>%s</b> <i>has escalated the dipute to admin.</i>", "enginethemes"), $name); ?>
+		</p>
+	<?php
+		break;
+
 	case 'me-open':
 		$name = get_the_author_meta( 'display_name', $message->sender );
 	?>
