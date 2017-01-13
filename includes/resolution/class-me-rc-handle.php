@@ -333,42 +333,105 @@ class ME_RC_Form_Handle
             self::escalate_notify_buyer($case);
         }
 
-        self::escalate_notify_admin($case);
+        self::escalate_notify_admin($case, $current_user_id);
     }
 
 
-    public function escalate_notify_buyer($case) {
+    public static function escalate_notify_buyer($dispute) {
         $subject = __("Your dispute has been escalated.", "enginethemes");
+        $transaction = me_get_order($dispute->post_parent);
+        $buyer_id = $dispute->sender;
+        $seller_id = $dispute->receiver;
+
         $args    = array(
-            'display_name' => get_the_author_meta('display_name', $dispute->receiver),
-            'buyer_name'   => get_the_author_meta('display_name', $dispute->sender),
+            'display_name' => get_the_author_meta('display_name', $buyer_id),
+            'seller_name'   => get_the_author_meta('display_name', $seller_id),
             'blogname'     => get_bloginfo('blogname'),
             'dispute_link' => me_rc_dispute_link($dispute->ID),
+            'order_link'   => $transaction->get_order_detail_url(),
+            'order'        => $transaction,
+            'order_id'     => $transaction->id,
         );
         // get dispute mail content from template
         ob_start();
-        me_get_template('resolution/emails/close-dispute', $args);
-        $close_dispute_mail_content = ob_get_clean();
+        me_get_template('resolution/emails/escalate-to-buyer', $args);
+        $escalate_buyer_mail_content = ob_get_clean();
 
-        $user = get_userdata($dispute->receiver);
+        $user = get_userdata($seller_id);
         /**
-         * Filter user close dispute email content
+         * Filter user escalate dispute email to buyer content
          *
-         * @param String $close_dispute_mail_content
+         * @param String $escalate_buyer_mail_content
          * @param Object $dispute The dispute object
          *
          * @since 1.1
          */
-        $close_dispute_mail_content = apply_filters('marketengine_close_dispute_mail_content', $close_dispute_mail_content, $dispute);
-        return wp_mail($user->user_email, $subject, $close_dispute_mail_content);
+        $escalate_buyer_mail_content = apply_filters('marketengine_escalate_to_buyer_mail_content', $escalate_buyer_mail_content, $dispute);
+        return wp_mail($user->user_email, $subject, $escalate_buyer_mail_content);
     }
 
-    public function escalate_notify_seller($case) {
-
-    }
-
-    public function escalate_notify_admin($case) {
+    public static function escalate_notify_seller($dispute) {
+        $subject = __("Your dispute has been escalated.", "enginethemes");
+        $transaction = me_get_order($dispute->post_parent);
+        $buyer_id = $dispute->sender;
+        $seller_id = $dispute->receiver;
         
+        $args    = array(
+            'display_name' => get_the_author_meta('display_name', $seller_id),
+            'seller_name'   => get_the_author_meta('display_name', $buyer_id),
+            'blogname'     => get_bloginfo('blogname'),
+            'dispute_link' => me_rc_dispute_link($dispute->ID),
+            'order_link'   => $transaction->get_order_detail_url(),
+            'order'        => $transaction,
+            'order_id'     => $transaction->id,
+        );
+        // get dispute mail content from template
+        ob_start();
+        me_get_template('resolution/emails/escalate-to-seller', $args);
+        $escalate_seller_mail_content = ob_get_clean();
+
+        $user = get_userdata($buyer_id);
+        /**
+         * Filter user escalate to seller dispute email content
+         *
+         * @param String $escalate_seller_mail_content
+         * @param Object $dispute The dispute object
+         *
+         * @since 1.1
+         */
+        $escalate_seller_mail_content = apply_filters('marketengine_escalate_to_seller_mail_content', $escalate_seller_mail_content, $dispute);
+        return wp_mail($user->user_email, $subject, $escalate_seller_mail_content);
+    }
+
+    public static function escalate_notify_admin($dispute, $sender) {
+        $subject = __("Your dispute has been escalated.", "enginethemes");
+        $transaction = me_get_order($dispute->post_parent);
+
+        $args    = array(
+            'display_name' => 'Admin',
+            'sender_name'   => get_the_author_meta('display_name', $sender),
+            'blogname'     => get_bloginfo('blogname'),
+            'dispute_link' => me_rc_dispute_link($dispute->ID),
+            'order_link'   => $transaction->get_order_detail_url(),
+            'order'        => $transaction,
+            'order_id'     => $transaction->id,
+        );
+        // get dispute mail content from template
+        ob_start();
+        me_get_template('resolution/emails/escalate-to-admin', $args);
+        $escalate_admin_mail_content = ob_get_clean();
+
+        $admin_email = get_option('admin_email');
+        /**
+         * Filter user escalate dispute email content
+         *
+         * @param String $escalate_dispute_mail_content
+         * @param Object $dispute The dispute object
+         *
+         * @since 1.1
+         */
+        $escalate_admin_mail_content = apply_filters('marketengine_escalate_to_admin_mail_content', $escalate_admin_mail_content, $dispute);
+        return wp_mail($admin_email, $subject, $escalate_admin_mail_content);
     }
 
     public static function resolve($case_data)

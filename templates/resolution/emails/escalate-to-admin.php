@@ -12,10 +12,9 @@ if (!defined('ABSPATH')) {
 }
 
 ?>
-Hi [display_name], 
-
-Seller[seller_name]/Buyer [buyer_name] has escalated the dispute for his/her transactions [order details_link]. 
-Please review it here and arbitrate the dispute based on the detailed information and materials involved in this transaction which are provided by both parties.
-
-Regards, 
-[blogname]
+<p><?php printf(__("Hi %s,", "enginethemes"), $display_name);?></p>
+<p><?php printf(__("%s has escalated the dispute for the transaction: <a href='%s' >%d</a>. ", "enginethemes"), $sender_name, $order_link, $order_id); ?>
+<?php _e("Please review it here and arbitrate the dispute based on the detailed information and materials involved in this transaction which are provided by both parties.", "enginethemes"); ?>
+<br/><a href='<?php echo $dispute_link; ?>' ><?php echo $dispute_link; ?></a>
+</p>
+<p><?php printf(__("Regards, <br/> %s", "enginethemes"), $blogname);?></p>
