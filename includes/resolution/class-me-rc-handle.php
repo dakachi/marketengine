@@ -330,7 +330,7 @@ class ME_RC_Form_Handle
         if($case->sender == $current_user_id) {
             self::escalate_notify_seller($case);
         }else {
-            self::escalate_notify_buyer($case)
+            self::escalate_notify_buyer($case);
         }
 
         self::escalate_notify_admin($case);
