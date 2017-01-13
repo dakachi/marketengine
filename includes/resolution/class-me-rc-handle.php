@@ -411,7 +411,7 @@ class ME_RC_Form_Handle
     }
 
     public static function escalate_notify_admin($dispute, $sender) {
-        $subject = sprintf(__("The dispute #%d has been escalated.", "enginethemes"), $case->ID);
+        $subject = sprintf(__("Dispute on the transaction %d has been escalated.", "enginethemes"), $dispute->post_parent);
         $transaction = me_get_order($dispute->post_parent);
 
         $args    = array(
