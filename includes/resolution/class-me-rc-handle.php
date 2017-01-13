@@ -324,6 +324,8 @@ class ME_RC_Form_Handle
         }
 
         $case_id = me_update_message(array('ID' => $case->ID, 'post_status' => 'me-escalated'));
+        me_update_message_meta($case_id, '_escalated_by', $current_user_id);
+        
         self::add_dispute_revision('me-escalated', $case);
         self::debate($case_data);
         // gui mail

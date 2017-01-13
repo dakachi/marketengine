@@ -76,70 +76,29 @@ me_print_notices();
         </div>
     </div>
 
-    <?php if( !in_array($case->post_status, array('me-escalated' , 'me-closed'))  ) : ?>
+    <?php if( $case->post_status !=  'me-closed' ) : ?>
     
         <div class="me-disputed-action">
 
-        <?php if(get_current_user_id() == $case->sender) : ?>
+            <?php 
 
-            <div class="me-row">
-                <div class="me-col-md-6">
-                    <div class="me-disputed-close">
-                        <a onclick="if(!confirm('<?php _e("Are you sure you want to close this dispute?", "enginethemes"); ?>')) return false;" 
-                        href="<?php echo wp_nonce_url(add_query_arg(array('close' => $case->ID) ), 'me-close_dispute' ,'wpnonce' ) ?>">
-                            <?php _e("Close dispute", "enginethemes"); ?>
-                        </a>
-                        <p>
-                            <?php _e("In case you totally agree with what the Seller offer, you can close this dispute. Once the dispute is closed, it cannot be re-opened.", "enginethemes"); ?>
-                        </p>
-                    </div>
-                </div>
-                <div class="me-col-md-6">
-                    <div class="me-disputed-escalate">
-                        <a href="<?php echo add_query_arg('action', 'escalate'); ?>">
-                            <?php _e("Escalate", "enginethemes"); ?>
-                        </a>
-                        <p>
-                            <?php _e("In case you don't agree with the seller or cannot negotiate with him, press Escalate to let the Admin arbitrates.", "enginethemes"); ?>
-                        </p>
-                    </div>
-                </div>
-            </div>
+            if($case->post_status == 'me-open') {
+                me_get_template('resolution/case-details/case-open', array('case' => $case));
+            }
 
-        <?php else : ?>
+            if($case->post_status == 'me-waiting') {
+                me_get_template('resolution/case-details/case-waiting', array('case' => $case));
+            }
 
-            <div class="me-row">
-                <div class="me-col-md-6">
+            if($case->post_status == 'me-escalated') {
+                me_get_template('resolution/case-details/case-escalated', array('case' => $case));
+            }
 
-                <?php if($case->post_status == 'me-waiting') : ?>
+            if($case->post_status == 'me-resolved') {
+                me_get_template('resolution/case-details/case-open', array('case' => $case));
+            }
 
-                    <div class="me-disputed-request-close">
-                        <h4><?php printf(__("Waiting for %s's respond", "enginethemes"), get_the_author_meta( 'display_name', $case->sender)); ?></h4>
-                        <p><?php _e("You have already sent request to close dispute to the Buyer. Whenever the Buyer accept your request, the dispute will be closed.", "enginethemes"); ?></p>
-                    </div>
-
-                <?php else : ?>
-
-                    <div class="me-disputed-close">
-                        <a onclick="if(!confirm('<?php _e("Are you sure you want to remind buyer of closing this dispute??", "enginethemes"); ?>')) return false;" 
-                        href="<?php echo wp_nonce_url(add_query_arg(array('request-close' => $case->ID) ), 'me-request_close_dispute' ,'wpnonce' ) ?>">
-                            <?php _e("Request To Close", "enginethemes"); ?>
-                        </a>
-                        <p><?php _e("In case both the Buyer and you agree with the deal, you can request to finish the dispute.", "enginethemes"); ?></p>
-                    </div>
-
-                <?php endif; ?>
-
-                </div>
-                <div class="me-col-md-6">
-                    <div class="me-disputed-escalate">
-                        <a href="<?php echo add_query_arg('action', 'escalate'); ?>"><?php _e("Escalate", "enginethemes"); ?></a>
-                        <p><?php _e(" In case the Buyer has excessive request or both of you cannot negotiate, press Escalate to let the Admin arbitrates.", "enginethemes"); ?></p>
-                    </div>
-                </div>
-            </div>
-
-        <?php endif; ?>
+            ?>
 
         </div>
 
