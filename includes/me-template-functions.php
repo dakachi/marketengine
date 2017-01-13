@@ -906,7 +906,7 @@ add_action('marketengine_transaction_items_details', 'me_transaction_items_headi
 function me_transaction_items_status($transaction)
 {
     $order_status = get_post_status($transaction->id);
-    me_get_template('purchases/order-status', array('order_status' => $order_status));
+    me_get_template('purchases/order-status', array('order_status' => $order_status, 'transaction' => $transaction));
 }
 add_action('marketengine_transaction_items_details', 'me_transaction_items_status', 11);
 
