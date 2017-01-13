@@ -72,7 +72,8 @@ class ME_RC_Form_Handle
         $data    = array_merge($data, $case_data);
         $case_id = self::create_dispute($data, $transaction);
 
-        do_action('marketengine_after_dispute', $case_id, $transaction->id, $transaction);
+        me_dispute_order($transaction->id);
+        do_action('marketengine_after_dispute', $transaction->id, $case_id, $transaction);
 
         return $case_id;
     }
@@ -276,6 +277,8 @@ class ME_RC_Form_Handle
         self::add_dispute_revision('me-closed', $dispute);
         self::close_notify($dispute);
 
+        me_resolve_order($dispute->post_parent);
+
         return $case_id;
 
     }
@@ -325,7 +328,7 @@ class ME_RC_Form_Handle
 
         $case_id = me_update_message(array('ID' => $case->ID, 'post_status' => 'me-escalated'));
         me_update_message_meta($case_id, '_escalated_by', $current_user_id);
-        
+
         self::add_dispute_revision('me-escalated', $case);
         self::debate($case_data);
         // gui mail
@@ -443,7 +446,9 @@ class ME_RC_Form_Handle
         if (!current_user_can('manage_options')) {
             return new WP_Error('permission_denied', __("You do not have permission to resolve case.", "enginethemes"));
         }
+        $dispute = me_get_message($case_data['dispute']);
         // subject: Resolved: The dispute on your transaction
+        me_resolve_order($dispute->post_parent);
     }
 
     public static function add_dispute_revision($state, $dispute)

@@ -134,7 +134,7 @@ function me_active_order($order_id) {
     do_action('marketengine_active_order', $order_id);
 }
 
-function me_dispute_order($case_id, $order_id) {
+function me_dispute_order($order_id) {
     $post_status = get_post_status($order_id);
 
     if ($post_status == 'me-disputed') {
@@ -148,7 +148,6 @@ function me_dispute_order($case_id, $order_id) {
 
     do_action('marketengine_dispute_order', $order_id);
 }
-add_action('marketengine_after_dispute', 'me_dispute_order', 10, 2);
 
 /**
  * Close order to finish the transaction process
@@ -171,6 +170,31 @@ function me_close_order($order_id) {
     ));
 
     do_action('marketengine_close_order', $order_id);
+
+    return $order_id;
+}
+
+/**
+ * Resolved order to finish the transaction process
+ *
+ * @param int $order_id The order id
+ *
+ * @return int $order_id
+ * @since 1.1
+ */
+function me_resolve_order($order_id) {
+    $post_status = get_post_status($order_id);
+
+    if ('me-resolved' == $post_status) {
+        return;
+    }
+
+    $order_id = wp_update_post(array(
+        'ID'          => $order_id,
+        'post_status' => 'me-resolved',
+    ));
+
+    do_action('marketengine_resolve_order', $order_id);
 
     return $order_id;
 }
