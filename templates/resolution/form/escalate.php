@@ -1,4 +1,5 @@
 <div class="me-escalate-form">
+	<?php me_print_notices(); ?>
 	<form id="me-escalate-form" method="post" action="<?php echo add_query_arg('action', 'escalate') ?>">
 		<div class="me-escalate-box">
 			<h3><?php _e("You tell us so far:", "enginethemes"); ?></h3>

@@ -69,9 +69,11 @@ class ME_RC_Form
             $case = ME_RC_Form_Handle::escalate($_POST);
             if (is_wp_error($case)) {
                 me_wp_error_to_notices($case);
+            }else {
+                wp_redirect(me_rc_dispute_link($case));
+                exit;    
             }
-            wp_redirect(me_rc_dispute_link($case));
-            exit;
+            
         }
     }
 
