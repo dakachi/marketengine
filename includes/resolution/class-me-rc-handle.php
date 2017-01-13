@@ -334,6 +334,8 @@ class ME_RC_Form_Handle
         }
 
         self::escalate_notify_admin($case, $current_user_id);
+
+        return $case_id;
     }
 
 
@@ -404,7 +406,7 @@ class ME_RC_Form_Handle
     }
 
     public static function escalate_notify_admin($dispute, $sender) {
-        $subject = __("Your dispute has been escalated.", "enginethemes");
+        $subject = sprintf(__("The dispute #%d has been escalated.", "enginethemes"), $case->ID);
         $transaction = me_get_order($dispute->post_parent);
 
         $args    = array(
@@ -439,6 +441,7 @@ class ME_RC_Form_Handle
         if (!current_user_can('manage_options')) {
             return new WP_Error('permission_denied', __("You do not have permission to resolve case.", "enginethemes"));
         }
+        // subject: Resolved: The dispute on your transaction
     }
 
     public static function add_dispute_revision($state, $dispute)
