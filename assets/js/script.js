@@ -199,6 +199,9 @@ jQuery(document).ready(function($) {
 		}
 	});
 
+	/* 
+	Move dispute.js
+	
 	$('.me-switch-tab-filter-1, .me-switch-tab-filter-2').on('click', function() {
 		$('.me-resolution').toggleClass('me-rslt-filter');
 	});
@@ -222,5 +225,6 @@ jQuery(document).ready(function($) {
 		$(document.getElementById(get_refund_block_id)).addClass('active');
 		$('.me-solution-item').attr('checked', false);
 	});
+	*/
 });
 
