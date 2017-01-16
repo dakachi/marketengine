@@ -18,15 +18,15 @@
 <div class="me-resolution-filter">
 	<form id="me-resolution-filter-form" action="<?php me_dispute_case_filter_form_action(); ?>">
  		<div class="me-row">
-			<div class="me-col-md-8">
+			<div class="me-col-md-5">
 				<div class="me-row">
-					<div class="me-col-md-4 me-col-sm-6">
+					<div class="me-col-md-5 me-col-sm-6">
 						<div class="me-status-filter">
 							<label><?php _e('Status','enginethemes'); ?></label>
 							<?php me_get_template('resolution/cases/case-status-list'); ?>
 						</div>
 					</div>
-					<div class="me-col-md-8 me-col-sm-6">
+					<div class="me-col-md-7 me-col-sm-6">
 						<div class="me-open-date-filter">
 							<label><?php _e('Open date', 'enginethemes'); ?></label>
 							<div class="me-resolution-pick">
@@ -37,7 +37,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="me-col-md-4">
+			<div class="me-col-md-7">
 				
 				<div class="me-keyword-filter">
 					<label><?php _e('Keyword', 'enginethemes'); ?></label>
