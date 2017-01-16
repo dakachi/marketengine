@@ -313,16 +313,16 @@ class ME_RC_Form_Handle
     public static function escalate($case_data)
     {
         $case = me_get_message($case_data['dispute']);
-        if(!$case) {
+        if (!$case) {
             return new WP_Error('invalid_case', __("Invalid case id.", "enginethemes"));
         }
 
-        $current_user_id  = get_current_user_id();
-        if($current_user_id  != $case->sender && $current_user_id != $case->receiver) {
+        $current_user_id = get_current_user_id();
+        if ($current_user_id != $case->sender && $current_user_id != $case->receiver) {
             return new WP_Error('permission_denied', __("You do not have permission to escalate case.", "enginethemes"));
         }
 
-        if(empty($case_data['post_content'])) {
+        if (empty($case_data['post_content'])) {
             return new WP_Error('permission_denied', __("The escalte content is required.", "enginethemes"));
         }
 
@@ -332,9 +332,9 @@ class ME_RC_Form_Handle
         self::add_dispute_revision('me-escalated', $case);
         self::debate($case_data);
         // gui mail
-        if($case->sender == $current_user_id) {
+        if ($case->sender == $current_user_id) {
             self::escalate_notify_seller($case);
-        }else {
+        } else {
             self::escalate_notify_buyer($case);
         }
 
@@ -343,16 +343,16 @@ class ME_RC_Form_Handle
         return $case_id;
     }
 
-
-    public static function escalate_notify_buyer($dispute) {
-        $subject = __("Your dispute has been escalated.", "enginethemes");
+    public static function escalate_notify_buyer($dispute)
+    {
+        $subject     = __("Your dispute has been escalated.", "enginethemes");
         $transaction = me_get_order($dispute->post_parent);
-        $buyer_id = $dispute->sender;
-        $seller_id = $dispute->receiver;
+        $buyer_id    = $dispute->sender;
+        $seller_id   = $dispute->receiver;
 
-        $args    = array(
+        $args = array(
             'display_name' => get_the_author_meta('display_name', $buyer_id),
-            'seller_name'   => get_the_author_meta('display_name', $seller_id),
+            'seller_name'  => get_the_author_meta('display_name', $seller_id),
             'blogname'     => get_bloginfo('blogname'),
             'dispute_link' => me_rc_dispute_link($dispute->ID),
             'order_link'   => $transaction->get_order_detail_url(),
@@ -377,15 +377,16 @@ class ME_RC_Form_Handle
         return wp_mail($user->user_email, $subject, $escalate_buyer_mail_content);
     }
 
-    public static function escalate_notify_seller($dispute) {
-        $subject = __("Your dispute has been escalated.", "enginethemes");
+    public static function escalate_notify_seller($dispute)
+    {
+        $subject     = __("Your dispute has been escalated.", "enginethemes");
         $transaction = me_get_order($dispute->post_parent);
-        $buyer_id = $dispute->sender;
-        $seller_id = $dispute->receiver;
-        
-        $args    = array(
+        $buyer_id    = $dispute->sender;
+        $seller_id   = $dispute->receiver;
+
+        $args = array(
             'display_name' => get_the_author_meta('display_name', $seller_id),
-            'seller_name'   => get_the_author_meta('display_name', $buyer_id),
+            'seller_name'  => get_the_author_meta('display_name', $buyer_id),
             'blogname'     => get_bloginfo('blogname'),
             'dispute_link' => me_rc_dispute_link($dispute->ID),
             'order_link'   => $transaction->get_order_detail_url(),
@@ -410,13 +411,14 @@ class ME_RC_Form_Handle
         return wp_mail($user->user_email, $subject, $escalate_seller_mail_content);
     }
 
-    public static function escalate_notify_admin($dispute, $sender) {
-        $subject = sprintf(__("Dispute on the transaction %d has been escalated.", "enginethemes"), $dispute->post_parent);
+    public static function escalate_notify_admin($dispute, $sender)
+    {
+        $subject     = sprintf(__("Dispute on the transaction %d has been escalated.", "enginethemes"), $dispute->post_parent);
         $transaction = me_get_order($dispute->post_parent);
 
-        $args    = array(
+        $args = array(
             'display_name' => 'Admin',
-            'sender_name'   => get_the_author_meta('display_name', $sender),
+            'sender_name'  => get_the_author_meta('display_name', $sender),
             'blogname'     => get_bloginfo('blogname'),
             'dispute_link' => me_rc_dispute_link($dispute->ID),
             'order_link'   => $transaction->get_order_detail_url(),
@@ -447,8 +449,59 @@ class ME_RC_Form_Handle
             return new WP_Error('permission_denied', __("You do not have permission to resolve case.", "enginethemes"));
         }
         $dispute = me_get_message($case_data['dispute']);
+        if ($dispute->post_status !== 'me-escalated') {
+            return new WP_Error('invalid_case', __("You can not resolve this case.", "enginethemes"));
+        }
+
+        if (empty($case_data['me-dispute-win'])) {
+            return new WP_Error('empty_content', __("You have to specify who is winner.", "enginethemes"));
+        }
+
+        if (empty($case_data['arbitrate_content'])) {
+            return new WP_Error('empty_content', __("The arbitrate content is required.", "enginethemes"));
+        }
+
+        $case_id = me_update_message(array('ID' => $dispute->ID, 'post_status' => 'me-resolved'));
+        me_update_message_meta($dispute->ID, '_case_winner', $case_data['me-dispute-win']);
+        me_update_message_meta($dispute->ID, '_case_arbitrate', $case_data['arbitrate_content']);
+        self::add_dispute_revision('me-resolved', $dispute);
+        self::resolve_notify($dispute);
         // subject: Resolved: The dispute on your transaction
         me_resolve_order($dispute->post_parent);
+
+        return $dispute->ID;
+    }
+
+    public static function resolve_notify($dispute)
+    {
+        $subject     = sprintf(__("Resolved: The dispute on your transaction.", "enginethemes"));
+        $transaction = me_get_order($dispute->post_parent);
+
+        $args = array(
+            'display_name' => get_the_author_meta('display_name', $dispute->sender),
+            'sender_name'  => 'Admin',
+            'blogname'     => get_bloginfo('blogname'),
+            'dispute_link' => me_rc_dispute_link($dispute->ID),
+            'order_link'   => $transaction->get_order_detail_url(),
+            'order'        => $transaction,
+            'order_id'     => $transaction->id,
+        );
+        // get dispute mail content from template
+        ob_start();
+        me_get_template('resolution/emails/escalate-to-admin', $args);
+        $escalate_admin_mail_content = ob_get_clean();
+
+        $admin_email = get_option('admin_email');
+        /**
+         * Filter user escalate dispute email content
+         *
+         * @param String $escalate_dispute_mail_content
+         * @param Object $dispute The dispute object
+         *
+         * @since 1.1
+         */
+        $escalate_admin_mail_content = apply_filters('marketengine_escalate_to_admin_mail_content', $escalate_admin_mail_content, $dispute);
+        return wp_mail($admin_email, $subject, $escalate_admin_mail_content);
     }
 
     public static function add_dispute_revision($state, $dispute)

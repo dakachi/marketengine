@@ -6,28 +6,34 @@ if (!defined('ABSPATH')) {
 
 $escalated_user = me_get_message_meta($case->ID, '_escalated_by', true);
 $escalate_user_name = get_the_author_meta( 'display_name', $escalated_user );
+$winner = empty($_POST['me-dispute-win']) ? '' : $_POST['me-dispute-win'];
 ?>
 
 <?php if(current_user_can('manage_options')) : ?>
 
-    <form id="me-dispute-arbitrate-form" action="">
+    <form id="me-dispute-arbitrate-form" action="" method="post">
         <p><?php printf(__("%s has escalated the dispute. The final result of the dispute is your adjudication.", "enginethemes"), $escalate_user_name) ?></p>
         <div class="marketengine-radio-field">
             <span><?php _e("Who would win the dispute:", "enginethemes"); ?></span>
             <div>
+                <input type="hidden" name="me-dispute-win" value="0" />
                 <label class="me-radio" for="me-dispute-win-buyer">
-                    <input class="me-receive-item-field" id="me-dispute-win-buyer" name="me-dispute-win" value="<?php echo $case->sender; ?>" type="radio" checked=true>
+                    <input <?php checked( $winner, $case->sender ); ?> class="me-receive-item-field" id="me-dispute-win-buyer" name="me-dispute-win" value="<?php echo $case->sender; ?>" type="radio" >
                     <span><?php echo get_the_author_meta( 'display_name', $case->sender ); ?> (<?php _e("Buyer", "enginethemes") ?>)</span>
                 </label>  
             </div>
             <div>
                 <label class="me-radio" for="me-dispute-win-seller">
-                    <input class="me-receive-item-field" id="me-dispute-win-seller" name="me-dispute-win" value="<?php echo $case->sender; ?>" type="radio">
+                    <input <?php checked( $winner, $case->receiver ); ?> class="me-receive-item-field" id="me-dispute-win-seller" name="me-dispute-win" value="<?php echo $case->receiver; ?>" type="radio" >
                     <span><?php echo get_the_author_meta( 'display_name', $case->receiver ); ?> (<?php _e("Seller", "enginethemes") ?>)</span>
                 </label>   
             </div>
         </div>
-        <textarea name="" id="" cols="30" rows="10"></textarea>
+        <textarea name="" id="" cols="30" rows="10" name="arbitrate_content"><?php if(isset($_POST['arbitrate_content'])) { echo $_POST['arbitrate_content']; } ?></textarea>
+            
+        <?php wp_nonce_field( 'me_arbitrate-dispute' ); ?>
+        <input type="hidden" name="dispute" value="<?php echo $case->ID; ?>">
+
         <input type="submit" class="me-arbitrate-btn" value="<?php _e("ARBITRATE", "enginethemes"); ?>">
     </form>
     
