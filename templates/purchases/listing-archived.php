@@ -12,8 +12,6 @@
 
 <?php if ( !$listing->is_available() ) : ?>
 	<p class="me-item-archive">
-	    <i class="icon-me-info-circle">
-	    </i>
-	    <?php _e('This listing has been archived.', 'enginethemes'); ?>
+	    <i class="icon-me-info-circle"></i><?php _e('This listing has been archived.', 'enginethemes'); ?>
 	</p>
 <?php endif; ?>
