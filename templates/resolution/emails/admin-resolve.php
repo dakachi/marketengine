@@ -1,8 +1,23 @@
-Hi [display_name], 
+<?php
+/**
+ * This is an email template send to user when admin resolve dispute
+ *
+ * You can modify the email by copy it to {your theme}/templates/resolution/email
+ * @since 1.1
+ */
 
-The dispute for your transaction [order details_link] has been resolved. Admin has decided [seller/buyer_name] is right. 
-You can review it here for further details.
-Thank you for your cooperation.
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
 
-Regards, 
-[blogname]
+?>
+<p><?php printf(__("Hi %s,", "enginethemes"), $display_name);?></p>
+
+<?php printf(__("The dispute for your transaction <a href='%s' >%d</a> has been resolved. Admin has decided %s is right. ", "enginethemes"), $order_link, $order_id, $winner) ?>
+<?php printf(__("You can review it <a href='%s'>here</a> for further details.", "enginethemes"), $dispute_link); ?>
+
+<p>
+<?php _e("Thank you for your cooperation.", "enginethemes"); ?> </br>
+<?php printf(__("Regards, <br/> %s", "enginethemes"), $blogname); ?>
+</p>

@@ -79,7 +79,16 @@ class ME_RC_Form
 
     public static function resolve()
     {
-
+        if (!empty($_POST['dispute']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me_arbitrate-dispute')) {
+            $case = ME_RC_Form_Handle::resolve($_POST);
+            if (is_wp_error($case)) {
+                me_wp_error_to_notices($case);
+            }else {
+                wp_redirect(me_rc_dispute_link($case));
+                exit;    
+            }
+            
+        }
     }
 
     public static function debate() {
