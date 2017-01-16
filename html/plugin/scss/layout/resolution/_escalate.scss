@@ -57,7 +57,12 @@
 		}
 	}
 }
-
+.me-escalate-about {
+	margin: 0;
+	font-size: $font_size_medium;
+	color: $color_text;
+	line-height: 1.5em;
+}
 .me-escalate-submit {
 	text-align: center;
 	.me-escalate-submit-btn {

@@ -3,12 +3,9 @@
 	<?php me_print_notices(); ?>
 	<form id="me-escalate-form" method="post" action="<?php echo add_query_arg('action', 'escalate') ?>">
 		<div class="me-escalate-box">
-			<h3><?php _e("You tell us so far:", "enginethemes"); ?></h3>
-			<ol class="">
-				<li>You already got the item</li>
-				<li>The item does not match description</li>
-				<li>You want to get full refund</li>
-			</ol>
+			<p class="me-escalate-about">You are about to escalate this dispute.<br/>
+			Admin will arbitrate based on reports and proofs from both sides.<br/>
+			Emails, images, files...all are accepted as proofs.</p>
 		</div>
 		<div class="me-escalate-box">
 			<h3><?php _e("Please tell more about your problem", "enginethemes"); ?></h3>
