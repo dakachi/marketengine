@@ -35,7 +35,4 @@ $userdata = get_userdata($related_party);
 	<div class="me-table-col me-rslt-related">
 		<?php echo $userdata->display_name; ?>
 	</div>
-	<div class="me-table-col me-rslt-amount">
-		<?php echo me_price_format($transaction->get_total()); ?>
-	</div>
 </div>
