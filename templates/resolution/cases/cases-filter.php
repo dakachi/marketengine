@@ -42,7 +42,7 @@
 				<div class="me-keyword-filter">
 					<label><?php _e('Keyword', 'enginethemes'); ?></label>
 					<div class="me-resolution-search">
-						<input type="text" placeholder="<?php _e('Search case, username...', 'enginethemes'); ?>" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>">
+						<input type="text" placeholder="<?php _e('Case number, related party', 'enginethemes'); ?>" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>">
 						<div class="me-resolution-clear-filter">
 							<a href="<?php echo me_resolution_center_url() ; ?>"><?php _e('Clear Filter', 'enginethemes'); ?></a>
 							<input class="me-resolution-filter-btn" type="submit" value="<?php _e('FILTER', 'enginethemes'); ?>">
