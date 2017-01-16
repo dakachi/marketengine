@@ -57,9 +57,9 @@ me_print_notices();
 
     <?php if( $case->post_status !=  'me-closed' ) : ?>
     
-        <div class="me-disputed-action">
+        <div class="me-disputed-action me-dispute-arbitrate">
 
-            <?php 
+            <?php
 
             if($case->post_status == 'me-open') {
                 me_get_template('resolution/case-details/case-open', array('case' => $case));

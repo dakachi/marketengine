@@ -19,7 +19,7 @@
     <div class="me-row">
         <div class="me-col-md-6">
             <div class="me-disputed-request-close">
-                <h4><?php printf(__("Waiting for %s's respond", "enginethemes"), get_the_author_meta( 'display_name', $case->sender)); ?></h4>
+                <h4><?php printf(__("Waiting for Buyer's respond", "enginethemes"), get_the_author_meta( 'display_name', $case->sender)); ?></h4>
                 <p><?php _e("You have already sent request to close dispute to the Buyer. Whenever the Buyer accept your request, the dispute will be closed.", "enginethemes"); ?></p>
             </div>
 
