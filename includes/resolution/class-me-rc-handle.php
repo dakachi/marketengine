@@ -386,7 +386,7 @@ class ME_RC_Form_Handle
 
         $args = array(
             'display_name' => get_the_author_meta('display_name', $seller_id),
-            'seller_name'  => get_the_author_meta('display_name', $buyer_id),
+            'buyer_name'  => get_the_author_meta('display_name', $buyer_id),
             'blogname'     => get_bloginfo('blogname'),
             'dispute_link' => me_rc_dispute_link($dispute->ID),
             'order_link'   => $transaction->get_order_detail_url(),
@@ -398,7 +398,7 @@ class ME_RC_Form_Handle
         me_get_template('resolution/emails/escalate-to-seller', $args);
         $escalate_seller_mail_content = ob_get_clean();
 
-        $user = get_userdata($buyer_id);
+        $user = get_userdata($seller_id);
         /**
          * Filter user escalate to seller dispute email content
          *
