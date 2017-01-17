@@ -43,7 +43,6 @@ switch ($file_type['ext']) {
 ?>
 
 <li class="me-item-img" title="<?php _e("Drag to sort", "enginethemes"); ?>">
-<<<<<<< HEAD
 	<span class="me-gallery-img">
 	    <input type="hidden" name="<?php echo esc_attr($filename); ?>[]" value="<?php echo esc_attr($image_id) ?>">
 	    <?php if(isset($image_url) && !empty($image_url)) : ?>
@@ -58,8 +57,4 @@ switch ($file_type['ext']) {
 		<?php echo $file_name; ?>
 		<a class="me-delete-img remove"></a>
 	</span>
-=======
-	<input type="hidden" name="<?php echo esc_attr($filename); ?>[]" value="<?php echo esc_attr($image_id) ?>">
-	<?php echo $file_name; ?><a class="me-delete-img remove"></a>
->>>>>>> a26336fe937410259138e42b367108d7c1aff378
 </li>
