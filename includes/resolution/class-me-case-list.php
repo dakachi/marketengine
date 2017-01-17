@@ -16,22 +16,22 @@ class ME_Case_List extends WP_List_Table
     {
 
         parent::__construct(array(
-            'singular' => __('Customer', 'sp'), //singular name of the listed records
-            'plural'   => __('Customers', 'sp'), //plural name of the listed records
+            'singular' => __('Case', 'enginethemes'), //singular name of the listed records
+            'plural'   => __('Cases', 'enginethemes'), //plural name of the listed records
             'ajax'     => false, //does this table support ajax?
         ));
 
     }
 
     /**
-     * Retrieve customers data from the database
+     * Retrieve cases data from the database
      *
      * @param int $per_page
      * @param int $page_number
      *
      * @return mixed
      */
-    public static function get_customers($per_page = 5, $page_number = 1)
+    public static function get_cases($per_page = 20, $page_number = 1)
     {
 
         global $wpdb;
@@ -52,18 +52,18 @@ class ME_Case_List extends WP_List_Table
     }
 
     /**
-     * Delete a customer record.
+     * Delete a case record.
      *
-     * @param int $id customer ID
+     * @param int $id case ID
      */
-    public static function delete_customer($id)
+    public static function delete_case($id)
     {
         global $wpdb;
 
         $wpdb->delete(
             "{$wpdb->prefix}marketengine_message_item",
-            ['ID' => $id],
-            ['%d']
+            array('ID' => $id),
+            array('%d')
         );
     }
 
@@ -76,7 +76,7 @@ class ME_Case_List extends WP_List_Table
     {
         global $wpdb;
 
-        $sql = "SELECT COUNT(*) FROM {$wpdb->prefix}marketengine_message_item";
+        $sql = "SELECT COUNT(*) FROM {$wpdb->prefix}marketengine_message_item WHERE post_type = 'dispute'";
 
         return $wpdb->get_var($sql);
     }
@@ -84,7 +84,7 @@ class ME_Case_List extends WP_List_Table
     /** Text displayed when no customer data is available */
     public function no_items()
     {
-        _e('No case avaliable.', 'enginethemes');
+        _e('No cases avaliable.', 'enginethemes');
     }
 
     /**
@@ -99,19 +99,24 @@ class ME_Case_List extends WP_List_Table
     {
         switch ($column_name) {
             case 'case':
-            $case_link = '<a href="'. me_rc_dispute_link($item['ID']) . '">#' .$item['ID'] .'</a>';
-            $author_link  = '<a href="' . get_author_posts_url( $item['sender'] ) . '">' . get_the_author_meta( 'display_name', $item['sender'] ) . '</a>';
-            printf(__("%s by %s", "enginethemes"), $case_link, $author_link);
-            break;
+	            $case_link = '<a href="'. me_rc_dispute_link($item['ID']) . '">#' .$item['ID'] .'</a>';
+	            $author_link  = '<a href="' . get_author_posts_url( $item['sender'] ) . '">' . get_the_author_meta( 'display_name', $item['sender'] ) . '</a>';
+	            printf(__("%s by %s", "enginethemes"), $case_link, $author_link);
+	            break;
             case 'status':
                 echo me_dispute_status_label($item['post_status']);
                 break;
             case 'date' :
              	echo date_i18n( get_option( 'date_format' ), strtotime($item['post_date']) );
              	break;
-
-            default:
-                return ''; //Show the whole array for troubleshooting purposes
+            case 'actions' :
+            	echo '<span>' .__("View", "enginethemes"). '</span>';
+            	?>
+            	<?php 
+            	break;
+            case 'issue' :
+            	echo '<span>' .__("Dispute Order", "enginethemes"). '</span>';
+            	break;
         }
     }
 
@@ -177,8 +182,8 @@ class ME_Case_List extends WP_List_Table
     public function get_sortable_columns()
     {
         $sortable_columns = array(
-            'status' => array(__("Status", "enginethemes"), true),
-            'case' => array('Case', false),
+            // 'status' => array(__("Status", "enginethemes"), true),
+            'date' => array('post_date', false),
         );
 
         return $sortable_columns;
@@ -209,7 +214,7 @@ class ME_Case_List extends WP_List_Table
         /** Process bulk action */
         $this->process_bulk_action();
 
-        $per_page     = $this->get_items_per_page('customers_per_page', 5);
+        $per_page     = $this->get_items_per_page('cases_per_page', 20);
         $current_page = $this->get_pagenum();
         $total_items  = self::record_count();
 
@@ -218,7 +223,7 @@ class ME_Case_List extends WP_List_Table
             'per_page'    => $per_page, //WE have to determine how many items to show on a page
         ));
 
-        $this->items = self::get_customers($per_page, $current_page);
+        $this->items = self::get_cases($per_page, $current_page);
     }
 
     public function process_bulk_action()
@@ -318,9 +323,9 @@ class SP_Plugin
 
         $option = 'per_page';
         $args   = array(
-            'label'   => 'Customers',
-            'default' => 5,
-            'option'  => 'customers_per_page',
+            'label'   => __("Cases", "enginethemes"),
+            'default' => 20,
+            'option'  => 'cases_per_page',
         );
 
         add_screen_option($option, $args);
