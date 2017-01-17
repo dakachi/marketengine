@@ -31,7 +31,6 @@ if (!defined('ABSPATH')) {
 
 		<?php  do_action('marketengine_order_extra_sidebar', $transaction);  ?>
 
-
 	</div>
 
 	<?php  do_action('marketengine_order_extra_end', $transaction);  ?>
