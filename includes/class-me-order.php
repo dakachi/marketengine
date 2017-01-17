@@ -145,7 +145,7 @@ class ME_Order {
         }else {
             $post = $order_id;
         }
-
+        
         if(!$post || $post->post_type != 'me_order') return false;
 
         foreach (get_object_vars($post) as $key => $value) {

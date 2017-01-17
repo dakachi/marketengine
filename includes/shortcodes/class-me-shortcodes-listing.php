@@ -24,20 +24,19 @@ class ME_Shortcodes_Listing
         }
 
         ob_start();
-        $listing_id = get_query_var('listing-id');
-        $listing = me_get_listing($listing_id);
-        if($listing) {
+        $listing_id = absint(get_query_var('listing-id'));
+        $listing    = me_get_listing($listing_id);
+        if ($listing) {
             $seller = $listing->get_author() == get_current_user_id();
 
-            if( !$seller ) {
+            if (!$seller) {
                 return load_template(get_404_template());
             }
 
             me_get_template('post-listing/edit-listing', array('listing' => $listing));
             $content = ob_get_clean();
             return $content;
-        }
-        else {
+        } else {
             return load_template(get_404_template());
         }
     }
@@ -45,7 +44,7 @@ class ME_Shortcodes_Listing
     public static function the_listing()
     {
         ob_start();
-        query_posts( array('post_type' => 'listing', 'post_status' => 'publish', 'paged' => get_query_var( 'page' )) );
+        query_posts(array('post_type' => 'listing', 'post_status' => 'publish', 'paged' => get_query_var('page')));
         me_get_template('listing-list');
         $content = ob_get_clean();
         wp_reset_query();

@@ -36,7 +36,7 @@ class ME_Shortcodes_Transaction {
     }
 
     public static function cancel_order() {
-        $order_id = get_query_var('order-id');
+        $order_id = absint( get_query_var('order-id') );
         if ($order_id) {
             $order = new ME_Order($order_id);
             ob_start();
@@ -54,7 +54,7 @@ class ME_Shortcodes_Transaction {
         }
 
         if (!empty($_GET['inquiry_id'])) {
-            $inquiry_id = $_GET['inquiry_id'];
+            $inquiry_id = absint( $_GET['inquiry_id'] );
             $inquiry    = me_get_message($inquiry_id);
 
             if ($user_id != $inquiry->sender && $user_id != $inquiry->receiver) {
