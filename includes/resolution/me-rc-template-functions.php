@@ -10,9 +10,9 @@ if (!defined('ABSPATH')) {
 function me_rc_dispute_button($transaction) {
 	$dispute_time_limit = $transaction->get_dispute_time_limit() ;
 	if ( $transaction->post_author == get_current_user_id() && 'me-pending' !== $transaction->post_status && $dispute_time_limit) {
-		echo '<div class="me-hidden-sm me-hidden-xs">';
+		// echo '<div class="me-hidden-sm me-hidden-xs">';
 		me_get_template('resolution/order/dispute-button', array('transaction' => $transaction, 'dispute_time_limit' => $dispute_time_limit));
-		echo '</div>';
+		// echo '</div>';
 	}
 }
 add_action( 'marketengine_order_extra_content', 'me_rc_dispute_button', 11);
@@ -34,9 +34,9 @@ function me_rc_center_link($transaction) {
  * @since 1.1
  */
 function me_rc_center_desktop_link($transaction) {
-	echo '<div class="me-hidden-sm me-hidden-xs">';
+	// echo '<div class="me-hidden-sm me-hidden-xs">';
 	me_rc_center_link($transaction);
-	echo '</div>';
+	// echo '</div>';
 }
 add_action( 'marketengine_order_extra_content', 'me_rc_center_desktop_link', 11);
 
@@ -52,16 +52,16 @@ function me_rc_mobile_dispute_button($transaction) {
 		echo '</div>';
 	}
 }
-add_action( 'marketengine_order_extra_end', 'me_rc_mobile_dispute_button', 11);
+// add_action( 'marketengine_order_extra_end', 'me_rc_mobile_dispute_button', 11);
 
 /**
  * Render order resolution center link
  * @since 1.1
  */
 function me_rc_center_mobile_link($transaction) {
-	echo '<div class="me-visible-sm me-visible-xs">';
+	// echo '<div class="me-visible-sm me-visible-xs">';
 	me_rc_center_link($transaction);
-	echo '</div>';
+	// echo '</div>';
 }
 add_action( 'marketengine_order_extra_end', 'me_rc_center_mobile_link', 11);
 
