@@ -18,7 +18,9 @@
 .me-transaction-dispute {
 	position: relative;
 	background: #FFF;
+	border: 1px solid $color_border_base;
 	@include box-shadow(0, 2px, 15px, 0, rgba($color_box_shadow, 1));
+	border-radius: $border_radius_base;
 	margin-top: 20px;
 	padding: 25px;
 	padding-right: 180px;
