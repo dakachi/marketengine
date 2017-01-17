@@ -105,7 +105,10 @@ class ME_Custom_Field_Form
     {
         if (is_admin() && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert_custom_field')) {
 
-            $field_id = ME_Custom_Field_Handle::insert($_POST);
+            $field_for_categories = $_POST['field_for_categories'];
+            $field_data = array_map( 'sanitize_text_field', $_POST );
+            $field_data['field_for_categories'] = $field_for_categories;
+            $field_id = ME_Custom_Field_Handle::insert($field_data);
 
             if (is_wp_error($field_id)) {
                 me_wp_error_to_notices($field_id);
@@ -131,7 +134,12 @@ class ME_Custom_Field_Form
     {
         if (is_admin() && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-update_custom_field')) {
 
-            $_POST['field_id'] = $_REQUEST['custom-field-id'];
+            $_POST['field_id'] = absint( $_REQUEST['custom-field-id'] );            
+
+            $field_for_categories = $_POST['field_for_categories'];
+            $field_data = array_map( 'sanitize_text_field', $_POST );
+            $field_data['field_for_categories'] = $field_for_categories;
+
             $field_id          = ME_Custom_Field_Handle::insert($_POST, true);
 
             if (is_wp_error($field_id)) {
@@ -158,7 +166,7 @@ class ME_Custom_Field_Form
     {
         if (is_admin() && isset($_REQUEST['_wp_nonce']) && wp_verify_nonce($_REQUEST['_wp_nonce'], 'delete-custom-field') && isset($_REQUEST['custom-field-id'])) {
 
-            ME_Custom_Field_Handle::delete($_REQUEST['custom-field-id']);
+            ME_Custom_Field_Handle::delete(absint( $_REQUEST['custom-field-id'] ));
 
             if (is_wp_error($result)) {
                 me_wp_error_to_notices($result);
@@ -181,7 +189,7 @@ class ME_Custom_Field_Form
     {
         if (is_admin() && isset($_REQUEST['_wp_nonce']) && wp_verify_nonce($_REQUEST['_wp_nonce'], 'remove-from-category') && isset($_REQUEST['custom-field-id'])) {
 
-            ME_Custom_Field_Handle::remove_from_category($_REQUEST['custom-field-id'], $_REQUEST['category-id']);
+            ME_Custom_Field_Handle::remove_from_category(absint( $_REQUEST['custom-field-id'] ), absint( $_REQUEST['category-id'] ));
 
             $redirect = remove_query_arg(array('action', '_wp_nonce', 'custom-field-id'));
             wp_redirect($redirect);

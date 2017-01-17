@@ -135,7 +135,7 @@ class ME_Checkout_Handle {
         foreach ($items as $item) {
             $order->add_listing($item['id'], $item['qty']);
         }
-        $order->set_payment_method($data['payment_method']);
+        $order->set_payment_method(sanitize_text_field( $data['payment_method'] ));
 
         return $order;
     }
@@ -145,7 +145,7 @@ class ME_Checkout_Handle {
      */
     public static function inquiry($data) {
 
-        $content = strip_tags(trim($data['content']));
+        $content = sanitize_textarea_field($data['content']);
 
         if (empty($data['inquiry_listing'])) {
             return new WP_Error('empty_listing', __("The listing is required.", "enginethemes"));
@@ -154,8 +154,8 @@ class ME_Checkout_Handle {
         if (empty($content)) {
             return new WP_Error('empty_inquiry_content', __("The inquiry content is required.", "enginethemes"));
         }
-        //TODO: validate listing id
-        $listing_id = $data['inquiry_listing'];
+        
+        $listing_id = absint($data['inquiry_listing']);
         $listing    = get_post($listing_id);
 
         if (is_wp_error($listing) || $listing->post_type != 'listing') {
@@ -164,7 +164,7 @@ class ME_Checkout_Handle {
 
         $inquiry_id = me_get_current_inquiry($listing_id);
         // strip html tag
-        $content = strip_tags(trim($data['content']));
+        $content = strip_tags($content);
         if (!$inquiry_id) {
             // create inquiry
             $inquiry_id = me_insert_message(
@@ -197,17 +197,17 @@ class ME_Checkout_Handle {
      * @return int | WP_Error
      */
     public static function insert_message($message_data) {
-        $inquiry_id = $message_data['inquiry_id'];
+        $inquiry_id = absint( $message_data['inquiry_id'] );
         if ($inquiry_id) {
             // add message to inquiry
             $current_user = get_current_user_id();
-            $inquiry      = me_get_message($message_data['inquiry_id']);
+            $inquiry      = me_get_message($inquiry_id);
 
             if (!$inquiry) {
                 return new WP_Error('invalid_inquiry', __("Invalid inquiry.", "enginethemes"));
             }
 
-            $message_data['content'] = strip_tags(trim($message_data['content']));
+            $message_data['content'] = strip_tags(sanitize_textarea_field($message_data['content']));
 
             if(empty($message_data['content'])) {
                 return new WP_Error('empty_message_content', __("The message content is required.", "enginethemes"));
@@ -223,10 +223,10 @@ class ME_Checkout_Handle {
 
             $message_data = array(
                 'post_content' => $message_data['content'],
-                'post_title'   => 'Message listing #' . $message_data['listing_id'],
+                'post_title'   => 'Message listing #' . absint( $message_data['listing_id'] ),
                 'post_type'    => 'message',
                 'receiver'     => $receiver,
-                'post_parent'  => $message_data['inquiry_id'],
+                'post_parent'  => $inquiry_id ,
             );
 
             $message_id = me_insert_message($message_data, true);
@@ -238,10 +238,10 @@ class ME_Checkout_Handle {
     }
 
     public static function message($data) {
-        $listing_id = $data['inquiry_listing'];
-        $inquiry_id = $data['inquiry_id'];
+        $listing_id = absint( $data['inquiry_listing'] );
+        $inquiry_id = absint( $data['inquiry_id'] );
         // strip html tag
-        $content = strip_tags(trim($data['content']));
+        $content = strip_tags(sanitize_textarea_field($data['content']));
         // add message
         $message_data = array(
             'listing_id' => $listing_id,
