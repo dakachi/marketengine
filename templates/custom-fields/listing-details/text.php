@@ -21,13 +21,13 @@ if (!defined('ABSPATH')) {
 <div class="me-row">
 	<div class="me-col-sm-3">
 		<div class="me-cf-title">
-			<p><?php echo $field['field_title'] ?></p>
-			<span><?php echo $field['field_description'] ?></span>
+			<p><?php echo esc_html( $field['field_title'] ); ?></p>
+			<span><?php echo esc_js( $field['field_description'] ); ?></span>
 		</div>
 	</div>
 	<div class="me-col-sm-9">
 		<div class="me-cf-content">
-			<p><?php echo $value; ?></p>
+			<p><?php echo esc_html( $value ); ?></p>
 		</div>
 	</div>
 </div>

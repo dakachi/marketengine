@@ -207,9 +207,9 @@ class ME_Checkout_Handle {
                 return new WP_Error('invalid_inquiry', __("Invalid inquiry.", "enginethemes"));
             }
 
-            $message_data['content'] = strip_tags(sanitize_textarea_field($message_data['content']));
+            $message_content = strip_tags(sanitize_textarea_field($message_data['content']));
 
-            if(empty($message_data['content'])) {
+            if(empty($message_content)) {
                 return new WP_Error('empty_message_content', __("The message content is required.", "enginethemes"));
             }
 
@@ -222,7 +222,7 @@ class ME_Checkout_Handle {
             }
 
             $message_data = array(
-                'post_content' => $message_data['content'],
+                'post_content' => $message_content,
                 'post_title'   => 'Message listing #' . absint( $message_data['listing_id'] ),
                 'post_type'    => 'message',
                 'receiver'     => $receiver,

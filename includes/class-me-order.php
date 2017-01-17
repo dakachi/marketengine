@@ -152,6 +152,7 @@ class ME_Order
             return false;
         }
 
+
         foreach (get_object_vars($post) as $key => $value) {
             $this->$key = $value;
         }
