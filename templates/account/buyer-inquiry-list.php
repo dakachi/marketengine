@@ -17,7 +17,8 @@ $args = array(
 );
 
 $role = 'sender';
-$args = array_merge(apply_filters( 'me_filter_inquiry', $_GET, $role ), $args);
+$request = array_map('esc_sql', $_GET);
+$args = array_merge(apply_filters( 'me_filter_inquiry', $request, $role ), $args);
 $query = new ME_Message_Query($args);
 ?>
 <!-- Tabs Inquiries -->

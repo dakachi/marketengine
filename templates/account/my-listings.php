@@ -8,8 +8,8 @@
  * @version     1.0.0
  */
 
-$paged = get_query_var('paged') ? get_query_var('paged') : 1;
-$listing_status = isset($_GET['status']) ? $_GET['status'] : 'publish';
+$paged = get_query_var('paged') ? absint( get_query_var('paged') ) : 1;
+$listing_status = isset($_GET['status']) ? esc_sql( $_GET['status'] ) : 'publish';
 $args = array(
 	'orderby'          => 'date',
 	'order'            => 'DESC',
