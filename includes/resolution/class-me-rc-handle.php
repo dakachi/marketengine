@@ -364,7 +364,7 @@ class ME_RC_Form_Handle
         me_get_template('resolution/emails/escalate-to-buyer', $args);
         $escalate_buyer_mail_content = ob_get_clean();
 
-        $user = get_userdata($buyer_id);
+        $buyer = get_userdata($buyer_id);
         /**
          * Filter user escalate dispute email to buyer content
          *
@@ -374,7 +374,7 @@ class ME_RC_Form_Handle
          * @since 1.1
          */
         $escalate_buyer_mail_content = apply_filters('marketengine_escalate_to_buyer_mail_content', $escalate_buyer_mail_content, $dispute);
-        return wp_mail($user->user_email, $subject, $escalate_buyer_mail_content);
+        return wp_mail($buyer->user_email, $subject, $escalate_buyer_mail_content);
     }
 
     public static function escalate_notify_seller($dispute)
@@ -398,7 +398,7 @@ class ME_RC_Form_Handle
         me_get_template('resolution/emails/escalate-to-seller', $args);
         $escalate_seller_mail_content = ob_get_clean();
 
-        $user = get_userdata($seller_id);
+        $seller = get_userdata($seller_id);
         /**
          * Filter user escalate to seller dispute email content
          *
@@ -408,7 +408,7 @@ class ME_RC_Form_Handle
          * @since 1.1
          */
         $escalate_seller_mail_content = apply_filters('marketengine_escalate_to_seller_mail_content', $escalate_seller_mail_content, $dispute);
-        return wp_mail($user->user_email, $subject, $escalate_seller_mail_content);
+        return wp_mail($seller->user_email, $subject, $escalate_seller_mail_content);
     }
 
     public static function escalate_notify_admin($dispute, $sender)
