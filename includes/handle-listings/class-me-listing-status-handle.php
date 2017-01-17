@@ -15,9 +15,7 @@ if (!defined('ABSPATH')) {
  */
 class ME_Listing_Status_Handle extends ME_Form {
     public static function init_hook() {
-
         add_action('wp_ajax_me_update_listing_status', array(__CLASS__, 'update_status'));
-        add_action('wp_ajax_nopriv_me_update_listing_status', array(__CLASS__, 'update_status'));
     }
 
     /**
@@ -27,9 +25,15 @@ class ME_Listing_Status_Handle extends ME_Form {
 
     public static function update_status() {
         if (current_user_can('edit_posts') && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me_update_listing_status')) {
+            $status = sanitize_text_field( $_POST['status'] );
+
+            if(!array_key_exists($status, me_listings_status_list())) {
+                exit;
+            }
+
             $update_data = array(
-                'ID'          => $_POST['listing_id'],
-                'post_status' => $_POST['status']
+                'ID'          => absint( $_POST['listing_id'] ),
+                'post_status' => $status
             );
             $result = wp_update_post( $update_data, true );
 
@@ -39,7 +43,7 @@ class ME_Listing_Status_Handle extends ME_Form {
                     'error' => $result,
                 );
             } else {
-                $redirect = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : me_get_auth_url('listings');
+                $redirect = isset($_POST['redirect_url']) ? esc_url( $_POST['redirect_url'] ) : me_get_auth_url('listings');
                 $response = array(
                     'success'    => true,
                     'listing' => $result,

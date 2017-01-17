@@ -33,8 +33,7 @@ class ME_Inquiry_Handle
             return new WP_Error('empty_listing', __("The listing is required.", "enginethemes"));
         }
 
-        //TODO: validate listing id
-        $listing_id = $data['send_inquiry'];
+        $listing_id = absint( $data['send_inquiry'] );
         $listing    = me_get_listing($listing_id);
 
         if ('contact' != $listing->get_listing_type()) {
@@ -86,19 +85,19 @@ class ME_Inquiry_Handle
      */
     public static function insert_message($message_data)
     {
-        $inquiry_id = $message_data['inquiry_id'];
+        $inquiry_id = absint( $message_data['inquiry_id'] );
         if ($inquiry_id) {
             // add message to inquiry
             $current_user = get_current_user_id();
-            $inquiry      = me_get_message($message_data['inquiry_id']);
+            $inquiry      = me_get_message($inquiry_id);
 
             if (!$inquiry) {
                 return new WP_Error('invalid_inquiry', __("Invalid inquiry.", "enginethemes"));
             }
 
-            $message_data['content'] = strip_tags(trim($message_data['content']));
+            $message_content = strip_tags(sanitize_textarea_field($message_data['content']));
 
-            if (empty($message_data['content'])) {
+            if (empty($message_content)) {
                 return new WP_Error('empty_message_content', __("The message content is required.", "enginethemes"));
             }
 
@@ -112,11 +111,11 @@ class ME_Inquiry_Handle
 
             $message_data = array(
                 'sender'       => $current_user,
-                'post_content' => $message_data['content'],
-                'post_title'   => 'Message listing #' . $message_data['listing_id'],
+                'post_content' => $message_content,
+                'post_title'   => 'Message listing #' . absint( $message_data['listing_id'] ),
                 'post_type'    => 'message',
                 'receiver'     => $receiver,
-                'post_parent'  => $message_data['inquiry_id'],
+                'post_parent'  => $inquiry_id,
             );
 
             return me_insert_message($message_data, true);
@@ -140,10 +139,10 @@ class ME_Inquiry_Handle
      */
     public static function message($data)
     {
-        $listing_id = $data['inquiry_listing'];
-        $inquiry_id = $data['inquiry_id'];
+        $listing_id = absint( $data['inquiry_listing'] );
+        $inquiry_id = absint( $data['inquiry_id'] );
         // strip html tag
-        $content = strip_tags(trim($data['content']));
+        $content = strip_tags(sanitize_textarea_field($data['content']));
         // add message
         $message_data = array(
             'listing_id' => $listing_id,
@@ -159,8 +158,11 @@ class ME_Inquiry_Handle
     public static function get_contact_list($args)
     {
         if (!empty($args['s'])) {
-            $search_string = stripslashes($args['s']);
-            $search_string = trim(mb_strtolower($search_string));
+
+            $args = array_map('sanitize_text_field', $args);
+
+            $search_string = stripslashes(sanitize_text_field( $args['s'] ));
+            $search_string = mb_strtolower($search_string);
 
             add_filter('user_search_columns', array(__CLASS__, 'filter_user_search_columns'));
             $users_1         = new WP_User_Query(array(

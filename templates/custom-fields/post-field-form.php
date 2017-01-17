@@ -26,6 +26,11 @@ if (!empty($_POST['parent_cat'])):
         foreach ($fields as $field):
             $field_name = $field['field_name'];
             $value      = !empty($_POST[$field_name]) ? $_POST[$field_name] : '';
+            if(is_array($value)) {
+            	$value = array_map('esc_html', $value);
+            }else {
+            	$value = esc_html( $value );
+            }
             me_get_template('custom-fields/listing-form/field-' . $field['field_type'], array('field' => $field, 'value' => $value));
         endforeach;
     }
