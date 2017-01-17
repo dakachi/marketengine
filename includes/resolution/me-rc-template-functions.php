@@ -63,7 +63,7 @@ function me_rc_center_mobile_link($transaction) {
 	me_rc_center_link($transaction);
 	// echo '</div>';
 }
-add_action( 'marketengine_order_extra_end', 'me_rc_center_mobile_link', 11);
+// add_action( 'marketengine_order_extra_end', 'me_rc_center_mobile_link', 11);
 
 /**
  * Transaction dispute form
