@@ -19,6 +19,10 @@
                 break;
             case 'me-open' :
                 _e("<span>Dispute started</span>", "enginethemes");
+                break;
+            case 'me-resolved' :
+                _e("<span>Dispute Resolved</span>", "enginethemes");
+                break;
         }
         ?>
         <span><?php echo date_i18n( get_option('date_format'),  strtotime($message->post_date) ); ?></span>

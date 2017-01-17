@@ -29,7 +29,7 @@ $winner = empty($_POST['me-dispute-win']) ? '' : $_POST['me-dispute-win'];
                 </label>   
             </div>
         </div>
-        <textarea name="" id="" cols="30" rows="10" name="arbitrate_content" placeholder="Your adjudication here"><?php if(isset($_POST['arbitrate_content'])) { echo $_POST['arbitrate_content']; } ?></textarea>
+        <textarea cols="30" rows="10" name="arbitrate_content" placeholder="<?php _e("Your adjudication here", "enginethemes") ?>"><?php if(isset($_POST['arbitrate_content'])) { echo $_POST['arbitrate_content']; } ?></textarea>
             
         <?php wp_nonce_field( 'me_arbitrate-dispute' ); ?>
         <input type="hidden" name="dispute" value="<?php echo $case->ID; ?>">

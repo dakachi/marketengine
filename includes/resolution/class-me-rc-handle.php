@@ -386,7 +386,7 @@ class ME_RC_Form_Handle
 
         $args = array(
             'display_name' => get_the_author_meta('display_name', $seller_id),
-            'seller_name'  => get_the_author_meta('display_name', $buyer_id),
+            'buyer_name'   => get_the_author_meta('display_name', $buyer_id),
             'blogname'     => get_bloginfo('blogname'),
             'dispute_link' => me_rc_dispute_link($dispute->ID),
             'order_link'   => $transaction->get_order_detail_url(),
@@ -398,7 +398,7 @@ class ME_RC_Form_Handle
         me_get_template('resolution/emails/escalate-to-seller', $args);
         $escalate_seller_mail_content = ob_get_clean();
 
-        $user = get_userdata($buyer_id);
+        $user = get_userdata($seller_id);
         /**
          * Filter user escalate to seller dispute email content
          *
@@ -464,15 +464,17 @@ class ME_RC_Form_Handle
         $case_id = me_update_message(array('ID' => $dispute->ID, 'post_status' => 'me-resolved'));
         me_update_message_meta($dispute->ID, '_case_winner', $case_data['me-dispute-win']);
         me_update_message_meta($dispute->ID, '_case_arbitrate', $case_data['arbitrate_content']);
+        
         self::add_dispute_revision('me-resolved', $dispute);
-        self::resolve_notify($dispute);
-        // subject: Resolved: The dispute on your transaction
-        me_resolve_order($dispute->post_parent);
+        self::resolve_notify_seller($dispute, $case_data['me-dispute-win']);
+        self::resolve_notify_buyer($dispute, $case_data['me-dispute-win']);
 
+        me_resolve_order($dispute->post_parent);
+        exit;
         return $dispute->ID;
     }
 
-    public static function resolve_notify($dispute)
+    public static function resolve_notify_buyer($dispute, $winner)
     {
         $subject     = sprintf(__("Resolved: The dispute on your transaction.", "enginethemes"));
         $transaction = me_get_order($dispute->post_parent);
@@ -486,22 +488,75 @@ class ME_RC_Form_Handle
             'order'        => $transaction,
             'order_id'     => $transaction->id,
         );
-        // get dispute mail content from template
-        ob_start();
-        me_get_template('resolution/emails/escalate-to-admin', $args);
-        $escalate_admin_mail_content = ob_get_clean();
 
-        $admin_email = get_option('admin_email');
+
+        if($winner == $dispute->sender) {
+            $args['winner'] = __("you", "enginethemes");
+        }else {
+            $args['winner'] = get_the_author_meta('display_name', $dispute->receiver);
+        }
+
+        ob_start();
+        me_get_template('resolution/emails/admin-resolve', $args);
+        $resolve_dispute_mail_content = ob_get_clean();
+
+        $buyer = get_userdata( $dispute->sender );
+        
         /**
-         * Filter user escalate dispute email content
+         * Filter user resolve dispute email content
          *
-         * @param String $escalate_dispute_mail_content
+         * @param String $resolve_dispute_mail_content
          * @param Object $dispute The dispute object
          *
          * @since 1.1
          */
-        $escalate_admin_mail_content = apply_filters('marketengine_escalate_to_admin_mail_content', $escalate_admin_mail_content, $dispute);
-        return wp_mail($admin_email, $subject, $escalate_admin_mail_content);
+        echo "<pre>";
+        print_r($resolve_dispute_mail_content);
+        echo "</pre>";
+        $resolve_dispute_mail_content = apply_filters('marketengine_resolve_to_buyer_mail_content', $resolve_dispute_mail_content, $dispute);
+        return wp_mail($buyer->user_email, $subject, $resolve_dispute_mail_content);
+    }
+
+    public static function resolve_notify_seller($dispute, $winner)
+    {
+        $subject     = sprintf(__("Resolved: The dispute on your transaction.", "enginethemes"));
+        $transaction = me_get_order($dispute->post_parent);
+
+        $args = array(
+            'display_name' => get_the_author_meta('display_name', $dispute->receiver),
+            'sender_name'  => 'Admin',
+            'blogname'     => get_bloginfo('blogname'),
+            'dispute_link' => me_rc_dispute_link($dispute->ID),
+            'order_link'   => $transaction->get_order_detail_url(),
+            'order'        => $transaction,
+            'order_id'     => $transaction->id,
+        );
+
+
+        if($winner == $dispute->receiver) {
+            $args['winnder'] = __("you", "enginethemes");
+        }else {
+            $args['winner'] = get_the_author_meta('display_name', $dispute->sender);
+        }
+
+        ob_start();
+        me_get_template('resolution/emails/admin-resolve', $args);
+        $resolve_dispute_mail_content = ob_get_clean();
+
+        $seller = get_userdata( $dispute->receiver );
+        /**
+         * Filter user resolve dispute email content
+         *
+         * @param String $resolve_dispute_mail_content
+         * @param Object $dispute The dispute object
+         *
+         * @since 1.1
+         */
+        echo "<pre>";
+        print_r($resolve_dispute_mail_content);
+        echo "</pre>";
+        $resolve_dispute_mail_content = apply_filters('marketengine_resolve_to_seller_mail_content', $resolve_dispute_mail_content, $dispute);
+        return wp_mail($seller->user_email, $subject, $resolve_dispute_mail_content);
     }
 
     public static function add_dispute_revision($state, $dispute)

@@ -5,7 +5,7 @@ switch ($message->post_status) :
 		$name = get_the_author_meta( 'display_name', $message->sender );
 	?>
 		<p>			
-			<?php printf(__("<b>%s</b> <i>has closed the dipute</i>", "enginethemes"), $name); ?>
+			<?php printf(__("<b>%s</b> <i>has closed the dispute</i>", "enginethemes"), $name); ?>
 		</p>
 	<?php
 		break;
@@ -13,7 +13,7 @@ switch ($message->post_status) :
 		$name = get_the_author_meta( 'display_name', $message->sender );
 	?>
 		<p>			
-			<?php printf(__("<b>%s</b> <i>has requested to closed the dipute</i>", "enginethemes"), $name); ?>
+			<?php printf(__("<b>%s</b> <i>has requested to closed the dispute</i>", "enginethemes"), $name); ?>
 		</p>
 	<?php
 		break;
@@ -21,7 +21,7 @@ switch ($message->post_status) :
 		$name = get_the_author_meta( 'display_name', $message->sender );
 	?>
 		<p>			
-			<?php printf(__("<b>%s</b> <i>has escalated the dipute to admin.</i>", "enginethemes"), $name); ?>
+			<?php printf(__("<b>%s</b> <i>has escalated the dispute to admin.</i>", "enginethemes"), $name); ?>
 		</p>
 	<?php
 		break;
@@ -30,9 +30,17 @@ switch ($message->post_status) :
 		$name = get_the_author_meta( 'display_name', $message->sender );
 	?>
 		<p>			
-			<?php printf(__("<b>%s</b> <i>has started the dipute</i>", "enginethemes"), $name); ?>
+			<?php printf(__("<b>%s</b> <i>has started the dispute.</i>", "enginethemes"), $name); ?>
 		</p>
 	<?php
+		break;
+	case 'me-resolved':
+	?>
+		<p>			
+			<?php _e("<b>Admin</b> <i>has resolved the dispute.</i>", "enginethemes"); ?>
+		</p>
+	<?php
+	break;
 endswitch;
  ?>
 	<span><?php echo date_i18n(get_option('date_format') .' ' . get_option('time_format') ,strtotime($message->post_date) ); ?></span>
