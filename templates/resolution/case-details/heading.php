@@ -1,8 +1,9 @@
 
-<div class="marketengine-page-title">
+<div class="marketengine-page-title me-have-breadcrumb">
     <h2>
         <?php printf(__("CASE #%d", "enginethemes"), $case->ID); ?>
     </h2>
+    <a href="<?php echo me_resolution_center_url(); ?>"></a>
     <ol class="me-breadcrumb">
         <li>
             <a href="<?php echo me_resolution_center_url(); ?>">
