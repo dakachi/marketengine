@@ -32,17 +32,13 @@ class ME_Options_Handle
 
         $request = $_REQUEST;
 
-        $name  = $request['name'];
+        $name  = sanitize_text_field( $request['name'] );
         $value = array();
 
         $options = ME_Options::get_instance();
 
         if (is_string($request['value'])) {
-            $request['value'] = stripslashes($request['value']);
-        }
-
-        if (is_int($request['value'])) {
-            wp_send_json('adas');
+            $request['value'] = stripslashes(sanitize_text_field($request['value'] ));
         }
 
         $value          = $request['value'];

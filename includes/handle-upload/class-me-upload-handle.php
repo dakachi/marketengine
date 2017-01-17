@@ -49,9 +49,9 @@ class ME_Upload_Handle extends ME_Form {
             
             if($attachment && $filename == 'message_file') {
                 $message_data = array(
-                    'listing_id' => $_REQUEST['listing_id'],
+                    'listing_id' => absint( $_REQUEST['listing_id'] ),
                     'content'    => '[me_message_file id='.$attachment['id'].' ]',
-                    'inquiry_id' => $_REQUEST['inquiry_id'],
+                    'inquiry_id' => absint( $_REQUEST['inquiry_id'] ),
                 );
                 $result = ME_Inquiry_Handle::insert_message($message_data);
                 $message = me_get_message($result);
