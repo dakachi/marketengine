@@ -94,7 +94,7 @@ class ME_RC_Form_Handle
 
         $sender = get_current_user_id();
 
-        if ($sender != $case->sender && $sender != $case->receiver) {
+        if (!current_user_can( 'manage_options' ) && $sender != $case->sender && $sender != $case->receiver) {
             return new WP_Error('permission_denied', __("You can not send message to this case.", "enginethemes"));
         }
 
