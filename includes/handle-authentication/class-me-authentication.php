@@ -88,7 +88,6 @@ class ME_Authentication
      */
     public static function register($user_data)
     {
-        // TODO: these rules will be considered, role?
         $rules = array(
             'user_login'     => 'required',
             'user_pass'      => 'required',
@@ -279,7 +278,7 @@ class ME_Authentication
             return $errors;
         }
 
-        $user_data = get_user_by('email', trim($user['user_email']));
+        $user_data = get_user_by('email', sanitize_email($user['user_email']));
         if (empty($user_data)) {
             $errors->add('invalid_email', __("<strong>ERROR</strong>: There is no user registered with that email address.", "enginethemes"));
         }
@@ -417,7 +416,7 @@ class ME_Authentication
             return $errors;
         }
 
-        $user = check_password_reset_key($user_data['key'], $user_data['user_login']);
+        $user = check_password_reset_key( sanitize_text_field( $user_data['key'] ) , sanitize_user( $user_data['user_login'] ));
         if (is_wp_error($user)) {
             return $user;
         } else {
@@ -501,7 +500,7 @@ class ME_Authentication
             return $errors;
         }
 
-        $user = get_user_by('email', $user_data['user_email']);
+        $user = get_user_by('email', sanitize_email( $user_data['user_email'] ));
         if (!$user) {
             return new WP_Error('email_not_exists', __("The email is not exists.", "enginethemes"));
         }

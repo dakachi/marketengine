@@ -155,9 +155,7 @@ class ME_Custom_Field_Handle {
 
             foreach ($term_ids as $key => $term_id) {
                 if (!in_array($term_id, $field_cat)) {
-                    //$field_count = count(me_cf_get_fields($term_id));
-                    $result      = me_cf_set_field_category($field_id, $term_id, 0);
-                    // $result      = me_cf_set_field_category($field_id, $term_id, $field_count);
+                    $result      = me_cf_set_field_category($field_id, absint( $term_id ), 0);
                 }
             }
         } else {

@@ -46,11 +46,11 @@ class ME_Report_CSVExport
             }
 
             if (!empty($_GET['from_date'])) {
-                $filename .= '_' . $_GET['from_date'];
+                $filename .= '_' . esc_html( $_GET['from_date'] );
             }
 
             if (!empty($_GET['to_date'])) {
-                $filename .= '_' . $_GET['to_date'];
+                $filename .= '_' . esc_html( $_GET['to_date'] );
             }
 
             header("Pragma: public");

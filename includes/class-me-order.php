@@ -482,7 +482,7 @@ class ME_Order
         $address_fields = array('first_name', 'last_name', 'phone', 'email', 'postcode', 'address', 'city', 'country');
         foreach ($address_fields as $field) {
             if (isset($address[$field])) {
-                update_post_meta($this->id, '_me_' . $type . '_' . $field, $address[$field]);
+                update_post_meta($this->id, '_me_' . $type . '_' . $field, sanitize_text_field( $address[$field] ));
             }
         }
     }

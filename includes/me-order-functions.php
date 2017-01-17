@@ -21,7 +21,7 @@ function me_insert_order($order_data) {
     $order_data['post_status'] = apply_filters('marketengine_create_order_status', 'me-pending');
 
     if (!empty($order_data['customer_note'])) {
-        $order_data['post_excerpt'] = $order_data['customer_note'];
+        $order_data['post_excerpt'] = sanitize_textarea_field( $order_data['customer_note'] );
     }
     /**
      * Filter insert order data
