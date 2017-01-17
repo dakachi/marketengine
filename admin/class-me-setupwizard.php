@@ -53,24 +53,26 @@ class ME_Setup_Wizard
     {
         if (!empty($_POST['step']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'marketengine-setup')) {
             
-            switch ($_POST['step']) {
+            $content = sanitize_text_field( $_POST['content'] );
+            $step = sanitize_text_field( $_POST['step'] );
+            switch ($step) {
                 case 'page':
-                    $data = $this->setup_page($_POST['content']);
+                    $data = $this->setup_page($content);
                     break;
                 case 'personalize':
-                    $data = $this->setup_personalize($_POST['content']);
+                    $data = $this->setup_personalize($content);
                     break;
                 case 'payment':
-                    $data = $this->setup_payment($_POST['content']);
+                    $data = $this->setup_payment( $content );
                     break;
                 case 'listing-type' : 
-                	$data = $this->setup_listing_types($_POST['content']);
+                	$data = $this->setup_listing_types($content);
                 default:
                 	$data = '';
                     break;
             }
 
-            wp_send_json(array('success' => true, 'step' => $_POST['step'], 'data' => $data));
+            wp_send_json(array('success' => true, 'step' => $step, 'data' => $data));
 
         } else {
             wp_send_json(array('success' => false, 'msg' => __("Permission denied.", "enginethemes")));

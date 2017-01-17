@@ -19,7 +19,8 @@ if (!defined('ABSPATH')) {
  * @version 1.0.0
  */
 
-class ME_Custom_Field_Form {
+class ME_Custom_Field_Form
+{
 
     /**
      * Initializes actions for form
@@ -27,7 +28,8 @@ class ME_Custom_Field_Form {
      * @since   1.0.1
      * @version 1.0.0
      */
-    public static function init() {
+    public static function init()
+    {
         add_filter('marketengine_section', array(__CLASS__, 'marketengine_add_custom_field_section'));
 
         add_action('admin_init', array(__CLASS__, 'me_create_custom_field'));
@@ -85,7 +87,8 @@ class ME_Custom_Field_Form {
      * @since   1.0.1
      * @version 1.0.0
      */
-    public static function marketengine_print_script() {
+    public static function marketengine_print_script()
+    {
         wp_dequeue_script('option-view');
         if (is_admin() && isset($_REQUEST['view']) && $_REQUEST['view'] == 'group-by-category') {
             wp_enqueue_script('cf_sort', ME_PLUGIN_URL . "assets/admin/custom-field-sort.js", array('jquery-ui'));
@@ -98,15 +101,16 @@ class ME_Custom_Field_Form {
      * @since   1.0.1
      * @version 1.0.0
      */
-    public static function me_create_custom_field() {
+    public static function me_create_custom_field()
+    {
         if (is_admin() && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert_custom_field')) {
 
-    		$field_id = ME_Custom_Field_Handle::insert($_POST);
+            $field_id = ME_Custom_Field_Handle::insert($_POST);
 
-    		if(is_wp_error($field_id)) {
-    			me_wp_error_to_notices($field_id);
-    			return;
-    		}
+            if (is_wp_error($field_id)) {
+                me_wp_error_to_notices($field_id);
+                return;
+            }
 
             $redirect = apply_filters('me_after_create_custom_field_redirect', $_POST['redirect']);
 
@@ -123,13 +127,14 @@ class ME_Custom_Field_Form {
      * @since   1.0.1
      * @version 1.0.0
      */
-    public static function me_update_custom_field() {
+    public static function me_update_custom_field()
+    {
         if (is_admin() && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-update_custom_field')) {
 
             $_POST['field_id'] = $_REQUEST['custom-field-id'];
-            $field_id = ME_Custom_Field_Handle::insert($_POST, true);
+            $field_id          = ME_Custom_Field_Handle::insert($_POST, true);
 
-            if(is_wp_error($field_id)) {
+            if (is_wp_error($field_id)) {
                 me_wp_error_to_notices($field_id);
                 return;
             }
@@ -149,7 +154,8 @@ class ME_Custom_Field_Form {
      * @since   1.0.1
      * @version 1.0.0
      */
-    public static function me_delete_custom_field() {
+    public static function me_delete_custom_field()
+    {
         if (is_admin() && isset($_REQUEST['_wp_nonce']) && wp_verify_nonce($_REQUEST['_wp_nonce'], 'delete-custom-field') && isset($_REQUEST['custom-field-id'])) {
 
             ME_Custom_Field_Handle::delete($_REQUEST['custom-field-id']);
@@ -171,7 +177,8 @@ class ME_Custom_Field_Form {
      * @since   1.0.1
      * @version 1.0.0
      */
-    public static function me_remove_custom_field_from_category() {
+    public static function me_remove_custom_field_from_category()
+    {
         if (is_admin() && isset($_REQUEST['_wp_nonce']) && wp_verify_nonce($_REQUEST['_wp_nonce'], 'remove-from-category') && isset($_REQUEST['custom-field-id'])) {
 
             ME_Custom_Field_Handle::remove_from_category($_REQUEST['custom-field-id'], $_REQUEST['category-id']);
@@ -181,7 +188,6 @@ class ME_Custom_Field_Form {
             exit;
         }
     }
-
 
     /**
      * Sort custom fields in a category
@@ -195,7 +201,7 @@ class ME_Custom_Field_Form {
             parse_str($_POST['order'], $fields);
             $fields = $fields['me-cf-item'];
             foreach ($fields as $order => $field_id) {
-                $result = me_cf_set_field_category($field_id, $_POST['category_id'], $order);
+                $result = me_cf_set_field_category($field_id, absint($_POST['category_id']), absint($order));
                 if (is_wp_error($result)) {
                     wp_send_json(array(
                         'status'  => false,
@@ -209,8 +215,8 @@ class ME_Custom_Field_Form {
                 'message'  => __('Sort custom fields successfully', 'enginethemes'),
                 'asd'      => $result,
                 'field_id' => $field_id,
-                'category' => $_POST['category_id'],
-                'order'    => $order,
+                'category' => absint($_POST['category_id']),
+                'order'    => absint($order),
             ));
         }
     }
