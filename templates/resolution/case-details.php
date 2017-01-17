@@ -71,10 +71,11 @@
                                             <?php 
                                                 me_get_template('upload-file/upload-file-form', array(
                                                     'id' => 'dispute-file',
+                                                    'class' => 'me-gallery-file-wrap',
                                                     'name' => 'dispute_file',
                                                     'source' => '',
                                                     'button' => 'me-dipute-upload',
-                                                    'button_text' => '<i class="icon-me-attach"></i>' . __("Add attachment", "enginethemes"),
+                                                    'button_text' => '<i class="icon-me-attach"></i> ' . __("Add attachment", "enginethemes"),
                                                     'multi' => true,
                                                     'maxsize' => esc_html( '2mb' ),
                                                     'maxcount' => 5,

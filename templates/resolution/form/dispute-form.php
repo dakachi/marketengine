@@ -51,6 +51,7 @@ $dispute_files = !empty($_POST['dispute_file']) ? $_POST['dispute_file'] : array
 	            'name' => 'dispute_file',
 	            'source' => $dispute_files,
 	            'button' => 'me-dipute-upload',
+	            'button_text' => __("Choose File", "enginethemes"),
 	            'multi' => true,
 	            'maxsize' => esc_html( '2mb' ),
 	            'maxcount' => 5,
