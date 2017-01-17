@@ -15,11 +15,11 @@ class ME_Case_List extends WP_List_Table
     public function __construct()
     {
 
-        parent::__construct([
+        parent::__construct(array(
             'singular' => __('Customer', 'sp'), //singular name of the listed records
             'plural'   => __('Customers', 'sp'), //plural name of the listed records
             'ajax'     => false, //does this table support ajax?
-        ]);
+        ));
 
     }
 
@@ -36,7 +36,7 @@ class ME_Case_List extends WP_List_Table
 
         global $wpdb;
 
-        $sql = "SELECT * FROM {$wpdb->prefix}marketengine_message_item";
+        $sql = "SELECT * FROM {$wpdb->prefix}marketengine_message_item WHERE post_type = 'dispute'";
 
         if (!empty($_REQUEST['orderby'])) {
             $sql .= ' ORDER BY ' . esc_sql($_REQUEST['orderby']);
@@ -84,7 +84,7 @@ class ME_Case_List extends WP_List_Table
     /** Text displayed when no customer data is available */
     public function no_items()
     {
-        _e('No customers avaliable.', 'sp');
+        _e('No case avaliable.', 'enginethemes');
     }
 
     /**
@@ -98,11 +98,20 @@ class ME_Case_List extends WP_List_Table
     public function column_default($item, $column_name)
     {
         switch ($column_name) {
-            case 'address':
-            case 'city':
-                return $item[$column_name];
+            case 'case':
+            $case_link = '<a href="'. me_rc_dispute_link($item['ID']) . '">#' .$item['ID'] .'</a>';
+            $author_link  = '<a href="' . get_author_posts_url( $item['sender'] ) . '">' . get_the_author_meta( 'display_name', $item['sender'] ) . '</a>';
+            printf(__("%s by %s", "enginethemes"), $case_link, $author_link);
+            break;
+            case 'status':
+                echo me_dispute_status_label($item['post_status']);
+                break;
+            case 'date' :
+                echo date_i18n( get_option( 'date_format' ), strtotime($item['post_date']) );
+                break;
+
             default:
-                return print_r($item, true); //Show the whole array for troubleshooting purposes
+                return ''; //Show the whole array for troubleshooting purposes
         }
     }
 
@@ -148,12 +157,14 @@ class ME_Case_List extends WP_List_Table
      */
     public function get_columns()
     {
-        $columns = [
+        $columns = array(
             'cb'      => '<input type="checkbox" />',
-            'name'    => __('Name', 'sp'),
-            'address' => __('Address', 'sp'),
-            'city'    => __('City', 'sp'),
-        ];
+            'status'    => __("Status", "enginethemes"),
+            'case' => __("Case", "enginethemes"),
+            'issue' => __("Issue", "enginethemes"),
+            'date' => __("Date", "enginethemes"),
+            'actions' => __("Actions", "enginethemes")
+        );
 
         return $columns;
     }
@@ -166,8 +177,8 @@ class ME_Case_List extends WP_List_Table
     public function get_sortable_columns()
     {
         $sortable_columns = array(
-            'name' => array('name', true),
-            'city' => array('city', false),
+            'status' => array(__("Status", "enginethemes"), true),
+            'case' => array('Case', false),
         );
 
         return $sortable_columns;
@@ -180,9 +191,9 @@ class ME_Case_List extends WP_List_Table
      */
     public function get_bulk_actions()
     {
-        $actions = [
+        $actions = array(
             'bulk-delete' => 'Delete',
-        ];
+        );
 
         return $actions;
     }
@@ -202,10 +213,10 @@ class ME_Case_List extends WP_List_Table
         $current_page = $this->get_pagenum();
         $total_items  = self::record_count();
 
-        $this->set_pagination_args([
+        $this->set_pagination_args(array(
             'total_items' => $total_items, //WE have to calculate the total number of items
             'per_page'    => $per_page, //WE have to determine how many items to show on a page
-        ]);
+        ));
 
         $this->items = self::get_customers($per_page, $current_page);
     }
@@ -253,13 +264,13 @@ class ME_Case_List extends WP_List_Table
     }
 
     protected function get_views() { 
-	    $status_links = array(
-	        "all"       => __("<a href='#'>All</a>",'my-plugin-slug'),
-	        "published" => __("<a href='#'>Published</a>",'my-plugin-slug'),
-	        "trashed"   => __("<a href='#'>Trashed</a>",'my-plugin-slug')
-	    );
-	    return $status_links;
-	}
+        $status_links = array(
+            "all"       => __("<a href='#'>All</a>",'enginethemes'),
+            "published" => __("<a href='#'>Published</a>",'enginethemes'),
+            "trashed"   => __("<a href='#'>Trashed</a>",'enginethemes')
+        );
+        return $status_links;
+    }
 }
 
 class SP_Plugin
@@ -323,28 +334,21 @@ class SP_Plugin
     public function plugin_settings_page()
     {
         ?>
-			<div class="wrap">
-				<h2><?php _e("Cases", "enginethemes")?></h2>
-
-				<div id="poststuff">
-					<div id="post-body" class="metabox-holder columns-2">
-						<div id="post-body-content">
-							<div class="meta-box-sortables ui-sortable">
-								<?php $this->customers_obj->views(); ?>
-								<form method="post">
-									<?php
-										$this->customers_obj->prepare_items();
-				        				$this->customers_obj->display();
-        							?>
-								</form>
-							</div>
-						</div>
-					</div>
-					<br class="clear">
-				</div>
-			</div>
-		<?php
-	}
+            <div class="wrap">
+                <h2><?php _e("Cases", "enginethemes")?></h2>
+                
+                <?php $this->customers_obj->views(); ?>
+                <form method="post">
+                    <?php
+                        $this->customers_obj->prepare_items();
+                        $this->customers_obj->display();
+                    ?>
+                </form>
+                            
+                    
+            </div>
+        <?php
+    }
 
     /** Singleton instance */
     public static function get_instance()

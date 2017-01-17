@@ -425,9 +425,14 @@ class ME_RC_Form_Handle
             'order'        => $transaction,
             'order_id'     => $transaction->id,
         );
+
         // get dispute mail content from template
         ob_start();
-        me_get_template('resolution/emails/escalate-to-admin', $args);
+        if($sender == $dispute->sender) {
+            me_get_template('resolution/emails/buyer-escalate-to-admin', $args);    
+        }else {
+            me_get_template('resolution/emails/seller-escalate-to-admin', $args);
+        }
         $escalate_admin_mail_content = ob_get_clean();
 
         $admin_email = get_option('admin_email');
