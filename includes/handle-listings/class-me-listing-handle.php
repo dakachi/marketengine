@@ -92,8 +92,9 @@ class ME_Listing_Handle
         }
 
         if (isset($listing_data['listing_gallery'])) {
+            $listing_gallery = array_map('absint', $listing_data['listing_gallery']);
             //process upload image gallery
-            update_post_meta($post, '_me_listing_gallery', $listing_data['listing_gallery']);
+            update_post_meta($post, '_me_listing_gallery', $listing_gallery);
         } else {
             update_post_meta($post, '_me_listing_gallery', array());
         }
@@ -115,13 +116,10 @@ class ME_Listing_Handle
     public static function update($listing_data)
     {
         $current_user_id    = get_current_user_id();
-        $listing_data['ID'] = $listing_data['edit'];
+        $listing_data['ID'] = absint( $listing_data['edit'] );
 
         $listing                     = me_get_listing($listing_data['ID']);
         $listing_data['post_author'] = $listing->post_author;
-
-        // unset($listing_data['parent_cat']);
-        // unset($listing_data['sub_cat']);
 
         $listing_type = $listing->get_listing_type();
         if ($listing_type !== $listing_data['listing_type']) {
@@ -458,7 +456,7 @@ class ME_Listing_Handle
     {
         // validate current user
         $current_user_id = get_current_user_id();
-        $rules           = array('content' => 'required', 'score' => 'required|greaterThan:0');
+        $rules           = array('content' => 'required', 'score' => 'required|numeric|greaterThan:0');
 
         $custom_attributes = array(
             'content' => __("review content", "enginethemes"),
@@ -493,7 +491,7 @@ class ME_Listing_Handle
             return new WP_Error('invalid_order', __("Invalid order id.", "enginethemes"));
         }
 
-        $listing_id = $data['listing_id'];
+        $listing_id = absint( $data['listing_id'] );
         $listing    = me_get_listing($listing_id);
         if (!$listing || is_wp_error($listing)) {
             return new WP_Error('invalid_listing', __("The reviewed listing is invalid.", "enginethemes"));
@@ -530,8 +528,8 @@ class ME_Listing_Handle
         if (empty($review_item)) {
             $order_item_id = me_add_order_item($order->ID, esc_html(get_the_title($listing_id)), 'review_item');
             me_add_order_item_meta($order_item_id, '_listing_id', $listing_id);
-            me_add_order_item_meta($order_item_id, '_review_score', $data['score']);
-            me_add_order_item_meta($order_item_id, '_review_content', $data['content']);
+            me_add_order_item_meta($order_item_id, '_review_score', absint( $data['score'] ));
+            me_add_order_item_meta($order_item_id, '_review_content', sanitize_textarea_field( $data['content'] ));
         }
 
         $commentdata = array(
@@ -539,7 +537,7 @@ class ME_Listing_Handle
             'comment_author'       => $current_user->display_name,
             'comment_author_email' => $current_user->user_email,
             // 'comment_author_url'   => 'http://',
-            'comment_content'      => $data['content'],
+            'comment_content'      => sanitize_textarea_field( $data['content'] ),
             'comment_type'         => 'review',
             'comment_parent'       => 0,
             'user_id'              => $current_user_id,
@@ -550,7 +548,7 @@ class ME_Listing_Handle
 
         $comment_id = wp_insert_comment($commentdata);
         if (!is_wp_error($comment_id)) {
-            update_comment_meta($comment_id, '_me_rating_score', $data['score']);
+            update_comment_meta($comment_id, '_me_rating_score', absint($data['score']));
 
             $comment = get_comment($comment_id);
             do_action('marketengine_insert_review', $comment_id, $comment);
