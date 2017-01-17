@@ -31,7 +31,7 @@ $dispute_files = !empty($_POST['dispute_file']) ? $_POST['dispute_file'] : array
 		</div>
 
 		<div class="me-dispute-image">
-			<h3><?php _e('Attachments (optional)', 'enginethemes'); ?></h3>
+			<h3><?php _e('Attachments (images or document)', 'enginethemes'); ?></h3>
 			<?php
 
 	        ob_start();

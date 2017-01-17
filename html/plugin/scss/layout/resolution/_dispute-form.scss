@@ -159,6 +159,9 @@
 		}
 		.me-receive-item {
 			padding: 0 15px 15px;
+			.marketengine-radio-field .me-radio {
+				margin-top: 0;
+			}
 		}
 		.me-dispute-problem {
 			padding-left: 15px;
