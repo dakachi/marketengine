@@ -364,7 +364,7 @@ class ME_RC_Form_Handle
         me_get_template('resolution/emails/escalate-to-buyer', $args);
         $escalate_buyer_mail_content = ob_get_clean();
 
-        $user = get_userdata($seller_id);
+        $user = get_userdata($buyer_id);
         /**
          * Filter user escalate dispute email to buyer content
          *
