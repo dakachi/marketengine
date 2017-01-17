@@ -470,7 +470,7 @@ class ME_RC_Form_Handle
         self::resolve_notify_buyer($dispute, $case_data['me-dispute-win']);
 
         me_resolve_order($dispute->post_parent);
-
+        exit;
         return $dispute->ID;
     }
 
@@ -491,7 +491,7 @@ class ME_RC_Form_Handle
 
 
         if($winner == $dispute->sender) {
-            $args['winnder'] = __("you", "enginethemes");
+            $args['winner'] = __("you", "enginethemes");
         }else {
             $args['winner'] = get_the_author_meta('display_name', $dispute->receiver);
         }
@@ -510,6 +510,9 @@ class ME_RC_Form_Handle
          *
          * @since 1.1
          */
+        echo "<pre>";
+        print_r($resolve_dispute_mail_content);
+        echo "</pre>";
         $resolve_dispute_mail_content = apply_filters('marketengine_resolve_to_buyer_mail_content', $resolve_dispute_mail_content, $dispute);
         return wp_mail($buyer->user_email, $subject, $resolve_dispute_mail_content);
     }
@@ -542,13 +545,16 @@ class ME_RC_Form_Handle
 
         $seller = get_userdata( $dispute->receiver );
         /**
-         * Filter user escalate dispute email content
+         * Filter user resolve dispute email content
          *
          * @param String $resolve_dispute_mail_content
          * @param Object $dispute The dispute object
          *
          * @since 1.1
          */
+        echo "<pre>";
+        print_r($resolve_dispute_mail_content);
+        echo "</pre>";
         $resolve_dispute_mail_content = apply_filters('marketengine_resolve_to_seller_mail_content', $resolve_dispute_mail_content, $dispute);
         return wp_mail($seller->user_email, $subject, $resolve_dispute_mail_content);
     }
