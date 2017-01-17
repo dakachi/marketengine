@@ -14,7 +14,8 @@ $args = array(
 	'paged'			=> $paged,
 );
 
-$args = array_merge(apply_filters( 'me_filter_order', $_GET ), $args);
+$request = array_map('esc_sql', $_GET);
+$args = array_merge(apply_filters( 'me_filter_order', $request ), $args);
 
 $query = new WP_Query( $args );
 

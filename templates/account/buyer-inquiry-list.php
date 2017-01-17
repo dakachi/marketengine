@@ -18,6 +18,7 @@ $args = array(
 
 $role = 'sender';
 $args = array_merge(apply_filters( 'me_filter_inquiry', $_GET, $role ), $args);
+$args = array_map('sanitize_text_field', $args);
 $query = new ME_Message_Query($args);
 ?>
 <!-- Tabs Inquiries -->
@@ -73,7 +74,7 @@ $query = new ME_Message_Query($args);
 			</div>
 		<?php endif; ?>
 
-			<div class="me-table-col me-order-buyer"><?php echo get_the_author_meta( 'display_name', $inquiry->receiver ); ?></div>
+			<div class="me-table-col me-order-buyer"><?php echo esc_html( get_the_author_meta( 'display_name', $inquiry->receiver ) ); ?></div>
 			<div class="me-table-col me-order-date-contact"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $inquiry->post_modified ) ); ?></div>
 		</div>
 
