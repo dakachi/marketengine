@@ -17,5 +17,5 @@ $file_name     = basename($attached_file);
 ?>
 <li class="me-item-img" title="<?php _e("Drag to sort", "enginethemes"); ?>">
 	<input type="hidden" name="<?php echo esc_attr($filename); ?>[]" value="<?php echo esc_attr($image_id) ?>">
-	 <?php echo $file_name; ?><a class="me-delete-img remove"></a>
+	<?php echo $file_name; ?><a class="me-delete-img remove"></a>
 </li>
