@@ -9,7 +9,7 @@
             </a>
         </li>
         <li>
-            <a href="<?php me_rc_dispute_link($case->ID); ?>">
+            <a href="<?php echo me_rc_dispute_link($case->ID); ?>">
                 #<?php echo $case->ID; ?>
             </a>
         </li>

@@ -413,7 +413,7 @@ class ME_RC_Form_Handle
 
     public static function escalate_notify_admin($dispute, $sender)
     {
-        $subject     = sprintf(__("Dispute on the transaction %d has been escalated.", "enginethemes"), $dispute->post_parent);
+        $subject     = sprintf(__("Dispute on the transaction #%d has been escalated.", "enginethemes"), $dispute->post_parent);
         $transaction = me_get_order($dispute->post_parent);
 
         $args = array(
@@ -475,7 +475,6 @@ class ME_RC_Form_Handle
         self::resolve_notify_buyer($dispute, $case_data['me-dispute-win']);
 
         me_resolve_order($dispute->post_parent);
-        exit;
         return $dispute->ID;
     }
 
@@ -515,9 +514,6 @@ class ME_RC_Form_Handle
          *
          * @since 1.1
          */
-        echo "<pre>";
-        print_r($resolve_dispute_mail_content);
-        echo "</pre>";
         $resolve_dispute_mail_content = apply_filters('marketengine_resolve_to_buyer_mail_content', $resolve_dispute_mail_content, $dispute);
         return wp_mail($buyer->user_email, $subject, $resolve_dispute_mail_content);
     }
@@ -557,9 +553,6 @@ class ME_RC_Form_Handle
          *
          * @since 1.1
          */
-        echo "<pre>";
-        print_r($resolve_dispute_mail_content);
-        echo "</pre>";
         $resolve_dispute_mail_content = apply_filters('marketengine_resolve_to_seller_mail_content', $resolve_dispute_mail_content, $dispute);
         return wp_mail($seller->user_email, $subject, $resolve_dispute_mail_content);
     }
