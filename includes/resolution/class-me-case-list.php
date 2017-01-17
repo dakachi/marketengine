@@ -166,7 +166,7 @@ class ME_Case_List extends WP_List_Table
             'cb'      => '<input type="checkbox" />',
             'status'    => __("Status", "enginethemes"),
             'case' => __("Case", "enginethemes"),
-            'issue' => __("Issue", "enginethemes"),
+            //'issue' => __("Issue", "enginethemes"),
             'date' => __("Date", "enginethemes"),
             'actions' => __("Actions", "enginethemes")
         );
@@ -197,7 +197,7 @@ class ME_Case_List extends WP_List_Table
     public function get_bulk_actions()
     {
         $actions = array(
-            'bulk-delete' => 'Delete',
+            'bulk-delete' => __("Delete", "enginethemes"),
         );
 
         return $actions;
@@ -307,7 +307,7 @@ class SP_Plugin
             __("Cases", "enginethemes"),
             __("Cases", "enginethemes"),
             'manage_options',
-            'me-dispute-cases',
+            'marketengine-dispute-cases',
             array($this, 'plugin_settings_page')
         );
 
