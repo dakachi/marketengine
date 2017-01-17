@@ -62,7 +62,7 @@
                         <div class="me-message-typing-form">
                             <form id="dispute-message-form" action="">
                             
-                            <?php if($case->post_status != 'me-closed') : ?>
+                            <?php if($case->post_status != 'me-closed' && $case->post_status != 'me-resolved') : ?>
                                 
                                 <textarea name="post_content" id="debate_content" placeholder="New message"></textarea>
                                 <div class="me-dispute-attachment">

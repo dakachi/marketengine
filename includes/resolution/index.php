@@ -14,6 +14,8 @@ require_once ME_PLUGIN_PATH . '/includes/resolution/class-me-rc-form.php';
 require_once ME_PLUGIN_PATH . '/includes/resolution/class-me-rc-handle.php';
 require_once ME_PLUGIN_PATH . '/includes/resolution/class-me-rc-query.php';
 
+require_once ME_PLUGIN_PATH . '/includes/resolution/class-me-case-list.php';
+
 function me_setup_resolution_center() {
 	ME_RC_Form::init();
 	ME_RC_Query::instance();

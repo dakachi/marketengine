@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 
 ?>
 <p><?php printf(__("Hi %s,", "enginethemes"), $display_name);?></p>
-<p><?php printf(__("Seller %s has escalated into the dispute for the order <a href='%s' >%d</a> to admin. ", "enginethemes"), $seller_name, $order_link, $order_id); ?></p>
+<p><?php printf(__("Seller %s has escalated into the dispute for the order <a href='%s' >#%d</a> to admin. ", "enginethemes"), $seller_name, $order_link, $order_id); ?></p>
 <p><?php _e("Please review and provide admin with detailed information and materials involved in this transaction in the conversation area. Please click the link below for further detail:", "enginethemes"); ?>
 <br/><a href='<?php echo $dispute_link; ?>' ><?php echo $dispute_link; ?></a>
 </p>
