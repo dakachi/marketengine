@@ -147,10 +147,15 @@ class ME_Order
         } else {
             $post = $order_id;
         }
+<<<<<<< HEAD
 
         if (!$post || $post->post_type != 'me_order') {
             return false;
         }
+=======
+        
+        if(!$post || $post->post_type != 'me_order') return false;
+>>>>>>> 1.0.1
 
         foreach (get_object_vars($post) as $key => $value) {
             $this->$key = $value;

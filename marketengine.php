@@ -199,7 +199,7 @@ class MarketEngine
         require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-contact.php';
 
         require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-payment.php';
-        require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-paypal-simple.php';
+        // require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-paypal-simple.php';
         require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-ppadaptive.php';
 
         require_once ME_PLUGIN_PATH . '/includes/handle-checkout/class-me-checkout-handle.php';
