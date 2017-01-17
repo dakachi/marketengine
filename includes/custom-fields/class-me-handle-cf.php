@@ -93,7 +93,7 @@ class ME_Handle_CF
             exit;
         }
 
-        $cat    = $_GET['cat'];
+        $cat    = absint($_GET['cat']);
         $fields = me_cf_get_fields($cat);
         if (empty($fields)) {
             exit;
@@ -119,7 +119,7 @@ class ME_Handle_CF
      */
     public function validate_fields($errors, $listing_data)
     {
-        $cat = $listing_data['parent_cat'];
+        $cat = absint( $listing_data['parent_cat'] );
 
         if (!$cat) {
             return $errors;
@@ -181,23 +181,23 @@ class ME_Handle_CF
                 $this->update_field_meta($post, $field, $data);
             }
         }
-        
+
     }
-    
+
     /**
      * Update listing custom field value as term taxonomy
      *
      * @param int $post The post id
      * @param array $field The field info
      * @param array $data The listing data
-     * 
+     *
      * @since 1.0
      * @return void
      */
     public function update_field_taxonomy($post, $field, $data)
     {
 
-        $field_name = $field['field_name'];
+        $field_name  = $field['field_name'];
         $field_value = $data[$field_name];
         $term_arr    = array();
         if (is_array($field_value)) {
@@ -213,7 +213,6 @@ class ME_Handle_CF
                 $term_arr[] = $term;
             }
         }
-        
 
         wp_set_object_terms($post, $term_arr, $field_name);
 
@@ -225,16 +224,18 @@ class ME_Handle_CF
      * @param int $post The post id
      * @param array $field The field info
      * @param array $data The listing data
-     * 
+     *
      * @since 1.0
      * @return void
      */
     public function update_field_meta($post, $field, $data)
     {
-        $field_name = $field['field_name'];
+        $field_name  = $field['field_name'];
         $field_value = $data[$field_name];
         if ('date' === $field['field_type']) {
             $field_value = date('Y-m-d', strtotime($field_value));
+        }else {
+            $field_value = sanitize_text_field( $field_value );
         }
 
         update_post_meta($post, $field_name, $field_value);
@@ -256,17 +257,16 @@ class ME_Handle_CF
 
         $fields = me_cf_get_fields($category[0]);
 
-        if(empty($fields)) {
+        if (empty($fields)) {
             return;
         }
-        
+
         ob_start();
         me_get_template('custom-fields/field-details', array('fields' => $fields));
         $content = ob_get_clean();
 
-        if($content != '') {
-            echo '<div class="me-custom-field me-desc-box">' . $content .'</div>';
+        if ($content != '') {
+            echo '<div class="me-custom-field me-desc-box">' . $content . '</div>';
         }
     }
 }
-

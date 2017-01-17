@@ -21,8 +21,8 @@ if (!defined('ABSPATH')) {
 <div class="me-row">
 	<div class="me-col-sm-3">
 		<div class="me-cf-title">
-			<p><?php echo $field['field_title'] ?></p>
-			<span><?php echo $field['field_description'] ?></span>
+			<p><?php echo esc_html( $field['field_title'] ); ?></p>
+			<span><?php echo esc_html( $field['field_description'] ); ?></span>
 		</div>
 	</div>
 	<div class="me-col-sm-9">
