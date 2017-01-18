@@ -10,9 +10,9 @@
 
 $args = array(
 	'post_type' => 'me_order',
-	'paged' 	=> get_query_var('paged')
+	'paged' 	=> absint( get_query_var('paged') )
 );
-$type = 'order';.
+$type = 'order';
 $request = array_map('esc_sql', $_GET);
 $args = array_merge(apply_filters( 'me_filter_order', $request, $type ), $args);
 
