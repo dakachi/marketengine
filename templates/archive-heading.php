@@ -3,7 +3,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-$selected = !empty($_GET['orderby']) ? $_GET['orderby'] : '';
+$selected = !empty($_GET['orderby']) ? esc_attr( $_GET['orderby'] ) : '';
 global $wp_query;
 ?>
 <div class="me-bar-shop">
@@ -21,21 +21,19 @@ global $wp_query;
 			<?php do_action('marketengine_before_filter_listing_form'); ?>
 
 			<select class="me-chosen-select" name="orderby" id="listing-orderby">
-				<?php /* <option <?php selected( $selected, '') ?> value=""><?php _e("Default Sort", "enginethemes"); ?></option>
-				<option <?php selected( $selected, 'rating') ?> value="rating"><?php _e("Sort by average rating", "enginethemes"); ?></option> */ ?>
 				<option <?php selected( $selected, 'date') ?> value="date"><?php _e("Sort by Newest", "enginethemes"); ?></option>
 				<option <?php selected( $selected, 'price') ?> value="price"><?php _e("Price: Low to High", "enginethemes"); ?></option>
 				<option <?php selected( $selected, 'price-desc') ?> value="price-desc"><?php _e("Price: High to Low", "enginethemes"); ?></option>
 			</select>
 			<input type="hidden" name="paged" value="1" ?>
 			<?php  if(!empty($_GET['price-min'])) : ?>
-				<input type="hidden" name="price-min" value="<?php echo $_GET['price-min'];  ?>" ?>
+				<input type="hidden" name="price-min" value="<?php echo esc_attr( $_GET['price-min'] );  ?>" ?>
 			<?php endif; ?>
 			<?php if(!empty($_GET['price-max'])) : ?>
-				<input type="hidden" name="price-max" value="<?php echo $_GET['price-max'];  ?>" ?>
+				<input type="hidden" name="price-max" value="<?php echo esc_attr( $_GET['price-max'] );  ?>" ?>
 			<?php  endif; ?>
             <?php if (!empty($_GET['keyword'])): ?>
-                <input type="hidden" name="keyword" value="<?php echo esc_html( $_GET['keyword'] ); ?>" ?>
+                <input type="hidden" name="keyword" value="<?php echo esc_attr( $_GET['keyword'] ); ?>" ?>
             <?php endif;?>
 
             <?php do_action('marketengine_after_filter_listing_form'); ?>

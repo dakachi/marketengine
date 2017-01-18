@@ -50,7 +50,7 @@ get_header();
                     me_get_template('purchases/review', 
                         array(
                             'transaction' => $order, 
-                            'listing_id' => $_GET['id']
+                            'listing_id' => absint( $_GET['id'] )
                         )
                     );
                 }else {
