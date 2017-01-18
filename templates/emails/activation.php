@@ -11,9 +11,9 @@ if (!defined('ABSPATH')) {
  * @since 1.0
  */
 ?>
-<p><?php printf(__("Hello %s,", "enginethemes"), $display_name); ?></p>
+<p><?php printf(__("Hello %s,", "enginethemes"), esc_html( $display_name )); ?></p>
 <p>
-	<?php printf(__("You have successfully registered an account with %s.", "enginethemes"), $blogname ); ?>
+	<?php printf(__("You have successfully registered an account with %s.", "enginethemes"), esc_html( $blogname ) ); ?>
 	&nbsp;<?php _e("Here is your account information:", "enginethemes"); ?>
 </p>
 <ol>
@@ -22,4 +22,4 @@ if (!defined('ABSPATH')) {
 </ol>
 <p><?php _e("Please click the link below to confirm your email address.", "enginethemes"); ?></p>
 <p><?php echo $activate_email_link; ?></p>
-<p><?php printf(__("Thank you and welcome to %s.", "enginethemes"), $blogname); ?></p>
+<p><?php printf(__("Thank you and welcome to %s.", "enginethemes"), esc_html( $blogname )); ?></p>

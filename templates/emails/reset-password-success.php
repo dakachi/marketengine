@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 ?>
-<p><?php printf(__("Hello %s,", "enginethemes"), $display_name);?></p>
-<p><?php printf(__("You have successfully changed your password. Click this link  %s to login to your %s account.", "enginethemes"), $site_url, $blogname)?></p>
+<p><?php printf(__("Hello %s,", "enginethemes"), esc_html( $display_name ));?></p>
+<p><?php printf(__("You have successfully changed your password. Click this link  %s to login to your %s account.", "enginethemes"), $site_url, esc_html( $blogname ))?></p>
 <p><?php _e("Sincerely", "enginethemes");?>, <br/>
-<?php echo $blogname; ?></p>
+<?php echo esc_html( $blogname ); ?></p>

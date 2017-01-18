@@ -103,7 +103,6 @@ class MarketEngine
         $this->define();
         $this->include_files();
         $this->init_hooks();
-        $this->add_ajax();
         /**
          * Fires after the plugin is loaded.
          *
@@ -143,7 +142,6 @@ class MarketEngine
     private function include_files()
     {
         require_once ME_PLUGIN_PATH . '/includes/class-me-autoloader.php';
-        require_once ME_PLUGIN_PATH . '/update.php';
 
         require_once ME_PLUGIN_PATH . '/admin/index.php';
         require_once ME_PLUGIN_PATH . '/includes/custom-fields/index.php';
@@ -198,7 +196,6 @@ class MarketEngine
         require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-contact.php';
 
         require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-payment.php';
-        // require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-paypal-simple.php';
         require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-ppadaptive.php';
 
         require_once ME_PLUGIN_PATH . '/includes/handle-checkout/class-me-checkout-handle.php';
@@ -378,13 +375,6 @@ class MarketEngine
         wp_enqueue_script('jquery-validation', 'http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js');
     }
 
-    /**
-     * Add ajax for front-end
-     */
-    public function add_ajax()
-    {
-        // TODO: move to admin package
-    }
 
     /**
      * Get the plugin url.
