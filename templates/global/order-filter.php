@@ -31,8 +31,8 @@ $type = isset($type) ? $type : 'transaction';
 				<div class="me-order-pick-date-filter">
 					<label><?php _e('Date of Order', 'enginethemes'); ?></label>
 					<div class="me-order-pick-date">
-						<input id="me-order-pick-date-1" name="from_date" type="text" value="<?php echo isset($_GET['from_date']) ? $_GET['from_date'] : ''; ?>" placeholder="<?php _e('From date', 'enginethemes'); ?>">
-						<input id="me-order-pick-date-2" name="to_date" type="text" value="<?php echo isset($_GET['to_date']) ? $_GET['to_date'] : ''; ?>" placeholder="<?php _e('To date', 'enginethemes'); ?>">
+						<input id="me-order-pick-date-1" name="from_date" type="text" value="<?php echo isset($_GET['from_date']) ? esc_attr( $_GET['from_date'] ) : ''; ?>" placeholder="<?php _e('From date', 'enginethemes'); ?>">
+						<input id="me-order-pick-date-2" name="to_date" type="text" value="<?php echo isset($_GET['to_date']) ? esc_attr( $_GET['to_date'] ) : ''; ?>" placeholder="<?php _e('To date', 'enginethemes'); ?>">
 					</div>
 				</div>
 			</div>
@@ -40,12 +40,10 @@ $type = isset($type) ? $type : 'transaction';
 			<div class="me-col-md-7">
 				<div class="me-order-keyword-filter">
 					<label><?php _e('Keyword', 'enginethemes'); ?></label>
-					<input type="text" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>" placeholder="<?php _e('Order ID, listing name, etc.', 'enginethemes'); ?>">
-
-					<?php //TODO style lai cho nay ?>
-					<?php $page = ($type === 'order') ? 'orders' : 'purchases'; ?>
+					<input type="text" name="keyword" value="<?php echo isset($_GET['keyword']) ? esc_attr( $_GET['keyword'] ) : ''; ?>" placeholder="<?php _e('Order ID, listing name, etc.', 'enginethemes'); ?>">
 				</div>
 				<div class="me-order-clear-filter">
+					<?php $page = ($type === 'order') ? 'orders' : 'purchases'; ?>
 					<a href="<?php echo me_get_auth_url($page); ?>"><?php _e('Clear Filter', 'enginethemes'); ?></a>
 					<input class="me-order-filter-btn" type="submit" value="<?php _e('FILTER', 'enginethemes'); ?>">
 				</div>

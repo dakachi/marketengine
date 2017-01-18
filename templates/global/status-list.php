@@ -10,7 +10,7 @@
 		<option value="any"><?php _e("Filter order's status", 'enginethemes'); ?></option>
 	<?php
 		foreach ($status_list as $key => $status) :
-			$curr_status = isset($_GET['order_status']) ? $_GET['order_status'] : '';
+			$curr_status = isset($_GET['order_status']) ? esc_attr( $_GET['order_status'] ) : '';
 	?>
 		<option value="<?php echo $key; ?>" <?php echo ($curr_status === $key) ? 'selected' : '' ?>><?php echo $status; ?></option>
 	<?php

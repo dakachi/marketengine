@@ -3,7 +3,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-$listing_gallery = !empty($_POST['listing_gallery']) ? $_POST['listing_gallery'] : $listing_gallery;
+$listing_gallery = !empty($_POST['listing_gallery']) ? array_map('absint', $_POST['listing_gallery']) : $listing_gallery;
 ?>
 
 <?php do_action('marketengine_before_post_listing_picture_form');?>

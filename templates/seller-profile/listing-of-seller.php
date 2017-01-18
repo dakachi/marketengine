@@ -11,7 +11,7 @@
 $args = array(
 	'author' 	=> $user_id,
 	'post_type' => 'listing',
-	'paged'		=> get_query_var('paged') ? get_query_var('paged') : 1,
+	'paged'		=> get_query_var('paged') ? absint( get_query_var('paged') ) : 1,
 	'orderby'   => 'ID',
 );
 $args = apply_filters( 'filter_listing_query', $args );

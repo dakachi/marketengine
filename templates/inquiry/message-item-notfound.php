@@ -16,7 +16,7 @@ $user_data = get_userdata($author);
 <li class="me-inquires-no-conversation">
 	<div class="me-inquires-avatar-seller">
 		<?php echo me_get_avatar( $author ); ?>
-		<b><?php echo $user_data->display_name; ?></b>
+		<b><?php echo esc_html( $user_data->display_name ); ?></b>
 		<p><?php _e("Send your first message to start the conversation.", "enginethemes"); ?></p>
 	</div>
 </li>

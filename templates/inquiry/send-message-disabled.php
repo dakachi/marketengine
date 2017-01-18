@@ -14,5 +14,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <div class="me-message-typing-archive">
-	You can not	continue the conversation since this listing was archived
+	<?php _e( "You can not	continue the conversation since this listing was archived", "enginethemes" ); ?>
 </div>

@@ -15,11 +15,7 @@ $location = $seller->location[0] ? $seller->location[0] : '';
 	<ul class="me-author-info">
 		<li>
 			<span class="pull-left"><?php echo __('From:'); ?></span>
-			<b class="pull-right"><?php echo $location; ?></b>
-		</li>
-		<li>
-			<span class="pull-left"><?php echo __('Language:'); ?></span>
-			<b class="pull-right"></b>
+			<b class="pull-right"><?php echo esc_html( $location ); ?></b>
 		</li>
 		<li>
 			<span class="pull-left"><?php echo __('Member Since:'); ?></span>

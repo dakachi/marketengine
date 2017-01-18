@@ -32,14 +32,6 @@ $note = esc_html( $transaction->post_excerpt );
 						<p><?php me_print_buyer_information( $billing_address ); ?></p>
 					</div>
 				</div>
-				<?php /*
-				<div class="me-col-md-6 me-col-sm-6">
-					<div class="me-ordership-info">
-						<h5><?php echo __( 'Shipped to:', 'enginethemes' ); ?></h5>
-						<p><?php me_print_buyer_information( $shipping_address ); ?></p>
-					</div>
-				</div>
-				*/?>
 			</div>
 		</div>
 		<div class="me-col-md-7">

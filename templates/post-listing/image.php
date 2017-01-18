@@ -1,5 +1,5 @@
 <?php
-$listing_image = !empty($_POST['listing_image']) ? $_POST['listing_image'] : $listing_image;
+$listing_image = !empty($_POST['listing_image']) ? absint( $_POST['listing_image'] ) : $listing_image;
 ?>
 <div class="marketengine-group-field">
 
