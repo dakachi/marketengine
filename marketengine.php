@@ -142,7 +142,6 @@ class MarketEngine
     private function include_files()
     {
         require_once ME_PLUGIN_PATH . '/includes/class-me-autoloader.php';
-        require_once ME_PLUGIN_PATH . '/update.php';
 
         require_once ME_PLUGIN_PATH . '/admin/index.php';
         require_once ME_PLUGIN_PATH . '/includes/custom-fields/index.php';
@@ -199,7 +198,6 @@ class MarketEngine
         require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-contact.php';
 
         require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-payment.php';
-        // require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-paypal-simple.php';
         require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-ppadaptive.php';
 
         require_once ME_PLUGIN_PATH . '/includes/handle-checkout/class-me-checkout-handle.php';

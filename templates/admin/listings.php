@@ -8,11 +8,11 @@ $listings = marketengine_listing_report($_REQUEST);
 if(empty($_REQUEST['paged'])) {
 	$i = 1;	
 }else {
-	$i = ($_REQUEST['paged'] - 1) * get_option( 'posts_per_page' ) + 1;
+	$i = (absint( $_REQUEST['paged'] ) - 1) * get_option( 'posts_per_page' ) + 1;
 }
 
-$quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
-$active_section = empty($_REQUEST['section']) ? '' : $_REQUEST['section'];
+$quant = empty($_REQUEST['quant']) ? 'day' : esc_attr( $_REQUEST['quant'] );
+$active_section = empty($_REQUEST['section']) ? '' : esc_attr( $_REQUEST['section'] );
 ?>
 
 <div class="me-tabs-content">

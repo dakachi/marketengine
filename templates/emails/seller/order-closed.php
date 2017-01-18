@@ -11,12 +11,12 @@ if (!defined('ABSPATH')) {
  * @since 1.0
  */
 ?>
-<p><?php printf(__("Dear %s", "enginethemes"), $display_name); ?>,</p>
-<p><?php printf(__("Your order for the listing  %s on %s has been closed.", "enginethemes"), $listing_link, get_bloginfo('blogname') ); ?></p>
+<p><?php printf(__("Dear %s", "enginethemes"), esc_html( $display_name )); ?>,</p>
+<p><?php printf(__("Your order for the listing  %s on %s has been closed.", "enginethemes"), $listing_link, esc_html( get_bloginfo('blogname') ) ); ?></p>
 <p><?php _e("Order details:", "enginethemes"); ?></p>
 <ol>
 	<li><?php printf(__("Listing: %s", "enginethemes"), $listing_link) ?></li>
-	<li><?php printf(__("Buyer: %s", "enginethemes"), $buyer_name) ?></li>
+	<li><?php printf(__("Buyer: %s", "enginethemes"), esc_html( $buyer_name )) ?></li>
 	<li><?php printf(__("Date of order: %s", "enginethemes"), $order_date) ?></li>
 	<li><?php printf(__("Total earnings (commission deducted): %s", "enginethemes"), $earning) ?></li>
 </ol>
@@ -24,4 +24,4 @@ if (!defined('ABSPATH')) {
 <?php printf(__("View your order details here: %s.", "enginethemes"), $order_link); ?>
 </p>
 <p><?php _e("Sincerely", "enginethemes"); ?>,
-<br><?php echo get_bloginfo('blogname'); ?></p>
+<br><?php echo esc_html( get_bloginfo('blogname') ); ?></p>
