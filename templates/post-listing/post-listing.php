@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 if( !isset($_POST['referer']) ) {
 	$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
 } else {
-	$referer = $_POST['referer'];
+	$referer = esc_url( $_POST['referer'] );
 }
 
 if(me_option('user-email-confirmation')) {

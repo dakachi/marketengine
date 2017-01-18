@@ -1,5 +1,5 @@
 <?php
-$parent_cat = $_REQUEST['parent-cat'];
+$parent_cat = absint( $_REQUEST['parent-cat'] );
 
 // $child_categories = get_terms( array('taxonomy' => 'listing_category', 'hide_empty' => false, 'parent' => $parent_cat) );
 
