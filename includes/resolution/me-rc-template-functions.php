@@ -59,11 +59,8 @@ function me_rc_mobile_dispute_button($transaction) {
  * @since 1.1
  */
 function me_rc_center_mobile_link($transaction) {
-	// echo '<div class="me-visible-sm me-visible-xs">';
 	me_rc_center_link($transaction);
-	// echo '</div>';
 }
-// add_action( 'marketengine_order_extra_end', 'me_rc_center_mobile_link', 11);
 
 /**
  * Transaction dispute form
@@ -91,3 +88,21 @@ function me_transaction_dispute_breadcrumb() {
     <?php endif; 
 }
 add_action( 'marketengine_order_breadcrumb_end', 'me_transaction_dispute_breadcrumb' );
+
+/**
+ * Filter the user account title when user access resolution center list
+ *
+ * @param string $title The current page title
+ *
+ * @since 1.1
+ */
+function me_rc_account_title($title, $id) {
+	if (is_page() && $id === me_get_option_page_id('user_account')) {
+        global $wp_query;
+        if (isset($wp_query->query_vars['resolution-center'])) {
+            return __('Resolution Center', 'enginethemes');
+        }
+    }
+    return $title;
+}
+add_filter( 'the_title', 'me_rc_account_title', 10, 2 );
