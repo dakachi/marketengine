@@ -80,7 +80,7 @@ var get_struct = function() {
 	return struct;
 }
 
-var get_task_dist = function(folder = '') {
+var get_task_dist = function(folder) {
 	var task_dist = dist + folder + '/' + curr_project.settings.slug + '/';
 	return task_dist;
 }
@@ -130,7 +130,6 @@ gulp.task('phpunit', function() {
 var me_vendor_src               = 'assets/js';
 var me_vendor_dest              = 'assets/js';
 
-var jquery_ui                   = me_vendor_src + '/jquery-ui.js';
 var muploader                   = me_vendor_src + '/muploader.js/';
 var jquery_magnific_popup       = me_vendor_src + '/jquery.magnific-popup.min.js';
 var jquery_flexslider           = me_vendor_src + '/jquery.flexslider-min.js';
@@ -148,7 +147,6 @@ var me_listing_review           = me_vendor_src + '/listing-review.js';
 
 gulp.task('script-vendor', function() {
     gulp.src([
-        jquery_ui,
         muploader,
         jquery_magnific_popup,
         jquery_flexslider,
