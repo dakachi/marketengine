@@ -16,7 +16,6 @@ $url = $is_buyer ? me_get_auth_url('purchases') : me_get_auth_url('orders');
 ?>
 <div class="marketengine-page-title me-have-breadcrumb">
     <h2><?php echo apply_filters( 'marketengine_transaction_title', $title ); ?></h2>
-    <a href="<?php echo $url; ?>"></a>
     <ol class="me-breadcrumb">
     	
     	<?php do_action('marketengine_order_breadcrumb_start'); ?>

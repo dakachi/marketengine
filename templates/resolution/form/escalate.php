@@ -3,9 +3,9 @@
 	<?php me_print_notices(); ?>
 	<form id="me-escalate-form" method="post" action="<?php echo add_query_arg('action', 'escalate') ?>">
 		<div class="me-escalate-box">
-			<p class="me-escalate-about">You are about to escalate this dispute.<br/>
-			Admin will arbitrate based on reports and proofs from both sides.<br/>
-			Emails, images, files...all are accepted as proofs.</p>
+			<p class="me-escalate-about"><?php _e("You are about to escalate this dispute.", "enginethemes") ?><br/>
+			<?php _e( "Admin will arbitrate based on reports and proofs from both sides.", "enginethemes" ) ?><br/>
+			<?php _e("Emails, images, files...all are accepted as proofs.", "enginethemes"); ?></p>
 		</div>
 		<div class="me-escalate-box">
 			<h3><?php _e("Please tell more about your problem", "enginethemes"); ?></h3>

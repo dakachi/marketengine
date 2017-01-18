@@ -759,8 +759,6 @@ function me_prevent_access_order_details()
 }
 add_action('template_redirect', 'me_prevent_access_order_details');
 
-
-
 /**
  * Transaction listing info
  *

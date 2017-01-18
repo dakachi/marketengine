@@ -8,9 +8,8 @@ $escalated_user = me_get_message_meta($case->ID, '_escalated_by', true);
 $escalate_user_name = get_the_author_meta( 'display_name', $escalated_user );
 $winner = empty($_POST['me-dispute-win']) ? '' : $_POST['me-dispute-win'];
 ?>
-
+<?php me_print_notices(); ?>
 <?php if(current_user_can('manage_options')) : ?>
-
     <form id="me-dispute-arbitrate-form" action="" method="post">
         <p><?php printf(__("%s has escalated the dispute. The final result of the dispute is your adjudication.", "enginethemes"), $escalate_user_name) ?></p>
         <div class="marketengine-radio-field">

@@ -2,7 +2,6 @@
 $transaction = me_get_order($case->post_parent);
 $items = $transaction->get_listing_items();
 $item = array_pop($items);
-me_print_notices();
 ?>
 <div class="me-disputed-info">
     <div class="me-disputed-product-order">
