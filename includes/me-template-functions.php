@@ -718,6 +718,29 @@ function me_auth_page_title($title, $id = null)
 }
 add_filter('the_title', 'me_auth_page_title', 10, 2);
 
+function me_transaction_review_title($title) {
+    if(!empty($_GET['action']) && $_GET['action'] == 'review') {
+        return __("Rate & Review", "enginethemes");
+    }
+    return $title;
+}
+add_filter('marketengine_transaction_title', 'me_transaction_review_title');
+
+
+/**
+ * Replace order title when user access resolution center
+ * @param array $title The title parts array
+ * @since 1.1
+ */
+function me_order_title($title){
+    global $post;
+    if (is_singular( 'me_order' )) {
+        $title['title'] = sprintf(__("Order #%d", "enginethemes"), $post->ID);
+    }
+    return $title;
+}
+add_filter('document_title_parts', 'me_order_title');
+
 /**
  * Redirect user to login when access order details without login
  *

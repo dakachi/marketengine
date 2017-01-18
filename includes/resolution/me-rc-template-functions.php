@@ -123,3 +123,12 @@ function me_rc_account_document_title($title){
     return $title;
 }
 add_filter('document_title_parts', 'me_rc_account_document_title');
+
+
+function me_transaction_dispute_title($title) {
+    if(!empty($_GET['action']) && $_GET['action'] == 'dispute') {
+        return __("Dispute", "enginethemes");
+    }
+    return $title;
+}
+add_filter('marketengine_transaction_title', 'me_transaction_dispute_title');
