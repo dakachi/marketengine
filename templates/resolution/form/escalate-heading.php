@@ -1,7 +1,8 @@
-<div class="marketengine-page-title">
+<div class="marketengine-page-title me-have-breadcrumb">
     <h2>
         <?php _e("ESCALATE", "enginethemes"); ?>
     </h2>
+    <a href="<?php echo me_rc_dispute_link($case->ID); ?>"></a>
     <ol class="me-breadcrumb">
         <li>
             <a href="<?php echo me_resolution_center_url(); ?>">
