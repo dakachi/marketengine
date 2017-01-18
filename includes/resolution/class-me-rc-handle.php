@@ -87,14 +87,14 @@ class ME_RC_Form_Handle
      */
     public static function debate($data)
     {
-        $case = me_get_message($data['dispute']);
+        $case = me_get_message(absint($data['dispute']));
         if (!$case) {
             return new WP_Error('invalid_case', __("Invalid case.", "enginethemes"));
         }
 
         $sender = get_current_user_id();
 
-        if (!current_user_can( 'manage_options' ) && $sender != $case->sender && $sender != $case->receiver) {
+        if (!current_user_can('manage_options') && $sender != $case->sender && $sender != $case->receiver) {
             return new WP_Error('permission_denied', __("You can not send message to this case.", "enginethemes"));
         }
 
@@ -115,7 +115,7 @@ class ME_RC_Form_Handle
         );
 
         if (!empty($data['dispute_file'])) {
-            $message_data['dispute_file'] = $data['dispute_file'];
+            $message_data['dispute_file'] = array_map('absint', $data['dispute_file']);
         }
 
         return self::create_dispute_message($message_data);
@@ -134,12 +134,12 @@ class ME_RC_Form_Handle
         $case_id = me_insert_message($data);
         if ($case_id) {
 
-            me_update_message_meta($case_id, '_case_problem', $data['dispute_problem']);
-            me_update_message_meta($case_id, '_case_problem_description', $data['dispute_content']);
-            me_update_message_meta($case_id, '_case_expected_resolution', $data['expect_solution']);
+            me_update_message_meta($case_id, '_case_problem', sanitize_text_field($data['dispute_problem']));
+            me_update_message_meta($case_id, '_case_problem_description', sanitize_text_field($data['dispute_content']));
+            me_update_message_meta($case_id, '_case_expected_resolution', sanitize_text_field($data['expect_solution']));
 
             if ($data['is_received_item']) {
-                me_update_message_meta($case_id, '_case_is_received_item', $data['is_received_item']);
+                me_update_message_meta($case_id, '_case_is_received_item', sanitize_text_field($data['is_received_item']));
             }
 
             $data['post_parent'] = $case_id;
@@ -212,7 +212,7 @@ class ME_RC_Form_Handle
      */
     public static function request_close($dispute_id)
     {
-        $dispute = me_get_message($dispute_id);
+        $dispute = me_get_message(absint($dispute_id));
         if (!$dispute) {
             return new WP_Error('invalid_case', __("Invalid case id.", "enginethemes"));
         }
@@ -263,7 +263,7 @@ class ME_RC_Form_Handle
      */
     public static function close($case_id)
     {
-        $dispute = me_get_message($case_id);
+        $dispute = me_get_message(absint($case_id));
         if (!$dispute) {
             return new WP_Error('invalid_case', __("Invalid case id.", "enginethemes"));
         }
@@ -312,7 +312,7 @@ class ME_RC_Form_Handle
 
     public static function escalate($case_data)
     {
-        $case = me_get_message($case_data['dispute']);
+        $case = me_get_message(absint($case_data['dispute']));
         if (!$case) {
             return new WP_Error('invalid_case', __("Invalid case id.", "enginethemes"));
         }
@@ -329,8 +329,9 @@ class ME_RC_Form_Handle
         $case_id = me_update_message(array('ID' => $case->ID, 'post_status' => 'me-escalated'));
         me_update_message_meta($case_id, '_escalated_by', $current_user_id);
 
-        self::add_dispute_revision('me-escalated', $case);
         self::debate($case_data);
+        self::add_dispute_revision('me-escalated', $case);
+        
         // gui mail
         if ($case->sender == $current_user_id) {
             self::escalate_notify_seller($case);
@@ -428,9 +429,9 @@ class ME_RC_Form_Handle
 
         // get dispute mail content from template
         ob_start();
-        if($sender == $dispute->sender) {
-            me_get_template('resolution/emails/buyer-escalate-to-admin', $args);    
-        }else {
+        if ($sender == $dispute->sender) {
+            me_get_template('resolution/emails/buyer-escalate-to-admin', $args);
+        } else {
             me_get_template('resolution/emails/seller-escalate-to-admin', $args);
         }
         $escalate_admin_mail_content = ob_get_clean();
@@ -465,14 +466,14 @@ class ME_RC_Form_Handle
         if (empty($case_data['arbitrate_content'])) {
             return new WP_Error('empty_content', __("The arbitrate content is required.", "enginethemes"));
         }
-
+        $winner = absint( $case_data['me-dispute-win'] );
         $case_id = me_update_message(array('ID' => $dispute->ID, 'post_status' => 'me-resolved'));
-        me_update_message_meta($dispute->ID, '_case_winner', $case_data['me-dispute-win']);
-        me_update_message_meta($dispute->ID, '_case_arbitrate', $case_data['arbitrate_content']);
-        
+        me_update_message_meta($dispute->ID, '_case_winner', $winner );
+        me_update_message_meta($dispute->ID, '_case_arbitrate', sanitize_textarea_field( $case_data['arbitrate_content'] ));
+
         self::add_dispute_revision('me-resolved', $dispute);
-        self::resolve_notify_seller($dispute, $case_data['me-dispute-win']);
-        self::resolve_notify_buyer($dispute, $case_data['me-dispute-win']);
+        self::resolve_notify_seller($dispute, $winner);
+        self::resolve_notify_buyer($dispute, $winner);
 
         me_resolve_order($dispute->post_parent);
         return $dispute->ID;
@@ -493,10 +494,9 @@ class ME_RC_Form_Handle
             'order_id'     => $transaction->id,
         );
 
-
-        if($winner == $dispute->sender) {
+        if ($winner == $dispute->sender) {
             $args['winner'] = __("you", "enginethemes");
-        }else {
+        } else {
             $args['winner'] = get_the_author_meta('display_name', $dispute->receiver);
         }
 
@@ -504,8 +504,8 @@ class ME_RC_Form_Handle
         me_get_template('resolution/emails/admin-resolve', $args);
         $resolve_dispute_mail_content = ob_get_clean();
 
-        $buyer = get_userdata( $dispute->sender );
-        
+        $buyer = get_userdata($dispute->sender);
+
         /**
          * Filter user resolve dispute email content
          *
@@ -533,10 +533,9 @@ class ME_RC_Form_Handle
             'order_id'     => $transaction->id,
         );
 
-
-        if($winner == $dispute->receiver) {
+        if ($winner == $dispute->receiver) {
             $args['winnder'] = __("you", "enginethemes");
-        }else {
+        } else {
             $args['winner'] = get_the_author_meta('display_name', $dispute->sender);
         }
 
@@ -544,7 +543,7 @@ class ME_RC_Form_Handle
         me_get_template('resolution/emails/admin-resolve', $args);
         $resolve_dispute_mail_content = ob_get_clean();
 
-        $seller = get_userdata( $dispute->receiver );
+        $seller = get_userdata($dispute->receiver);
         /**
          * Filter user resolve dispute email content
          *

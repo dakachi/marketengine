@@ -18,11 +18,6 @@
 			<div class="me-line-step-order <?php echo $process_index >= 1 ? 'active' : '' ?>">
 				<span><?php _e('Check payment', 'enginethemes'); ?></span>
 			</div>
-			<?php /*<div class="me-line-step-order <?php echo $process_index >= 2 ? 'active' : '' ?>">
-				<span><?php _e('Active order', 'enginethemes'); ?></span>
-				</div>
-			*/ ?>
-
 			<div class="me-line-step-order <?php echo $process_index >= 2 ? 'active' : '' ?>">
 				<span><?php _e('Order completed', 'enginethemes'); ?></span>
 			</div>

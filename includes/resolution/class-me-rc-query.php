@@ -91,7 +91,7 @@ class ME_RC_Query
     {
         if (get_query_var('case_type')) {
             $current_user_id = get_current_user_id();
-            $case_id         = get_query_var('case_id');
+            $case_id         = absint( get_query_var('case_id') );
             $case            = me_get_message($case_id);
 
             if (!$case) {
@@ -123,7 +123,7 @@ class ME_RC_Query
 
     public function the_dispute_body_class($classes)
     {
-        $classes[] = 'dispute-case-' . get_query_var('case_id') . ' single-dispute ';
+        $classes[] = 'dispute-case-' . absint( get_query_var('case_id') ) . ' single-dispute ';
         return $classes;
     }
 }

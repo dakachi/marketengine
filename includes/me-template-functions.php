@@ -429,12 +429,12 @@ function me_get_order_status_info($status, $info_type = '')
             break;
         case 'me-closed':
             $style         = 'me-order-closed';
-            $text          = '';
+            $text          = __("The order has been closed.", "enginethemes");
             $order_process = 5;
             break;
         case 'me-resolved':
             $style         = 'me-order-resolved';
-            $text          = '';
+            $text          = __("Dispute has already been resolved.", "enginethemes");
             $order_process = 5;
             break;
         default:

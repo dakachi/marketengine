@@ -144,7 +144,7 @@ class ME_Case_List extends WP_List_Table
     public function column_name($item)
     {
 
-        $delete_nonce = wp_create_nonce('sp_delete_customer');
+        $delete_nonce = wp_create_nonce('me_delete_case');
 
         $title = '<strong>' . $item['name'] . '</strong>';
 
@@ -182,7 +182,6 @@ class ME_Case_List extends WP_List_Table
     public function get_sortable_columns()
     {
         $sortable_columns = array(
-            // 'status' => array(__("Status", "enginethemes"), true),
             'date' => array('post_date', false),
         );
 
@@ -235,10 +234,10 @@ class ME_Case_List extends WP_List_Table
             // In our file that handles the request, verify the nonce.
             $nonce = esc_attr($_REQUEST['_wpnonce']);
 
-            if (!wp_verify_nonce($nonce, 'sp_delete_customer')) {
+            if (!wp_verify_nonce($nonce, 'me_delete_case')) {
                 die('Go get a life script kiddies');
             } else {
-                self::delete_customer(absint($_GET['customer']));
+                self::delete_case(absint($_GET['customer']));
 
                 // esc_url_raw() is used to prevent converting ampersand in url to "#038;"
                 // add_query_arg() return the current url
@@ -257,8 +256,7 @@ class ME_Case_List extends WP_List_Table
 
             // loop over the array of record IDs and delete them
             foreach ($delete_ids as $id) {
-                self::delete_customer($id);
-
+                self::delete_case($id);
             }
 
             // esc_url_raw() is used to prevent converting ampersand in url to "#038;"
@@ -278,14 +276,14 @@ class ME_Case_List extends WP_List_Table
 	}
 }
 
-class SP_Plugin
+class ME_Case_Screen
 {
 
     // class instance
     static $instance;
 
-    // customer WP_List_Table object
-    public $customers_obj;
+    // case WP_List_Table object
+    public $cases_obj;
 
     // class constructor
     public function __construct()
@@ -330,7 +328,7 @@ class SP_Plugin
 
         add_screen_option($option, $args);
 
-        $this->customers_obj = new ME_Case_List();
+        $this->cases_obj = new ME_Case_List();
     }
 
     /**
@@ -342,11 +340,11 @@ class SP_Plugin
 			<div class="wrap">
 				<h2><?php _e("Cases", "enginethemes")?></h2>
 				
-				<?php $this->customers_obj->views(); ?>
+				<?php $this->cases_obj->views(); ?>
 				<form method="post">
 					<?php
-						$this->customers_obj->prepare_items();
-        				$this->customers_obj->display();
+						$this->cases_obj->prepare_items();
+        				$this->cases_obj->display();
 					?>
 				</form>
 							
@@ -367,5 +365,5 @@ class SP_Plugin
 }
 
 add_action('plugins_loaded', function () {
-    SP_Plugin::get_instance();
+    ME_Case_Screen::get_instance();
 });
