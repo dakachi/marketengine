@@ -10,7 +10,7 @@ if( isset($_POST['listing_description']) && !empty($_POST['listing_description']
 <div class="marketengine-group-field">
 	<div class="marketengine-input-field">
 	    <label class="me-field-title"><?php _e("Listing Title", "enginethemes");?></label>
-	    <input type="text" name="listing_title" value="<?php echo $listing_title ?>" class="required">
+	    <input type="text" name="listing_title" value="<?php echo $listing_title; ?>" class="required">
 	</div>
 </div>
 <div class="marketengine-group-field">

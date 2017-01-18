@@ -1,1 +1,0 @@
-<!-- xoá file nay và dua nó qua resolution -->
