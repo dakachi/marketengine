@@ -27,7 +27,7 @@ jQuery(document).ready(function($) {
 	var owl_carousel = $("#me-related-slider");
     owl_carousel.owlCarousel({
 		items : 2,
-		margin: 30,
+		margin: 26,
 		nav: true,
 		navText: ['<span></span>', '<span></span>'],
 		dots: false,

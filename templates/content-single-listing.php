@@ -41,16 +41,17 @@ if (!defined('ABSPATH')) {
 						<?php me_get_template('single-listing/description', array('listing' => $listing)); ?>
 
 						<?php me_get_template('single-listing/rating', array('listing' => $listing));?>
-						
+
+					</div>
+					
+					<div class="me-visible-xs">
 						<?php if( $listing->post_author != get_current_user_id() ) {
 
 							me_get_template('user-info', array('author_id' => $listing->post_author));
 
-						} ?>	
-
-
+						} ?>
 					</div>
-
+					
 					<?php do_action('marketengine_after_single_listing_information'); ?>
 
 				</div>
