@@ -186,7 +186,7 @@ ul.marketengine-gallery-img {
 					}
 					&.me-gallery-file {
 						position: relative;
-						display: block;
+						display: inline-block;
 					}
 				}
 				.me-delete-img {
@@ -267,5 +267,15 @@ ul.marketengine-gallery-img {
 		margin-right: -15px;
 		padding: 25px 15px;
 		margin-top: 0;
+	}
+	.me-gallery-file-wrap {
+		ul.marketengine-gallery-img {
+			li {
+				&.me-item-img {
+					width: 100%;
+					margin-top: 10px;
+				}
+			}
+		}
 	}
 }
