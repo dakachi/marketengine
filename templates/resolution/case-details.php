@@ -27,6 +27,8 @@
                                     echo get_the_author_meta( 'display_name', $case->receiver );
                                 }elseif(get_current_user_id() == $case->receiver) {
                                     echo get_the_author_meta( 'display_name', $case->sender );
+                                } elseif (current_user_can('manage_options')) {
+                                    echo get_the_author_meta( 'display_name', $case->receiver );
                                 }
                                 ?>
                             </p>
