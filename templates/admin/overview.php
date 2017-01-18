@@ -31,7 +31,7 @@ if(empty($_REQUEST['tab']) || !isset($admin_report_tabs[$_REQUEST['tab']])) {
 	</ul>
 	<div class="me-tabs-container">
 	<?php
-		me_get_template('admin/'. $_REQUEST['tab']);
+		me_get_template('admin/'. sanitize_text_field( $_REQUEST['tab'] ));
 	?>
 	</div>
 </div>

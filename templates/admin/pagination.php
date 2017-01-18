@@ -8,7 +8,7 @@
 	if(empty($_REQUEST['paged'])) {
 		$current = 0;
 	}else {
-		$current = (($_REQUEST['paged'] - 1) * $posts_per_page);
+		$current = ((absint( $_REQUEST['paged'] ) - 1) * $posts_per_page);
 	}
 
 	$final = $posts_per_page + $current;
@@ -26,7 +26,7 @@
 	<span class="me-paginations">
 		<?php 
 		$big = 999999999;
-		$current_page = empty($_REQUEST['paged']) ? 1 : $_REQUEST['paged'];
+		$current_page = empty($_REQUEST['paged']) ? 1 : absint( $_REQUEST['paged'] );
 		echo paginate_links( array(
 			'base' => add_query_arg( 'paged', '%#%' ),
 			'format' => '',

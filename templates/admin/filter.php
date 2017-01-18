@@ -6,7 +6,7 @@ $quants = array(
 	'quarter' => __( "Quarter" , "enginethemes" ),
 	'year' => __( "Year" , "enginethemes" ),
 );
-$selected_quant = !empty($_REQUEST['quant']) ? $_REQUEST['quant'] : 'day';
+$selected_quant = !empty($_REQUEST['quant']) ? esc_attr( $_REQUEST['quant'] ) : 'day';
 $nonce = wp_create_nonce( 'me-export' );
 ?>
 <style type="text/css">
@@ -25,8 +25,8 @@ $nonce = wp_create_nonce( 'me-export' );
 	<span class="me-pick-date-box">
 		<form action="" method="get">
 			<input name="page" value="me-reports" type="hidden" />
-			<input name="tab" value="<?php echo empty($_REQUEST['tab']) ? 'listing' : $_REQUEST['tab']; ?>" type="hidden" />
-			<input name="section" value="<?php echo empty($_REQUEST['section']) ? '' : $_REQUEST['section']; ?>" type="hidden" />
+			<input name="tab" value="<?php echo empty($_REQUEST['tab']) ? 'listing' : esc_attr( $_REQUEST['tab'] ); ?>" type="hidden" />
+			<input name="section" value="<?php echo empty($_REQUEST['section']) ? '' : esc_attr( $_REQUEST['section'] ); ?>" type="hidden" />
 			<span class="me-group-pick-date">
 				<span class="me-report-start-date"><?php _e("From", "enginethemes"); ?></span>
 				<span class="me-pick-date">
