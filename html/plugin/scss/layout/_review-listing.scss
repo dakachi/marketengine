@@ -1,0 +1,77 @@
+//=== Buyer review listing
+//
+.me-review-listing {
+	background: #FFF;
+	margin: 0 auto;
+	margin-top: 24px;
+	width: 600px;
+	padding: 30px 40px 20px 40px;
+	border: 1px solid $color_border_base;
+	border-radius: $border_radius_base;
+	@include box-shadow(0, 0, 2px, 2px, rgba($color_border_base, 0.2));
+	> h3 {
+		margin: 30px 0 20px 0;
+		font-size: $font_size_large;
+		text-align: center;
+		line-height: 1.2em;
+	}
+	> p {
+		margin-top: 40px;
+		font-size: $font_size_base;
+		color: $color_text;
+		text-align: center;
+	}
+	textarea {
+		width: 100%;
+		height: 120px;
+		max-width: 100%;
+		border: 1px solid $color_border_1;
+		padding: 10px 14px;
+		line-height: 1.4em;
+	}
+	.me-rating {
+		display: block;
+		text-align: center;
+		i {
+			font-size: 24px;
+			color: #f2bc00;
+			&:hover {
+				cursor: pointer;
+			} 
+		}
+	}
+	.me-review-submit {
+		margin-top: 40px;
+		margin-bottom: 40px;
+		text-align: center;
+	}
+	.me-backlink {
+		display: inline-block;
+		text-align: initial;
+		&:before {
+			content: '';
+			display: block;
+		}
+	}
+}
+
+@media (max-width: $screen_xs_max) { //767px
+	.me-review-listing  {
+		width: auto;
+		margin-top: 0;
+		padding: 15px;
+		margin-left: -15px;
+		margin-right: -15px;
+	}
+	.me-review-listing {
+		> p {
+			margin-top: 30px;
+		}
+		.me-review-submit {
+			margin: 20px 0;
+		}
+	}
+	.me-review-btn {
+		width: 100%;
+	}
+}

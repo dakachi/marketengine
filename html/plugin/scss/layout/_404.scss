@@ -1,0 +1,38 @@
+//=== Layout 404 errors
+//
+.me-errors-wrap {
+	background: #FFF;
+	margin-top: 46px;
+	padding: 50px 15px 90px 15px;
+	text-align: center;
+	border: 1px solid $color_border_base;
+	border-radius: $border_radius_base;
+	img {
+		max-width: 100%;
+	}
+	h2 {
+		margin: 30px 0 0;
+		font-size: $font_size_base * 2;
+	}
+	h4 {
+		margin: 10px 0 0;
+		font-size: $font_size_large;
+		color: $color_text_2;
+	}
+	p {
+		margin: 20px 0 0;
+		font-size: $font_size_medium;
+		a {
+			color: $color_text;
+			text-decoration: underline;
+		}
+	}
+}
+
+@media (max-width: $screen_xs_max) { // 767px
+	.me-errors-wrap {
+		margin-top: 20px;
+		padding-top: 20px;
+		padding-bottom: 40px;
+	}
+}

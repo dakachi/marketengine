@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1 ,user-scalable=no">
+	<title>MarketEngine Checkout</title>
+	<link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="../assets/css/marketengine-font-icon.css">
+	<link rel="stylesheet" href="../assets/css/marketengine-layout-basic.css">
+	<link rel="stylesheet" href="../assets/css/marketengine-layout.css">
+	<link rel="stylesheet" href="../assets/css/magnific-popup.css">
+	<link rel="stylesheet" href="../assets/css/flexslider.css">
+	<script src="../assets/js/jquery.min.js" type="text/javascript"></script>
+	<script src="../assets/js/jquery-ui.js" type="text/javascript"></script>
+	<script src="../assets/js/me.sliderthumbs.js" type="text/javascript"></script>
+	<script src="../assets/js/jquery.magnific-popup.min.js" type="text/javascript"></script>
+	<script src="../assets/js/jquery.flexslider-min.js" type="text/javascript"></script>
+	<script src="../assets/js/jquery.mCustomScrollbar.min.js" type="text/javascript"></script>
+	<script src="../assets/js/script.js" type="text/javascript"></script>
+</head>
+<body>
+	<div id="marketengine-wrapper-listing" class="marketengine">
+		<div class="marketengine-profile-wrap">
+			<header id="me-header-wrapper">
+				<div class="me-container">
+					<div class="marketengine-header-top">
+						<a href="" class="marketengine-logo pull-left">
+							<span class="text-large">Test Admin</span>
+							<span class="text-small">Just another WordPress site</span>
+						</a>
+						<div class="marketengine-menu-header pull-right">
+							<nav class="me-menu-page">
+								<ul class="marketengine-nav-menu">
+									<li><a href="">PAGE</a></li>
+									<li><a href="#">BLOG</a></li>
+									<li><a href="#">CONTACT</a></li>
+									<li><a href="#">ABOUT</a></li>
+									<li><a href="#">TERMS</a></li>
+								</ul>
+							</nav>
+							<nav class="me-menu-account">
+								<select name="" id="" onchange="window.location.href=this.value;">
+									<option>MY ACCOUNT</option>
+									<option value="#">Dashboard</option>
+									<option value="#">My Listing</option>
+									<option value="#">Transactions</option>
+									<option value="#">Inbox</option>
+								</select>
+							</nav>
+							<span class="me-account-humberger me-visible-xs-inline"><i class="icon-me-user"></i></span>
+							<span class="me-page-humberger me-visible-sm-inline me-visible-xs-inline"><i class="icon-me-bars"></i></span>
+						</div>
+					</div>
+				</div>
+				<div class="marketengine-header-bottom">
+					<nav class="me-menu-page me-visible-sm me-visible-xs">
+						<ul class="marketengine-nav-menu">
+							<li><a href="#">PAGE</a></li>
+							<li><a href="#">BLOG</a></li>
+							<li><a href="#">CONTACT</a></li>
+							<li><a href="#">ABOUT</a></li>
+							<li><a href="#">TERMS</a></li>
+						</ul>
+					</nav>
+					<nav class="me-menu-account me-visible-sm me-visible-xs">
+						<ul class="marketengine-nav-menu">
+							<li><a href="#">DASHBOARD</a></li>
+							<li><a href="#">MY LISTING</a></li>
+							<li><a href="#">TRANSACTIONS</a></li>
+							<li><a href="#">INBOX</a></li>
+						</ul>
+					</nav>
+					<div class="me-container">
+						<div class="marketengine-bar pull-left">
+							<ul class="me-shopcategories">
+								<li>
+									<span class="marketengine-bar-title"><i class="icon-me-list"></i>SHOP CATEGORIES</span>
+									<nav class="me-nav-category">
+										<div class="me-container">
+											<span class="me-triangle-top"></span>
+											<ul class="me-menu-category">
+												<li>
+													<a href="#">Apparel</a><span class="me-arrow"></span>
+												</li>
+												<li><a href="#">Bags, Shoes &amp; Accessories</a></li>
+												<li><a href="#">he</a></li>
+												<li><a href="#">Apparel</a></li>
+											</ul>
+										</div>
+									</nav>
+								</li>
+							</ul>
+							
+						</div>
+						<nav class="marketengine-nav pull-right">
+							<ul class="marketengine-nav-post">
+								<li class="">
+									<div class="me-search me-hidden-xs">
+										<input type="text" name="me-search" placeholder="Enter keyword...">
+										<i class="icon-me-search me-search-btn"></i>
+									</div>
+									<span class="me-search-btn-xs me-visible-xs"><i class="icon-me-search me-search-btn"></i></span>
+									<div class="me-search-xs me-visible-xs">
+										<input type="text" name="me-search" placeholder="Enter keyword...">
+										<i class="icon-me-search me-search-btn"></i>
+									</div>
+								</li>
+								<li><a href="#" class="me-post-listing"><i class="icon-me-add-circle"></i><span class="me-hidden-xs">Post Listing</span></a></li>
+								<!-- <li><a href=""><i class="icon-me-cart"></i>(0) item</a></li> -->
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</header>
+			
+			<div id="marketengine-page">
+				<div class="me-container">
+					<div class="marketengine-content-wrap">
+						<div class="marketengine-page-title">
+							<p>CHECKOUT</p>
+						</div>
+						<div class="marketengine-content">
+							<form id="me-checkout-form" action="">
+								<div class="me-row">
+									<div class="me-col-md-9">
+										<div class="me-billing-shipping">
+											<h3 class="me-title-bill-ship">Billing &amp; Shipping Details</h3>
+											<div class="me-switch-billing">
+												<input id="me-billing-address-input" type="radio" name="me-billing" checked>
+												<label class="me-switch-bill-label" for="me-billing-address-input">I have billing &amp; shipping addresses</label>
+												<div class="me-billing-address">
+													<h4>My billing address</h4>
+													<div class="me-row">
+														<div class="me-col-md-6">
+															<div class="marketengine-input-field">
+																<label class="text">First name</label>
+																<input type="text" name="firstname">
+															</div>
+														</div>
+														<div class="me-col-md-6">
+															<div class="marketengine-input-field">
+																<label class="text">Last name</label>
+																<input type="text" name="lastname">
+															</div>
+														</div>
+													</div>
+													<div class="me-row">
+														<div class="me-col-md-6">
+															<div class="marketengine-input-field">
+																<label class="text">Email address</label>
+																<input type="text" name="email">
+															</div>
+														</div>
+														<div class="me-col-md-6">
+															<div class="marketengine-input-field">
+																<label class="text">Phone</label>
+																<input type="text" name="phone">
+															</div>
+														</div>
+													</div>
+													<div class="me-row">
+														<div class="me-col-md-6">
+															<div class="marketengine-input-field">
+																<label class="text">Country</label>
+																<input type="text" name="country">
+															</div>
+														</div>
+														<div class="me-col-md-6">
+															<div class="marketengine-input-field">
+																<label class="text">Town/City</label>
+																<input type="text" name="city">
+															</div>
+														</div>
+													</div>
+													<div class="me-row">
+														<div class="me-col-md-6">
+															<div class="marketengine-input-field">
+																<label class="text">Street address</label>
+																<input type="text" name="street">
+															</div>
+														</div>
+														<div class="me-col-md-6">
+															<div class="marketengine-input-field">
+																<label class="text">Post code</label>
+																<input type="text" name="postcode">
+															</div>
+														</div>
+													</div>
+													<input id="me-shipping-address-input" type="checkbox" name="me-billing" checked>
+													<label class="me-use-ship-label" for="me-shipping-address-input">Use the same address as the billing address</label>
+													<div class="me-shipping-address">
+														<h4>My shiping address</h4>
+														<div class="me-row">
+															<div class="me-col-md-6">
+																<div class="marketengine-input-field">
+																	<label class="text">First name</label>
+																	<input type="text" name="firstname">
+																</div>
+															</div>
+															<div class="me-col-md-6">
+																<div class="marketengine-input-field">
+																	<label class="text">Last name</label>
+																	<input type="text" name="lastname">
+																</div>
+															</div>
+														</div>
+														<div class="me-row">
+															<div class="me-col-md-6">
+																<div class="marketengine-input-field">
+																	<label class="text">Email address</label>
+																	<input type="text" name="email">
+																</div>
+															</div>
+															<div class="me-col-md-6">
+																<div class="marketengine-input-field">
+																	<label class="text">Phone</label>
+																	<input type="text" name="phone">
+																</div>
+															</div>
+														</div>
+														<div class="me-row">
+															<div class="me-col-md-6">
+																<div class="marketengine-input-field">
+																	<label class="text">Country</label>
+																	<input type="text" name="country">
+																</div>
+															</div>
+															<div class="me-col-md-6">
+																<div class="marketengine-input-field">
+																	<label class="text">Town/City</label>
+																	<input type="text" name="city">
+																</div>
+															</div>
+														</div>
+														<div class="me-row">
+															<div class="me-col-md-6">
+																<div class="marketengine-input-field">
+																	<label class="text">Street address</label>
+																	<input type="text" name="street">
+																</div>
+															</div>
+															<div class="me-col-md-6">
+																<div class="marketengine-input-field">
+																	<label class="text">Post code</label>
+																	<input type="text" name="postcode">
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="me-switch-billing">
+												<input id="me-local-pickup-input" type="radio" name="me-billing">
+												<label class="me-switch-bill-label" for="me-local-pickup-input">I want local pickup</label>
+												<div class="me-local-pickup">
+													<h4>Pickup address:</h4>
+													<p><b>Address:</b>007 Lac Long Quan, Q1, TpHCM</p>
+													<p><b>Email:</b>seller@email.com</p>
+													<p><b>Phone:</b>01234567899</p>
+												</div>
+											</div>
+										</div>
+										<div class="me-order-note">
+											<h3>Order Notes <small>(optional)</small></h3>
+											<textarea name=""></textarea>
+										</div>
+									</div>
+									<div class="me-col-md-3 me-hidden-sm me-hidden-xs">
+										<div class="me-content-sidebar">
+											<div class="me-authors">
+												<span class="me-avatar">
+													<img src="http://0.gravatar.com/avatar/c655f931959fd28e3594563edd348833?s=60&d=mm&r=G" alt="">
+													<b>author listing</b>
+												</span>
+												<ul class="me-author-info">
+													<li>
+														<span class="pull-left">From:</span>
+														<b class="pull-right">Banglades</b>
+													</li>
+													<li>
+														<span class="pull-left">Language:</span>
+														<b class="pull-right">Vietnam</b>
+													</li>
+													<li>
+														<span class="pull-left">Member Sinced:</span>
+														<b class="pull-right">30 NOV, 2017</b>
+													</li>
+												</ul>
+												<a href="" class="me-view-profile">View profile</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="me-shopping-cart">
+									<h3>Your order</h3>
+									<div class="me-table me-cart-table">
+										<div class="me-table-rhead">
+											<div class="me-table-col me-cart-name">Listing</div>
+											<div class="me-table-col me-cart-price">Price</div>
+											<div class="me-table-col me-cart-units">Units</div>
+											<div class="me-table-col me-cart-units-total">Total</div>
+										</div>
+										<div class="me-table-row me-cart-item">
+											<div class="me-table-col me-cart-name">
+												<div class="me-cart-listing">
+													<a href="#">
+														<img src="../assets/img/2.jpg" alt="">
+														<span>Lorem Ipsum is simply dummy text Lorem Ipsum is simply</span>
+													</a>
+												</div>
+											</div>
+											<div class="me-table-col me-cart-price"><span>Price</span>$20</div>
+											<div class="me-table-col me-cart-units"><span>Units</span><input type="number" value="20"></div>
+											<div class="me-table-col me-cart-units-total">$400</div>
+										</div>
+										<div class="me-table-row me-cart-item">
+											<div class="me-table-col me-cart-name">
+												<div class="me-cart-listing">
+													<a href="#">
+														<img src="../assets/img/2.jpg" alt="">
+														<span>Lorem Ipsum is simply dummy text Lorem Ipsum is simply</span>
+													</a>
+												</div>
+											</div>
+											<div class="me-table-col me-cart-price"><span>Price</span>$12</div>
+											<div class="me-table-col me-cart-units"><span>Units</span><input type="number" value="60"></div>
+											<div class="me-table-col me-cart-units-total">$720</div>
+										</div>
+										<div class="me-table-row me-cart-rshippingfee">
+											<div class="me-table-col me-table-empty"></div>
+											<div class="me-table-col me-table-empty"></div>
+											<div class="me-table-col me-cart-shippingfee">Shipping fee:</div>
+											<div class="me-table-col me-cart-shippingfee-price">$100</div>
+										</div>
+										<div class="me-table-row me-cart-rtotals">
+											<div class="me-table-col me-table-empty"></div>
+											<div class="me-table-col me-table-empty"></div>
+											<div class="me-table-col me-cart-amount">Total amount:</div>
+											<div class="me-table-col me-cart-totals">$1220</div>
+										</div>
+									</div>
+
+									<div class="me-checkout-submit">
+										<input class="me-checkout-submit-btn" type="submit" value="MAKE PAYMENT">
+									</div>
+								</div>
+								<div class="me-authors me-authors-xs me-visible-sm me-visible-xs">
+									<span class="me-avatar">
+										<img src="http://0.gravatar.com/avatar/c655f931959fd28e3594563edd348833?s=60&d=mm&r=G" alt="">
+										<b>author listing</b>
+									</span>
+									<ul class="me-author-info">
+										<li>
+											<span class="pull-left">From:</span>
+											<b class="pull-right">Banglades</b>
+										</li>
+										<li>
+											<span class="pull-left">Language:</span>
+											<b class="pull-right">Vietnam</b>
+										</li>
+										<li>
+											<span class="pull-left">Member Sinced:</span>
+											<b class="pull-right">30 NOV, 2017</b>
+										</li>
+									</ul>
+									<a href="" class="me-view-profile">View profile</a>
+								</div>
+							</form>
+						</div>
+						<!--// marketengine-content -->
+					</div>
+
+				</div>
+			</div>
+
+			<footer id="marketengine-footer">
+				<div class="me-footer-wrap">
+					<div class="me-container">
+						<div class="me-row">
+							<div class="me-col-md-7">
+								<div class="me-row">
+									<div class="me-col-md-4 me-col-sm-4">
+										<div class="me-menu-footer-wrap">
+											<h2 class="me-title-mf">DISCOVER</h2>
+											<ul class="me-menu-footer">
+												<li><a href="#">How it works</a></li>
+												<li><a href="#">Trust and Quanlity</a></li>
+												<li><a href="#">Blog</a></li>
+											</ul>
+										</div>
+									</div>
+									<div class="me-col-md-4 me-col-sm-4">
+										<div class="me-menu-footer-wrap">
+											<h2 class="me-title-mf">COMPANY</h2>
+											<ul class="me-menu-footer">
+												<li><a href="#">How it works</a></li>
+												<li><a href="#">Trust and Quanlity</a></li>
+												<li><a href="#">Blog</a></li>
+											</ul>
+										</div>
+									</div>
+									<div class="me-col-md-4 me-col-sm-4">
+										<div class="me-menu-footer-wrap">
+											<h2 class="me-title-mf">ENTERPRISE SOLUTIONS</h2>
+											<ul class="me-menu-footer">
+												<li><a href="#">How it works</a></li>
+												<li><a href="#">Trust and Quanlity</a></li>
+												<li><a href="#">Blog</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="me-col-md-5">
+								<div class="me-row">
+									<div class="me-col-md-6 me-col-sm-6">
+										<div class="me-menu-footer-wrap">
+											<h2 class="me-title-mf">CONNECT WITH US</h2>
+											<ul class="me-menu-footer">
+												<li><a href=""><i class="icon-me-facebook"></i>Facebook</a></li>
+												<li><a href=""><i class="icon-me-twitter"></i>tWitter</a></li>
+												<li><a href=""><i class="icon-me-google-plus"></i>Google Plus</a></li>
+												<li><a href=""><i class="icon-me-youtube"></i>Youtube</a></li>
+											</ul>
+										</div>
+									</div>
+									<div class="me-col-md-6 me-col-sm-6">
+										<div class="me-menu-footer-wrap">
+											<h2 class="me-title-mf">CONTACT US</h2>
+											<ul class="me-menu-footer">
+												<li>
+													<p>
+														<b>EngineThemes</b>
+														<a href="mailto:contact@enginethemes.com">contact@enginethemes.com</a>
+													</p>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="me-copyright">
+					<p>MarketEngine &copy; 2016 Powered by <b>EngineThemes</b></p>
+				</div>
+			</footer>
+
+		</div>
+	</div>
+
+	<div class="me-overlay"></div>
+</body>
+</html>

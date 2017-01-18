@@ -1,0 +1,57 @@
+//=== Column grid
+//
+@mixin marketengine_column_grid($grid_type) {
+	@for $i from 1 through 12 {
+		.me-col-#{$grid_type}-#{$i} {
+			position: relative;
+			min-height: 1px;
+			padding-left: $padding_base;
+			padding-right: $padding_base;
+		}
+	}
+}
+
+//=== Column grid responsive
+//
+@mixin marketengine_column_grid_responsive($grid_type) {
+	@for $i from 1 through 12 {
+		.me-col-#{$grid_type}-#{$i} {
+			float: left;
+			width: 100%/12*$i;
+		}
+	}
+
+	@for $i from 1 through 12 {
+		.me-col-#{$grid_type}-pull-#{$i} {
+			left: 100%/12*$i;
+		}
+	}
+
+	@for $i from 1 through 12 {
+		.me-col-#{$grid_type}-push-#{$i} {
+			right: 100%/12*$i;
+		}
+	}
+}
+
+
+
+//=== MarketEngine responsive visible
+//
+@mixin marketengine_responsive_visible($grid_type) {
+	.me-visible-#{$grid_type} {
+		display: block !important;
+	}
+	.me-visible-#{$grid_type}-inline {
+		display: inline-block !important;
+	}
+}
+
+//=== MarketEngine responsive hidden
+//
+@mixin marketengine_responsive_hidden($grid_type) {
+	.me-hidden-#{$grid_type} {
+		display: none !important;
+	}
+}
+

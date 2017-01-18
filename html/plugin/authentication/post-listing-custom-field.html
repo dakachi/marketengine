@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>MarketEngine Post Listing</title>
+	<link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="../assets/css/marketengine-font-icon.css">
+	<link rel="stylesheet" href="../assets/css/marketengine-layout.css">
+	<link rel="stylesheet" href="../assets/css/marketengine-layout-basic.css">
+	<script src="../assets/js/jquery.min.js" type="text/javascript"></script>
+	<script src="../assets/js/jquery-ui.js" type="text/javascript"></script>
+	<script src="../assets/js/me.sliderthumbs.js" type="text/javascript"></script>
+	<script src="../assets/js/jquery.magnific-popup.min.js" type="text/javascript"></script>
+	<script src="../assets/js/jquery.flexslider-min.js" type="text/javascript"></script>
+	<script src="../assets/js/jquery.mCustomScrollbar.min.js" type="text/javascript"></script>
+	<script src="../assets/js/chosen.jquery.min.js" type="text/javascript"></script>
+	<script src="../assets/js/script.js" type="text/javascript"></script>
+</head>
+<body>
+	<div id="marketengine-wrapper" class="marketengine">
+		<div class="marketengine-post-listing-wrap">
+			<form  id="post-listing-form" class="post-listing-form" method="post" accept-charset="utf-8">
+				<h3>POST LISTING</h3>
+				<div id="marketengine-post-step-1" class="marketengine-post-step active">
+					<div class="marketengine-group-field">
+						<div class="marketengine-select-field">
+						    <label class="me-field-title">Category</label>
+						    <select class="" name="">
+						    	<option value="">Catgory listing 1</option>
+						    	<option value="">Catgory listing 2</option>
+						    	<option value="">Catgory listing 3</option>
+						    	<option value="">Catgory listing 4</option>
+						    </select>
+						</div>
+					</div>
+					<div class="marketengine-group-field">
+						<div class="marketengine-select-field">
+						    <label class="me-title-field">Sub-category</label>
+						    <select class="" name="">
+						    	<option value="">Sub catgory listing 1</option>
+						    	<option value="">Sub catgory listing 2</option>
+						    	<option value="">Sub catgory listing 3</option>
+						    	<option value="">Sub catgory listing 4</option>
+						    </select>
+						</div>
+					</div>
+				</div>
+				<div id="marketengine-post-step-2" class="marketengine-post-step">
+					<div class="marketengine-group-field">
+						<div class="marketengine-select-field">
+						    <label class="me-field-title">Listing</label>
+						    <select class="" name="listing-type">
+						    	<option value="">Listing type 1</option>
+						    	<option value="">Listing type 2</option>
+						    	<option value="">Listing type 3</option>
+						    	<option value="">Listing type 4</option>
+						    </select>
+						</div>
+					</div>
+
+					<div class="marketengine-group-field">
+						<div class="me-row">
+							<div class="me-col-md-6">
+								<div class="marketengine-input-field">
+								    <label class="me-field-title">Price</label>
+								    <input type="text" name="listing_price" placeholder="$">
+								</div>
+							</div>
+							<div class="me-col-md-6">
+								<div class="marketengine-select-field">
+								    <label class="me-field-title">Pricing unit</label>
+								    <select class="" name="listing-type">
+								    	<option value="">Listing type 1</option>
+								    	<option value="">Listing type 2</option>
+								    	<option value="">Listing type 3</option>
+								    	<option value="">Listing type 4</option>
+								    </select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="marketengine-post-step-3" class="marketengine-post-step">
+					<div class="marketengine-group-field">
+						<div class="marketengine-input-field">
+						    <label class="me-field-title">Listing title</label>
+						    <input type="text" name="lising_title">
+						</div>
+					</div>
+					<div class="marketengine-group-field">
+						<div class="marketengine-textarea-field">
+							<label class="me-field-title">Description</label>
+							<textarea name="description" id=""></textarea>
+						</div>
+					</div>
+					
+					<!-- Custom Field -->
+					<div class="marketengine-custom-field">
+						<div class="marketengine-group-field">
+							<div class="marketengine-input-field">
+							    <label for="me_cf_text_1" class="me-field-title">Custom field text</label>
+							    <input id="me_cf_text_1" type="text" placeholder="Text placeholder" name="me_cf_text_1">
+							</div>
+						</div>
+
+						<div class="marketengine-group-field">
+							<div class="marketengine-textarea-field">
+							    <label for="me_cf_textarea_2" class="me-field-title">Custom field textarea</label>
+							    <textarea id="me_cf_textarea_2" placeholder="Textarea placeholder" name="me_cf_textarea_2"></textarea>
+							</div>
+						</div>
+
+						<div class="marketengine-group-field">
+							<div class="marketengine-input-field">
+							    <label for="me_cf_number_3" class="me-field-title">Custom field number <small>(optional)</small><i class="me-help-text icon-me-question-circle" title="Help text: Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt"></i></label>
+							    <input id="me_cf_number_3" type="number" placeholder="Number placeholder" name="me_cf_number_3" min="1" max="1001">
+							</div>
+						</div>
+						
+						<div class="marketengine-group-field">
+							<div class="marketengine-date-field">
+							    <label for="me_cf_date_4" class="me-field-title">Custom field date</label>
+							    <input id="me_cf_date_4" type="text" placeholder="Date placeholder" name="me_cf_date_4">
+							    <i class="icon-me-calendar"></i>
+							</div>
+						</div>
+
+						<div class="marketengine-group-field">
+							<div class="marketengine-checkbox-field">
+							    <label class="me-field-title">Custom field Checkbox</label>
+							    <div class="me-checkbox">
+							    	<label for="me_cf_checkbox_5"><input id="me_cf_checkbox_5" type="checkbox"><span>Option 1</span></label>	
+							    </div>
+							    <div class="me-checkbox">
+							    	<label for="me_cf_checkbox_6"><input id="me_cf_checkbox_6" type="checkbox"><span>Option 101</span></label>	
+							    </div>
+							    <div class="me-checkbox">
+							    	<label for="me_cf_checkbox_7"><input id="me_cf_checkbox_7" type="checkbox"><span>Option 1001 overnight full options</span></label>
+							    </div>
+							    
+							</div>
+						</div>
+						<div class="marketengine-group-field">
+							<div class="marketengine-radio-field">
+							    <label class="me-field-title">Custom field Radio</label>
+							    <div>
+							    	<label class="me-radio" for="me_cf_radio_8"><input id="me_cf_radio_8" name="me_cf_radio" type="radio"><span>Option 1</span></label>	
+								    <label class="me-radio" for="me_cf_radio_9"><input id="me_cf_radio_9" name="me_cf_radio" type="radio"><span>Option 101</span></label>	
+								   	<label class="me-radio" for="me_cf_radio_10"><input id="me_cf_radio_10" name="me_cf_radio" type="radio"><span>Option 1001 overnight full options</span></label>
+								</div>
+							</div>
+						</div>
+
+						<div class="marketengine-group-field">
+							<div class="marketengine-input-field">
+							    <label for="me_cf_date_4" class="me-field-title">Custom field single select</label>
+							    <select name="" id="" class="me-chosen-select me-cf-chosen">
+							    	<option value="">Single select 1</option>
+							    	<option value="">Single select 2</option>
+							    	<option value="">Single select 3</option>
+							    	<option value="">Single select 4</option>
+							    </select>
+							</div>
+						</div>
+
+
+						<div class="marketengine-group-field">
+							<div class="marketengine-input-field">
+							    <label for="me_cf_date_4" class="me-field-title">Custom field single select</label>
+							    <select name="" id="" class="me-chosen-select me-cf-chosen" multiple="">
+							    	<option value="">Single select 1</option>
+							    	<option value="">Single select 2</option>
+							    	<option value="">Single select 3</option>
+							    	<option value="">Single select 4</option>
+							    </select>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="marketengine-group-field">
+						<div class="marketengine-upload-field">
+							<label class="me-field-title">Upload images <small>(optional)</small></label>
+							
+							<div id="upload_listing_gallery" class="me-upload-wrapper ">
+							    <div class="upload_preview_container">
+							        <ul class="marketengine-gallery-img ui-sortable">
+							            
+							        </ul>
+							    </div>
+							    <div class="upload-container" style="position: relative;">
+							        <span id="me-btn-upload" class="me-btn-upload me-gallery-add-img" style="position: relative; z-index: 1;">Choose image</span>
+								    <div id="html5_1b39mk84tdhr1h2lsesdf61uu23_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 10px; left: 0px; width: 108px; height: 29px; overflow: hidden; z-index: 0;">
+								    	<input id="html5_1b39mk84tdhr1h2lsesdf61uu23" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" multiple="" accept="image/jpeg,.jpg,.jpeg,image/gif,.gif,image/png,.png">
+								    </div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="marketengine-group-field">
+						<div class="marketengine-input-field">
+						    <div class="tagsdiv" id="listing_tag">
+					            <div class="jaxtag">
+					            <div class="nojs-tags hide-if-js">
+					                <label class="me-field-title" for="tax-input-listing_tag">Tags</label>
+					                <textarea style="display:none;" name="listing_tag" rows="3" cols="20" class="the-tags" id="tax-input-listing_tag" aria-describedby="new-tag-listing_tag-desc"></textarea>
+					            </div>
+
+					            <div class="ajaxtag hide-if-no-js">
+					                <p><input type="text" id="new-tag-listing_tag" name="newtag[listing_tag]" class="newtag form-input-tip" size="16" autocomplete="off" aria-describedby="new-tag-listing_tag-desc" value="">
+					            </p></div>
+
+					            </div>
+					            <div class="tagchecklist"><span>&nbsp;Tag 1<i id="listing_tag-check-num-0" class="ntdelbutton icon-me-remove" tabindex="0"></i></span></div>
+					        </div>
+						</div>
+					</div>
+					<div class="marketengine-group-field me-text-center submit-post">
+						<input class="marketengine-post-submit-btn" type="submit" value="SUBMIT">
+					</div>
+					<a href="#" class="back-link-page me-forward-section" data-active="2">&lt; Cancel</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

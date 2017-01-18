@@ -1,0 +1,152 @@
+//=== Fonts family
+//
+$font_family_base:						'Lato', sans-serif;
+$font_family_2:							'Helvetica', sans-serif;
+
+//=== Fonts size
+//
+$font_size_base:          				14px !default;
+$font_size_large:         				ceil(($font_size_base * 1.25)) !default; // ~18px
+$font_size_medium:						ceil(($font_size_base * 1.14)) !default; // ~16px
+$font_size_small:         				ceil(($font_size_base * 0.85)) !default; // ~12px
+$font_size_btn_base:					$font_size_base;
+$font_size_btn_large:					$font_size_large;
+$font_size_btn_medium:					$font_size_medium;
+
+//==== Fonts weight
+//
+$font_weight_small:						300;
+$font_weight_normal:					400;
+$font_weight_bold:						700;
+$font_weight_black: 					800;
+
+
+//=== Color
+//
+$color_text: 							#333333;
+$color_text_2:							#555555;
+$color_label_1:							#b9b8b8; //Lable
+$color_label_2:							#919191; //Lable (view info)
+$color_label_3:							#555555;
+$color_link: 							#10a2ef; // Link
+$color_link_hover:						#10a2ef; // Link hover
+$color_link_focus:						#10a2ef; // Link focus	
+$color_link_active:						#10a2ef; // Link active
+$color_border_base:						#e6e6e6; // border color
+$color_border_input_text:				#ededed;
+$color_border_1:						#ededed;
+$color_field_required:					#e84a5f;
+$color_text_btn:						#ffffff;
+
+$color_notifi_success:					#53a554;
+
+
+//=== Color label status listing
+//
+$color_label_status_archive:			#e56a2e;
+$color_label_status_pause:				#fecb00;
+$color_label_status_draft:				#aaafb3;
+$color_label_status_pending:			#fda933;
+$color_label_status_publish:			#92cd00;
+
+
+//=== Skin
+//
+$background_skin: 						#ffffff;
+$color_skin: 							#e84a5f; // skin for plugin
+$color_skin_hover:						#cd3d50;
+$color_border_skin_base:				#e84a5f;
+$color_border_button_skin:              #e84a5f;
+$background_btn: 						#e84a5f;
+$background_btn_hover: 					$color_skin_hover;
+$background_header_bottom:    			#646464;
+
+$color_disable_btn:						#919191;
+
+$color_box_shadow: 						#f5f5f5;
+
+
+
+//=== Heading
+//
+$font_size_h1:            				floor(($font_size_base * 2.6)) !default; // ~36px
+$font_size_h2:            				floor(($font_size_base * 2.15)) !default; // ~30px
+$font_size_h3:            				ceil(($font_size_base * 1.7)) !default; // ~24px
+$font_size_h4:            				ceil(($font_size_base * 1.25)) !default; // ~18px
+$font_size_h5:            				$font_size_base !default;
+$font_size_h6:            				ceil(($font_size_base * 0.85)) !default; // ~12px
+
+//=== Line height
+//
+$line_height_base: 						1.428571429 !default; // 20/14
+$hine_height_heading:					1.1 !default;
+
+//=== Border
+//
+$border_base:							1px solid $color_border_base !default;
+$border_1: 								1px solid $color_border_1 !default;
+
+//=== Border radius
+//
+$border_radius_base:					3px;
+
+//=== Padding page
+//
+$padding_base: 							15px;
+
+//=== Box-shadow
+//
+// $box_shadow_base:						
+
+//=== Z-index
+//
+$zindex-dropdown:          				1000 !default;
+
+//=== Width layout form
+//
+$width_layout_form_base:				698px;
+
+//=== Layout Plugin Style
+//
+//
+// $layout_background: 					#ffffff !default;
+
+
+
+//== Media queries breakpoints
+//
+//## Define the breakpoints at which your layout will change, adapting to different screen sizes.
+
+// Extra small screen / phone
+//** Deprecated `$screen-xs` as of v3.0.1
+$screen_xs:                  			480px !default;
+//** Deprecated `$screen-xs-min` as of v3.2.0
+$screen_xs_min:              			$screen_xs !default;
+//** Deprecated `$screen-phone` as of v3.0.1
+$screen_phone:               			$screen_xs_min !default;
+
+// Small screen / tablet
+//** Deprecated `$screen-sm` as of v3.0.1
+$screen_sm:                  			768px !default;
+$screen_sm_min:              			$screen_sm !default;
+//** Deprecated `$screen-tablet` as of v3.0.1
+$screen_tablet:              			$screen_sm_min !default;
+
+// Medium screen / desktop
+//** Deprecated `$screen-md` as of v3.0.1
+$screen_md:                  			992px !default;
+$screen_md_min:              			$screen_md !default;
+//** Deprecated `$screen-desktop` as of v3.0.1
+$screen-desktop:             			$screen_md_min !default;
+
+// Large screen / wide desktop
+//** Deprecated `$screen-lg` as of v3.0.1
+$screen_lg:                  			1200px !default;
+$screen_lg_min:              			$screen_lg !default;
+//** Deprecated `$screen-lg-desktop` as of v3.0.1
+$screen_lg_desktop:          			$screen_lg_min !default;
+
+// So media queries don't overlap when required, provide a maximum
+$screen_xs_max:              			($screen_sm_min - 1) !default;
+$screen_sm_max:              			($screen_md_min - 1) !default;
+$screen_md_max:              			($screen_lg_min - 1) !default;

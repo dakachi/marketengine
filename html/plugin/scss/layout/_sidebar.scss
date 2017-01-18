@@ -1,0 +1,22 @@
+//=== Form search
+//
+.me-blog-sidebar-content {
+	.me-search {
+		position: relative;
+		margin-top: 14px;
+		input[type="text"] {
+			width: 100%;
+			height: 30px;
+			border: 1px solid $color_border_base;
+			border-radius: $border_radius_base;
+			padding-left: 10px;
+			padding-right: 32px;
+		}
+		> .me-search-btn {
+			position: absolute;
+			top: 8px;
+			right: 10px;
+			cursor: pointer;
+		}
+	}
+}

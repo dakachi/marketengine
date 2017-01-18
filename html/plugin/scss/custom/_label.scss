@@ -1,0 +1,179 @@
+.marketengine-label {
+	display: inline-block;
+	padding: 5px 16px;
+	margin-bottom: 0; // For input.btn
+	font-size: $font_size_small;
+	font-weight: $font_weight_bold;
+	text-align: center;
+	vertical-align: middle;
+	// touch-action: manipulation;
+	cursor: pointer;
+	background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+	background: $background_btn;
+	// border: 1px solid transparent;
+	white-space: nowrap;
+	border-radius: 8px;
+	color: $color_text_btn;
+	line-height: 1em;
+	&:hover {
+		background: $background_btn_hover;
+	}
+	&.disable {
+		background: none;
+		color: $color_skin;
+		cursor: default;
+		&:hover {
+		}
+	}
+}
+
+/* 
+//==== Label status listing
+.marketengine-label-status {
+	display: inline-block;
+	margin: 0;
+	padding: 8px 0px;
+	min-width: 100px;
+	margin-bottom: 0; // For input.btn
+	font-size: $font_size_base;
+	font-weight: $font_weight_bold;
+	text-align: center;
+	vertical-align: middle;
+	// touch-action: manipulation;
+	// cursor: pointer;
+	background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+	background: $color_label_2;
+	// border: 1px solid transparent;
+	@include box-shadow(0, 0, 8px, 3px, rgba($color_border_base, 0.5));
+	white-space: nowrap;
+	border-radius: 2px;
+	color: #FFFFFF;
+	line-height: 1em;
+}
+.marketengine-label-archive {
+	@extend .marketengine-label-status;
+	background: $color_label_status_archive !important;
+	@include box-shadow(0, 0, 8px, 3px, rgba($color_label_status_archive, 0.25));
+}
+.marketengine-label-pause {
+	@extend .marketengine-label-status;
+	background: $color_label_status_pause !important;
+	@include box-shadow(0, 0, 8px, 3px, rgba($color_label_status_pause, 0.25));
+}
+.marketengine-label-draft {
+	@extend .marketengine-label-status;
+	background: $color_label_status_draft !important;
+	@include box-shadow(0, 0, 8px, 3px, rgba($color_label_status_draft, 0.25));
+}
+.marketengine-label-pending {
+	@extend .marketengine-label-status;
+	background: $color_label_status_pending !important;
+	@include box-shadow(0, 0, 8px, 3px, rgba($color_label_status_pending, 0.25));
+}
+.marketengine-label-publish {
+	@extend .marketengine-label-status;
+	background: $color_label_status_publish !important;
+	@include box-shadow(0, 0, 8px, 3px, rgba($color_label_status_publish, 0.25));
+}
+
+.marketengine-ribbon {
+	position: absolute;
+	background: $color_label_2;
+	height: 22px;
+	line-height: 20px;
+	padding-left: 10px;
+	padding-right: 12px;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+	.me-ribbon-content {
+		font-size: 12px;
+		font-weight: 700;
+		color: #FFF;
+	}
+	&:after {
+		content: " ";
+	    border: 11px solid $color_label_2;
+	    right: -13px;
+	    border-left-width: 10px;
+	    border-right-color: rgba(0, 0, 0, 0);
+	    position: absolute;
+	    top: 0;
+	}
+}
+
+.marketengine-ribbon-publish {
+	@extend .marketengine-ribbon;
+	background: $color_label_status_publish !important;
+	&:after {
+		content: " ";
+		border: 11px solid $color_label_status_publish !important;
+		right: -13px;
+	    border-left-width: 10px !important;
+	    border-right-color: rgba(0, 0, 0, 0) !important;
+	    position: absolute;
+	    top: 0;
+	}
+}
+.marketengine-ribbon-pending {
+	@extend .marketengine-ribbon;
+	background: $color_label_status_pending !important;
+	&:after {
+		content: " ";
+		border: 11px solid $color_label_status_pending !important;
+		right: -13px;
+	    border-left-width: 10px !important;
+	    border-right-color: rgba(0, 0, 0, 0) !important;
+	    position: absolute;
+	    top: 0;
+	}
+}
+.marketengine-ribbon-archived {
+	@extend .marketengine-ribbon;
+	background: $color_label_status_archive !important;
+	&:after {
+		content: " ";
+		border: 11px solid $color_label_status_archive !important;
+		right: -13px;
+	    border-left-width: 10px !important;
+	    border-right-color: rgba(0, 0, 0, 0) !important;
+	    position: absolute;
+	    top: 0;
+	}
+}
+.marketengine-ribbon-paused {
+	@extend .marketengine-ribbon;
+	background: $color_label_status_pause !important;
+	&:after {
+		content: " ";
+		border: 11px solid $color_label_status_pause !important;
+		right: -13px;
+	    border-left-width: 10px !important;
+	    border-right-color: rgba(0, 0, 0, 0) !important;
+	    position: absolute;
+	    top: 0;
+	}
+}
+.marketengine-ribbon-draft {
+	@extend .marketengine-ribbon;
+	background: $color_label_status_draft !important;
+	&:after {
+		content: " ";
+		border: 11px solid $color_label_status_draft !important;
+		right: -13px;
+	    border-left-width: 10px !important;
+	    border-right-color: rgba(0, 0, 0, 0) !important;
+	    position: absolute;
+	    top: 0;
+	}
+} */
+
+// Label tags listing
+// 
+
+.marketengine-tags {
+	li {
+		.me-label-tags {
+			color: #555;
+		}
+	}
+}
