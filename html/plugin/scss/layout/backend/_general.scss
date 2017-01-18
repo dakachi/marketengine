@@ -24,7 +24,7 @@ ul, ol, li {
 }
 
 .me-notification-error {
-	margin-right: 20px;
+	margin: 10px 20px 10px 0;
 	padding: 10px 10px 10px 62px;
 	position: relative;
 	background: #fae8eb;
@@ -92,7 +92,7 @@ ul, ol, li {
     -moz-osx-font-smoothing: grayscale;
 }
 .notice-warning.me-notices {
-	margin: 5px 20px 15px 2px !important;
+	margin: 10px 20px 10px 2px !important;
 }
 //-----------------------------------------------------------------------------
 
@@ -993,7 +993,7 @@ ul, ol, li {
 //=== notice run setup wizard 
 //
 .updated.marketengine-message {
-	margin: 5px 20px 2px 2px;
+	margin: 10px 20px 10px 2px;
 }
 .marketengine-message.me-setup-notices{
     border-left-color : #e84a5f !important;
