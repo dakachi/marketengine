@@ -9,6 +9,6 @@
 			<?php echo esc_html( get_the_author_meta( 'display_name', $message->sender ) ); ?>
 		</a>
 		<p><?php echo apply_filters( 'the_marketengine_message', $message->post_content ); ?></p>
-		<span><?php echo human_time_diff( strtotime($message->post_date) ); ?></span>
+		<span><?php echo human_time_diff( strtotime($message->post_date), current_time( 'timestamp' ) ); ?></span>
 	</div>
 </li>
