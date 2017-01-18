@@ -97,6 +97,12 @@ class ME_Case_List extends WP_List_Table
      */
     public function column_default($item, $column_name)
     {
+        $item_detail = '';
+        $item_detail .= '<tr>'; 
+        $item_detail .= '<td colspan="6">';
+
+        $item_detail .= '</td>'; 
+        $item_detail .= '</tr>'; 
         switch ($column_name) {
             case 'case':
 	            $case_link = '<a href="'. me_rc_dispute_link($item['ID']) . '">#' .$item['ID'] .'</a>';
@@ -110,7 +116,7 @@ class ME_Case_List extends WP_List_Table
              	echo date_i18n( get_option( 'date_format' ), strtotime($item['post_date']) );
              	break;
             case 'actions' :
-            	echo '<span>' .__("View", "enginethemes"). '</span>';
+            	echo '<span class="me-action-case"><i class="icon-me-eye"></i><i class="icon-me-eye-slash"></i></span>';
             	?>
             	<?php 
             	break;
@@ -305,7 +311,7 @@ class ME_Case_Screen
             __("Cases", "enginethemes"),
             __("Cases", "enginethemes"),
             'manage_options',
-            'marketengine-dispute-cases',
+            'me-dispute-cases',
             array($this, 'plugin_settings_page')
         );
 

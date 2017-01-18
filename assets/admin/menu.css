@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'icomoon';
+    font-family: 'me-icomoon';
     src:    url('../fonts/icomoon.eot?aeg4q0');
     src:    url('../fonts/icomoon.eot?aeg4q0#iefix') format('embedded-opentype'),
         url('../fonts/icomoon.ttf?aeg4q0') format('truetype'),
@@ -11,7 +11,7 @@
 
 .dashicons-admin-generic-icon-me-logo:before {
 	content: "\e92b";
-	font-family: 'icomoon' !important;
+	font-family: 'me-icomoon' !important;
 	font-size: 24px;
     speak: none;
     font-style: normal;
@@ -26,7 +26,7 @@
 }
 .dashicons-icon-me-listing:before {
 	content: "\e924";
-	font-family: 'icomoon' !important;
+	font-family: 'me-icomoon' !important;
 	font-size: 18px;
     speak: none;
     font-style: normal;
