@@ -1,23 +1,12 @@
-=== Plugin Name ===
-Contributors: EngineThemes
-Donate link: https://www.enginethemes.com/marketengine/
-Tags: enginethemes, marketengine, free marketplace plugin, multi vendor marketplace, ecommerce-marketplace, multi seller, vendor system, commission, store, shopping, cart, online store, online shopping, paypal gateway, checkout, transaction, order, selling, offering, rating, review, filter, search, niche, live message box
-Requires at least: 4.0
-Tested up to: 4.7
-Stable tag: 1.0.1
-License: GPLv2 or later
-License URI: 
-Here is a short description of the plugin.  
-
 == Description ==
 
-Developed by EngineThemes, MarketEngine is a free WordPress marketplace plugin for those who are looking for a multi-vendor marketplace platform for any niche. This plugin will play as a technical assistant, designing the most logical user flow and building all must-have features needed for a marketplace. 
+* Developed by EngineThemes, MarketEngine is a free WordPress marketplace plugin for those who are looking for a multi-vendor marketplace platform for any niche. This plugin will play as a technical assistant, designing the most logical user flow and building all must-have features needed for a marketplace. 
 
-By using MarketEngine plugin, you will find it easy to build an e-commerce website where vendors can register at your site, list their products and services with different listing types, manage their account performance, etc. This plugin will deliver an all-in-one solution, helping you save effortless time and money spent on creating an online store with WordPress.
+* By using MarketEngine plugin, you will find it easy to build an e-commerce website where vendors can register at your site, list their products and services with different listing types, manage their account performance, etc. This plugin will deliver an all-in-one solution, helping you save effortless time and money spent on creating an online store with WordPress.
 
-Since user experience is the top priority for any niche, we focus more on enhancing shopping experience from sell to search & shop. Just a few simple clicks, buyer can get the right item matching their needs. Besides, our checkout process is as smoothly as possible. Only 3 steps, the transaction is totally completed and protected by secure PayPal gateway.
+* Since user experience is the top priority for any niche, we focus more on enhancing shopping experience from sell to search & shop. Just a few simple clicks, buyer can get the right item matching their needs. Besides, our checkout process is as smoothly as possible. Only 3 steps, the transaction is totally completed and protected by secure PayPal gateway.
 
-MarketEngine also provides admin with an elegant dashboard where you can control everything on your site such as monitor all members, listings, and orders occurring on the site as well as make any changes from back-end. As a result, you can prevent spam from unreliable accounts on your site.
+* MarketEngine also provides admin with an elegant dashboard where you can control everything on your site such as monitor all members, listings, and orders occurring on the site as well as make any changes from back-end. As a result, you can prevent spam from unreliable accounts on your site.
  
 Key Features:
 
