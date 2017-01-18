@@ -40,7 +40,7 @@ $inquiry_count = $listing->get_inquiry_count();
 		</div>
 
 		<?php if( $listing->is_available()) : ?>
-			<?php echo $listing->get_short_description(); ?>
+			<?php echo esc_html( $listing->get_short_description() ); ?>
 		<?php endif; ?>
 
 	</div>
