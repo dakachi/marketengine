@@ -139,13 +139,13 @@ class ME_Report_CSVExport
     public function generate_listings()
     {
 
-        $args              = $_REQUEST;
+        $args              = array_map('esc_attr', $_REQUEST);;
         $args['showposts'] = 300000;
         $args['paged']     = 1;
         $query             = marketengine_listing_report($args);
 
         $quant          = empty($args['quant']) ? 'day' : $args['quant'];
-        $active_section = empty($_REQUEST['section']) ? '' : $_REQUEST['section'];
+        $active_section = empty($args['section']) ? '' : $args['section'];
         $listings       = $query['posts'];
 
         $csv_output = '';
@@ -201,7 +201,7 @@ class ME_Report_CSVExport
     public function generate_orders()
     {
 
-        $args              = $_REQUEST;
+        $args              = array_map('esc_attr', $_REQUEST);
         $args['showposts'] = 300000;
         $args['paged']     = 1;
         $query             = marketengine_orders_report($args);
@@ -227,7 +227,7 @@ class ME_Report_CSVExport
     public function generate_inquiries()
     {
 
-        $args              = $_REQUEST;
+        $args              = array_map('esc_attr', $_REQUEST);
         $args['showposts'] = 300000;
         $args['paged']     = 1;
         $query             = marketengine_inquiries_report($args);
@@ -253,7 +253,7 @@ class ME_Report_CSVExport
     public function generate_members()
     {
 
-        $args              = $_REQUEST;
+        $args              = array_map('esc_attr', $_REQUEST);
         $args['showposts'] = 300000;
         $args['paged']     = 1;
         $query             = marketengine_members_report($args);
