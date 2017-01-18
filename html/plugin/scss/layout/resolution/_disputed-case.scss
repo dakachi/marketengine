@@ -175,11 +175,14 @@
 		min-width: 144px;
 		height: 36px;
 		font-size: $font_size_medium;
-		color: $color_skin;
+		color: $color_label_2;
 		text-align: center;
 		line-height: 34px;
-		border: 1px solid $color_skin;
+		border: 1px solid $color_label_2;
 		border-radius: 2px;
+		&:hover {
+			color: $color_label_2;
+		}
 	}
 	p {
 		color: $color_label_2;
@@ -210,11 +213,14 @@
 		min-width: 144px;
 		height: 36px;
 		font-size: $font_size_medium;
-		color: #10a2ef;
+		color: $color_label_2;
 		text-align: center;
 		line-height: 34px;
-		border: 1px solid #10a2ef;
+		border: 1px solid $color_label_2;
 		border-radius: 2px;
+		&:hover {
+			color: $color_label_2;
+		}
 	}
 	p {
 		color: $color_label_2;
