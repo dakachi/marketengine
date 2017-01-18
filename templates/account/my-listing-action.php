@@ -33,14 +33,6 @@ $edit_url = me_get_endpoint_url( 'listing_id', $listing_id ,me_get_page_permalin
 	<span data-status="me-archived" class="me-icon-delete"><i class="icon-me-delete"></i><?php _e('Archive', 'enginethemes'); ?></span>
 <?php
 		break;
-		/* case 'me-paused':
-?>
-	<span data-status="publish" class="icon-me-step-forward"></span>
-	<a href="<?php echo me_get_auth_url('listing-id', $listing_id); ?>"><span class="icon-me-edit"></span></a>
-	<span data-status="me-archived" class="icon-me-delete"></span>
-<?php
-			break; */
-		default:
 ?>
 	<span data-status="publish" class="icon-me-play"></span>
 	<a href="<?php echo $edit_url; ?>"><span class="me-icon-edit"><i class="icon-me-edit"></i><?php _e('Edit', 'enginethemes'); ?></span></a>

@@ -34,7 +34,7 @@ get_header();
             <div class="marketengine-content">
             <?php 
                 if ($transaction->post_author == get_current_user_id() && !empty($_GET['action']) ) {
-                    do_action('marketengine_order_details_action', $_GET['action'], $transaction );
+                    do_action('marketengine_order_details_action', esc_attr( $_GET['action'] ), $transaction );
                 } else {
                     do_action('marketengine_transaction_details', $transaction);
                 }

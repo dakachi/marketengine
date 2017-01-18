@@ -1,6 +1,6 @@
 <?php
 $listing_type_categories = me_get_listing_type_categories();
-$selected_cat = empty($_POST['parent_cat']) ? $selected_cat : $_POST['parent_cat'];
+$selected_cat = empty($_POST['parent_cat']) ? $selected_cat : absint( $_POST['parent_cat'] );
 $listing_type_categories['all'][] = $selected_cat;
 
 $parent_categories = get_terms(array('taxonomy' => 'listing_category', 'hide_empty' => false, 'parent' => 0, 'include' => $listing_type_categories['all']));
@@ -8,7 +8,7 @@ $parent_categories = get_terms(array('taxonomy' => 'listing_category', 'hide_emp
 if ($selected_cat) {
     $child_cats = get_terms(array('taxonomy' => 'listing_category', 'hide_empty' => false, 'parent' => $selected_cat));
 }
-$selected_sub_cat = empty($_POST['sub_cat']) ? $selected_sub_cat : $_POST['sub_cat'];
+$selected_sub_cat = empty($_POST['sub_cat']) ? $selected_sub_cat : absint( $_POST['sub_cat'] );
 if(!isset($editing)) $editing = false;
 ?>
 

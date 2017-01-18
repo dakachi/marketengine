@@ -10,10 +10,10 @@ $inquiry_page = me_get_page_permalink('inquiry');
 			<?php echo me_get_avatar( $message->sender, 36); ?>
 		</span>
 		<span class="me-contact-author">
-			<span><?php echo get_the_author_meta( 'display_name', $message->sender ); ?></span>
+			<span><?php echo esc_html( get_the_author_meta( 'display_name', $message->sender ) ); ?></span>
 
 			<?php if($new_message) : ?>
-				<span class="me-message-count"><?php echo $new_message; ?></span>
+				<span class="me-message-count"><?php echo esc_html( $new_message ); ?></span>
 			<?php endif; ?>
 
 		</span>

@@ -8,10 +8,10 @@ $members = marketengine_members_report($_REQUEST);
 if(empty($_REQUEST['paged'])) {
 	$i = 1;
 }else {
-	$i = ($_REQUEST['paged'] - 1) * get_option( 'posts_per_page' ) + 1;
+	$i = (absint( $_REQUEST['paged'] ) - 1) * get_option( 'posts_per_page' ) + 1;
 }
 
-$quant = empty($_REQUEST['quant']) ? 'day' : $_REQUEST['quant'];
+$quant = empty($_REQUEST['quant']) ? 'day' : esc_attr( $_REQUEST['quant'] );
 ?>
 <div class="me-tabs-content">
 	<!-- <ul class="me-nav me-section-nav">

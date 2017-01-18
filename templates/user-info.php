@@ -15,17 +15,12 @@ $member_sinced = date_i18n( get_option( 'date_format' ), strtotime(get_the_autho
 <div class="me-authors me-authors-xs <?php echo !empty($class) ? $class : ''; ?>">
 	<span class="me-avatar">
 		<?php echo me_get_avatar( $author_id ); ?>
-		<b><?php echo $display_name; ?></b>
+		<b><?php echo esc_html( $display_name ); ?></b>
 	</span>
 	<ul class="me-author-info">
 		<li>
 			<span><?php echo __('From:', 'enginethemes'); ?><span><?php echo $location ?></span></span>
 		</li>
-		<?php /*
-		<li>
-			<span class="pull-left"><?php echo __('Language:', 'enginethemes'); ?><span>Vietnam</span></span>
-		</li>
-		*/ ?>
 		<li>
 			<span class="pull-left"><?php echo __('Member Since:', 'enginethemes'); ?><span><?php echo $member_sinced; ?></span></span>
 		</li>

@@ -25,8 +25,6 @@ $pricing_unit = $listing->get_pricing_unit();
 	<span class="me-price">
 		<?php echo me_price_html( $price, '', $pricing_unit ); ?>
 	</span>
-	<?php /* <span class="me-instock"><?php _e("In Stock", "enginethemes"); ?></span> */ ?>
-
 	<?php if( 'publish' === $listing->post_status ) : ?>
 	<div class="me-addtocart">
 		<form method="post">

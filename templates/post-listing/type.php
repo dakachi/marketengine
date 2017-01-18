@@ -13,7 +13,7 @@
  *
  */
 $listing_types = me_get_listing_types();
-$selected_listing_type = empty($_POST['listing_type']) ? $selected_listing_type : $_POST['listing_type'];
+$selected_listing_type = empty($_POST['listing_type']) ? $selected_listing_type : esc_attr( $_POST['listing_type'] );
 
 if (!empty($_POST['meta_input']['contact_email'])) {$contact_email = esc_attr($_POST['meta_input']['contact_email']);}
 if (!empty($_POST['meta_input']['listing_price'])) {$price =  esc_attr($_POST['meta_input']['listing_price']);}

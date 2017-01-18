@@ -7,11 +7,11 @@
 <p><?php _e('Dear Admin', 'enginethemes'); ?></p>
 <p><?php _e('There is a new comment on the post', 'enginethemes'); ?> <?php echo $post->post_title; ?></p>
 <ul>
-<li><?php _e('Author:', 'enginethemes'); ?> <?php echo $comment->comment_author; ?></li>
-<li><?php _e('Email:', 'enginethemes'); ?> <?php echo $comment->comment_author_email; ?></li>
-<li><?php _e('URL:', 'enginethemes'); ?> <?php echo $comment->comment_author_url; ?></li>
+<li><?php _e('Author:', 'enginethemes'); ?> <?php echo esc_html( $comment->comment_author ); ?></li>
+<li><?php _e('Email:', 'enginethemes'); ?> <?php echo esc_html( $comment->comment_author_email ); ?></li>
+<li><?php _e('URL:', 'enginethemes'); ?> <?php echo esc_url( $comment->comment_author_url ); ?></li>
 <li><?php _e('Comment:', 'enginethemes'); ?>
-	<p><?php echo nl2br($comment->comment_content); ?></p>
+	<p><?php echo esc_html( nl2br($comment->comment_content) ); ?></p>
 </li>
 </ul>
 

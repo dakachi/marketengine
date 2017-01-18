@@ -6,6 +6,5 @@
 			<div class="me-spinner-item3"></div>
 			<div class="me-spinner-item4"></div>
 		</div>
-		<?php //_e("Load older message", "enginethemes"); ?>
 	</div>
 </div>

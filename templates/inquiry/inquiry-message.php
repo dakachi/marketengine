@@ -33,9 +33,9 @@
 
 							<div class="me-contact-message-user">
 								<?php if($inquiry->receiver == $user_id) : ?>
-									<p><?php echo get_the_author_meta( 'display_name', $inquiry->sender ); ?></p>
+									<p><?php echo esc_html( get_the_author_meta( 'display_name', $inquiry->sender ) ); ?></p>
 								<?php else : ?>
-									<p><?php echo get_the_author_meta( 'display_name', $inquiry->receiver ); ?></p>
+									<p><?php echo esc_html( get_the_author_meta( 'display_name', $inquiry->receiver ) ); ?></p>
 								<?php endif; ?>
 							</div>
 

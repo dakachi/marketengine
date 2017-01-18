@@ -21,8 +21,8 @@ if ('' === get_option('permalink_structure')) {
 				<div class="me-inquiries-pick-date-filter">
 					<label><?php _e('Latest', 'enginethemes'); ?></label>
 					<div class="me-inquiries-pick-date">
-						<input id="me-inquiries-pick-date-1" name="from_date" type="text" value="<?php echo isset($_GET['from_date']) ? $_GET['from_date'] : ''; ?>" placeholder="<?php _e('From date', 'enginethemes'); ?>">
-						<input id="me-inquiries-pick-date-2" name="to_date" type="text" value="<?php echo isset($_GET['to_date']) ? $_GET['to_date'] : ''; ?>" placeholder="<?php _e('To date', 'enginethemes'); ?>">
+						<input id="me-inquiries-pick-date-1" name="from_date" type="text" value="<?php echo isset($_GET['from_date']) ? esc_attr( $_GET['from_date'] ) : ''; ?>" placeholder="<?php _e('From date', 'enginethemes'); ?>">
+						<input id="me-inquiries-pick-date-2" name="to_date" type="text" value="<?php echo isset($_GET['to_date']) ? esc_attr( $_GET['to_date'] ) : ''; ?>" placeholder="<?php _e('To date', 'enginethemes'); ?>">
 					</div>
 				</div>
 			</div>
@@ -30,7 +30,7 @@ if ('' === get_option('permalink_structure')) {
 			<div class="me-col-md-9">
 				<div class="me-inquiries-filter">
 					<label><?php _e('Keyword', 'enginethemes'); ?></label>
-					<input class="me-inquiries-keyword" type="text" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>" placeholder="<?php _e('Listing name, seller name, etc.', 'enginethemes'); ?>">
+					<input class="me-inquiries-keyword" type="text" name="keyword" value="<?php echo isset($_GET['keyword']) ? esc_attr( $_GET['keyword'] ) : ''; ?>" placeholder="<?php _e('Listing name, seller name, etc.', 'enginethemes'); ?>">
 
 					<?php //TODO style lai cho nay ?>
 				</div>

@@ -11,11 +11,11 @@ if (!defined('ABSPATH')) {
     exit;
 }
 $user = ME()->get_current_user();
-$first_name = isset($_POST['first_name']) ? $_POST['first_name'] : $user->first_name;
-$last_name = isset($_POST['last_name']) ? $_POST['last_name'] : $user->last_name;
-$location = isset($_POST['location']) ? $_POST['location'] : $user->location;
-$paypal_email = isset($_POST['paypal_email']) ? $_POST['paypal_email'] : $user->paypal_email;
-$about_user = isset($_POST['description']) ? $_POST['description'] : $user->description;
+$first_name = isset($_POST['first_name']) ? esc_attr( $_POST['first_name'] ) : $user->first_name;
+$last_name = isset($_POST['last_name']) ? esc_attr( $_POST['last_name'] ) : $user->last_name;
+$location = isset($_POST['location']) ? esc_attr( $_POST['location'] ) : $user->location;
+$paypal_email = isset($_POST['paypal_email']) ? esc_attr( $_POST['paypal_email'] ) : $user->paypal_email;
+$about_user = isset($_POST['description']) ? esc_attr( $_POST['description'] ) : $user->description;
 $user_avatar = $user->get_user_avatar_id();
 ?>
 

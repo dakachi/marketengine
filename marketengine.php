@@ -142,7 +142,6 @@ class MarketEngine
     private function include_files()
     {
         require_once ME_PLUGIN_PATH . '/includes/class-me-autoloader.php';
-        require_once ME_PLUGIN_PATH . '/update.php';
 
         require_once ME_PLUGIN_PATH . '/admin/index.php';
         require_once ME_PLUGIN_PATH . '/includes/custom-fields/index.php';
@@ -199,7 +198,6 @@ class MarketEngine
         require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-contact.php';
 
         require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-payment.php';
-        // require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-paypal-simple.php';
         require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-ppadaptive.php';
 
         require_once ME_PLUGIN_PATH . '/includes/handle-checkout/class-me-checkout-handle.php';
@@ -287,12 +285,15 @@ class MarketEngine
         wp_enqueue_style('me_font_icon', $this->plugin_url() . '/assets/css/marketengine-font-icon.css');
 
         wp_enqueue_script(array('jquery', 'plupload-all'));
+        wp_enqueue_script('jquery-ui-datepicker');
+        wp_enqueue_script('jquery-ui-slider');  
+        wp_enqueue_script('jquery-ui-tooltip');
+        wp_enqueue_script('jquery-ui-sortable'); 
 
         if(ME_SCRIPT_DEBUG) {
             wp_enqueue_script('muploader.js', $this->plugin_url() . "/assets/js/muploader$suffix.js", array('jquery', 'plupload-all'), $this->version, true);
 
             // lib
-            wp_enqueue_script('jquery-ui', $this->plugin_url() . "/assets/js/jquery-ui.js", array('jquery'), $this->version, true);
             wp_enqueue_script('magnific_popup', $this->plugin_url() . "/assets/js/jquery.magnific-popup.min.js", array('jquery'), $this->version, true);
             wp_enqueue_script('owl-carousel-js', $this->plugin_url() . "/assets/js/owl.carousel.min.js", array('jquery'), $this->version, true);
             wp_enqueue_script('raty.js', $this->plugin_url() . "/assets/js/jquery.raty$suffix.js", array('jquery'), $this->version, true);

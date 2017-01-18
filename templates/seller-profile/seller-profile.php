@@ -9,7 +9,7 @@
  */
 
 get_header();
-$user_id = get_query_var( 'author' );
+$user_id = absint( get_query_var( 'author' ) );
 ?>
 
 <div id="marketengine-page">
