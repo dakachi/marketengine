@@ -16,7 +16,7 @@ $type = 'order';
 $request = array_map('esc_sql', $_GET);
 $args = array_merge(apply_filters( 'me_filter_order', $request, $type ), $args);
 
-$all_order_args = json_encode( array_merge(apply_filters( 'me_filter_order', $_GET, $type ), array('post_type' => 'me_order', 'posts_per_page' => -1) ) );
+$all_order_args = json_encode( array_merge(apply_filters( 'me_filter_order', $request, $type ), array('post_type' => 'me_order', 'posts_per_page' => -1) ) );
 
 $query = new WP_Query($args);
 
