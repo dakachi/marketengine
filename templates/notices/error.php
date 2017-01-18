@@ -1,9 +1,10 @@
-<?php
-$me_notices = me_get_notices('error');
-foreach ($me_notices as $key => $notice):
-    ?>
-		<div class="alert alert-error" role="alert">
-			<?php echo $notice ?>
-		</div>
+<div class="me-notification">
 	<?php
-endforeach;
+	$me_notices = me_get_notices('error');
+	foreach ($me_notices as $key => $notice):
+	    ?>
+			<span class="me-alert-error" role="alert">- <?php echo $notice ?></span>
+		<?php
+	endforeach;
+	?>
+</div>

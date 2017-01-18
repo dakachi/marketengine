@@ -1,49 +1,82 @@
 <?php
+/**
+ * 	The Template for displaying content of listing detail.
+ * 	This template can be overridden by copying it to yourtheme/marketengine/content-single-listing.php.
+ *
+ * @author 		EngineThemes
+ * @package 	MarketEngine/Templates
+ * @version     1.0.0
+ */
+
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
 }
-global $post;
-$listing = new ME_Listing($post);
-$listing_type = $listing->get_listing_type();
+
 ?>
-<div class="marketengine me-container">
-	<div itemscope itemtype="http://schema.org/Product" class="marketengine-listing-detail">
-		<div class="me-row">
-			<div class="me-col-md-12">
-				<?php me_get_template_part('single-listing/title');?>
-				<?php me_get_template_part('single-listing/statistic');?>
+<div id="marketengine-page">
+	<div class="marketengine me-container">
+		<div itemscope itemtype="http://schema.org/Product" class="marketengine-listing-detail">
+			<div class="me-row">
+				<div class="me-col-md-12">
+					<?php me_get_template('single-listing/title');?>
+					<?php me_get_template('single-listing/statistic', array('listing' => $listing));?>
+				</div>
 			</div>
-		</div>
-		<div class="me-row">
-			<div class="me-col-md-9">
+			<div class="me-row">
+				<div class="me-col-md-9">
 
-				<?php do_action('marketengine_before_single_listing_details'); ?>
+					<?php do_action('marketengine_before_single_listing_information'); ?>
 
-				<div class="marketengine-content-detail">
-					<?php me_get_template_part('single-listing/gallery');?>
-					<?php me_get_template_part('single-listing/description');?>
-					<?php me_get_template_part('single-listing/rating');?>
+					<div class="marketengine-content-detail">
+
+						<?php me_get_template('single-listing/gallery', array('listing' => $listing));?>
+						
+						<?php me_get_template('single-listing/notices'); ?>
+							
+						<?php me_get_template('single-listing/control', array('listing' => $listing) ); ?>
+							
+						<?php me_get_template('single-listing/category', array('listing' => $listing));?>
+						
+						<?php me_get_template('single-listing/description', array('listing' => $listing)); ?>
+
+						<?php me_get_template('single-listing/rating', array('listing' => $listing));?>
+						
+						<?php if( $listing->post_author != get_current_user_id() ) {
+
+							me_get_template('user-info', array('author_id' => $listing->post_author));
+
+						} ?>	
+
+
+					</div>
+
+					<?php do_action('marketengine_after_single_listing_information'); ?>
+
 				</div>
 
-				<?php do_action('marketengine_after_single_listing_details'); ?>
+				<div class="me-col-md-3 me-hidden-sm me-hidden-xs">
 
-			</div>
-			<div class="me-col-md-3">
+					<?php do_action('marketengine_before_single_listing_sidebar'); ?>
 
-				<?php do_action('marketengine_before_single_listing_sidebar'); ?>
+					<div class="marketengine-sidebar-detail">
 
-				<div class="marketengine-sidebar-detail">
+						<?php me_get_template('single-listing/notices'); ?>
 
-					<?php //me_get_template_part('single-listing/status');?>
-					<?php me_get_template_part('single-listing/'. $listing_type );?>
-					<?php me_get_template_part('single-listing/category');?>		
-					<?php me_get_template_part('single-listing/author');?>			
-					<?php me_get_template_part('single-listing/report');?>
+						<?php me_get_template('single-listing/control', array('listing' => $listing) ); ?>
+
+						<?php me_get_template('single-listing/category');?>
+						<?php
+						if( $listing->post_author != get_current_user_id() ) :
+							me_get_template('user-info', array('author_id' => $listing->post_author));
+						endif;
+						?>
+
+					</div>
+
+					<?php do_action('marketengine_after_single_listing_sidebar'); ?>
+
 				</div>
-
-				<?php do_action('marketengine_after_single_listing_sidebar'); ?>
-
 			</div>
 		</div>
 	</div>

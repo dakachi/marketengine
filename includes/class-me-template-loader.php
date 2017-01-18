@@ -21,14 +21,24 @@ class ME_Template_Loader {
     public static function template_include($template) {
         $find = array();
         $file = '';
-
         if (is_embed()) {
             return $template;
         }
 
-        if (is_single() && get_post_type() == 'listing') {
+        if (is_author()) {
+
+            $file = 'seller-profile/seller-profile.php';
+            $find[] = $file;
+            $find[] = ME()->template_path() . $file;
+        } elseif (is_single() && get_post_type() == 'listing') {
 
             $file = 'single-listing.php';
+            $find[] = $file;
+            $find[] = ME()->template_path() . $file;
+
+        } elseif (is_single() && get_post_type() == 'me_order') {
+
+            $file = 'order-detail.php';
             $find[] = $file;
             $find[] = ME()->template_path() . $file;
 
@@ -66,28 +76,5 @@ class ME_Template_Loader {
         return $template;
     }
 
-    public static function comments_template_loader($template) {
-        if (get_post_type() !== 'product') {
-            return $template;
-        }
-
-        $check_dirs = array(
-            trailingslashit(get_stylesheet_directory()) . ME()->template_path(),
-            trailingslashit(get_template_directory()) . ME()->template_path(),
-            trailingslashit(get_stylesheet_directory()),
-            trailingslashit(get_template_directory()),
-            trailingslashit(ME()->plugin_path()) . 'templates/',
-        );
-
-        if (ME_TEMPLATE_DEBUG_MODE) {
-            $check_dirs = array(array_pop($check_dirs));
-        }
-
-        foreach ($check_dirs as $dir) {
-            if (file_exists(trailingslashit($dir) . 'single-product-reviews.php')) {
-                return trailingslashit($dir) . 'single-product-reviews.php';
-            }
-        }
-    }
 }
 ME_Template_Loader::init_hooks();

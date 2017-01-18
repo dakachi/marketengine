@@ -47,7 +47,7 @@ class ME_Widget_Listing_Categories extends WP_Widget {
 
         echo $args['before_widget'];
         if ($title) {
-            echo $args['before_title'] . $title . $args['after_title'];
+            //echo $args['before_title'] . $title . $args['after_title'];
         }
 
         $cat_args = array(
@@ -61,7 +61,7 @@ class ME_Widget_Listing_Categories extends WP_Widget {
             $dropdown_id    = ($first_dropdown) ? 'listing_category' : "{$this->id_base}-dropdown-{$this->number}";
             $first_dropdown = false;
 
-            echo '<label class="screen-reader-text" for="' . esc_attr($dropdown_id) . '">' . $title . '</label>';
+            // echo '<label class="screen-reader-text" for="' . esc_attr($dropdown_id) . '">' . $title . '</label>';
 
             $cat_args['show_option_none'] = __('Select Category');
             $cat_args['id']               = $dropdown_id;
@@ -95,9 +95,19 @@ class ME_Widget_Listing_Categories extends WP_Widget {
 <?php
 } else {
             ?>
-        <ul>
+        <div class="me-title-sidebar">
+            <?php
+                if ($title) { ?>
+                    <h2><?php echo $title ?></h2>
+            <?php 
+                }
+            ?>
+            
+        </div>
+        <ul class="me-menu-categories">
 <?php
 $cat_args['title_li'] = '';
+$cat_args['show_option_all'] = __("All categories", "enginethemes");
 
             /**
              * Filter the arguments for the Categories widget.
@@ -111,7 +121,6 @@ $cat_args['title_li'] = '';
         </ul>
 <?php
 }
-
         echo $args['after_widget'];
     }
 

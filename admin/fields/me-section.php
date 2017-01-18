@@ -5,19 +5,33 @@ if (!defined('ABSPATH')) {
 }
 
 
+/**
+ * Class ME_Section
+ * 
+ * ME Html Section container of field group
+ *
+ * @since 1.0
+ * @package Admin/Options
+ * @category Class
+ *
+ * @version 1.0
+ */
 class ME_Section extends ME_Container {
-    protected $_controls;
-    public function __construct($args, $option) {
+    /**
+     * Contructor
+     * @param array $args
+     */
+    public function __construct($args) {
         $this->_name     = $args['slug'];
         $this->_template = $args['template'];
         $this->_first = $args['first'];
     }
 
     public function start() {
-        if($this->_first) {
-            echo '<div class="me-section-content">';    
+        if((!isset($_REQUEST['section']) && $this->_first) || (isset($_REQUEST['section']) && $_REQUEST['section'] == $this->_name)) {
+            echo '<div class="me-section-content" id="'.$this->_name.'">';
         }else {
-            echo '<div class="me-section-content" style="display:none;">';
+            echo '<div class="me-section-content" id="'.$this->_name.'" style="display:none;">';
         }
     }
 

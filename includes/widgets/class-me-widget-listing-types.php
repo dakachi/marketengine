@@ -22,7 +22,7 @@ class ME_Widget_Listing_Types extends WP_Widget {
      **/
     public function ME_Widget_Listing_Types() {
         $widget_ops = array('classname' => 'me-listing-types', 'description' => __("A list listing types", "enginethemes"));
-        parent::__construct('me-listing-types', __("MarketEnngine Listing Types", "enginethemes"), $widget_ops);
+        parent::__construct('me-listing-types', __("MarketEngine Listing Types", "enginethemes"), $widget_ops);
     }
 
     /**
@@ -36,34 +36,48 @@ class ME_Widget_Listing_Types extends WP_Widget {
      * @param array $instance Settings for the current Categories widget instance.
      */
     public function widget($args, $instance) {
+        global $wp_query;
+        if (!$wp_query->is_post_type_archive('listing') && !$wp_query->is_tax(get_object_taxonomies('listing'))) {
+            return ;
+        }
         /** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
         $title = apply_filters('widget_title', empty($instance['title']) ? __('Listing Types', 'enginethemes') : $instance['title'], $instance, $this->id_base);
 
         echo $args['before_widget'];
-        
+
         $types = me_get_listing_types();
 
         $current = !empty($_GET['type']) ? $_GET['type'] : '';
 
         ?>
-            <h2 class="widget-title"><?php echo $title; ?></h2>
+            <div class="me-title-sidebar">
+                <h2><?php echo $title  ?></h2>
+            </div>
             <div class="me-listingtype-filter">
                 <label>
-                    <input type="radio" name="type" value="" <?php checked( '', $current); ?>>
+                    <input type="radio" name="type" value="" <?php checked( '', $current); ?> onclick="window.location.href='<?php echo remove_query_arg('type'); ?>'">
                     <a href="<?php echo remove_query_arg('type'); ?>" ><?php _e("All", "enginethemes"); ?></a>
                 </label>
-            </div>    
-            <?php foreach ($types as $key => $type) :
-                $link = add_query_arg('type', $key);
-                $link = preg_replace('%\/page/[0-9]+%', '',  $link );
-            ?>
+            </div>
+            <?php foreach ($types as $key => $type) : ?>
+
+                <?php 
+                    $link = add_query_arg('type', $key);
+                    $link = preg_replace('%\/page/[0-9]+%', '',  $link );
+                    if($key == 'contact') {
+                        $link = remove_query_arg( array('price-min', 'price-max'), $link );
+                    }
+                ?>
+
                 <div class="me-listingtype-filter">
                     <label>
-                        <input type="radio" name="type" value="<?php echo $key; ?>" <?php checked( $key, $current); ?>>
-                        <a href="<?php echo $link; ?>"><?php echo $type; ?></a>
+                        <input type="radio" name="type" value="<?php echo $key; ?>" <?php checked( $key, $current); ?> onclick="window.location.href='<?php echo esc_attr( $link ); ?>'">
+                        <a href="<?php echo esc_attr( $link ); ?>"><?php echo $type; ?></a>
                     </label>
-                </div>    
+                </div>
+
             <?php endforeach; ?>
+
         <?php
 
         echo $args['after_widget'];
@@ -81,9 +95,6 @@ class ME_Widget_Listing_Types extends WP_Widget {
 
         $instance = $old_instance;
         $instance['title'] = sanitize_text_field( $new_instance['title'] );
-        $instance['count'] = !empty($new_instance['count']) ? 1 : 0;
-        $instance['hierarchical'] = !empty($new_instance['hierarchical']) ? 1 : 0;
-        $instance['dropdown'] = !empty($new_instance['dropdown']) ? 1 : 0;
 
         return $instance;
     }
@@ -104,15 +115,6 @@ class ME_Widget_Listing_Types extends WP_Widget {
         ?>
         <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e( 'Title:' ); ?></label>
         <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" /></p>
-
-        <p><input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('dropdown'); ?>" name="<?php echo $this->get_field_name('dropdown'); ?>"<?php checked( $dropdown ); ?> />
-        <label for="<?php echo $this->get_field_id('dropdown'); ?>"><?php _e( 'Display as dropdown' ); ?></label><br />
-
-        <input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>"<?php checked( $count ); ?> />
-        <label for="<?php echo $this->get_field_id('count'); ?>"><?php _e( 'Show post counts' ); ?></label><br />
-
-        <input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('hierarchical'); ?>" name="<?php echo $this->get_field_name('hierarchical'); ?>"<?php checked( $hierarchical ); ?> />
-        <label for="<?php echo $this->get_field_id('hierarchical'); ?>"><?php _e( 'Show hierarchy' ); ?></label></p>
     <?php
     }
 }

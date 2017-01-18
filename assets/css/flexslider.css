@@ -134,7 +134,7 @@ html[xmlns] .flexslider .slides {
   content: '\f002';
 } */
 .flex-direction-nav .flex-prev {
-  left: -20px;
+  left: 0;
   width: 0;
   height: 0;
   border-top: 13px solid transparent;
@@ -142,7 +142,7 @@ html[xmlns] .flexslider .slides {
   border-bottom: 13px solid transparent;
 }
 .flex-direction-nav .flex-next {
-  right: -20px;
+  right: 0;
   text-align: right;
   width: 0;
   height: 0;
@@ -163,13 +163,13 @@ html[xmlns] .flexslider .slides {
 } */
 /* .flexslider:hover .flex-direction-nav .flex-next:hover {
   opacity: 1;
-}
+}*/
 .flex-direction-nav .flex-disabled {
   opacity: 0!important;
   filter: alpha(opacity=0);
   cursor: default;
   z-index: -1;
-} */
+}
 /* .flex-pauseplay a {
   display: block;
   width: 20px;

@@ -1,5 +1,8 @@
 {
     "require-dev": {
         "phpunit/phpunit": "5.3.*"
+    },
+    "require": {
+        "phpdocumentor/phpdocumentor": "1.*"
     }
 }

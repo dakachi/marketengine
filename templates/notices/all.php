@@ -1,3 +1,3 @@
 <?php
-me_get_template_part('notices/success');
-me_get_template_part('notices/error');
+me_get_template('notices/success');
+me_get_template('notices/error');

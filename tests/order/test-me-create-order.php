@@ -2,6 +2,7 @@
 class Tests_ME_Create_Order extends WP_UnitTestCase {
     public function __construct($factory = null) {
         parent::__construct($factory);
+        $this->listing_category = new WP_UnitTest_Factory_For_Term($this, 'listing_category');
     }
 
     public function setUp() {
@@ -28,7 +29,7 @@ class Tests_ME_Create_Order extends WP_UnitTestCase {
 
     public function test_create_order_customer_note() {
         $order_id = me_insert_order($this->order_data);
-        $post = get_post($order_id);
+        $post     = get_post($order_id);
         $this->assertEquals('Order note', $post->post_excerpt);
     }
 

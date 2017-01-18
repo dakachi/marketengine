@@ -71,8 +71,7 @@ class Tests_ME_Reset_Pass extends WP_UnitTestCase {
 
         //retrieve the mailer instance
         $mailer = tests_retrieve_phpmailer_instance();
-        $mail_content_expected = '<p>Hello Dakachi1,</p>' .
-            '<p>You have successfully changed your password. Click this link  http://example.org to login to your Test Blog account.</p>';
+        $mail_content_expected = '<p>Hello dakachi1,</p>';
         $this->assertStringStartsWith($mail_content_expected, $mailer->get_sent()->body);
         reset_phpmailer_instance();
     }

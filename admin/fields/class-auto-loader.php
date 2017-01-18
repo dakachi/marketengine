@@ -1,9 +1,16 @@
 <?php
+/**
+ * ME_Field_Autoloader
+ *
+ * @version        1.0
+ * @package        MarketEngine/Fields/
+ * @category       Class
+ * @author         MarketEngine
+ */
 
 if (!defined('ABSPATH')) {
     exit;
 }
-
 /**
  * ME_Field_Autoloader
  *

@@ -1,10 +1,27 @@
 <?php
+/**
+ * MarketEngine PayPal Adaptive
+ *
+ * @author EngineThemes
+ * @since 1.0.0
+ *
+ * @version 1.0.0
+ *
+ */
+
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;
 }
 /**
  * Paypal Adaptive class
+ *
+ * Handles payments between users of the payment.
+ *
+ * @package MarketEngine/Classes
+ * @category Classes
+ * @since 1.0.0
+ *
  */
 class ME_PPAdaptive extends ME_Payment {
     /**
@@ -58,12 +75,15 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.0
      */
     public function __construct() {
+        $this->api['username']  = me_option('paypal-api-username');
+        $this->api['password']  = me_option('paypal-api-password');
+        $this->api['signature'] = me_option('paypal-api-signature');
+        $this->api['appID']     = me_option('paypal-app-api');
 
-        // $api       = ae_get_option('escrow_paypal_api', array());
-        $this->api   = ae_get_option('escrow_paypal_api', array());
         $this->appID = isset($this->api['appID']) ? $this->api['appID'] : 'APP-80W284485P519543T';
 
-        $testmode = ae_get_option('test_mode');
+        // $testmode = ae_get_option('test_mode', true);
+        $testmode = me_option('test-mode') ? true : false;
         // test mod is on
         $this->endpoint        = 'https://svcs.sandbox.paypal.com/AdaptivePayments/';
         $this->paypal_url      = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey=';
@@ -87,13 +107,16 @@ class ME_PPAdaptive extends ME_Payment {
      * @return string
      */
     public function get_pending_message($pending_reason) {
-        $pending_reason = strtoupper($pending_reason)
+        $pending_reason = strtoupper($pending_reason);
         $reason         = array(
             'ECHECK'         => __('The payment is pending because it was made by an eCheck that has not yet cleared.', 'enginethemes'),
             'MULTI_CURRENCY' => __('The receiver does not have a balance in the currency sent, and does not have the Payment Receiving Preferences set to automatically convert and accept this payment. Receiver must manually accept or deny this payment from the Account Overview.', 'enginethemes'),
+            'INTERNATIONAL'  => __("The payment is pending because the receiver holds a non-U.S. account and does not have a withdrawal mechanism. The receiver must manually accept or deny this payment from the Account Overview.", "enginethemes"),
             'UPGRADE'        => __('The payment is pending because it was made via credit card and the receiver must upgrade the account to a Business account or Premier status to receive the funds. It can also mean that receiver has reached the monthly limit for transactions on the account', 'enginethemes'),
             'VERIFY'         => __('The payment is pending because the receiver is not yet verified.', 'enginethemes'),
             'RISK'           => __('The payment is pending while it is being reviewed by PayPal for risk.', 'enginethemes'),
+            'UNILATERAL'     => __("The payment is pending because it was made to an email address that is not yet registered or confirmed.", "enginethemes"),
+            'UPGRADE'        => __("The payment is pending because it was made via credit card and the receiver must upgrade the account to a Business account or Premier status to receive the funds. It can also mean that receiver has reached the monthly limit for transactions on the account.", "enginethemes"),
             'OTHER'          => __('The payment is pending for review. For more information, contact PayPal Customer Service.', 'enginethemes'),
         );
         if (isset($reason[$pending_reason])) {
@@ -124,13 +147,18 @@ class ME_PPAdaptive extends ME_Payment {
 
         return $headers;
     }
-
     /**
-     * The GetVerifiedStatus API operation lets you determine whether the specified PayPal account's status is verified or unverified.
+     * The GetVerifiedStatus API operation lets you determine
+     * whether the specified PayPal account's status is verified or unverified.
+     *
+     * @param array $info
+     * @return string $response
+     *
+     * @since 1.0.0
+     *
      */
     public function get_verified_account($info) {
-
-        $testmode = ae_get_option('test_mode');
+        $testmode = me_option('test-mode') ? true : false;
         // test mod is on
         $endpoint = 'https://svcs.sandbox.paypal.com/AdaptiveAccounts/';
         // live mod is on
@@ -166,16 +194,27 @@ class ME_PPAdaptive extends ME_Payment {
         $headers  = $this->build_headers();
 
         $data['requestEnvelope.errorLanguage'] = get_bloginfo('language');
-
-        $response = wp_remote_post($endpoint, array(
+        $response                              = wp_remote_post($endpoint, array(
             'headers'     => $headers,
             'body'        => $data,
             'httpversion' => '1.1',
         ));
+
         if (!is_wp_error($response)) {
-            return json_decode($response['body']);
+            $response = json_decode($response['body']);
+            if (empty($response->error)) {
+                $response->transaction_url = $this->paypal_url . $response->payKey;
+            } else {
+                $error    = $response->error;
+                if($error[0]->errorId == "520003" ) {
+                    $response = new WP_Error('payment_fail', __("Your order has not been completed yet. API credentials are incorrect. Please contact the Admin for further information.", "enginethemes"));
+                }else {
+                    $response = new WP_Error('payment_fail', $error[0]->message);
+                }
+            }
         }
         return $response;
+
     }
 
     /**
@@ -185,7 +224,7 @@ class ME_PPAdaptive extends ME_Payment {
      *
      * https://developer.paypal.com/docs/classic/api/adaptive-payments/ExecutePayment_API_Operation/
      *
-     * @param $payKey (Optional) The pay key that identifies the payment to be executed.
+     * @param $paykey (Optional) The pay key that identifies the payment to be executed.
      *          This is the pay key returned in the PayResponse message.
      *
      * @since 1.0
@@ -256,9 +295,8 @@ class ME_PPAdaptive extends ME_Payment {
      *  - a specific day of the week or the month,
      *  - and whether or not a PIN is required for each payment request.
      *
-     * @param $endingDate Last date for which the preapproval is valid. It cannot be later than one year from the starting date. Contact PayPal if you do not want to specify an ending date.
-     * @param $startingDate First date for which the preapproval is valid. It cannot be before today's date or after the ending date.
-     * @since 1.2
+     * @param object $order
+     * @since 1.0
      * @author Dakachi
      */
     public function pre_approval($order) {
@@ -281,7 +319,7 @@ class ME_PPAdaptive extends ME_Payment {
      * Use the CancelPreapproval API operation to handle the canceling of preapprovals.
      * Preapprovals can be canceled regardless of the state they are in, such as active, expired, deactivated, and previously canceled.
      *
-     * @param string $paykey The payment pre-approval key
+     * @param string $preapproval_key The payment pre-approval key
      *
      * @since 1.0
      * @return object | WP_Error
@@ -295,7 +333,7 @@ class ME_PPAdaptive extends ME_Payment {
      * Use the PaymentDetails API operation to obtain information about a payment.
      * You can identify the payment by the tracking ID, the PayPal transaction ID in an IPN message, or the pay key associated with the payment.
      *
-     * @param $payKey
+     * @param $paykey
      *
      * @since 1.0
      * @return object | WP_Error
@@ -364,3 +402,367 @@ class ME_PPAdaptive extends ME_Payment {
     }
 
 }
+
+/**
+ * ME Paypal Adaptive Request
+ * The class handle setup and receive post back from paypal
+ *
+ * @version     1.0
+ * @package     Payment
+ * @category    Includes/Gateways
+ *
+ * @author      Dakachi
+ */
+class ME_PPAdaptive_Request {
+
+    /**
+     * The ME_PPAdaptive instance
+     * @var ME_PPAdaptive
+     */
+    private $gateway;
+
+    /**
+     * The single instance of the class.
+     *
+     * @var ME_PPAdaptive
+     * @since 1.0
+     */
+    static $_instance;
+
+    /**
+     * Main ME_PPAdaptive Instance.
+     *
+     * Ensures only one instance of ME_PPAdaptive is loaded or can be loaded.
+     *
+     * @since 1.0
+     * @return ME_PPAdaptive - Main instance.
+     */
+    public static function instance() {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    }
+
+    /**
+     * ME PayPay Adaptive Request Class constructor.
+     * @since 1.0.0
+     */
+    public function __construct() {
+        $this->gateway = ME_PPAdaptive::instance();
+    }
+
+    /**
+     * Check the option pay primary or note
+     */
+    private function is_pay_primary() {
+        return apply_filters('marketengine_ppadaptive_is_pay_primary', false);
+    }
+
+    /**
+     * Get the site's commission fee
+     */
+    private function get_commission_fee() {
+        return me_option('paypal-commission-fee');
+    }
+
+    /**
+     * Get the site's receive commission email
+     */
+    private function get_commission_email() {
+        return me_option('paypal-receiver-email');
+    }
+
+    /**
+     * Retrieve order receiver list item
+     *
+     * @param Object $order ME_Order object
+     *
+     * @since 1.0
+     * @return array
+     */
+    private function get_receiver_list_args($order) {
+        $commission_fee = $this->get_commission_fee();
+
+        $receiver_items = me_get_order_items($order->id, 'receiver_item');
+        if (!empty($receiver_items)) {
+            $order_item_id = $receiver_items[0]->order_item_id;
+
+            $amount = me_get_order_item_meta($order_item_id, '_amount', true);
+            if ($commission_fee > 0) {
+                // $amount        = $amount - $commission_fee;
+                $commission    = round( ((float) $amount * (float) $commission_fee) / 100, 2 );
+                $amount        = round( $amount - $commission, 2 );
+                $receiver_list = array(
+                    'receiverList.receiver(0).amount' => $amount,
+                    'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
+                    // 'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
+
+                    // admin receiver
+                    'receiverList.receiver(1).amount' => $commission,
+                    'receiverList.receiver(1).email'  => $this->get_commission_email(),
+                    //'receiverList.receiver(1).primary' => $this->is_pay_primary(),
+                );
+
+                // update order commission item
+                $commission_items = me_get_order_items($order->id, 'commission_item');
+                $receiver_1       = (object) array(
+                    'user_name'  => 'admin',
+                    'email'      => $this->get_commission_email(),
+                    'amount'     => $commission,
+                    'is_primary' => false,
+                );
+                if (!empty($commission_items)) {
+                    $order_item_id = $commission_items[0]->order_item_id;
+                    $order->update_commission($order_item_id, $receiver_1);
+                } else {
+                    $order->add_commission($receiver_1);
+                }
+
+                // update receiver item
+                me_update_order_item_meta($order_item_id, '_amount', $amount);
+
+            } else {
+                $receiver_list = array(
+                    'receiverList.receiver(0).amount' => round($amount, 2),
+                    'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
+                );
+            }
+
+        }
+
+        return apply_filters('marketegnine_ppadaptive_receiver_list', $receiver_list, $order);
+    }
+
+    /**
+     * Setup the request data send to ppadaptive
+     *
+     * @param object $order The me_order object
+     *
+     * @since 1.0
+     * @return object
+     */
+    public function setup_payment($order) {
+        $currency = $order->get_currency_code();
+        if (!$currency) {
+            update_post_meta($order->id, '_me_currency_code', me_option('payment-currency-code', 'USD'));
+            $currency = me_option('payment-currency-code', 'USD');
+        }
+
+        $order_data = array_merge(array(
+            'returnUrl'                     => $order->get_confirm_url(),
+            'cancelUrl'                     => $order->get_cancel_url(),
+            'ipnNotificationUrl'            => home_url('?me-payment=ME_PPAdaptive_Request'),
+
+            'currencyCode'                  => $currency,
+            'feesPayer'                     => 'EACHRECEIVER',
+            'requestEnvelope.errorLanguage' => get_bloginfo('language'),
+        ),
+            $this->get_receiver_list_args($order)
+        );
+
+        $response = $this->gateway->pay($order_data);
+        if (!empty($response->payKey)) {
+            update_post_meta($order->id, '_me_ppadaptive_paykey', $response->payKey);
+        }
+        return $response;
+    }
+
+    /**
+     * Catch the post back from paypal adaptive to update order
+     *
+     * @since 1.0
+     * @return void
+     */
+    public function complete_payment() {
+        $order_id = get_query_var('order-id');
+        if (!$order_id) {
+            return;
+        }
+        $payKey = get_post_meta($order_id, '_me_ppadaptive_paykey', true);
+        $this->process_order($order_id, $payKey);
+    }
+
+    /**
+     * Process the order
+     *
+     * @param int $order_id The order id
+     * @param string $payKey The paypal adaptive pay key
+     * @since 1.0
+     */
+    public function process_order($order_id, $payKey) {
+
+        $response = $this->gateway->payment_details($payKey);
+        if (is_wp_error($response)) {
+            return false;
+        }
+
+        switch ($response->status) {
+
+        case 'COMPLETED':
+            $this->order_finish($response, $order_id);
+            break;
+        case 'INCOMPLETE':
+            $this->order_incomplete($response, $order_id);
+        case 'PROCESSING':
+        case 'PENDING':
+            $this->order_pending($response, $order_id);
+        case 'REVERSALERROR':
+        default:
+            $this->order_error($response, $order_id);
+            break;
+        }
+
+        if ($response->status == 'COMPLETED' || $response->status == 'INCOMPLETE' || $response->status == 'PENDING') {
+            update_post_meta($order_id, '_sender_email', $response->senderEmail);
+            update_post_meta($order_id, '_sender_account_id', $response->sender->accountId);
+            update_post_meta($order_id, '_action_type', $response->actionType);
+            update_post_meta($order_id, '_fees_payer', $response->feesPayer);
+        }
+    }
+
+    /**
+     * Update order receiver list
+     *
+     * @param Object $response The paypal response Post back
+     * @param Int $order_id Current processing order id
+     *
+     * @since 1.0
+     * @author EngineThemes
+     * @return void
+     */
+    private function update_receiver($response, $order_id) {
+
+        $payment_info   = $response->paymentInfoList->paymentInfo;
+        $receiver_items = me_get_order_items($order_id, 'receiver_item');
+        $commission_items = me_get_order_items($order_id, 'commission_item');
+
+        $receiver_items = array_merge($receiver_items, $commission_items);
+        foreach ($receiver_items as $key => $receiver) {
+
+            $transaction_info = $payment_info[$key];
+            if (!empty($transaction_info->transactionId)) {
+                me_update_order_item_meta($receiver->order_item_id, '_transaction_id', $transaction_info->transactionId);
+                me_update_order_item_meta($receiver->order_item_id, '_transaction_status', $transaction_info->transactionStatus);
+                me_update_order_item_meta($receiver->order_item_id, 'refunded_amount', $transaction_info->refundedAmount);
+                me_update_order_item_meta($receiver->order_item_id, '_pending_refund', $transaction_info->pendingRefund);
+            }
+
+            if (!empty($transaction_info->pendingReason)) {
+                $pending_reason  = $transaction_info->pendingReason;
+                $pending_message = $this->gateway->get_pending_message($pending_reason);
+                me_update_order_item_meta($receiver->order_item_id, '_pending_reason', $pending_message);
+            }
+        }
+    }
+
+    /**
+     * Finish the order
+     * Order has been completed and is paid to the target account Seller & Admin
+     *
+     * @param Object $response The paypal response Post back
+     * @param Int $order_id Current processing order id
+     *
+     * @since 1.0
+     * @author EngineThemes
+     * @return void
+     */
+    private function order_finish($response, $order_id) {
+        $this->update_receiver($response, $order_id);
+        me_complete_order($order_id);
+    }
+
+    /**
+     * The order is incomplete, fund just sent to primary receiver.
+     * Status of payment order was pay, but not yet eligible to transfer money to the Seller account
+     *
+     * @param Object $response The paypal response Post back
+     * @param Int $order_id Current processing order id
+     *
+     * @since 1.0
+     * @author EngineThemes
+     * @return void
+     */
+    private function order_incomplete($response, $order_id) {
+        $this->update_receiver($response, $order_id);
+        me_active_order($order_id);
+    }
+
+    private function order_pending($response, $order_id) {
+    }
+
+    private function order_error($response, $order_id) {
+    }
+
+    private function api_fee() {
+        return array(
+            'PRIMARYRECEIVER' => __("Primary receiver pays all fees", 'enginethemes'),
+            'EACHRECEIVER'    => __("Each receiver pays their own fee", 'enginethemes'),
+            'SECONDARYONLY'   => __("Secondary receivers pay all fees", 'enginethemes'),
+        );
+    }
+
+}
+
+/**
+ * ME_Adaptive_IPN
+ * Class handel paypal adaptive INP to process order
+ *
+ * https://developer.paypal.com/docs/classic/adaptive-payments/integration-guide/APIPN/
+ *
+ * @version     1.0
+ * @package     Payment
+ * @category    Includes/Gateways
+ *
+ * @author      Dakachi
+ */
+class ME_Adaptive_IPN {
+    /**
+     * The single instance of the class.
+     *
+     * @var ME_Adaptive_IPN
+     * @since 1.0
+     */
+    static $_instance;
+
+    /**
+     * Main ME_Adaptive_IPN Instance.
+     *
+     * Ensures only one instance of ME_Adaptive_IPN is loaded or can be loaded.
+     *
+     * @since 1.0
+     * @return ME_Adaptive_IPN - Main instance.
+     */
+    public static function instance() {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    }
+
+    public function __construct() {
+        add_action('marketegine_me_ppadaptive_request', array($this, 'handle_ipn'));
+    }
+
+    public function handle_ipn($response) {
+        if ( $response['pay_key'] ) {
+            $paykey   = $response['pay_key'];
+            $order_id = $this->get_order_id($paykey);
+            if ($order_id) {
+                ME_PPAdaptive_Request::instance()->process_order($order_id, $paykey);
+            }
+        }
+        exit;
+    }
+
+    private function get_order_id($paykey) {
+        global $wpdb;
+        $sql    = "select post_id, meta_key from $wpdb->postmeta where meta_value = '{$paykey}'";
+        $result = $wpdb->get_row($sql, ARRAY_A);
+        if ($result) {
+            return $result['post_id'];
+        }
+        return false;
+    }
+}
+ME_Adaptive_IPN::instance();

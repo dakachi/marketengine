@@ -1,0 +1,254 @@
+.me-sidebar-inbox {
+	background: #FFF;
+	@include box-shadow(0, 0, 14px, 1px, rgba($color_border_base, 0.6));
+	margin-top: 24px;
+}
+.me-content-inbox {
+	background: #FFF;
+	@include box-shadow(0, 0, 14px, 1px, rgba($color_border_base, 0.6));
+	margin-top: 24px;
+}
+
+.me-inbox-filter {
+	position: relative;
+	padding-left: 25px;
+	padding-right: 25px;
+	padding: 10px 25px;
+	border-bottom: 1px solid $color_border_base;
+	font-size: 0;
+}
+
+.me-pagination-inbox {
+	display: inline-block;
+	text-align: right;
+	width: 210px;
+	font-size: 0;
+	vertical-align: top;
+	> span {
+		display: inline-block;
+		vertical-align: top;
+		line-height: 28px;
+		margin-right: 10px;
+		font-size: $font_size_base;
+		color: $color_border_base;
+		b {
+			color: $color_text;
+		}
+	}
+	.me-inbox-prev {
+		display: inline-block;
+		width: 32px;
+		height: 28px;
+		border: 1px solid $color_border_base;
+		border-radius: 2px;
+		padding: 4px 8px;
+		font-size: $font_size_base;
+		color: $color_text;
+	}
+	.me-inbox-next {
+		display: inline-block;
+		width: 32px;
+		height: 28px;
+		border: 1px solid $color_border_base;
+		border-radius: 2px;
+		padding: 4px 8px;
+		font-size: $font_size_base;
+		color: $color_text;
+	}
+	+ .me-search-inbox {
+		width: calc(100% - 400px);
+		float: none;
+		margin-top: 0;
+	}
+}
+
+.me-search-inbox {
+	position: relative;
+	display: inline-block;
+	width: calc(100% - 210px);
+	// margin-top: 2px;
+	// margin-left: 20px;
+	// float: right;
+	padding-left: 40px;
+	.me-inbox-refresh {
+		display: inline-block;
+		width: 30px;
+		height: 28px;
+		border: 1px solid $color_border_base;
+		border-radius: 3px;
+		padding: 4px 8px;
+		background: #fafafa;
+		cursor: pointer;
+		position: absolute;
+		top: 50%;
+		left: 0;
+		transform: translateY(-50%);
+		font-size: $font_size_base;
+	}
+	input {
+		width: 100%;
+		height: 28px;
+		padding: 4px 10px;
+		padding-right: 28px;
+		line-height: 24px;
+		border: 1px solid $color_border_base;
+		font-size: $font_size_base;
+	}
+	.me-search-inbox-btn {
+		position: absolute;
+		right: 7px;
+		top: 6px;
+		color: $color_text;
+		cursor: pointer;
+		font-size: $font_size_base;
+	}
+}
+
+
+//=== List Inbox
+//
+.me-inbox-list {
+	margin: 0;
+	padding: 0;
+	> li {
+		display: block;
+		margin: 0;
+		padding: 17px 25px;
+		border-bottom: 1px solid #F7f7f7;
+		&.me-inbox-new {
+			.me-inbox-author {
+				font-size: $font_size_medium;
+				font-weight: $font_weight_bold;
+			}
+		}
+		> a {
+			display: block;
+			width: 100%;
+			&:after {
+				content: ' ';
+				display: table;
+				clear: both;
+			}
+		}
+	}
+}
+.me-inbox-list {
+	.me-inbox-img {
+		display: block;
+		width: 50px;
+		height: 50px;
+		float: left;
+	}
+	.me-inbox-info {
+		position: relative;
+		display: -webkit-box;
+		overflow: hidden;
+		white-space: normal;
+		text-overflow: ellipsis;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		// height: 2.8em;
+		line-height: 1.4em;
+		margin-left: 70px;
+		padding-right: 150px;
+		font-size: $font_size_base;
+		// font-weight: $font_weight_bold;
+		color: $color_text;
+	}
+}
+.me-inbox-img {
+	img {
+		width: 100%;
+		height: 100%;
+		border-radius: 4px;
+	}
+}
+.me-inbox-info {
+	.me-inbox-author {
+		display: block;
+		line-height: 1em;
+	}
+	.me-inbox-messages {
+		display: block;
+		@include text-overflow();
+		margin-top: 10px;
+		color: $color_label_2;
+		i {
+			margin-right: 4px;
+			color: $color_skin;
+		}
+	}
+	.me-inbox-time {
+		position: absolute;
+		top: 0;
+		right: 0;
+		text-align: right;
+		> span {
+			display: block;
+			color: $color_skin;
+			margin-top: 9px;
+		}
+	}
+}
+.me-message-info {
+	text-align: right;
+	.me-new-message {
+		display: block;
+		color: $color_text;
+		> span {
+			color: $color_skin;
+			margin-right: 4px;
+		}
+	}
+	.me-old-message {
+		font-weight: normal;
+		color: #dbdbdb;
+		> span {
+			color: #dbdbdb;
+			margin-right: 4px;
+		}
+	}
+	.me-message-time {
+		display: block;
+		font-weight: normal;
+		color: $color_label_2;
+	}
+}
+
+@media (max-width: $screen_xs_max) {
+	.me-content-inbox {
+		margin-left: -15px;
+		margin-right: -15px;
+		box-shadow: none;
+	}
+	.me-inbox-filter {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	.me-search-inbox {
+		width: 100%;
+	}
+	.me-pagination-inbox {
+		display: none;
+	}
+	.me-inbox-list {
+		> li {
+			padding: 14px 15px;
+		}
+		.me-inbox-info {
+			padding: 0;
+		}
+		.me-inbox-messages {
+			margin-top: 6px;
+			@include text-overflow-row(2);
+		}
+		.me-inbox-time {
+			position: initial;
+			display: inline-block;
+			margin-top: 4px;
+			> span {
+				display: none;
+			}
+		}
+	}
+}

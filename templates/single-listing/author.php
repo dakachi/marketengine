@@ -3,26 +3,26 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
+$seller = new ME_Seller( $author_id );
+$display_name = $seller->display_name ? $seller->display_name : '';
+$location = $seller->location[0] ? $seller->location[0] : '';
 ?>
 <div class="me-authors">
 	<span class="me-avatar">
-		<img src="http://0.gravatar.com/avatar/c655f931959fd28e3594563edd348833?s=60&amp;d=mm&amp;r=G" alt="">
-		<b>author listing</b>
+		<?php echo $seller->get_avatar(); ?>
+		<b><?php echo $display_name; ?></b>
 	</span>
 	<ul class="me-author-info">
 		<li>
-			<span class="pull-left">From:</span>
-			<b class="pull-right">Banglades</b>
+			<span class="pull-left"><?php echo __('From:'); ?></span>
+			<b class="pull-right"><?php echo esc_html( $location ); ?></b>
 		</li>
 		<li>
-			<span class="pull-left">Language:</span>
-			<b class="pull-right">Vietnam</b>
-		</li>
-		<li>
-			<span class="pull-left">Member Sinced:</span>
-			<b class="pull-right">30 NOV, 2017</b>
+			<span class="pull-left"><?php echo __('Member Since:'); ?></span>
+			<b class="pull-right"><?php echo date( 'd M, Y', strtotime($seller->user_registered)); ?></b>
 		</li>
 	</ul>
-	<a href="" class="me-view-profile">View profile</a>
+	<a href="<?php echo get_author_posts_url($author_id); ?>" class="me-view-profile">
+		<?php _e("View profile", "enginethemes"); ?>
+	</a>
 </div>

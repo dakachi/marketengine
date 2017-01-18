@@ -4,6 +4,9 @@ class Tests_ME_Register extends WP_UnitTestCase {
         parent::__construct($factory);
     }
 
+    function tearDown() {
+        reset_phpmailer_instance();
+    }
     // test register successfull
     // @cover ME_Authentication::register()
     public function test_register_success() {
@@ -58,7 +61,7 @@ class Tests_ME_Register extends WP_UnitTestCase {
 
         //retrieve the mailer instance
         $mailer = tests_retrieve_phpmailer_instance();
-        $this->assertStringStartsWith("<p>Hello Dakachi dang,", $mailer->get_sent()->body);
+        $this->assertStringStartsWith("<p>Hello dakachi dang,", $mailer->get_sent()->body);
         reset_phpmailer_instance();
     }
 
@@ -99,7 +102,7 @@ class Tests_ME_Register extends WP_UnitTestCase {
 
         //retrieve the mailer instance
         $mailer = tests_retrieve_phpmailer_instance();
-        $this->assertStringStartsWith("<p>Hello Dakachi dang,</p>", $mailer->get_sent()->body);
+        $this->assertStringStartsWith("<p>Hello dakachi dang,</p>", $mailer->get_sent()->body);
         reset_phpmailer_instance();
     }
 

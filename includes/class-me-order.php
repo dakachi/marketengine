@@ -5,19 +5,215 @@ if (!defined('ABSPATH')) {
 }
 
 class ME_Order {
+    /**
+     * Order ID.
+     *
+     * @var int
+     */
     public $id;
-    public $order;
-    public $subtotal;
-    public $total;
-    public $shipping_info = array();
-    public $items         = array();
+    /**
+     * Order ID.
+     *
+     * @var int
+     */
+    public $ID;
+
+    /**
+     * ID of sender.
+     *
+     * A numeric string, for compatibility reasons.
+     *
+     * @var string
+     */
+    public $post_author = 0;
+
+    /**
+     * The Order's local publication time.
+     *
+     * @var string
+     */
+    public $post_date = '0000-00-00 00:00:00';
+
+    /**
+     * The Order's GMT publication time.
+     *
+     * @var string
+     */
+    public $post_date_gmt = '0000-00-00 00:00:00';
+
+    /**
+     * The Order's content.
+     *
+     * @var string
+     */
+    public $post_content = '';
+
+    /**
+     * The Order's title.
+     *
+     * @var string
+     */
+    public $post_title = '';
+
+    /**
+     * The Order's excerpt.
+     *
+     * @var string
+     */
+    public $post_excerpt = '';
+
+    /**
+     * The Order's status.
+     *
+     * @var string
+     */
+    public $post_status = 'sent';
+
+    /**
+     * The Order's password in plain text.
+     *
+     * @var string
+     */
+    public $post_password = '';
+
+    /**
+     * The Order's slug.
+     *
+     * @var string
+     */
+    public $post_name = '';
+
+    /**
+     * The Order's local modified time.
+     *
+     * @var string
+     */
+    public $post_modified = '0000-00-00 00:00:00';
+
+    /**
+     * The Order's GMT modified time.
+     *
+     * @var string
+     */
+    public $post_modified_gmt = '0000-00-00 00:00:00';
+
+    /**
+     * A utility DB field for Order content.
+     *
+     *
+     * @var string
+     */
+    public $post_content_filtered = '';
+
+    /**
+     * ID of a Order's parent Order.
+     *
+     * @var int
+     */
+    public $post_parent = 0;
+
+    /**
+     * The unique identifier for a Order, not necessarily a URL, used as the feed GUID.
+     *
+     * @var string
+     */
+    public $guid = '';
+
+    /**
+     * The Order's type, like post or page.
+     *
+     * @var string
+     */
+    public $post_type = 'post';
+
+    /**
+     * Stores the Order object's sanitization level.
+     *
+     * Does not correspond to a DB field.
+     *
+     * @var string
+     */
+    public $filter;
     /**
      *
      */
-    public function __construct($order = 0) {
-        $order       = absint($order);
-        $this->id    = $order;
-        $this->order = get_post($order);
+    public function __construct($order_id = 0) {
+
+        if(is_numeric($order_id)) {
+            $order_id = (int) $order_id;    
+            $post = get_post($order_id);
+        }else {
+            $post = $order_id;
+        }
+        
+        if(!$post || $post->post_type != 'me_order') return false;
+
+        foreach (get_object_vars($post) as $key => $value) {
+            $this->$key = $value;
+        }
+
+        $this->id = $this->ID;
+        $this->order = $post;
+
+        $this->caculate_subtotal();
+        $this->caculate_total();
+    }
+
+    public function __get($name) {
+        if (strrpos($name, 'billing') !== false) {
+            $billing_address = $this->get_address('billing');
+            $name            = str_replace('billing_', '', $name);
+            if (isset($billing_address[$name])) {
+                return $billing_address[$name];
+            } else {
+                return '';
+            }
+        }
+
+        if (strrpos($name, 'shipping') !== false) {
+            $shipping = $this->get_address('shipping');
+            $name     = str_replace('shipping_', '', $name);
+            if (isset($shipping[$name])) {
+                return $shipping[$name];
+            } else {
+                return '';
+            }
+        }
+
+        return '';
+    }
+
+    public function has_status($status) {
+        if(is_array($status)) {
+            return in_array($this->post_status, $status);
+        }
+        return $this->post_status === $status;
+    }
+
+    public function get_confirm_url() {
+        return me_get_order_url( 'confirm_order', 'order-id', $this->id);
+    }
+
+    public function get_order_detail_url() {
+        return get_the_permalink($this->id);
+    }
+
+    public function get_cancel_url() {
+        return me_get_order_url( 'cancel_order', 'order-id', $this->id);
+    }
+
+    /**
+     * Retrieve Order Currency Code
+     * @return String
+     * @since 1.0
+     */
+    public function get_currency_code() {
+        return get_post_meta($this->ID, '_order_currency_code', true);
+    }
+
+
+    public function get_currency() {
+        return get_post_meta($this->ID, '_order_currency', true);
     }
 
     /**
@@ -33,19 +229,34 @@ class ME_Order {
         if (!is_object($listing)) {
             return false;
         }
-        $order_item_id = me_add_order_item($this->id, $listing->get_title(), 'listing_item');
+
+        $order_item_id = me_add_order_item($this->id, get_the_title($listing->ID), 'listing_item');
         if ($order_item_id) {
-            me_add_order_item_meta($order_item_id, '_listing_id', $listing->id);
-            me_add_order_item_meta($order_item_id, '_listing_description', $listing->get_description());
+            me_add_order_item_meta($order_item_id, '_listing_id', $listing->ID);
+            me_add_order_item_meta($order_item_id, '_listing_description', $listing->post_content);
 
             me_add_order_item_meta($order_item_id, '_qty', $qty);
             me_add_order_item_meta($order_item_id, '_listing_price', $listing->get_price());
         }
 
+        $seller = get_userdata( $listing->post_author );
+
         $this->caculate_subtotal();
+        $this->caculate_total();
+
+        // TODO: neu add nhieu listing thi de o day khong on
+        $receiver_0 = (object) array(
+            'user_name'  =>  $seller->user_login,
+            'email'      => get_user_meta($seller->ID, 'paypal_email', true),
+            'amount'     => $this->get_total(),
+            'is_primary' => false,
+        );
+
+        $this->add_receiver($receiver_0);
 
         return $order_item_id;
     }
+
     /**
      * Update listing item
      *
@@ -55,7 +266,7 @@ class ME_Order {
      *
      * @since 1.0
      */
-    public function update_listing($item_id, $listing, $args) {
+    public function update_listing($item_id, $args) {
         $item_id = absint($item_id);
 
         if (!$item_id) {
@@ -66,10 +277,70 @@ class ME_Order {
             me_update_order_item_meta($item_id, '_qty', $args['qty']);
         }
 
+        if(isset($args['price'])) {
+            me_update_order_item_meta($item_id, '_listing_price', $args['price']);
+        }
+
         $this->caculate_subtotal();
         $this->caculate_total();
 
         return $item_id;
+    }
+    /**
+     * Update order listing when it is pending
+     */
+    public function update_listings() {
+        if($this->has_status('me-pending')) {
+            $listing_items = $this->get_listing_items();
+            foreach ($listing_items as $key => $item) {
+                // update listing item price
+                $listing = me_get_listing($item['ID']);
+                if($listing && $listing->is_available()) {
+                    $this->update_listing($item['order_item_id'], array('price' => $listing->get_price() ));    
+                }
+                // listing da bi xoa hoac ko ban nua
+            }
+        }
+    }
+
+
+    /**
+     * Retrieve ordered listing items
+     * @return array
+     * @since 1.0
+     */
+    public function get_listing_items() {
+        $order_listing_item = me_get_order_items($this->id, 'listing_item');
+        $listing_items = array();
+        if(!empty($order_listing_item)) {
+            foreach ($order_listing_item as $key => $item) {
+                $id = me_get_order_item_meta($item->order_item_id, '_listing_id', true);
+                $listing_items[$id] = array(
+                    'ID' => $id,
+                    'title' =>  $item->order_item_name,
+                    'qty' => me_get_order_item_meta($item->order_item_id, '_qty', true),
+                    'price' => me_get_order_item_meta($item->order_item_id, '_listing_price', true),
+                    'description' => me_get_order_item_meta($item->order_item_id, '_listing_description', true), 
+                    'order_item_id' => $item->order_item_id
+                );
+            }
+        }
+        return $listing_items;
+    }
+
+    /**
+     * Get listing item
+     *
+     * @param string $type Order id
+     *
+     * @since 1.0
+     *
+     * @return listing item
+     */
+    public function get_listing() {
+        $order_listing_item = me_get_order_items($this->id, 'listing_item');
+        $listing_item       = me_get_order_item_meta($order_listing_item[0]->order_item_id);
+        return $listing_item;
     }
 
     /**
@@ -85,11 +356,11 @@ class ME_Order {
             return false;
         }
 
-        $order_item_id = me_add_order_item($this->id, $receiver->get_user_name(), 'receiver_item');
+        $order_item_id = me_add_order_item($this->id, $receiver->user_name, 'receiver_item');
         if ($order_item_id) {
-            me_add_order_item_meta($order_item_id, '_receive_email', $receiver->get_receiver_email());
-            me_add_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary());
-            me_add_order_item_meta($order_item_id, '_amount', $receiver->get_amount());
+            me_add_order_item_meta($order_item_id, '_receive_email', $receiver->email);
+            me_add_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary);
+            me_add_order_item_meta($order_item_id, '_amount', $receiver->amount);
         }
         return $order_item_id;
     }
@@ -110,9 +381,37 @@ class ME_Order {
             return false;
         }
 
-        me_update_order_item_meta($order_item_id, '_receive_email', $receiver->get_receiver_email());
-        me_update_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary());
-        me_update_order_item_meta($order_item_id, '_amount', $receiver->get_amount());
+        me_update_order_item_meta($order_item_id, '_receive_email', $receiver->email);
+        me_update_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary);
+        me_update_order_item_meta($order_item_id, '_amount', $receiver->amount);
+
+        return $order_item_id;
+    }
+
+    public function add_commission($receiver) {
+        if (!is_object($receiver)) {
+            return false;
+        }
+
+        $order_item_id = me_add_order_item($this->id, $receiver->user_name, 'commission_item');
+        if ($order_item_id) {
+            me_add_order_item_meta($order_item_id, '_receive_email', $receiver->email);
+            me_add_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary);
+            me_add_order_item_meta($order_item_id, '_amount', $receiver->amount);
+        }
+        return $order_item_id;
+    }
+
+    public function update_commission($item_id, $receiver) {
+        $order_item_id = absint($item_id);
+
+        if (!$order_item_id) {
+            return false;
+        }
+
+        me_update_order_item_meta($order_item_id, '_receive_email', $receiver->email);
+        me_update_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary);
+        me_update_order_item_meta($order_item_id, '_amount', $receiver->amount);
 
         return $order_item_id;
     }
@@ -126,9 +425,9 @@ class ME_Order {
      *
      * @return array Array of address details
      */
-    public function get_address($type = 'billing') {
-        $address_field = array('first_name', 'last_name', 'phone', 'email', 'postcode', 'address', 'city', 'country');
-        $address       = array();
+    public function get_address($type) {
+        $address_fields = array('first_name', 'last_name', 'phone', 'email', 'address', 'city', 'country', 'postcode');
+        $address        = array();
         foreach ($address_fields as $field) {
             $address[$field] = get_post_meta($this->id, '_me_' . $type . '_' . $field, true);
         }
@@ -146,10 +445,10 @@ class ME_Order {
      * @return array Array of address details
      */
     public function set_address($address, $type = 'billing') {
-        $address_field = array('first_name', 'last_name', 'phone', 'email', 'postcode', 'address', 'city', 'country');
+        $address_fields = array('first_name', 'last_name', 'phone', 'email', 'postcode', 'address', 'city', 'country');
         foreach ($address_fields as $field) {
             if (isset($address[$field])) {
-                update_post_meta($this->id, '_me_' . $type . '_' . $field, $address[$field]);
+                update_post_meta($this->id, '_me_' . $type . '_' . $field, sanitize_text_field( $address[$field] ));
             }
         }
     }
@@ -265,6 +564,10 @@ class ME_Order {
         return $this->total;
     }
 
+    public function get_total() {
+        return get_post_meta($this->id, '_order_total', true);
+    }
+
     /**
      * Retrieve the order transaction id
      * @since 1.0
@@ -287,6 +590,10 @@ class ME_Order {
 
     }
 
+    public function get_order_number() {
+        return $this->id;
+    }
+
     public function get_buyer() {
 
     }
@@ -300,13 +607,29 @@ class ME_Order {
             update_post_meta($this->id, '_me_payment_gateway', $payment->name);
             update_post_meta($this->id, '_me_gateway_title', $payment->title);
         } else {
-            update_post_meta($this->id, '_me_payment_gateway', '');
-            update_post_meta($this->id, '_me_gateway_title', '');
+            update_post_meta($this->id, '_me_payment_gateway', $payment);
+            update_post_meta($this->id, '_me_gateway_title', $payment);
+        }
+    }
+
+    public function get_payment_method() {
+        return get_post_meta($this->id, '_me_payment_gateway', true);
+    }
+
+    public function get_dispute_time_limit() {
+        $remaining = 0;
+        if( $this->has_status('me-complete') ) {
+            $completed_date = date(get_option('date_format'), strtotime($this->post_modified));
+            $limit = me_get_dispute_time_limit();
+            $now = date(get_option('date_format'));
+
+            $date = date(get_option('date_format'), strtotime( $completed_date . ' +'. $limit.' days'));
+            $remaining = (strtotime($date) - strtotime($now)) / 86400;
+
+            $remaining = ($remaining < 0) ? 0 : $remaining;
         }
 
+        return $remaining;
     }
 
-    public function get_transaction_url() {
-
-    }
 }
