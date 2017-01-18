@@ -197,4 +197,12 @@ $(document).ready(function() {
     	$('.me-field-type-options').html(options);
 
     });
+
+    //=== Disputed case
+    //
+    $('.me-action-case').on('click', function(event) {
+    	var target = event.currentTarget;
+    	$(target).toggleClass('active');
+    });
+
 });
