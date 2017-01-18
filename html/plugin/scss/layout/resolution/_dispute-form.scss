@@ -1,0 +1,192 @@
+//== Dispute form
+//
+.me-dispute-form {
+	background: #FFF;
+	width: 698px;
+	margin-top: 24px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom: 30px;
+	border: 1px solid $color_border_1;
+	border-radius: 4px;
+	.me-disputed-product-info {
+		padding: 40px 60px;
+		h3 {
+			font-size: $font_size_base;
+			font-weight: 400;
+			color: $color_label_2;
+			margin: 0 0 10px;
+		}
+	}
+	.me-receive-item {
+		padding: 0 60px;
+		padding-bottom: 20px;
+		border-bottom: 1px solid $color_border_1;
+		h3 {
+			font-size: $font_size_base;
+			font-weight: normal;
+			color: $color_label_2;
+			line-height: 1em;
+			margin: 0 0 10px;
+		}
+	}
+	.me-dispute-problem {
+		padding: 20px 60px 0 60px;
+		h3 {
+			font-size: $font_size_base;
+			font-weight: normal;
+			color: $color_label_2;
+			line-height: 1em;
+			margin: 0 0 10px;
+		}
+		select {
+			width: 100%;
+			color: $color_text_2;
+			border: 1px solid $color_border_1;
+		}
+	}
+	.me-dispute-description {
+		padding: 20px 60px 0 60px;
+		h3 {
+			font-size: $font_size_base;
+			font-weight: normal;
+			color: $color_label_2;
+			line-height: 1em;
+			margin: 0 0 10px;
+		}
+		textarea {
+			width: 100%;
+			max-width: 100%;
+			height: 120px;
+			padding: 6px 10px;
+			resize: none;
+			border: 1px solid $color_border_1;
+			color: $color_text_2;
+		}
+	}
+	.me-dispute-image {
+		padding: 20px 60px 0 60px;
+		h3 {
+			font-size: $font_size_base;
+			font-weight: normal;
+			color: $color_label_2;
+			line-height: 1em;
+			margin: 0 0 10px;
+		}
+	}
+	.me-dispute-refund {
+		padding: 20px 60px 0 60px;
+		h3 {
+			font-size: $font_size_base;
+			font-weight: normal;
+			color: $color_label_2;
+			line-height: 1em;
+			margin: 0 0 10px;
+		}
+		.dispute-get-refund {
+			margin-bottom: 20px;
+			label {
+				color: $color_text;
+				cursor: pointer;
+				input {
+					margin-right: 5px;
+				}
+			}
+			> span {
+				display: block;
+				font-size: $font_size_base;
+				color: $color_label_2;
+				font-style: italic;
+			}
+			&:last-child {
+				margin-bottom: 0;
+			}
+			/* + .dispute-get-refund {
+				margin-bottom: 0;
+			} */
+		}
+	}
+	.me-dispute-submit {
+		text-align: center;
+		margin-top: 60px;
+	}
+	.me-backlink {
+		display: inline-block;
+		margin-left: 60px;
+		margin-top: 60px;
+	}
+}
+.me-dispute-submit {
+	.me-dispute-submit-btn {
+		width: auto;
+		font-weight: 700;
+	}
+}
+
+.me-receive-item {
+	> label {
+		display: inline-block;
+		cursor: pointer;
+		input {
+			margin-right: 5px;
+			cursor: pointer;
+		}
+		+ label {
+			margin-left: 30px;
+		}
+	}
+}
+
+#dispute-get-refund-no, #dispute-get-refund-yes {
+	display: none;
+}
+#dispute-get-refund-no.active, #dispute-get-refund-yes.active {
+	display: block;
+}
+
+@media (max-width: $screen_xs_max) { //767px
+	.me-dispute-form {
+		margin-top: 0;
+		width: auto;
+		padding-bottom: 15px;
+		margin-left: -15px;
+		margin-right: -15px;
+		border-left: none;
+		border-right: none;
+		border-radius: 0;
+		.me-disputed-product-info {
+			padding: 15px;
+		}
+		.me-receive-item {
+			padding: 0 15px 15px;
+		}
+		.me-dispute-problem {
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+		.me-dispute-description {
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+		.me-dispute-image {
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+		.me-dispute-refund {
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+		.me-dispute-submit {
+			margin-top: 30px;
+			padding-left: 15px;
+			padding-right: 15px;
+			.me-dispute-submit-btn {
+				width: 100%;
+			}
+		}
+		.me-backlink {
+			margin-left: 15px;
+			margin-top: 20px;
+		}
+	}
+}

@@ -1,0 +1,101 @@
+//=== Payment Confirm
+//
+
+.me-orderpayment-table {
+	width: 100%;
+	.me-table-col {
+		border-bottom: 1px solid $color_border_base;
+		border-top: none;
+	    padding: 4px 0 16px;
+	    font-size: 16px;
+	    color: #555;
+	}
+	tr {
+		border-bottom: 1px solid $color_border_base;
+		&:last-child {
+			border: none;
+		}
+	}
+	td {
+		padding: 4px 0 16px;
+		font-size: $font_size_medium;
+		color: $color_label_3;
+	}
+	.me-order-units {
+		width: 28%;
+		text-align: left;
+		padding-left: 94px;
+	}
+	.me-order-pricing {
+		width: 22%;
+		text-align: center;
+
+	}
+	.me-order-total, .me-order-shipfee, .me-order-totals {
+		width: 50%;
+		span {
+			display: inline-block;
+			&:first-child {
+				float: left;
+				min-width: 120px;
+				text-align: right;	
+			}
+			&:last-child {
+				float: right;
+			}
+		}
+	}
+	.me-order-shipfee, .me-order-totals {
+		padding-top: 16px;
+	}
+	.me-order-totals {
+		font-size: $font_size_large;
+		font-weight: $font_weight_bold;
+		color: $color_text;
+	}
+}
+
+.me-payment-confirmation {
+	background: #FFF;
+	@include box-shadow(0, 0, 14px, 1px, rgba($color_border_base, 0.6));
+	margin-top: 24px;
+	padding: 25px;
+	.me-orderlisting-info {
+		background: none;
+		box-shadow: none;
+		margin: 0;
+		padding: 0;
+	}
+	.me-orderpayment-table {
+		margin-top: 10px;
+		.me-ordertotal {
+			width: 34%;
+		}
+		.me-orderunits {
+			width: 28%;
+			padding-left: 94px;
+		}
+	}
+}
+.me-payment-confirm-submit {
+	margin-top: 10px;
+	text-align: right;
+}
+
+@media (max-width: $screen_xs_max) { //767px
+	.me-payment-confirmation {
+		padding: 16px;
+		.me-orderpayment-table {
+			.me-ordertotal {
+				width: 100%;
+			}
+			.me-orderunits {
+				width: 100%;
+				padding-left: 0;
+			}
+		}
+	}
+	.me-payment-confirm-submit {
+		text-align: center;
+	}
+}

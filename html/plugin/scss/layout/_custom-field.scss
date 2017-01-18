@@ -1,0 +1,70 @@
+//=== Layout custom field
+//
+.me-custom-field {
+	background: #FFF;
+	padding: 0px 0 0px 30px;
+	/* border: 1px solid $color_border_base;
+	border-bottom: none; */
+	> .me-row {
+		&:first-of-type {
+			.me-cf-content {
+				border: none;
+			}
+		}
+	}
+}
+
+.me-cf-title {
+	padding: 20px 0;
+	p {
+		margin: 0;
+		font-size: $font_size_base + 1;
+		font-weight: $font_weight_bold;
+		color: #333;
+		+ span {
+			margin-top: 4px;
+		}
+	}
+	span {
+		display: block;
+		font-size: $font_size_base - 1; 
+		color: $color_label_2
+	}
+}
+.me-cf-content {
+	padding: 20px 30px 20px 0;
+	border-top: 1px solid $color_border_base;
+	p {
+		margin: 0;
+		font-size: $font_size_base;
+		color: #333;
+		line-height: 1.6em;
+	}
+	ul {
+		margin: 0;
+		> li {
+			font-size: $font_size_base;
+			color: #333;
+			line-height: 1.6em;
+		}
+	}
+}
+
+@media (max-width: $screen_xs_max) { //767px
+	.me-custom-field {
+		padding-bottom: 10px;
+	}
+	.me-cf-title {
+		padding-bottom: 0;
+		p {
+			+ span {
+				margin: 0;
+			}
+		}
+	}
+	.me-cf-content {
+		border: none;
+		padding-top: 5px;
+		padding-bottom: 10px;
+	}
+}

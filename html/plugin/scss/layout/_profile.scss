@@ -1,0 +1,113 @@
+//=== Profile
+//
+.me-avatar-user {
+	text-align: center;
+	margin-bottom: 60px;
+	.avatar-user {
+		position: relative;
+		display: inline-block;
+		width: 100px;
+		height: 100px;
+		overflow: hidden;
+		color: #FFF;
+		&:hover {
+			cursor: pointer;
+			.change-avatar-user {
+				display: block;
+			}
+		}
+		img {
+			width: 100%;
+			height: auto;
+			border-radius: 8px;
+		}
+	}
+	ul.marketengine-gallery-img {
+		margin-top: 0;
+	}
+	ul.marketengine-gallery-img li.me-item-img {
+		margin-top: 0;
+		padding: 0;
+		border-radius: 8px;
+		overflow: hidden;
+	}
+	ul.marketengine-gallery-img li.uploading {
+		width: 100px;
+		height: 100px;
+		margin-top: 0;
+		padding: 0;
+		border-radius: 8px;
+		overflow: hidden;
+		margin-left: 0;
+		z-index: 1;
+	}
+	ul.marketengine-gallery-img li.uploading + li {
+		left: 50%;
+		transform: translateX(-50%);
+	}
+	ul.marketengine-gallery-img li.me-item-img span.me-gallery-img, ul.marketengine-gallery-img li.uploading .uploading-progress {
+		width: 100px;
+		height: 100px;
+		border: none;
+	}
+
+}
+
+.me-single-image ul.marketengine-gallery-img .uploading {
+    z-index: 1;
+}
+.me-single-image ul.marketengine-gallery-img .uploading + li {
+    position: absolute !important;
+    border : none !important;
+    z-index: 0;
+    opacity: 0.9;
+    left: -8px;
+    top: 0;
+}
+
+//==== Profile info
+//
+.me-profile-info {
+	.marketengine-text-field {
+		margin-bottom: 30px;
+		.me-field-title {
+			font-size: $font_size_base;
+			color: $color_label_2;
+		}
+		> span {
+			font-size: $font_size_base;
+			color: $color_label_2;
+		}
+		> p {
+			font-size: $font_size_medium;
+			color: $color_text;
+			min-height: 20px;
+			margin: 0;
+			margin-top: 6px;
+			padding: 0;
+			a {
+				font-size: $font_size_medium;
+				color: $color_text;
+			}
+		}
+	}
+}
+.marketengine-text-field > p > .me-not-yet-info {
+	font-style: italic;
+	color: $color_label_1;
+}
+.marketengine-text-field.edit-profile {
+	margin-top: 35px;
+	margin-bottom: 36px;
+}	
+
+@media (max-width: $screen_xs_max) {
+	.me-avatar-user {
+		margin-bottom: 30px;
+		ul.marketengine-gallery-img li.me-item-img span.me-gallery-img, ul.marketengine-gallery-img li.uploading .uploading-progress {
+			width: 86px;
+			height: 86px;
+			border: none;
+		}
+	}
+}

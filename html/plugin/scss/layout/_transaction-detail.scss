@@ -1,0 +1,62 @@
+//=== Transaction detail
+//
+.me-orderlisting-review {
+	float: right;
+	display: inline-block;
+	margin-top: 15px;
+	padding: 7px 30px;
+	color: $color_skin;
+	border: 1px solid $color_skin;
+	border-radius: 4px;
+	font-size: $font_size_small;
+	&:hover {
+		color: $color_skin_hover;
+		border: 1px solid $color_skin_hover;
+	}
+}
+
+.me-transaction-dispute {
+	position: relative;
+	background: #FFF;
+	@include box-shadow(0, 2px, 15px, 0, rgba($color_box_shadow, 1));
+	margin-top: 20px;
+	padding: 25px;
+	padding-right: 180px;
+	p {
+		margin: 0;
+		color: $color_text;
+	}
+	a {
+		display: inline-block;
+		height: 30px;
+		padding: 5px 24px;
+		position: absolute;
+		right: 25px;
+		top: 50%;
+		transform: translateY(-50%);
+		font-size: $font_size_small;
+		color: $color_label_3;
+		border: 1px solid $color_label_3;
+		border-radius: 4px;
+	}
+}
+
+@media (max-width: $screen_xs_max) { //767px
+	.me-orderlisting-review {
+		margin-left: 0;
+		width: 100%;
+		text-align: center;
+	}
+	.me-transaction-dispute {
+		padding: 15px;
+		margin-right: -15px;
+		margin-left: -15px;
+		a {
+			position: initial;
+			transform: translateY(0);
+			margin-top: 14px;
+			width: 100%;
+			text-align: center;
+		}
+	}
+}
