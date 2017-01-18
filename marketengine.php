@@ -379,6 +379,9 @@ class MarketEngine
         $dev_suffix = $develop_src ? '' : '.min';
         wp_enqueue_style('me-option-css', ME_PLUGIN_URL . 'assets/admin/menu.css');
         wp_enqueue_script('jquery-ui-datepicker');
+        wp_enqueue_script('jquery-ui-slider');  
+        wp_enqueue_script('jquery-ui-tooltip');
+        wp_enqueue_script('jquery-ui-sortable'); 
         wp_enqueue_script('jquery-validation', $this->plugin_url() . "/assets/js/jquery.validate.min.js", array('jquery'), $this->version, true);
     }
 
