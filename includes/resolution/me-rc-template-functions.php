@@ -106,3 +106,20 @@ function me_rc_account_title($title, $id) {
     return $title;
 }
 add_filter( 'the_title', 'me_rc_account_title', 10, 2 );
+
+/**
+ * Replace account title when user access resolution center
+ * @param array $title The title parts array
+ * @since 1.1
+ */
+function me_rc_account_document_title($title){
+	global $post;
+	if (is_page() && $post->ID === me_get_option_page_id('user_account')) {
+        global $wp_query;
+        if (isset($wp_query->query_vars['resolution-center'])) {
+            $title['title'] =  __('Resolution Center', 'enginethemes');
+        }
+    }
+    return $title;
+}
+add_filter('document_title_parts', 'me_rc_account_document_title');
