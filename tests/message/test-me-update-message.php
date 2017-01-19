@@ -63,7 +63,7 @@ class Tests_ME_Update_Message extends WP_UnitTestCase {
         $message_data = $this->message_data;
         $message_data['post_content'] = '';
         $message_id = me_update_message($message_data, true);
-        $this->assertEquals(new WP_Error('empty_content', __('Content, title, and excerpt are empty.')), $message_id);
+        $this->assertEquals(new WP_Error('empty_content', __('Content are empty.')), $message_id);
     }
 
 }

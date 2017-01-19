@@ -6,6 +6,9 @@ class Tests_ME_Inquiry_Handle extends WP_UnitTestCase {
     }
 
     public function setUp() {
+
+        add_filter( 'marketengine_listing_type_categories', array($this, 'filter_listing_type_category' ) );
+
         $this->user_1 = self::factory()->user->create(array('role' => 'author'));
         update_user_meta( $this->user_1, 'paypal_email', 'dinhle1987-per@yahoo.com' );
         $this->user_2 = self::factory()->user->create(array('role' => 'author'));
@@ -19,7 +22,7 @@ class Tests_ME_Inquiry_Handle extends WP_UnitTestCase {
         $listing_data = array(
             'listing_title'       => 'Listing 1',
             'listing_description' => 'abc',
-            'listing_type'        => 'purchasion',
+            'listing_type'        => 'contact',
             'meta_input'          => array(
                 'listing_price' => '1000',
             ),
@@ -30,7 +33,7 @@ class Tests_ME_Inquiry_Handle extends WP_UnitTestCase {
         $this->listing = me_get_listing($p1);
 
         $this->inquiry_data = array(
-        	'inquiry_listing' => $p1,
+        	'send_inquiry' => $p1,
         	'content' => 'Inquiry message 1'
         );
     }
@@ -40,9 +43,17 @@ class Tests_ME_Inquiry_Handle extends WP_UnitTestCase {
         wp_delete_term($this->sub_cat, 'listing_category');
     }
 
+    public function filter_listing_type_category($category) {
+        return array(
+            'all' => array ($this->parent_cat),
+            'contact' => array($this->parent_cat),
+            'purchasion' => array($this->parent_cat)
+        );
+    }
+
     public function test_me_handle_inquiry_message_content() {
     	wp_set_current_user($this->user_2);
-    	$id = ME_Checkout_Handle::inquiry($this->inquiry_data);
+    	$id = ME_Inquiry_Handle::inquiry($this->inquiry_data);
 
     	$messages = me_get_messages(array('post_type' => 'message', 'post_parent' => $id));
     	$this->assertEquals('Inquiry message 1', $messages[0]->post_content);
@@ -51,8 +62,8 @@ class Tests_ME_Inquiry_Handle extends WP_UnitTestCase {
 
     public function test_me_handle_inquiry_yourself() {
     	wp_set_current_user($this->user_1);
-    	$id = ME_Checkout_Handle::inquiry($this->inquiry_data);
-        $this->assertEquals(new WP_Error('send_to_yourself', 'You can not send message to your self.'), $id);
+    	$id = ME_Inquiry_Handle::inquiry($this->inquiry_data);
+        $this->assertEquals(new WP_Error('inquire_yourself', 'You can not send message to your self.'), $id);
     }
 }
 // test get message
