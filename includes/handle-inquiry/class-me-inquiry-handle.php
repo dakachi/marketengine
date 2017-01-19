@@ -41,7 +41,7 @@ class ME_Inquiry_Handle
         }
 
         if ($current_user_id == $listing->post_author) {
-            return new WP_Error('inquire_yourself', __("You can not inquire your self.", "enginethemes"));
+            return new WP_Error('inquire_yourself', __("You can not inquire yourself.", "enginethemes"));
         }
 
         if (!ME()->get_current_user()->is_activated()) {
