@@ -156,5 +156,14 @@ $(document).ready(function() {
 	    }
     });
 
+    //=== Disputed case
+    //
+    $('.me-action-case').on('click', function(event) {
+    	var target = event.currentTarget;
+    	$(target).toggleClass('active');
+    	var case_id = $(target).data('case-id');
+    	$(document.getElementById(case_id)).toggleClass('active');
+    });
+
 });
 })(jQuery);

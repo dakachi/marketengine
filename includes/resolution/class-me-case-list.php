@@ -98,11 +98,11 @@ class ME_Case_List extends WP_List_Table
     public function column_default($item, $column_name)
     {
         $item_detail = '';
-        $item_detail .= '<tr>'; 
-        $item_detail .= '<td colspan="6">';
+        $item_detail .= '<tr class="me-case-detail" id="case-'. $item['ID'] .'">'; 
+        $item_detail .= '<th class="check-column"></th>';
+        $item_detail .= '<td colspan="4">'. $this->table_detail_case($item) .'</td>';
+        $item_detail .= '</tr>';
 
-        $item_detail .= '</td>'; 
-        $item_detail .= '</tr>'; 
         switch ($column_name) {
             case 'case':
 	            $case_link = '<a href="'. me_rc_dispute_link($item['ID']) . '">#' .$item['ID'] .'</a>';
@@ -116,7 +116,7 @@ class ME_Case_List extends WP_List_Table
              	echo date_i18n( get_option( 'date_format' ), strtotime($item['post_date']) );
              	break;
             case 'actions' :
-            	echo '<span class="me-action-case"><i class="icon-me-eye"></i><i class="icon-me-eye-slash"></i></span>';
+            	echo '<span class="me-action-case" data-case-id="case-'. $item['ID'] .'"><i class="icon-me-eye"></i><i class="icon-me-eye-slash"></i></span>' . $item_detail;
             	?>
             	<?php 
             	break;
@@ -124,6 +124,55 @@ class ME_Case_List extends WP_List_Table
             	echo '<span>' .__("Dispute Order", "enginethemes"). '</span>';
             	break;
         }
+    }
+
+    /**
+     *
+     * @param array $item
+     * @param string $column_name
+     *
+     * @return mixed
+     */
+    public function table_detail_case($item) {
+        $tb = '<table class="me-table-case-detail">';
+        $tb .= '<tr>';
+        $tb .= '<td class="me-td-case-detail">Open date:</td>';
+        $tb .= '<td>'. date_i18n( get_option( 'date_format' ), strtotime($item['post_date']) ) .'</td>';
+        $tb .= '</tr>';
+        $tb .= '<tr>'; 
+        $tb .= '<td class="me-td-case-detail">Opened By:</td>';
+        $tb .= '<td>'. get_the_author_meta( 'display_name', $item['sender'] ) .'</td>';
+        $tb .= '</tr>';
+        $tb .= '<tr>'; 
+        $tb .= '<td class="me-td-case-detail">Listing:</td>';
+        $tb .= '<td>'. get_the_author_meta( 'display_name', $item['sender'] ) .'</td>';
+        $tb .= '</tr>';
+        $tb .= '<tr>'; 
+        $tb .= '<td class="me-td-case-detail">Problem:</td>';
+        $tb .= '<td>'. get_the_author_meta( 'display_name', $item['sender'] ) .'</td>';
+        $tb .= '</tr>';
+        $tb .= '<tr>'; 
+        $tb .= '<td class="me-td-case-detail">Buyer wants to:</td>';
+        $tb .= '<td>'. get_the_author_meta( 'display_name', $item['sender'] ) .'</td>';
+        $tb .= '</tr>';
+        $tb .= '<tr>'; 
+        $tb .= '<td class="me-td-case-detail">Order ID:</td>';
+        $tb .= '<td>'. get_the_author_meta( 'display_name', $item['sender'] ) .'</td>';
+        $tb .= '</tr>';
+        $tb .= '<tr>'; 
+        $tb .= '<td class="me-td-case-detail">Total amount:</td>';
+        $tb .= '<td>'. get_the_author_meta( 'display_name', $item['sender'] ) .'</td>';
+        $tb .= '</tr>';
+        $tb .= '<tr>'; 
+        $tb .= '<td class="me-td-case-detail">Order date:</td>';
+        $tb .= '<td>'. get_the_author_meta( 'display_name', $item['sender'] ) .'</td>';
+        $tb .= '</tr>';
+        $tb .= '<tr>'; 
+        $tb .= '<td class="me-td-case-detail">Related party:</td>';
+        $tb .= '<td>'. get_the_author_meta( 'display_name', $item['sender'] ) .'</td>';
+        $tb .= '</tr>';
+        $tb .= '</table>';
+        return $tb;
     }
 
     /**

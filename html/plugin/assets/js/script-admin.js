@@ -201,6 +201,7 @@ $(document).ready(function() {
     //=== Disputed case
     //
     $('.me-action-case').on('click', function(event) {
+    	console.log('sfds');
     	var target = event.currentTarget;
     	$(target).toggleClass('active');
     });

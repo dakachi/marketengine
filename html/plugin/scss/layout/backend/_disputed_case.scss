@@ -24,3 +24,19 @@
 		}
 	}
 }
+.me-case-detail {
+	display: none;
+	&.active {
+		display: table-row;
+	}
+}
+.me-table-case-detail {
+	td {
+		padding-left: 0;
+		padding-right: 40px;
+		&.me-td-case-detail {
+			font-weight: 600;
+			color: #333;
+		}
+	}
+}
