@@ -97,14 +97,11 @@ class ME_Case_List extends WP_List_Table
      */
     public function column_default($item, $column_name)
     {
-        // var_dump($item);
         $item_detail = '';
         $item_detail .= '<tr class="me-case-detail" id="case-'. $item['ID'] .'">'; 
         $item_detail .= '<th class="check-column"></th>';
         $item_detail .= '<td colspan="4">'. $this->table_detail_case($item) .'</td>';
         $item_detail .= '</tr>';
-
-        
 
         switch ($column_name) {
             case 'case':
