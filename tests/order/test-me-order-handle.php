@@ -6,6 +6,9 @@ class Tests_ME_Order_Handle extends WP_UnitTestCase {
     }
 
     public function setUp() {
+
+        add_filter( 'marketengine_listing_type_categories', array($this, 'filter_listing_type_category' ) );
+
         $this->user_1 = self::factory()->user->create(array('role' => 'author'));
         update_user_meta( $this->user_1, 'paypal_email', 'dinhle1987-per@yahoo.com' );
 
@@ -30,8 +33,18 @@ class Tests_ME_Order_Handle extends WP_UnitTestCase {
             'parent_cat'          => $this->parent_cat,
             'sub_cat'             => $this->sub_cat,
         );
-        $p1            = ME_Listing_Handle::insert($listing_data);
+        $p1 = ME_Listing_Handle::insert($listing_data);
         $this->listing = me_get_listing($p1);
+
+        wp_set_current_user($this->user_2);
+    }
+
+    public function filter_listing_type_category($category) {
+        return array(
+            'all' => array ($this->parent_cat),
+            'contact' => array($this->parent_cat),
+            'purchasion' => array($this->parent_cat)
+        );
     }
 
     public function tearDown() {

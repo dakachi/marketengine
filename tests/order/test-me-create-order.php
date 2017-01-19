@@ -46,7 +46,11 @@ class Tests_ME_Create_Order extends WP_UnitTestCase {
     }
 
     public function get_currency_code($code) {
-        return 'GBP';
+        $sign = '$';
+        $code = 'GBP';
+        $is_align_right = true;
+        $label = 'USD';
+        return compact('sign', 'code', 'is_align_right', 'label');
     }
     //
 }
