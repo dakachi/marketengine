@@ -39,7 +39,13 @@ class ME_Case_List extends WP_List_Table
         $sql = "SELECT * FROM {$wpdb->prefix}marketengine_message_item WHERE post_type = 'dispute'";
 
         if (!empty($_REQUEST['post_status'])) {
-            $sql .= ' AND post_status = "' . esc_sql($_REQUEST['post_status']) .'"';
+            if($_REQUEST['post_status'] != 'all') {
+                $sql .= ' AND post_status = "' . esc_sql($_REQUEST['post_status']) .'"';    
+            } 
+        }
+
+        if(!isset($_REQUEST['post_status']) || empty($_REQUEST['post_status'])) {
+            $sql .= ' AND post_status = "me-escalated"';    
         }
 
         if (!empty($_REQUEST['orderby'])) {
@@ -88,6 +94,25 @@ class ME_Case_List extends WP_List_Table
 
         return $wpdb->get_var($sql);
     }
+
+    /**
+     * Returns the count of records by status in the database.
+     *
+     * @return null|string
+     */
+    public static function status_count()
+    {
+        global $wpdb;
+
+        $sql = "SELECT post_status, COUNT(*) as count FROM {$wpdb->prefix}marketengine_message_item WHERE post_type = 'dispute' Group By post_status";
+
+        $results = $wpdb->get_results($sql, ARRAY_A);
+        $counts = array();
+        foreach ($results as $key => $value) {
+            $counts[$value['post_status']] = $value['count'];
+        }
+        return $counts;
+    }   
 
     /** Text displayed when no customer data is available */
     public function no_items()
@@ -351,14 +376,48 @@ class ME_Case_List extends WP_List_Table
     }
 
     protected function get_views() { 
-	    $status_links = array(
-	        "all"       => __("<a href='".remove_query_arg('post_status')."'>All</a>",'enginethemes'),
-            "escalated" => __("<a class='current' href='".add_query_arg('post_status', 'me-escalated')."'>Escalated</a>",'enginethemes'),
-	        "open" => __("<a href='".add_query_arg('post_status', 'me-open')."'>Open</a>",'enginethemes'),
-            "waiting" => __("<a href='".add_query_arg('post_status', 'me-waiting')."'>Request Close</a>",'enginethemes'),
-            "closed" => __("<a href='".add_query_arg('post_status', 'me-closed')."'>Closed</a>",'enginethemes'),
-            "resolved" => __("<a href='".add_query_arg('post_status', 'me-resolved')."'>Resolved</a>",'enginethemes'),
-	    );
+        $status = me_dispute_statuses();
+
+        $counts = self::status_count();
+        $record_counts = self::record_count();
+
+        $all_class = '';
+        if(isset($_REQUEST['post_status']) && $_REQUEST['post_status'] == 'all') {
+            $all_class= 'class="current"';
+        }
+
+        $status_links = array(
+            "all"       => __('<a '.$all_class.'  href="'.add_query_arg('post_status', 'all').'">All <span class="count">('. $record_counts . ')</span></a>','enginethemes')
+        );
+
+        $escalate_class = '';
+        if(!isset($_REQUEST['post_status']) || $_REQUEST['post_status'] == 'me-escalated') {
+            $escalate_class= 'class="current"';
+        }
+
+        $count = 0;
+        if(isset($counts['me-escalated'])) {
+            $count = $counts['me-escalated'];
+        }
+
+        $status_links['me-escalated'] = '<a '.$escalate_class.' href="'.remove_query_arg('post_status').'"">'.__("Escalated", "enginethemes") .' <span class="count">('. $count . ')</span></a>';
+        unset($status['me-escalated']);
+
+        $class = '';
+        foreach ($status as $key => $value) {
+            if(isset($_REQUEST['post_status']) && $_REQUEST['post_status'] == $key) {
+                $class = 'class="current"';
+            }
+
+            $count = 0;
+            if(isset($counts[$key])) {
+                $count = $counts[$key];
+            }
+
+            $status_links[$key] = '<a '.$class.' href="'.add_query_arg('post_status', $key).'"">' . $value .' <span class="count">('. $count . ')</span></a>';
+            $class = '';
+        }
+
 	    return $status_links;
 	}
 }
