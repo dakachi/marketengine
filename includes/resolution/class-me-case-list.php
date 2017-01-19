@@ -435,7 +435,7 @@ class ME_Case_Screen
     public function __construct()
     {
         add_filter('set-screen-option', array(__CLASS__, 'set_screen'), 10, 3);
-        add_action('admin_menu', array($this, 'plugin_menu'));
+        add_action('admin_menu', array($this, 'plugin_menu'), 21);
     }
 
     public static function set_screen($status, $option, $value)

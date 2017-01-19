@@ -126,7 +126,10 @@ function marketengine_option_menu() {
         null,
         28
     );
+}
+add_action('admin_menu', 'marketengine_option_menu');
 
+function marketengine_reports_menu() {
     add_submenu_page(
         'marketengine',
         __("Reports", "enginethemes"),
@@ -135,7 +138,10 @@ function marketengine_option_menu() {
         'me-reports',
         'marketengine_report_view'
     );
+}
+add_action('admin_menu', 'marketengine_reports_menu', 20);
 
+function marketengine_settings_menu() {
     add_submenu_page(
         'marketengine',
         __("Settings", "enginethemes"),
@@ -144,7 +150,11 @@ function marketengine_option_menu() {
         'me-settings',
         'marketengine_option_view'
     );
+}
+add_action('admin_menu', 'marketengine_settings_menu', 25);
 
+
+function marketengine_setupwizard_menu() {
     add_submenu_page(
         'marketengine',
         __("Setup Wizard", "enginethemes"),
@@ -154,7 +164,7 @@ function marketengine_option_menu() {
         null
     );
 }
-add_action('admin_menu', 'marketengine_option_menu');
+add_action('admin_menu', 'marketengine_setupwizard_menu', 30);
 
 /**
  * Prints styles to admin head.
