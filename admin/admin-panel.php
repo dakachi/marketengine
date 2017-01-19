@@ -236,9 +236,9 @@ add_action('admin_enqueue_scripts', 'marketengine_load_admin_option_script_css')
  * @since 1.0
  */
 function marketengine_option_header() {
-    marketengine_option_notices();
     ?>
 <div class="wrap">
+<?php marketengine_option_notices(); ?>
 <div class="marketengine-admin">
     <div class="me-header">
         <span class="pull-left"><?php _e("MARKETENGINE", "enginethemes");?></span>
