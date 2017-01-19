@@ -38,6 +38,10 @@ class ME_Case_List extends WP_List_Table
 
         $sql = "SELECT * FROM {$wpdb->prefix}marketengine_message_item WHERE post_type = 'dispute'";
 
+        if (!empty($_REQUEST['post_status'])) {
+            $sql .= ' AND post_status = "' . esc_sql($_REQUEST['post_status']) .'"';
+        }
+
         if (!empty($_REQUEST['orderby'])) {
             $sql .= ' ORDER BY ' . esc_sql($_REQUEST['orderby']);
             $sql .= !empty($_REQUEST['order']) ? ' ' . esc_sql($_REQUEST['order']) : ' ASC';
@@ -77,6 +81,10 @@ class ME_Case_List extends WP_List_Table
         global $wpdb;
 
         $sql = "SELECT COUNT(*) FROM {$wpdb->prefix}marketengine_message_item WHERE post_type = 'dispute'";
+
+        if (!empty($_REQUEST['post_status'])) {
+            $sql .= ' AND post_status = ' . esc_sql($_REQUEST['post_status']);
+        }
 
         return $wpdb->get_var($sql);
     }
@@ -344,9 +352,12 @@ class ME_Case_List extends WP_List_Table
 
     protected function get_views() { 
 	    $status_links = array(
-	        "all"       => __("<a href='#'>All</a>",'enginethemes'),
-	        "published" => __("<a href='#'>Published</a>",'enginethemes'),
-	        "trashed"   => __("<a href='#'>Trashed</a>",'enginethemes')
+	        "all"       => __("<a href='".remove_query_arg('post_status')."'>All</a>",'enginethemes'),
+            "escalated" => __("<a class='current' href='".add_query_arg('post_status', 'me-escalated')."'>Escalated</a>",'enginethemes'),
+	        "open" => __("<a href='".add_query_arg('post_status', 'me-open')."'>Open</a>",'enginethemes'),
+            "waiting" => __("<a href='".add_query_arg('post_status', 'me-waiting')."'>Request Close</a>",'enginethemes'),
+            "closed" => __("<a href='".add_query_arg('post_status', 'me-closed')."'>Closed</a>",'enginethemes'),
+            "resolved" => __("<a href='".add_query_arg('post_status', 'me-resolved')."'>Resolved</a>",'enginethemes'),
 	    );
 	    return $status_links;
 	}
