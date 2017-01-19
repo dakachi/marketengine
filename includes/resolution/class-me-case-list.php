@@ -97,11 +97,7 @@ class ME_Case_List extends WP_List_Table
      */
     public function column_default($item, $column_name)
     {
-        $item_detail = '';
-        $item_detail .= '<tr class="me-case-detail" id="case-'. $item['ID'] .'">'; 
-        $item_detail .= '<th class="check-column"></th>';
-        $item_detail .= '<td colspan="4">'. $this->table_detail_case($item) .'</td>';
-        $item_detail .= '</tr>';
+
 
         switch ($column_name) {
             case 'case':
@@ -116,9 +112,17 @@ class ME_Case_List extends WP_List_Table
              	echo date_i18n( get_option( 'date_format' ), strtotime($item['post_date']) );
              	break;
             case 'actions' :
-            	echo '<span class="me-action-case" data-case-id="case-'. $item['ID'] .'"><i class="icon-me-eye"></i><i class="icon-me-eye-slash"></i></span>' . $item_detail;
-            	?>
-            	<?php 
+
+                
+            	echo '<span class="me-action-case" data-case-id="case-'. $item['ID'] .'"><i class="icon-me-eye"></i><i class="icon-me-eye-slash"></i></span>';
+                
+                echo '<tr class="me-case-detail" id="case-'. $item['ID'] .'">';
+                echo '<th class="check-column"></th>';
+                echo '<td colspan="4">';
+                    $this->table_detail_case($item);
+                echo '</td>';
+                echo '</tr>';
+
             	break;
             case 'issue' :
             	echo '<span>' .__("Dispute Order", "enginethemes"). '</span>';
@@ -134,45 +138,62 @@ class ME_Case_List extends WP_List_Table
      * @return mixed
      */
     public function table_detail_case($item) {
-        $tb = '<table class="me-table-case-detail">';
-        $tb .= '<tr>';
-        $tb .= '<td class="me-td-case-detail">Open date:</td>';
-        $tb .= '<td>'. date_i18n( get_option( 'date_format' ), strtotime($item['post_date']) ) .'</td>';
-        $tb .= '</tr>';
-        $tb .= '<tr>'; 
-        $tb .= '<td class="me-td-case-detail">Opened By:</td>';
-        $tb .= '<td>'. get_the_author_meta( 'display_name', $item['sender'] ) .'</td>';
-        $tb .= '</tr>';
-        $tb .= '<tr>'; 
-        $tb .= '<td class="me-td-case-detail">Listing:</td>';
-        $tb .= '<td>'. get_the_author_meta( 'display_name', $item['sender'] ) .'</td>';
-        $tb .= '</tr>';
-        $tb .= '<tr>'; 
-        $tb .= '<td class="me-td-case-detail">Problem:</td>';
-        $tb .= '<td>'. get_the_author_meta( 'display_name', $item['sender'] ) .'</td>';
-        $tb .= '</tr>';
-        $tb .= '<tr>'; 
-        $tb .= '<td class="me-td-case-detail">Buyer wants to:</td>';
-        $tb .= '<td>'. get_the_author_meta( 'display_name', $item['sender'] ) .'</td>';
-        $tb .= '</tr>';
-        $tb .= '<tr>'; 
-        $tb .= '<td class="me-td-case-detail">Order ID:</td>';
-        $tb .= '<td>'. get_the_author_meta( 'display_name', $item['sender'] ) .'</td>';
-        $tb .= '</tr>';
-        $tb .= '<tr>'; 
-        $tb .= '<td class="me-td-case-detail">Total amount:</td>';
-        $tb .= '<td>'. get_the_author_meta( 'display_name', $item['sender'] ) .'</td>';
-        $tb .= '</tr>';
-        $tb .= '<tr>'; 
-        $tb .= '<td class="me-td-case-detail">Order date:</td>';
-        $tb .= '<td>'. get_the_author_meta( 'display_name', $item['sender'] ) .'</td>';
-        $tb .= '</tr>';
-        $tb .= '<tr>'; 
-        $tb .= '<td class="me-td-case-detail">Related party:</td>';
-        $tb .= '<td>'. get_the_author_meta( 'display_name', $item['sender'] ) .'</td>';
-        $tb .= '</tr>';
-        $tb .= '</table>';
-        return $tb;
+        $transaction = me_get_order($item['post_parent']);
+        $listing_items = $transaction->get_listing_items();
+        $listing_item = array_pop($listing_items);
+        ?>
+        <table class="me-table-case-detail">
+            <tr>
+                <td class="me-td-case-detail"><?php _e( "Open date:", "enginethemes" ) ?></td>
+                <td><?php echo date_i18n( get_option( 'date_format' ), strtotime($item['post_date']) ); ?></td>
+            </tr>
+            <tr>
+                <td class="me-td-case-detail"><?php _e("Opened By:", "enginethemes"); ?></td>
+                <td><?php echo get_the_author_meta( 'display_name', $item['sender'] ); ?></td>
+            </tr>
+            <tr>
+                <td class="me-td-case-detail"><?php _e("Listing:", "enginethemes"); ?></td>
+                <td>
+                    <a href="<?php echo get_permalink($listing_item['ID']); ?>">
+                        <?php echo esc_html( $listing_item['title'] ); ?>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td class="me-td-case-detail"><?php _e("Problem:", "enginethemes"); ?></td>
+                <td><?php echo me_rc_dispute_problem_text($item['ID']); ?></td>
+            </tr>
+            <tr>
+                <td class="me-td-case-detail"><?php _e("Buyer wants to:", "enginethemes"); ?></td>
+                <td><?php echo me_rc_case_expected_solution_label($item['ID']); ?></td>
+            </tr>
+            <tr>
+                <td class="me-td-case-detail"><?php _e("Order ID:", "enginethemes"); ?></td>
+                <td>
+                    <a href="<?php echo $transaction->get_order_detail_url(); ?>">
+                        #<?php echo $transaction->ID; ?>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td class="me-td-case-detail"><?php _e("Total amount:", "enginethemes"); ?></td>
+                <td><?php echo me_price_format($transaction->get_total()); ?></td>
+            </tr>
+            <tr>
+                <td class="me-td-case-detail"><?php _e("Order date:", "enginethemes"); ?></td>
+                <td><?php echo date_i18n(get_option('date_format'), strtotime($transaction->post_date)); ?></p></td>
+            </tr>
+            <tr>
+                <td class="me-td-case-detail"><?php _e("Related party:", "enginethemes"); ?></td>
+                <td><?php echo get_the_author_meta( 'display_name', $item['receiver'] ); ?></td>
+            </tr>
+            <tr>
+                <td>
+                <a href="<?php echo me_rc_dispute_link($item['ID']); ?>"><?php _e('View Details', 'enginethemes'); ?></a>
+                </td>
+            </tr>
+        </table>
+        <?php 
     }
 
     /**

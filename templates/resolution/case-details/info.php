@@ -19,7 +19,7 @@ $item = array_pop($items);
                     <p>
                         <span><?php _e("Listing:", "enginethemes");?></span>
                         <a href="<?php echo get_permalink($item['ID']); ?>">
-                            <?php echo $item['title']; ?>
+                            <?php echo esc_html( $item['title'] ); ?>
                         </a>
                     </p>
                     <p>
