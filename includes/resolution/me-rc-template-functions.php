@@ -10,10 +10,16 @@ if (!defined('ABSPATH')) {
 function me_rc_dispute_button($transaction) {
 	$dispute_time_limit = $transaction->get_dispute_time_limit() ;
 	if ( $transaction->post_author == get_current_user_id() && 'me-pending' !== $transaction->post_status && $dispute_time_limit) {
-		// echo '<div class="me-hidden-sm me-hidden-xs">';
 		me_get_template('resolution/order/dispute-button', array('transaction' => $transaction, 'dispute_time_limit' => $dispute_time_limit));
-		// echo '</div>';
 	}
+
+	if('me-resolved' === $transaction->post_status) {
+		$case = new ME_Message_Query(array('post_type' => 'dispute', 'post_parent' => $transaction->id));
+		$case = array_pop($case->posts);
+		$case_id = $case->ID;
+		me_get_template('resolution/order/resolution-link', array('transaction' => $transaction , 'case' => $case_id));
+	}
+
 }
 add_action( 'marketengine_order_extra_content', 'me_rc_dispute_button', 11);
 
@@ -34,9 +40,7 @@ function me_rc_center_link($transaction) {
  * @since 1.1
  */
 function me_rc_center_desktop_link($transaction) {
-	// echo '<div class="me-hidden-sm me-hidden-xs">';
 	me_rc_center_link($transaction);
-	// echo '</div>';
 }
 add_action( 'marketengine_order_extra_content', 'me_rc_center_desktop_link', 11);
 
