@@ -6,9 +6,9 @@ if (!defined('ABSPATH')) {
 
 if('me-resolved' === $transaction->post_status) : ?>
 
-	<div class="me-orderwarning-info">
+	<div class="me-transaction-dispute">
 		<p><?php echo __('Dispute has already been resolved. You can view the history of dispute.', 'enginethemes'); ?></p>
-		<a href="<?php echo me_rc_dispute_link($case); ?>" class="me-resolution-center"><?php _e('View', 'enginethemes'); ?></a>
+		<a href="<?php echo me_rc_dispute_link($case); ?>"><?php _e('View', 'enginethemes'); ?></a>
 	</div>
 
 <?php else : ?>
