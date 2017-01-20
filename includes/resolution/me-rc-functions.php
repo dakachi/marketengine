@@ -195,9 +195,11 @@ function me_rc_dispute_case_query($query)
         'receiver'  => get_current_user_id(),
     );
 
-    $args  = array_merge(apply_filters('me_filter_dispute_case', $query), $args);
-    $query = new ME_Message_Query($args);
+    $args = wp_parse_args( $query, $args );
 
+    $args  = array_merge(apply_filters('me_filter_dispute_case', $query), $args); 
+    $query = new ME_Message_Query($args);
+    
     return $query;
 }
 

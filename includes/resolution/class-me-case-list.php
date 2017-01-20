@@ -36,29 +36,31 @@ class ME_Case_List extends WP_List_Table
 
         global $wpdb;
 
-        $sql = "SELECT * FROM {$wpdb->prefix}marketengine_message_item WHERE post_type = 'dispute'";
+        $args = array('sender' => '', 'receiver' => '', 'paged' => $page_number, 'showposts' => $per_page);        
+
+        if (!empty($_REQUEST['orderby'])) {
+            $args['orderby'] = esc_sql($_REQUEST['orderby']);
+            $args['order'] =  !empty($_REQUEST['order']) ? esc_sql($_REQUEST['order']) : ' ASC';
+        }
+
+
+        if(isset($_REQUEST['s']) && $_REQUEST['s'] != '') {
+            $args['keyword'] = esc_sql($_REQUEST['s']);
+        }
 
         if (!empty($_REQUEST['post_status'])) {
             if($_REQUEST['post_status'] != 'all') {
-                $sql .= ' AND post_status = "' . esc_sql($_REQUEST['post_status']) .'"';    
+                $args['status'] = esc_sql($_REQUEST['post_status']);    
             } 
         }
 
         if(!isset($_REQUEST['post_status']) || empty($_REQUEST['post_status'])) {
-            $sql .= ' AND post_status = "me-escalated"';    
+            $args['status'] = 'me-escalated';
         }
 
-        if (!empty($_REQUEST['orderby'])) {
-            $sql .= ' ORDER BY ' . esc_sql($_REQUEST['orderby']);
-            $sql .= !empty($_REQUEST['order']) ? ' ' . esc_sql($_REQUEST['order']) : ' ASC';
-        }
+        $query = me_rc_dispute_case_query($args);
 
-        $sql .= " LIMIT $per_page";
-        $sql .= ' OFFSET ' . ($page_number - 1) * $per_page;
-
-        $result = $wpdb->get_results($sql, 'ARRAY_A');
-
-        return $result;
+        return (array)$query->posts;
     }
 
     /**
@@ -86,13 +88,24 @@ class ME_Case_List extends WP_List_Table
     {
         global $wpdb;
 
-        $sql = "SELECT COUNT(*) FROM {$wpdb->prefix}marketengine_message_item WHERE post_type = 'dispute'";
-
-        if (!empty($_REQUEST['post_status'])) {
-            $sql .= ' AND post_status = ' . esc_sql($_REQUEST['post_status']);
+        $args = array('sender' => '', 'receiver' => '');
+        if(isset($_REQUEST['s']) && $_REQUEST['s'] != '') {
+            $args['keyword'] = esc_sql($_REQUEST['s']);
         }
 
-        return $wpdb->get_var($sql);
+        if (!empty($_REQUEST['post_status'])) {
+            if($_REQUEST['post_status'] != 'all') {
+                $args['status'] = esc_sql($_REQUEST['post_status']);    
+            } 
+        }
+
+        if(!isset($_REQUEST['post_status']) || empty($_REQUEST['post_status'])) {
+            $args['status'] = 'me-escalated';
+        }
+
+        $query = me_rc_dispute_case_query($args);
+
+        return $query->found_posts;
     }
 
     /**
@@ -108,8 +121,10 @@ class ME_Case_List extends WP_List_Table
 
         $results = $wpdb->get_results($sql, ARRAY_A);
         $counts = array();
+        $counts['all'] = 0;
         foreach ($results as $key => $value) {
             $counts[$value['post_status']] = $value['count'];
+            $counts['all'] += $value['count'];
         }
         return $counts;
     }   
@@ -131,7 +146,7 @@ class ME_Case_List extends WP_List_Table
     public function column_default($item, $column_name)
     {
 
-
+        $item = (array)$item;
         switch ($column_name) {
             case 'case':
 	            $case_link = '<a href="'. me_rc_dispute_link($item['ID']) . '">#' .$item['ID'] .'</a>';
@@ -239,7 +254,7 @@ class ME_Case_List extends WP_List_Table
     public function column_cb($item)
     {
         return sprintf(
-            '<input type="checkbox" name="bulk-delete[]" value="%s" />', $item['ID']
+            '<input type="checkbox" name="bulk-delete[]" value="%s" />', $item->ID
         );
     }
 
@@ -379,7 +394,6 @@ class ME_Case_List extends WP_List_Table
         $status = me_dispute_statuses();
 
         $counts = self::status_count();
-        $record_counts = self::record_count();
 
         $all_class = '';
         if(isset($_REQUEST['post_status']) && $_REQUEST['post_status'] == 'all') {
@@ -387,7 +401,7 @@ class ME_Case_List extends WP_List_Table
         }
 
         $status_links = array(
-            "all"       => __('<a '.$all_class.'  href="'.add_query_arg('post_status', 'all').'">All <span class="count">('. $record_counts . ')</span></a>','enginethemes')
+            "all"       => __('<a '.$all_class.'  href="'.add_query_arg('post_status', 'all').'">All <span class="count">('. $counts['all'] . ')</span></a>','enginethemes')
         );
 
         $escalate_class = '';
@@ -490,7 +504,7 @@ class ME_Case_Screen
 					<?php
 						$this->cases_obj->search_box('search', 'search_id');
                         if ( ! empty( $_REQUEST['post_status'] ) ) {
-                            echo '<input type="hidden" name="orderby" value="' . esc_attr( $_REQUEST['post_status'] ) . '" />';    
+                            echo '<input type="hidden" name="post_status" value="all" />';    
                         }
                         echo '<input type="hidden" name="page" value="me-dispute-cases" />';
 
