@@ -271,8 +271,9 @@ class ME_Inquiry_Form
      */
     public static function filter_message($content)
     {
-        $content = nl2br($content);
+        $content = nl2br(esc_html($content));
 
+        $content = '<p>' . $content . '</p>';
         $url     = '~(?:(https?)://([^\s<]+)|(www\.[^\s<]+?\.[^\s<]+))(?<![\.,:])~i';
         $content = preg_replace($url, '<a href="$0" rel="noopener noreferrer" target="_blank"  title="$0">$0</a>', $content);
 

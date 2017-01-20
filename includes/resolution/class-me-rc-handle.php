@@ -105,7 +105,7 @@ class ME_RC_Form_Handle
         }
 
         $message_data = array(
-            'post_content' => '<p>' . wp_kses_post($data['post_content']) . '</p>',
+            'post_content' => wp_kses_post($data['post_content']),
             'post_title'   => 'Message case #' . $case->ID,
             'post_type'    => 'message',
             'receiver'     => $receiver_id,
@@ -163,6 +163,7 @@ class ME_RC_Form_Handle
     {
         $data['post_type'] = 'message';
         if (!empty($data['dispute_file'])) {
+            $data['post_content'] .= "\n";
             $data['post_content'] .= '[me_message_file id=' . join(',', $data['dispute_file']) . ' ]';
         }
 
