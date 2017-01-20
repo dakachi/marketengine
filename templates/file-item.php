@@ -6,7 +6,9 @@ if (!defined('ABSPATH')) {
 
 $file_size =  '192 KB';
 $file_icon = '';
-
+?>
+<div>
+<?php 
 switch ($file_type['ext']) {
 	case 'jpeg':
 	case 'png':
@@ -18,7 +20,8 @@ switch ($file_type['ext']) {
 			<?php echo wp_get_attachment_image( $file_id, 'thumbnail'); ?>
 		</a>
 		<?php
-		$file_icon = '<i class="icon-me-file-image" ></i>';
+		// $file_icon = '<i class="icon-me-file-image" ></i>';
+		return;
 		break;
 	case 'pdf' :
 		$file_icon  = '<i class="icon-me-file-pdf"></i>';
@@ -39,4 +42,5 @@ switch ($file_type['ext']) {
 		break;
 }
 ?>
-<?php echo '<a href="'. $url .'" class="me-mess-file-item" download="'.$name.'">'. $file_icon .'<span class="me-mess-name">'. $name .'</span><span class="me-mess-size">'. me_format_size_units($size) .'</span><span class="me-mess-download"><i class="icon-me-download"></i></span></a>'; ?>
+<?php echo '<a href="'. $url .'" class="me-mess-file-item file-'.$file_type['ext'].'" download="'.$name.'">'. $file_icon .'<span class="me-mess-name">'. $name .'</span><span class="me-mess-size">'. me_format_size_units($size) .'</span><span class="me-mess-download"><i class="icon-me-download"></i></span></a>'; ?>
+</div>

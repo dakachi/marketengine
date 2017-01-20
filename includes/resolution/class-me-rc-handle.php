@@ -105,7 +105,7 @@ class ME_RC_Form_Handle
         }
 
         $message_data = array(
-            'post_content' => wp_kses_post($data['post_content']),
+            'post_content' => '<p>' . wp_kses_post($data['post_content']) . '</p>',
             'post_title'   => 'Message case #' . $case->ID,
             'post_type'    => 'message',
             'receiver'     => $receiver_id,
