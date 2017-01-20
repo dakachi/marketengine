@@ -1,4 +1,10 @@
 <?php
+/**
+ * The template render file info in message box: inquiry, dispute
+ * This template can be overridden by copying it to yourtheme/marketengine/message-file-item.php.
+ * @package     MarketEngine/Templates
+ * @version     1.0
+ */
 // Exit if accessed directly.
 if (!defined('ABSPATH')) {
     exit;

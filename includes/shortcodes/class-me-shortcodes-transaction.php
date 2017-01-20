@@ -95,7 +95,7 @@ class ME_Shortcodes_Transaction
                     $file_url  = wp_get_attachment_url($file_id);
 
                     me_get_template(
-                        'file-item',
+                        'message-file-item',
                         array(
                             'file_id'   => $file_id,
                             'name'      => $file_name,
