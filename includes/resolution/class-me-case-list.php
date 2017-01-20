@@ -482,19 +482,22 @@ class ME_Case_Screen
      */
     public function plugin_settings_page()
     {
+        $this->cases_obj->prepare_items();
         ?>
 			<div class="wrap">
 				<h2><?php _e("Cases", "enginethemes")?></h2>
-				
-				<?php $this->cases_obj->views(); ?>
-				<form method="post">
+				<form method="get">
 					<?php
-						$this->cases_obj->prepare_items();
+						$this->cases_obj->search_box('search', 'search_id');
+                        if ( ! empty( $_REQUEST['post_status'] ) ) {
+                            echo '<input type="hidden" name="orderby" value="' . esc_attr( $_REQUEST['post_status'] ) . '" />';    
+                        }
+                        echo '<input type="hidden" name="page" value="me-dispute-cases" />';
+
+                        $this->cases_obj->views(); 
         				$this->cases_obj->display();
 					?>
 				</form>
-							
-					
 			</div>
 		<?php
 	}

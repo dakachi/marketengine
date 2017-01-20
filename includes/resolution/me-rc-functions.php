@@ -180,19 +180,6 @@ function me_rc_case_expected_solution_label($case_id)
 }
 
 /**
- * Check is user dispute the order or not
- *
- * @param int $order_id The order id
- * @since 1.1
- *
- * @return bool
- */
-function is_order_disputed($order_id)
-{
-
-}
-
-/**
  * Returns the dispute case query.
  *
  * @since     1.1.0
