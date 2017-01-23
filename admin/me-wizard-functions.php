@@ -317,7 +317,7 @@ function marketengine_add_sample_listing()
 
     $listing_number = $_POST['number'];
 
-    $listing = include ME_PLUGIN_PATH . '/sample-data/listing/listing-' . $listing_number . '.php';
+    $listing = include MARKETENGINE_PATH . '/sample-data/listing/listing-' . $listing_number . '.php';
 
     add_filter('posts_where', 'me_setup_sample_data_post_where', 10, 2);
     $query = new WP_Query(array(
