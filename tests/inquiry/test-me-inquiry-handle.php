@@ -54,7 +54,8 @@ class Tests_ME_Inquiry_Handle extends WP_UnitTestCase {
     public function test_me_handle_inquiry() {
     	wp_set_current_user($this->user_2);
     	$id = ME_Inquiry_Handle::inquiry($this->inquiry_data);
-        $this->assertInternalType('integer', absint( $id ));
+        $message = me_get_message($id);
+        $this->assertInstanceOf(ME_Message::class, $message);
     }
 
     public function test_me_handle_inquiry_yourself() {
