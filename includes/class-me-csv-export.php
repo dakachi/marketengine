@@ -23,11 +23,11 @@ class ME_CSV_Export {
 			}
 
             if (!empty($_GET['from_date'])) {
-                $filename .= '_' . $_GET['from_date'];
+                $filename .= '_' . sanitize_file_name( $_GET['from_date'] );
             }
 
             if (!empty($_GET['to_date'])) {
-                $filename .= '_' . $_GET['to_date'];
+                $filename .= '_' . sanitize_file_name($_GET['to_date']);
             }
 
 			header("Pragma: public");
@@ -66,7 +66,7 @@ class ME_CSV_Export {
 
 	public function generate_orders() {
 
-		$args = $_REQUEST;
+		$args = array_map('esc_sql', $_REQUEST);
 
 		$data = me_order_report_data($args);
 
@@ -82,7 +82,7 @@ class ME_CSV_Export {
 	}
 
 	public function generate_transactions() {
-		$args = $_REQUEST;
+		$args = array_map('esc_sql', $_REQUEST);
 
 		$data = me_transaction_report_data($args);
 

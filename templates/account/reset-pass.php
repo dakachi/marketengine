@@ -34,8 +34,8 @@ do_action('marketengine_before_reset_password_form');
 			</div>
 		</div>
 
-		<input type="hidden" name="key" value="<?php echo $_GET['key']; ?>" />
-		<input type="hidden" name="user_login" value="<?php echo $_GET['login']; ?>" />
+		<input type="hidden" name="key" value="<?php echo esc_attr( $_GET['key'] ); ?>" />
+		<input type="hidden" name="user_login" value="<?php echo esc_attr( $_GET['login'] ); ?>" />
 		<?php wp_nonce_field('me-reset_password', "_wpnonce");?>
 
 		<div class="marketengine-group-field me-submit-reset">

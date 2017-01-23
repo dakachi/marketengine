@@ -217,7 +217,7 @@ function me_render_field_option($options) {
 
 function marketengine_cf_pagination($args) {
     $big = 999999999;
-    $current_page = empty($_REQUEST['paged']) ? 1 : $_REQUEST['paged'];
+    $current_page = empty($_REQUEST['paged']) ? 1 : absint( $_REQUEST['paged'] );
     echo paginate_links( array(
         'base' => add_query_arg( 'paged', '%#%' ),
         'format' => '',

@@ -6,12 +6,12 @@ if (!defined('ABSPATH')) {
 
 function me_add_user_meta($meta) {
     if (isset($_POST['location'])) {
-        $meta['location'] = $_POST['location'];
-        $meta['paypal_email'] = $_POST['paypal_email'];
+        $meta['location'] = sanitize_text_field( $_POST['location'] );
+        $meta['paypal_email'] = sanitize_email( $_POST['paypal_email'] );
     }
 
     if(!empty($_POST['user_avatar'])) {
-    	$meta['user_avatar'] = esc_attr( $_POST['user_avatar'] );
+    	$meta['user_avatar'] = absint( $_POST['user_avatar'] );
     }
 
     return $meta;

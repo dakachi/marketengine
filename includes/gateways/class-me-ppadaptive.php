@@ -575,7 +575,7 @@ class ME_PPAdaptive_Request {
      * @return void
      */
     public function complete_payment() {
-        $order_id = get_query_var('order-id');
+        $order_id = absint( get_query_var('order-id') );
         if (!$order_id) {
             return;
         }

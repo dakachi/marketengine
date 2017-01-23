@@ -139,7 +139,7 @@ class ME_Inquiry_Form
 
             $redirect = me_get_page_permalink('inquiry');
 
-            $id = me_get_current_inquiry($_POST['send_inquiry']);
+            $id = me_get_current_inquiry(absint( $_POST['send_inquiry'] ));
 
             if (!$id) {
                 $result = ME_Inquiry_Handle::inquiry($_POST);
@@ -182,12 +182,12 @@ class ME_Inquiry_Form
     public static function fetch_messages()
     {
         if (!empty($_GET['parent']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'me-inquiry-message')) {
-            $parent  = me_get_message($_GET['parent']);
+            $parent  = me_get_message(absint( $_GET['parent'] ));
             $user_id = get_current_user_id();
             if ($parent->receiver != $user_id && $parent->sender != $user_id) {
                 wp_send_json(array('success' => false));
             }
-            $messages = me_get_messages(array('post_type' => 'message', 'showposts' => 12, 'post_parent' => $_GET['parent'], 'paged' => $_GET['paged']));
+            $messages = me_get_messages(array('post_type' => 'message', 'showposts' => 12, 'post_parent' => absint( $_GET['parent'] ), 'paged' => absint( $_GET['paged'] )));
             $messages = array_reverse($messages);
             ob_start();
             foreach ($messages as $key => $message) {
@@ -206,9 +206,9 @@ class ME_Inquiry_Form
     {
         if (!empty($_GET['listing'])) {
             $user_id = get_current_user_id();
-            $listing = get_post($_GET['listing']);
+            $listing = get_post(absint( $_GET['listing'] ));
 
-            $paged = $_GET['paged'];
+            $paged = absint( $_GET['paged'] );
 
             if ($listing->post_author != $user_id) {
                 wp_send_json(array('success' => false));
@@ -219,8 +219,8 @@ class ME_Inquiry_Form
                 'post_parent' => $listing->ID,
                 'post_type'   => 'inquiry',
                 'showposts'   => 12,
-                'inquiry_id'  => $_GET['inquiry_id'],
-                's'           => $_GET['s'],
+                'inquiry_id'  => absint( $_GET['inquiry_id'] ),
+                's'           => esc_sql( $_GET['s'] ),
             );
             $contact_list = ME_Inquiry_Handle::get_contact_list($args);
 
@@ -235,7 +235,7 @@ class ME_Inquiry_Form
     {
         if (isset($_GET['s']) && !empty($_GET['listing_id'])) {
             $user_id = get_current_user_id();
-            $listing = get_post($_GET['listing_id']);
+            $listing = get_post(absint( $_GET['listing_id'] ));
 
             $paged = 1;
 
@@ -248,8 +248,8 @@ class ME_Inquiry_Form
                 'post_parent' => $listing->ID,
                 'post_type'   => 'inquiry',
                 'showposts'   => 12,
-                'inquiry_id'  => $_GET['inquiry_id'],
-                's'           => $_GET['s'],
+                'inquiry_id'  => absint( $_GET['inquiry_id'] ),
+                's'           => esc_sql( $_GET['s'] ),
             );
             $contact_list = ME_Inquiry_Handle::get_contact_list($args);
 
