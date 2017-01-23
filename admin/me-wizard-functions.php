@@ -225,7 +225,7 @@ function marketengine_add_sample_user($user_data)
         update_user_meta($user_id, 'is_sample_data', 'sample-data');
 
         $number = rand(1, 5);
-        $img_1  = marketengine_handle_sample_image(ME_PLUGIN_URL . 'sample-data/images/' . $user_data['avatar'], $user_data['user_login']);
+        $img_1  = marketengine_handle_sample_image(MARKETENGINE_URL . 'sample-data/images/' . $user_data['avatar'], $user_data['user_login']);
 
         update_user_meta($user_id, 'user_avatar', $img_1);
 
@@ -354,9 +354,9 @@ function marketengine_add_sample_listing()
         'listing_category' => array($cat_id_1, $cat_id_2),
     );
 
-    $img_1 = marketengine_handle_sample_image(ME_PLUGIN_URL . 'sample-data/images/dell.jpg', $listing['post_name'] . '-1');
-    $img_2 = marketengine_handle_sample_image(ME_PLUGIN_URL . 'sample-data/images/macbook.jpg', $listing['post_name'] . '-2');
-    $img_3 = marketengine_handle_sample_image(ME_PLUGIN_URL . 'sample-data/images/samsung.jpg', $listing['post_name'] . '-3');
+    $img_1 = marketengine_handle_sample_image(MARKETENGINE_URL . 'sample-data/images/dell.jpg', $listing['post_name'] . '-1');
+    $img_2 = marketengine_handle_sample_image(MARKETENGINE_URL . 'sample-data/images/macbook.jpg', $listing['post_name'] . '-2');
+    $img_3 = marketengine_handle_sample_image(MARKETENGINE_URL . 'sample-data/images/samsung.jpg', $listing['post_name'] . '-3');
 
     $listing_gallery = array(
         $img_1,

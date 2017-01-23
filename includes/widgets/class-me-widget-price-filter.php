@@ -70,19 +70,19 @@ class ME_Widget_Price_Filter extends WP_Widget {
             <div class="me-price-filter">
                 <div id="me-range-price" min="<?php echo $min; ?>" max="<?php echo $max; ?>" step="1"></div>
                 <div class="me-row">
-                    <div class="me-col-xs-5"><input class="me-range-price me-range-min" type="number" name="price-min" value="<?php echo !empty($_GET['price-min']) ? $_GET['price-min'] : $min; ?>"></div>
+                    <div class="me-col-xs-5"><input class="me-range-price me-range-min" type="number" name="price-min" value="<?php echo !empty($_GET['price-min']) ? esc_attr( $_GET['price-min'] ) : $min; ?>"></div>
                     <div class="me-col-xs-2 "><span class="me-range-dash">-</span></div>
-                    <div class="me-col-xs-5"><input class="me-range-price me-range-max" type="number" name="price-max" value="<?php echo !empty($_GET['price-max']) ? $_GET['price-max'] : $max; ?>"></div>
+                    <div class="me-col-xs-5"><input class="me-range-price me-range-max" type="number" name="price-max" value="<?php echo !empty($_GET['price-max']) ? esc_attr( $_GET['price-max'] ) : $max; ?>"></div>
                 </div>
             </div>
             <div class="me-filter-button">
                 <input class="me-filter-btn" type="submit" value="<?php _e("Filter", "enginethemes");?>">
             </div>
             <?php if (!empty($_GET['orderby'])): ?>
-                <input type="hidden" name="orderby" value="<?php echo esc_html( $_GET['orderby'] ); ?>" ?>
+                <input type="hidden" name="orderby" value="<?php echo esc_attr( $_GET['orderby'] ); ?>" ?>
             <?php endif;?>
             <?php if (!empty($_GET['keyword'])): ?>
-                <input type="hidden" name="keyword" value="<?php echo esc_html( $_GET['keyword'] ); ?>" ?>
+                <input type="hidden" name="keyword" value="<?php echo esc_attr( $_GET['keyword'] ); ?>" ?>
             <?php endif;?>
             <?php do_action('marketengine_after_price_filter_form'); ?>
         </form>

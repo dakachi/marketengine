@@ -124,12 +124,12 @@ if (!class_exists('MarketEngine')):
 
         private function define()
     {
-            if (!defined('ME_PLUGIN_PATH')) {
-                define('ME_PLUGIN_PATH', dirname(__FILE__));
+            if (!defined('MARKETENGINE_PATH')) {
+                define('MARKETENGINE_PATH', dirname(__FILE__));
             }
 
-            if (!defined('ME_PLUGIN_URL')) {
-                define('ME_PLUGIN_URL', plugin_dir_url(__FILE__));
+            if (!defined('MARKETENGINE_URL')) {
+                define('MARKETENGINE_URL', plugin_dir_url(__FILE__));
             }
         }
 
@@ -141,72 +141,72 @@ if (!class_exists('MarketEngine')):
 
         private function include_files()
     {
-            require_once ME_PLUGIN_PATH . '/includes/class-me-autoloader.php';
+            require_once MARKETENGINE_PATH . '/includes/class-me-autoloader.php';
 
-            require_once ME_PLUGIN_PATH . '/admin/index.php';
-            require_once ME_PLUGIN_PATH . '/includes/custom-fields/index.php';
+            require_once MARKETENGINE_PATH . '/admin/index.php';
+            require_once MARKETENGINE_PATH . '/includes/custom-fields/index.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/class-me-install.php';
-            require_once ME_PLUGIN_PATH . '/includes/class-me-session.php';
-            require_once ME_PLUGIN_PATH . '/includes/class-me-validator.php';
-            require_once ME_PLUGIN_PATH . '/includes/class-me-post-types.php';
-            require_once ME_PLUGIN_PATH . '/includes/class-me-query.php';
-            require_once ME_PLUGIN_PATH . '/includes/class-me-template-loader.php';
-            require_once ME_PLUGIN_PATH . '/includes/class-me-order.php';
-            require_once ME_PLUGIN_PATH . '/includes/class-me-shipping.php';
-            require_once ME_PLUGIN_PATH . '/includes/class-me-options.php';
+            require_once MARKETENGINE_PATH . '/includes/class-me-install.php';
+            require_once MARKETENGINE_PATH . '/includes/class-me-session.php';
+            require_once MARKETENGINE_PATH . '/includes/class-me-validator.php';
+            require_once MARKETENGINE_PATH . '/includes/class-me-post-types.php';
+            require_once MARKETENGINE_PATH . '/includes/class-me-query.php';
+            require_once MARKETENGINE_PATH . '/includes/class-me-template-loader.php';
+            require_once MARKETENGINE_PATH . '/includes/class-me-order.php';
+            require_once MARKETENGINE_PATH . '/includes/class-me-shipping.php';
+            require_once MARKETENGINE_PATH . '/includes/class-me-options.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/class-me-schedule.php';
+            require_once MARKETENGINE_PATH . '/includes/class-me-schedule.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/users/class-me-user-seller.php';
+            require_once MARKETENGINE_PATH . '/includes/users/class-me-user-seller.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/class-me-message-query.php';
-            require_once ME_PLUGIN_PATH . '/includes/class-me-conversation.php';
-            require_once ME_PLUGIN_PATH . '/includes/class-me-csv-export.php';
+            require_once MARKETENGINE_PATH . '/includes/class-me-message-query.php';
+            require_once MARKETENGINE_PATH . '/includes/class-me-conversation.php';
+            require_once MARKETENGINE_PATH . '/includes/class-me-csv-export.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/me-notices-functions.php';
-            require_once ME_PLUGIN_PATH . '/includes/me-template-functions.php';
-            require_once ME_PLUGIN_PATH . '/includes/me-email-functions.php';
-            require_once ME_PLUGIN_PATH . '/includes/me-report-functions.php';
-            require_once ME_PLUGIN_PATH . '/includes/me-listing-functions.php';
-            require_once ME_PLUGIN_PATH . '/includes/me-order-functions.php';
-            require_once ME_PLUGIN_PATH . '/includes/me-payment-functions.php';
-            require_once ME_PLUGIN_PATH . '/includes/me-cart-functions.php';
-            require_once ME_PLUGIN_PATH . '/includes/me-conversation-functions.php';
-            require_once ME_PLUGIN_PATH . '/includes/me-user-functions.php';
-            require_once ME_PLUGIN_PATH . '/includes/me-helper-functions.php';
-            require_once ME_PLUGIN_PATH . '/includes/me-widgets.php';
+            require_once MARKETENGINE_PATH . '/includes/me-notices-functions.php';
+            require_once MARKETENGINE_PATH . '/includes/me-template-functions.php';
+            require_once MARKETENGINE_PATH . '/includes/me-email-functions.php';
+            require_once MARKETENGINE_PATH . '/includes/me-report-functions.php';
+            require_once MARKETENGINE_PATH . '/includes/me-listing-functions.php';
+            require_once MARKETENGINE_PATH . '/includes/me-order-functions.php';
+            require_once MARKETENGINE_PATH . '/includes/me-payment-functions.php';
+            require_once MARKETENGINE_PATH . '/includes/me-cart-functions.php';
+            require_once MARKETENGINE_PATH . '/includes/me-conversation-functions.php';
+            require_once MARKETENGINE_PATH . '/includes/me-user-functions.php';
+            require_once MARKETENGINE_PATH . '/includes/me-helper-functions.php';
+            require_once MARKETENGINE_PATH . '/includes/me-widgets.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/abstracts/class-abstract-form.php';
+            require_once MARKETENGINE_PATH . '/includes/abstracts/class-abstract-form.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/handle-options/class-me-options-handle.php';
+            require_once MARKETENGINE_PATH . '/includes/handle-options/class-me-options-handle.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/handle-authentication/class-me-authentication-form.php';
-            require_once ME_PLUGIN_PATH . '/includes/handle-authentication/class-me-authentication.php';
+            require_once MARKETENGINE_PATH . '/includes/handle-authentication/class-me-authentication-form.php';
+            require_once MARKETENGINE_PATH . '/includes/handle-authentication/class-me-authentication.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/handle-listings/class-me-listing-handle.php';
-            require_once ME_PLUGIN_PATH . '/includes/handle-listings/class-me-listing-status-handle.php';
-            require_once ME_PLUGIN_PATH . '/includes/handle-listings/class-me-listing-handle-form.php';
+            require_once MARKETENGINE_PATH . '/includes/handle-listings/class-me-listing-handle.php';
+            require_once MARKETENGINE_PATH . '/includes/handle-listings/class-me-listing-status-handle.php';
+            require_once MARKETENGINE_PATH . '/includes/handle-listings/class-me-listing-handle-form.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/handle-upload/class-me-upload-handle.php';
+            require_once MARKETENGINE_PATH . '/includes/handle-upload/class-me-upload-handle.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-factory.php';
-            require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing.php';
-            require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-purchasion.php';
-            require_once ME_PLUGIN_PATH . '/includes/listings/class-me-listing-contact.php';
+            require_once MARKETENGINE_PATH . '/includes/listings/class-me-listing-factory.php';
+            require_once MARKETENGINE_PATH . '/includes/listings/class-me-listing.php';
+            require_once MARKETENGINE_PATH . '/includes/listings/class-me-listing-purchasion.php';
+            require_once MARKETENGINE_PATH . '/includes/listings/class-me-listing-contact.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-payment.php';
-            require_once ME_PLUGIN_PATH . '/includes/gateways/class-me-ppadaptive.php';
+            require_once MARKETENGINE_PATH . '/includes/gateways/class-me-payment.php';
+            require_once MARKETENGINE_PATH . '/includes/gateways/class-me-ppadaptive.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/handle-checkout/class-me-checkout-handle.php';
-            require_once ME_PLUGIN_PATH . '/includes/handle-checkout/class-me-checkout-form.php';
+            require_once MARKETENGINE_PATH . '/includes/handle-checkout/class-me-checkout-handle.php';
+            require_once MARKETENGINE_PATH . '/includes/handle-checkout/class-me-checkout-form.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/handle-inquiry/class-me-inquiry-handle.php';
-            require_once ME_PLUGIN_PATH . '/includes/handle-inquiry/class-me-inquiry-form.php';
+            require_once MARKETENGINE_PATH . '/includes/handle-inquiry/class-me-inquiry-handle.php';
+            require_once MARKETENGINE_PATH . '/includes/handle-inquiry/class-me-inquiry-form.php';
 
-            require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-auth.php';
-            require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-listing.php';
-            require_once ME_PLUGIN_PATH . '/includes/shortcodes/class-me-shortcodes-transaction.php';
+            require_once MARKETENGINE_PATH . '/includes/shortcodes/class-me-shortcodes-auth.php';
+            require_once MARKETENGINE_PATH . '/includes/shortcodes/class-me-shortcodes-listing.php';
+            require_once MARKETENGINE_PATH . '/includes/shortcodes/class-me-shortcodes-transaction.php';
         }
 
         /**
@@ -270,11 +270,11 @@ if (!class_exists('MarketEngine')):
     {
             $develop_src = true;
 
-            if (!defined('ME_SCRIPT_DEBUG')) {
-                define('ME_SCRIPT_DEBUG', $develop_src);
+            if (!defined('MARKETENGINE_SCRIPT_DEBUG')) {
+                define('MARKETENGINE_SCRIPT_DEBUG', $develop_src);
             }
 
-            $suffix     = ME_SCRIPT_DEBUG ? '' : '.min';
+            $suffix     = MARKETENGINE_SCRIPT_DEBUG ? '' : '.min';
             $dev_suffix = $develop_src ? '' : '.min';
 
             wp_enqueue_style('me_layout', $this->plugin_url() . '/assets/css/marketengine-layout.css');
@@ -288,7 +288,7 @@ if (!class_exists('MarketEngine')):
             wp_enqueue_script('jquery-ui-tooltip');
             wp_enqueue_script('jquery-ui-sortable'); 
 
-            if (ME_SCRIPT_DEBUG) {
+            if (MARKETENGINE_SCRIPT_DEBUG) {
                 wp_enqueue_script('muploader.js', $this->plugin_url() . "/assets/js/muploader$suffix.js", array('jquery', 'plupload-all'), $this->version, true);
 
                 // lib
@@ -367,14 +367,17 @@ if (!class_exists('MarketEngine')):
     {
             $develop_src = true;
 
-            if (!defined('ME_SCRIPT_DEBUG')) {
-                define('ME_SCRIPT_DEBUG', $develop_src);
+            if (!defined('MARKETENGINE_SCRIPT_DEBUG')) {
+                define('MARKETENGINE_SCRIPT_DEBUG', $develop_src);
             }
 
-            $suffix     = ME_SCRIPT_DEBUG ? '' : '.min';
+            $suffix     = MARKETENGINE_SCRIPT_DEBUG ? '' : '.min';
             $dev_suffix = $develop_src ? '' : '.min';
-            wp_enqueue_style('me-option-css', ME_PLUGIN_URL . 'assets/admin/menu.css');
+            wp_enqueue_style('me-option-css', MARKETENGINE_URL . 'assets/admin/menu.css');
             wp_enqueue_script('jquery-ui-datepicker');
+            wp_enqueue_script('jquery-ui-slider');  
+            wp_enqueue_script('jquery-ui-tooltip');
+            wp_enqueue_script('jquery-ui-sortable'); 
             wp_enqueue_script('jquery-validation', $this->plugin_url() . "/assets/js/jquery.validate.min.js", array('jquery'), $this->version, true);
         }
 

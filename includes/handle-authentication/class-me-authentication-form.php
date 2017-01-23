@@ -35,7 +35,7 @@ class ME_Auth_Form extends ME_Form
     public static function get_redirect_link()
     {
         if (isset($_POST['redirect'])) {
-            $redirect = $_POST['redirect'];
+            $redirect = esc_url( $_POST['redirect'] );
         } elseif (wp_get_referer()) {
             $redirect = wp_get_referer();
         } else {
@@ -53,7 +53,7 @@ class ME_Auth_Form extends ME_Form
             } else {
                 // set the redirect link after login
                 if (isset($_POST['redirect'])) {
-                    $redirect = $_POST['redirect'];
+                    $redirect = esc_url($_POST['redirect']);
                 } elseif (wp_get_referer()) {
                     $redirect = wp_get_referer();
                 } else {

@@ -255,8 +255,8 @@ class ME_Query
     public function filter_price_query($query)
     {
         if (!empty($_GET['price-min']) && !empty($_GET['price-max'])) {
-            $min_price                                       = $_GET['price-min'];
-            $max_price                                       = $_GET['price-max'];
+            $min_price                                       = esc_sql( $_GET['price-min'] );
+            $max_price                                       = esc_sql( $_GET['price-max'] );
             $query->query_vars['meta_query']['filter_price'] = array(
                 'key'     => 'listing_price',
                 'value'   => array($min_price, $max_price),
@@ -287,7 +287,7 @@ class ME_Query
         if (!empty($_GET['type'])) {
             $query->query_vars['meta_query']['filter_type'] = array(
                 'key'     => '_me_listing_type',
-                'value'   => $_GET['type'],
+                'value'   => esc_sql( $_GET['type'] ),
                 'compare' => '=',
             );
         }
@@ -303,7 +303,7 @@ class ME_Query
     public function filter_search_query($query)
     {
         if (!empty($_GET['keyword'])) {
-            $query->query_vars['s'] = $_GET['keyword'];
+            $query->query_vars['s'] = esc_sql( $_GET['keyword'] );
         }
         return $query;
     }

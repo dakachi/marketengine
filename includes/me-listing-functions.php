@@ -103,7 +103,7 @@ function me_get_listing_type_categories() {
  */
 function me_is_listing_type_available($listing_type, $cat = 0) {
     if(!$cat && !empty($_POST['parent_cat'])) {
-        $cat = $_POST['parent_cat'];
+        $cat = absint( $_POST['parent_cat'] );
     }
     if($cat == '') return true;
 

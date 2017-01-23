@@ -69,7 +69,7 @@ function marketengine_option_view() {
 
     echo '<ul class="me-nav me-tabs-nav">';
 
-    if (empty($_REQUEST['tab'])) {
+    if (empty($_REQUEST['tab']) || !array_key_exists($_REQUEST['tab'], $tabs)) {
         $requested_tab = 'marketplace-settings';
     } else {
         $requested_tab = $_REQUEST['tab'];
@@ -204,14 +204,14 @@ function marketengine_add_header_style () {
  */
 function marketengine_load_admin_option_script_css() {
     if (!empty($_REQUEST['page']) && (strpos($_REQUEST['page'], 'me') !== false)) {
-        wp_register_style('scrollbar-css', ME_PLUGIN_URL . 'assets/admin/jquery.mCustomScrollbar.min.css', array(), '1.0');
-        wp_enqueue_style('marketengine-font-icon', ME_PLUGIN_URL . 'assets/css/marketengine-font-icon.css', array(), '1.0');
-        wp_enqueue_style('me-option-css', ME_PLUGIN_URL . 'assets/admin/marketengine-admin.css');
+        wp_register_style('scrollbar-css', MARKETENGINE_URL . 'assets/admin/jquery.mCustomScrollbar.min.css', array(), '1.0');
+        wp_enqueue_style('marketengine-font-icon', MARKETENGINE_URL . 'assets/css/marketengine-font-icon.css', array(), '1.0');
+        wp_enqueue_style('me-option-css', MARKETENGINE_URL . 'assets/admin/marketengine-admin.css');
 
         wp_enqueue_script('backbone');
-        wp_enqueue_script('jquery-scrollbar', ME_PLUGIN_URL . 'assets/admin/jquery.mCustomScrollbar.min.js', array('jquery'), '1.0', true);
-        wp_enqueue_script('marketengine-option', ME_PLUGIN_URL . 'assets/admin/script-admin.js', array('jquery', 'jquery-scrollbar'), '1.0', true);
-        wp_enqueue_script('option-view', ME_PLUGIN_URL . 'assets/admin/option-view.js', array('jquery', 'backbone', 'jquery-scrollbar'), '1.0', true);
+        wp_enqueue_script('jquery-scrollbar', MARKETENGINE_URL . 'assets/admin/jquery.mCustomScrollbar.min.js', array('jquery'), '1.0', true);
+        wp_enqueue_script('marketengine-option', MARKETENGINE_URL . 'assets/admin/script-admin.js', array('jquery', 'jquery-scrollbar'), '1.0', true);
+        wp_enqueue_script('option-view', MARKETENGINE_URL . 'assets/admin/option-view.js', array('jquery', 'backbone', 'jquery-scrollbar'), '1.0', true);
         wp_localize_script(
             'backbone',
             'me_globals',

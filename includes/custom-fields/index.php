@@ -7,12 +7,12 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-require_once ME_PLUGIN_PATH . '/includes/custom-fields/me-cf-functions.php';
-require_once ME_PLUGIN_PATH . '/includes/custom-fields/me-cf-template-functions.php';
-require_once ME_PLUGIN_PATH . '/includes/custom-fields/class-me-admin-custom-field-form.php';
-require_once ME_PLUGIN_PATH . '/includes/custom-fields/class-me-admin-custom-field.php';
-require_once ME_PLUGIN_PATH . '/includes/custom-fields/class-me-handle-cf.php';
-require_once ME_PLUGIN_PATH . '/includes/custom-fields/me-cf-taxonomy-function.php';
+require_once MARKETENGINE_PATH . '/includes/custom-fields/me-cf-functions.php';
+require_once MARKETENGINE_PATH . '/includes/custom-fields/me-cf-template-functions.php';
+require_once MARKETENGINE_PATH . '/includes/custom-fields/class-me-admin-custom-field-form.php';
+require_once MARKETENGINE_PATH . '/includes/custom-fields/class-me-admin-custom-field.php';
+require_once MARKETENGINE_PATH . '/includes/custom-fields/class-me-handle-cf.php';
+require_once MARKETENGINE_PATH . '/includes/custom-fields/me-cf-taxonomy-function.php';
 
 
 function me_setup_custom_field() {
