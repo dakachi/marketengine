@@ -47,7 +47,7 @@ class ME_Widget_Listing_Types extends WP_Widget {
 
         $types = me_get_listing_types();
 
-        $current = !empty($_GET['type']) ? $_GET['type'] : '';
+        $current = !empty($_GET['type']) ? esc_attr( $_GET['type'] ) : '';
 
         ?>
             <div class="me-title-sidebar">

@@ -57,7 +57,7 @@ class ME_Listing_Handle_Form extends ME_Form {
             } else {
                 // set the redirect link after submit new listing
                 if (isset($_POST['redirect'])) {
-                    $redirect = $_POST['redirect'];
+                    $redirect = esc_url($_POST['redirect']);
                 } else {
                     $redirect = get_permalink($new_listing);
                 }
@@ -86,7 +86,7 @@ class ME_Listing_Handle_Form extends ME_Form {
             } else {
                 // set the redirect link after update listing
                 if (isset($_POST['redirect'])) {
-                    $redirect = $_POST['redirect'];
+                    $redirect = esc_url( $_POST['redirect'] );
                 } else {
                     $redirect = get_permalink($listing);
                 }
@@ -114,7 +114,7 @@ class ME_Listing_Handle_Form extends ME_Form {
             if(is_wp_error( $review )) {
                 me_wp_error_to_notices($review);
             }else {
-                $redirect = get_permalink( $_POST['listing_id'] );
+                $redirect = get_permalink( absint( $_POST['listing_id'] ) );
                 wp_safe_redirect( $redirect );
                 exit;
             }
@@ -149,7 +149,7 @@ class ME_Listing_Handle_Form extends ME_Form {
      */
     public static function load_sub_category() {
         if (isset($_REQUEST['parent-cat'])) {
-            $child_categories = get_terms( array('taxonomy' => 'listing_category', 'hide_empty' => false, 'parent' => $_REQUEST['parent-cat']));
+            $child_categories = get_terms( array('taxonomy' => 'listing_category', 'hide_empty' => false, 'parent' => absint( $_REQUEST['parent-cat'] )));
             ob_start();
             me_get_template('post-listing/sub-cat', array('child_categories' => $child_categories) );
             $content = ob_get_clean();
@@ -169,10 +169,10 @@ class ME_Listing_Handle_Form extends ME_Form {
 
     public static function load_more_review() {
         if(!empty($_GET['post_id']) && !empty($_GET['page'])) {
-            $offset = 2* ($_GET['page']-1);
+            $offset = 2* (absint( $_GET['page'] )-1);
             $number = get_option( 'comments_per_page' );
 
-            $comments = get_comments(array( 'offset' => $offset, 'type' => 'review', 'post_id' => $_GET['post_id'], 'status' => 'approve', 'number' => $number));
+            $comments = get_comments(array( 'offset' => $offset, 'type' => 'review', 'post_id' => absint( $_GET['post_id'] ), 'status' => 'approve', 'number' => $number));
             ob_start();
             wp_list_comments( wp_list_comments( array('callback' => 'marketengine_comments'), $comments ) );
             $content = ob_get_clean();

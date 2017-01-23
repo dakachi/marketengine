@@ -91,7 +91,7 @@ class ME_Custom_Field_Form
     {
         wp_dequeue_script('option-view');
         if (is_admin() && isset($_REQUEST['view']) && $_REQUEST['view'] == 'group-by-category') {
-            wp_enqueue_script('cf_sort', ME_PLUGIN_URL . "assets/admin/custom-field-sort.js", array('jquery-ui'));
+            wp_enqueue_script('cf_sort', MARKETENGINE_URL . "assets/admin/custom-field-sort.js", array('jquery-ui'));
         }
     }
 

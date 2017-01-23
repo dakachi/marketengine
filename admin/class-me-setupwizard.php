@@ -54,7 +54,7 @@ class ME_Setup_Wizard
         if (!empty($_POST['step']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'marketengine-setup')) {
             
             $content = sanitize_text_field( $_POST['content'] );
-            $step = sanitize_text_field( $_POST['step'] );
+            $step = esc_attr( $_POST['step'] );
             switch ($step) {
                 case 'page':
                     $data = $this->setup_page($content);
@@ -184,7 +184,7 @@ class ME_Setup_Wizard
             return;
         }
 
-        wp_register_script('setup-wizard.js', ME_PLUGIN_URL . 'assets/admin/setup-wizard.js', array('jquery'));
+        wp_register_script('setup-wizard.js', MARKETENGINE_URL . 'assets/admin/setup-wizard.js', array('jquery'));
         wp_localize_script(
             'setup-wizard.js',
             'me_globals',
@@ -212,8 +212,8 @@ class ME_Setup_Wizard
 			<title><?php _e('MarketEngine &rsaquo; Setup Wizard', 'enginethemes');?></title>
 			<?php
 				wp_print_scripts('setup-wizard.js');
-        		wp_enqueue_style('me_font_icon', ME_PLUGIN_URL . 'assets/css/marketengine-font-icon.css');
-        		wp_enqueue_style('setup-wizard.css', ME_PLUGIN_URL . 'assets/admin/setup-wizard.css');
+        		wp_enqueue_style('me_font_icon', MARKETENGINE_URL . 'assets/css/marketengine-font-icon.css');
+        		wp_enqueue_style('setup-wizard.css', MARKETENGINE_URL . 'assets/admin/setup-wizard.css');
         	?>
 			<?php do_action('admin_print_styles');?>
 			<?php do_action('admin_head');?>

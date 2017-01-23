@@ -46,11 +46,11 @@ class ME_Report_CSVExport
             }
 
             if (!empty($_GET['from_date'])) {
-                $filename .= '_' . esc_html( $_GET['from_date'] );
+                $filename .= '_' . sanitize_file_name( $_GET['from_date'] );
             }
 
             if (!empty($_GET['to_date'])) {
-                $filename .= '_' . esc_html( $_GET['to_date'] );
+                $filename .= '_' . sanitize_file_name( $_GET['to_date'] );
             }
 
             header("Pragma: public");
@@ -139,7 +139,7 @@ class ME_Report_CSVExport
     public function generate_listings()
     {
 
-        $args              = array_map('esc_attr', $_REQUEST);;
+        $args              = array_map('esc_sql', $_REQUEST);
         $args['showposts'] = 300000;
         $args['paged']     = 1;
         $query             = marketengine_listing_report($args);
@@ -201,7 +201,7 @@ class ME_Report_CSVExport
     public function generate_orders()
     {
 
-        $args              = array_map('esc_attr', $_REQUEST);
+        $args              = array_map('esc_sql', $_REQUEST);
         $args['showposts'] = 300000;
         $args['paged']     = 1;
         $query             = marketengine_orders_report($args);
@@ -227,7 +227,7 @@ class ME_Report_CSVExport
     public function generate_inquiries()
     {
 
-        $args              = array_map('esc_attr', $_REQUEST);
+        $args              = array_map('esc_sql', $_REQUEST);
         $args['showposts'] = 300000;
         $args['paged']     = 1;
         $query             = marketengine_inquiries_report($args);
@@ -253,7 +253,7 @@ class ME_Report_CSVExport
     public function generate_members()
     {
 
-        $args              = array_map('esc_attr', $_REQUEST);
+        $args              = array_map('esc_sql', $_REQUEST);
         $args['showposts'] = 300000;
         $args['paged']     = 1;
         $query             = marketengine_members_report($args);

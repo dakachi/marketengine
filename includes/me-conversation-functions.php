@@ -846,7 +846,7 @@ function me_inquiry_ids_by_user( $user, $role ) {
  */
 function me_filter_inquiry_query( $query, $role ) {
     $args = array();
-
+    
     if( isset($query['from_date']) || isset($query['to_date']) ){
         $before = $after = '';
         if( isset($query['from_date']) && !empty($query['from_date']) ){
@@ -877,13 +877,14 @@ function me_filter_inquiry_query( $query, $role ) {
     }
 
     if( isset($query['keyword']) && $query['keyword'] != '' ) {
+        $keyword = esc_sql( $query['keyword'] );
         $ids_by_listing = $ids_by_user = array();
 
-        $ids_by_listing = me_inquiry_ids_by_listing( $query['keyword'] );
+        $ids_by_listing = me_inquiry_ids_by_listing( $keyword );
         if( $role == 'sender' ) {
-            $ids_by_user = me_inquiry_ids_by_user( $query['keyword'], 'receiver' );
+            $ids_by_user = me_inquiry_ids_by_user( $keyword, 'receiver' );
         } else {
-            $ids_by_user = me_inquiry_ids_by_user( $query['keyword'], 'sender' );
+            $ids_by_user = me_inquiry_ids_by_user( $keyword, 'sender' );
         }
 
         $post_parent = array_merge($ids_by_listing, $ids_by_user);
