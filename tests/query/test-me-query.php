@@ -22,13 +22,6 @@ class Test_ME_Query extends WP_UnitTestCase {
         // ));
     }
 
-    public function tearDown() {
-        // global $wp_post_types;
-        // if ( isset( $wp_post_types[ 'me_order' ] ) ) {
-        //     unset( $wp_post_types[ 'me_order' ] );
-        // }
-    }
-
     public function test_me_get_option_page_id() {
         $pages = $this->get_list_of_pages();
         foreach( $pages as $page ) {
@@ -110,8 +103,6 @@ class Test_ME_Query extends WP_UnitTestCase {
         global $wp_rewrite;
         $edit_listing_page = me_get_option_page_id('edit_listing');
 
-        $this->assertEquals( -1, $edit_listing_page);
-
         $edit_listing_page = $post_id = $this->post_factory->create_object( array(
             'post_type' => 'page',
             'post_name' => 'edit-listing',
@@ -161,20 +152,6 @@ class Test_ME_Query extends WP_UnitTestCase {
         $this->assertSame( site_url('?post_type=me_order&p='.$order_id), get_the_permalink($order) );
     }
 
-    public function test_custom_order_link_with_pretty_url() {
-        // global $wp_rewrite;
-        // $wp_rewrite->extra_permastructs['me_order'] = '/order/%post_id%/%me_order%';
-
-        // $order_id = $this->post_factory->create_object( array(
-        //     'post_type' => 'me_order',
-        // ) );
-        // $order_endpoint = me_get_endpoint_name('order_id');
-
-        // $this->set_permalink_structure('%postname%');
-
-        // $order = get_post($order_id);
-        // $this->assertSame( site_url($order_endpoint.'/'.$order_id), get_the_permalink($order) );
-    }
 
     function get_list_of_pages() {
         return array('user_account', 'post_listing', 'edit_listing', 'checkout', 'confirm_order', 'cancel_order', 'inquiry');

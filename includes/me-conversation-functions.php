@@ -386,7 +386,7 @@ function me_get_messages($args = null) {
         'numberposts' => 10,
         'orderby'     => 'date',
         'order'       => 'DESC',
-        'post_type'   => 'post',
+        'post_type'   => 'message',
     );
 
     $r = wp_parse_args($args, $defaults);
