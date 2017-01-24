@@ -16,14 +16,14 @@ if (!defined('ABSPATH')) {
  * @category Hook Function
  * @since 1.0
  */
-function post_row_actions($actions, $post)
+function me_post_row_actions($actions, $post)
 {
     if ($post && 'listing' == $post->post_type) {
         return array();
     }
     return $actions;
 }
-add_filter('post_row_actions', 'post_row_actions', 10, 2);
+add_filter('post_row_actions', 'me_post_row_actions', 10, 2);
 
 /**
  * Hook to change listing list table primary column
