@@ -134,40 +134,22 @@ class ME_Post_Types
      */
     public static function register_post_type()
     {
-        $listing_label = me_option('listing-label');
-        if($listing_label) {
-            $labels        = array(
-                'name'               => ucfirst($listing_label). 's',
-                'singular_name'      => ucfirst($listing_label),
-                'add_new'            => __('Add New', "enginethemes"),
-                'add_new_item'       => sprintf(__('Add New %s', "enginethemes"), ucfirst($listing_label)),
-                'edit_item'          => sprintf(__('Edit %s', "enginethemes"), $listing_label),
-                'new_item'           => sprintf(__('New %s', "enginethemes"), $listing_label),
-                'all_items'          => sprintf(__('All %s', "enginethemes"), ucfirst($listing_label). 's'),
-                'view_item'          => sprintf(__('View %s', "enginethemes"), $listing_label),
-                'search_items'       => sprintf(__('Search %s', "enginethemes"),$listing_label. 's'),
-                'not_found'          => sprintf(__('No %s found', "enginethemes"), $listing_label. 's'),
-                'not_found_in_trash' => sprintf(__('No %s found in Trash', "enginethemes"), $listing_label. 's'),
-                'parent_item_colon'  => '',
-                'menu_name'          => ucfirst($listing_label). 's',
-            );
-        }else {
-            $labels        = array(
-                'name'               => __('Listings', "enginethemes"),
-                'singular_name'      => __('Listing', "enginethemes"),
-                'add_new'            => __('Add New', "enginethemes"),
-                'add_new_item'       => __('Add New Listing', "enginethemes"),
-                'edit_item'          => __('Edit Listing', "enginethemes"),
-                'new_item'           => __('New Listing', "enginethemes"),
-                'all_items'          => __('All Listings', "enginethemes"),
-                'view_item'          => __('View Listing', "enginethemes"),
-                'search_items'       => __('Search Listings', "enginethemes"),
-                'not_found'          => __('No listings found', "enginethemes"),
-                'not_found_in_trash' => __('No listings found in Trash', "enginethemes"),
-                'parent_item_colon'  => '',
-                'menu_name'          => __('Listings', "enginethemes"),
-            );
-        }
+        
+        $labels        = array(
+            'name'               => __('Listings', "enginethemes"),
+            'singular_name'      => __('Listing', "enginethemes"),
+            'add_new'            => __('Add New', "enginethemes"),
+            'add_new_item'       => __('Add New Listing', "enginethemes"),
+            'edit_item'          => __('Edit Listing', "enginethemes"),
+            'new_item'           => __('New Listing', "enginethemes"),
+            'all_items'          => __('All Listings', "enginethemes"),
+            'view_item'          => __('View Listing', "enginethemes"),
+            'search_items'       => __('Search Listings', "enginethemes"),
+            'not_found'          => __('No listings found', "enginethemes"),
+            'not_found_in_trash' => __('No listings found in Trash', "enginethemes"),
+            'parent_item_colon'  => '',
+            'menu_name'          => __('Listings', "enginethemes"),
+        );        
         
         register_post_type('listing', array(
             'labels'             => $labels,
