@@ -37,7 +37,7 @@
             }
             flag = true;
         });
-        $('#upload_user_avatar').jUploader({
+        $('#upload_user_avatar').MaketEngineUploader({
             browse_button: 'change-avatar-user',
             multi: false,
             removable: false,

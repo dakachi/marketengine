@@ -4,7 +4,7 @@
 
 (function($) {
 
-    $.fn.jUploader = function(options)
+    $.fn.MaketEngineUploader = function(options)
     {
         var setting = {
             multi: false,
