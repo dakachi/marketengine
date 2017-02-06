@@ -73,7 +73,7 @@ class ME_CSV_Export {
 		$headings = array(
 			'order_id' 		=> __("Order ID", "enginethemes"),
 			'status' 		=> __("Status", "enginethemes"),
-			'amount' 		=> __("Amount", "enginethemes") . '(' .me_option('payment-currency-sign') .')',
+			'amount' 		=> __("Amount", "enginethemes") . '(' .marketengine_option('payment-currency-sign') .')',
 			'date_of_order'	=> __("Date Of Order", "enginethemes"),
 			'listing_title'	=> __("Listing", "enginethemes"),
 		);
@@ -89,7 +89,7 @@ class ME_CSV_Export {
 		$headings = array(
 			'transaction_id'=> __("Transaction ID", "enginethemes"),
 			'status' 		=> __("Status", "enginethemes"),
-			'amount' 		=> __("Amount", "enginethemes") . '(' .me_option('payment-currency-sign') .')',
+			'amount' 		=> __("Amount", "enginethemes") . '(' .marketengine_option('payment-currency-sign') .')',
 			'date_of_order'	=> __("Date Of Order", "enginethemes"),
 			'listing_title'	=> __("Listing", "enginethemes"),
 		);
