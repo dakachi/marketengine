@@ -3,7 +3,7 @@
 		<h5><?php echo __('Order status:', 'enginethemes'); ?></h5>
 		<div class="me-orderstatus">
 			<?php
-				me_print_order_status( $order_status );
+				marketengine_print_order_status( $order_status );
 				$status_info = marketengine_get_order_status_info( $order_status, 'text' );
 			?>
 

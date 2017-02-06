@@ -1,9 +1,9 @@
 <?php
 class ME_Shortcodes_Auth {
     public static function init_shortcodes() {
-        add_shortcode('marketengine_user_account', array(__CLASS__, 'marketengine_user_account'));
-        add_shortcode('marketengine_user_register', array(__CLASS__, 'marketengine_register_form'));
-        add_shortcode('marketengine_user_login', array(__CLASS__, 'marketengine_login_form'));
+        add_shortcode('me_user_account', array(__CLASS__, 'marketengine_user_account'));
+        add_shortcode('me_user_register', array(__CLASS__, 'marketengine_register_form'));
+        add_shortcode('me_user_login', array(__CLASS__, 'marketengine_login_form'));
     }
     public static function marketengine_user_account() {
         global $wp;

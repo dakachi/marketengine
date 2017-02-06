@@ -3,11 +3,11 @@ class ME_Shortcodes_Transaction
 {
     public static function init_shortcodes()
     {
-        add_shortcode('marketengine_checkout_form', array(__CLASS__, 'checkout_form'));
-        add_shortcode('marketengine_confirm_order', array(__CLASS__, 'confirm_order'));
-        add_shortcode('marketengine_cancel_payment', array(__CLASS__, 'cancel_order'));
-        add_shortcode('marketengine_inquiry_form', array(__CLASS__, 'inquiry_form'));
-        add_shortcode('marketengine_message_file', array(__CLASS__, 'marketengine_message_file'));
+        add_shortcode('me_checkout_form', array(__CLASS__, 'checkout_form'));
+        add_shortcode('me_confirm_order', array(__CLASS__, 'confirm_order'));
+        add_shortcode('me_cancel_payment', array(__CLASS__, 'cancel_order'));
+        add_shortcode('me_inquiry_form', array(__CLASS__, 'inquiry_form'));
+        add_shortcode('me_message_file', array(__CLASS__, 'marketengine_message_file'));
     }
 
     public static function checkout_form()

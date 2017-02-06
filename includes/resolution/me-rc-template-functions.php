@@ -40,7 +40,7 @@ function marketengine_rc_center_link($transaction) {
  * @since 1.1
  */
 function marketengine_rc_center_desktop_link($transaction) {
-	me_rc_center_link($transaction);
+	marketengine_rc_center_link($transaction);
 }
 add_action( 'marketengine_order_extra_content', 'marketengine_rc_center_desktop_link', 11);
 
@@ -63,7 +63,7 @@ function marketengine_rc_mobile_dispute_button($transaction) {
  * @since 1.1
  */
 function marketengine_rc_center_mobile_link($transaction) {
-	me_rc_center_link($transaction);
+	marketengine_rc_center_link($transaction);
 }
 
 /**

@@ -3,9 +3,9 @@ class ME_Shortcodes_Listing
 {
     public static function init_shortcodes()
     {
-        add_shortcode('marketengine_post_listing_form', array(__CLASS__, 'post_listing_form'));
-        add_shortcode('marketengine_edit_listing_form', array(__CLASS__, 'edit_listing_form'));
-        add_shortcode('marketengine_listings', array(__CLASS__, 'the_listing'));
+        add_shortcode('me_post_listing_form', array(__CLASS__, 'post_listing_form'));
+        add_shortcode('me_edit_listing_form', array(__CLASS__, 'edit_listing_form'));
+        add_shortcode('me_listings', array(__CLASS__, 'the_listing'));
     }
     public static function post_listing_form()
     {
