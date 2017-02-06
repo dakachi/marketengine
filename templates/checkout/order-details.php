@@ -33,7 +33,7 @@ $total = 0;
 		<?php do_action( 'marketengine_before_cart_item_list' ); ?>
 
 		<?php foreach ($cart_items as $key => $item) :
-			$listing =  me_get_listing(absint( $item['id'] ));
+			$listing =  marketengine_get_listing(absint( $item['id'] ));
 
 			$total += ($listing->get_price() * $item['qty']);
 			$unit = ($item['qty']) ? $item['qty'] : 1;
@@ -49,7 +49,7 @@ $total = 0;
 				</div>
 			</div>
 			<div class="me-table-col me-cart-price">
-				<?php echo me_price_html( $listing->get_price() ); ?>
+				<?php echo marketengine_price_html( $listing->get_price() ); ?>
 				<span class="me-cart-price-mobile"><?php _e("Price", "enginethemes"); ?></span>
 			</div>
 			<div class="me-table-col me-cart-units">
@@ -57,7 +57,7 @@ $total = 0;
 				<span class="me-cart-units-mobile"><?php _e("Units", "enginethemes"); ?></span>
 			</div>
 			<div class="me-table-col me-cart-units-total">
-				<?php echo me_price_html( $listing->get_price() * $unit); ?>
+				<?php echo marketengine_price_html( $listing->get_price() * $unit); ?>
 			</div>
 
 			<input type="hidden" name="listing_item[<?php echo $key; ?>][id]" value="<?php echo $item['id']; ?>" />	
@@ -72,7 +72,7 @@ $total = 0;
 			<div class="me-table-col me-table-col-empty"></div>
 			<div class="me-table-col me-table-col-empty"></div>
 			<div class="me-table-col me-cart-amount"><?php _e("Total amount:", "enginethemes"); ?></div>
-			<div class="me-table-col me-cart-totals"><?php echo me_price_html( $listing->get_price() * $unit); ?></div>
+			<div class="me-table-col me-cart-totals"><?php echo marketengine_price_html( $listing->get_price() * $unit); ?></div>
 		</div>
 	</div>
 	<?php wp_nonce_field('me-checkout'); ?>

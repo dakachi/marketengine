@@ -16,16 +16,16 @@
  * @since     1.1.0
  * @version 1.0.0
  */
-function me_resolution_center_url()
+function marketengine_resolution_center_url()
 {
     global $wp_rewrite;
-    $url = me_get_page_permalink('user_account');
+    $url = marketengine_get_page_permalink('user_account');
 
     if (!$url) {
         return home_url();
     }
 
-    $endpoint = me_option('ep_resolution-center');
+    $endpoint = marketengine_option('ep_resolution-center');
     $endpoint = $endpoint ? $endpoint : 'resolution-center';
 
     if ($wp_rewrite->using_permalinks()) {
@@ -36,9 +36,9 @@ function me_resolution_center_url()
     return $url;
 }
 
-function me_rc_dispute_link($case_id) {
+function marketengine_rc_dispute_link($case_id) {
     global $wp_rewrite;
-    $endpoint = trim(me_option('ep_case'));
+    $endpoint = trim(marketengine_option('ep_case'));
     $endpoint  = !empty($endpoint) ? $endpoint : 'case';
     if($wp_rewrite->using_permalinks()) {
         return home_url( $endpoint .'/'. $case_id );    
@@ -56,7 +56,7 @@ function me_rc_dispute_link($case_id) {
  * @since     1.1.0
  * @version 1.0.0
  */
-function me_dispute_statuses()
+function marketengine_dispute_statuses()
 {
     $statuses = array(
         'me-open'      => __('Open', 'enginethemes'),
@@ -66,7 +66,7 @@ function me_dispute_statuses()
         'me-resolved'  => __('Resolved', 'enginethemes'),
     );
 
-    return apply_filters('me_dispute_statuses', $statuses);
+    return apply_filters('marketengine_dispute_statuses', $statuses);
 }
 
 /**
@@ -78,9 +78,9 @@ function me_dispute_statuses()
  * @since     1.1.0
  * @version 1.0.0
  */
-function me_dispute_status_label($status_name)
+function marketengine_dispute_status_label($status_name)
 {
-    $statuses = me_dispute_statuses();
+    $statuses = marketengine_dispute_statuses();
     return $status_name ? $statuses[$status_name] : '';
 }
 
@@ -92,7 +92,7 @@ function me_dispute_status_label($status_name)
  * @since     1.1.0
  * @version 1.0.0
  */
-function me_rc_dispute_problems()
+function marketengine_rc_dispute_problems()
 {
     $problems = array(
         'problem-1' => __('I no longer want this item.', 'enginethemes'),
@@ -103,7 +103,7 @@ function me_rc_dispute_problems()
         'problem-6' => __('Item expired.', 'enginethemes'),
     );
 
-    return apply_filters('me_rc_dispute_problems', $problems);
+    return apply_filters('marketengine_rc_dispute_problems', $problems);
 }
 
 /**
@@ -115,10 +115,10 @@ function me_rc_dispute_problems()
  * @since     1.1.0
  * @version 1.0.0
  */
-function me_rc_dispute_problem_text($case_id)
+function marketengine_rc_dispute_problem_text($case_id)
 {
-    $problems     = me_rc_dispute_problems();
-    $problem_name = me_get_message_meta($case_id, '_case_problem', true);
+    $problems     = marketengine_rc_dispute_problems();
+    $problem_name = marketengine_get_message_meta($case_id, '_case_problem', true);
     return $problem_name ? $problems[$problem_name] : '';
 }
 
@@ -127,7 +127,7 @@ function me_rc_dispute_problem_text($case_id)
  *
  * @since     1.1.0
  */
-function me_rc_item_received_expected_solutions()
+function marketengine_rc_item_received_expected_solutions()
 {
 
     $solution = array(
@@ -145,7 +145,7 @@ function me_rc_item_received_expected_solutions()
         ),
     );
 
-    return apply_filters('me_rc_yes_expected_solutions', $solution);
+    return apply_filters('marketengine_rc_yes_expected_solutions', $solution);
 }
 
 /**
@@ -153,8 +153,8 @@ function me_rc_item_received_expected_solutions()
  *
  * @since     1.1.0
  */
-function me_rc_item_not_received_expected_solutions() {
-    return apply_filters('me_rc_no_expected_solutions',array(
+function marketengine_rc_item_not_received_expected_solutions() {
+    return apply_filters('marketengine_rc_no_expected_solutions',array(
         'full-refund'    => array(
             'label'       => __('Get full refund', 'enginethemes'),
             'description' => __('(request the money back for item not received)', 'enginethemes'),
@@ -172,10 +172,10 @@ function me_rc_item_not_received_expected_solutions() {
  * @return string
  * @since 1.1
  */
-function me_rc_case_expected_solution_label($case_id)
+function marketengine_rc_case_expected_solution_label($case_id)
 {
-    $problems     = array_merge(me_rc_item_received_expected_solutions(), me_rc_item_not_received_expected_solutions() );
-    $problem_name = me_get_message_meta($case_id, '_case_expected_resolution', true);
+    $problems     = array_merge(marketengine_rc_item_received_expected_solutions(), marketengine_rc_item_not_received_expected_solutions() );
+    $problem_name = marketengine_get_message_meta($case_id, '_case_expected_resolution', true);
     return $problem_name ? $problems[$problem_name]['label'] : '';
 }
 
@@ -185,7 +185,7 @@ function me_rc_case_expected_solution_label($case_id)
  * @since     1.1.0
  * @version 1.0.0
  */
-function me_rc_dispute_case_query($query)
+function marketengine_rc_dispute_case_query($query)
 {
     $paged = get_query_var('paged') ? get_query_var('paged') : 1;
     $args  = array(
@@ -197,13 +197,13 @@ function me_rc_dispute_case_query($query)
 
     $args = wp_parse_args( $query, $args );
 
-    $args  = array_merge(apply_filters('me_filter_dispute_case', $query), $args); 
+    $args  = array_merge(apply_filters('marketengine_filter_dispute_case', $query), $args); 
     $query = new ME_Message_Query($args);
     
     return $query;
 }
 
-function me_dispute_case_id_by_user($user)
+function marketengine_dispute_case_id_by_user($user)
 {
     global $wpdb;
     $query = "SELECT $wpdb->marketengine_message_item.ID
@@ -219,7 +219,7 @@ function me_dispute_case_id_by_user($user)
     return $results;
 }
 
-function me_filter_dispute_case($query)
+function marketengine_filter_dispute_case($query)
 {
     $args = array();
     if (!empty($query['status']) && $query['status'] !== 'any') {
@@ -257,7 +257,7 @@ function me_filter_dispute_case($query)
     if (!empty($query['keyword'])) {
         $case_id = is_numeric($query['keyword']) ? $query['keyword'] : '';
 
-        $ids = me_dispute_case_id_by_user($query['keyword']);
+        $ids = marketengine_dispute_case_id_by_user($query['keyword']);
         if ($case_id) {
             $ids = array_merge($ids, array($case_id));
         }
@@ -271,9 +271,9 @@ function me_filter_dispute_case($query)
 
     return $args;
 }
-add_filter('me_filter_dispute_case', 'me_filter_dispute_case');
+add_filter('marketengine_filter_dispute_case', 'marketengine_filter_dispute_case');
 
-function me_dispute_case_filter_form_action()
+function marketengine_dispute_case_filter_form_action()
 {
     global $wp;
     if ('' === get_option('permalink_structure')) {

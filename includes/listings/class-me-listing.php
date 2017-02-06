@@ -333,7 +333,7 @@ class ME_Listing
     {
         $content = get_post_field('post_content', $this->ID, 'display');
         $content = apply_filters('the_content', $content);
-        return me_trim_words($content, $length);
+        return marketengine_trim_words($content, $length);
     }
 
     public function get_listing_thumbnail($size = 'post-thumbnail', $attr = '')
@@ -445,8 +445,8 @@ class ME_Listing
 
     public function get_edit_url()
     {
-        $page = me_get_page_permalink('user_account');
-        $edit = me_get_endpoint_name('edit-listing');
+        $page = marketengine_get_page_permalink('user_account');
+        $edit = marketengine_get_endpoint_name('edit-listing');
         return $page . $edit . '/' . $this->id;
     }
 

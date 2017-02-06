@@ -9,15 +9,15 @@
  * @since 		1.0.1
  */
 
-$query = me_rc_dispute_case_query($_GET);
+$query = marketengine_rc_dispute_case_query($_GET);
 ?>
 
 <div class="me-resolution">
 
-	<?php me_get_template('resolution/cases/cases-filter'); ?>
+	<?php marketengine_get_template('resolution/cases/cases-filter'); ?>
 
-	<?php me_get_template('resolution/cases/dispute-case-list', array('query' => $query)); ?>
+	<?php marketengine_get_template('resolution/cases/dispute-case-list', array('query' => $query)); ?>
 
-	<?php me_get_template('resolution/cases/cases-pagination', array('query' => $query)); ?>
+	<?php marketengine_get_template('resolution/cases/cases-pagination', array('query' => $query)); ?>
 
 </div>

@@ -37,12 +37,12 @@ $unit = ($order_item['qty']) ? $order_item['qty'][0] : 1;
 			<div class="me-table-col me-cart-name">
 				<div class="me-cart-listing">
 				
-					<?php me_get_template('purchases/order-listing-image', array('listing' => $listing) ); ?>
+					<?php marketengine_get_template('purchases/order-listing-image', array('listing' => $listing) ); ?>
 
 					<?php if(!$listing) : ?> 
 
 						<span><?php echo esc_html($order_item['title']); ?></span>
-						<?php me_get_template('purchases/listing-deleted', array('listing' => $listing) ); ?>
+						<?php marketengine_get_template('purchases/listing-deleted', array('listing' => $listing) ); ?>
 
 					<?php else : ?>
 
@@ -50,14 +50,14 @@ $unit = ($order_item['qty']) ? $order_item['qty'][0] : 1;
 							<span><?php echo esc_html($order_item['title']); ?></span>
 						</a>
 
-						<?php me_get_template('purchases/listing-archived', array('listing' => $listing) ); ?>
+						<?php marketengine_get_template('purchases/listing-archived', array('listing' => $listing) ); ?>
 
 					<?php endif; ?>
 
 				</div>
 			</div>
 			<div class="me-table-col me-cart-price">
-				<?php echo me_price_html( $order_item['price'] ); ?>
+				<?php echo marketengine_price_html( $order_item['price'] ); ?>
 				<span class="me-cart-price-mobile"><?php _e("Price", "enginethemes"); ?></span>
 			</div>
 			<div class="me-table-col me-cart-units">
@@ -65,7 +65,7 @@ $unit = ($order_item['qty']) ? $order_item['qty'][0] : 1;
 				<span class="me-cart-units-mobile"><?php _e("Units", "enginethemes"); ?></span>
 			</div>
 			<div class="me-table-col me-cart-units-total">
-				<?php echo me_price_html($order_item['price'] * $unit); ?>
+				<?php echo marketengine_price_html($order_item['price'] * $unit); ?>
 			</div>
 
 		</div>
@@ -76,7 +76,7 @@ $unit = ($order_item['qty']) ? $order_item['qty'][0] : 1;
 			<div class="me-table-col me-table-col-empty"></div>
 			<div class="me-table-col me-table-col-empty"></div>
 			<div class="me-table-col me-cart-amount"><?php _e("Total amount:", "enginethemes"); ?></div>
-			<div class="me-table-col me-cart-totals"><?php echo me_price_html($order_item['price'] * $unit); ?></div>
+			<div class="me-table-col me-cart-totals"><?php echo marketengine_price_html($order_item['price'] * $unit); ?></div>
 		</div>
 	</div>
 	<div class="me-checkout-submit">

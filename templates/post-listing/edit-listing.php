@@ -50,21 +50,21 @@ $listing_content = apply_filters('the_content', $listing->post_content);
 	<div class="marketengine-post-listing-wrap">
 		<form  id="edit-listing-form" class="post-listing-form me-edit-listing" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 			<h3><?php _e('Edit the Listing', 'enginethemes'); ?></h3>
-			<?php me_print_notices(); ?>
+			<?php marketengine_print_notices(); ?>
 
 			<?php do_action('marketengine_edit_listing_form_start', $listing); ?>
 
-			<?php me_get_template('post-listing/category', array('selected_cat' => $selected_cat, 'selected_sub_cat' => $selected_sub_cat, 'editing' => true) ); ?>
+			<?php marketengine_get_template('post-listing/category', array('selected_cat' => $selected_cat, 'selected_sub_cat' => $selected_sub_cat, 'editing' => true) ); ?>
 
-			<?php me_get_template('post-listing/type', $listing_types); ?>
+			<?php marketengine_get_template('post-listing/type', $listing_types); ?>
 
-			<?php me_get_template('post-listing/information', array('listing_content' => $listing_content,  'listing_title' => $listing->post_title)); ?>
+			<?php marketengine_get_template('post-listing/information', array('listing_content' => $listing_content,  'listing_title' => $listing->post_title)); ?>
 
 			<?php do_action('marketengine_edit_listing_information_form_fields', $listing); ?>
 
-			<?php me_get_template('post-listing/gallery', array('listing_gallery' => $listing->get_gallery(), 'listing_image' => $listing->get_featured_image())); ?>
+			<?php marketengine_get_template('post-listing/gallery', array('listing_gallery' => $listing->get_gallery(), 'listing_image' => $listing->get_featured_image())); ?>
 
-			<?php me_get_template('post-listing/tags', array('default' => join(',', $listing_tag))); ?>
+			<?php marketengine_get_template('post-listing/tags', array('default' => join(',', $listing_tag))); ?>
 
 			<?php do_action('marketengine_edit_listing_form_fields', $listing); ?>
 

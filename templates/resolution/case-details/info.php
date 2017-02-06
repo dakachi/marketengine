@@ -1,5 +1,5 @@
 <?php
-$transaction = me_get_order($case->post_parent);
+$transaction = marketengine_get_order($case->post_parent);
 $items = $transaction->get_listing_items();
 $item = array_pop($items);
 ?>
@@ -11,7 +11,7 @@ $item = array_pop($items);
                     <h3><?php _e("Case infomation", "enginethemes");?></h3>
                     <p>
                         <span><?php _e("Case status:", "enginethemes");?></span>
-                        <?php echo me_dispute_status_label($case->post_status); ?>
+                        <?php echo marketengine_dispute_status_label($case->post_status); ?>
                     </p>
                     <p>
                         <span><?php _e("Open date:", "enginethemes");?></span>
@@ -24,11 +24,11 @@ $item = array_pop($items);
                     </p>
                     <p>
                         <span><?php _e("Problem:", "enginethemes");?></span>
-                        <?php echo me_rc_dispute_problem_text($case->ID); ?>
+                        <?php echo marketengine_rc_dispute_problem_text($case->ID); ?>
                     </p>
                     <p>
                         <span><?php _e("You want to:", "enginethemes");?></span>
-                        <?php echo me_rc_case_expected_solution_label($case->ID); ?>
+                        <?php echo marketengine_rc_case_expected_solution_label($case->ID); ?>
                     </p>
                 </div>
             </div>
@@ -43,7 +43,7 @@ $item = array_pop($items);
                     </p>
                     <p>
                         <span><?php _e("Total amount:", "enginethemes");?></span>
-                        <?php echo me_price_format($transaction->get_total()); ?>
+                        <?php echo marketengine_price_format($transaction->get_total()); ?>
                     </p>
                     <p>
                         <span><?php _e("Order date:", "enginethemes");?></span>
@@ -61,19 +61,19 @@ $item = array_pop($items);
             <?php
 
             if($case->post_status == 'me-open') {
-                me_get_template('resolution/case-details/case-open', array('case' => $case));
+                marketengine_get_template('resolution/case-details/case-open', array('case' => $case));
             }
 
             if($case->post_status == 'me-waiting') {
-                me_get_template('resolution/case-details/case-waiting', array('case' => $case));
+                marketengine_get_template('resolution/case-details/case-waiting', array('case' => $case));
             }
 
             if($case->post_status == 'me-escalated') {
-                me_get_template('resolution/case-details/case-escalated', array('case' => $case));
+                marketengine_get_template('resolution/case-details/case-escalated', array('case' => $case));
             }
 
             if($case->post_status == 'me-resolved') {
-                me_get_template('resolution/case-details/case-resolved', array('case' => $case));
+                marketengine_get_template('resolution/case-details/case-resolved', array('case' => $case));
             }
 
             ?>

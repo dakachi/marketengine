@@ -15,7 +15,7 @@ class Tests_ME_Inquiry_Handle extends WP_UnitTestCase {
         wp_set_current_user($this->user_1);
         $this->inquiry_data = array('customer_note' => 'Order note');
 
-        $this->order_id   = me_insert_order($this->order_data);
+        $this->order_id   = marketengine_insert_order($this->order_data);
         $this->parent_cat = $this->listing_category->create_object(array('taxonomy' => 'listing_category', 'name' => 'Cat 1'));
         $this->sub_cat    = $this->listing_category->create_object(array('taxonomy' => 'listing_category', 'name' => 'Sub Cat 1', 'parent' => $this->parent_cat));
 
@@ -30,7 +30,7 @@ class Tests_ME_Inquiry_Handle extends WP_UnitTestCase {
             'sub_cat'             => $this->sub_cat,
         );
         $p1            = ME_Listing_Handle::insert($listing_data);
-        $this->listing = me_get_listing($p1);
+        $this->listing = marketengine_get_listing($p1);
 
         $this->inquiry_data = array(
         	'send_inquiry' => $p1,
@@ -54,7 +54,7 @@ class Tests_ME_Inquiry_Handle extends WP_UnitTestCase {
     public function test_me_handle_inquiry() {
     	wp_set_current_user($this->user_2);
     	$id = ME_Inquiry_Handle::inquiry($this->inquiry_data);
-        $message = me_get_message($id);
+        $message = marketengine_get_message($id);
         $this->assertInstanceOf(ME_Message::class, $message);
     }
 

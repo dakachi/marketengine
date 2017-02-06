@@ -15,14 +15,14 @@
 
 	<div id="dispute-get-refund-yes" <?php echo  !isset($_POST['is_received_item']) || (isset($_POST['is_received_item']) && $_POST['is_received_item'] == 'true') ? 'class="active"' : ''; ?>>
 		<?php
-			$resolutions = me_rc_item_received_expected_solutions(true);
+			$resolutions = marketengine_rc_item_received_expected_solutions(true);
 			me_get_template('resolution/form/resolution-item', array('resolutions' => $resolutions));
 		?>
 	</div>
 
 	<div id="dispute-get-refund-no" <?php echo isset($_POST['is_received_item']) && $_POST['is_received_item'] == 'false' ? 'class="active"' : ''; ?>>
 		<?php
-			$resolutions = me_rc_item_not_received_expected_solutions();
+			$resolutions = marketengine_rc_item_not_received_expected_solutions();
 			me_get_template('resolution/form/resolution-item', array('resolutions' => $resolutions));
 		?>
 	</div>

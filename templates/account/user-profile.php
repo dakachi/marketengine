@@ -15,7 +15,7 @@ $user = ME()->get_current_user();
 
 <?php do_action('marketengine_before_user_profile', $user); ?>
 
-<?php me_print_notices(); ?>
+<?php marketengine_print_notices(); ?>
 
 <div class="me-authen-wrap me-authen-profile">
 
@@ -116,11 +116,11 @@ $user = ME()->get_current_user();
 
 		</div>
 		<div class="marketengine-text-field edit-profile">
-			<a href="<?php echo $user->is_activated() ? me_get_endpoint_url('edit-profile') : 'javascript:void(0)'; ?>" class="marketengine-btn <?php echo $user->is_activated() ? '' : 'me-disable-btn'; ?>"><?php _e("EDIT PROFILE", "enginethemes");?></a>
+			<a href="<?php echo $user->is_activated() ? marketengine_get_endpoint_url('edit-profile') : 'javascript:void(0)'; ?>" class="marketengine-btn <?php echo $user->is_activated() ? '' : 'me-disable-btn'; ?>"><?php _e("EDIT PROFILE", "enginethemes");?></a>
 		</div>
 
 		<?php if($user->is_activated()): ?>
-		<a href="<?php echo me_get_endpoint_url('change-password'); ?>" class="back-home-sigin me-backlink"><?php _e("Change Password", "enginethemes");?></a>
+		<a href="<?php echo marketengine_get_endpoint_url('change-password'); ?>" class="back-home-sigin me-backlink"><?php _e("Change Password", "enginethemes");?></a>
 		<?php else : ?>
 		<a href="<?php echo add_query_arg(array( 'resend-confirmation-email' => true, '_wpnonce' => wp_create_nonce('me-resend_confirmation_email') )); ?>" id="resend-confirmation-email" class="back-home-sigin me-backlink"><?php _e("Resend activation email", "enginethemes");?></a>
 		<?php endif; ?>

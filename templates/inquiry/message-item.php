@@ -1,7 +1,7 @@
 <li>
 	<a href="<?php echo get_author_posts_url($message->sender); ?>" >
 		<span class="me-mgs-author-avatar">
-			<?php echo me_get_avatar( $message->sender, '36'); ?>
+			<?php echo marketengine_get_avatar( $message->sender, '36'); ?>
 		</span>
 	</a>
 	<div class="me-message-author">

@@ -29,10 +29,10 @@ $query = new WP_Query( $args );
 		<div class="marketengine-filter">
 			<div class="marketengine-filter-listing pull-right">
 				<div class="filter-listing-status">
-					<select class="me-chosen-select" name="" id="" onchange="window.location.href='<?php echo me_get_auth_url('listings'); ?>' + this.value;">
+					<select class="me-chosen-select" name="" id="" onchange="window.location.href='<?php echo marketengine_get_auth_url('listings'); ?>' + this.value;">
 						<option value="<?php echo '?status=any'; ?>" <?php selected( $listing_status, 'any'); ?>><?php _e('All status', 'enginethemes'); ?></option>
 					<?php
-						$filter_options = me_listings_status_list();
+						$filter_options = marketengine_listings_status_list();
 						foreach( $filter_options as $key => $label) :
 					?>
 						<option value="<?php echo '?status=' . $key; ?>" <?php selected( $listing_status, $key); ?>><?php echo $label; ?></option>
@@ -85,7 +85,7 @@ $query = new WP_Query( $args );
 							$pricing_unit = $purchasion->get_pricing_unit();
 							?>
 								<span class="me-price pull-left">
-									<?php echo me_price_html( $price, $pricing_unit ) ?>
+									<?php echo marketengine_price_html( $price, $pricing_unit ) ?>
 								</span>
 
 								<div class="me-rating pull-right">
@@ -100,8 +100,8 @@ $query = new WP_Query( $args );
 							<div class="me-item-action">
 								<form method="post">
 
-								<?php me_get_template('account/my-listing-action', array( 'listing_status' => $listing_status, 'listing_id' => get_the_ID()) ); ?>
-								<?php wp_nonce_field( 'me_update_listing_status' ); ?>
+								<?php marketengine_get_template('account/my-listing-action', array( 'listing_status' => $listing_status, 'listing_id' => get_the_ID()) ); ?>
+								<?php wp_nonce_field( 'marketengine_update_listing_status' ); ?>
 									<input type="hidden" id="listing_id" value="<?php the_ID(); ?>" />
 									<input type="hidden" id="redirect_url" value="<?php echo $_SERVER['REQUEST_URI']; ?>" />
 
@@ -116,7 +116,7 @@ $query = new WP_Query( $args );
 			?>
 			</ul>
 			<div class="me-paginations">
-				<?php me_paginate_link ($query); ?>
+				<?php marketengine_paginate_link ($query); ?>
 			</div>
 		</div>
 
@@ -129,7 +129,7 @@ elseif(isset($_GET['status'])) : ?>
 					<select class="me-chosen-select" name="" id="" onchange="window.location.href=this.value;">
 						<option value="<?php echo '?status=any'; ?>" <?php selected( $listing_status, 'any'); ?>><?php _e('All status', 'enginethemes'); ?></option>
 					<?php
-						$filter_options = me_listings_status_list();
+						$filter_options = marketengine_listings_status_list();
 						foreach( $filter_options as $key => $label) :
 					?>
 						<option value="<?php echo '?status=' . $key; ?>" <?php selected( $listing_status, $key); ?>><?php echo $label; ?></option>
@@ -146,7 +146,7 @@ elseif(isset($_GET['status'])) : ?>
 	_e('Sorry! There are no listings matching your filter.');
 	echo '</p></div>';
 else:
-	me_get_template('account/my-listing-none');
+	marketengine_get_template('account/my-listing-none');
 endif;
 ?>
 </div>

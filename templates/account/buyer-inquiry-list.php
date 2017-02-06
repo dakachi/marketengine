@@ -18,7 +18,7 @@ $args = array(
 
 $role = 'sender';
 $request = array_map('esc_sql', $_GET);
-$args = array_merge(apply_filters( 'me_filter_inquiry', $request, $role ), $args);
+$args = array_merge(apply_filters( 'marketengine_filter_inquiry', $request, $role ), $args);
 $query = new ME_Message_Query($args);
 ?>
 <!-- Tabs Inquiries -->
@@ -29,7 +29,7 @@ $query = new ME_Message_Query($args);
 		<span><?php echo __('Filter list', 'enginethemes'); ?></span>
 	</div>
 	<!--/Mobile-->
-	<?php me_get_template('global/inquiry-filter', array('page' => 'purchases') ); ?>
+	<?php marketengine_get_template('global/inquiry-filter', array('page' => 'purchases') ); ?>
 
 	<?php if( $query->have_posts() ) : ?>
 
@@ -43,14 +43,14 @@ $query = new ME_Message_Query($args);
 
 			<?php
 				foreach( $query->posts as $inquiry ) :
-					$listing = me_get_listing($inquiry->post_parent);
-					$new_message = me_get_message_meta($inquiry->ID, '_me_sender_new_message', true);
+					$listing = marketengine_get_listing($inquiry->post_parent);
+					$new_message = marketengine_get_message_meta($inquiry->ID, '_me_sender_new_message', true);
 			?>
 
 			<div class="me-table-row">
 				<div class="me-table-col me-order-listing">
 					<div class="me-order-listing-info">
-						<p><a href="<?php echo me_inquiry_permalink($inquiry->ID); ?>"><?php echo $listing ? esc_html($listing->get_title()) : __('Deleted listing'); ?></a></p>
+						<p><a href="<?php echo marketengine_inquiry_permalink($inquiry->ID); ?>"><?php echo $listing ? esc_html($listing->get_title()) : __('Deleted listing'); ?></a></p>
 					</div>
 				</div>
 
@@ -84,7 +84,7 @@ $query = new ME_Message_Query($args);
 		</div>
 
 		<div class="me-paginations">
-			<?php me_paginate_link($query); ?>
+			<?php marketengine_paginate_link($query); ?>
 		</div>
 
 	<?php else: ?>

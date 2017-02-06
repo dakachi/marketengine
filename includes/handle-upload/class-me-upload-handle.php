@@ -55,13 +55,13 @@ class ME_Upload_Handle
             $attachment = self::handle_file($file, $filename);
             if ($attachment) {
                 if (!$_REQUEST['is_file']) {
-                    me_get_template('upload-file/multi-image-form', array(
+                    marketengine_get_template('upload-file/multi-image-form', array(
                         'image_id' => $attachment['id'],
                         'filename' => $filename,
                         'close'    => true,
                     ));
                 } else {
-                    me_get_template('upload-file/multi-file', array(
+                    marketengine_get_template('upload-file/multi-file', array(
                         'image_id' => $attachment['id'],
                         'filename' => $filename,
                         'close'    => true,
@@ -89,21 +89,21 @@ class ME_Upload_Handle
                     'inquiry_id' => $_REQUEST['inquiry_id'],
                 );
                 $result  = ME_Inquiry_Handle::insert_message($message_data);
-                $message = me_get_message($result);
-                me_get_template('inquiry/message-item', array('message' => $message));
+                $message = marketengine_get_message($result);
+                marketengine_get_template('inquiry/message-item', array('message' => $message));
                 exit;
             }
 
             if ($attachment) {
 
                 if (!$_REQUEST['is_file']) {
-                    me_get_template('upload-file/single-image-form', array(
+                    marketengine_get_template('upload-file/single-image-form', array(
                         'image_id' => $attachment['id'],
                         'filename' => $filename,
                         'close'    => true,
                     ));
                 } else {
-                    me_get_template('upload-file/single-file', array(
+                    marketengine_get_template('upload-file/single-file', array(
                         'image_id' => $attachment['id'],
                         'filename' => $filename,
                         'close'    => true,

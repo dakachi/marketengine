@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$winner = me_get_message_meta($case->ID, '_case_winner', true);
-$case_arbitrate = me_get_message_meta($case->ID, '_case_arbitrate', true);
+$winner = marketengine_get_message_meta($case->ID, '_case_winner', true);
+$case_arbitrate = marketengine_get_message_meta($case->ID, '_case_arbitrate', true);
 
 ?>
 

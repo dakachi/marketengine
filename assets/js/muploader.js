@@ -2,7 +2,7 @@
  * Created by agungbayu
  */
 (function($) {
-    $.fn.jUploader = function(options) {
+    $.fn.MaketEngineUploader = function(options) {
         var setting = {
             multi: false,
             runtimes: 'html5,flash,html4',

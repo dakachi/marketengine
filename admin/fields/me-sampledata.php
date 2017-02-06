@@ -66,7 +66,7 @@ class ME_Sampledata {
                         for (var i = 1; i <= 12; i++) {
                             $.ajax({
                                 type: 'post',
-                                url: me_globals.ajaxurl,
+                                url: marketengine_globals.ajaxurl,
                                 data: {
                                     action: 'me-add-sample-data',
                                     number : i,
@@ -113,7 +113,7 @@ class ME_Sampledata {
                         
                         $.ajax({
                             type: 'post',
-                            url: me_globals.ajaxurl,
+                            url: marketengine_globals.ajaxurl,
                             data: {
                                 action: 'me-remove-sample-data',
                                 _wpnonce: $('#_wpnonce').val()

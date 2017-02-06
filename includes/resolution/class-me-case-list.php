@@ -58,7 +58,7 @@ class ME_Case_List extends WP_List_Table
             $args['status'] = 'me-escalated';
         }
 
-        $query = me_rc_dispute_case_query($args);
+        $query = marketengine_rc_dispute_case_query($args);
 
         return (array)$query->posts;
     }
@@ -103,7 +103,7 @@ class ME_Case_List extends WP_List_Table
             $args['status'] = 'me-escalated';
         }
 
-        $query = me_rc_dispute_case_query($args);
+        $query = marketengine_rc_dispute_case_query($args);
 
         return $query->found_posts;
     }
@@ -149,12 +149,12 @@ class ME_Case_List extends WP_List_Table
         $item = (array)$item;
         switch ($column_name) {
             case 'case':
-	            $case_link = '<a href="'. me_rc_dispute_link($item['ID']) . '">#' .$item['ID'] .'</a>';
+	            $case_link = '<a href="'. marketengine_rc_dispute_link($item['ID']) . '">#' .$item['ID'] .'</a>';
 	            $author_link  = '<a href="' . get_author_posts_url( $item['sender'] ) . '">' . get_the_author_meta( 'display_name', $item['sender'] ) . '</a>';
 	            printf(__("%s by %s", "enginethemes"), $case_link, $author_link);
 	            break;
             case 'status':
-                echo me_dispute_status_label($item['post_status']);
+                echo marketengine_dispute_status_label($item['post_status']);
                 break;
             case 'date' :
              	echo date_i18n( get_option( 'date_format' ), strtotime($item['post_date']) );
@@ -186,7 +186,7 @@ class ME_Case_List extends WP_List_Table
      * @return mixed
      */
     public function table_detail_case($item) {
-        $transaction = me_get_order($item['post_parent']);
+        $transaction = marketengine_get_order($item['post_parent']);
         $listing_items = $transaction->get_listing_items();
         $listing_item = array_pop($listing_items);
         ?>
@@ -209,11 +209,11 @@ class ME_Case_List extends WP_List_Table
             </tr>
             <tr>
                 <td class="me-td-case-detail"><?php _e("Problem:", "enginethemes"); ?></td>
-                <td><?php echo me_rc_dispute_problem_text($item['ID']); ?></td>
+                <td><?php echo marketengine_rc_dispute_problem_text($item['ID']); ?></td>
             </tr>
             <tr>
                 <td class="me-td-case-detail"><?php _e("Buyer wants to:", "enginethemes"); ?></td>
-                <td><?php echo me_rc_case_expected_solution_label($item['ID']); ?></td>
+                <td><?php echo marketengine_rc_case_expected_solution_label($item['ID']); ?></td>
             </tr>
             <tr>
                 <td class="me-td-case-detail"><?php _e("Order ID:", "enginethemes"); ?></td>
@@ -225,7 +225,7 @@ class ME_Case_List extends WP_List_Table
             </tr>
             <tr>
                 <td class="me-td-case-detail"><?php _e("Total amount:", "enginethemes"); ?></td>
-                <td><?php echo me_price_format($transaction->get_total()); ?></td>
+                <td><?php echo marketengine_price_format($transaction->get_total()); ?></td>
             </tr>
             <tr>
                 <td class="me-td-case-detail"><?php _e("Order date:", "enginethemes"); ?></td>
@@ -237,7 +237,7 @@ class ME_Case_List extends WP_List_Table
             </tr>
             <tr>
                 <td>
-                <a href="<?php echo me_rc_dispute_link($item['ID']); ?>"><?php _e('View Details', 'enginethemes'); ?></a>
+                <a href="<?php echo marketengine_rc_dispute_link($item['ID']); ?>"><?php _e('View Details', 'enginethemes'); ?></a>
                 </td>
             </tr>
         </table>
@@ -268,7 +268,7 @@ class ME_Case_List extends WP_List_Table
     public function column_name($item)
     {
 
-        $delete_nonce = wp_create_nonce('me_delete_case');
+        $delete_nonce = wp_create_nonce('marketengine_delete_case');
 
         $title = '<strong>' . $item['name'] . '</strong>';
 
@@ -358,7 +358,7 @@ class ME_Case_List extends WP_List_Table
             // In our file that handles the request, verify the nonce.
             $nonce = esc_attr($_REQUEST['_wpnonce']);
 
-            if (!wp_verify_nonce($nonce, 'me_delete_case')) {
+            if (!wp_verify_nonce($nonce, 'marketengine_delete_case')) {
                 die('Go get a life script kiddies');
             } else {
                 self::delete_case(absint($_GET['customer']));
@@ -391,7 +391,7 @@ class ME_Case_List extends WP_List_Table
     }
 
     protected function get_views() { 
-        $status = me_dispute_statuses();
+        $status = marketengine_dispute_statuses();
 
         $counts = self::status_count();
 

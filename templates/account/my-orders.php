@@ -7,7 +7,7 @@
  * @package 	MarketEngine/Templates
  * @version     1.0.0
  */
-$redirect = me_get_auth_url('orders');
+$redirect = marketengine_get_auth_url('orders');
 ?>
 <div class="me-orderlist">
 	<div class="marketengine-tabs">
@@ -25,9 +25,9 @@ $redirect = me_get_auth_url('orders');
 			<div class="me-tabs-section">
 			<?php
 				if(empty($_GET['tab']) || $_GET['tab'] == 'order') :
-					me_get_template('account/order-list');
+					marketengine_get_template('account/order-list');
 				else :
-					me_get_template('account/seller-inquiry-list');
+					marketengine_get_template('account/seller-inquiry-list');
 				endif;
 				?>
 			</div>

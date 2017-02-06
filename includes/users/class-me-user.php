@@ -31,7 +31,7 @@ class ME_User {
     }
 
     public function is_activated() {
-        $is_required_email_confirmation = me_option('user-email-confirmation') ? true : false;
+        $is_required_email_confirmation = marketengine_option('user-email-confirmation') ? true : false;
         return (!$is_required_email_confirmation || !get_user_meta($this->id, 'activate_email_key', true));
     }
 

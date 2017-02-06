@@ -118,7 +118,7 @@ class ME_Listing_Handle
         $current_user_id    = get_current_user_id();
         $listing_data['ID'] = absint( $listing_data['edit'] );
 
-        $listing                     = me_get_listing($listing_data['ID']);
+        $listing                     = marketengine_get_listing($listing_data['ID']);
         $listing_data['post_author'] = $listing->post_author;
 
         $listing_type = $listing->get_listing_type();
@@ -260,7 +260,7 @@ class ME_Listing_Handle
      *
      * @since 1.0
      *
-     * @see me_validate
+     * @see marketengine_validate
      * @param array $data Listing data
      *
      * @return True|WP_Error True if success, WP_Error if false
@@ -290,9 +290,9 @@ class ME_Listing_Handle
         );
 
         $rules    = apply_filters('marketengine_insert_listing_rules', $rules, $listing_data);
-        $is_valid = me_validate($listing_data, $rules, $custom_attributes);
+        $is_valid = marketengine_validate($listing_data, $rules, $custom_attributes);
         if (!$is_valid) {
-            $invalid_data = me_get_invalid_message($listing_data, $rules, $custom_attributes);
+            $invalid_data = marketengine_get_invalid_message($listing_data, $rules, $custom_attributes);
         }
 
         if (!empty($listing_data['listing_type'])) {
@@ -313,9 +313,9 @@ class ME_Listing_Handle
             $listing_meta_data_rules = self::get_listing_type_fields_rule($listing_data['listing_type']);
 
             // validate post meta data
-            $is_valid = me_validate($listing_data['meta_input'], $listing_meta_data_rules['rules'], $listing_meta_data_rules['custom_attributes']);
+            $is_valid = marketengine_validate($listing_data['meta_input'], $listing_meta_data_rules['rules'], $listing_meta_data_rules['custom_attributes']);
             if (!$is_valid) {
-                $invalid_data = array_merge($invalid_data, me_get_invalid_message($listing_data['meta_input'], $listing_meta_data_rules['rules'], $listing_meta_data_rules['custom_attributes']));
+                $invalid_data = array_merge($invalid_data, marketengine_get_invalid_message($listing_data['meta_input'], $listing_meta_data_rules['rules'], $listing_meta_data_rules['custom_attributes']));
             }
 
             // validate listing category
@@ -374,7 +374,7 @@ class ME_Listing_Handle
             return array('invalid_listing_category' => __("The selected listing category is invalid.", "enginethemes"));
         }
         
-        $listing_type_categories = me_get_listing_type_categories();
+        $listing_type_categories = marketengine_get_listing_type_categories();
         if(!$is_update && !in_array($listing_data['parent_cat'], $listing_type_categories['all'])) {
             return array('no_support_category' => __("The selected listing category is not support in any listing type.", "enginethemes"));   
         }
@@ -402,7 +402,7 @@ class ME_Listing_Handle
 
                 $invalid_data['unsupported_type'] = sprintf(
                     __("The listing type %s is not supported in category %s.", "enginethemes"),
-                    me_get_listing_type_label($listing_type),
+                    marketengine_get_listing_type_label($listing_type),
                     $term->name
                 );
             }
@@ -471,9 +471,9 @@ class ME_Listing_Handle
          * @since 1.0
          */
         $rules    = apply_filters('marketengine_insert_review_rules', $rules, $data);
-        $is_valid = me_validate($data, $rules, $custom_attributes);
+        $is_valid = marketengine_validate($data, $rules, $custom_attributes);
         if (!$is_valid) {
-            $invalid_data = me_get_invalid_message($data, $rules, $custom_attributes);
+            $invalid_data = marketengine_get_invalid_message($data, $rules, $custom_attributes);
         }
 
         if (!empty($invalid_data)) {
@@ -493,7 +493,7 @@ class ME_Listing_Handle
         }
 
         $listing_id = absint( $data['listing_id'] );
-        $listing    = me_get_listing($listing_id);
+        $listing    = marketengine_get_listing($listing_id);
         if (!$listing || is_wp_error($listing)) {
             return new WP_Error('invalid_listing', __("The reviewed listing is invalid.", "enginethemes"));
         }
@@ -525,12 +525,12 @@ class ME_Listing_Handle
             return new WP_Error('duplicationde', sprintf(__("You have already review on %s.", 'enginethemes'), esc_html(get_the_title($listing_id))));
         }
 
-        $review_item = me_get_order_items($order->ID, 'review_item');
+        $review_item = marketengine_get_order_items($order->ID, 'review_item');
         if (empty($review_item)) {
-            $order_item_id = me_add_order_item($order->ID, esc_html(get_the_title($listing_id)), 'review_item');
-            me_add_order_item_meta($order_item_id, '_listing_id', $listing_id);
-            me_add_order_item_meta($order_item_id, '_review_score', absint( $data['score'] ));
-            me_add_order_item_meta($order_item_id, '_review_content', sanitize_textarea_field( $data['content'] ));
+            $order_item_id = marketengine_add_order_item($order->ID, esc_html(get_the_title($listing_id)), 'review_item');
+            marketengine_add_order_item_meta($order_item_id, '_listing_id', $listing_id);
+            marketengine_add_order_item_meta($order_item_id, '_review_score', absint( $data['score'] ));
+            marketengine_add_order_item_meta($order_item_id, '_review_content', sanitize_textarea_field( $data['content'] ));
         }
 
         $commentdata = array(
@@ -621,7 +621,7 @@ class ME_Listing_Handle
     {
         global $wpdb;
 
-        $listing      = me_get_listing($listing_id);
+        $listing      = marketengine_get_listing($listing_id);
         $listing_name = $listing->get_title();
 
         $sql = "SELECT COUNT(OI.order_id) as count, O.post_status as status
@@ -633,7 +633,7 @@ class ME_Listing_Handle
                 GROUP BY O.post_status";
 
         $results = $wpdb->get_results($sql);
-        $results = me_filter_order_count_result($results);
+        $results = marketengine_filter_order_count_result($results);
 
         if (isset($results['me-complete'])) {
             update_post_meta($listing_id, '_me_order_count', $results['me-complete']);

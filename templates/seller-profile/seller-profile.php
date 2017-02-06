@@ -19,7 +19,7 @@ $user_id = absint( get_query_var( 'author' ) );
 				<div class="me-row">
 					<div class="me-col-md-3">
 						<div class="me-content-sidebar">
-							<?php me_get_template('seller-profile/seller-info', array('user_id' => $user_id) ); ?>
+							<?php marketengine_get_template('seller-profile/seller-info', array('user_id' => $user_id) ); ?>
 						</div>
 					</div>
 					<div class="me-col-md-9">
@@ -42,7 +42,7 @@ $user_id = absint( get_query_var( 'author' ) );
 								</ul>
 
 								<div class="me-tabs-container">
-									<?php me_get_template('seller-profile/content-seller-profile', array ('user_id' => $user_id) ); ?>
+									<?php marketengine_get_template('seller-profile/content-seller-profile', array ('user_id' => $user_id) ); ?>
 								</div>
 							</div>
 						</div>

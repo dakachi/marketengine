@@ -53,7 +53,7 @@ class ME_RC_Query
      */
     public function add_enpoint()
     {
-        $option_value = me_option('ep_resolution-center');
+        $option_value = marketengine_option('ep_resolution-center');
         if (!$option_value) {
             $option_value = 'resolution-center';
         }
@@ -82,7 +82,7 @@ class ME_RC_Query
      */
     public function rewrite_case_detail_url()
     {
-        $endpoint = trim(me_option('ep_case'));
+        $endpoint = trim(marketengine_option('ep_case'));
         $endpoint  = $endpoint ? $endpoint : 'case';
         add_rewrite_rule($endpoint . '/([0-9]+)/?$', 'index.php?case_type=dispute&case_id=$matches[1]', 'top');
     }
@@ -92,7 +92,7 @@ class ME_RC_Query
         if (get_query_var('case_type')) {
             $current_user_id = get_current_user_id();
             $case_id         = absint( get_query_var('case_id') );
-            $case            = me_get_message($case_id);
+            $case            = marketengine_get_message($case_id);
 
             if (!$case) {
                 return;

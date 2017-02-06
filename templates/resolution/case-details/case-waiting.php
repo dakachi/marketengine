@@ -11,7 +11,7 @@
                 </p>
             </div>
         </div>
-        <?php me_get_template('resolution/case-details/buyer-escalate-button', array('case' => $case)); ?>
+        <?php marketengine_get_template('resolution/case-details/buyer-escalate-button', array('case' => $case)); ?>
     </div>
 
 <?php else : ?>
@@ -24,7 +24,7 @@
             </div>
 
         </div>
-        <?php me_get_template('resolution/case-details/seller-escalate-button', array('case' => $case)); ?>
+        <?php marketengine_get_template('resolution/case-details/seller-escalate-button', array('case' => $case)); ?>
     </div>
 
 <?php endif; ?>

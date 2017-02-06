@@ -19,7 +19,7 @@ $args = array(
 $role = 'receiver';
 
 $request = array_map('esc_sql', $_GET);
-$args = array_merge(apply_filters( 'me_filter_inquiry', $request, $role ), $args);
+$args = array_merge(apply_filters( 'marketengine_filter_inquiry', $request, $role ), $args);
 $query = new ME_Message_Query($args);
 
 ?>
@@ -31,7 +31,7 @@ $query = new ME_Message_Query($args);
 		<span><?php echo __('Filter list', 'enginethemes'); ?></span>
 	</div>
 	<!--/Mobile-->
-	<?php me_get_template('global/inquiry-filter', array('page' => 'orders') ); ?>
+	<?php marketengine_get_template('global/inquiry-filter', array('page' => 'orders') ); ?>
 
 	
 	<?php if( $query->have_posts() ) : ?>
@@ -44,14 +44,14 @@ $query = new ME_Message_Query($args);
 			</div>
 			<?php
 				foreach( $query->posts as $inquiry ) :
-					$listing = me_get_listing($inquiry->post_parent);
-					$new_message = me_get_message_meta($inquiry->ID, '_me_recevier_new_message', true);
+					$listing = marketengine_get_listing($inquiry->post_parent);
+					$new_message = marketengine_get_message_meta($inquiry->ID, '_me_recevier_new_message', true);
 			?>
 
 			<div class="me-table-row">
 				<div class="me-table-col me-order-buyer">
 					<div class="me-order-listing-info">
-						<p><a href="<?php echo me_inquiry_permalink($inquiry->ID); ?>"><?php echo get_the_author_meta( 'display_name', $inquiry->sender ); ?></a></p>
+						<p><a href="<?php echo marketengine_inquiry_permalink($inquiry->ID); ?>"><?php echo get_the_author_meta( 'display_name', $inquiry->sender ); ?></a></p>
 					</div>
 				</div>
 
@@ -65,7 +65,7 @@ $query = new ME_Message_Query($args);
 					<?php endif; ?>
 				<?php endif; ?>
 
-				<?php me_get_template('account/archived-listing-notice', array('listing_obj' => $listing)); ?>
+				<?php marketengine_get_template('account/archived-listing-notice', array('listing_obj' => $listing)); ?>
 
 				<div class="me-table-col me-order-listing"><?php echo $listing ? esc_html($listing->get_title()) : __('Deleted listing', 'enginethemes'); ?></div>
 				<div class="me-table-col me-order-date-contact"><?php echo date_i18n( get_option( 'date_format' ), strtotime( $inquiry->post_modified ) ); ?></div>
@@ -77,7 +77,7 @@ $query = new ME_Message_Query($args);
 		</div>
 
 		<div class="me-paginations">
-			<?php me_paginate_link($query); ?>
+			<?php marketengine_paginate_link($query); ?>
 		</div>
 
 	<?php else : ?>

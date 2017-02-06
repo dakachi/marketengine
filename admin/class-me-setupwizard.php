@@ -34,7 +34,7 @@ class ME_Setup_Wizard
     }
 
     public function notices() {
-    	if(!me_option('finish_wizard')) {
+    	if(!marketengine_option('finish_wizard')) {
     		$skip_setup_nonce = wp_create_nonce('skip_setup_wizard');
     	?>
 		<div id="message" class="updated marketengine-message me-setup-notices">
@@ -128,8 +128,8 @@ class ME_Setup_Wizard
 
     private function get_listing_type_category_option() {
     	// setup category for setup listing type
-    	$purchase_available = me_option('purchasion-available', array());
-    	$contact_available = me_option('contact-available', array());
+    	$purchase_available = marketengine_option('purchasion-available', array());
+    	$contact_available = marketengine_option('contact-available', array());
 
     	$purchase_category_option = '';
     	$contact_category_option = '';
@@ -187,7 +187,7 @@ class ME_Setup_Wizard
         wp_register_script('setup-wizard.js', MARKETENGINE_URL . 'assets/admin/setup-wizard.js', array('jquery'));
         wp_localize_script(
             'setup-wizard.js',
-            'me_globals',
+            'marketengine_globals',
             array(
                 'ajaxurl'       => admin_url('admin-ajax.php'),
                 'reload_notice' => __("Data will be lost if you leave the page, are you sure?", "enginethemes"),
@@ -212,7 +212,7 @@ class ME_Setup_Wizard
 			<title><?php _e('MarketEngine &rsaquo; Setup Wizard', 'enginethemes');?></title>
 			<?php
 				wp_print_scripts('setup-wizard.js');
-        		wp_enqueue_style('me_font_icon', MARKETENGINE_URL . 'assets/css/marketengine-font-icon.css');
+        		wp_enqueue_style('marketengine_font_icon', MARKETENGINE_URL . 'assets/css/marketengine-font-icon.css');
         		wp_enqueue_style('setup-wizard.css', MARKETENGINE_URL . 'assets/admin/setup-wizard.css');
         	?>
 			<?php do_action('admin_print_styles');?>
@@ -328,7 +328,7 @@ class ME_Setup_Wizard
 					</div>
 					<div class="me-sfield-group">
 						<label for=""><?php _e("2- What is your commission fee?", "enginethemes");?></label>
-						<input id="me-setup-commission" class="me-input-price" name="commission" type="number" min="0" value="<?php echo me_option('paypal-commission-fee', 0); ?>">
+						<input id="me-setup-commission" class="me-input-price" name="commission" type="number" min="0" value="<?php echo marketengine_option('paypal-commission-fee', 0); ?>">
 						<span>%</span>
 					</div>
 					<div class="me-sfield-group">
@@ -360,12 +360,12 @@ class ME_Setup_Wizard
 						<div class="me-sfield-group">
 							<label for=""><?php _e("1- Title", "enginethemes");?></label>
 							<span><?php _e('The labels will be shown as listing type allowing user to filter. "Selling" is set by default', "enginethemes"); ?></span>
-							<input type="text" name="purchasion_title" placeholder="<?php _e("Selling", "enginethemes"); ?>" value="<?php echo me_option('purchasion-title'); ?>">
+							<input type="text" name="purchasion_title" placeholder="<?php _e("Selling", "enginethemes"); ?>" value="<?php echo marketengine_option('purchasion-title'); ?>">
 						</div>
 						<div class="me-sfield-group">
 							<label for=""><?php _e("2- Text Button", "enginethemes");?></label>
 							<span><?php _e("\"BUY NOW\" is set by default. But you can enter the text button to demonstrate the behavior that user can do", "enginethemes"); ?></span>
-							<input type="text" name="purchasion_action" placeholder="<?php _e("BUY NOW", "enginethemes"); ?>" value="<?php echo me_option('purchasion-action'); ?>">
+							<input type="text" name="purchasion_action" placeholder="<?php _e("BUY NOW", "enginethemes"); ?>" value="<?php echo marketengine_option('purchasion-action'); ?>">
 						</div>
 						<div class="me-sfield-group">
 							<label for=""><?php _e("3- Available Categories", "enginethemes");?></label>
@@ -381,12 +381,12 @@ class ME_Setup_Wizard
 						<div class="me-sfield-group">
 							<label for=""><?php _e("1- Title", "enginethemes");?></label>
 							<span><?php _e('The labels will be shown as listing type allowing user to filter. "Offering" is set by default', "enginethemes"); ?></span>
-							<input type="text" name="contact_title" placeholder="<?php _e("Offering", "enginethemes"); ?>" value="<?php echo me_option('contact-title'); ?>">
+							<input type="text" name="contact_title" placeholder="<?php _e("Offering", "enginethemes"); ?>" value="<?php echo marketengine_option('contact-title'); ?>">
 						</div>
 						<div class="me-sfield-group">
 							<label for=""><?php _e("2- Text Button", "enginethemes");?></label>
 							<span><?php _e("\"CONTACT\" is set by default. But you can enter the text button to demonstrate the behavior that user can do", "enginethemes"); ?></span>
-							<input type="text" name="contact_action" placeholder="<?php _e("CONTACT", "enginethemes"); ?>" value="<?php echo me_option('contact-action'); ?>">
+							<input type="text" name="contact_action" placeholder="<?php _e("CONTACT", "enginethemes"); ?>" value="<?php echo marketengine_option('contact-action'); ?>">
 						</div>
 						<div class="me-sfield-group">
 							<label for=""><?php _e("3- Available Categories", "enginethemes");?></label>

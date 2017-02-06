@@ -5,7 +5,7 @@ jQuery(document).ready(function($){
 			_status = $(this).data('status'),
 			_lising_id = form.children('#listing_id').val();
 		data = {
-			action: 'me_update_listing_status',
+			action: 'marketengine_update_listing_status',
 			status: _status,
 			listing_id: _lising_id,
 			redirect_url: form.children('#redirect_url').val(),

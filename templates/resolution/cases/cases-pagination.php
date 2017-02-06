@@ -10,5 +10,5 @@
  */
 ?>
 <div class="me-paginations">
-	<?php me_paginate_link($query); ?>
+	<?php marketengine_paginate_link($query); ?>
 </div>

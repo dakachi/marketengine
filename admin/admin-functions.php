@@ -17,10 +17,10 @@
  * @category    Admin
  * @since       1.0.1
  */
-function me_admin_notice_filter( $notices ) {
+function marketengine_admin_notice_filter( $notices ) {
 
-	$payment_setting = me_check_payment_setting();	
-	$link = me_menu_page_url('me-settings', 'payment-gateways');
+	$payment_setting = marketengine_check_payment_setting();	
+	$link = marketengine_menu_page_url('me-settings', 'payment-gateways');
 
 	if( !$payment_setting && 'me-settings' === $_GET['page']) {
 		$notices['payment_gateway_error'] = sprintf(__("Your site currently can't process payment yet, since your PayPal API hasn't been set up correctly.<br/>Please visit <a href='%s'>this page</a> to fix the issue."), $link );
@@ -28,7 +28,7 @@ function me_admin_notice_filter( $notices ) {
 
 	return $notices;
 }
-add_filter('me_admin_notices', 'me_admin_notice_filter');
+add_filter('marketengine_admin_notices', 'marketengine_admin_notice_filter');
 
 
 /**
@@ -37,12 +37,12 @@ add_filter('me_admin_notices', 'me_admin_notice_filter');
  * @category    Admin
  * @since       1.0.1
  */
-function me_check_payment_setting() {
-	$paypal_email = me_option('paypal-receiver-email');
-	$paypal_app_id = me_option('paypal-app-api');
-	$paypal_api_username = me_option('paypal-api-username');
-	$paypal_api_password = me_option('paypal-api-password');
-	$paypal_api_signature = me_option('paypal-api-signature');
+function marketengine_check_payment_setting() {
+	$paypal_email = marketengine_option('paypal-receiver-email');
+	$paypal_app_id = marketengine_option('paypal-app-api');
+	$paypal_api_username = marketengine_option('paypal-api-username');
+	$paypal_api_password = marketengine_option('paypal-api-password');
+	$paypal_api_signature = marketengine_option('paypal-api-signature');
 
 	return ( isset( $paypal_email ) && !empty( $paypal_email ) && is_email( $paypal_email )
 			&& isset( $paypal_app_id ) && !empty( $paypal_app_id )
@@ -65,7 +65,7 @@ function me_check_payment_setting() {
  * @param bool $echo Whether or not to echo the url - default is true
  * @return string the url
  */
-function me_menu_page_url( $menu_slug = 'me-settings', $tab = '', $echo = false) {
+function marketengine_menu_page_url( $menu_slug = 'me-settings', $tab = '', $echo = false) {
 	global $_parent_pages;
 
 	if ( isset( $_parent_pages[$menu_slug] ) ) {

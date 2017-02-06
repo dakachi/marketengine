@@ -25,7 +25,7 @@ $quant = empty($_REQUEST['quant']) ? 'day' : esc_attr( $_REQUEST['quant'] );
 		<div class="me-section-content">
 			<div class="me-revenue-section">
 				<h3><?php _e("Report Orders", "enginethemes"); ?></h3>
-				<?php me_get_template('admin/filter'); ?>
+				<?php marketengine_get_template('admin/filter'); ?>
 				<div class="me-table me-report-table">
 					<div class="me-table-rhead">
 						<div class="me-table-col">
@@ -58,12 +58,12 @@ $quant = empty($_REQUEST['quant']) ? 'day' : esc_attr( $_REQUEST['quant'] );
 					<?php }else { ?>
 						</div>
 						<div class="me-result-filter">
-							<?php me_get_template('admin/report-none'); ?>
+							<?php marketengine_get_template('admin/report-none'); ?>
 						</div>
 						
 					<?php } ?>
 				<!-- </div> -->
-				<?php me_get_template('admin/pagination', array('query' => $orders)); ?>
+				<?php marketengine_get_template('admin/pagination', array('query' => $orders)); ?>
 			</div>
 		</div>
 	</div>

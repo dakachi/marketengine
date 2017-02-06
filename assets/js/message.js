@@ -1,9 +1,6 @@
 /* global me_globals.ajaxurl, wpAjax*/
-/**
- * Created by agungbayu
- */
 (function($) {
-    $.fn.messageUploader = function(options) {
+    $.fn.MakertEngineMessageUploader = function(options) {
         var setting = {
             multi: false,
             runtimes: 'html5,flash,html4',
@@ -174,7 +171,7 @@
                     type: 'post',
                     url: me_globals.ajaxurl,
                     data: {
-                        action: 'me_send_message',
+                        action: 'marketengine_send_message',
                         type: settings.type,
                         inquiry_id: settings.parent,
                         content: content,
@@ -195,7 +192,7 @@
                 });
             });
             // setup uploader
-            $elem.messageUploader({
+            $elem.MakertEngineMessageUploader({
                 multi: false,
                 removable: false,
                 name: 'message_file',

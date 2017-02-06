@@ -17,7 +17,7 @@ class ME_RC_Form_Handle
     {
         $sender = get_current_user_id();
 
-        $transaction = me_get_order($case_data['transaction-id']);
+        $transaction = marketengine_get_order($case_data['transaction-id']);
 
         if (!$transaction) {
             return new WP_Error('order_not_found', __('The transaction does not exist.', 'enginethemes'));
@@ -72,7 +72,7 @@ class ME_RC_Form_Handle
         $data    = array_merge($data, $case_data);
         $case_id = self::create_dispute($data, $transaction);
 
-        me_dispute_order($transaction->id);
+        marketengine_dispute_order($transaction->id);
         do_action('marketengine_after_dispute', $transaction->id, $case_id, $transaction);
 
         return $case_id;
@@ -87,7 +87,7 @@ class ME_RC_Form_Handle
      */
     public static function debate($data)
     {
-        $case = me_get_message(absint($data['dispute']));
+        $case = marketengine_get_message(absint($data['dispute']));
         if (!$case) {
             return new WP_Error('invalid_case', __("Invalid case.", "enginethemes"));
         }
@@ -131,22 +131,22 @@ class ME_RC_Form_Handle
      */
     public static function create_dispute($data, $transaction)
     {
-        $case_id = me_insert_message($data);
+        $case_id = marketengine_insert_message($data);
         if ($case_id) {
 
-            me_update_message_meta($case_id, '_case_problem', sanitize_text_field($data['dispute_problem']));
-            me_update_message_meta($case_id, '_case_problem_description', sanitize_text_field($data['dispute_content']));
-            me_update_message_meta($case_id, '_case_expected_resolution', sanitize_text_field($data['expect_solution']));
+            marketengine_update_message_meta($case_id, '_case_problem', sanitize_text_field($data['dispute_problem']));
+            marketengine_update_message_meta($case_id, '_case_problem_description', sanitize_text_field($data['dispute_content']));
+            marketengine_update_message_meta($case_id, '_case_expected_resolution', sanitize_text_field($data['expect_solution']));
 
             if ($data['is_received_item']) {
-                me_update_message_meta($case_id, '_case_is_received_item', sanitize_text_field($data['is_received_item']));
+                marketengine_update_message_meta($case_id, '_case_is_received_item', sanitize_text_field($data['is_received_item']));
             }
 
             $data['post_parent'] = $case_id;
             $data['case_id']     = $case_id;
             self::create_dispute_message($data);
             // add revision
-            self::add_dispute_revision('me-open', me_get_message($case_id));
+            self::add_dispute_revision('me-open', marketengine_get_message($case_id));
             // email seller
             self::new_dispute_notify($data, $transaction);
         }
@@ -167,7 +167,7 @@ class ME_RC_Form_Handle
             $data['post_content'] .= '[me_message_file id=' . join(',', $data['dispute_file']) . ' ]';
         }
 
-        return me_insert_message($data);
+        return marketengine_insert_message($data);
     }
 
     /**
@@ -186,11 +186,11 @@ class ME_RC_Form_Handle
             'order_link'   => $transaction->get_order_detail_url(),
             'order'        => $transaction,
             'order_id'     => $transaction->id,
-            'dispute_link' => me_rc_dispute_link($data['case_id']),
+            'dispute_link' => marketengine_rc_dispute_link($data['case_id']),
         );
         // get dispute mail content from template
         ob_start();
-        me_get_template('resolution/emails/dispute-email', $args);
+        marketengine_get_template('resolution/emails/dispute-email', $args);
         $dispute_mail_content = ob_get_clean();
 
         $user = get_userdata($data['receiver']);
@@ -213,7 +213,7 @@ class ME_RC_Form_Handle
      */
     public static function request_close($dispute_id)
     {
-        $dispute = me_get_message(absint($dispute_id));
+        $dispute = marketengine_get_message(absint($dispute_id));
         if (!$dispute) {
             return new WP_Error('invalid_case', __("Invalid case id.", "enginethemes"));
         }
@@ -222,7 +222,7 @@ class ME_RC_Form_Handle
             return new WP_Error('permission_denied', __("You can not request to close this case.", "enginethemes"));
         }
 
-        $dispute_id = me_update_message(array('ID' => $dispute_id, 'post_status' => 'me-waiting'));
+        $dispute_id = marketengine_update_message(array('ID' => $dispute_id, 'post_status' => 'me-waiting'));
 
         // add revision
         self::add_dispute_revision('me-waiting', $dispute);
@@ -238,11 +238,11 @@ class ME_RC_Form_Handle
             'display_name' => get_the_author_meta('display_name', $dispute->sender),
             'seller_name'  => get_the_author_meta('display_name', $dispute->receiver),
             'blogname'     => get_bloginfo('blogname'),
-            'dispute_link' => me_rc_dispute_link($dispute->ID),
+            'dispute_link' => marketengine_rc_dispute_link($dispute->ID),
         );
         // get dispute mail content from template
         ob_start();
-        me_get_template('resolution/emails/request-close', $args);
+        marketengine_get_template('resolution/emails/request-close', $args);
         $request_close_mail_content = ob_get_clean();
 
         $user = get_userdata($dispute->sender);
@@ -264,7 +264,7 @@ class ME_RC_Form_Handle
      */
     public static function close($case_id)
     {
-        $dispute = me_get_message(absint($case_id));
+        $dispute = marketengine_get_message(absint($case_id));
         if (!$dispute) {
             return new WP_Error('invalid_case', __("Invalid case id.", "enginethemes"));
         }
@@ -273,12 +273,12 @@ class ME_RC_Form_Handle
             return new WP_Error('permission_denied', __("You can not close this case.", "enginethemes"));
         }
 
-        $case_id = me_update_message(array('ID' => $case_id, 'post_status' => 'me-closed'));
+        $case_id = marketengine_update_message(array('ID' => $case_id, 'post_status' => 'me-closed'));
         // add revision
         self::add_dispute_revision('me-closed', $dispute);
         self::close_notify($dispute);
 
-        me_resolve_order($dispute->post_parent);
+        marketengine_resolve_order($dispute->post_parent);
 
         return $case_id;
 
@@ -291,11 +291,11 @@ class ME_RC_Form_Handle
             'display_name' => get_the_author_meta('display_name', $dispute->receiver),
             'buyer_name'   => get_the_author_meta('display_name', $dispute->sender),
             'blogname'     => get_bloginfo('blogname'),
-            'dispute_link' => me_rc_dispute_link($dispute->ID),
+            'dispute_link' => marketengine_rc_dispute_link($dispute->ID),
         );
         // get dispute mail content from template
         ob_start();
-        me_get_template('resolution/emails/close-dispute', $args);
+        marketengine_get_template('resolution/emails/close-dispute', $args);
         $close_dispute_mail_content = ob_get_clean();
 
         $user = get_userdata($dispute->receiver);
@@ -313,7 +313,7 @@ class ME_RC_Form_Handle
 
     public static function escalate($case_data)
     {
-        $case = me_get_message(absint($case_data['dispute']));
+        $case = marketengine_get_message(absint($case_data['dispute']));
         if (!$case) {
             return new WP_Error('invalid_case', __("Invalid case id.", "enginethemes"));
         }
@@ -327,8 +327,8 @@ class ME_RC_Form_Handle
             return new WP_Error('permission_denied', __("The escalte content is required.", "enginethemes"));
         }
 
-        $case_id = me_update_message(array('ID' => $case->ID, 'post_status' => 'me-escalated'));
-        me_update_message_meta($case_id, '_escalated_by', $current_user_id);
+        $case_id = marketengine_update_message(array('ID' => $case->ID, 'post_status' => 'me-escalated'));
+        marketengine_update_message_meta($case_id, '_escalated_by', $current_user_id);
 
         self::debate($case_data);
         self::add_dispute_revision('me-escalated', $case);
@@ -348,7 +348,7 @@ class ME_RC_Form_Handle
     public static function escalate_notify_buyer($dispute)
     {
         $subject     = __("Your dispute has been escalated.", "enginethemes");
-        $transaction = me_get_order($dispute->post_parent);
+        $transaction = marketengine_get_order($dispute->post_parent);
         $buyer_id    = $dispute->sender;
         $seller_id   = $dispute->receiver;
 
@@ -356,14 +356,14 @@ class ME_RC_Form_Handle
             'display_name' => get_the_author_meta('display_name', $buyer_id),
             'seller_name'  => get_the_author_meta('display_name', $seller_id),
             'blogname'     => get_bloginfo('blogname'),
-            'dispute_link' => me_rc_dispute_link($dispute->ID),
+            'dispute_link' => marketengine_rc_dispute_link($dispute->ID),
             'order_link'   => $transaction->get_order_detail_url(),
             'order'        => $transaction,
             'order_id'     => $transaction->id,
         );
         // get dispute mail content from template
         ob_start();
-        me_get_template('resolution/emails/escalate-to-buyer', $args);
+        marketengine_get_template('resolution/emails/escalate-to-buyer', $args);
         $escalate_buyer_mail_content = ob_get_clean();
 
         $buyer = get_userdata($buyer_id);
@@ -382,7 +382,7 @@ class ME_RC_Form_Handle
     public static function escalate_notify_seller($dispute)
     {
         $subject     = __("Your dispute has been escalated.", "enginethemes");
-        $transaction = me_get_order($dispute->post_parent);
+        $transaction = marketengine_get_order($dispute->post_parent);
         $buyer_id    = $dispute->sender;
         $seller_id   = $dispute->receiver;
 
@@ -390,14 +390,14 @@ class ME_RC_Form_Handle
             'display_name' => get_the_author_meta('display_name', $seller_id),
             'buyer_name'   => get_the_author_meta('display_name', $buyer_id),
             'blogname'     => get_bloginfo('blogname'),
-            'dispute_link' => me_rc_dispute_link($dispute->ID),
+            'dispute_link' => marketengine_rc_dispute_link($dispute->ID),
             'order_link'   => $transaction->get_order_detail_url(),
             'order'        => $transaction,
             'order_id'     => $transaction->id,
         );
         // get dispute mail content from template
         ob_start();
-        me_get_template('resolution/emails/escalate-to-seller', $args);
+        marketengine_get_template('resolution/emails/escalate-to-seller', $args);
         $escalate_seller_mail_content = ob_get_clean();
 
         $seller = get_userdata($seller_id);
@@ -416,13 +416,13 @@ class ME_RC_Form_Handle
     public static function escalate_notify_admin($dispute, $sender)
     {
         $subject     = sprintf(__("Dispute on the transaction #%d has been escalated.", "enginethemes"), $dispute->post_parent);
-        $transaction = me_get_order($dispute->post_parent);
+        $transaction = marketengine_get_order($dispute->post_parent);
 
         $args = array(
             'display_name' => 'Admin',
             'sender_name'  => get_the_author_meta('display_name', $sender),
             'blogname'     => get_bloginfo('blogname'),
-            'dispute_link' => me_rc_dispute_link($dispute->ID),
+            'dispute_link' => marketengine_rc_dispute_link($dispute->ID),
             'order_link'   => $transaction->get_order_detail_url(),
             'order'        => $transaction,
             'order_id'     => $transaction->id,
@@ -431,9 +431,9 @@ class ME_RC_Form_Handle
         // get dispute mail content from template
         ob_start();
         if ($sender == $dispute->sender) {
-            me_get_template('resolution/emails/buyer-escalate-to-admin', $args);
+            marketengine_get_template('resolution/emails/buyer-escalate-to-admin', $args);
         } else {
-            me_get_template('resolution/emails/seller-escalate-to-admin', $args);
+            marketengine_get_template('resolution/emails/seller-escalate-to-admin', $args);
         }
         $escalate_admin_mail_content = ob_get_clean();
 
@@ -455,7 +455,7 @@ class ME_RC_Form_Handle
         if (!current_user_can('manage_options')) {
             return new WP_Error('permission_denied', __("You do not have permission to resolve case.", "enginethemes"));
         }
-        $dispute = me_get_message($case_data['dispute']);
+        $dispute = marketengine_get_message($case_data['dispute']);
         if ($dispute->post_status !== 'me-escalated') {
             return new WP_Error('invalid_case', __("You can not resolve this case.", "enginethemes"));
         }
@@ -468,28 +468,28 @@ class ME_RC_Form_Handle
             return new WP_Error('empty_content', __("The arbitrate content is required.", "enginethemes"));
         }
         $winner = absint( $case_data['me-dispute-win'] );
-        $case_id = me_update_message(array('ID' => $dispute->ID, 'post_status' => 'me-resolved'));
-        me_update_message_meta($dispute->ID, '_case_winner', $winner );
-        me_update_message_meta($dispute->ID, '_case_arbitrate', sanitize_textarea_field( $case_data['arbitrate_content'] ));
+        $case_id = marketengine_update_message(array('ID' => $dispute->ID, 'post_status' => 'me-resolved'));
+        marketengine_update_message_meta($dispute->ID, '_case_winner', $winner );
+        marketengine_update_message_meta($dispute->ID, '_case_arbitrate', sanitize_textarea_field( $case_data['arbitrate_content'] ));
 
         self::add_dispute_revision('me-resolved', $dispute);
         self::resolve_notify_seller($dispute, $winner);
         self::resolve_notify_buyer($dispute, $winner);
 
-        me_resolve_order($dispute->post_parent);
+        marketengine_resolve_order($dispute->post_parent);
         return $dispute->ID;
     }
 
     public static function resolve_notify_buyer($dispute, $winner)
     {
         $subject     = sprintf(__("Resolved: The dispute on your transaction.", "enginethemes"));
-        $transaction = me_get_order($dispute->post_parent);
+        $transaction = marketengine_get_order($dispute->post_parent);
 
         $args = array(
             'display_name' => get_the_author_meta('display_name', $dispute->sender),
             'sender_name'  => 'Admin',
             'blogname'     => get_bloginfo('blogname'),
-            'dispute_link' => me_rc_dispute_link($dispute->ID),
+            'dispute_link' => marketengine_rc_dispute_link($dispute->ID),
             'order_link'   => $transaction->get_order_detail_url(),
             'order'        => $transaction,
             'order_id'     => $transaction->id,
@@ -502,7 +502,7 @@ class ME_RC_Form_Handle
         }
 
         ob_start();
-        me_get_template('resolution/emails/admin-resolve', $args);
+        marketengine_get_template('resolution/emails/admin-resolve', $args);
         $resolve_dispute_mail_content = ob_get_clean();
 
         $buyer = get_userdata($dispute->sender);
@@ -522,13 +522,13 @@ class ME_RC_Form_Handle
     public static function resolve_notify_seller($dispute, $winner)
     {
         $subject     = sprintf(__("Resolved: The dispute on your transaction.", "enginethemes"));
-        $transaction = me_get_order($dispute->post_parent);
+        $transaction = marketengine_get_order($dispute->post_parent);
 
         $args = array(
             'display_name' => get_the_author_meta('display_name', $dispute->receiver),
             'sender_name'  => 'Admin',
             'blogname'     => get_bloginfo('blogname'),
-            'dispute_link' => me_rc_dispute_link($dispute->ID),
+            'dispute_link' => marketengine_rc_dispute_link($dispute->ID),
             'order_link'   => $transaction->get_order_detail_url(),
             'order'        => $transaction,
             'order_id'     => $transaction->id,
@@ -541,7 +541,7 @@ class ME_RC_Form_Handle
         }
 
         ob_start();
-        me_get_template('resolution/emails/admin-resolve', $args);
+        marketengine_get_template('resolution/emails/admin-resolve', $args);
         $resolve_dispute_mail_content = ob_get_clean();
 
         $seller = get_userdata($dispute->receiver);
@@ -575,6 +575,6 @@ class ME_RC_Form_Handle
             'post_title'   => 'Revision #' . $dispute->ID,
             'post_content' => 'Revision #' . $dispute->ID,
         );
-        $revision = me_insert_message($data);
+        $revision = marketengine_insert_message($data);
     }
 }

@@ -159,6 +159,8 @@ class MarketEngine
         require_once MARKETENGINE_PATH . '/includes/class-me-options.php';
 
         require_once MARKETENGINE_PATH . '/includes/class-me-schedule.php';
+        require_once MARKETENGINE_PATH . '/includes/users/class-me-user.php';
+        require_once MARKETENGINE_PATH . '/includes/users/class-me-user-seller.php';
 
         require_once MARKETENGINE_PATH . '/includes/users/class-me-user-seller.php';
 

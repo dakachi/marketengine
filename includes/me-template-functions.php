@@ -23,7 +23,7 @@
  *
  * @return string The template filename if one is located.
  */
-function me_locate_template($template_names)
+function marketengine_locate_template($template_names)
 {
     $located          = '';
     $me_template_path = ME()->template_path();
@@ -67,7 +67,7 @@ function me_locate_template($template_names)
  * @param string $template_name The slug name for the generic template.
  * @param string $args The array of the varaible.
  */
-function me_get_template($template_name, $args = array())
+function marketengine_get_template($template_name, $args = array())
 {
     if (!empty($args) && is_array($args)) {
         extract($args);
@@ -91,12 +91,12 @@ function me_get_template($template_name, $args = array())
         $templates[] = "$template_name.php";
     }
 
-    $located = me_locate_template($templates);
+    $located = marketengine_locate_template($templates);
 
     include $located;
 }
 
-function me_get_sidebar()
+function marketengine_get_sidebar()
 {
     /**
      * Fires before the sidebar template file is loaded.
@@ -109,7 +109,7 @@ function me_get_sidebar()
      *
      * @param string $name Name of the specific sidebar file to use.
      */
-    do_action('me_get_sidebar', $name);
+    do_action('marketengine_get_sidebar', $name);
 
     $templates = array();
     $name      = (string) $name;
@@ -119,7 +119,7 @@ function me_get_sidebar()
 
     $templates[] = 'sidebar.php';
 
-    me_locate_template($templates, true);
+    marketengine_locate_template($templates, true);
 }
 
 
@@ -131,17 +131,17 @@ function me_get_sidebar()
  * @param  string $default_url
  * @return string
  */
-function me_lostpassword_url($default_url = '')
+function marketengine_lostpassword_url($default_url = '')
 {
-    $profile_link       = me_get_page_permalink('user_account');
-    $password_reset_url = me_get_endpoint_url('forgot-password', '', $profile_link);
+    $profile_link       = marketengine_get_page_permalink('user_account');
+    $password_reset_url = marketengine_get_endpoint_url('forgot-password', '', $profile_link);
     if (false !== $password_reset_url) {
         return $password_reset_url;
     } else {
         return $default_url;
     }
 }
-add_filter('lostpassword_url', 'me_lostpassword_url', 10, 1);
+add_filter('lostpassword_url', 'marketengine_lostpassword_url', 10, 1);
 
 /**
  * Get endpoint URL.
@@ -154,12 +154,12 @@ add_filter('lostpassword_url', 'me_lostpassword_url', 10, 1);
  *
  * @return string
  */
-function me_get_endpoint_url($ep_query_var, $value = '', $permalink = '')
+function marketengine_get_endpoint_url($ep_query_var, $value = '', $permalink = '')
 {
     if (!$permalink) {
         $permalink = get_permalink();
     }
-    $endpoint = me_get_endpoint_name($ep_query_var);
+    $endpoint = marketengine_get_endpoint_name($ep_query_var);
 
     if (get_option('permalink_structure')) {
         if (strstr($permalink, '?')) {
@@ -188,7 +188,7 @@ function me_get_endpoint_url($ep_query_var, $value = '', $permalink = '')
  *     Tags meta box arguments.
  * }
  */
-function me_post_tags_meta_box($default, $taxonomy)
+function marketengine_post_tags_meta_box($default, $taxonomy)
 {
     $tax_name              = esc_attr($taxonomy);
     $taxonomy              = get_taxonomy($taxonomy);
@@ -224,7 +224,7 @@ function me_post_tags_meta_box($default, $taxonomy)
  *
  * @since 1.0
  */
-function me_paginate_link($me_query = array())
+function marketengine_paginate_link($me_query = array())
 {
     $max_num_pages = 0;
     if ($me_query === array()) {
@@ -257,7 +257,7 @@ function me_paginate_link($me_query = array())
 
 function marketengine_sidebar()
 {
-    me_get_template('global/sidebar');
+    marketengine_get_template('global/sidebar');
 }
 add_action('marketengine_sidebar', 'marketengine_sidebar');
 
@@ -270,12 +270,12 @@ add_action('marketengine_sidebar', 'marketengine_sidebar');
  *
  */
 
-function me_get_auth_url($query_var = '', $value = '')
+function marketengine_get_auth_url($query_var = '', $value = '')
 {
-    $url = me_get_page_permalink('user_account');
+    $url = marketengine_get_page_permalink('user_account');
 
     if ($url) {
-        $url = me_get_endpoint_url($query_var, $value, $url);
+        $url = marketengine_get_endpoint_url($query_var, $value, $url);
         return $url;
     }
     return home_url();
@@ -290,14 +290,14 @@ function me_get_auth_url($query_var = '', $value = '')
  *
  */
 
-function me_get_order_url($page, $query_var = 'order-id', $value = '')
+function marketengine_get_order_url($page, $query_var = 'order-id', $value = '')
 {
-    $url                 = me_get_page_permalink($page);
-    $order_endpoint      = me_get_endpoint_name($query_var);
+    $url                 = marketengine_get_page_permalink($page);
+    $order_endpoint      = marketengine_get_endpoint_name($query_var);
     $permalink_structure = get_option('permalink_structure');
 
     if ($url) {
-        $url = me_get_endpoint_url($query_var, $value, $url);
+        $url = marketengine_get_endpoint_url($query_var, $value, $url);
         return $url;
     }
     return home_url();
@@ -312,17 +312,17 @@ function me_get_order_url($page, $query_var = 'order-id', $value = '')
  *
  */
 
-function me_get_seller_profile_url($seller_id)
+function marketengine_get_seller_profile_url($seller_id)
 {
     if (!$seller_id) {
         return;
     }
 
-    $url            = me_get_page_permalink('seller_profile');
-    $order_endpoint = me_get_endpoint_name('seller_id');
+    $url            = marketengine_get_page_permalink('seller_profile');
+    $order_endpoint = marketengine_get_endpoint_name('seller_id');
 
     if ($url) {
-        $url = me_get_endpoint_url('seller_id', $seller_id, $url);
+        $url = marketengine_get_endpoint_url('seller_id', $seller_id, $url);
         return $url;
     }
     return home_url();
@@ -334,16 +334,16 @@ function me_get_seller_profile_url($seller_id)
  * Adds an action to get shop categories selectbox template.
  *
  */
-function me_shop_categories_action($device = '')
+function marketengine_shop_categories_action($device = '')
 {
     if ('mobile' === $device) {
-        me_get_template('global/shop-categories-mobile');
+        marketengine_get_template('global/shop-categories-mobile');
     } else {
-        me_get_template('global/shop-categories');
+        marketengine_get_template('global/shop-categories');
     }
 
 }
-add_action('me_shop_categories', 'me_shop_categories_action');
+add_action('marketengine_shop_categories', 'marketengine_shop_categories_action');
 
 /**
  * Prints account menu.
@@ -351,54 +351,54 @@ add_action('me_shop_categories', 'me_shop_categories_action');
  * Adds an action to get account menu selectbox template.
  *
  */
-function me_account_menu_action($device = '')
+function marketengine_account_menu_action($device = '')
 {
     if ('mobile' === $device) {
-        me_get_template('global/account-menu-mobile');
+        marketengine_get_template('global/account-menu-mobile');
     } else {
-        me_get_template('global/account-menu');
+        marketengine_get_template('global/account-menu');
     }
 
 }
-add_action('me_account_menu', 'me_account_menu_action');
+add_action('marketengine_account_menu', 'marketengine_account_menu_action');
 
-function me_account_menu_flag_filter($flag)
+function marketengine_account_menu_flag_filter($flag)
 {
     $flag = false;
     return $flag;
 }
-add_filter('me_account_menu_flag', 'me_account_menu_flag_filter');
+add_filter('marketengine_account_menu_flag', 'marketengine_account_menu_flag_filter');
 
 /**
  * Prints post listing button.
  *
  */
-function me_post_listing_button_action()
+function marketengine_post_listing_button_action()
 {
-    me_get_template('global/post-listing-button');
+    marketengine_get_template('global/post-listing-button');
 }
-add_action('me_post_listing_button', 'me_post_listing_button_action');
+add_action('marketengine_post_listing_button', 'marketengine_post_listing_button_action');
 
-function me_search_form_action()
+function marketengine_search_form_action()
 {
     marketengine_get_search_form();
 }
-add_action('me_search_form', 'me_search_form_action');
+add_action('marketengine_search_form', 'marketengine_search_form_action');
 
-function me_status_list_action($type = '')
+function marketengine_status_list_action($type = '')
 {
-    me_get_template('global/status-list', array('type' => $type));
+    marketengine_get_template('global/status-list', array('type' => $type));
 }
-add_action('me_status_list', 'me_status_list_action');
+add_action('marketengine_status_list', 'marketengine_status_list_action');
 
 /**
  *  Returns css class for each order status
  *  @param: $status
  *  @param: $needed style or index of order process
  */
-function me_get_order_status_info($status, $info_type = '')
+function marketengine_get_order_status_info($status, $info_type = '')
 {
-    $status_list = me_get_order_status_list();
+    $status_list = marketengine_get_order_status_list();
 
     switch ($status) {
         case 'me-pending':
@@ -455,10 +455,10 @@ function me_get_order_status_info($status, $info_type = '')
 /**
  *  Prints html of order status
  */
-function me_print_order_status($status)
+function marketengine_print_order_status($status)
 {
-    $status_list = me_get_order_status_list();
-    $style       = me_get_order_status_info($status, 'style');
+    $status_list = marketengine_get_order_status_list();
+    $style       = marketengine_get_order_status_info($status, 'style');
     echo '<span class="' . $style . '">' . $status_list[$status] . '</span>';
 }
 
@@ -466,7 +466,7 @@ function me_print_order_status($status)
  *  Prints buyer's information
  *  @param: $address
  */
-function me_print_buyer_information($address)
+function marketengine_print_buyer_information($address)
 {
     foreach ($address as $key => $value) {
         if ($key === 'first_name') {
@@ -486,16 +486,16 @@ function me_print_buyer_information($address)
  *  Returns html of price
  *  @param: $price
  */
-function me_price_html($price, $args = array(), $unit = '')
+function marketengine_price_html($price, $args = array(), $unit = '')
 {
-    $sign = me_option('payment-currency-sign');
-    $code = me_option('payment-currency-code');
+    $sign = marketengine_option('payment-currency-sign');
+    $code = marketengine_option('payment-currency-code');
 
     $args = wp_parse_args($args, array('code' => $code, 'sign' => $sign));
 
     extract($args);
 
-    $sign_position = me_option('currency-sign-postion') ? true : false;
+    $sign_position = marketengine_option('currency-sign-postion') ? true : false;
     $html          = '';
 
     if ($sign_position) {
@@ -519,17 +519,17 @@ function me_price_html($price, $args = array(), $unit = '')
  *
  * @return string
  */
-function me_price_format($price, $args = array())
+function marketengine_price_format($price, $args = array())
 {
-    $sign = me_option('payment-currency-sign');
-    $code = me_option('payment-currency-code');
+    $sign = marketengine_option('payment-currency-sign');
+    $code = marketengine_option('payment-currency-code');
 
     $args = wp_parse_args($args, array('code' => $code, 'sign' => $sign));
     extract($args);
 
     $format = '';
 
-    $sign_position_is_align_right = me_option('currency-sign-postion') ? true : false;
+    $sign_position_is_align_right = marketengine_option('currency-sign-postion') ? true : false;
 
     if ($sign_position_is_align_right) {
         $format .= $sign . $price;
@@ -545,7 +545,7 @@ function me_price_format($price, $args = array())
  */
 function marketengine_comments($comment, $args, $depth)
 {
-    me_get_template('single-listing/review-item', array('comment' => $comment, 'args' => $args, 'depth' => $depth));
+    marketengine_get_template('single-listing/review-item', array('comment' => $comment, 'args' => $args, 'depth' => $depth));
 }
 
 /**
@@ -691,10 +691,10 @@ function marketengine_get_the_archive_title()
  * @param string $title, int $id
  * @return string
  */
-function me_auth_page_title($title, $id = null)
+function marketengine_auth_page_title($title, $id = null)
 {
 
-    if (is_page() && in_the_loop() && $id === me_get_option_page_id('user_account')) {
+    if (is_page() && in_the_loop() && $id === marketengine_get_option_page_id('user_account')) {
         global $wp_query;
         if (!is_user_logged_in()) {
             if (isset($wp_query->query_vars['register'])) {
@@ -716,15 +716,15 @@ function me_auth_page_title($title, $id = null)
     }
     return $title;
 }
-add_filter('the_title', 'me_auth_page_title', 10, 2);
+add_filter('the_title', 'marketengine_auth_page_title', 10, 2);
 
-function me_transaction_review_title($title) {
+function marketengine_transaction_review_title($title) {
     if(!empty($_GET['action']) && $_GET['action'] == 'review') {
         return __("Rate & Review", "enginethemes");
     }
     return $title;
 }
-add_filter('marketengine_transaction_title', 'me_transaction_review_title');
+add_filter('marketengine_transaction_title', 'marketengine_transaction_review_title');
 
 
 /**
@@ -732,14 +732,14 @@ add_filter('marketengine_transaction_title', 'me_transaction_review_title');
  * @param array $title The title parts array
  * @since 1.1
  */
-function me_order_title($title){
+function marketengine_order_title($title){
     global $post;
     if (is_singular( 'me_order' )) {
         $title['title'] = sprintf(__("Order #%d", "enginethemes"), $post->ID);
     }
     return $title;
 }
-add_filter('document_title_parts', 'me_order_title');
+add_filter('document_title_parts', 'marketengine_order_title');
 
 /**
  * Redirect user to login when access order details without login
@@ -749,15 +749,15 @@ add_filter('document_title_parts', 'me_order_title');
  *
  * @since 1.0.1
  */
-function me_prevent_access_order_details()
+function marketengine_prevent_access_order_details()
 {
     if (is_singular('me_order') && !is_user_logged_in()) {
-        $login_url = me_get_auth_url();
+        $login_url = marketengine_get_auth_url();
         wp_redirect($login_url);
         exit;
     }
 }
-add_action('template_redirect', 'me_prevent_access_order_details');
+add_action('template_redirect', 'marketengine_prevent_access_order_details');
 
 /**
  * Transaction listing info
@@ -765,11 +765,11 @@ add_action('template_redirect', 'me_prevent_access_order_details');
  * @param ME_Order $transaction
  * @since 1.1
  */
-function me_order_listing_info($transaction)
+function marketengine_order_listing_info($transaction)
 {
     $listing_items = $transaction->get_listing_items();
     $cart_item     = array_pop($listing_items);
-    $listing       = me_get_listing($cart_item['ID']);
+    $listing       = marketengine_get_listing($cart_item['ID']);
 
     if ($transaction->post_author == get_current_user_id()) {
         $author_id = $listing ? $listing->post_author : '';
@@ -777,7 +777,7 @@ function me_order_listing_info($transaction)
         $author_id = $transaction->post_author;
     }
 
-    me_get_template('purchases/order-listing',
+    marketengine_get_template('purchases/order-listing',
         array(
             'listing'      => $listing,
             'transaction'  => $transaction,
@@ -785,7 +785,7 @@ function me_order_listing_info($transaction)
         )
     );
 }
-add_action('marketengine_order_extra_content', 'me_order_listing_info', 10);
+add_action('marketengine_order_extra_content', 'marketengine_order_listing_info', 10);
 
 
 
@@ -795,21 +795,21 @@ add_action('marketengine_order_extra_content', 'me_order_listing_info', 10);
  * @param ME_Order $transaction
  * @since 1.1
  */
-function me_order_user_info($transaction)
+function marketengine_order_user_info($transaction)
 {
     if ($transaction->post_author == get_current_user_id()) {
         $listing_items = $transaction->get_listing_items();
         $cart_item     = array_pop($listing_items);
-        $listing       = me_get_listing($cart_item['ID']);
+        $listing       = marketengine_get_listing($cart_item['ID']);
 
         $author_id = $listing ? $listing->post_author : '';
     } else {
         $author_id = $transaction->post_author;
     }
 
-    me_get_template('user-info', array('author_id' => $author_id));
+    marketengine_get_template('user-info', array('author_id' => $author_id));
 }
-add_action('marketengine_order_extra_sidebar', 'me_order_user_info', 10);
+add_action('marketengine_order_extra_sidebar', 'marketengine_order_user_info', 10);
 
 
 
@@ -819,7 +819,7 @@ add_action('marketengine_order_extra_sidebar', 'me_order_user_info', 10);
  * @param ME_Order $transaction
  * @since 1.1
  */
-function me_order_related_listing($transaction)
+function marketengine_order_related_listing($transaction)
 {
     if (get_current_user_id() == $transaction->post_author) {
         $listing_items   = $transaction->get_listing_items();
@@ -847,16 +847,16 @@ function me_order_related_listing($transaction)
             }
         }
 
-        $args = apply_filters('me_related_listing_args', $args);
+        $args = apply_filters('marketengine_related_listing_args', $args);
 
         $listings = get_posts($args);
         // get the template
-        me_get_template('purchases/listing-slider', array('listings' => $listings));
+        marketengine_get_template('purchases/listing-slider', array('listings' => $listings));
 
         wp_reset_postdata();
     }
 }
-add_action('marketengine_after_order_extra', 'me_order_related_listing');
+add_action('marketengine_after_order_extra', 'marketengine_order_related_listing');
 
 /**
  * Transaction details
@@ -864,12 +864,12 @@ add_action('marketengine_after_order_extra', 'me_order_related_listing');
  * @param ME_Order $transaction
  * @since 1.1
  */
-function me_transaction_details($transaction)
+function marketengine_transaction_details($transaction)
 {
     $transaction->update_listings();
-    me_get_template('purchases/transaction', array('transaction' => $transaction));
+    marketengine_get_template('purchases/transaction', array('transaction' => $transaction));
 }
-add_action('marketengine_transaction_details', 'me_transaction_details', 10);
+add_action('marketengine_transaction_details', 'marketengine_transaction_details', 10);
 
 /**
  * Transaction review form
@@ -879,9 +879,9 @@ add_action('marketengine_transaction_details', 'me_transaction_details', 10);
  * 
  * @since 1.1 
  */
-function me_transaction_review_form($action, $transaction) {
+function marketengine_transaction_review_form($action, $transaction) {
     if('review' === $action && !empty($_GET['id']) ) {
-        me_get_template('purchases/review',
+        marketengine_get_template('purchases/review',
             array(
                 'transaction' => $transaction,
                 'listing_id'  => $_GET['id'],
@@ -889,18 +889,18 @@ function me_transaction_review_form($action, $transaction) {
         );
     }
 }
-add_action( 'marketengine_order_details_action', 'me_transaction_review_form', 10, 2 );
+add_action( 'marketengine_order_details_action', 'marketengine_transaction_review_form', 10, 2 );
 
 /**
  * Add a review to the transaction breadcrum
  * @since 1.1
  */
-function me_transaction_review_breadcrumb() {
+function marketengine_transaction_review_breadcrumb() {
     if(!empty($_GET['action']) && 'review' == $_GET['action'] ) : ?>
         <li><a href="#"><?php _e("Rate & Review", "enginethemes"); ?></a></li>
     <?php endif; 
 }
-add_action( 'marketengine_order_breadcrumb_end', 'me_transaction_review_breadcrumb' );
+add_action( 'marketengine_order_breadcrumb_end', 'marketengine_transaction_review_breadcrumb' );
 
 /**
  * Transaction items details heading template
@@ -908,15 +908,15 @@ add_action( 'marketengine_order_breadcrumb_end', 'me_transaction_review_breadcru
  * @param ME_Order $transaction
  * @since 1.1
  */
-function me_transaction_items_heading($transaction)
+function marketengine_transaction_items_heading($transaction)
 {
     $payment_date = date_i18n(get_option('date_format'), strtotime($transaction->post_date));
     $order_number = '#' . $transaction->get_order_number();
     $current_user = get_current_user_id();
     $transaction_label = ($transaction->post_author == $current_user) ? __('Transaction ID:', 'enginethemes') : __('Order ID:', 'enginethemes');
-    me_get_template('purchases/order-info', array('transaction_label' => $transaction_label, 'order_number' => $order_number, 'payment_date' => $payment_date));
+    marketengine_get_template('purchases/order-info', array('transaction_label' => $transaction_label, 'order_number' => $order_number, 'payment_date' => $payment_date));
 }
-add_action('marketengine_transaction_items_details', 'me_transaction_items_heading', 10);
+add_action('marketengine_transaction_items_details', 'marketengine_transaction_items_heading', 10);
 
 /**
  * Transaction items details status template
@@ -924,12 +924,12 @@ add_action('marketengine_transaction_items_details', 'me_transaction_items_headi
  * @param ME_Order $transaction
  * @since 1.1
  */
-function me_transaction_items_status($transaction)
+function marketengine_transaction_items_status($transaction)
 {
     $order_status = get_post_status($transaction->id);
-    me_get_template('purchases/order-status', array('order_status' => $order_status, 'transaction' => $transaction));
+    marketengine_get_template('purchases/order-status', array('order_status' => $order_status, 'transaction' => $transaction));
 }
-add_action('marketengine_transaction_items_details', 'me_transaction_items_status', 11);
+add_action('marketengine_transaction_items_details', 'marketengine_transaction_items_status', 11);
 
 /**
  * Transaction items details items list template
@@ -937,16 +937,16 @@ add_action('marketengine_transaction_items_details', 'me_transaction_items_statu
  * @param ME_Order $transaction
  * @since 1.1
  */
-function me_transaction_items_details($transaction)
+function marketengine_transaction_items_details($transaction)
 {
     $listing_items = $transaction->get_listing_items();
     $order_item    = array_pop($listing_items);
 
-    $listing = me_get_listing($order_item['ID']);
-    me_get_template('purchases/order-item', array('order_item' => $order_item, 'listing' => $listing, 'transaction' => $transaction));
+    $listing = marketengine_get_listing($order_item['ID']);
+    marketengine_get_template('purchases/order-item', array('order_item' => $order_item, 'listing' => $listing, 'transaction' => $transaction));
 
 }
-add_action('marketengine_transaction_items_details', 'me_transaction_items_details', 12);
+add_action('marketengine_transaction_items_details', 'marketengine_transaction_items_details', 12);
 
 /**
  * Transaction items details billing info template
@@ -954,8 +954,8 @@ add_action('marketengine_transaction_items_details', 'me_transaction_items_detai
  * @param ME_Order $transaction
  * @since 1.1
  */
-function me_transaction_items_billing_info($transaction)
+function marketengine_transaction_items_billing_info($transaction)
 {
-    me_get_template( 'purchases/order-bill-info', array('transaction' => $transaction) );
+    marketengine_get_template( 'purchases/order-bill-info', array('transaction' => $transaction) );
 }
-add_action('marketengine_transaction_items_details', 'me_transaction_items_billing_info', 12);
+add_action('marketengine_transaction_items_details', 'marketengine_transaction_items_billing_info', 12);

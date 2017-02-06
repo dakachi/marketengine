@@ -25,7 +25,7 @@ class Tests_ME_Order_Item extends WP_UnitTestCase {
 
     public function test_me_add_order_item() {
         global $wpdb;
-        $item_id = me_add_order_item(1, 'Order item data', 'listing_item');
+        $item_id = marketengine_add_order_item(1, 'Order item data', 'listing_item');
 
         $order_item = $wpdb->get_row("SELECT * FROM {$this->table} WHERE order_item_id = {$item_id}");
 
@@ -35,9 +35,9 @@ class Tests_ME_Order_Item extends WP_UnitTestCase {
 
     public function test_me_update_order_item() {
         global $wpdb;
-        $item_id = me_add_order_item(1, 'Order item data', 'listing_item');
+        $item_id = marketengine_add_order_item(1, 'Order item data', 'listing_item');
 
-        me_update_order_item(
+        marketengine_update_order_item(
             $item_id,
             array(
                 'order_item_type' => 'ship',
@@ -53,20 +53,20 @@ class Tests_ME_Order_Item extends WP_UnitTestCase {
 
     public function test_me_delete_order_item() {
         global $wpdb;
-        $item_id = me_add_order_item(1, 'Order item data', 'listing_item');
-        me_delete_order_item($item_id);
+        $item_id = marketengine_add_order_item(1, 'Order item data', 'listing_item');
+        marketengine_delete_order_item($item_id);
         $order_item = $wpdb->get_row("SELECT * FROM {$this->table} WHERE order_item_id = {$item_id}");
         $this->assertEmpty($order_item);
     }
 
     /**
-     * @cover me_get_order_items()
+     * @cover marketengine_get_order_items()
      */
     public function test_get_order_items() {
         global $wpdb;
-        $item_id_1 = me_add_order_item(2, 'Order item data', 'listing_item');
-        $item_id_2 = me_add_order_item(2, 'Order item data 2', 'listing_item');
-        $results = me_get_order_items(2, 'listing_item');
+        $item_id_1 = marketengine_add_order_item(2, 'Order item data', 'listing_item');
+        $item_id_2 = marketengine_add_order_item(2, 'Order item data 2', 'listing_item');
+        $results = marketengine_get_order_items(2, 'listing_item');
         $expect  = array(
             (object) array(
                 'order_item_id'   => (string)$item_id_1,

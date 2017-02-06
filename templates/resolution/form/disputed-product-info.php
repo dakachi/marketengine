@@ -16,15 +16,15 @@ if($listings) :
 ?>
 <div class="me-disputed-product-info">
 
-	<?php me_print_notices(); ?>
+	<?php marketengine_print_notices(); ?>
 	
 	<h3><?php _e('You purchased item:', 'enginethemes'); ?></h3>
 	<a href="#"><?php echo get_the_post_thumbnail($id); ?></a>
 	<div class="me-disputed-product">
 		<h2><?php echo $listing['title']; ?></h2>
-		<p><span><?php _e('Unit price:', 'enginethemes'); ?></span><?php echo me_price_format($listing['price']); ?></p>
+		<p><span><?php _e('Unit price:', 'enginethemes'); ?></span><?php echo marketengine_price_format($listing['price']); ?></p>
 		<p><span><?php _e('Quantity:', 'enginethemes'); ?></span><?php echo $listing['qty']; ?></p>
-		<p><span><?php _e('Total amount:', 'enginethemes'); ?></span><?php echo me_price_format($transaction->get_total()); ?></p>
+		<p><span><?php _e('Total amount:', 'enginethemes'); ?></span><?php echo marketengine_price_format($transaction->get_total()); ?></p>
 	</div>
 </div>
 <?php

@@ -24,7 +24,7 @@ $about_seller = get_user_meta( $user_id, 'description' , true );
 
 <div id="me-tabs-section">
 	<div class="me-section-listing">
-		<?php me_get_template('seller-profile/listing-of-seller', array('user_id' => $user_id) ); ?>
+		<?php marketengine_get_template('seller-profile/listing-of-seller', array('user_id' => $user_id) ); ?>
 	</div>
 </div>
 

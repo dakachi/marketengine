@@ -23,12 +23,12 @@ class Tests_ME_Update_Message extends WP_UnitTestCase {
         );
         $this->message_data = $defaults;
 
-        $this->message_id = me_insert_message($defaults);
+        $this->message_id = marketengine_insert_message($defaults);
         $this->message_data['ID'] = $this->message_id;
     }
 
     public function test_update_message_success() {
-        $message_id = me_update_message($this->message_data, true);
+        $message_id = marketengine_update_message($this->message_data, true);
         $this->assertInternalType("int", $message_id);
     }
 
@@ -39,10 +39,10 @@ class Tests_ME_Update_Message extends WP_UnitTestCase {
         $message_data = $this->message_data;
         $message_data['sender'] = '';
 
-        $message_id = me_update_message($message_data, true);
+        $message_id = marketengine_update_message($message_data, true);
         $this->assertInternalType("int", $message_id);
 
-        $message = me_get_message($message_id);
+        $message = marketengine_get_message($message_id);
         $this->assertEquals($this->user_1, $message->sender);
     }
 
@@ -52,7 +52,7 @@ class Tests_ME_Update_Message extends WP_UnitTestCase {
     public function test_update_message_with_empty_receiver() {
         $message_data = $this->message_data;
         $message_data['receiver'] = '';
-        $message_id = me_update_message($message_data, true);
+        $message_id = marketengine_update_message($message_data, true);
         $this->assertEquals(new WP_Error('empty_receiver', __('Receiver is empty.')), $message_id);
     }
 
@@ -62,7 +62,7 @@ class Tests_ME_Update_Message extends WP_UnitTestCase {
     public function test_update_message_with_empty_content() {
         $message_data = $this->message_data;
         $message_data['post_content'] = '';
-        $message_id = me_update_message($message_data, true);
+        $message_id = marketengine_update_message($message_data, true);
         $this->assertEquals(new WP_Error('empty_content', __('Content are empty.')), $message_id);
     }
 

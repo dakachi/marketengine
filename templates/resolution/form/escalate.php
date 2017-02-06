@@ -1,6 +1,6 @@
-<?php me_get_template('resolution/form/escalate-heading', array('case' => $case)); ?>
+<?php marketengine_get_template('resolution/form/escalate-heading', array('case' => $case)); ?>
 <div class="me-escalate-form">
-	<?php me_print_notices(); ?>
+	<?php marketengine_print_notices(); ?>
 	<form id="me-escalate-form" method="post" action="<?php echo add_query_arg('action', 'escalate') ?>">
 		<div class="me-escalate-box">
 			<p class="me-escalate-about"><?php _e("You are about to escalate this dispute.", "enginethemes") ?><br/>
@@ -18,7 +18,7 @@
 		        ob_start();
 		        if($dispute_files) {
 		            foreach($dispute_files as $gallery) {
-		                me_get_template('upload-file/multi-file-form', array(
+		                marketengine_get_template('upload-file/multi-file-form', array(
 		                    'image_id' => $gallery,
 		                    'filename' => 'dispute_file',
 		                    'close' => true
@@ -27,7 +27,7 @@
 		        }
 		        $dispute_files = ob_get_clean();
 
-		        me_get_template('upload-file/upload-form', array(
+		        marketengine_get_template('upload-file/upload-form', array(
 		            'id' => 'dispute-file',
 		            'name' => 'dispute_file',
 		            'source' => $dispute_files,

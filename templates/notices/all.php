@@ -1,3 +1,3 @@
 <?php
-me_get_template('notices/success');
-me_get_template('notices/error');
+marketengine_get_template('notices/success');
+marketengine_get_template('notices/error');

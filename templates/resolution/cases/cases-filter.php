@@ -16,14 +16,14 @@
 </div>
 <!--//mobile-->
 <div class="me-resolution-filter">
-	<form id="me-resolution-filter-form" action="<?php me_dispute_case_filter_form_action(); ?>">
+	<form id="me-resolution-filter-form" action="<?php marketengine_dispute_case_filter_form_action(); ?>">
  		<div class="me-row">
 			<div class="me-col-md-5">
 				<div class="me-row">
 					<div class="me-col-md-5 me-col-sm-6">
 						<div class="me-status-filter">
 							<label><?php _e('Status','enginethemes'); ?></label>
-							<?php me_get_template('resolution/cases/case-status-list'); ?>
+							<?php marketengine_get_template('resolution/cases/case-status-list'); ?>
 						</div>
 					</div>
 					<div class="me-col-md-7 me-col-sm-6">
@@ -44,7 +44,7 @@
 					<div class="me-resolution-search">
 						<input type="text" placeholder="<?php _e('Case number, related party', 'enginethemes'); ?>" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>">
 						<div class="me-resolution-clear-filter">
-							<a href="<?php echo me_resolution_center_url() ; ?>"><?php _e('Clear Filter', 'enginethemes'); ?></a>
+							<a href="<?php echo marketengine_resolution_center_url() ; ?>"><?php _e('Clear Filter', 'enginethemes'); ?></a>
 							<input class="me-resolution-filter-btn" type="submit" value="<?php _e('FILTER', 'enginethemes'); ?>">
 						</div>
 					</div>

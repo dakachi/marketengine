@@ -14,9 +14,9 @@ $args = array(
 );
 $type = 'order';
 $request = array_map('esc_sql', $_GET);
-$args = array_merge(apply_filters( 'me_filter_order', $request, $type ), $args);
+$args = array_merge(apply_filters( 'marketengine_filter_order', $request, $type ), $args);
 
-$all_order_args = json_encode( array_merge(apply_filters( 'me_filter_order', $request, $type ), array('post_type' => 'me_order', 'posts_per_page' => -1) ) );
+$all_order_args = json_encode( array_merge(apply_filters( 'marketengine_filter_order', $request, $type ), array('post_type' => 'me_order', 'posts_per_page' => -1) ) );
 
 $query = new WP_Query($args);
 
@@ -27,7 +27,7 @@ $query = new WP_Query($args);
 	<span><?php echo __('Filter list', 'enginethemes'); ?></span>
 </div>
 <!--/Mobile-->
-<?php me_get_template('global/order-filter', array('type' => $type)); ?>
+<?php marketengine_get_template('global/order-filter', array('type' => $type)); ?>
 
 
 <?php if( $query->have_posts() ) : ?>
@@ -46,15 +46,15 @@ $query = new WP_Query($args);
 			$order = new ME_Order( get_the_ID() );
 			$order_total = $order->get_total();
 
-			$order_listing = me_get_order_items( get_the_ID() );
-			$listing_item = me_get_order_items(get_the_ID(), 'listing_item');
+			$order_listing = marketengine_get_order_items( get_the_ID() );
+			$listing_item = marketengine_get_order_items(get_the_ID(), 'listing_item');
 		?>
 			<div class="me-table-row">
 				<div class="me-table-col me-order-id"><a href="<?php the_permalink(); ?>">#<?php the_ID(); ?></a></div>
 				<div class="me-table-col me-order-status">
-					<?php me_print_order_status( get_post_status( get_the_ID()) ); ?>
+					<?php marketengine_print_order_status( get_post_status( get_the_ID()) ); ?>
 				</div>
-				<div class="me-table-col me-order-amount"><?php echo me_price_html($order_total); ?></div>
+				<div class="me-table-col me-order-amount"><?php echo marketengine_price_html($order_total); ?></div>
 				<div class="me-table-col me-order-date"><?php echo get_the_date(get_option('date_format'), get_the_ID()); ?></div>
 				<div class="me-table-col me-order-listing">
 					<div class="me-order-listing-info">
@@ -67,7 +67,7 @@ $query = new WP_Query($args);
 	</div>
 
 	<div class="me-paginations">
-		<?php me_paginate_link( $query ); ?>
+		<?php marketengine_paginate_link( $query ); ?>
 	</div>
 
 <?php else : ?>

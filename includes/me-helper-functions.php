@@ -20,9 +20,9 @@ if (!defined('ABSPATH')) {
  *
  * @return int| null Page Id if exist or null if page not existed
  */
-function me_get_option_page_id($page_option_name)
+function marketengine_get_option_page_id($page_option_name)
 {
-    $page_id = absint(me_option('me_' . $page_option_name . '_page_id'));
+    $page_id = absint(marketengine_option('me_' . $page_option_name . '_page_id'));
     $page    = get_post($page_id);
     if (!$page) {
         return -1;
@@ -30,7 +30,7 @@ function me_get_option_page_id($page_option_name)
     return $page_id;
 }
 
-if (!function_exists('me_get_page_permalink')) {
+if (!function_exists('marketengine_get_page_permalink')) {
     /**
      * Retrieve page url base on page option name
      *
@@ -42,9 +42,9 @@ if (!function_exists('me_get_page_permalink')) {
      * @param  string $page_option_name The page option name
      * @return string
      */
-    function me_get_page_permalink($page_name)
+    function marketengine_get_page_permalink($page_name)
     {
-        $page = me_option('me_' . $page_name . '_page_id');
+        $page = marketengine_option('marketengine_' . $page_name . '_page_id');
         if (!$page = get_post($page)) {
             return home_url();
         }
@@ -63,13 +63,13 @@ if (!function_exists('me_get_page_permalink')) {
  * @param  string $query_var
  * @return string
  */
-function me_get_endpoint_name($query_var)
+function marketengine_get_endpoint_name($query_var)
 {
     $query_var        = str_replace('-', '_', $query_var);
-    $defaults         = me_default_endpoints();
+    $defaults         = marketengine_default_endpoints();
     $default_endpoint = isset($defaults[$query_var]) ? $defaults[$query_var] : '';
 
-    $endpoint = me_option('ep_' . $query_var);
+    $endpoint = marketengine_option('ep_' . $query_var);
     return $endpoint ? $endpoint : $default_endpoint;
 }
 
@@ -82,7 +82,7 @@ function me_get_endpoint_name($query_var)
  * @access public
  * @return array of endpoints
  */
-function me_default_endpoints()
+function marketengine_default_endpoints()
 {
     $endpoint_arr = array(
         'forgot_password'   => 'forgot-password',
@@ -114,7 +114,7 @@ function me_default_endpoints()
  * @since 1.0
  * @return string
  */
-function me_option($option, $default = '')
+function marketengine_option($option, $default = '')
 {
     $options = ME_Options::get_instance();
     return $options->get_option($option, $default);
@@ -132,7 +132,7 @@ function me_option($option, $default = '')
  * @since 1.0
  * @return string
  */
-function me_update_option($option, $value)
+function marketengine_update_option($option, $value)
 {
     $options = ME_Options::get_instance();
     return $options->update_option($option, $value);
@@ -147,7 +147,7 @@ function me_update_option($option, $value)
  * @since 1.0
  * @return string
  */
-function me_get_client_ip()
+function marketengine_get_client_ip()
 {
     if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
         $ip = $_SERVER['HTTP_CLIENT_IP'];
@@ -167,7 +167,7 @@ function me_get_client_ip()
  * @since 1.0
  * @return string
  */
-function me_get_client_agent()
+function marketengine_get_client_agent()
 {
     return !empty($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : '';
 }
@@ -189,7 +189,7 @@ function me_get_client_agent()
  * @param string $more      Optional. What to append if $text needs to be trimmed. Default '&hellip;'.
  * @return string Trimmed text.
  */
-function me_trim_words($text, $num_words = 55, $more = null)
+function marketengine_trim_words($text, $num_words = 55, $more = null)
 {
     if (null === $more) {
         $more = __('&hellip;');
@@ -231,7 +231,7 @@ function me_trim_words($text, $num_words = 55, $more = null)
      * @param string $more          An optional string to append to the end of the trimmed text, e.g. &hellip;.
      * @param string $original_text The text before it was trimmed.
      */
-    return apply_filters('me_trim_words', $text, $num_words, $more, $original_text);
+    return apply_filters('marketengine_trim_words', $text, $num_words, $more, $original_text);
 }
 
 /**
@@ -243,7 +243,7 @@ function me_trim_words($text, $num_words = 55, $more = null)
  * @param int $bytes
  * @return string
  */
-function me_format_size_units($bytes)
+function marketengine_format_size_units($bytes)
 {
     if ($bytes >= 1073741824) {
         $bytes = number_format($bytes / 1073741824, 2) . ' GB';

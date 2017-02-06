@@ -18,8 +18,8 @@ class ME_Seller extends ME_User {
         $this->user_data = get_user_meta($id);
     }
     public function get_my_listings_permalink() {
-    	$profile_page = me_get_page_permalink( 'user_account' );
-    	$listings_endpoint = me_get_endpoint_name( 'listings' );
+    	$profile_page = marketengine_get_page_permalink( 'user_account' );
+    	$listings_endpoint = marketengine_get_endpoint_name( 'listings' );
     	return $profile_page . '/'.$listings_endpoint;
     }
 }

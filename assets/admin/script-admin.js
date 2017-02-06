@@ -47,7 +47,7 @@ $(document).ready(function() {
     	var field_type = $(target).val();
 
     	var data = {
-    		action: 'me_cf_load_input_type',
+    		action: 'marketengine_cf_load_input_type',
     		field_type: field_type,
     	};
 

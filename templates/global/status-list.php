@@ -1,5 +1,5 @@
 <?php
-	$status_list = me_get_order_status_list();
+	$status_list = marketengine_get_order_status_list();
 	if( !empty($status_list) ) :
 		if( $type == 'order' ) {
 			unset($status_list['me-pending']);

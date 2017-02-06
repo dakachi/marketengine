@@ -1,20 +1,20 @@
-<?php me_get_template('resolution/case-details/heading', array('case' => $case)); ?>
+<?php marketengine_get_template('resolution/case-details/heading', array('case' => $case)); ?>
 <!-- marketengine-content -->
 <div class="marketengine-content">
 
-    <?php me_get_template('resolution/case-details/mobile-nav'); ?>
+    <?php marketengine_get_template('resolution/case-details/mobile-nav'); ?>
 
     <div class="me-disputed-case">
         
-        <?php me_get_template('resolution/case-details/info', array('case' => $case)); ?>
+        <?php marketengine_get_template('resolution/case-details/info', array('case' => $case)); ?>
 
         <div class="me-disputed-conversation">
             <div class="me-row">
                 <div class="me-col-md-3 me-col-md-pull-9 me-col-sm-4 me-col-sm-pull-8">
                     <div class="me-sidebar-contact">
                             
-                        <?php me_get_template('resolution/case-details/related-party', array('case' => $case)); ?>
-                        <?php me_get_template('resolution/case-details/dispute-event', array('case' => $case)); ?>
+                        <?php marketengine_get_template('resolution/case-details/related-party', array('case' => $case)); ?>
+                        <?php marketengine_get_template('resolution/case-details/dispute-event', array('case' => $case)); ?>
                         
                     </div>
                 </div>
@@ -45,9 +45,9 @@
     						<?php foreach ($messages  as $key => $message) : ?>
     							<?php 
                                 if($message->post_type == 'revision') {
-                                    me_get_template('resolution/revision-item', array('message' => $message));
+                                    marketengine_get_template('resolution/revision-item', array('message' => $message));
                                 }else {
-                                    me_get_template('resolution/message-item', array('message' => $message));    
+                                    marketengine_get_template('resolution/message-item', array('message' => $message));    
                                 }
                                  ?>
     						<?php endforeach; ?>
@@ -72,7 +72,7 @@
                                         <div class="me-row">
                                             <div class="me-col-lg-10 me-col-md-9">
                                                 <?php 
-                                                    me_get_template('upload-file/upload-file-form', array(
+                                                    marketengine_get_template('upload-file/upload-file-form', array(
                                                         'id' => 'dispute-file',
                                                         'class' => 'me-gallery-file-wrap',
                                                         'name' => 'dispute_file',

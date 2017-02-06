@@ -24,10 +24,10 @@ class ME_Listing_Status_Handle extends ME_Form {
      */
 
     public static function update_status() {
-        if (current_user_can('edit_posts') && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me_update_listing_status')) {
+        if (current_user_can('edit_posts') && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'marketengine_update_listing_status')) {
             $status = sanitize_text_field( $_POST['status'] );
 
-            if(!array_key_exists($status, me_listings_status_list())) {
+            if(!array_key_exists($status, marketengine_listings_status_list())) {
                 exit;
             }
 
@@ -43,7 +43,7 @@ class ME_Listing_Status_Handle extends ME_Form {
                     'error' => $result,
                 );
             } else {
-                $redirect = isset($_POST['redirect_url']) ? esc_url( $_POST['redirect_url'] ) : me_get_auth_url('listings');
+                $redirect = isset($_POST['redirect_url']) ? esc_url( $_POST['redirect_url'] ) : marketengine_get_auth_url('listings');
                 $response = array(
                     'success'    => true,
                     'listing' => $result,

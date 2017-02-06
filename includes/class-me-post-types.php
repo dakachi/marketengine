@@ -62,7 +62,7 @@ class ME_Post_Types
             'menu_name'             => __('Categories', "enginethemes"),
         );
         //TODO: setup listing category permarlink
-        $permalinks = get_option('me_permalinks');
+        $permalinks = get_option('marketengine_permalinks');
         $args       = array(
             'labels'            => $labels,
             'public'            => true,
@@ -104,7 +104,7 @@ class ME_Post_Types
             'menu_name'             => __('Tags', "enginethemes"),
         );
         //TODO: setup listing category permarlink
-        $permalinks = get_option('me_permalinks');
+        $permalinks = get_option('marketengine_permalinks');
         $args       = array(
             'labels'            => $labels,
             'public'            => true,
@@ -206,7 +206,7 @@ class ME_Post_Types
             'public'             => false,
             'publicly_queryable' => true,
             'rewrite'            => array(
-                'slug' => me_get_endpoint_name('order-id') . '/%post_id%',
+                'slug' => marketengine_get_endpoint_name('order-id') . '/%post_id%',
             ),
             'has_archive'        => true,
             'show_ui'            => true,

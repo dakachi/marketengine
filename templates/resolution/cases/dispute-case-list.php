@@ -14,11 +14,11 @@
 
 	<div class="me-table me-table-resolution">
 
-		<?php me_get_template('resolution/cases/cases-table-header'); ?>
+		<?php marketengine_get_template('resolution/cases/cases-table-header'); ?>
 
 		<?php foreach ($query->posts as $case) : ?>
 
-		<?php me_get_template('resolution/cases/cases-rows', array('case' => $case)); ?>
+		<?php marketengine_get_template('resolution/cases/cases-rows', array('case' => $case)); ?>
 
 		<?php endforeach; ?>
 	
@@ -28,10 +28,10 @@
 
 	<div class="me-table me-table-empty me-table-resolution">
 
-		<?php me_get_template('resolution/cases/cases-table-header'); ?>
+		<?php marketengine_get_template('resolution/cases/cases-table-header'); ?>
 
 	</div>
 	
-	<?php me_get_template('resolution/cases/no-cases'); ?>
+	<?php marketengine_get_template('resolution/cases/no-cases'); ?>
 	
 <?php endif; ?>

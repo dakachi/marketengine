@@ -16,8 +16,8 @@ require_once MARKETENGINE_PATH . '/includes/resolution/class-me-rc-query.php';
 
 require_once MARKETENGINE_PATH . '/includes/resolution/class-me-case-list.php';
 
-function me_setup_resolution_center() {
+function marketengine_setup_resolution_center() {
 	ME_RC_Form::init();
 	ME_RC_Query::instance();
 }
-add_action('after_setup_theme', 'me_setup_resolution_center');
+add_action('after_setup_theme', 'marketengine_setup_resolution_center');

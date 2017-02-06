@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$edit_url = me_get_endpoint_url( 'listing_id', $listing_id ,me_get_page_permalink('edit_listing'));
+$edit_url = marketengine_get_endpoint_url( 'listing_id', $listing_id ,marketengine_get_page_permalink('edit_listing'));
 
 	switch ($listing_status->name) {
 		case 'publish':

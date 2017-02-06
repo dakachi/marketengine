@@ -7,11 +7,11 @@
 		<?php do_action('marketengine_single_listing_send_inquiry_form_start'); ?>
 		<div class="me-contact">
 
-			<?php if(me_is_activated_user()) : ?>
-			<input type="submit" class="me-buy-now-btn" value="<?php echo me_option('contact-action') ?  me_option('contact-action') : __("CONTACT NOW", "enginethemes");?>">
+			<?php if!marketengine_is_activated_user()) : ?>
+			<input type="submit" class="me-buy-now-btn" value="<?php echo marketengine_option('contact-action') ?  marketengine_option('contact-action') : __("CONTACT NOW", "enginethemes");?>">
 			<?php else : ?>
 			<a href="<?php the_permalink(); ?>" class="me-buy-now-btn">
-				<?php echo me_option('contact-action') ?  me_option('contact-action') : __("CONTACT NOW", "enginethemes"); ?>
+				<?php echo marketengine_option('contact-action') ?  marketengine_option('contact-action') : __("CONTACT NOW", "enginethemes"); ?>
 			</a>
 			<?php endif; ?>
 		</div>

@@ -8,7 +8,7 @@
  * @version     1.0.0
  * @since 		1.0.1
  */
-$problems = me_rc_dispute_problems();
+$problems = marketengine_rc_dispute_problems();
 ?>
 
 <div class="me-dispute-problem">

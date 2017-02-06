@@ -3,10 +3,10 @@
     <h2>
         <?php printf(__("CASE #%d", "enginethemes"), $case->ID); ?>
     </h2>
-    <a href="<?php echo me_resolution_center_url(); ?>"></a>
+    <a href="<?php echo marketengine_resolution_center_url(); ?>"></a>
     <ol class="me-breadcrumb">
         <li>
-            <a href="<?php echo me_resolution_center_url(); ?>">
+            <a href="<?php echo marketengine_resolution_center_url(); ?>">
                 <?php _e("Resolution Center", "enginethemes"); ?>
             </a>
         </li>

@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$transaction = me_get_order();
+$transaction = marketengine_get_order();
 get_header();
 ?>
 
@@ -29,7 +29,7 @@ get_header();
 
             <?php do_action('marketengine_transaction_details_start', $transaction); ?>
 
-            <?php me_get_template('purchases/order-heading', array('transaction' => $transaction)); ?>
+            <?php marketengine_get_template('purchases/order-heading', array('transaction' => $transaction)); ?>
 
             <div class="marketengine-content">
             <?php 

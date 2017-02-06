@@ -14,6 +14,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+$args = apply_filters( 'marketengine_related_listing', $args );
 
 if(!empty($listings)) :
 ?>
@@ -25,7 +26,7 @@ if(!empty($listings)) :
 
 		<?php
 			foreach( $listings as $listing ) :
-				$listing = me_get_listing($listing);
+				$listing = marketengine_get_listing($listing);
 				$listing_type = $listing->get_listing_type();
 		?>
 			<div class="me-item-post">
@@ -42,9 +43,9 @@ if(!empty($listings)) :
 
 						<?php
 							if('purchasion' == $listing_type) :
-								me_get_template('loop/purchasion', array('listing' => $listing));
+								marketengine_get_template('loop/purchasion', array('listing' => $listing));
 							else :
-								me_get_template('loop/contact', array('listing' => $listing));
+								marketengine_get_template('loop/contact', array('listing' => $listing));
 							endif;
 						 ?>
 

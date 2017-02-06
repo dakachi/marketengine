@@ -22,7 +22,7 @@ $listing_gallery = !empty($_POST['listing_gallery']) ? array_map('absint', $_POS
         ob_start();
         if($listing_gallery) {
             foreach($listing_gallery as $gallery) {
-                me_get_template('upload-file/multi-image-form', array(
+                marketengine_get_template('upload-file/multi-image-form', array(
                     'image_id' => $gallery,
                     'filename' => 'listing_gallery',
                     'close' => true
@@ -31,7 +31,7 @@ $listing_gallery = !empty($_POST['listing_gallery']) ? array_map('absint', $_POS
         }
         $listing_gallery = ob_get_clean();
 
-        me_get_template('upload-file/upload-form', array(
+        marketengine_get_template('upload-file/upload-form', array(
             'id' => 'upload_listing_gallery',
             'name' => 'listing_gallery',
             'source' => $listing_gallery,

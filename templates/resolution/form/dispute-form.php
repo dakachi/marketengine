@@ -19,11 +19,11 @@ $dispute_files = !empty($_POST['dispute_file']) ? $_POST['dispute_file'] : array
 		
 		<?php do_action('marketengine_dispute_form_start'); ?>
 
-		<?php me_get_template('resolution/form/disputed-product-info', array('transaction' => $transaction)); ?>
+		<?php marketengine_get_template('resolution/form/disputed-product-info', array('transaction' => $transaction)); ?>
 
-		<?php me_get_template('resolution/form/dispute-received-item'); ?>
+		<?php marketengine_get_template('resolution/form/dispute-received-item'); ?>
 
-		<?php me_get_template('resolution/form/dispute-problem'); ?>
+		<?php marketengine_get_template('resolution/form/dispute-problem'); ?>
 
 		<div class="me-dispute-description">
 			<h3><?php _e('Please tell more about your problem', 'enginethemes'); ?></h3>
@@ -37,7 +37,7 @@ $dispute_files = !empty($_POST['dispute_file']) ? $_POST['dispute_file'] : array
 	        ob_start();
 	        if($dispute_files) {
 	            foreach($dispute_files as $gallery) {
-	                me_get_template('upload-file/multi-file-form', array(
+	                marketengine_get_template('upload-file/multi-file-form', array(
 	                    'image_id' => $gallery,
 	                    'filename' => 'dispute_file',
 	                    'close' => true
@@ -46,7 +46,7 @@ $dispute_files = !empty($_POST['dispute_file']) ? $_POST['dispute_file'] : array
 	        }
 	        $dispute_files = ob_get_clean();
 
-	        me_get_template('upload-file/upload-form', array(
+	        marketengine_get_template('upload-file/upload-form', array(
 	            'id' => 'dispute-file',
 	            'name' => 'dispute_file',
 	            'source' => $dispute_files,
@@ -60,7 +60,7 @@ $dispute_files = !empty($_POST['dispute_file']) ? $_POST['dispute_file'] : array
 	        ?>
 		</div>
 
-		<?php me_get_template('resolution/form/expected-resolution'); ?>
+		<?php marketengine_get_template('resolution/form/expected-resolution'); ?>
 
 		<?php wp_nonce_field('me-open_dispute_case'); ?>
 		<?php wp_nonce_field('marketengine', 'me-dispute-file'); ?>

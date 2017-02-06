@@ -16,14 +16,14 @@ if (!defined('ABSPATH')) {
  * @category Hook Function
  * @since 1.0
  */
-function me_post_row_actions($actions, $post)
+function marketengine_post_row_actions($actions, $post)
 {
     if ($post && 'listing' == $post->post_type) {
         return array();
     }
     return $actions;
 }
-add_filter('post_row_actions', 'me_post_row_actions', 10, 2);
+add_filter('post_row_actions', 'marketengine_post_row_actions', 10, 2);
 
 /**
  * Hook to change listing list table primary column
@@ -34,13 +34,13 @@ add_filter('post_row_actions', 'me_post_row_actions', 10, 2);
  * @category Hook Function
  * @since 1.0
  */
-function me_change_listing_primary_column($column, $screen_id) {
+function marketengine_change_listing_primary_column($column, $screen_id) {
     if($screen_id == 'edit-listing') {
         return 'post_title';
     }
     return $column;
 }
-add_filter('list_table_primary_column', 'me_change_listing_primary_column',10, 2);
+add_filter('list_table_primary_column', 'marketengine_change_listing_primary_column',10, 2);
 
 /**
  * Add and modify listing post column
@@ -48,7 +48,7 @@ add_filter('list_table_primary_column', 'me_change_listing_primary_column',10, 2
  * @category Hook Function
  * @since 1.0
  */
-function me_listing_columns($existing_columns)
+function marketengine_listing_columns($existing_columns)
 {
     if (empty($existing_columns) && !is_array($existing_columns)) {
         $existing_columns = array();
@@ -67,7 +67,7 @@ function me_listing_columns($existing_columns)
 
     return array_merge($existing_columns, $columns);
 }
-add_filter('manage_listing_posts_columns', 'me_listing_columns');
+add_filter('manage_listing_posts_columns', 'marketengine_listing_columns');
 
 /**
  * Render listing column value
@@ -75,7 +75,7 @@ add_filter('manage_listing_posts_columns', 'me_listing_columns');
  * @category Hook Function
  * @since 1.0
  */
-function me_render_listing_columns($column)
+function marketengine_render_listing_columns($column)
 {
     global $post, $wpdb;
 
@@ -116,12 +116,12 @@ function me_render_listing_columns($column)
         case 'price':
             $price = get_post_meta($post->ID, 'listing_price', true);
             if ($price) {
-                echo me_price_html($price);
+                echo marketengine_price_html($price);
             }
             break;
     }
 }
-add_action('manage_listing_posts_custom_column', 'me_render_listing_columns', 2);
+add_action('manage_listing_posts_custom_column', 'marketengine_render_listing_columns', 2);
 
 /**
  * Add listing metabox, remove authordiv
@@ -129,11 +129,11 @@ add_action('manage_listing_posts_custom_column', 'me_render_listing_columns', 2)
  * @category Hook Function
  * @since 1.0
  */
-function me_listing_meta_box()
+function marketengine_listing_meta_box()
 {
     remove_meta_box('authordiv', 'listing', 'normal');
 }
-add_action('add_meta_boxes', 'me_listing_meta_box');
+add_action('add_meta_boxes', 'marketengine_listing_meta_box');
 
 
 /**
@@ -144,8 +144,8 @@ add_action('add_meta_boxes', 'me_listing_meta_box');
  * 
  * @since 1.0
  */
-function me_remove_filter_listing_mine($views) {
+function marketengine_remove_filter_listing_mine($views) {
     unset($views['mine']);
     return $views;
 }
-add_filter( 'views_edit-listing', 'me_remove_filter_listing_mine' );
+add_filter( 'views_edit-listing', 'marketengine_remove_filter_listing_mine' );

@@ -34,7 +34,7 @@ class ME_Inquiry_Handle
         }
 
         $listing_id = absint( $data['send_inquiry'] );
-        $listing    = me_get_listing($listing_id);
+        $listing    = marketengine_get_listing($listing_id);
 
         if ('contact' != $listing->get_listing_type()) {
             return new WP_Error('invalid_listing', __("Invalid listing.", "enginethemes"));
@@ -52,11 +52,11 @@ class ME_Inquiry_Handle
             return new WP_Error('invalid_listing', __("Invalid listing.", "enginethemes"));
         }
 
-        $inquiry_id = me_get_current_inquiry($listing_id);
+        $inquiry_id = marketengine_get_current_inquiry($listing_id);
 
         if (!$inquiry_id) {
             // create inquiry
-            $inquiry_id = me_insert_message(
+            $inquiry_id = marketengine_insert_message(
                 array(
                     'post_content' => 'Inquiry listing #' . $listing_id,
                     'post_title'   => 'Inquiry listing #' . $listing_id,
@@ -89,7 +89,7 @@ class ME_Inquiry_Handle
         if ($inquiry_id) {
             // add message to inquiry
             $current_user = get_current_user_id();
-            $inquiry      = me_get_message($inquiry_id);
+            $inquiry      = marketengine_get_message($inquiry_id);
 
             if (!$inquiry) {
                 return new WP_Error('invalid_inquiry', __("Invalid inquiry.", "enginethemes"));
@@ -118,7 +118,7 @@ class ME_Inquiry_Handle
                 'post_parent'  => $inquiry_id,
             );
 
-            return me_insert_message($message_data, true);
+            return marketengine_insert_message($message_data, true);
 
         } else {
             return new WP_Error('invalid_inquiry', __("Invalid inquiry.", "enginethemes"));
@@ -178,7 +178,7 @@ class ME_Inquiry_Handle
             // no contact found
             if (empty($users_found)) {
                 ob_start();
-                me_get_template('inquiry/contact-item-notfound');
+                marketengine_get_template('inquiry/contact-item-notfound');
                 $content = ob_get_clean();
                 return array(
                     'found_posts' => 0,
@@ -194,11 +194,11 @@ class ME_Inquiry_Handle
 
         if ($messages->have_posts()) {
             while ($messages->have_posts()): $messages->the_post();
-                me_get_template('inquiry/contact-item', array('current_inquiry' => $args['inquiry_id']));
+                marketengine_get_template('inquiry/contact-item', array('current_inquiry' => $args['inquiry_id']));
             endwhile;
         } else {
             if($args['paged'] == 1) {
-                me_get_template('inquiry/contact-item-notfound');    
+                marketengine_get_template('inquiry/contact-item-notfound');    
             }
         }
         $content = ob_get_clean();
