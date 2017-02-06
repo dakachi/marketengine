@@ -10,12 +10,12 @@
 
 $paged = get_query_var('paged') ? get_query_var('paged') : 1;
 $args = array(
-	'post_type' 	=> 'me_order',
+	'post_type' 	=> 'marketengine_order',
 	'paged'			=> $paged,
 );
 
 $request = array_map('esc_sql', $_GET);
-$args = array_merge(apply_filters( 'me_filter_order', $request ), $args);
+$args = array_merge(apply_filters( 'marketengine_filter_order', $request ), $args);
 
 $query = new WP_Query( $args );
 
@@ -26,7 +26,7 @@ $query = new WP_Query( $args );
 	<span><?php echo __('Filter list', 'enginethemes'); ?></span>
 </div>
 
-<?php me_get_template('global/order-filter'); ?>
+<?php marketengine_get_template('global/order-filter'); ?>
 
 <div class="me-table me-orderlist-table">
 	<div class="me-table-rhead">
@@ -44,7 +44,7 @@ $query = new WP_Query( $args );
 			$order = new ME_Order( get_the_ID() );
 			$order_total = $order->get_total();
 
-			$order_listing = me_get_order_items( get_the_ID() );
+			$order_listing = marketengine_get_order_items( get_the_ID() );
 			$order_date = get_the_date(get_option('date_format'), get_the_ID());
 			$order_status = get_post_status( get_the_ID() );
 	?>
@@ -52,9 +52,9 @@ $query = new WP_Query( $args );
 	<?php // TODO: replace this with transaction number ?>
 		<div class="me-table-col me-order-id"><a href="<?php the_permalink(); ?>">#<?php the_ID(); ?></a></div>
 		<div class="me-table-col me-order-status">
-			<?php echo me_print_order_status( $order_status ); ?>
+			<?php echo marketengine_print_order_status( $order_status ); ?>
 		</div>
-		<div class="me-table-col me-order-amount"><?php echo me_price_html($order_total); ?></div>
+		<div class="me-table-col me-order-amount"><?php echo marketengine_price_html($order_total); ?></div>
 		<div class="me-table-col me-order-date"><?php echo $order_date; ?></div>
 		<div class="me-table-col me-order-listing">
 			<div class="me-order-listing-info">
@@ -68,7 +68,7 @@ $query = new WP_Query( $args );
 </div>
 
 <div class="me-paginations">
-	<?php me_paginate_link( $query ); ?>
+	<?php marketengine_paginate_link( $query ); ?>
 </div>
 <?php /*
 <div class="marketengine-loadmore">

@@ -29,7 +29,7 @@ class ME_Upload_Handle extends ME_Form {
             $file = $_FILES[$filename];
             $attachment = self::handle_file($file);
 
-            me_get_template('upload-file/multi-file-form', array(
+            marketengine_get_template('upload-file/multi-file-form', array(
                 'image_id' => $attachment['id'],
                 'filename' => $filename,
                 'close' => true
@@ -54,12 +54,12 @@ class ME_Upload_Handle extends ME_Form {
                     'inquiry_id' => absint( $_REQUEST['inquiry_id'] ),
                 );
                 $result = ME_Inquiry_Handle::insert_message($message_data);
-                $message = me_get_message($result);
-                me_get_template('inquiry/message-item', array('message' => $message));
+                $message = marketengine_get_message($result);
+                marketengine_get_template('inquiry/message-item', array('message' => $message));
                 exit;
             }
 
-            me_get_template('upload-file/single-file-form', array(
+            marketengine_get_template('upload-file/single-file-form', array(
                 'image_id' => $attachment['id'],
                 'filename' => $filename,
                 'close' => $close,

@@ -23,9 +23,9 @@ if (!defined('ABSPATH')) {
 
 						<div class="me-content-shop">
 
-							<?php me_get_template('archive-heading') ?>
+							<?php marketengine_get_template('archive-heading') ?>
 
-							<?php me_get_template('listing-list'); ?>
+							<?php marketengine_get_template('listing-list'); ?>
 
 						</div>
 

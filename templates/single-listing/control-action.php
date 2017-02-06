@@ -24,13 +24,13 @@ if (!defined('ABSPATH')) {
 	?>
 
 		<span class="me-price">
-			<?php echo me_price_html( $price, '', $pricing_unit ); ?>
+			<?php echo marketengine_price_html( $price, '', $pricing_unit ); ?>
 		</span>
 
 	<?php endif; ?>
 		<form method="post">
-			<?php me_get_template('account/my-listing-action', array('listing_status' => $listing_status, 'listing_id' => get_the_ID())); ?>
-			<?php wp_nonce_field( 'me_update_listing_status' ); ?>
+			<?php marketengine_get_template('account/my-listing-action', array('listing_status' => $listing_status, 'listing_id' => get_the_ID())); ?>
+			<?php wp_nonce_field( 'marketengine_update_listing_status' ); ?>
 			<input type="hidden" id="listing_id" value="<?php the_ID(); ?>" />
 			<input type="hidden" id="redirect_url" value="<?php the_permalink(); ?>" />
 		</form>

@@ -15,9 +15,9 @@ require_once MARKETENGINE_PATH . '/includes/custom-fields/class-me-handle-cf.php
 require_once MARKETENGINE_PATH . '/includes/custom-fields/me-cf-taxonomy-function.php';
 
 
-function me_setup_custom_field() {
+function marketengine_setup_custom_field() {
 	ME_Handle_CF::instance();
 	ME_Custom_Field_Form::init();
 	// ME_Custom_Field_Handle::init();
 }
-add_action('after_setup_theme', 'me_setup_custom_field');
+add_action('after_setup_theme', 'marketengine_setup_custom_field');

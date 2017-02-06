@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
  * @param array $args
  * @return array $result
  */
-function me_order_report_data( $args ) {
+function marketengine_order_report_data( $args ) {
 	global $wpdb;
 	$defaults = array(
         'from_date' => '2016-1-1',
@@ -56,7 +56,7 @@ function me_order_report_data( $args ) {
 	 		LEFT JOIN $wpdb->marketengine_order_items as O
 	 			ON P.ID = O.order_id
 	 		LEFT JOIN  $wpdb->postmeta as PM ON  PM.post_id = P.ID AND PM.meta_key = '_order_subtotal'
-	 		WHERE P.post_type = 'me_order'
+	 		WHERE P.post_type = 'marketengine_order'
 	 		    AND P.ID IN (
 	 		        SELECT order_items.order_id
 	 		        FROM $wpdb->marketengine_order_items as order_items
@@ -68,7 +68,7 @@ function me_order_report_data( $args ) {
 	if( empty($order_status) || $order_status == 'any' ) {
 		$query .= " AND (";
 		$order_status = array( 'me-complete', 'me-closed', 'publish' );
-		$order_status = apply_filters( 'me_export-order_status', $order_status );
+		$order_status = apply_filters( 'marketengine_export-order_status', $order_status );
 		foreach($order_status as $key => $status) {
 			if($key != 0) {
 				$query .= " OR ";
@@ -107,7 +107,7 @@ function me_order_report_data( $args ) {
  * @param array $args
  * @return array $result
  */
-function me_transaction_report_data( $args ) {
+function marketengine_transaction_report_data( $args ) {
 	global $wpdb;
 	$defaults = array(
         'from_date' => '1970-1-1',
@@ -141,14 +141,14 @@ function me_transaction_report_data( $args ) {
 	 		LEFT JOIN $wpdb->marketengine_order_items as O
 	 			ON P.ID = O.order_id
 	 		LEFT JOIN  $wpdb->postmeta as PM ON  PM.post_id = P.ID AND PM.meta_key = '_order_subtotal'
-	 		WHERE P.post_type = 'me_order'
+	 		WHERE P.post_type = 'marketengine_order'
 	 		    AND P.post_author = {$user}
 	 		    AND P.post_date BETWEEN '{$from_date} 0:0:1' AND '{$to_date} 23:59:59'";
 
 	if( empty($order_status) || $order_status == 'any' ) {
 		$query .= " AND (";
 		$order_status = array( 'me-complete', 'me-pending', 'me-closed', 'publish' );
-		$order_status = apply_filters( 'me_export-order_status', $order_status );
+		$order_status = apply_filters( 'marketengine_export-order_status', $order_status );
 		foreach($order_status as $key => $status) {
 			if($key != 0) {
 				$query .= " OR ";

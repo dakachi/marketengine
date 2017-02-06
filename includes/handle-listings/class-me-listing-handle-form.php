@@ -38,8 +38,8 @@ class ME_Listing_Handle_Form extends ME_Form {
      * Handle redirect user to page login when not logged in
      */
     public static function redirect_to_login() {
-        if(!is_user_logged_in() && is_page( me_get_option_page_id('post_listing') ) ) {
-            $link = me_get_page_permalink('user_account');
+        if(!is_user_logged_in() && is_page( marketengine_get_option_page_id('post_listing') ) ) {
+            $link = marketengine_get_page_permalink('user_account');
             $link = add_query_arg(array('redirect' => get_permalink()), $link);
             wp_redirect( $link );
             exit;
@@ -53,7 +53,7 @@ class ME_Listing_Handle_Form extends ME_Form {
         if (!empty($_POST['insert_lisiting']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert_listing')) {
             $new_listing = ME_Listing_Handle::insert($_POST);
             if (is_wp_error($new_listing)) {
-                me_wp_error_to_notices($new_listing);
+                marketengine_wp_error_to_notices($new_listing);
             } else {
                 // set the redirect link after submit new listing
                 if (isset($_POST['redirect'])) {
@@ -82,7 +82,7 @@ class ME_Listing_Handle_Form extends ME_Form {
         if (!empty($_POST['update_lisiting']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-update_listing')) {
             $listing = ME_Listing_Handle::update($_POST);
             if (is_wp_error($listing)) {
-                me_wp_error_to_notices($listing);
+                marketengine_wp_error_to_notices($listing);
             } else {
                 // set the redirect link after update listing
                 if (isset($_POST['redirect'])) {
@@ -112,7 +112,7 @@ class ME_Listing_Handle_Form extends ME_Form {
         if (!empty($_POST['listing_id']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-review-listing')) {
             $review = ME_Listing_Handle::insert_review($_POST);
             if(is_wp_error( $review )) {
-                me_wp_error_to_notices($review);
+                marketengine_wp_error_to_notices($review);
             }else {
                 $redirect = get_permalink( absint( $_POST['listing_id'] ) );
                 wp_safe_redirect( $redirect );
@@ -151,11 +151,11 @@ class ME_Listing_Handle_Form extends ME_Form {
         if (isset($_REQUEST['parent-cat'])) {
             $child_categories = get_terms( array('taxonomy' => 'listing_category', 'hide_empty' => false, 'parent' => absint( $_REQUEST['parent-cat'] )));
             ob_start();
-            me_get_template('post-listing/sub-cat', array('child_categories' => $child_categories) );
+            marketengine_get_template('post-listing/sub-cat', array('child_categories' => $child_categories) );
             $content = ob_get_clean();
 
-            $purchase_cats = me_option('purchasion-available');
-            $contact_cats = me_option('contact-available');
+            $purchase_cats = marketengine_option('purchasion-available');
+            $contact_cats = marketengine_option('contact-available');
 
             wp_send_json_success(array(
                 'content' => $content,
@@ -182,8 +182,8 @@ class ME_Listing_Handle_Form extends ME_Form {
     }
 
     public static function update_order_count( $order_id ) {
-        $listing = me_get_order_items($order_id, 'listing_item');
-        $listing_id = me_get_order_item_meta($listing_item[0]->order_item_id, '_listing_id', true);
+        $listing = marketengine_get_order_items($order_id, 'listing_item');
+        $listing_id = marketengine_get_order_item_meta($listing_item[0]->order_item_id, '_listing_id', true);
         ME_Listing_Handle::update_order_count($listing_id);
     }
 

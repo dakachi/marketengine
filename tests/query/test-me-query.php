@@ -10,11 +10,11 @@ class Test_ME_Query extends WP_UnitTestCase {
     public function setUp() {
         parent::setUp();
         // $this->create_test_pages();
-        // register_post_type('me_order', array(
+        // register_post_type('marketengine_order', array(
         //     'public'             => false,
         //     'publicly_queryable' => true,
         //     'rewrite'            => array(
-        //         'slug' => me_get_endpoint_name('order-id') . '/%post_id%',
+        //         'slug' => marketengine_get_endpoint_name('order-id') . '/%post_id%',
         //     ),
         //     'has_archive'        => true,
         //     'query_var'          => true,
@@ -24,15 +24,15 @@ class Test_ME_Query extends WP_UnitTestCase {
 
     public function tearDown() {
         // global $wp_post_types;
-        // if ( isset( $wp_post_types[ 'me_order' ] ) ) {
-        //     unset( $wp_post_types[ 'me_order' ] );
+        // if ( isset( $wp_post_types[ 'marketengine_order' ] ) ) {
+        //     unset( $wp_post_types[ 'marketengine_order' ] );
         // }
     }
 
     public function test_me_get_option_page_id() {
         $pages = $this->get_list_of_pages();
         foreach( $pages as $page ) {
-            $result = me_get_option_page_id( $page );
+            $result = marketengine_get_option_page_id( $page );
             $this->assertEquals(-1, $result);
 
             $page_id = $this->post_factory->create_object( array(
@@ -42,19 +42,19 @@ class Test_ME_Query extends WP_UnitTestCase {
             $name = "me_{$page}_page_id";
             $this->options->$name = $page_id;
             $this->options->save();
-            $result = me_get_option_page_id($page);
+            $result = marketengine_get_option_page_id($page);
             $this->assertEquals($page_id, $result);
         }
     }
 
     public function test_me_get_endpoint_name() {
-        $result = me_get_endpoint_name('forgot-password');
+        $result = marketengine_get_endpoint_name('forgot-password');
         $this->assertEquals('forgot-password', $result);
 
         $option_name = 'ep_forgot_password';
         $this->options->$option_name = 'quen-mat-khau';
         $this->options->save();
-        $result = me_get_endpoint_name('forgot_password');
+        $result = marketengine_get_endpoint_name('forgot_password');
         $this->assertEquals('quen-mat-khau', $result);
     }
 
@@ -92,7 +92,7 @@ class Test_ME_Query extends WP_UnitTestCase {
 
         $endpoints = array('orders', 'purchases', 'listings');
         foreach ($endpoints as $key => $endpoint) {
-            $pattern[] = '^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$';
+            $pattern[] = '^(.?.+?)/' . marketengine_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$';
             $redirect[] = 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint;
 
             add_rewrite_rule($pattern[$key], $redirect[$key], 'top');
@@ -108,7 +108,7 @@ class Test_ME_Query extends WP_UnitTestCase {
 
     public function test_rewrite_edit_listing_url() {
         global $wp_rewrite;
-        $edit_listing_page = me_get_option_page_id('edit_listing');
+        $edit_listing_page = marketengine_get_option_page_id('edit_listing');
 
         $this->assertEquals( -1, $edit_listing_page);
 
@@ -118,7 +118,7 @@ class Test_ME_Query extends WP_UnitTestCase {
         ) );
         $page = get_post($edit_listing_page);
 
-        $pattern = '^/' . $page->post_name . '/' . me_get_endpoint_name('listing_id') . '/?([0-9]{1,})/?$';
+        $pattern = '^/' . $page->post_name . '/' . marketengine_get_endpoint_name('listing_id') . '/?([0-9]{1,})/?$';
         $redirect = 'index.php?page_id=' . $edit_listing_page . '&listing_id' . '=$matches[1]';
         add_rewrite_rule($pattern, $redirect, 'top');
 
@@ -130,7 +130,7 @@ class Test_ME_Query extends WP_UnitTestCase {
 
     public function test_rewrite_order_detail_url() {
         global $wp_rewrite;
-        $order_endpoint = me_get_endpoint_name('order_id');
+        $order_endpoint = marketengine_get_endpoint_name('order_id');
 
         $pattern = $order_endpoint . '/([0-9]+)/?$';
         $redirect = 'index.php?post_type=me_order&p=$matches[1]';
@@ -154,7 +154,7 @@ class Test_ME_Query extends WP_UnitTestCase {
 
     public function test_custom_order_link() {
         $order_id = $this->post_factory->create_object( array(
-            'post_type' => 'me_order',
+            'post_type' => 'marketengine_order',
         ) );
 
         $order = get_post($order_id);
@@ -163,12 +163,12 @@ class Test_ME_Query extends WP_UnitTestCase {
 
     public function test_custom_order_link_with_pretty_url() {
         // global $wp_rewrite;
-        // $wp_rewrite->extra_permastructs['me_order'] = '/order/%post_id%/%me_order%';
+        // $wp_rewrite->extra_permastructs['marketengine_order'] = '/order/%post_id%/%me_order%';
 
         // $order_id = $this->post_factory->create_object( array(
-        //     'post_type' => 'me_order',
+        //     'post_type' => 'marketengine_order',
         // ) );
-        // $order_endpoint = me_get_endpoint_name('order_id');
+        // $order_endpoint = marketengine_get_endpoint_name('order_id');
 
         // $this->set_permalink_structure('%postname%');
 
@@ -204,19 +204,19 @@ class Test_ME_Query extends WP_UnitTestCase {
     function get_payment_rewrite_args() {
         $rewrite_args = array(
             array(
-                'page_id'       => me_get_option_page_id('confirm_order'),
-                'endpoint_name' => me_get_endpoint_name('order-id'),
+                'page_id'       => marketengine_get_option_page_id('confirm_order'),
+                'endpoint_name' => marketengine_get_endpoint_name('order-id'),
                 'query_var'     => 'order-id',
             ),
 
             array(
-                'page_id'       => me_get_option_page_id('cancel_order'),
-                'endpoint_name' => me_get_endpoint_name('order-id'),
+                'page_id'       => marketengine_get_option_page_id('cancel_order'),
+                'endpoint_name' => marketengine_get_endpoint_name('order-id'),
                 'query_var'     => 'order-id',
             ),
             array(
-                'page_id'       => me_get_option_page_id('checkout'),
-                'endpoint_name' => me_get_endpoint_name('pay'),
+                'page_id'       => marketengine_get_option_page_id('checkout'),
+                'endpoint_name' => marketengine_get_endpoint_name('pay'),
                 'query_var'     => 'pay',
             ),
         );

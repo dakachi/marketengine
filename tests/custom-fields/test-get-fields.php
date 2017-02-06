@@ -66,12 +66,12 @@ class Tests_Get_Fields extends WP_UnitTestCase
         );
         
         foreach ($this->field_data as $key => $field_data) {
-            $result = me_cf_insert_field($field_data, true);
+            $result = marketengine_cf_insert_field($field_data, true);
             if($key < 2) {
-                me_cf_set_field_category($result , $this->parent_cat, $key);
-                me_cf_set_field_category($result , $this->parent_cat_2, $key);    
+                marketengine_cf_set_field_category($result , $this->parent_cat, $key);
+                marketengine_cf_set_field_category($result , $this->parent_cat_2, $key);    
             }else {
-                me_cf_set_field_category($result , $this->parent_cat_2, $key);
+                marketengine_cf_set_field_category($result , $this->parent_cat_2, $key);
             }
         }
 
@@ -85,7 +85,7 @@ class Tests_Get_Fields extends WP_UnitTestCase
         wp_delete_term($this->parent_cat_2, 'listing_category');
         wp_delete_term($this->parent_cat_3, 'listing_category');
 
-        me_cf_remove_field_category($this->field_id, $this->parent_cat);
+        marketengine_cf_remove_field_category($this->field_id, $this->parent_cat);
 
         global $wpdb;
 
@@ -97,14 +97,14 @@ class Tests_Get_Fields extends WP_UnitTestCase
 
     public function test_me_get_field_in_category()
     {
-        $fields = me_cf_get_fields($this->parent_cat);
+        $fields = marketengine_cf_get_fields($this->parent_cat);
         $this->assertEquals(array('field_1', 'field_2'),wp_list_pluck ( $fields , 'field_name')) ;
         $this->assertEquals(array(2, 2),wp_list_pluck ( $fields , 'count')) ;
     }
 
     public function test_me_get_all_feilds()
     {
-        $fields = me_cf_get_fields();
+        $fields = marketengine_cf_get_fields();
         $this->assertEquals(array('field_1', 'field_2', 'field_3'),wp_list_pluck ( $fields , 'field_name')) ;
         $this->assertEquals(array(2, 2, 1),wp_list_pluck ( $fields , 'count')) ;
     }

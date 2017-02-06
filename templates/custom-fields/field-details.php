@@ -25,44 +25,44 @@ foreach ($fields as $field):
         case 'textarea':
         case 'number':
 
-            $value = me_field($field['field_name']);
+            $value = marketengine_field($field['field_name']);
             if (!$value) {
                 break;
             }
 
-            me_get_template('custom-fields/listing-details/text', array('field' => $field, 'value' => $value));
+            marketengine_get_template('custom-fields/listing-details/text', array('field' => $field, 'value' => $value));
 
             break;
         case 'date':
-            $value = me_field($field['field_name']);
+            $value = marketengine_field($field['field_name']);
             if (!$value) {
                 break;
             }
 
             $date = date_i18n(get_option('date_format'), strtotime($value));
-            me_get_template('custom-fields/listing-details/text', array('field' => $field, 'value' => $date));
+            marketengine_get_template('custom-fields/listing-details/text', array('field' => $field, 'value' => $date));
 
             break;
 
         case 'single-select':
-            $value = me_field($field['field_name'], null, array('fields' => 'names'));
+            $value = marketengine_field($field['field_name'], null, array('fields' => 'names'));
             if (empty($value)) {
                 break;
             }
 
             $value = $value[0];
-            me_get_template('custom-fields/listing-details/text', array('field' => $field, 'value' => $value));
+            marketengine_get_template('custom-fields/listing-details/text', array('field' => $field, 'value' => $value));
 
             break;
 
         case 'checkbox':
         case 'multi-select':
-            $value = me_field($field['field_name'], null, array('fields' => 'names'));
+            $value = marketengine_field($field['field_name'], null, array('fields' => 'names'));
             if (empty($value)) {
                 break;
             }
 
-            me_get_template('custom-fields/listing-details/list', array('field' => $field, 'value' => $value));
+            marketengine_get_template('custom-fields/listing-details/list', array('field' => $field, 'value' => $value));
 
             break;
 

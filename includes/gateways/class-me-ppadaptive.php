@@ -75,15 +75,15 @@ class ME_PPAdaptive extends ME_Payment {
      * @since 1.0
      */
     public function __construct() {
-        $this->api['username']  = me_option('paypal-api-username');
-        $this->api['password']  = me_option('paypal-api-password');
-        $this->api['signature'] = me_option('paypal-api-signature');
-        $this->api['appID']     = me_option('paypal-app-api');
+        $this->api['username']  = marketengine_option('paypal-api-username');
+        $this->api['password']  = marketengine_option('paypal-api-password');
+        $this->api['signature'] = marketengine_option('paypal-api-signature');
+        $this->api['appID']     = marketengine_option('paypal-app-api');
 
         $this->appID = isset($this->api['appID']) ? $this->api['appID'] : 'APP-80W284485P519543T';
 
         // $testmode = ae_get_option('test_mode', true);
-        $testmode = me_option('test-mode') ? true : false;
+        $testmode = marketengine_option('test-mode') ? true : false;
         // test mod is on
         $this->endpoint        = 'https://svcs.sandbox.paypal.com/AdaptivePayments/';
         $this->paypal_url      = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey=';
@@ -158,7 +158,7 @@ class ME_PPAdaptive extends ME_Payment {
      *
      */
     public function get_verified_account($info) {
-        $testmode = me_option('test-mode') ? true : false;
+        $testmode = marketengine_option('test-mode') ? true : false;
         // test mod is on
         $endpoint = 'https://svcs.sandbox.paypal.com/AdaptiveAccounts/';
         // live mod is on
@@ -463,14 +463,14 @@ class ME_PPAdaptive_Request {
      * Get the site's commission fee
      */
     private function get_commission_fee() {
-        return me_option('paypal-commission-fee');
+        return marketengine_option('paypal-commission-fee');
     }
 
     /**
      * Get the site's receive commission email
      */
     private function get_commission_email() {
-        return me_option('paypal-receiver-email');
+        return marketengine_option('paypal-receiver-email');
     }
 
     /**
@@ -484,18 +484,18 @@ class ME_PPAdaptive_Request {
     private function get_receiver_list_args($order) {
         $commission_fee = $this->get_commission_fee();
 
-        $receiver_items = me_get_order_items($order->id, 'receiver_item');
+        $receiver_items = marketengine_get_order_items($order->id, 'receiver_item');
         if (!empty($receiver_items)) {
             $order_item_id = $receiver_items[0]->order_item_id;
 
-            $amount = me_get_order_item_meta($order_item_id, '_amount', true);
+            $amount = marketengine_get_order_item_meta($order_item_id, '_amount', true);
             if ($commission_fee > 0) {
                 // $amount        = $amount - $commission_fee;
                 $commission    = round( ((float) $amount * (float) $commission_fee) / 100, 2 );
                 $amount        = round( $amount - $commission, 2 );
                 $receiver_list = array(
                     'receiverList.receiver(0).amount' => $amount,
-                    'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
+                    'receiverList.receiver(0).email'  => marketengine_get_order_item_meta($order_item_id, '_receive_email', true),
                     // 'receiverList.receiver(0).primary' => !$this->is_pay_primary(),
 
                     // admin receiver
@@ -505,7 +505,7 @@ class ME_PPAdaptive_Request {
                 );
 
                 // update order commission item
-                $commission_items = me_get_order_items($order->id, 'commission_item');
+                $commission_items = marketengine_get_order_items($order->id, 'commission_item');
                 $receiver_1       = (object) array(
                     'user_name'  => 'admin',
                     'email'      => $this->get_commission_email(),
@@ -520,12 +520,12 @@ class ME_PPAdaptive_Request {
                 }
 
                 // update receiver item
-                me_update_order_item_meta($order_item_id, '_amount', $amount);
+                marketengine_update_order_item_meta($order_item_id, '_amount', $amount);
 
             } else {
                 $receiver_list = array(
                     'receiverList.receiver(0).amount' => round($amount, 2),
-                    'receiverList.receiver(0).email'  => me_get_order_item_meta($order_item_id, '_receive_email', true),
+                    'receiverList.receiver(0).email'  => marketengine_get_order_item_meta($order_item_id, '_receive_email', true),
                 );
             }
 
@@ -537,7 +537,7 @@ class ME_PPAdaptive_Request {
     /**
      * Setup the request data send to ppadaptive
      *
-     * @param object $order The me_order object
+     * @param object $order The marketengine_order object
      *
      * @since 1.0
      * @return object
@@ -545,8 +545,8 @@ class ME_PPAdaptive_Request {
     public function setup_payment($order) {
         $currency = $order->get_currency_code();
         if (!$currency) {
-            update_post_meta($order->id, '_me_currency_code', me_option('payment-currency-code', 'USD'));
-            $currency = me_option('payment-currency-code', 'USD');
+            update_post_meta($order->id, '_me_currency_code', marketengine_option('payment-currency-code', 'USD'));
+            $currency = marketengine_option('payment-currency-code', 'USD');
         }
 
         $order_data = array_merge(array(
@@ -634,24 +634,24 @@ class ME_PPAdaptive_Request {
     private function update_receiver($response, $order_id) {
 
         $payment_info   = $response->paymentInfoList->paymentInfo;
-        $receiver_items = me_get_order_items($order_id, 'receiver_item');
-        $commission_items = me_get_order_items($order_id, 'commission_item');
+        $receiver_items = marketengine_get_order_items($order_id, 'receiver_item');
+        $commission_items = marketengine_get_order_items($order_id, 'commission_item');
 
         $receiver_items = array_merge($receiver_items, $commission_items);
         foreach ($receiver_items as $key => $receiver) {
 
             $transaction_info = $payment_info[$key];
             if (!empty($transaction_info->transactionId)) {
-                me_update_order_item_meta($receiver->order_item_id, '_transaction_id', $transaction_info->transactionId);
-                me_update_order_item_meta($receiver->order_item_id, '_transaction_status', $transaction_info->transactionStatus);
-                me_update_order_item_meta($receiver->order_item_id, 'refunded_amount', $transaction_info->refundedAmount);
-                me_update_order_item_meta($receiver->order_item_id, '_pending_refund', $transaction_info->pendingRefund);
+                marketengine_update_order_item_meta($receiver->order_item_id, '_transaction_id', $transaction_info->transactionId);
+                marketengine_update_order_item_meta($receiver->order_item_id, '_transaction_status', $transaction_info->transactionStatus);
+                marketengine_update_order_item_meta($receiver->order_item_id, 'refunded_amount', $transaction_info->refundedAmount);
+                marketengine_update_order_item_meta($receiver->order_item_id, '_pending_refund', $transaction_info->pendingRefund);
             }
 
             if (!empty($transaction_info->pendingReason)) {
                 $pending_reason  = $transaction_info->pendingReason;
                 $pending_message = $this->gateway->get_pending_message($pending_reason);
-                me_update_order_item_meta($receiver->order_item_id, '_pending_reason', $pending_message);
+                marketengine_update_order_item_meta($receiver->order_item_id, '_pending_reason', $pending_message);
             }
         }
     }
@@ -669,7 +669,7 @@ class ME_PPAdaptive_Request {
      */
     private function order_finish($response, $order_id) {
         $this->update_receiver($response, $order_id);
-        me_complete_order($order_id);
+        marketengine_complete_order($order_id);
     }
 
     /**
@@ -685,7 +685,7 @@ class ME_PPAdaptive_Request {
      */
     private function order_incomplete($response, $order_id) {
         $this->update_receiver($response, $order_id);
-        me_active_order($order_id);
+        marketengine_active_order($order_id);
     }
 
     private function order_pending($response, $order_id) {

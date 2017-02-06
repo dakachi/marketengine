@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
 
 <?php
 $notices = array();
-$notices = apply_filters( 'me_admin_notices', $notices );
+$notices = apply_filters( 'marketengine_admin_notices', $notices );
 
 if( !empty($notices) ) : ?>
 

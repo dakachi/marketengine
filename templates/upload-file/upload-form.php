@@ -4,7 +4,7 @@
             <?php
             if($source) {
                 if(!$multi) {
-                    me_get_template('upload-file/single-file-form', array(
+                    marketengine_get_template('upload-file/single-file-form', array(
                         'image_id' => $source,
                         'filename' => $name,
                         'close' => $close

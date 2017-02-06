@@ -14,8 +14,8 @@ if (!defined('ABSPATH')) {
  *
  * @return int|WP_Error The post ID on success. The value 0 or WP_Error on failure.
  */
-function me_insert_order($order_data) {
-    $order_data['post_type']  = 'me_order';
+function marketengine_insert_order($order_data) {
+    $order_data['post_type']  = 'marketengine_order';
     $order_data['post_title'] = 'Order-' . date(get_option('links_updated_date_format'), current_time('timestamp'));
 
     $order_data['post_status'] = apply_filters('marketengine_create_order_status', 'me-pending');
@@ -42,8 +42,8 @@ function me_insert_order($order_data) {
         // hash password
         update_post_meta($order_id, '_me_order_key', 'marketengine-' . wp_hash_password(time()));
         // store client ip, agent
-        update_post_meta($order_id, '_me_customer_ip', me_get_client_ip());
-        update_post_meta($order_id, '_me_customer_agent', me_get_client_agent());
+        update_post_meta($order_id, '_me_customer_ip', marketengine_get_client_ip());
+        update_post_meta($order_id, '_me_customer_agent', marketengine_get_client_agent());
         /**
          * marketengine_after_create_order
          * add action after create order successful
@@ -68,12 +68,12 @@ function me_insert_order($order_data) {
  *
  * @return int|WP_Error The post ID on success. The value 0 or WP_Error on failure.
  */
-function me_update_order($order_data) {
+function marketengine_update_order($order_data) {
     $order_data = apply_filters('marketengine_update_order_data', $order_data);
     // First, get all of the original fields.
     $post = get_post($order_data['ID'], ARRAY_A);
 
-    if (is_null($post) || $post->post_type !== 'me_order') {
+    if (is_null($post) || $post->post_type !== 'marketengine_order') {
         return new WP_Error('invalid_order', __('Invalid order ID.', 'enginethemes'));
     }
 
@@ -81,14 +81,14 @@ function me_update_order($order_data) {
     $post       = wp_slash($post);
     $order_data = array_merge($post, $order_data);
 
-    return me_insert_order($order_data);
+    return marketengine_insert_order($order_data);
 }
 
 /**
  * Order completed, fund has been sent to seller
  * @param int $order_id The order id
  */
-function me_complete_order($order_id) {
+function marketengine_complete_order($order_id) {
 
     $post_status = get_post_status($order_id);
 
@@ -105,7 +105,7 @@ function me_complete_order($order_id) {
         $current = date('Y-m-d H:i:s', current_time('timestamp'));
         update_post_meta($order_id, '_me_order_complete_time', $current);
 
-        $dispute_time_limit = me_get_dispute_time_limit();
+        $dispute_time_limit = marketengine_get_dispute_time_limit();
         $closed_date        = date('Y-m-d h:i:s', strtotime("+{$dispute_time_limit} days"));
         update_post_meta($order_id, '_me_order_closed_time', $closed_date);
     }
@@ -119,7 +119,7 @@ function me_complete_order($order_id) {
  * Order in-complete, order was not yet eligible to transfer money to the account Seller.
  * @param int $order_id The order id
  */
-function me_active_order($order_id) {
+function marketengine_active_order($order_id) {
 
     $post_status = get_post_status($order_id);
 
@@ -134,7 +134,7 @@ function me_active_order($order_id) {
     do_action('marketengine_active_order', $order_id);
 }
 
-function me_dispute_order($order_id) {}
+function marketengine_dispute_order($order_id) {}
 
 /**
  * Close order to finish the transaction process
@@ -143,7 +143,7 @@ function me_dispute_order($order_id) {}
  *
  * @return int $order_id
  */
-function me_close_order($order_id) {
+function marketengine_close_order($order_id) {
 
     $post_status = get_post_status($order_id);
 
@@ -165,13 +165,13 @@ function me_close_order($order_id) {
  * Run cron job to collection expired order to close
  * @since 1.0
  */
-function me_cron_close_order() {
+function marketengine_cron_close_order() {
     global $wpdb;
     $current = date('Y-m-d H:i:s', current_time('timestamp'));
 
     $sql = "SELECT DISTINCT ID FROM {$wpdb->posts} as p
                 INNER JOIN {$wpdb->postmeta} as mt ON mt.post_id = p.ID
-                WHERE   (p.post_type = 'me_order')
+                WHERE   (p.post_type = 'marketengine_order')
                     AND (p.post_status = 'me-complete')
                     AND mt.meta_key = '_me_order_closed_time'
                     AND (mt.meta_value < '{$current}')
@@ -179,17 +179,17 @@ function me_cron_close_order() {
 
     $on_closing_order = $wpdb->get_results($sql);
     foreach ($on_closing_order as $key => $order) {
-        me_close_order($order->ID);
+        marketengine_close_order($order->ID);
     }
 
 }
-add_action('marketengine_cron_execute', 'me_cron_close_order');
+add_action('marketengine_cron_execute', 'marketengine_cron_close_order');
 
-function me_get_order($order) {
+function marketengine_get_order($order) {
     return new ME_Order($order);
 }
 
-function me_get_order_ids($value, $type) {
+function marketengine_get_order_ids($value, $type) {
     global $wpdb;
     $operator = '=';
     if ($type == 'listing_item') {
@@ -210,7 +210,7 @@ function me_get_order_ids($value, $type) {
  *  @param: $query
  *  @return: $args - query args
  */
-function me_filter_order_query($query, $type = '') {
+function marketengine_filter_order_query($query, $type = '') {
     $args['post__in'] = array();
 
     if (isset($query['order_status']) && $query['order_status'] !== '' && $query['order_status'] !== 'any') {
@@ -218,7 +218,7 @@ function me_filter_order_query($query, $type = '') {
     }
 
     if ($type == 'order' && (!isset($query['order_status']) || $query['order_status'] == '' || $query['order_status'] == 'any')) {
-        $statuses = me_get_order_status_list();
+        $statuses = marketengine_get_order_status_list();
         unset($statuses['me-pending']);
         unset($statuses['publish']);
         $query['order_status'] = array_keys($statuses);
@@ -255,7 +255,7 @@ function me_filter_order_query($query, $type = '') {
 
     if ($type == 'order') {
         $user_data = get_userdata(get_current_user_id());
-        $order_ids = me_get_order_ids($user_data->user_login, 'receiver_item');
+        $order_ids = marketengine_get_order_ids($user_data->user_login, 'receiver_item');
         if (empty($order_ids)) {
             $args['post__in'] = array(-1);
             return $args;
@@ -268,7 +268,7 @@ function me_filter_order_query($query, $type = '') {
 
     $keyword_result = array();
     if (isset($query['keyword']) && !empty($query['keyword'])) {
-        $id_by_listing = me_get_order_ids($query['keyword'], 'listing_item');
+        $id_by_listing = marketengine_get_order_ids($query['keyword'], 'listing_item');
 
         $id_by_keyword = array();
         if (is_numeric($query['keyword'])) {
@@ -289,7 +289,7 @@ function me_filter_order_query($query, $type = '') {
 
     return $args;
 }
-add_filter('me_filter_order', 'me_filter_order_query', 1, 2);
+add_filter('marketengine_filter_order', 'marketengine_filter_order_query', 1, 2);
 
 /**
  * MarketEngine Get Order Status Listing
@@ -299,7 +299,7 @@ add_filter('me_filter_order', 'me_filter_order_query', 1, 2);
  * @since 1.0
  * @return array
  */
-function me_get_order_status_list() {
+function marketengine_get_order_status_list() {
     $order_status = array(
         'me-pending'  => __("Pending", "enginethemes"), // mainly intended for technical case, when an error occurs payment, or payment by bank transfer confirmation to admin
         'publish'     => __("Actived", "enginethemes"), // mainly intended for technical case, when an error occurs payment, or payment by bank transfer confirmation to admin
@@ -322,8 +322,8 @@ function me_get_order_status_list() {
  * @since 1.0
  * @return string
  */
-function me_get_order_status_label($status) {
-    $order_status = me_get_order_status_list();
+function marketengine_get_order_status_label($status) {
+    $order_status = marketengine_get_order_status_list();
     return $order_status[$status];
 }
 
@@ -337,7 +337,7 @@ function me_get_order_status_label($status) {
  *
  * @return array Array of order item object
  */
-function me_get_order_items($order_id, $type = '') {
+function marketengine_get_order_items($order_id, $type = '') {
     global $wpdb;
     if ($type) {
         $query = "SELECT *
@@ -367,7 +367,7 @@ function me_get_order_items($order_id, $type = '') {
  *
  * @return int
  */
-function me_add_order_item($order_id, $item_name, $item_type = 'listing_item') {
+function marketengine_add_order_item($order_id, $item_name, $item_type = 'listing_item') {
     global $wpdb;
 
     $order_id = absint($order_id);
@@ -406,7 +406,7 @@ function me_add_order_item($order_id, $item_name, $item_type = 'listing_item') {
  *
  * @return bool
  */
-function me_update_order_item($item_id, $args) {
+function marketengine_update_order_item($item_id, $args) {
     global $wpdb;
 
     $item_id = absint($item_id);
@@ -433,7 +433,7 @@ function me_update_order_item($item_id, $args) {
  *
  * @return bool
  */
-function me_delete_order_item($item_id) {
+function marketengine_delete_order_item($item_id) {
     global $wpdb;
 
     $item_id = absint($item_id);
@@ -463,7 +463,7 @@ function me_delete_order_item($item_id) {
  *                           Default false.
  * @return mixed Will be an array if $single is false. Will be value of meta data field if $single is true.
  */
-function me_get_order_item_meta($order_item_id, $key = '', $single = false) {
+function marketengine_get_order_item_meta($order_item_id, $key = '', $single = false) {
     return get_metadata('marketengine_order_item', $order_item_id, $key, $single);
 }
 
@@ -479,7 +479,7 @@ function me_get_order_item_meta($order_item_id, $key = '', $single = false) {
  *                           Default false.
  * @return int|false Meta ID on success, false on failure.
  */
-function me_add_order_item_meta($order_item_id, $meta_key, $meta_value, $unique = true) {
+function marketengine_add_order_item_meta($order_item_id, $meta_key, $meta_value, $unique = true) {
     return add_metadata('marketengine_order_item', $order_item_id, $meta_key, $meta_value, $unique);
 }
 
@@ -495,7 +495,7 @@ function me_add_order_item_meta($order_item_id, $meta_key, $meta_value, $unique 
  *                           Default empty.
  * @return int|false Meta ID if the key didn't exist, true on successful update, false on failure.
  */
-function me_update_order_item_meta($order_item_id, $meta_key, $meta_value, $prev_value = '') {
+function marketengine_update_order_item_meta($order_item_id, $meta_key, $meta_value, $prev_value = '') {
     return update_metadata('marketengine_order_item', $order_item_id, $meta_key, $meta_value, $prev_value);
 }
 
@@ -510,7 +510,7 @@ function me_update_order_item_meta($order_item_id, $meta_key, $meta_value, $prev
  *
  * @return bool True on success, false on failure.
  */
-function me_delete_order_item_meta($order_item_id, $meta_key, $meta_value = '') {
+function marketengine_delete_order_item_meta($order_item_id, $meta_key, $meta_value = '') {
     return delete_metadata('marketengine_order_item', $order_item_id, $meta_key, $meta_value);
 }
 
@@ -521,6 +521,6 @@ function me_delete_order_item_meta($order_item_id, $meta_key, $meta_value = '') 
  *
  * @return int dispute time limit or 3
  */
-function me_get_dispute_time_limit() {
-    return absint( me_option( 'dispute-time-limit', 3 ) );
+function marketengine_get_dispute_time_limit() {
+    return absint( marketengine_option( 'dispute-time-limit', 3 ) );
 }

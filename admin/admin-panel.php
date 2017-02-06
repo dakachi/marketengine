@@ -103,7 +103,7 @@ function marketengine_option_view() {
  */
 function marketengine_report_view() {
     marketengine_option_header();
-    me_get_template('admin/overview', $_REQUEST);
+    marketengine_get_template('admin/overview', $_REQUEST);
     marketengine_option_footer();
 }
 
@@ -162,7 +162,7 @@ add_action('admin_menu', 'marketengine_option_menu');
  * @since   1.0.1
  */
 function marketengine_add_header_style () {
-    if (isset($_GET['post_type']) && $_GET['post_type'] == 'me_order') {
+    if (isset($_GET['post_type']) && $_GET['post_type'] == 'marketengine_order') {
         echo '<style type="text/css">
             #favorite-actions, .add-new-h2, .page-title-action, .hide-if-no-js { display:none; }
             @media screen and (max-width: 782px) {
@@ -214,7 +214,7 @@ function marketengine_load_admin_option_script_css() {
         wp_enqueue_script('option-view', MARKETENGINE_URL . 'assets/admin/option-view.js', array('jquery', 'backbone', 'jquery-scrollbar'), '1.0', true);
         wp_localize_script(
             'backbone',
-            'me_globals',
+            'marketengine_globals',
             array(
                 'ajaxurl' => admin_url('admin-ajax.php'),
             )
@@ -267,17 +267,17 @@ function marketengine_option_footer() {
  * @category Admin
  * @since 1.0
  */
-function me_admin_menu_class() {
+function marketengine_admin_menu_class() {
     global $menu;
     $menu[28][6] .= '-icon-me-logo';
 }
-add_action( 'admin_menu', 'me_admin_menu_class', 10 );
+add_action( 'admin_menu', 'marketengine_admin_menu_class', 10 );
 
-function me_admin_footer_text( $text) {
+function marketengine_admin_footer_text( $text) {
     $text = sprintf( 'Thank you for creating with <a href="%s">EngineThemes</a>.', 'https://www.enginethemes.com/' );
     return $text;
 }
-add_filter( 'admin_footer_text', 'me_admin_footer_text' );
+add_filter( 'admin_footer_text', 'marketengine_admin_footer_text' );
 
 /**
  * Render MarketEngine Admin notices
@@ -286,6 +286,6 @@ add_filter( 'admin_footer_text', 'me_admin_footer_text' );
  */
 function marketengine_option_notices() {
 ?>
-    <?php me_get_template( 'admin/notices' ); ?>
+    <?php marketengine_get_template( 'admin/notices' ); ?>
 <?php
 }

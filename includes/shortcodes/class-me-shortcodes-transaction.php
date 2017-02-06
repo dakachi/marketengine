@@ -5,15 +5,15 @@ class ME_Shortcodes_Transaction {
         add_shortcode('me_confirm_order', array(__CLASS__, 'confirm_order'));
         add_shortcode('me_cancel_payment', array(__CLASS__, 'cancel_order'));
         add_shortcode('me_inquiry_form', array(__CLASS__, 'inquiry_form'));
-        add_shortcode('me_message_file', array(__CLASS__, 'me_message_file'));
+        add_shortcode('me_message_file', array(__CLASS__, 'marketengine_message_file'));
     }
 
     public static function checkout_form() {
-        if (!me_is_activated_user()) {
+        if (!marketengine_is_activated_user()) {
             return __("Sorry! Only active account can buy listings. Please check mail box to activate your account.", "enginethemes");
         } elseif (is_user_logged_in()) {
             ob_start();
-            me_get_template('checkout/checkout');
+            marketengine_get_template('checkout/checkout');
             $content = ob_get_clean();
             return $content;
         } else {
@@ -29,7 +29,7 @@ class ME_Shortcodes_Transaction {
         if ($order_id) {
             $order = new ME_Order($order_id);
             ob_start();
-            me_get_template('checkout/confirm', array('order' => $order));
+            marketengine_get_template('checkout/confirm', array('order' => $order));
             $content = ob_get_clean();
             return $content;
         }
@@ -40,7 +40,7 @@ class ME_Shortcodes_Transaction {
         if ($order_id) {
             $order = new ME_Order($order_id);
             ob_start();
-            me_get_template('checkout/cancel-payment', array('order' => $order));
+            marketengine_get_template('checkout/cancel-payment', array('order' => $order));
             $content = ob_get_clean();
             return $content;
         }
@@ -55,20 +55,20 @@ class ME_Shortcodes_Transaction {
 
         if (!empty($_GET['inquiry_id'])) {
             $inquiry_id = absint( $_GET['inquiry_id'] );
-            $inquiry    = me_get_message($inquiry_id);
+            $inquiry    = marketengine_get_message($inquiry_id);
 
             if ($user_id != $inquiry->sender && $user_id != $inquiry->receiver) {
                 return load_template(get_404_template());
             }
             ob_start();
-            me_get_template('inquiry/inquiry-message', array('inquiry' => $inquiry));
+            marketengine_get_template('inquiry/inquiry-message', array('inquiry' => $inquiry));
             $content = ob_get_clean();
             return $content;
         }
 
     }
 
-    public static function me_message_file($atts) {
+    public static function marketengine_message_file($atts) {
         if ($atts['id']) {
             $file_id = absint($atts['id']);
             if (!$file_id) {
@@ -81,7 +81,7 @@ class ME_Shortcodes_Transaction {
             $file_url      = wp_get_attachment_url($file_id);
 
             ob_start();
-            me_get_template(
+            marketengine_get_template(
                 'inquiry/file-item',
                 array(
                     'file_id'   => $file_id,

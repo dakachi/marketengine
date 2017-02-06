@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
  * @since 1.0
  * @return array Array of payment gateways object
  */
-function me_get_available_payment_gateways() {
+function marketengine_get_available_payment_gateways() {
 	$available_gateways =  array(
 		'ppadaptive' => ME_PPAdaptive_Request::instance()
 	);
@@ -22,8 +22,8 @@ function me_get_available_payment_gateways() {
  * @since 1.0
  * @return bool
  */
-function me_is_available_payment_gateway($gateway) {
-	$available_gateways = me_get_available_payment_gateways();
+function marketengine_is_available_payment_gateway($gateway) {
+	$available_gateways = marketengine_get_available_payment_gateways();
 	return isset($available_gateways[$gateway]);
 }
 
@@ -33,10 +33,10 @@ function me_is_available_payment_gateway($gateway) {
  * @since 1.0
  */
 function get_marketengine_currency() {
-	$sign = me_option('payment-currency-sign', '$');
-    $code = me_option('payment-currency-code', 'USD');
-    $is_align_right = me_option('currency-sign-postion') ? true : false;
-    $label = me_option('payment-currency-label', 'USD');
+	$sign = marketengine_option('payment-currency-sign', '$');
+    $code = marketengine_option('payment-currency-code', 'USD');
+    $is_align_right = marketengine_option('currency-sign-postion') ? true : false;
+    $label = marketengine_option('payment-currency-label', 'USD');
     return compact('sign', 'code', 'is_align_right', 'label');
 }
 

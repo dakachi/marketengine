@@ -54,11 +54,11 @@ class ME_Listing_Purchasion extends ME_Listing{
     }
 
     public function is_downloadable() {
-        return get_post_meta($this->ID, 'me_is_downloadable', true);
+        return get_post_meta($this->ID, 'marketengine_is_downloadable', true);
     }
 
     public function is_in_stock() {
-        return get_post_meta($this->ID, 'me_is_in_stock', true);
+        return get_post_meta($this->ID, 'marketengine_is_in_stock', true);
     }
 
     public function get_shipping_fee() {

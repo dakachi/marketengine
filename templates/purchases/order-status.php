@@ -4,7 +4,7 @@
 		<div class="me-orderstatus">
 			<?php
 				me_print_order_status( $order_status );
-				$status_info = me_get_order_status_info( $order_status, 'text' );
+				$status_info = marketengine_get_order_status_info( $order_status, 'text' );
 			?>
 
 			<?php if($status_info) : ?>
@@ -12,7 +12,7 @@
 			<?php endif; ?>
 		</div>
 		<?php
-			$process_index = me_get_order_status_info( $order_status );
+			$process_index = marketengine_get_order_status_info( $order_status );
 		?>
 		<div class="me-line-process-order">
 			<div class="me-line-step-order <?php echo $process_index >= 1 ? 'active' : '' ?>">

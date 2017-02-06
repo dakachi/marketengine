@@ -30,7 +30,7 @@ $user_avatar = $user->get_user_avatar_id();
 			<?php do_action('marketengine_before_edit_user_avatar', $user); ?>
 			<div class="me-avatar-user">
 				<?php
-		        me_get_template('upload-file/avatar-form', array(
+		        marketengine_get_template('upload-file/avatar-form', array(
 		            'id' => 'upload_user_avatar',
 		            'name' => 'user_avatar',
 		            'source' => $user_avatar,
@@ -46,7 +46,7 @@ $user_avatar = $user->get_user_avatar_id();
 
 			<?php do_action('marketengine_after_edit_user_avatar', $user); ?>
 
-			<?php me_print_notices(); ?>
+			<?php marketengine_print_notices(); ?>
 
 			<?php do_action('marketengine_before_edit_user_profile', $user); ?>
 
@@ -151,7 +151,7 @@ $user_avatar = $user->get_user_avatar_id();
 		<div class="marketengine-text-field edit-profile">
 			<input type="submit" class="marketengine-btn" name="update_profile" value="<?php _e("UPDATE PROFILE", "enginethemes");?>" />
 		</div>
-		<a href="<?php echo me_get_page_permalink('user_account'); ?>" class="back-home-sigin me-backlink"><?php _e("Cancel", "enginethemes");?></a>
+		<a href="<?php echo marketengine_get_page_permalink('user_account'); ?>" class="back-home-sigin me-backlink"><?php _e("Cancel", "enginethemes");?></a>
 	</div>
 
 	<?php do_action('marketengine_edit_user_profile_form_end', $user); ?>

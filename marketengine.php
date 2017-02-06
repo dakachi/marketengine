@@ -158,6 +158,7 @@ if (!class_exists('MarketEngine')):
 
             require_once MARKETENGINE_PATH . '/includes/class-me-schedule.php';
 
+            require_once MARKETENGINE_PATH . '/includes/users/class-me-user.php';
             require_once MARKETENGINE_PATH . '/includes/users/class-me-user-seller.php';
 
             require_once MARKETENGINE_PATH . '/includes/class-me-message-query.php';
@@ -277,9 +278,9 @@ if (!class_exists('MarketEngine')):
             $suffix     = MARKETENGINE_SCRIPT_DEBUG ? '' : '.min';
             $dev_suffix = $develop_src ? '' : '.min';
 
-            wp_enqueue_style('me_layout', $this->plugin_url() . '/assets/css/marketengine-layout.css');
+            wp_enqueue_style('marketengine_layout', $this->plugin_url() . '/assets/css/marketengine-layout.css');
             wp_enqueue_style('magnific_popup_css', $this->plugin_url() . '/assets/css/magnific-popup.css');
-            wp_enqueue_style('me_font_icon', $this->plugin_url() . '/assets/css/marketengine-font-icon.css');
+            wp_enqueue_style('marketengine_font_icon', $this->plugin_url() . '/assets/css/marketengine-font-icon.css');
             wp_enqueue_style('flexslider', $this->plugin_url() . '/assets/css/flexslider.css');
 
             wp_enqueue_script(array('jquery', 'plupload-all'));

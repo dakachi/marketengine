@@ -38,7 +38,7 @@ $active_section = empty($_REQUEST['section']) ? '' : esc_attr( $_REQUEST['sectio
 		<div class="me-section-content">
 			<div class="me-revenue-section">
 				<h3><?php _e("Report Listings", "enginethemes"); ?></h3>
-				<?php me_get_template('admin/filter'); ?>
+				<?php marketengine_get_template('admin/filter'); ?>
 				<div class="me-table me-report-table">
 					<div class="me-table-rhead">
 						<div class="me-table-col">
@@ -98,13 +98,13 @@ $active_section = empty($_REQUEST['section']) ? '' : esc_attr( $_REQUEST['sectio
 					<?php }else { ?>
 						</div>
 						<div class="me-result-filter">
-							<?php me_get_template('admin/report-none'); ?>
+							<?php marketengine_get_template('admin/report-none'); ?>
 						</div>
 						
 					<?php } ?>
 					 
 				<!-- </div> -->
-				<?php me_get_template('admin/pagination', array('query' => $listings)); ?>
+				<?php marketengine_get_template('admin/pagination', array('query' => $listings)); ?>
 			</div>
 		</div>
 	</div>

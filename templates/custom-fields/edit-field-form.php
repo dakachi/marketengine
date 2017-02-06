@@ -18,8 +18,8 @@ if($fields) :
 	<?php foreach ($fields as $field) : ?>
 
 		<?php 
-			$value = me_field($field['field_name'], $listing, array('fields' => 'ids'));
-			me_get_template('custom-fields/listing-form/field-'. $field['field_type'], array('field' => $field, 'value' => $value)); 
+			$value = marketengine_field($field['field_name'], $listing, array('fields' => 'ids'));
+			marketengine_get_template('custom-fields/listing-form/field-'. $field['field_type'], array('field' => $field, 'value' => $value)); 
 		?>
 
 	<?php endforeach; ?>

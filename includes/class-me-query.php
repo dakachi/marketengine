@@ -61,9 +61,9 @@ class ME_Query
      */
     private function load_endpoints_name()
     {
-        $endpoint_arr = me_default_endpoints();
+        $endpoint_arr = marketengine_default_endpoints();
         foreach ($endpoint_arr as $key => $value) {
-            $option_value = me_option('ep_' . $key);
+            $option_value = marketengine_option('ep_' . $key);
             if (isset($option_value) && !empty($option_value) && $option_value != $value) {
                 $endpoint_arr[$key] = $option_value;
             }
@@ -112,19 +112,19 @@ class ME_Query
     {
         $rewrite_args = array(
             array(
-                'page_id'       => me_get_option_page_id('confirm_order'),
-                'endpoint_name' => me_get_endpoint_name('order-id'),
+                'page_id'       => marketengine_get_option_page_id('confirm_order'),
+                'endpoint_name' => marketengine_get_endpoint_name('order-id'),
                 'query_var'     => 'order-id',
             ),
 
             array(
-                'page_id'       => me_get_option_page_id('cancel_order'),
-                'endpoint_name' => me_get_endpoint_name('order-id'),
+                'page_id'       => marketengine_get_option_page_id('cancel_order'),
+                'endpoint_name' => marketengine_get_endpoint_name('order-id'),
                 'query_var'     => 'order-id',
             ),
             array(
-                'page_id'       => me_get_option_page_id('me_checkout'),
-                'endpoint_name' => me_get_endpoint_name('pay'),
+                'page_id'       => marketengine_get_option_page_id('marketengine_checkout'),
+                'endpoint_name' => marketengine_get_endpoint_name('pay'),
                 'query_var'     => 'pay',
             ),
         );
@@ -144,7 +144,7 @@ class ME_Query
     {
         $endpoints = array('orders', 'purchases', 'listings');
         foreach ($endpoints as $endpoint) {
-            add_rewrite_rule('^(.?.+?)/' . me_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
+            add_rewrite_rule('^(.?.+?)/' . marketengine_get_endpoint_name($endpoint) . '/page/?([0-9]{1,})/?$', 'index.php?pagename=$matches[1]&paged=$matches[2]&' . $endpoint, 'top');
         }
     }
 
@@ -154,10 +154,10 @@ class ME_Query
      */
     private function rewrite_edit_listing_url()
     {
-        $edit_listing_page = me_get_option_page_id('edit_listing');
+        $edit_listing_page = marketengine_get_option_page_id('edit_listing');
         if ($edit_listing_page > -1) {
             $page = get_post($edit_listing_page);
-            add_rewrite_rule('^/' . $page->post_name . '/' . me_get_endpoint_name('listing_id') . '/?([0-9]{1,})/?$', 'index.php?page_id=' . $edit_listing_page . '&listing_id' . '=$matches[1]', 'top');
+            add_rewrite_rule('^/' . $page->post_name . '/' . marketengine_get_endpoint_name('listing_id') . '/?([0-9]{1,})/?$', 'index.php?page_id=' . $edit_listing_page . '&listing_id' . '=$matches[1]', 'top');
         }
     }
 
@@ -167,7 +167,7 @@ class ME_Query
      */
     private function rewrite_order_detail_url()
     {
-        $order_endpoint = me_get_endpoint_name('order_id');
+        $order_endpoint = marketengine_get_endpoint_name('order_id');
         add_rewrite_rule($order_endpoint . '/([0-9]+)/?$', 'index.php?post_type=me_order&p=$matches[1]', 'top');
     }
 
@@ -184,7 +184,7 @@ class ME_Query
      */
     public function custom_order_link($post_link, $post = 0)
     {
-        if ($post->post_type == 'me_order') {
+        if ($post->post_type == 'marketengine_order') {
             if (get_option('permalink_structure')) {
                 $pos       = strrpos($post_link, '%/');
                 $post_link = substr($post_link, 0, $pos + 1);

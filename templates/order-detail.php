@@ -9,7 +9,7 @@
  */
 //TODO: tam thoi lam the nay
 if( !current_user_can('edit_posts') ) {
-    $login_url = me_get_auth_url();
+    $login_url = marketengine_get_auth_url();
     wp_redirect( $login_url );
 }
 $user_id = get_current_user_id();
@@ -20,14 +20,14 @@ $order = new ME_Order($order_id);
 
 $buyer = $order->post_author == $user_id;
 
-$seller = me_get_order_items($order_id)[1]->order_item_name;
+$seller = marketengine_get_order_items($order_id)[1]->order_item_name;
 
 if( !$buyer && !($seller == $user_data->user_login) ) {
     return load_template(get_404_template());
 }
 
 $title = $buyer ? __('MY TRANSACTIONS', 'enginethemes') : __('MY ORDERS', 'enginethemes');
-$url = $buyer ? me_get_auth_url('purchases') : me_get_auth_url('orders');
+$url = $buyer ? marketengine_get_auth_url('purchases') : marketengine_get_auth_url('orders');
 get_header();
 ?>
 
@@ -47,17 +47,17 @@ get_header();
             <?php
             if( $buyer ) {
                 if(!empty($_GET['action']) && 'review' == $_GET['action'] && !empty($_GET['id'])) {
-                    me_get_template('purchases/review', 
+                    marketengine_get_template('purchases/review', 
                         array(
                             'transaction' => $order, 
                             'listing_id' => absint( $_GET['id'] )
                         )
                     );
                 }else {
-                    me_get_template('purchases/transaction', array('transaction' => $order));
+                    marketengine_get_template('purchases/transaction', array('transaction' => $order));
                 }
             } else {
-                me_get_template('purchases/order', array('order' => $order));
+                marketengine_get_template('purchases/order', array('order' => $order));
             }
             ?>
         </div>

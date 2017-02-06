@@ -12,7 +12,7 @@ class Tests_ME_Inquiry_Handle extends WP_UnitTestCase {
         wp_set_current_user($this->user_1);
         $this->inquiry_data = array('customer_note' => 'Order note');
 
-        $this->order_id   = me_insert_order($this->order_data);
+        $this->order_id   = marketengine_insert_order($this->order_data);
         $this->parent_cat = $this->listing_category->create_object(array('taxonomy' => 'listing_category', 'name' => 'Cat 1'));
         $this->sub_cat    = $this->listing_category->create_object(array('taxonomy' => 'listing_category', 'name' => 'Sub Cat 1', 'parent' => $this->parent_cat));
 
@@ -27,7 +27,7 @@ class Tests_ME_Inquiry_Handle extends WP_UnitTestCase {
             'sub_cat'             => $this->sub_cat,
         );
         $p1            = ME_Listing_Handle::insert($listing_data);
-        $this->listing = me_get_listing($p1);
+        $this->listing = marketengine_get_listing($p1);
 
         $this->inquiry_data = array(
         	'inquiry_listing' => $p1,
@@ -44,7 +44,7 @@ class Tests_ME_Inquiry_Handle extends WP_UnitTestCase {
     	wp_set_current_user($this->user_2);
     	$id = ME_Checkout_Handle::inquiry($this->inquiry_data);
 
-    	$messages = me_get_messages(array('post_type' => 'message', 'post_parent' => $id));
+    	$messages = marketengine_get_messages(array('post_type' => 'message', 'post_parent' => $id));
     	$this->assertEquals('Inquiry message 1', $messages[0]->post_content);
         $this->assertEquals($id, $messages[0]->post_parent);
     }

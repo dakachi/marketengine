@@ -146,7 +146,7 @@ class ME_Order {
             $post = $order_id;
         }
         
-        if(!$post || $post->post_type != 'me_order') return false;
+        if(!$post || $post->post_type != 'marketengine_order') return false;
 
         foreach (get_object_vars($post) as $key => $value) {
             $this->$key = $value;
@@ -191,7 +191,7 @@ class ME_Order {
     }
 
     public function get_confirm_url() {
-        return me_get_order_url( 'confirm_order', 'order-id', $this->id);
+        return marketengine_get_order_url( 'confirm_order', 'order-id', $this->id);
     }
 
     public function get_order_detail_url() {
@@ -199,7 +199,7 @@ class ME_Order {
     }
 
     public function get_cancel_url() {
-        return me_get_order_url( 'cancel_order', 'order-id', $this->id);
+        return marketengine_get_order_url( 'cancel_order', 'order-id', $this->id);
     }
 
     /**
@@ -230,13 +230,13 @@ class ME_Order {
             return false;
         }
 
-        $order_item_id = me_add_order_item($this->id, get_the_title($listing->ID), 'listing_item');
+        $order_item_id = marketengine_add_order_item($this->id, get_the_title($listing->ID), 'listing_item');
         if ($order_item_id) {
-            me_add_order_item_meta($order_item_id, '_listing_id', $listing->ID);
-            me_add_order_item_meta($order_item_id, '_listing_description', $listing->post_content);
+            marketengine_add_order_item_meta($order_item_id, '_listing_id', $listing->ID);
+            marketengine_add_order_item_meta($order_item_id, '_listing_description', $listing->post_content);
 
-            me_add_order_item_meta($order_item_id, '_qty', $qty);
-            me_add_order_item_meta($order_item_id, '_listing_price', $listing->get_price());
+            marketengine_add_order_item_meta($order_item_id, '_qty', $qty);
+            marketengine_add_order_item_meta($order_item_id, '_listing_price', $listing->get_price());
         }
 
         $seller = get_userdata( $listing->post_author );
@@ -274,11 +274,11 @@ class ME_Order {
         }
 
         if (isset($args['qty'])) {
-            me_update_order_item_meta($item_id, '_qty', $args['qty']);
+            marketengine_update_order_item_meta($item_id, '_qty', $args['qty']);
         }
 
         if(isset($args['price'])) {
-            me_update_order_item_meta($item_id, '_listing_price', $args['price']);
+            marketengine_update_order_item_meta($item_id, '_listing_price', $args['price']);
         }
 
         $this->caculate_subtotal();
@@ -294,7 +294,7 @@ class ME_Order {
             $listing_items = $this->get_listing_items();
             foreach ($listing_items as $key => $item) {
                 // update listing item price
-                $listing = me_get_listing($item['ID']);
+                $listing = marketengine_get_listing($item['ID']);
                 if($listing && $listing->is_available()) {
                     $this->update_listing($item['order_item_id'], array('price' => $listing->get_price() ));    
                 }
@@ -310,17 +310,17 @@ class ME_Order {
      * @since 1.0
      */
     public function get_listing_items() {
-        $order_listing_item = me_get_order_items($this->id, 'listing_item');
+        $order_listing_item = marketengine_get_order_items($this->id, 'listing_item');
         $listing_items = array();
         if(!empty($order_listing_item)) {
             foreach ($order_listing_item as $key => $item) {
-                $id = me_get_order_item_meta($item->order_item_id, '_listing_id', true);
+                $id = marketengine_get_order_item_meta($item->order_item_id, '_listing_id', true);
                 $listing_items[$id] = array(
                     'ID' => $id,
                     'title' =>  $item->order_item_name,
-                    'qty' => me_get_order_item_meta($item->order_item_id, '_qty', true),
-                    'price' => me_get_order_item_meta($item->order_item_id, '_listing_price', true),
-                    'description' => me_get_order_item_meta($item->order_item_id, '_listing_description', true), 
+                    'qty' => marketengine_get_order_item_meta($item->order_item_id, '_qty', true),
+                    'price' => marketengine_get_order_item_meta($item->order_item_id, '_listing_price', true),
+                    'description' => marketengine_get_order_item_meta($item->order_item_id, '_listing_description', true), 
                     'order_item_id' => $item->order_item_id
                 );
             }
@@ -338,8 +338,8 @@ class ME_Order {
      * @return listing item
      */
     public function get_listing() {
-        $order_listing_item = me_get_order_items($this->id, 'listing_item');
-        $listing_item       = me_get_order_item_meta($order_listing_item[0]->order_item_id);
+        $order_listing_item = marketengine_get_order_items($this->id, 'listing_item');
+        $listing_item       = marketengine_get_order_item_meta($order_listing_item[0]->order_item_id);
         return $listing_item;
     }
 
@@ -356,11 +356,11 @@ class ME_Order {
             return false;
         }
 
-        $order_item_id = me_add_order_item($this->id, $receiver->user_name, 'receiver_item');
+        $order_item_id = marketengine_add_order_item($this->id, $receiver->user_name, 'receiver_item');
         if ($order_item_id) {
-            me_add_order_item_meta($order_item_id, '_receive_email', $receiver->email);
-            me_add_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary);
-            me_add_order_item_meta($order_item_id, '_amount', $receiver->amount);
+            marketengine_add_order_item_meta($order_item_id, '_receive_email', $receiver->email);
+            marketengine_add_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary);
+            marketengine_add_order_item_meta($order_item_id, '_amount', $receiver->amount);
         }
         return $order_item_id;
     }
@@ -381,9 +381,9 @@ class ME_Order {
             return false;
         }
 
-        me_update_order_item_meta($order_item_id, '_receive_email', $receiver->email);
-        me_update_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary);
-        me_update_order_item_meta($order_item_id, '_amount', $receiver->amount);
+        marketengine_update_order_item_meta($order_item_id, '_receive_email', $receiver->email);
+        marketengine_update_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary);
+        marketengine_update_order_item_meta($order_item_id, '_amount', $receiver->amount);
 
         return $order_item_id;
     }
@@ -393,11 +393,11 @@ class ME_Order {
             return false;
         }
 
-        $order_item_id = me_add_order_item($this->id, $receiver->user_name, 'commission_item');
+        $order_item_id = marketengine_add_order_item($this->id, $receiver->user_name, 'commission_item');
         if ($order_item_id) {
-            me_add_order_item_meta($order_item_id, '_receive_email', $receiver->email);
-            me_add_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary);
-            me_add_order_item_meta($order_item_id, '_amount', $receiver->amount);
+            marketengine_add_order_item_meta($order_item_id, '_receive_email', $receiver->email);
+            marketengine_add_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary);
+            marketengine_add_order_item_meta($order_item_id, '_amount', $receiver->amount);
         }
         return $order_item_id;
     }
@@ -409,9 +409,9 @@ class ME_Order {
             return false;
         }
 
-        me_update_order_item_meta($order_item_id, '_receive_email', $receiver->email);
-        me_update_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary);
-        me_update_order_item_meta($order_item_id, '_amount', $receiver->amount);
+        marketengine_update_order_item_meta($order_item_id, '_receive_email', $receiver->email);
+        marketengine_update_order_item_meta($order_item_id, '_is_primary', $receiver->is_primary);
+        marketengine_update_order_item_meta($order_item_id, '_amount', $receiver->amount);
 
         return $order_item_id;
     }
@@ -474,10 +474,10 @@ class ME_Order {
      * @return int
      */
     public function add_fee($fee) {
-        $item_id = me_add_order_item($this->id, $fee['name'], '_order_fee');
+        $item_id = marketengine_add_order_item($this->id, $fee['name'], '_order_fee');
         if ($item_id) {
-            me_add_order_item_meta($item_id, '_fee_amount', $fee['amount']);
-            me_add_order_item_meta($item_id, '_fee_title', $fee['title']);
+            marketengine_add_order_item_meta($item_id, '_fee_amount', $fee['amount']);
+            marketengine_add_order_item_meta($item_id, '_fee_title', $fee['title']);
         }
         $this->caculate_total();
         return $item_id;
@@ -497,13 +497,13 @@ class ME_Order {
      */
     public function update_fee($item_id, $args) {
         if (!empty($args['name'])) {
-            me_update_order_item($item_id, array('order_item_name' => $args['name']));
+            marketengine_update_order_item($item_id, array('order_item_name' => $args['name']));
         }
 
         $fee_attrs = array('title', 'amount');
         foreach ($fee_attrs as $fee_attr) {
             if (!empty($args[$fee_attr])) {
-                me_update_order_item_meta($item_id, '_fee_' . $fee_attr, $args[$fee_attr]);
+                marketengine_update_order_item_meta($item_id, '_fee_' . $fee_attr, $args[$fee_attr]);
             }
         }
 
@@ -518,12 +518,12 @@ class ME_Order {
      * @return int
      */
     public function caculate_subtotal() {
-        $listing_items = me_get_order_items($this->id, 'listing_item');
+        $listing_items = marketengine_get_order_items($this->id, 'listing_item');
         $subtotal      = 0;
 
         foreach ($listing_items as $key => $item) {
-            $price = me_get_order_item_meta($item->order_item_id, '_listing_price', true);
-            $qty   = me_get_order_item_meta($item->order_item_id, '_qty', true);
+            $price = marketengine_get_order_item_meta($item->order_item_id, '_listing_price', true);
+            $qty   = marketengine_get_order_item_meta($item->order_item_id, '_qty', true);
             $subtotal += $price * $qty;
         }
 
@@ -544,7 +544,7 @@ class ME_Order {
      */
     public function caculate_shipping() {
         if (!empty($this->shipping_info['name'])) {
-            $shipping_class = me_get_shipping_class($this->shipping_info['name'], $this);
+            $shipping_class = marketengine_get_shipping_class($this->shipping_info['name'], $this);
             return $shipping_class->caculate_fee();
         }
         return 0;
@@ -620,7 +620,7 @@ class ME_Order {
         $remaining = 0;
         if( $this->has_status('me-complete') ) {
             $completed_date = date(get_option('date_format'), strtotime($this->post_modified));
-            $limit = me_get_dispute_time_limit();
+            $limit = marketengine_get_dispute_time_limit();
             $now = date(get_option('date_format'));
 
             $date = date(get_option('date_format'), strtotime( $completed_date . ' +'. $limit.' days'));

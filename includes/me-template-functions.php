@@ -23,7 +23,7 @@
  *
  * @return string The template filename if one is located.
  */
-function me_locate_template($template_names)
+function marketengine_locate_template($template_names)
 {
     $located          = '';
     $me_template_path = ME()->template_path();
@@ -67,7 +67,7 @@ function me_locate_template($template_names)
  * @param string $template_name The slug name for the generic template.
  * @param string $args The array of the varaible.
  */
-function me_get_template($template_name, $args = array())
+function marketengine_get_template($template_name, $args = array())
 {
     if (!empty($args) && is_array($args)) {
         extract($args);
@@ -83,7 +83,7 @@ function me_get_template($template_name, $args = array())
      * @param string $slug The slug name for the generic template.
      * @param string $args The array of the varaible.
      */
-    do_action("me_get_template_$template_name", $template_name, $args);
+    do_action("marketengine_get_template_$template_name", $template_name, $args);
 
     $templates = array();
 
@@ -91,12 +91,12 @@ function me_get_template($template_name, $args = array())
         $templates[] = "$template_name.php";
     }
 
-    $located = me_locate_template($templates);
+    $located = marketengine_locate_template($templates);
     if(!$located) return;
     include $located;
 }
 
-function me_get_sidebar()
+function marketengine_get_sidebar()
 {
     /**
      * Fires before the sidebar template file is loaded.
@@ -109,7 +109,7 @@ function me_get_sidebar()
      *
      * @param string $name Name of the specific sidebar file to use.
      */
-    do_action('me_get_sidebar', $name);
+    do_action('marketengine_get_sidebar', $name);
 
     $templates = array();
     $name      = (string) $name;
@@ -119,14 +119,14 @@ function me_get_sidebar()
 
     $templates[] = 'sidebar.php';
 
-    me_locate_template($templates, true);
+    marketengine_locate_template($templates, true);
 }
 
 // TODO: can dat ham nay cho dung vi tri file
-if (!function_exists('me_get_page_permalink')) {
-    function me_get_page_permalink($page_name)
+if (!function_exists('marketengine_get_page_permalink')) {
+    function marketengine_get_page_permalink($page_name)
     {
-        $page = me_option('me_' . $page_name . '_page_id');
+        $page = marketengine_option('me_' . $page_name . '_page_id');
         if (!$page = get_post($page)) {
             return home_url();
         }
@@ -141,17 +141,17 @@ if (!function_exists('me_get_page_permalink')) {
  * @param  string $default_url
  * @return string
  */
-function me_lostpassword_url($default_url = '')
+function marketengine_lostpassword_url($default_url = '')
 {
-    $profile_link       = me_get_page_permalink('user_account');
-    $password_reset_url = me_get_endpoint_url('forgot-password', '', $profile_link);
+    $profile_link       = marketengine_get_page_permalink('user_account');
+    $password_reset_url = marketengine_get_endpoint_url('forgot-password', '', $profile_link);
     if (false !== $password_reset_url) {
         return $password_reset_url;
     } else {
         return $default_url;
     }
 }
-add_filter('lostpassword_url', 'me_lostpassword_url', 10, 1);
+add_filter('lostpassword_url', 'marketengine_lostpassword_url', 10, 1);
 
 /**
  * Get endpoint URL.
@@ -164,12 +164,12 @@ add_filter('lostpassword_url', 'me_lostpassword_url', 10, 1);
  *
  * @return string
  */
-function me_get_endpoint_url($ep_query_var, $value = '', $permalink = '')
+function marketengine_get_endpoint_url($ep_query_var, $value = '', $permalink = '')
 {
     if (!$permalink) {
         $permalink = get_permalink();
     }
-    $endpoint = me_get_endpoint_name($ep_query_var);
+    $endpoint = marketengine_get_endpoint_name($ep_query_var);
 
     if (get_option('permalink_structure')) {
         if (strstr($permalink, '?')) {
@@ -198,7 +198,7 @@ function me_get_endpoint_url($ep_query_var, $value = '', $permalink = '')
  *     Tags meta box arguments.
  * }
  */
-function me_post_tags_meta_box($default, $taxonomy)
+function marketengine_post_tags_meta_box($default, $taxonomy)
 {
     $tax_name              = esc_attr($taxonomy);
     $taxonomy              = get_taxonomy($taxonomy);
@@ -234,7 +234,7 @@ function me_post_tags_meta_box($default, $taxonomy)
  *
  * @since 1.0
  */
-function me_paginate_link($me_query = array())
+function marketengine_paginate_link($me_query = array())
 {
     $max_num_pages = 0;
     if ($me_query === array()) {
@@ -267,30 +267,30 @@ function me_paginate_link($me_query = array())
 
 function marketengine_sidebar()
 {
-    me_get_template('global/sidebar');
+    marketengine_get_template('global/sidebar');
 }
 add_action('marketengine_sidebar', 'marketengine_sidebar');
 
 // TODO: tam thoi de day
-function me_get_option($option, $default = '')
+function marketengine_get_option($option, $default = '')
 {
     return get_option($option, $default);
 }
 
-function me_option($option, $default = '')
+function marketengine_option($option, $default = '')
 {
     $options = ME_Options::get_instance();
     return $options->get_option($option, $default);
 }
 
-function me_update_option($option, $value)
+function marketengine_update_option($option, $value)
 {
     $options = ME_Options::get_instance();
     return $options->update_option($option, $value);
 }
 
 // TODO: noi bo ham nay
-function me_get_client_ip()
+function marketengine_get_client_ip()
 {
     if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
         $ip = $_SERVER['HTTP_CLIENT_IP'];
@@ -302,7 +302,7 @@ function me_get_client_ip()
     return $ip;
 }
 
-function me_get_client_agent()
+function marketengine_get_client_agent()
 {
     return !empty($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : '';
 }
@@ -316,12 +316,12 @@ function me_get_client_agent()
  *
  */
 
-function me_get_auth_url($query_var = '', $value = '')
+function marketengine_get_auth_url($query_var = '', $value = '')
 {
-    $url = me_get_page_permalink('user_account');
+    $url = marketengine_get_page_permalink('user_account');
 
     if ($url) {
-        $url = me_get_endpoint_url($query_var, $value, $url);
+        $url = marketengine_get_endpoint_url($query_var, $value, $url);
         return $url;
     }
     return home_url();
@@ -336,14 +336,14 @@ function me_get_auth_url($query_var = '', $value = '')
  *
  */
 
-function me_get_order_url($page, $query_var = 'order-id', $value = '')
+function marketengine_get_order_url($page, $query_var = 'order-id', $value = '')
 {
-    $url                 = me_get_page_permalink($page);
-    $order_endpoint      = me_get_endpoint_name($query_var);
+    $url                 = marketengine_get_page_permalink($page);
+    $order_endpoint      = marketengine_get_endpoint_name($query_var);
     $permalink_structure = get_option('permalink_structure');
 
     if ($url) {
-        $url = me_get_endpoint_url($query_var, $value, $url);
+        $url = marketengine_get_endpoint_url($query_var, $value, $url);
         return $url;
     }
     return home_url();
@@ -358,17 +358,17 @@ function me_get_order_url($page, $query_var = 'order-id', $value = '')
  *
  */
 
-function me_get_seller_profile_url($seller_id)
+function marketengine_get_seller_profile_url($seller_id)
 {
     if (!$seller_id) {
         return;
     }
 
-    $url            = me_get_page_permalink('seller_profile');
-    $order_endpoint = me_get_endpoint_name('seller_id');
+    $url            = marketengine_get_page_permalink('seller_profile');
+    $order_endpoint = marketengine_get_endpoint_name('seller_id');
 
     if ($url) {
-        $url = me_get_endpoint_url('seller_id', $seller_id, $url);
+        $url = marketengine_get_endpoint_url('seller_id', $seller_id, $url);
         return $url;
     }
     return home_url();
@@ -380,14 +380,14 @@ function me_get_seller_profile_url($seller_id)
  * Adds an action to get shop categories selectbox template.
  *
  */
-function me_shop_categories_action( $device = '' )
+function marketengine_shop_categories_action( $device = '' )
 {
     if ( 'mobile' === $device )
-        me_get_template('global/shop-categories-mobile');
+        marketengine_get_template('global/shop-categories-mobile');
     else
-        me_get_template('global/shop-categories');
+        marketengine_get_template('global/shop-categories');
 }
-add_action('me_shop_categories', 'me_shop_categories_action');
+add_action('marketengine_shop_categories', 'marketengine_shop_categories_action');
 
 /**
  * Prints account menu.
@@ -395,52 +395,52 @@ add_action('me_shop_categories', 'me_shop_categories_action');
  * Adds an action to get account menu selectbox template.
  *
  */
-function me_account_menu_action( $device = '' )
+function marketengine_account_menu_action( $device = '' )
 {
     if ( 'mobile' === $device )
-        me_get_template('global/account-menu-mobile');
+        marketengine_get_template('global/account-menu-mobile');
     else
-        me_get_template('global/account-menu');
+        marketengine_get_template('global/account-menu');
 }
-add_action('me_account_menu', 'me_account_menu_action');
+add_action('marketengine_account_menu', 'marketengine_account_menu_action');
 
-function me_account_menu_flag_filter($flag)
+function marketengine_account_menu_flag_filter($flag)
 {
     $flag = false;
     return $flag;
 }
-add_filter('me_account_menu_flag', 'me_account_menu_flag_filter');
+add_filter('marketengine_account_menu_flag', 'marketengine_account_menu_flag_filter');
 
 /**
  * Prints post listing button.
  *
  */
-function me_post_listing_button_action()
+function marketengine_post_listing_button_action()
 {
-    me_get_template('global/post-listing-button');
+    marketengine_get_template('global/post-listing-button');
 }
-add_action('me_post_listing_button', 'me_post_listing_button_action');
+add_action('marketengine_post_listing_button', 'marketengine_post_listing_button_action');
 
-function me_search_form_action()
+function marketengine_search_form_action()
 {
     marketengine_get_search_form();
 }
-add_action('me_search_form', 'me_search_form_action');
+add_action('marketengine_search_form', 'marketengine_search_form_action');
 
-function me_status_list_action($type = '')
+function marketengine_status_list_action($type = '')
 {
-    me_get_template('global/status-list', array('type' => $type));
+    marketengine_get_template('global/status-list', array('type' => $type));
 }
-add_action('me_status_list', 'me_status_list_action');
+add_action('marketengine_status_list', 'marketengine_status_list_action');
 
 /**
  *  Returns css class for each order status
  *  @param: $status
  *  @param: $needed style or index of order process
  */
-function me_get_order_status_info($status, $info_type = '')
+function marketengine_get_order_status_info($status, $info_type = '')
 {
-    $status_list = me_get_order_status_list();
+    $status_list = marketengine_get_order_status_list();
 
     switch ($status) {
         case 'me-pending':
@@ -497,10 +497,10 @@ function me_get_order_status_info($status, $info_type = '')
 /**
  *  Prints html of order status
  */
-function me_print_order_status($status)
+function marketengine_print_order_status($status)
 {
-    $status_list = me_get_order_status_list();
-    $style       = me_get_order_status_info($status, 'style');
+    $status_list = marketengine_get_order_status_list();
+    $style       = marketengine_get_order_status_info($status, 'style');
     echo '<span class="' . $style . '">' . $status_list[$status] . '</span>';
 }
 
@@ -508,7 +508,7 @@ function me_print_order_status($status)
  *  Prints buyer's information
  *  @param: $address
  */
-function me_print_buyer_information($address)
+function marketengine_print_buyer_information($address)
 {
     foreach ($address as $key => $value) {
         if( $key === 'first_name' ) {
@@ -528,16 +528,16 @@ function me_print_buyer_information($address)
  *  Returns html of price
  *  @param: $price
  */
-function me_price_html($price, $args = array(), $unit = '')
+function marketengine_price_html($price, $args = array(), $unit = '')
 {
-    $sign = me_option('payment-currency-sign');
-    $code = me_option('payment-currency-code');
+    $sign = marketengine_option('payment-currency-sign');
+    $code = marketengine_option('payment-currency-code');
 
     $args = wp_parse_args($args, array('code' => $code, 'sign' => $sign));
 
     extract($args);
 
-    $sign_position = me_option('currency-sign-postion') ? true : false;
+    $sign_position = marketengine_option('currency-sign-postion') ? true : false;
     $html          = '';
 
     if ($sign_position) {
@@ -561,17 +561,17 @@ function me_price_html($price, $args = array(), $unit = '')
  *
  * @return string
  */
-function me_price_format($price, $args = array())
+function marketengine_price_format($price, $args = array())
 {
-    $sign = me_option('payment-currency-sign');
-    $code = me_option('payment-currency-code');
+    $sign = marketengine_option('payment-currency-sign');
+    $code = marketengine_option('payment-currency-code');
 
     $args = wp_parse_args($args, array('code' => $code, 'sign' => $sign));
     extract($args);
 
     $format = '';
 
-    $sign_position_is_align_right = me_option('currency-sign-postion') ? true : false;
+    $sign_position_is_align_right = marketengine_option('currency-sign-postion') ? true : false;
 
     if ($sign_position_is_align_right) {
         $format .= $sign . $price;
@@ -587,7 +587,7 @@ function me_price_format($price, $args = array())
  */
 function marketengine_comments($comment, $args, $depth)
 {
-    me_get_template('single-listing/review-item', array('comment' => $comment, 'args' => $args, 'depth' => $depth));
+    marketengine_get_template('single-listing/review-item', array('comment' => $comment, 'args' => $args, 'depth' => $depth));
 }
 
 /**
@@ -741,7 +741,7 @@ function marketengine_get_the_archive_title()
  * @param string $more      Optional. What to append if $text needs to be trimmed. Default '&hellip;'.
  * @return string Trimmed text.
  */
-function me_trim_words($text, $num_words = 55, $more = null)
+function marketengine_trim_words($text, $num_words = 55, $more = null)
 {
     if (null === $more) {
         $more = __('&hellip;');
@@ -783,7 +783,7 @@ function me_trim_words($text, $num_words = 55, $more = null)
      * @param string $more          An optional string to append to the end of the trimmed text, e.g. &hellip;.
      * @param string $original_text The text before it was trimmed.
      */
-    return apply_filters('me_trim_words', $text, $num_words, $more, $original_text);
+    return apply_filters('marketengine_trim_words', $text, $num_words, $more, $original_text);
 }
 
 /**
@@ -792,7 +792,7 @@ function me_trim_words($text, $num_words = 55, $more = null)
  * @param int $bytes
  * @return string
  */
-function me_format_size_units($bytes)
+function marketengine_format_size_units($bytes)
 {
     if ($bytes >= 1073741824) {
         $bytes = number_format($bytes / 1073741824, 2) . ' GB';
@@ -817,9 +817,9 @@ function me_format_size_units($bytes)
  * @param string $title, int $id
  * @return string
  */
-function me_auth_page_title( $title, $id = null ) {
+function marketengine_auth_page_title( $title, $id = null ) {
 
-    if (is_page() && in_the_loop() && $id === me_get_option_page_id('user_account')) {
+    if (is_page() && in_the_loop() && $id === marketengine_get_option_page_id('user_account')) {
         global $wp_query;
         if(!is_user_logged_in() ) {
             if( isset($wp_query->query_vars['register']) ) {
@@ -842,4 +842,4 @@ function me_auth_page_title( $title, $id = null ) {
     }
     return $title;
 }
-add_filter( 'the_title', 'me_auth_page_title', 10, 2 );
+add_filter( 'the_title', 'marketengine_auth_page_title', 10, 2 );

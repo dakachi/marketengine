@@ -57,24 +57,24 @@ class ME_Inquiry_Form
 
         $inquiry_id = $message->post_parent;
 
-        $inquiry         = me_get_message($inquiry_id);
+        $inquiry         = marketengine_get_message($inquiry_id);
         $current_user_id = get_current_user_id();
         if (!$inquiry || $inquiry->post_type != 'inquiry') {
             return;
         }
 
-        $message_count = me_get_message_field('message_count', $inquiry_id);
-        me_update_message(array('post_type' => 'inquiry', 'message_count' => ($message_count + 1), 'ID' => $inquiry_id), true);
+        $message_count = marketengine_get_message_field('message_count', $inquiry_id);
+        marketengine_update_message(array('post_type' => 'inquiry', 'message_count' => ($message_count + 1), 'ID' => $inquiry_id), true);
 
         // update message meta
         if ($current_user_id == $inquiry->receiver) {
-            $new_message = me_get_message_meta($inquiry_id, '_me_sender_new_message', true);
-            me_update_message_meta($inquiry_id, '_me_sender_new_message', absint($new_message) + 1);
+            $new_message = marketengine_get_message_meta($inquiry_id, '_me_sender_new_message', true);
+            marketengine_update_message_meta($inquiry_id, '_me_sender_new_message', absint($new_message) + 1);
         }
 
         if ($current_user_id == $inquiry->sender) {
-            $new_message = me_get_message_meta($inquiry_id, '_me_recevier_new_message', true);
-            me_update_message_meta($inquiry_id, '_me_recevier_new_message', absint($new_message) + 1);
+            $new_message = marketengine_get_message_meta($inquiry_id, '_me_recevier_new_message', true);
+            marketengine_update_message_meta($inquiry_id, '_me_recevier_new_message', absint($new_message) + 1);
         }
 
     }
@@ -90,11 +90,11 @@ class ME_Inquiry_Form
         $inquiry_id      = $inquiry->ID;
         // update message meta
         if ($current_user_id == $inquiry->receiver) {
-            me_update_message_meta($inquiry_id, '_me_recevier_new_message', 0);
+            marketengine_update_message_meta($inquiry_id, '_me_recevier_new_message', 0);
         }
 
         if ($current_user_id == $inquiry->sender) {
-            me_update_message_meta($inquiry_id, '_me_sender_new_message', 0);
+            marketengine_update_message_meta($inquiry_id, '_me_sender_new_message', 0);
         }
     }
 
@@ -106,14 +106,14 @@ class ME_Inquiry_Form
         if (isset($_POST['send_inquiry']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-send-inquiry')) {
             // check user login
             if (!is_user_logged_in()) {
-                $redirect = me_get_page_permalink('user_account');
+                $redirect = marketengine_get_page_permalink('user_account');
                 wp_redirect($redirect);
                 exit;
             }
 
-            $redirect = me_get_page_permalink('inquiry');
+            $redirect = marketengine_get_page_permalink('inquiry');
 
-            $id = me_get_current_inquiry(absint( $_POST['send_inquiry'] ));
+            $id = marketengine_get_current_inquiry(absint( $_POST['send_inquiry'] ));
 
             if (!$id) {
                 $result = ME_Inquiry_Handle::inquiry($_POST);
@@ -141,9 +141,9 @@ class ME_Inquiry_Form
             if (is_wp_error($result)) {
                 wp_send_json(array('success' => 'false', 'msg' => $result->get_error_message()));
             } else {
-                $message = me_get_message($result);
+                $message = marketengine_get_message($result);
                 ob_start();
-                me_get_template('inquiry/message-item', array('message' => $message));
+                marketengine_get_template('inquiry/message-item', array('message' => $message));
                 $content = ob_get_clean();
                 wp_send_json(array('success' => true, 'content' => $content));
             }
@@ -156,16 +156,16 @@ class ME_Inquiry_Form
     public static function fetch_messages()
     {
         if (!empty($_GET['parent']) && !empty($_GET['_wpnonce']) && wp_verify_nonce($_GET['_wpnonce'], 'me-inquiry-message')) {
-            $parent  = me_get_message(absint( $_GET['parent'] ));
+            $parent  = marketengine_get_message(absint( $_GET['parent'] ));
             $user_id = get_current_user_id();
             if ($parent->receiver != $user_id && $parent->sender != $user_id) {
                 wp_send_json(array('success' => false));
             }
-            $messages = me_get_messages(array('post_type' => 'message', 'showposts' => 12, 'post_parent' => absint( $_GET['parent'] ), 'paged' => absint( $_GET['paged'] )));
+            $messages = marketengine_get_messages(array('post_type' => 'message', 'showposts' => 12, 'post_parent' => absint( $_GET['parent'] ), 'paged' => absint( $_GET['paged'] )));
             $messages = array_reverse($messages);
             ob_start();
             foreach ($messages as $key => $message) {
-                me_get_template('inquiry/message-item', array('message' => $message));
+                marketengine_get_template('inquiry/message-item', array('message' => $message));
             }
             $content = ob_get_clean();
 

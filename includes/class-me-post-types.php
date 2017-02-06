@@ -62,7 +62,7 @@ class ME_Post_Types
             'menu_name'             => __('Categories', "enginethemes"),
         );
         //TODO: setup listing category permarlink
-        $permalinks = get_option('me_permalinks');
+        $permalinks = get_option('marketengine_permalinks');
         $args       = array(
             'labels'            => $labels,
             'public'            => true,
@@ -104,7 +104,7 @@ class ME_Post_Types
             'menu_name'             => __('Tags', "enginethemes"),
         );
         //TODO: setup listing category permarlink
-        $permalinks = get_option('me_permalinks');
+        $permalinks = get_option('marketengine_permalinks');
         $args       = array(
             'labels'            => $labels,
             'public'            => true,
@@ -187,7 +187,7 @@ class ME_Post_Types
         // ));
 
         // TODO: tam thoi de day
-        register_post_type('me_order', array(
+        register_post_type('marketengine_order', array(
             'labels'             => array(
                 'name'               => __('Orders', "enginethemes"),
                 'singular_name'      => __('Order', "enginethemes"),
@@ -206,7 +206,7 @@ class ME_Post_Types
             'public'             => false,
             'publicly_queryable' => true,
             'rewrite'            => array(
-                'slug' => me_get_endpoint_name('order-id') . '/%post_id%',
+                'slug' => marketengine_get_endpoint_name('order-id') . '/%post_id%',
             ),
             'has_archive'        => true,
             'show_ui'            => true,
@@ -219,7 +219,7 @@ class ME_Post_Types
         ));
 
         register_post_status('me-pending', array(
-            'label'                     => _x('Pending', 'me_order'),
+            'label'                     => _x('Pending', 'marketengine_order'),
             'public'                    => false,
             'exclude_from_search'       => false,
             'private'                   => true,
@@ -229,7 +229,7 @@ class ME_Post_Types
         ));
 
         register_post_status('me-active', array(
-            'label'                     => _x('Finished', 'me_order'),
+            'label'                     => _x('Finished', 'marketengine_order'),
             'public'                    => false,
             'exclude_from_search'       => false,
             'private'                   => true,
@@ -239,7 +239,7 @@ class ME_Post_Types
         ));
 
         register_post_status('me-complete', array(
-            'label'                     => _x('Completed', 'me_order'),
+            'label'                     => _x('Completed', 'marketengine_order'),
             'public'                    => true,
             'exclude_from_search'       => false,
             'private'                   => true,
@@ -249,7 +249,7 @@ class ME_Post_Types
         ));
 
         register_post_status('me-disputed', array(
-            'label'                     => _x('Disputed', 'me_order'),
+            'label'                     => _x('Disputed', 'marketengine_order'),
             'public'                    => true,
             'exclude_from_search'       => false,
             'private'                   => true,
@@ -259,7 +259,7 @@ class ME_Post_Types
         ));
 
         register_post_status('me-closed', array(
-            'label'                     => _x('Closed', 'me_order'),
+            'label'                     => _x('Closed', 'marketengine_order'),
             'public'                    => true,
             'exclude_from_search'       => false,
             'private'                   => true,
@@ -269,7 +269,7 @@ class ME_Post_Types
         ));
 
         register_post_status('me-resolved', array(
-            'label'                     => _x('Resolved', 'me_order'),
+            'label'                     => _x('Resolved', 'marketengine_order'),
             'public'                    => true,
             'exclude_from_search'       => false,
             'private'                   => true,

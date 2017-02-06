@@ -37,17 +37,17 @@ $total = 0;
 		<div class="me-table-row me-cart-item">
 			<div class="me-table-col me-cart-name">
 				<div class="me-cart-listing">
-				<?php me_get_template('purchases/order-listing-image', array('listing_obj' => $listing_obj) ); ?>
+				<?php marketengine_get_template('purchases/order-listing-image', array('listing_obj' => $listing_obj) ); ?>
 
 					<a href="<?php echo $listing_obj && (($listing_obj->get_author() == get_current_user_id()) || $listing_obj->is_available()) ? get_permalink( $listing_obj->ID ) : 'javascript:void(0)'; ?>">
 						<span><?php echo esc_html($listing_item['title']); ?></span>
 					</a>
 
-				<?php me_get_template('purchases/archived-listing-notice', array('listing_obj' => $listing_obj) ); ?>
+				<?php marketengine_get_template('purchases/archived-listing-notice', array('listing_obj' => $listing_obj) ); ?>
 				</div>
 			</div>
 			<div class="me-table-col me-cart-price">
-				<?php echo me_price_html( $listing_item['price'] ); ?>
+				<?php echo marketengine_price_html( $listing_item['price'] ); ?>
 				<span class="me-cart-price-mobile"><?php _e("Price", "enginethemes"); ?></span>
 			</div>
 			<div class="me-table-col me-cart-units">
@@ -55,7 +55,7 @@ $total = 0;
 				<span class="me-cart-units-mobile"><?php _e("Units", "enginethemes"); ?></span>
 			</div>
 			<div class="me-table-col me-cart-units-total">
-				<?php echo me_price_html($listing_item['price'] * $unit); ?>
+				<?php echo marketengine_price_html($listing_item['price'] * $unit); ?>
 			</div>
 
 			<input type="hidden" name="listing_item[<?php echo $key; ?>][id]" value="<?php echo $item['id']; ?>" />
@@ -76,7 +76,7 @@ $total = 0;
 			<div class="me-table-col me-table-empty"></div>
 			<div class="me-table-col me-table-empty"></div>
 			<div class="me-table-col me-cart-amount"><?php _e("Total amount:", "enginethemes"); ?></div>
-			<div class="me-table-col me-cart-totals"><?php echo me_price_html($listing_item['price'] * $unit); ?></div>
+			<div class="me-table-col me-cart-totals"><?php echo marketengine_price_html($listing_item['price'] * $unit); ?></div>
 		</div>
 	</div>
 	<div class="me-checkout-submit">

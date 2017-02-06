@@ -108,7 +108,7 @@ class Tests_ME_Reset_Pass extends WP_UnitTestCase {
         );
         $key = get_password_reset_key(get_userdata($u1));
 
-        add_filter('password_reset_expiration', array($this, 'me_reset_expiration'));
+        add_filter('password_reset_expiration', array($this, 'marketengine_reset_expiration'));
 
         $auth = new ME_Auth_Form();
         $error = ME_Authentication::reset_pass(
@@ -121,10 +121,10 @@ class Tests_ME_Reset_Pass extends WP_UnitTestCase {
         );
         $this->assertEquals(new WP_Error('expired_key', 'Invalid key'), $error);
 
-        remove_filter('password_reset_expiration', array($this, 'me_reset_expiration'));
+        remove_filter('password_reset_expiration', array($this, 'marketengine_reset_expiration'));
     }
     // set the token expired time to 0
-    public function me_reset_expiration() {
+    public function marketengine_reset_expiration() {
         return 0;
     }
     // invalid user login

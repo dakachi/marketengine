@@ -44,16 +44,16 @@ class ME_Custom_Field_Handle {
         $field_data['field_constraint'] = $attributes;
 
         if(!$is_update) {
-            $field_id = me_cf_insert_field($field_data, true);
+            $field_id = marketengine_cf_insert_field($field_data, true);
         }
         else {
-            $current_cats      = me_cf_get_field_categories($field_data['field_id']);
+            $current_cats      = marketengine_cf_get_field_categories($field_data['field_id']);
             self::remove_categories(array(
                 'field_id'     => $field_data['field_id'],
                 'current_cats' => $current_cats,
                 'new_cats'     => $term_ids,
             ));
-            $field_id = me_cf_update_field($field_data, true);
+            $field_id = marketengine_cf_update_field($field_data, true);
         }
 
         $result = self::set_field_category($field_id, $term_ids);
@@ -83,7 +83,7 @@ class ME_Custom_Field_Handle {
      */
     public static function delete($field_id)
     {
-        return me_cf_delete_field($field_id);
+        return marketengine_cf_delete_field($field_id);
     }
 
     /**
@@ -100,11 +100,11 @@ class ME_Custom_Field_Handle {
      */
     public static function remove_from_category($field_id, $category_id)
     {
-        $term_ids = me_cf_get_field_categories($field_id);
+        $term_ids = marketengine_cf_get_field_categories($field_id);
         if (count($term_ids) == 1) {
             self::delete($field_id);
         } else {
-            me_cf_remove_field_category($field_id, $category_id);
+            marketengine_cf_remove_field_category($field_id, $category_id);
         }
     }
 
@@ -151,11 +151,11 @@ class ME_Custom_Field_Handle {
         $result = '';
         if (isset($term_ids) && !empty($term_ids)) {
 
-            $field_cat = me_cf_get_field_categories($field_id);
+            $field_cat = marketengine_cf_get_field_categories($field_id);
 
             foreach ($term_ids as $key => $term_id) {
                 if (!in_array($term_id, $field_cat)) {
-                    $result      = me_cf_set_field_category($field_id, absint( $term_id ), 0);
+                    $result      = marketengine_cf_set_field_category($field_id, absint( $term_id ), 0);
                 }
             }
         } else {
@@ -178,9 +178,9 @@ class ME_Custom_Field_Handle {
         $unuse_cats = array_diff($current_cats, $new_cats);
 
         foreach ($unuse_cats as $key => $cat) {
-            $removed = me_cf_remove_field_category($field_id, $cat);
+            $removed = marketengine_cf_remove_field_category($field_id, $cat);
             if (is_wp_error($removed)) {
-                me_wp_error_to_notices($removed);
+                marketengine_wp_error_to_notices($removed);
                 return;
             }
         }
@@ -237,7 +237,7 @@ class ME_Custom_Field_Handle {
     public static function is_field_name_exists()
     {
         if ($_POST['current_field_id'] != -1) {
-            $field = me_cf_get_field($_POST['current_field_id']);
+            $field = marketengine_cf_get_field($_POST['current_field_id']);
 
             if ($field) {
                 wp_send_json(array(
@@ -247,7 +247,7 @@ class ME_Custom_Field_Handle {
             }
         }
 
-        $field = me_cf_is_field_name_exists($_POST['field_name']);
+        $field = marketengine_cf_is_field_name_exists($_POST['field_name']);
 
         if ($field) {
             $unique  = false;
@@ -277,7 +277,7 @@ class ME_Custom_Field_Handle {
             return new WP_Error('field_option_empty', __("Field option cannot be empty.", 'enginethemes'));
         }
 
-        me_cf_register_field_taxonomy($field_data);
+        marketengine_cf_register_field_taxonomy($field_data);
         $field_options = trim($field_data['field_options']);
         $field_name    = $field_data['field_name'];
 
@@ -312,7 +312,7 @@ class ME_Custom_Field_Handle {
      */
     private static function remove_unused_field_options($field_name, $new_options)
     {
-        $existed_options = me_cf_get_field_options($field_name);
+        $existed_options = marketengine_cf_get_field_options($field_name);
         $options_remove = array_diff_key($existed_options, $new_options);
 
         foreach ($options_remove as $key => $option) {

@@ -116,11 +116,11 @@ class ME_Authentication
          * @since 1.0
          */
         $rules    = apply_filters('marketengine_register_form_rules', $rules, $user_data);
-        $is_valid = me_validate($user_data, $rules, $custom_attributes);
+        $is_valid = marketengine_validate($user_data, $rules, $custom_attributes);
 
         $errors = new WP_Error();
         if (!$is_valid) {
-            $invalid_data = me_get_invalid_message($user_data, $rules, $custom_attributes);
+            $invalid_data = marketengine_get_invalid_message($user_data, $rules, $custom_attributes);
             foreach ($invalid_data as $key => $message) {
                 $errors->add($key, $message);
             }
@@ -211,7 +211,7 @@ class ME_Authentication
         }
 
         $user                           = new WP_User($user_id);
-        $is_required_email_confirmation = me_option('user-email-confirmation') ? true : false;
+        $is_required_email_confirmation = marketengine_option('user-email-confirmation') ? true : false;
 
         if ($is_required_email_confirmation) {
             // generate the activation key
@@ -224,7 +224,7 @@ class ME_Authentication
             self::send_registration_success_email($user);
         }
         /**
-         * Do action me_user_register
+         * Do action marketengine_user_register
          *
          * @param Object $user WP_User
          * @param Array $user_data
@@ -268,10 +268,10 @@ class ME_Authentication
          * @since 1.0
          */
         $rules    = apply_filters('marketengine_forgot_password_form_rules', $rules, $user);
-        $is_valid = me_validate($user, $rules, $custom_attributes);
+        $is_valid = marketengine_validate($user, $rules, $custom_attributes);
 
         if (!$is_valid) {
-            $invalid_data = me_get_invalid_message($user, $rules, $custom_attributes);
+            $invalid_data = marketengine_get_invalid_message($user, $rules, $custom_attributes);
             foreach ($invalid_data as $key => $message) {
                 $errors->add($key, $message);
             }
@@ -312,11 +312,11 @@ class ME_Authentication
             return $key;
         }
 
-        $profile_link    = me_get_page_permalink('user_account');
+        $profile_link    = marketengine_get_page_permalink('user_account');
         $reset_pass_link = add_query_arg(array(
             'key'   => $key,
             'login' => rawurlencode($user_login),
-        ), me_get_endpoint_url('reset-password', '', $profile_link));
+        ), marketengine_get_endpoint_url('reset-password', '', $profile_link));
 
         $reset_pass_link = apply_filters('marketengine_resert_password_link', $reset_pass_link, $user_data, $key);
 
@@ -338,7 +338,7 @@ class ME_Authentication
             'display_name' => get_the_author_meta( 'display_name', $user_data->ID )
         );
         ob_start();
-        me_get_template('emails/reset-password', $mail_args);
+        marketengine_get_template('emails/reset-password', $mail_args);
         $message = ob_get_clean();
 
         
@@ -406,10 +406,10 @@ class ME_Authentication
          * @since 1.0
          */
         $rules    = apply_filters('marketengine_reset_password_form_rules', $rules, $user_data);
-        $is_valid = me_validate($user_data, $rules, $custom_attributes);
+        $is_valid = marketengine_validate($user_data, $rules, $custom_attributes);
         if (!$is_valid) {
             $errors       = new WP_Error();
-            $invalid_data = me_get_invalid_message($user_data, $rules, $custom_attributes);
+            $invalid_data = marketengine_get_invalid_message($user_data, $rules, $custom_attributes);
             foreach ($invalid_data as $key => $message) {
                 $errors->add($key, $message);
             }
@@ -442,7 +442,7 @@ class ME_Authentication
             );
             // get mail content
             ob_start();
-            me_get_template('emails/reset-password-success', $mail_args);
+            marketengine_get_template('emails/reset-password-success', $mail_args);
             $mail_content = ob_get_clean();
             /**
              * Filter user reset password success email content
@@ -490,10 +490,10 @@ class ME_Authentication
          * @since 1.0
          */
         $rules    = apply_filters('marketengine_confirm_mail_rules', $rules, $user_data);
-        $is_valid = me_validate($user_data, $rules, $custom_attributes);
+        $is_valid = marketengine_validate($user_data, $rules, $custom_attributes);
         if (!$is_valid) {
             $errors       = new WP_Error();
-            $invalid_data = me_get_invalid_message($user_data, $rules, $custom_attributes);
+            $invalid_data = marketengine_get_invalid_message($user_data, $rules, $custom_attributes);
             foreach ($invalid_data as $key => $message) {
                 $errors->add($key, $message);
             }
@@ -545,7 +545,7 @@ class ME_Authentication
              * @since 1.0
              */
             $activation_mail_subject = apply_filters('marketengine_activation_mail_subject', __("Activate Email", "enginethemes"), $user);
-            $profile_link            = me_get_page_permalink('user-profile');
+            $profile_link            = marketengine_get_page_permalink('user-profile');
             $activate_email_link     = add_query_arg(array(
                 'key'        => $user_activate_email_key,
                 'user_email' => $user->user_email,
@@ -564,7 +564,7 @@ class ME_Authentication
             );
             // get activation mail content from template
             ob_start();
-            me_get_template('emails/activation', $args);
+            marketengine_get_template('emails/activation', $args);
             $activation_mail_content = ob_get_clean();
 
             /**
@@ -602,7 +602,7 @@ class ME_Authentication
         );
         // get registration success mail content from template
         ob_start();
-        me_get_template('emails/registration-success', $args);
+        marketengine_get_template('emails/registration-success', $args);
         $registration_success_mail_content = ob_get_clean();
         /**
          * Filter user registration success email subject
@@ -720,9 +720,9 @@ class ME_Authentication
          * @since 1.0
          */
         $rules    = apply_filters('marketengine_change_password_rules', $rules, $user_data);
-        $is_valid = me_validate($user_data, $rules, $custom_attributes);
+        $is_valid = marketengine_validate($user_data, $rules, $custom_attributes);
         if (!$is_valid) {
-            $invalid_data = me_get_invalid_message($user_data, $rules, $custom_attributes);
+            $invalid_data = marketengine_get_invalid_message($user_data, $rules, $custom_attributes);
             foreach ($invalid_data as $key => $message) {
                 $errors->add($key, $message);
             }

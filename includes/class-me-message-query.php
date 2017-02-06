@@ -1544,7 +1544,7 @@ class ME_Message_Query {
 
 		// Convert to WP_Post objects.
 		if ( $this->posts ) {
-			$this->posts = array_map( 'me_get_message', $this->posts );
+			$this->posts = array_map( 'marketengine_get_message', $this->posts );
 		}
 
 		if ( ! $q['suppress_filters'] ) {
@@ -1577,7 +1577,7 @@ class ME_Message_Query {
 		if ( $this->posts ) {
 			$this->post_count = count( $this->posts );
 
-			$this->posts = array_map( 'me_get_message', $this->posts );
+			$this->posts = array_map( 'marketengine_get_message', $this->posts );
 
 			// if ( $q['cache_results'] )
 			// 	update_post_caches($this->posts, $post_type, $q['update_post_term_cache'], $q['update_post_meta_cache']);
@@ -1811,7 +1811,7 @@ class ME_Message_Query {
 		global $id, $authordata, $currentday, $currentmonth, $page, $pages, $multipage, $more, $numpages;
 
 		if ( ! ( $post instanceof ME_Message ) ) {
-			$post = me_get_message( $post );
+			$post = marketengine_get_message( $post );
 		}
 
 		if ( ! $post ) {
@@ -1885,7 +1885,7 @@ class ME_Message_Query {
 		 * @param WP_Post  &$post The Post object (passed by reference).
 		 * @param WP_Query &$this The current Query object (passed by reference).
 		 */
-		do_action_ref_array( 'me_the_message', array( &$post, &$this ) );
+		do_action_ref_array( 'marketengine_the_message', array( &$post, &$this ) );
 
 		return true;
 	}

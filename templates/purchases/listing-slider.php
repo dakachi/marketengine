@@ -21,7 +21,7 @@ if(!empty($listing_cat)) {
 	}
 }
 
-$args = apply_filters( 'me_filte_related_listing', $args );
+$args = apply_filters( 'marketengine_filte_related_listing', $args );
 
 $listings = get_posts( $args );
 
@@ -35,7 +35,7 @@ if(!empty($listings)) :
 		<ul class="me-related slides">
 		<?php
 			foreach( $listings as $listing ) :
-				$listing = me_get_listing($listing);
+				$listing = marketengine_get_listing($listing);
 				$listing_type = $listing->get_listing_type();
 		?>
 			<li class="me-item-post">
@@ -52,9 +52,9 @@ if(!empty($listings)) :
 
 						<?php
 							if('purchasion' == $listing_type) :
-								me_get_template('loop/purchasion', array('listing' => $listing));
+								marketengine_get_template('loop/purchasion', array('listing' => $listing));
 							else :
-								me_get_template('loop/contact', array('listing' => $listing));
+								marketengine_get_template('loop/contact', array('listing' => $listing));
 							endif;
 						 ?>
 

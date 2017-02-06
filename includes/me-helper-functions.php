@@ -18,9 +18,9 @@ if (!defined('ABSPATH')) {
  *
  * @return int| null Page Id if exist or null if page not existed
  */
-function me_get_option_page_id($page_option_name)
+function marketengine_get_option_page_id($page_option_name)
 {
-    $page_id = absint(me_option('me_' . $page_option_name . '_page_id'));
+    $page_id = absint(marketengine_option('marketengine_' . $page_option_name . '_page_id'));
     $page    = get_post($page_id);
     if (!$page) {
         return -1;
@@ -35,13 +35,13 @@ function me_get_option_page_id($page_option_name)
  * @param  string $query_var
  * @return string
  */
-function me_get_endpoint_name($query_var)
+function marketengine_get_endpoint_name($query_var)
 {
     $query_var        = str_replace('-', '_', $query_var);
-    $defaults         = me_default_endpoints();
+    $defaults         = marketengine_default_endpoints();
     $default_endpoint = isset($defaults[$query_var]) ? $defaults[$query_var] : '';
 
-    $endpoint = me_option('ep_' . $query_var);
+    $endpoint = marketengine_option('ep_' . $query_var);
     return $endpoint ? $endpoint : $default_endpoint;
 }
 
@@ -51,7 +51,7 @@ function me_get_endpoint_name($query_var)
  * @access public
  * @return array of endpoints
  */
-function me_default_endpoints()
+function marketengine_default_endpoints()
 {
     $endpoint_arr = array(
         'forgot_password' => 'forgot-password',
