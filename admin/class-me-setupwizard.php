@@ -80,14 +80,14 @@ class ME_Setup_Wizard
     }
 
     public function setup_page($content) {
-    	me_create_functional_pages();
+    	marketengine_create_functional_pages();
     }
 
     public function setup_personalize($content) {
     	parse_str($content);
-    	me_update_option('listing-label', $listing_label);
-    	me_update_option('seller-label', $seller_label);
-    	me_update_option('buyer-label', $buyer_label);
+    	marketengine_update_option('listing-label', $listing_label);
+    	marketengine_update_option('seller-label', $seller_label);
+    	marketengine_update_option('buyer-label', $buyer_label);
     }
 
     public function setup_payment($content) {
@@ -103,27 +103,27 @@ class ME_Setup_Wizard
     	}
 
     	
-    	me_update_option('paypal-commission-fee', absint( $commission ));
+    	marketengine_update_option('paypal-commission-fee', absint( $commission ));
     	
 
     	$currency = $currencies[$currency];
-    	me_update_option('payment-currency-code', $currency['code']);
-    	me_update_option('payment-currency-sign', $currency['sign']);
-    	me_update_option('payment-currency-label', $currency['label']);
+    	marketengine_update_option('payment-currency-code', $currency['code']);
+    	marketengine_update_option('payment-currency-sign', $currency['sign']);
+    	marketengine_update_option('payment-currency-label', $currency['label']);
 
     	return $this->get_listing_type_category_option();
     }
 
     public function setup_listing_types($content) {
     	parse_str($content);
-    	me_update_option('purchasion-title', $purchasion_title);
-    	me_update_option('contact-title', $contact_title);
+    	marketengine_update_option('purchasion-title', $purchasion_title);
+    	marketengine_update_option('contact-title', $contact_title);
 
-    	me_update_option('purchasion-action', $purchasion_action);
-    	me_update_option('contact-action', $contact_action);
+    	marketengine_update_option('purchasion-action', $purchasion_action);
+    	marketengine_update_option('contact-action', $contact_action);
 
-    	me_update_option('purchasion-available', $purchasion_available);
-    	me_update_option('contact-available', $contact_available);
+    	marketengine_update_option('purchasion-available', $purchasion_available);
+    	marketengine_update_option('contact-available', $contact_available);
     }
 
     private function get_listing_type_category_option() {
@@ -177,7 +177,7 @@ class ME_Setup_Wizard
     {
         
         if(!empty($_GET['skip-setup']) && !empty($_GET['nonce']) && wp_verify_nonce($_GET['nonce'], 'skip_setup_wizard')) {
-        	me_update_option('finish_wizard', 1);
+        	marketengine_update_option('finish_wizard', 1);
         }
 
         if (empty($_GET['page']) || 'marketengine-setup' !== $_GET['page']) {

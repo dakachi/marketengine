@@ -96,7 +96,7 @@ function marketengine_render_listing_columns($column)
         case 'type':
             $listing_type = get_post_meta($post->ID, '_me_listing_type', true);
             if (!empty($listing_type)) {
-                echo esc_html(me_get_listing_type_label($listing_type));
+                echo esc_html(marketengine_get_listing_type_label($listing_type));
             }
             break;
 
