@@ -44,7 +44,7 @@ if (!function_exists('marketengine_get_page_permalink')) {
      */
     function marketengine_get_page_permalink($page_name)
     {
-        $page = marketengine_option('marketengine_' . $page_name . '_page_id');
+        $page = marketengine_option('me_' . $page_name . '_page_id');
         if (!$page = get_post($page)) {
             return home_url();
         }
