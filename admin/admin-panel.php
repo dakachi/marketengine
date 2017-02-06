@@ -224,7 +224,7 @@ function marketengine_load_admin_option_script_css() {
         wp_enqueue_script('option-view', MARKETENGINE_URL . 'assets/admin/option-view.js', array('jquery', 'backbone', 'jquery-scrollbar'), '1.0', true);
         wp_localize_script(
             'backbone',
-            'marketengine_globals',
+            'me_globals',
             array(
                 'ajaxurl' => admin_url('admin-ajax.php'),
             )

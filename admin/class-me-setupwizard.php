@@ -187,7 +187,7 @@ class ME_Setup_Wizard
         wp_register_script('setup-wizard.js', MARKETENGINE_URL . 'assets/admin/setup-wizard.js', array('jquery'));
         wp_localize_script(
             'setup-wizard.js',
-            'marketengine_globals',
+            'me_globals',
             array(
                 'ajaxurl'       => admin_url('admin-ajax.php'),
                 'reload_notice' => __("Data will be lost if you leave the page, are you sure?", "enginethemes"),
