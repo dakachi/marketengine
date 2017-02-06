@@ -36,7 +36,7 @@ class ME_Template_Loader {
             $find[] = $file;
             $find[] = ME()->template_path() . $file;
 
-        } elseif (is_single() && get_post_type() == 'marketengine_order') {
+        } elseif (is_single() && get_post_type() == 'me_order') {
 
             $file = 'order-detail.php';
             $find[] = $file;

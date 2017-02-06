@@ -146,7 +146,7 @@ class ME_Order {
             $post = $order_id;
         }
         
-        if(!$post || $post->post_type != 'marketengine_order') return false;
+        if(!$post || $post->post_type != 'me_order') return false;
 
         foreach (get_object_vars($post) as $key => $value) {
             $this->$key = $value;

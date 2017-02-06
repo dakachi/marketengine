@@ -184,7 +184,7 @@ class ME_Query
      */
     public function custom_order_link($post_link, $post = 0)
     {
-        if ($post->post_type == 'marketengine_order') {
+        if ($post->post_type == 'me_order') {
             if (get_option('permalink_structure')) {
                 $pos       = strrpos($post_link, '%/');
                 $post_link = substr($post_link, 0, $pos + 1);

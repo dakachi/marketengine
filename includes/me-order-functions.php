@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
  * @return int|WP_Error The post ID on success. The value 0 or WP_Error on failure.
  */
 function marketengine_insert_order($order_data) {
-    $order_data['post_type']  = 'marketengine_order';
+    $order_data['post_type']  = 'me_order';
     $order_data['post_title'] = 'Order-' . date(get_option('links_updated_date_format'), current_time('timestamp'));
 
     $order_data['post_status'] = apply_filters('marketengine_create_order_status', 'me-pending');
@@ -73,7 +73,7 @@ function marketengine_update_order($order_data) {
     // First, get all of the original fields.
     $post = get_post($order_data['ID'], ARRAY_A);
 
-    if (is_null($post) || $post->post_type !== 'marketengine_order') {
+    if (is_null($post) || $post->post_type !== 'me_order') {
         return new WP_Error('invalid_order', __('Invalid order ID.', 'enginethemes'));
     }
 
@@ -171,7 +171,7 @@ function marketengine_cron_close_order() {
 
     $sql = "SELECT DISTINCT ID FROM {$wpdb->posts} as p
                 INNER JOIN {$wpdb->postmeta} as mt ON mt.post_id = p.ID
-                WHERE   (p.post_type = 'marketengine_order')
+                WHERE   (p.post_type = 'me_order')
                     AND (p.post_status = 'me-complete')
                     AND mt.meta_key = '_me_order_closed_time'
                     AND (mt.meta_value < '{$current}')

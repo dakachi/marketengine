@@ -22,7 +22,7 @@ class Tests_ME_Create_Order extends WP_UnitTestCase {
         $order_id = marketengine_insert_order($this->order_data);
 
         $post = get_post($order_id);
-        $this->assertEquals('marketengine_order', $post->post_type);
+        $this->assertEquals('me_order', $post->post_type);
         $this->assertEquals($this->user_1, $post->post_author);
         $this->assertEquals('me-pending', $post->post_status);
     }

@@ -162,7 +162,7 @@ add_action('admin_menu', 'marketengine_option_menu');
  * @since   1.0.1
  */
 function marketengine_add_header_style () {
-    if (isset($_GET['post_type']) && $_GET['post_type'] == 'marketengine_order') {
+    if (isset($_GET['post_type']) && $_GET['post_type'] == 'me_order') {
         echo '<style type="text/css">
             #favorite-actions, .add-new-h2, .page-title-action, .hide-if-no-js { display:none; }
             @media screen and (max-width: 782px) {
@@ -214,7 +214,7 @@ function marketengine_load_admin_option_script_css() {
         wp_enqueue_script('option-view', MARKETENGINE_URL . 'assets/admin/option-view.js', array('jquery', 'backbone', 'jquery-scrollbar'), '1.0', true);
         wp_localize_script(
             'backbone',
-            'marketengine_globals',
+            'me_globals',
             array(
                 'ajaxurl' => admin_url('admin-ajax.php'),
             )

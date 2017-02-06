@@ -345,7 +345,7 @@ function marketengine_orders_report($args)
 
     $join = " LEFT JOIN  $wpdb->postmeta ON  {$wpdb->postmeta}.post_id = {$wpdb->posts}.ID AND {$wpdb->postmeta}.meta_key = '_order_subtotal' ";
 
-    $where   = " WHERE post_type = 'marketengine_order' AND post_status != 'me-pending' AND post_date BETWEEN '{$from_date}' AND '{$to_date}'";
+    $where   = " WHERE post_type = 'me_order' AND post_status != 'me-pending' AND post_date BETWEEN '{$from_date}' AND '{$to_date}'";
     $groupby = " GROUP BY `quant` ,`year` ";
     $orderby = " ORDER BY {$orderby} {$order} ";
     $limits  = " LIMIT " . $pgstrt . $showposts;

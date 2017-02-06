@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
  */
 function marketengine_order_row_actions($actions, $post)
 {
-    if ($post && 'marketengine_order' == $post->post_type) {
+    if ($post && 'me_order' == $post->post_type) {
         return array();
     }
     return $actions;
@@ -116,7 +116,7 @@ function marketengine_render_me_order_columns($column)
             $commission_items = marketengine_get_order_items($post->ID, 'commission_item');
             if (!empty($commission_items)) {
                 $item_id = $commission_items[0]->order_item_id;
-                echo marketengine_price_html(me_get_order_item_meta($item_id, '_amount', true), $currency);
+                echo marketengine_price_html(marketengine_get_order_item_meta($item_id, '_amount', true), $currency);
             }else{
                 echo '0';
             }
@@ -148,9 +148,9 @@ function marketengine_order_payment_details() {
  */
 function marketengine_order_meta_box()
 {
-    add_meta_box('order_meta', __('Order Payment Info'), 'marketengine_order_payment_details', 'marketengine_order', 'normal', 'high');
-    remove_meta_box('submitdiv', 'marketengine_order', 'side');
-    remove_meta_box('postcustom', 'marketengine_order', 'normal');
+    add_meta_box('order_meta', __('Order Payment Info'), 'marketengine_order_payment_details', 'me_order', 'normal', 'high');
+    remove_meta_box('submitdiv', 'me_order', 'side');
+    remove_meta_box('postcustom', 'me_order', 'normal');
 }
 add_action('add_meta_boxes', 'marketengine_order_meta_box');
 

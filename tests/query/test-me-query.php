@@ -10,7 +10,7 @@ class Test_ME_Query extends WP_UnitTestCase {
     public function setUp() {
         parent::setUp();
         // $this->create_test_pages();
-        // register_post_type('marketengine_order', array(
+        // register_post_type('me_order', array(
         //     'public'             => false,
         //     'publicly_queryable' => true,
         //     'rewrite'            => array(
@@ -24,8 +24,8 @@ class Test_ME_Query extends WP_UnitTestCase {
 
     public function tearDown() {
         // global $wp_post_types;
-        // if ( isset( $wp_post_types[ 'marketengine_order' ] ) ) {
-        //     unset( $wp_post_types[ 'marketengine_order' ] );
+        // if ( isset( $wp_post_types[ 'me_order' ] ) ) {
+        //     unset( $wp_post_types[ 'me_order' ] );
         // }
     }
 
@@ -154,7 +154,7 @@ class Test_ME_Query extends WP_UnitTestCase {
 
     public function test_custom_order_link() {
         $order_id = $this->post_factory->create_object( array(
-            'post_type' => 'marketengine_order',
+            'post_type' => 'me_order',
         ) );
 
         $order = get_post($order_id);
@@ -163,10 +163,10 @@ class Test_ME_Query extends WP_UnitTestCase {
 
     public function test_custom_order_link_with_pretty_url() {
         // global $wp_rewrite;
-        // $wp_rewrite->extra_permastructs['marketengine_order'] = '/order/%post_id%/%me_order%';
+        // $wp_rewrite->extra_permastructs['me_order'] = '/order/%post_id%/%me_order%';
 
         // $order_id = $this->post_factory->create_object( array(
-        //     'post_type' => 'marketengine_order',
+        //     'post_type' => 'me_order',
         // ) );
         // $order_endpoint = marketengine_get_endpoint_name('order_id');
 

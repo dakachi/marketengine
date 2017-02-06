@@ -56,7 +56,7 @@ function marketengine_order_report_data( $args ) {
 	 		LEFT JOIN $wpdb->marketengine_order_items as O
 	 			ON P.ID = O.order_id
 	 		LEFT JOIN  $wpdb->postmeta as PM ON  PM.post_id = P.ID AND PM.meta_key = '_order_subtotal'
-	 		WHERE P.post_type = 'marketengine_order'
+	 		WHERE P.post_type = 'me_order'
 	 		    AND P.ID IN (
 	 		        SELECT order_items.order_id
 	 		        FROM $wpdb->marketengine_order_items as order_items
@@ -141,7 +141,7 @@ function marketengine_transaction_report_data( $args ) {
 	 		LEFT JOIN $wpdb->marketengine_order_items as O
 	 			ON P.ID = O.order_id
 	 		LEFT JOIN  $wpdb->postmeta as PM ON  PM.post_id = P.ID AND PM.meta_key = '_order_subtotal'
-	 		WHERE P.post_type = 'marketengine_order'
+	 		WHERE P.post_type = 'me_order'
 	 		    AND P.post_author = {$user}
 	 		    AND P.post_date BETWEEN '{$from_date} 0:0:1' AND '{$to_date} 23:59:59'";
 

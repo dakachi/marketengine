@@ -9,14 +9,14 @@
  */
 
 $args = array(
-	'post_type' => 'marketengine_order',
+	'post_type' => 'me_order',
 	'paged' 	=> absint( get_query_var('paged') )
 );
 $type = 'order';
 $request = array_map('esc_sql', $_GET);
 
 $args = array_merge(apply_filters( 'marketengine_filter_order', $request, $type ), $args);
-$all_order_args = json_encode( array_merge(apply_filters( 'marketengine_filter_order', $request, $type ), array('post_type' => 'marketengine_order', 'posts_per_page' => -1) ) );
+$all_order_args = json_encode( array_merge(apply_filters( 'marketengine_filter_order', $request, $type ), array('post_type' => 'me_order', 'posts_per_page' => -1) ) );
 
 $query = new WP_Query($args);
 

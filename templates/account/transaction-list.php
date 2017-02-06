@@ -10,7 +10,7 @@
 
 $paged = get_query_var('paged') ? get_query_var('paged') : 1;
 $args = array(
-	'post_type' 	=> 'marketengine_order',
+	'post_type' 	=> 'me_order',
 	'paged'			=> $paged,
 );
 
