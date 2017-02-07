@@ -171,7 +171,7 @@
                     type: 'post',
                     url: me_globals.ajaxurl,
                     data: {
-                        action: 'marketengine_send_message',
+                        action: 'me_send_message',
                         type: settings.type,
                         inquiry_id: settings.parent,
                         content: content,
