@@ -77,8 +77,8 @@ function marketengine_get_listing_type_label($type) {
  * @return array Array of category id the listing type support
  */
 function marketengine_get_listing_type_categories() {
-    $purchase_cats = marketengine_option('purchasion-available');
-    $contact_cats  = marketengine_option('contact-available');
+    $purchase_cats = marketengine_option('purchasion-available', array());
+    $contact_cats  = marketengine_option('contact-available', array());
     $categories = array(
         'contact' => empty($contact_cats) ? array() : (array)$contact_cats,
         'purchasion' => empty($purchase_cats) ? array() : (array)$purchase_cats
