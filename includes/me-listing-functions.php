@@ -80,8 +80,8 @@ function marketengine_get_listing_type_categories() {
     $purchase_cats = marketengine_option('purchasion-available');
     $contact_cats  = marketengine_option('contact-available');
     $categories = array(
-        'contact' => empty($contact_cats) ? array() : $contact_cats,
-        'purchasion' => empty($purchase_cats) ? array() : $purchase_cats
+        'contact' => empty($contact_cats) ? array() : (array)$contact_cats,
+        'purchasion' => empty($purchase_cats) ? array() : (array)$purchase_cats
     );
     $categories['all'] = array_merge($categories['contact'], $categories['purchasion']);
     /**
