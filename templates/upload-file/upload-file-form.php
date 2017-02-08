@@ -9,7 +9,7 @@
             <?php
             if($source) {
                 if(!$multi) {
-                    me_get_template('upload-file/single-file', array(
+                    marketengine_get_template('upload-file/single-file', array(
                         'image_id' => $source,
                         'filename' => $name,
                         'close' => $close
