@@ -116,21 +116,21 @@
 	padding: 6px 32px;
 }
 
-.me-checkout-submit-btn, .me-order-confirm-btn {
+.me-checkout-submit-btn {
 	@extend .marketengine-btn;
 	width: auto;
 	font-weight: normal;
 	padding: 8px 40px;
 } 
 
-.me-order-submit-btn {
+/* .me-order-submit-btn {
 	@extend .marketengine-btn;
 	// background: #b9b8b8;
 	border: 1px solid $color_border_base;
 	width: auto;
 	font-weight: normal;
 	padding: 8px 40px;
-}
+} */
 
 .me-review-btn {
 	@extend .marketengine-btn;
@@ -178,4 +178,8 @@
 		background: darken(#555, 10%);
 		border-color: darken(#555, 10%);
 	}
+}
+
+@media (max-width: $screen_xs_max) { // 767px
+	
 }
