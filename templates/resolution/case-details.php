@@ -39,33 +39,33 @@
                             $messages = array_reverse ($message_query->posts);
                         ?>
                         <div class="dispute-message-wrapper">
-                        <div class="me-contact-messages" id="messages-container" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
-                            <ul class="me-contact-messages-list">
-                            <?php if( $messages ) : ?>
-    						<?php foreach ($messages  as $key => $message) : ?>
-    							<?php 
-                                if($message->post_type == 'revision') {
-                                    marketengine_get_template('resolution/revision-item', array('message' => $message));
-                                }else {
-                                    marketengine_get_template('resolution/message-item', array('message' => $message));    
-                                }
-                                 ?>
-    						<?php endforeach; ?>
-    						<?php endif; ?>
-                                
-                            </ul>
-                        </div>
-                        <script type="text/javascript">
-                            var objDiv = document.getElementById("messages-container");
-                            objDiv.scrollTop = objDiv.scrollHeight;
-                        </script>
+                            <div class="me-contact-messages" id="messages-container" style="overflow: hidden;overflow-y: scroll; max-height: 500px;">
+                                <ul class="me-contact-messages-list">
+                                <?php if( $messages ) : ?>
+        						<?php foreach ($messages  as $key => $message) : ?>
+        							<?php 
+                                    if($message->post_type == 'revision') {
+                                        marketengine_get_template('resolution/revision-item', array('message' => $message));
+                                    }else {
+                                        marketengine_get_template('resolution/message-item', array('message' => $message));    
+                                    }
+                                     ?>
+        						<?php endforeach; ?>
+        						<?php endif; ?>
+                                    
+                                </ul>
+                            </div>
+                            <script type="text/javascript">
+                                var objDiv = document.getElementById("messages-container");
+                                objDiv.scrollTop = objDiv.scrollHeight;
+                            </script>
                         </div>
                         
 
                         <?php if($case->post_status != 'me-closed' && $case->post_status != 'me-resolved') : ?>
 
                             <div class="me-message-typing-form">
-                                <form id="dispute-message-form" action="">
+                                <form id="dispute-message-form">
 
                                     <textarea name="post_content" id="debate_content" placeholder="New message"></textarea>
                                     <div class="me-dispute-attachment">
