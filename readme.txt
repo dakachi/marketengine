@@ -2,7 +2,7 @@
 Contributors: enginethemes
 Donate link: https://www.enginethemes.com/marketengine/
 Tags: enginethemes, multi vendor marketplace, ecommerce marketplace, multi seller, commission, paypal gateway, listing, niche
-Requires at least: 4.0
+Requires at least: 4.7
 Tested up to: 4.7
 Stable tag: 1.0.1
 License: GPLv2 or later
