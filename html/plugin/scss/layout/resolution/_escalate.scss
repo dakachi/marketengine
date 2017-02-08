@@ -86,7 +86,10 @@
 	.me-escalate-box {
 		margin-bottom: 20px;
 	}
-	.me-escalate-submit-btn {
-		width: 100%;
+	.me-escalate-submit {
+		.me-escalate-submit-btn {
+			width: 100%;
+		}
 	}
+	
 }
