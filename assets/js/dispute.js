@@ -23,7 +23,7 @@ jQuery(document).ready(function($) {
         $('#dispute-get-refund-no').removeClass('active');
         $(document.getElementById(get_refund_block_id)).addClass('active');
     });
-    $('#dispute-file').jUploader({
+    $('#dispute-file').MakertEngineMessageUploader({
         browse_button: 'me-dipute-upload',
         multi: true,
         name: 'dispute_file',
