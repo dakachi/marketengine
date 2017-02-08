@@ -41,7 +41,7 @@ $inquiry_count = $listing->get_inquiry_count();
 		</div>
 
 		<?php if( $listing->is_available()) : ?>
-			<?php echo esc_html( $listing->get_short_description() ); ?>
+			<?php echo wp_kses( $listing->get_short_description(), '<p><a><ul><ol><li><h6><span><b><em><strong><br>' ); ?>
 		<?php endif; ?>
 
 	</div>

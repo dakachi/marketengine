@@ -2,7 +2,7 @@
     $.fn.me_load_review = function(options) {
 
         var comment_page_counts = parseInt($(this).attr('data-page')),
-            action = 'marketengine_load_more_reviews';
+            action = 'me_load_more_reviews';
 
         var page = 2;
         var element = $(this);
