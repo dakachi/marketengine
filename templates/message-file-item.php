@@ -45,4 +45,4 @@ switch ($file_type['ext']) {
 		break;
 }
 ?>
-<?php echo '<a href="'. $url .'" class="me-mess-file-item file-'.$file_type['ext'].'" download="'.$name.'">'. $file_icon .'<span class="me-mess-name">'. $name .'</span><span class="me-mess-size">'. me_format_size_units($size) .'</span><span class="me-mess-download"><i class="icon-me-download"></i></span></a>'; ?>
+<?php echo '<a href="'. $url .'" class="me-mess-file-item file-'.$file_type['ext'].'" download="'.$name.'">'. $file_icon .'<span class="me-mess-name">'. $name .'</span><span class="me-mess-size">'. marketengine_format_size_units($size) .'</span><span class="me-mess-download"><i class="icon-me-download"></i></span></a>'; ?>

@@ -10,14 +10,14 @@ if (!defined('ABSPATH')) {
 function marketengine_rc_dispute_button($transaction) {
 	$dispute_time_limit = $transaction->get_dispute_time_limit() ;
 	if ( $transaction->post_author == get_current_user_id() && 'me-pending' !== $transaction->post_status && $dispute_time_limit) {
-		me_get_template('resolution/order/dispute-button', array('transaction' => $transaction, 'dispute_time_limit' => $dispute_time_limit));
+		marketengine_get_template('resolution/order/dispute-button', array('transaction' => $transaction, 'dispute_time_limit' => $dispute_time_limit));
 	}
 
 	if('me-resolved' === $transaction->post_status) {
 		$case = new ME_Message_Query(array('post_type' => 'dispute', 'post_parent' => $transaction->id));
 		$case = array_pop($case->posts);
 		$case_id = $case->ID;
-		me_get_template('resolution/order/resolution-link', array('transaction' => $transaction , 'case' => $case_id));
+		marketengine_get_template('resolution/order/resolution-link', array('transaction' => $transaction , 'case' => $case_id));
 	}
 
 }
@@ -32,7 +32,7 @@ function marketengine_rc_center_link($transaction) {
 		$case = new ME_Message_Query(array('post_type' => 'dispute', 'post_parent' => $transaction->id));
 		$case = array_pop($case->posts);
 		$case_id = $case->ID;
-		me_get_template('resolution/order/resolution-link', array('transaction' => $transaction , 'case' => $case_id));
+		marketengine_get_template('resolution/order/resolution-link', array('transaction' => $transaction , 'case' => $case_id));
 	}
 }
 /**
@@ -52,7 +52,7 @@ function marketengine_rc_mobile_dispute_button($transaction) {
 	$dispute_time_limit = $transaction->get_dispute_time_limit() ;
 	if ( $transaction->post_author == get_current_user_id() && 'me-pending' !== $transaction->post_status && $dispute_time_limit) {
 		echo '<div class="me-visible-sm me-visible-xs">';
-		me_get_template('resolution/order/dispute-button', array('transaction' => $transaction, 'dispute_time_limit' => $dispute_time_limit));
+		marketengine_get_template('resolution/order/dispute-button', array('transaction' => $transaction, 'dispute_time_limit' => $dispute_time_limit));
 		echo '</div>';
 	}
 }
