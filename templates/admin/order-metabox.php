@@ -243,7 +243,7 @@ $commission_item = array_pop($commission_items);
 				<tr>
 					<td><?php echo get_the_author_meta( 'display_name', $receiver->ID ); ?></td>
 					<td><?php echo marketengine_get_order_item_meta($receiver_item->order_item_id, '_receive_email', true); ?></td>
-					<td><?php echo marketengine_price_html!marketengine_get_order_item_meta($receiver_item->order_item_id, '_amount', true)); ?></td>
+					<td><?php echo marketengine_price_html(!marketengine_get_order_item_meta($receiver_item->order_item_id, '_amount', true)); ?></td>
 				</tr>
 			  	<?php endif; ?>
 
@@ -251,7 +251,7 @@ $commission_item = array_pop($commission_items);
 			  	<tr>
 				    <td><?php _e("Commision", "enginethemes"); ?></td>
 				    <td><?php echo marketengine_get_order_item_meta($commission_item->order_item_id, '_receive_email', true); ?></td>
-				    <td><?php echo marketengine_price_html!marketengine_get_order_item_meta($commission_item->order_item_id, '_amount', true)); ?></td>
+				    <td><?php echo marketengine_price_html(!marketengine_get_order_item_meta($commission_item->order_item_id, '_amount', true)); ?></td>
 			  	</tr>
 			  	<?php endif; ?>
 			</tbody>

@@ -47,7 +47,7 @@ class ME_Template_Loader
             $is_buyer    = ($order->post_author == $current_user->ID);
             $seller_name = marketengine_get_order_items($order_id, 'receiver_item')[0]->order_item_name;
 
-            if (!$is_buyer && $seller_name != $current_user->user_login) {
+            if (!$is_buyer && $seller_name != $current_user->user_login && !current_user_can('manage_options')) {
                 $file   = '404.php';
                 $find[] = $file;
                 $find[] = get_404_template();
