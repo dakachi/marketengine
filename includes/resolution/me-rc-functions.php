@@ -36,6 +36,14 @@ function marketengine_resolution_center_url()
     return $url;
 }
 
+/**
+ * Returns the url of dispute link
+ *
+ * @param int $case_id The dispute case id
+ * @return string The case link
+ * @since     1.1.0
+ * @version 1.0.0
+ */
 function marketengine_rc_dispute_link($case_id) {
     global $wp_rewrite;
     $endpoint = trim(marketengine_option('ep_case'));
