@@ -136,10 +136,10 @@ class ME_Setup_Wizard
     	$contact_category_option = '';
     	$listing_category = get_terms( 'listing_category', array('parent' => 0, 'hide_empty' => false) );
     	foreach ($listing_category as $key => $category) {
-    		$purchase_selected = in_array($category->term_id, $purchase_available) ? 'selected="selected"' : '';
+    		$purchase_selected = in_array($category->term_id, (array)$purchase_available) ? 'selected="selected"' : '';
     		$purchase_category_option .= '<option '.$purchase_selected.' value="'.$category->term_id.'">'.$category->name.'</option>';
 
-    		$contact_selected = in_array($category->term_id, $contact_available ) ? 'selected="selected"' : '';
+    		$contact_selected = in_array($category->term_id, (array)$contact_available ) ? 'selected="selected"' : '';
     		$contact_category_option .= '<option '.$contact_selected.' value="'.$category->term_id.'">'.$category->name.'</option>';
     	}
 		return array('contact_option' => $contact_category_option , 'purchase_option' => $purchase_category_option);
