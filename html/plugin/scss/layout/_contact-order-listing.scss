@@ -248,6 +248,12 @@
 	}
 	.me-message-author {
 		overflow: hidden;
+		.me-message-fancybox {
+			display: block;
+			margin-top: 14px;
+			width: 150px;
+			height: 150px;
+		}
 	}
 }
 
