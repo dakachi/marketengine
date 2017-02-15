@@ -4,7 +4,7 @@ Donate link: https://www.enginethemes.com/marketengine/
 Tags: enginethemes, multi vendor marketplace, ecommerce marketplace, multi seller, commission, paypal gateway, listing, niche
 Requires at least: 4.7
 Tested up to: 4.7
-Stable tag: 1.0.1
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 A free WordPress plugin that allows you to build a multi vendor marketplace platform for any niche. Let anyone open a store to sell their products/services on your site in minutes, then earn commissions from each transaction happened in your ecommerce marketplace. 
