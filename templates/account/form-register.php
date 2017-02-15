@@ -20,7 +20,7 @@ if (get_option('users_can_register')):
 
 		<h3><?php _e("Become our Member", "enginethemes"); ?></h3>
 
-		<?php me_print_notices(); ?>
+		<?php marketengine_print_notices(); ?>
 		<?php do_action('marketengine_user_register_form_start');?>
 
 		<div class="marketengine-group-field">

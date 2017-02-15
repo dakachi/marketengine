@@ -70,8 +70,8 @@ class ME_Handle_CF
             return;
         }
 
-        $fields = me_cf_get_fields($category[0]);
-        me_get_template('custom-fields/edit-field-form', array('fields' => $fields, 'listing' => $listing));
+        $fields = marketengine_cf_get_fields($category[0]);
+        marketengine_get_template('custom-fields/edit-field-form', array('fields' => $fields, 'listing' => $listing));
     }
 
     /**
@@ -80,7 +80,7 @@ class ME_Handle_CF
      */
     public function post_form_fields()
     {
-        me_get_template('custom-fields/post-field-form');
+        marketengine_get_template('custom-fields/post-field-form');
     }
 
     /**
@@ -94,14 +94,14 @@ class ME_Handle_CF
         }
 
         $cat    = absint($_GET['cat']);
-        $fields = me_cf_get_fields($cat);
+        $fields = marketengine_cf_get_fields($cat);
         if (empty($fields)) {
             exit;
         }
 
         foreach ($fields as $field):
             $value = '';
-            me_get_template('custom-fields/listing-form/field-' . $field['field_type'], array('field' => $field, 'value' => $value));
+            marketengine_get_template('custom-fields/listing-form/field-' . $field['field_type'], array('field' => $field, 'value' => $value));
         endforeach;
 
         exit;
@@ -125,7 +125,7 @@ class ME_Handle_CF
             return $errors;
         }
 
-        $fields = me_cf_get_fields($cat);
+        $fields = marketengine_cf_get_fields($cat);
 
         $rules             = array();
         $custom_attributes = array();
@@ -144,9 +144,9 @@ class ME_Handle_CF
             $custom_attributes[$field_name] = $field['field_title'];
         }
 
-        $is_valid = me_validate($listing_data, $rules, $custom_attributes);
+        $is_valid = marketengine_validate($listing_data, $rules, $custom_attributes);
         if (!$is_valid) {
-            $errors = array_merge($errors, me_get_invalid_message($listing_data, $rules, $custom_attributes));
+            $errors = array_merge($errors, marketengine_get_invalid_message($listing_data, $rules, $custom_attributes));
         }
 
         return $errors;
@@ -168,7 +168,7 @@ class ME_Handle_CF
             return false;
         }
 
-        $fields = me_cf_get_fields($category[0]);
+        $fields = marketengine_cf_get_fields($category[0]);
         if (empty($fields)) {
             return false;
         }
@@ -255,14 +255,14 @@ class ME_Handle_CF
             return;
         }
 
-        $fields = me_cf_get_fields($category[0]);
+        $fields = marketengine_cf_get_fields($category[0]);
 
         if (empty($fields)) {
             return;
         }
 
         ob_start();
-        me_get_template('custom-fields/field-details', array('fields' => $fields));
+        marketengine_get_template('custom-fields/field-details', array('fields' => $fields));
         $content = ob_get_clean();
 
         if ($content != '') {

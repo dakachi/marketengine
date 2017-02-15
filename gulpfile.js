@@ -23,12 +23,15 @@ var project = {
 		settings: {
 			name: "MarketEngine",
 			slug: 'marketengine',
-			src: 'E:/xampp/htdocs/sites/wp-content/plugins/zeroengine/',
+			src: 'D:/xampp/htdocs/wp/wp-content/plugins/marketengine',
 			version: '2.0',
 			struct: [
 				'**',
 				'!.git/**',
 				'!tests/**',
+				'!wordpress-developer/**',
+				'!node_modules/**',
+				'!vendor/**',
 				'!.gitignore',
 				'!bootstrap.php',
 				'!composer.json',
@@ -43,7 +46,7 @@ var project = {
 		settings: {
 			name: "ZeroEngine",
 			slug: 'zeroengine',
-			src: 'C:/xampp/htdocs/sites/wp-content/themes/zeroengine/',
+			src: 'D:/xampp/htdocs/wp/wp-content/themes/zeroengine',
 			version: '1.0',
 			struct: [
 				'**',
@@ -53,7 +56,7 @@ var project = {
 		},
 	},
 }
-const dist = 'backups/';
+const dist = '../../backups/';
 
 /* Declare current project */
 
@@ -86,7 +89,7 @@ var get_task_dist = function(folder) {
 }
 
 gulp.task('clean:dist', () => {
-	var task_dist = get_task_dist();
+	var task_dist = get_task_dist('');
 
 	return del.sync(task_dist);
 })
@@ -114,7 +117,6 @@ var gulp_path = 'C:/xampp/htdocs/gulp/';
 var shell = require('gulp-shell');
 gulp.task('phpdoc', shell.task([gulp_path + 'vendor/bin/phpdoc -d ' + curr_project.settings.src + ' -t ' + gulp_path + 'docs/phpdoc -i ' + curr_project.settings.src + 'vendor/,node_modules/,tests/,bootstrap.php --template="responsive-twig"']));
 
-var sys = require('sys');
 var gutil = require('gulp-util');
 var exec = require('gulp-exec');
 
@@ -132,7 +134,7 @@ var me_vendor_dest              = 'assets/js';
 
 var muploader                   = me_vendor_src + '/muploader.js/';
 var jquery_magnific_popup       = me_vendor_src + '/jquery.magnific-popup.min.js';
-var jquery_flexslider           = me_vendor_src + '/jquery.flexslider-min.js';
+var jquery_owl_carousel         = me_vendor_src + '/owl.carousel.min.js';
 var jquery_raty                 = me_vendor_src + '/jquery.raty.js';
 
 var me_user_profile             = me_vendor_src + '/user-profile.js';
@@ -144,12 +146,13 @@ var me_message                  = me_vendor_src + '/message.js';
 var me_index                    = me_vendor_src + '/index.js';
 var me_my_listings              = me_vendor_src + '/my-listings.js';
 var me_listing_review           = me_vendor_src + '/listing-review.js';
+var dispute           = me_vendor_src + '/dispute.js';
 
 gulp.task('script-vendor', function() {
     gulp.src([
         muploader,
         jquery_magnific_popup,
-        jquery_flexslider,
+        jquery_owl_carousel,
         jquery_raty,
         me_user_profile,
         me_tag_box,
@@ -160,7 +163,8 @@ gulp.task('script-vendor', function() {
         me_index,
         me_my_listings,
         me_my_listings,
-        me_listing_review
+        me_listing_review,
+        dispute 
     ])
     .pipe(uglify())
     .pipe(strip_comments())

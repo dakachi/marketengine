@@ -1,9 +1,6 @@
 /* global me_globals.ajaxurl, wpAjax*/
-/**
- * Created by agungbayu
- */
 (function($) {
-    $.fn.messageUploader = function(options) {
+    $.fn.MakertEngineMessageUploader = function(options) {
         var setting = {
             multi: false,
             runtimes: 'html5,flash,html4',
@@ -195,7 +192,7 @@
                 });
             });
             // setup uploader
-            $elem.messageUploader({
+            $elem.MakertEngineMessageUploader({
                 multi: false,
                 removable: false,
                 name: 'message_file',

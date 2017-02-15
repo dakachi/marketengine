@@ -1,5 +1,5 @@
 <?php
-$listing_type_categories = me_get_listing_type_categories();
+$listing_type_categories = marketengine_get_listing_type_categories();
 $selected_cat = empty($_POST['parent_cat']) ? $selected_cat : absint( $_POST['parent_cat'] );
 $listing_type_categories['all'][] = $selected_cat;
 

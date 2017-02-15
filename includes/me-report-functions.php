@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
  * @param array $args
  * @return array $result
  */
-function me_order_report_data( $args ) {
+function marketengine_order_report_data( $args ) {
 	global $wpdb;
 	$defaults = array(
         'from_date' => '2016-1-1',
@@ -68,7 +68,7 @@ function me_order_report_data( $args ) {
 	if( empty($order_status) || $order_status == 'any' ) {
 		$query .= " AND (";
 		$order_status = array( 'me-complete', 'me-closed', 'publish' );
-		$order_status = apply_filters( 'me_export-order_status', $order_status );
+		$order_status = apply_filters( 'marketengine_export-order_status', $order_status );
 		foreach($order_status as $key => $status) {
 			if($key != 0) {
 				$query .= " OR ";
@@ -107,7 +107,7 @@ function me_order_report_data( $args ) {
  * @param array $args
  * @return array $result
  */
-function me_transaction_report_data( $args ) {
+function marketengine_transaction_report_data( $args ) {
 	global $wpdb;
 	$defaults = array(
         'from_date' => '1970-1-1',
@@ -148,7 +148,7 @@ function me_transaction_report_data( $args ) {
 	if( empty($order_status) || $order_status == 'any' ) {
 		$query .= " AND (";
 		$order_status = array( 'me-complete', 'me-pending', 'me-closed', 'publish' );
-		$order_status = apply_filters( 'me_export-order_status', $order_status );
+		$order_status = apply_filters( 'marketengine_export-order_status', $order_status );
 		foreach($order_status as $key => $status) {
 			if($key != 0) {
 				$query .= " OR ";

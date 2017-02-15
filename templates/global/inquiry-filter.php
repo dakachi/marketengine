@@ -35,7 +35,7 @@ if ('' === get_option('permalink_structure')) {
 					<?php //TODO style lai cho nay ?>
 				</div>
 				<div class="me-inquiries-clear-filter">
-					<a href="<?php echo me_get_auth_url($page).'?tab=inquiry'; ?>"><?php _e('Clear Filter'); ?></a>
+					<a href="<?php echo marketengine_get_auth_url($page).'?tab=inquiry'; ?>"><?php _e('Clear Filter'); ?></a>
 					<input class="me-inquiries-filter-btn" type="submit" value="<?php _e('FILTER', 'enginethemes'); ?>">
 				</div>
 			</div>

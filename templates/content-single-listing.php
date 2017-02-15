@@ -19,8 +19,8 @@ if (!defined('ABSPATH')) {
 		<div itemscope itemtype="http://schema.org/Product" class="marketengine-listing-detail">
 			<div class="me-row">
 				<div class="me-col-md-12">
-					<?php me_get_template('single-listing/title');?>
-					<?php me_get_template('single-listing/statistic', array('listing' => $listing));?>
+					<?php marketengine_get_template('single-listing/title');?>
+					<?php marketengine_get_template('single-listing/statistic', array('listing' => $listing));?>
 				</div>
 			</div>
 			<div class="me-row">
@@ -30,27 +30,28 @@ if (!defined('ABSPATH')) {
 
 					<div class="marketengine-content-detail">
 
-						<?php me_get_template('single-listing/gallery', array('listing' => $listing));?>
+						<?php marketengine_get_template('single-listing/gallery', array('listing' => $listing));?>
 						
-						<?php me_get_template('single-listing/notices'); ?>
+						<?php marketengine_get_template('single-listing/notices'); ?>
 							
-						<?php me_get_template('single-listing/control', array('listing' => $listing) ); ?>
+						<?php marketengine_get_template('single-listing/control', array('listing' => $listing) ); ?>
 							
-						<?php me_get_template('single-listing/category', array('listing' => $listing));?>
+						<?php marketengine_get_template('single-listing/category', array('listing' => $listing));?>
 						
-						<?php me_get_template('single-listing/description', array('listing' => $listing)); ?>
+						<?php marketengine_get_template('single-listing/description', array('listing' => $listing)); ?>
 
-						<?php me_get_template('single-listing/rating', array('listing' => $listing));?>
-						
-						<?php if( $listing->post_author != get_current_user_id() ) {
-
-							me_get_template('user-info', array('author_id' => $listing->post_author));
-
-						} ?>	
-
+						<?php marketengine_get_template('single-listing/rating', array('listing' => $listing));?>
 
 					</div>
+					
+					<div class="me-visible-xs">
+						<?php if( $listing->post_author != get_current_user_id() ) {
 
+							marketengine_get_template('user-info', array('author_id' => $listing->post_author));
+
+						} ?>
+					</div>
+					
 					<?php do_action('marketengine_after_single_listing_information'); ?>
 
 				</div>
@@ -61,14 +62,14 @@ if (!defined('ABSPATH')) {
 
 					<div class="marketengine-sidebar-detail">
 
-						<?php me_get_template('single-listing/notices'); ?>
+						<?php marketengine_get_template('single-listing/notices'); ?>
 
-						<?php me_get_template('single-listing/control', array('listing' => $listing) ); ?>
+						<?php marketengine_get_template('single-listing/control', array('listing' => $listing) ); ?>
 
-						<?php me_get_template('single-listing/category');?>
+						<?php marketengine_get_template('single-listing/category');?>
 						<?php
 						if( $listing->post_author != get_current_user_id() ) :
-							me_get_template('user-info', array('author_id' => $listing->post_author));
+							marketengine_get_template('user-info', array('author_id' => $listing->post_author));
 						endif;
 						?>
 

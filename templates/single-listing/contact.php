@@ -26,7 +26,7 @@ $listing_status = $listing->post_status;
 	<?php do_action('marketengine_single_listing_send_inquiry_form_start'); ?>
 
 	<div class="me-contact">
-		<input <?php disabled( !me_is_activated_user() ); ?> type="submit" class="me-buy-now-btn <?php echo !me_is_activated_user() ? 'me-disable-btn' : ''; ?>" value="<?php echo me_option('contact-action') ?  me_option('contact-action') : __("CONTACT NOW", "enginethemes") ; ?>">
+		<input <?php disabled( !marketengine_is_activated_user() ); ?> type="submit" class="me-buy-now-btn <?php echo !marketengine_is_activated_user() ? 'me-disable-btn' : ''; ?>" value="<?php echo marketengine_option('contact-action') ?  marketengine_option('contact-action') : __("CONTACT NOW", "enginethemes") ; ?>">
 	</div>
 
 	<?php wp_nonce_field('me-send-inquiry'); ?>
@@ -38,7 +38,7 @@ $listing_status = $listing->post_status;
 <?php else : ?>
 
 	<div class="me-contact">
-		<p class="me-contact-archive"><?php echo me_option('contact-title') ?  me_option('contact-title') : __("OFFERING", "enginethemes") ; ?></p>
+		<p class="me-contact-archive"><?php echo marketengine_option('contact-title') ?  marketengine_option('contact-title') : __("OFFERING", "enginethemes") ; ?></p>
 	</div>
 
 <?php endif; ?>

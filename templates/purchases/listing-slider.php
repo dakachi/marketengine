@@ -1,29 +1,20 @@
 <?php
+/**
+ * The template for displaying order related listing slider
+ *
+ * This template can be overridden by copying it to yourtheme/marketengine/purchases/listing-slider.php.
+ *
+ * @package     MarketEngine/Templates
+ * @since 		1.0.0
+ * @version     1.0.0
+ */
 
-$args = array(
-	'posts_per_page'	=> 12,
-	'post_type' 		=> 'listing',
-	'exclude'			=> $curr_listing,
-);
-
-$listing_cat = wp_get_post_terms($curr_listing, 'listing_category');
-
-if(!empty($listing_cat)) {
-	$args['tax_query'] = array();
-	foreach ($listing_cat as $key => $cat) {
-		if(!$cat->parent) {
-			$args['tax_query'][] = array(
-					'taxonomy' 	=> 'listing_category',
-					'field' 	=> 'slug',
-					'terms' 	=> $cat,
-				);
-		}
-	}
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
 }
 
-$args = apply_filters( 'me_filte_related_listing', $args );
-
-$listings = get_posts( $args );
+$args = apply_filters( 'marketengine_related_listing', $args );
 
 if(!empty($listings)) :
 ?>
@@ -31,14 +22,14 @@ if(!empty($listings)) :
 <div class="marketengine-related-wrap">
 	<?php ?>
 	<h2><?php _e('You may like these listings', 'enginethemes'); ?></h2>
-	<div class="me-related-slider flexslider">
-		<ul class="me-related slides">
+	<div id="me-related-slider" class="me-related-slider">
+
 		<?php
 			foreach( $listings as $listing ) :
-				$listing = me_get_listing($listing);
+				$listing = marketengine_get_listing($listing);
 				$listing_type = $listing->get_listing_type();
 		?>
-			<li class="me-item-post">
+			<div class="me-item-post">
 
 				<div class="me-item-wrap">
 
@@ -52,9 +43,9 @@ if(!empty($listings)) :
 
 						<?php
 							if('purchasion' == $listing_type) :
-								me_get_template('loop/purchasion', array('listing' => $listing));
+								marketengine_get_template('loop/purchasion', array('listing' => $listing));
 							else :
-								me_get_template('loop/contact', array('listing' => $listing));
+								marketengine_get_template('loop/contact', array('listing' => $listing));
 							endif;
 						 ?>
 
@@ -68,13 +59,12 @@ if(!empty($listings)) :
 
 				</div>
 
-			</li>
+			</div>
 
 		<?php endforeach; ?>
-		</ul>
+
 	</div>
 </div>
 
 <?php endif; ?>
 
-<?php wp_reset_postdata(); ?>

@@ -134,27 +134,32 @@ _.templateSettings = {
         syncOption: function(e) {
             var $target = $(e.currentTarget),
                 view = this;
+
+            $target.parent().find('.me-warning-icon').remove();
+            if ($target.hasClass('no-zero')) {
+                if ($target.val() === '') {
+                    $target.parent().append('<span class="me-warning-icon"></span>');
+                    return;
+                }
+                if ($target.val() == 0) {
+                    $target.parent().append('<span class="me-warning-icon"></span>');
+                    return ;
+                }
+            }
+
             view.option.set('name', $target.attr('name'));
             view.option.set('value', $target.val());
             view.option.set('type', $target.attr('type'));
             view.option.save('', '', {
                 success: function(result, status, jqXHR) {
-                    if ($target.hasClass('no-zero')) {
-                        if ($target.val() === '') {
-                            return;
-                        }
-                        if ($target.val() == 0) {
-                            status.success = false;
-                        }
-                    }
-                    $target.parent().find('.me-warning-icon').remove();
+                    
                     if (status.success) {
                         $target.parent().append('<span class="me-success-icon"></span>');
                         setTimeout(function() {
                             $target.parent().find('.me-success-icon').remove();
                         }, 1000);
                     } else {
-                        $target.parent().append('<span class="me-warning-icon"></span>');
+                        
                     }
                 },
             });

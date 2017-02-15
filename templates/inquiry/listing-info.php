@@ -21,7 +21,8 @@ $inquiry_count = $listing->get_inquiry_count();
 
 	<?php $author = $listing->get_author() ==  get_current_user_id(); ?>
 
-	<?php me_get_template('purchases/order-listing-image', array('listing_obj' => $listing)); ?>
+	<?php marketengine_get_template('purchases/order-listing-image', array('listing' => $listing)); ?>
+
 	<div class="me-listing-info <?php echo (!$listing->is_available() ) ? 'me-listing-info-archive' : ''; ?>">
 		<?php if($author || $listing->is_available()) : ?>
 			<a class="" href="<?php echo $listing->get_permalink(); ?>">
@@ -40,11 +41,11 @@ $inquiry_count = $listing->get_inquiry_count();
 		</div>
 
 		<?php if( $listing->is_available()) : ?>
-			<?php echo esc_html( $listing->get_short_description() ); ?>
+			<?php echo wp_kses( $listing->get_short_description(), '<p><a><ul><ol><li><h6><span><b><em><strong><br>' ); ?>
 		<?php endif; ?>
 
 	</div>
 
 <?php endif; ?>
-	<?php me_get_template('purchases/archived-listing-notice', array('listing_obj' => $listing) ); ?>
+	<?php marketengine_get_template('purchases/listing-archived', array('listing' => $listing) ); ?>
 </div>

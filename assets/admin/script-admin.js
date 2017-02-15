@@ -1,15 +1,5 @@
 (function($){
 $(document).ready(function() {
-	/*$('.me-nav > li').on('click', function(ev) {
-		var target = ev.currentTarget;
-		$(target).parent('.me-nav').children('li').removeClass('active');
-		$(target).addClass('active');
-		var pos = $(target).index();
-		var parent = $(target).parent('.me-nav');
-		$(parent).next().children('div').hide()
-		$(parent).next().children('div').eq(pos).show();
-	});
-	*/
 	$('.me-scroll-language').mCustomScrollbar({
 		setHeight:340
 	});
@@ -57,7 +47,7 @@ $(document).ready(function() {
     	var field_type = $(target).val();
 
     	var data = {
-    		action: 'me_cf_load_input_type',
+    		action: 'marketengine_cf_load_input_type',
     		field_type: field_type,
     	};
 
@@ -164,6 +154,15 @@ $(document).ready(function() {
 	    if (cfm == false) {
 	    	e.preventDefault();
 	    }
+    });
+
+    //=== Disputed case
+    //
+    $('.me-action-case').on('click', function(event) {
+    	var target = event.currentTarget;
+    	$(target).toggleClass('active');
+    	var case_id = $(target).data('case-id');
+    	$(document.getElementById(case_id)).toggleClass('active');
     });
 
 });

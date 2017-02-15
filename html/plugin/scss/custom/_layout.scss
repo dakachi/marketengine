@@ -119,6 +119,24 @@
 	}
 }
 
+//=== Resolution center
+//
+.me-disputed-close a {
+	color: $color_skin;
+	border-color: $color_skin;
+	&:hover {
+		color: $color_skin;
+	}
+}
+
+.me-disputed-escalate a {
+	color: $color_link;
+	border-color: $color_link;
+	&:hover {
+		color: $color_link;
+	}
+}
+
 @media (max-width: $screen_sm_max) { //991px
 	.mega-menu {
 		.mega-list {

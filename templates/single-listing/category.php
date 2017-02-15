@@ -15,7 +15,7 @@ $terms = wp_get_object_terms( $post->ID, 'listing_category', array('orderby' => 
 		<a href="<?php echo get_term_link( $term, 'listing_category' ); ?>"><?php echo $term->name; ?></a>
 	<?php endforeach; ?>
 
-	<?php me_get_template('single-listing/tags');?>
+	<?php marketengine_get_template('single-listing/tags');?>
 </div>
 
 <?php do_action('marketengine_after_single_listing_categories'); ?>

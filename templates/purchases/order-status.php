@@ -3,8 +3,8 @@
 		<h5><?php echo __('Order status:', 'enginethemes'); ?></h5>
 		<div class="me-orderstatus">
 			<?php
-				me_print_order_status( $order_status );
-				$status_info = me_get_order_status_info( $order_status, 'text' );
+				marketengine_print_order_status( $order_status );
+				$status_info = marketengine_get_order_status_info( $order_status, 'text' );
 			?>
 
 			<?php if($status_info) : ?>
@@ -12,17 +12,12 @@
 			<?php endif; ?>
 		</div>
 		<?php
-			$process_index = me_get_order_status_info( $order_status );
+			$process_index = marketengine_get_order_status_info( $order_status );
 		?>
 		<div class="me-line-process-order">
 			<div class="me-line-step-order <?php echo $process_index >= 1 ? 'active' : '' ?>">
 				<span><?php _e('Check payment', 'enginethemes'); ?></span>
 			</div>
-			<?php /*<div class="me-line-step-order <?php echo $process_index >= 2 ? 'active' : '' ?>">
-				<span><?php _e('Active order', 'enginethemes'); ?></span>
-				</div>
-			*/ ?>
-
 			<div class="me-line-step-order <?php echo $process_index >= 2 ? 'active' : '' ?>">
 				<span><?php _e('Order completed', 'enginethemes'); ?></span>
 			</div>

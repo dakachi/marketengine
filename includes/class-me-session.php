@@ -91,7 +91,7 @@ class ME_Session {
 
         add_action('shutdown', array($this, 'save_session_data'));
         // schedule hook to garbage session
-        add_action('me_session_garbage_collection', array($this, 'destroy_session'));
+        add_action('marketengine_session_garbage_collection', array($this, 'destroy_session'));
         add_action('wp', array($this, 'session_register_garbage_collection'));
     }
 
@@ -299,8 +299,8 @@ class ME_Session {
 	 * Register the garbage collector as a twice daily event.
 	 */
 	public function session_register_garbage_collection() {
-		if (!wp_next_scheduled('me_session_garbage_collection')) {
-			wp_schedule_event(time(), 'twicedaily', 'me_session_garbage_collection');
+		if (!wp_next_scheduled('marketengine_session_garbage_collection')) {
+			wp_schedule_event(time(), 'twicedaily', 'marketengine_session_garbage_collection');
 		}
 	}
 

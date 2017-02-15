@@ -1,0 +1,42 @@
+//=== Style case disputed
+//
+.me-action-case {
+	display: inline-block;
+	padding: 4px 8px;
+	border: 1px solid #ccc;
+	border-radius: 2px;
+	box-shadow: 0 1px 0 0 #d8d6d6;
+	cursor: pointer;
+	&.active {
+		> i {
+			&:first-child {
+				display: none;
+			}
+			&:last-child {
+				display: inline-block;
+			}
+		}
+	}
+	> i {
+		color: #555;
+		&:last-child {
+			display: none;
+		}
+	}
+}
+.me-case-detail {
+	display: none;
+	&.active {
+		display: table-row;
+	}
+}
+.me-table-case-detail {
+	td {
+		padding-left: 0;
+		padding-right: 40px;
+		&.me-td-case-detail {
+			font-weight: 600;
+			color: #333;
+		}
+	}
+}

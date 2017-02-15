@@ -3,11 +3,11 @@ if(isset($field_obj)) {
 	$_POST = $field_obj;
 }
 
-$constraint = me_field_attribute_array($_POST);
+$constraint = marketengine_field_attribute_array($_POST);
 
 ?>
 <div class="me-custom-field">
-	<?php me_print_notices(); ?>
+	<?php marketengine_print_notices(); ?>
 	<h2><?php _e('Add New Custom Field', 'enginethemes'); ?></h2>
 	<form method="post" id="me-custom-field-form">
 
@@ -36,7 +36,7 @@ $constraint = me_field_attribute_array($_POST);
 				<select <?php disabled( isset($_POST['field_name']) && !empty($_POST['field_name']) ); ?> required id="me-choose-field-type" class="select-field" name="field_type">
 					<option value=""><?php _e('Choose field type', 'enginethemes'); ?></option>
 					<?php
-						$field_types = me_list_custom_field_type();
+						$field_types = marketengine_list_custom_field_type();
 						$field_type = isset($_POST['field_type']) ? $_POST['field_type'] : '';
 						if(!empty($field_types)) :
 					?>
@@ -55,7 +55,7 @@ $constraint = me_field_attribute_array($_POST);
 			<div class="me-field-type-options">
 			<?php
 				if (isset($_POST['field_type'])) {
-					do_action('me_load_cf_input');
+					do_action('marketengine_load_cf_input');
 				}
 			?>
 			</div>
@@ -85,7 +85,7 @@ $constraint = me_field_attribute_array($_POST);
 				<select required class="select-field" name="field_for_categories[]" id="field_for_categories" multiple="true">
 
 				<?php
-					$categories = me_get_listing_categories();
+					$categories = marketengine_get_listing_categories();
 					if(!isset($_POST['field_id'])) {
 						if(!isset($_REQUEST['category-id'])) {
 							$selected = isset($_POST['field_id']) ? $selected : array_keys($categories);

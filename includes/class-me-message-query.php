@@ -965,7 +965,12 @@ class ME_Message_Query {
 			$where .= " AND {$this->table}.post_author NOT IN ($author__not_in) ";
 		} elseif ( ! empty( $q['author__in'] ) ) {
 			$author__in = implode( ',', array_map( 'absint', array_unique( (array) $q['author__in'] ) ) );
-			$where .= " AND {$this->table}.sender IN ($author__in) ";
+			if(!empty($q['receiver']) && $q['receiver'] != '0') {
+				$where .= " AND ({$this->table}.sender IN ($author__in) ";
+			} else {
+				$where .= " AND {$this->table}.sender IN ($author__in) ";
+			}
+
 		}
 
 		// Author stuff for nice URLs
@@ -1000,7 +1005,11 @@ class ME_Message_Query {
 				$where .= " AND {$this->table}.post_author NOT IN ($author__not_in) ";
 			} elseif ( ! empty( $q['author__in'] ) ) {
 				$author__in = implode( ',', array_map( 'absint', array_unique( (array) $q['author__in'] ) ) );
-				$where .= " AND {$this->table}.receiver IN ($author__in) ";
+				if(!empty($q['sender']) && $q['sender'] != '0') {
+					$where .= " OR {$this->table}.receiver IN ($author__in) ) ";
+				} else {
+					$where .= " AND {$this->table}.receiver IN ($author__in) ";
+				}
 			}
 		}
 
@@ -1167,14 +1176,16 @@ class ME_Message_Query {
 			$p_status = array();
 			$e_status = array();
 
-			foreach ( get_post_stati() as $status ) {
-				if ( in_array( $status, $q_status ) ) {
-					if ( 'private' == $status )
-						$p_status[] = "$this->table.post_status = '$status'";
-					else
-						$r_status[] = "$this->table.post_status = '$status'";
-				}
+			// foreach ( get_post_stati() as $status ) {
+			// 	if ( in_array( $status, $q_status ) ) {
+			foreach($q_status as $status) {
+				if ( 'private' == $status )
+					$p_status[] = "$this->table.post_status = '$status'";
+				else
+					$r_status[] = "$this->table.post_status = '$status'";
 			}
+			// 	}
+			// }
 
 			if ( empty($q['perm'] ) || 'readable' != $q['perm'] ) {
 				$r_status = array_merge($r_status, $p_status);
@@ -1544,7 +1555,7 @@ class ME_Message_Query {
 
 		// Convert to WP_Post objects.
 		if ( $this->posts ) {
-			$this->posts = array_map( 'me_get_message', $this->posts );
+			$this->posts = array_map( 'marketengine_get_message', $this->posts );
 		}
 
 		if ( ! $q['suppress_filters'] ) {
@@ -1577,7 +1588,7 @@ class ME_Message_Query {
 		if ( $this->posts ) {
 			$this->post_count = count( $this->posts );
 
-			$this->posts = array_map( 'me_get_message', $this->posts );
+			$this->posts = array_map( 'marketengine_get_message', $this->posts );
 
 			// if ( $q['cache_results'] )
 			// 	update_post_caches($this->posts, $post_type, $q['update_post_term_cache'], $q['update_post_meta_cache']);
@@ -1811,7 +1822,7 @@ class ME_Message_Query {
 		global $id, $authordata, $currentday, $currentmonth, $page, $pages, $multipage, $more, $numpages;
 
 		if ( ! ( $post instanceof ME_Message ) ) {
-			$post = me_get_message( $post );
+			$post = marketengine_get_message( $post );
 		}
 
 		if ( ! $post ) {
@@ -1885,7 +1896,7 @@ class ME_Message_Query {
 		 * @param WP_Post  &$post The Post object (passed by reference).
 		 * @param WP_Query &$this The current Query object (passed by reference).
 		 */
-		do_action_ref_array( 'me_the_message', array( &$post, &$this ) );
+		do_action_ref_array( 'marketengine_the_message', array( &$post, &$this ) );
 
 		return true;
 	}
