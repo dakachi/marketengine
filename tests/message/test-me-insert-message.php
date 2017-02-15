@@ -25,7 +25,7 @@ class Tests_ME_Insert_Message extends WP_UnitTestCase {
     }
 
     public function test_insert_message_success() {
-        $message_id = me_insert_message($this->message_data, true);
+        $message_id = marketengine_insert_message($this->message_data, true);
         $this->assertInternalType("int", $message_id);
     }
 
@@ -36,10 +36,10 @@ class Tests_ME_Insert_Message extends WP_UnitTestCase {
         $message_data = $this->message_data;
         $message_data['sender'] = '';
 
-        $message_id = me_insert_message($message_data, true);
+        $message_id = marketengine_insert_message($message_data, true);
         $this->assertInternalType("int", $message_id);
 
-        $message = me_get_message($message_id);
+        $message = marketengine_get_message($message_id);
         $this->assertEquals($this->user_1, $message->sender);
     }
 
@@ -49,7 +49,7 @@ class Tests_ME_Insert_Message extends WP_UnitTestCase {
     public function test_insert_message_with_empty_receiver() {
         $message_data = $this->message_data;
         $message_data['receiver'] = '';
-        $message_id = me_insert_message($message_data, true);
+        $message_id = marketengine_insert_message($message_data, true);
         $this->assertEquals(new WP_Error('empty_receiver', __('Receiver is empty.')), $message_id);
     }
 
@@ -59,8 +59,8 @@ class Tests_ME_Insert_Message extends WP_UnitTestCase {
     public function test_insert_message_with_empty_content() {
         $message_data = $this->message_data;
         $message_data['post_content'] = '';
-        $message_id = me_insert_message($message_data, true);
-        $this->assertEquals(new WP_Error('empty_content', __('Content, title, and excerpt are empty.')), $message_id);
+        $message_id = marketengine_insert_message($message_data, true);
+        $this->assertEquals(new WP_Error('empty_content', __('Content are empty.')), $message_id);
     }
 
     /**
@@ -69,7 +69,7 @@ class Tests_ME_Insert_Message extends WP_UnitTestCase {
     public function test_me_insert_message_to_me() {
         $message_data = $this->message_data;
         $message_data['receiver'] = $message_data['sender'];
-        $message_id = me_insert_message($message_data, true);
+        $message_id = marketengine_insert_message($message_data, true);
         $this->assertEquals(new WP_Error('send_to_yourself', __('You can not send message to your self.')), $message_id);
     }
 

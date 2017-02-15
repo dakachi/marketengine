@@ -16,8 +16,8 @@ if( !isset($_POST['referer']) ) {
 	$referer = esc_url( $_POST['referer'] );
 }
 
-if(me_option('user-email-confirmation')) {
-	$can_post_listing = (current_user_can( 'publish_posts' ) && me_is_activated_user() ) || current_user_can('manage_options');
+if(marketengine_option('user-email-confirmation')) {
+	$can_post_listing = (current_user_can( 'publish_posts' ) && marketengine_is_activated_user() ) || current_user_can('manage_options');
 } else {
 	$can_post_listing = current_user_can( 'publish_posts' );
 }
@@ -32,21 +32,21 @@ if(me_option('user-email-confirmation')) {
 	<div class="marketengine-post-listing-wrap">
 		<form  id="post-listing-form" class="post-listing-form" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 			<h3><?php _e('Post a Listing', 'enginethemes'); ?></h3>
-			<?php me_print_notices(); ?>
+			<?php marketengine_print_notices(); ?>
 
 			<?php do_action('marketengine_post_listing_form_start'); ?>
 
-			<?php me_get_template('post-listing/category', array('selected_cat' => '', 'selected_sub_cat' => '') );  ?>
+			<?php marketengine_get_template('post-listing/category', array('selected_cat' => '', 'selected_sub_cat' => '') );  ?>
 
-			<?php me_get_template('post-listing/type', array('selected_listing_type' => 'purchasion', 'contact_email' => '', 'price' => '', 'unit' => '')); ?>
+			<?php marketengine_get_template('post-listing/type', array('selected_listing_type' => 'purchasion', 'contact_email' => '', 'price' => '', 'unit' => '')); ?>
 
-			<?php me_get_template('post-listing/information', array('listing_content' => '',  'listing_title' => '')); ?>
+			<?php marketengine_get_template('post-listing/information', array('listing_content' => '',  'listing_title' => '')); ?>
 
 			<?php do_action('marketengine_post_listing_information_form_fields'); ?>
 
-			<?php me_get_template('post-listing/gallery',  array('listing_gallery' => '', 'listing_image' => '')); ?>
+			<?php marketengine_get_template('post-listing/gallery',  array('listing_gallery' => '', 'listing_image' => '')); ?>
 
-			<?php me_get_template('post-listing/tags', array('default' => '')); ?>
+			<?php marketengine_get_template('post-listing/tags', array('default' => '')); ?>
 
 			<?php do_action('marketengine_post_listing_form_fields'); ?>
 
@@ -71,5 +71,5 @@ if(me_option('user-email-confirmation')) {
 <?php do_action('marketengine_after_post_listing_form'); ?>
 
 <?php else:
-	me_get_template('post-listing/post-listing-none');
+	marketengine_get_template('post-listing/post-listing-none');
 endif; ?>

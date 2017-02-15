@@ -10,7 +10,7 @@ class Tests_ME_Validator extends WP_UnitTestCase {
             'agree_with_tos' => 'required'
         );
 
-        $invalid_data = me_get_invalid_message($data, $rules);
+        $invalid_data = marketengine_get_invalid_message($data, $rules);
 		$this->assertEquals(array('user_login' => "The user login field is required.") , $invalid_data );
 	}
 	// test data is email
@@ -23,7 +23,7 @@ class Tests_ME_Validator extends WP_UnitTestCase {
             'agree_with_tos' => 'required'
         );
 
-        $invalid_data = me_get_invalid_message($data, $rules);
+        $invalid_data = marketengine_get_invalid_message($data, $rules);
 		$this->assertEquals(array('user_email' => "The user email must be a valid email address.") , $invalid_data );
 	}
 
@@ -37,7 +37,7 @@ class Tests_ME_Validator extends WP_UnitTestCase {
             'user_email' => 'required|email'
         );
 
-        $invalid_data = me_get_invalid_message($data, $rules);
+        $invalid_data = marketengine_get_invalid_message($data, $rules);
 		$this->assertEquals(array('phone' => "The phone must be a number.") , $invalid_data );
 	}
 
@@ -51,7 +51,7 @@ class Tests_ME_Validator extends WP_UnitTestCase {
             'user_email' => 'required|email'
         );
 
-        $invalid_data = me_get_invalid_message($data, $rules);
+        $invalid_data = marketengine_get_invalid_message($data, $rules);
 		$this->assertEquals(array('site' => "The site format is invalid.") , $invalid_data );
 	}
 	// test number min
@@ -64,7 +64,7 @@ class Tests_ME_Validator extends WP_UnitTestCase {
             'user_email' => 'required|email'
         );
 
-        $invalid_data = me_get_invalid_message($data, $rules);
+        $invalid_data = marketengine_get_invalid_message($data, $rules);
 		$this->assertEquals( array('min' => __('The min must be at least 6.',"enginethemes" )), $invalid_data );
 	}
 
@@ -78,7 +78,7 @@ class Tests_ME_Validator extends WP_UnitTestCase {
             'user_email' => 'required|email'
         );
 
-        $invalid_data = me_get_invalid_message($data, $rules);
+        $invalid_data = marketengine_get_invalid_message($data, $rules);
 		$this->assertEquals( array('min' => __('The min must be at least 6 characters.',"enginethemes" )), $invalid_data );
 	}
 
@@ -93,7 +93,7 @@ class Tests_ME_Validator extends WP_UnitTestCase {
             'user_email' => 'required|email'
         );
 
-        $invalid_data = me_get_invalid_message($data, $rules);
+        $invalid_data = marketengine_get_invalid_message($data, $rules);
 		$this->assertEquals(array('re_user_pass' => "The re user pass and user pass must match.") , $invalid_data );
 	}
 }

@@ -6,6 +6,9 @@ class Tests_ME_Order_Handle extends WP_UnitTestCase {
     }
 
     public function setUp() {
+
+        add_filter( 'marketengine_listing_type_categories', array($this, 'filter_listing_type_category' ) );
+
         $this->user_1 = self::factory()->user->create(array('role' => 'author'));
         update_user_meta( $this->user_1, 'paypal_email', 'dinhle1987-per@yahoo.com' );
 
@@ -16,7 +19,7 @@ class Tests_ME_Order_Handle extends WP_UnitTestCase {
             'customer_note' => 'Order note',
         );
 
-        $this->order_id   = me_insert_order($this->order_data);
+        $this->order_id   = marketengine_insert_order($this->order_data);
         $this->parent_cat = $this->listing_category->create_object(array('taxonomy' => 'listing_category', 'name' => 'Cat 1'));
         $this->sub_cat    = $this->listing_category->create_object(array('taxonomy' => 'listing_category', 'name' => 'Sub Cat 1', 'parent' => $this->parent_cat));
 
@@ -30,8 +33,18 @@ class Tests_ME_Order_Handle extends WP_UnitTestCase {
             'parent_cat'          => $this->parent_cat,
             'sub_cat'             => $this->sub_cat,
         );
-        $p1            = ME_Listing_Handle::insert($listing_data);
-        $this->listing = me_get_listing($p1);
+        $p1 = ME_Listing_Handle::insert($listing_data);
+        $this->listing = marketengine_get_listing($p1);
+
+        wp_set_current_user($this->user_2);
+    }
+
+    public function filter_listing_type_category($category) {
+        return array(
+            'all' => array ($this->parent_cat),
+            'contact' => array($this->parent_cat),
+            'purchasion' => array($this->parent_cat)
+        );
     }
 
     public function tearDown() {
@@ -46,8 +59,8 @@ class Tests_ME_Order_Handle extends WP_UnitTestCase {
 
         $order      = new ME_Order($this->order_id);
         $item_id    = $order->add_listing($this->listing);
-        $listing_id = me_get_order_item_meta($item_id, '_listing_id', true);
-        $price      = me_get_order_item_meta($item_id, '_listing_price', true);
+        $listing_id = marketengine_get_order_item_meta($item_id, '_listing_id', true);
+        $price      = marketengine_get_order_item_meta($item_id, '_listing_price', true);
 
         $this->assertEquals($this->listing->ID, $listing_id);
         $this->assertEquals(1000, $price);

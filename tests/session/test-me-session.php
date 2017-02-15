@@ -11,23 +11,23 @@ class Test_ME_Session extends WP_UnitTestCase {
      * test get session data
      */
     public function test_me_session_get_session_data() {
-        me_empty_notices();
-        me_add_notice('Success 1!', 'success');
-        me_add_notice('Success 2!', 'success');
-        me_add_notice('Error!', 'error');
+        marketengine_empty_notices();
+        marketengine_add_notice('Success 1!', 'success');
+        marketengine_add_notice('Success 2!', 'success');
+        marketengine_add_notice('Error!', 'error');
 
         $cookie = 'wp_marketengine_cookie_' . COOKIEHASH;
         $_COOKIE[ $cookie ] = 'wowowowow';
         ME()->session->save_session_data();
 
         $session_data = ME()->session->get_session_data();
-        $this->assertEquals(array('me_notices' => array('success' => array('Success 1!', 'Success 2!'), 'error' => array('Error!'))), $session_data);
+        $this->assertEquals(array('marketengine_notices' => array('success' => array('Success 1!', 'Success 2!'), 'error' => array('Error!'))), $session_data);
     }
 
 	public function test_me_session_update_expiry() {
 		global $wpdb;
 
-		me_add_notice('Success 1!', 'success');
+		marketengine_add_notice('Success 1!', 'success');
        	$cookie = 'wp_marketengine_cookie_' . COOKIEHASH;
 		$table = $wpdb->prefix . 'marketengine_sessions';
 
@@ -58,7 +58,7 @@ class Test_ME_Session extends WP_UnitTestCase {
 	public function test_me_session_destroy(){
 		global $wpdb;
 
-		me_add_notice('Success 1!', 'success');
+		marketengine_add_notice('Success 1!', 'success');
        	$cookie = 'wp_marketengine_cookie_' . COOKIEHASH;
 		$table = $wpdb->prefix . 'marketengine_sessions';
 

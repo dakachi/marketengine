@@ -46,10 +46,10 @@ class Tests_ME_Message_Query extends WP_UnitTestCase
         $message_data = $this->message_data;
 
         $message_data['receiver'] = $this->user_2;
-        $this->msg_ids[] = me_insert_message($message_data);
+        $this->msg_ids[] = marketengine_insert_message($message_data);
 
         $message_data['receiver'] = $this->user_3;
-        $this->msg_ids[] = me_insert_message($message_data);
+        $this->msg_ids[] = marketengine_insert_message($message_data);
 
         $message_query = new ME_Message_Query(array('post_type' => 'inquiry', 'receiver_name' => 'bui_nguyen'));
 
@@ -59,7 +59,7 @@ class Tests_ME_Message_Query extends WP_UnitTestCase
 
     public function test_me_get_message_null()
     {
-        $message = me_get_message(0);
+        $message = marketengine_get_message(0);
         $this->assertNull($message);
     }
 
@@ -67,9 +67,9 @@ class Tests_ME_Message_Query extends WP_UnitTestCase
     {
         $message_data             = $this->message_data;
         $message_data['receiver'] = $this->user_3;
-        $message_id               = me_insert_message($message_data);
+        $message_id               = marketengine_insert_message($message_data);
 
-        $message = me_get_message($message_id);
+        $message = marketengine_get_message($message_id);
         $this->assertInstanceOf(ME_Message::class, $message);
     }
 

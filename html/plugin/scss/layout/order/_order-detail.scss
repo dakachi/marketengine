@@ -111,7 +111,7 @@
 }
 
 .me-orderstatus-info {
-	.me-order-closed, .me-order-complete, .me-order-dispute, .me-order-pending, .me-order-resolve {
+	.me-order-closed, .me-order-complete, .me-order-disputed, .me-order-pending, .me-order-resolved {
 		font-weight: 800;
 	}
 	.me-orderstatus-notifi {
@@ -275,6 +275,8 @@
 .me-orderwarning-info {
 	background: #FFF;
 	@include box-shadow(0, 2px, 15px, 0, rgba($color_box_shadow, 1));
+	border: 1px solid $color_border_base;
+	border-radius: $border_radius_base; 
 	position: relative;
 	padding: 10px 185px 10px 25px;
 	margin-top: 10px;
@@ -460,6 +462,9 @@
 		}
 		.me-listing-info {
 			padding: 0;
+			a.me-orderlisting-review {
+				margin-top: 14px;
+			}
 			.me-item-archive {
 				margin: 10px 0 0;
 				padding: 0;
@@ -482,6 +487,9 @@
 		margin-left: -15px;
 		margin-right: -15px;
 		.me-resolution-center {
+			width: 100%;
+			height: auto;
+			padding: 7px 0;
 			position: inherit;
 			margin-top: 10px;
 			position: initial;
@@ -542,6 +550,12 @@
 					color: $color_text;
 				}
 				+ .me-line-step-order {
+					&.active {
+						&:after {
+							content: '\e925';
+							color: #98d00e;
+						}
+					}
 					span {
 						color: $color_text;
 					}

@@ -68,17 +68,17 @@ class ME_Autoloader {
         $file = $this->get_file_name_from_class($class);
         $path = '';
         // cho nay kiem tra ten class de thay doi include path cho phu hop
-        if (strpos($class, 'me_listings') === 0) {
+        if (strpos($class, 'marketengine_listings') === 0) {
             $path = $this->include_path . 'listings/' . substr(str_replace('_', '-', $class), 18) . '/';
-        } elseif (strpos($class, 'me_user') === 0) {
+        } elseif (strpos($class, 'marketengine_user') === 0) {
             $path = $this->include_path . 'users/' . substr(str_replace('_', '-', $class), 11) . '/';
-        } elseif (strpos($class, 'me_authentication') === 0) {
+        } elseif (strpos($class, 'marketengine_authentication') === 0) {
             $path = $this->include_path . 'authentication/' . substr(str_replace('_', '-', $class), 12) . '/';
-        } elseif (strpos($class, 'me_shortcodes') === 0) {
+        } elseif (strpos($class, 'marketengine_shortcodes') === 0) {
             $path = $this->include_path . 'shortcodes/' . substr(str_replace('_', '-', $class), 12) . '/';
         }
 
-        if (empty($path) || (!$this->load_file($path . $file) && strpos($class, 'me_') === 0)) {
+        if (empty($path) || (!$this->load_file($path . $file) && strpos($class, 'marketengine_') === 0)) {
             $this->load_file($this->include_path . $file);
         }
     }

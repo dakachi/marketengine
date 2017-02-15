@@ -4,7 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class ME_Listing {
+class ME_Listing
+{
     /**
      * Post ID.
      *
@@ -191,7 +192,8 @@ class ME_Listing {
      * @param int $listing_id Listing ID.
      * @return ME_Listing|false Listing object, false otherwise.
      */
-    public static function get_instance($listing_id) {
+    public static function get_instance($listing_id)
+    {
         global $wpdb;
 
         $listing_id = (int) $listing_id;
@@ -213,7 +215,7 @@ class ME_Listing {
         } elseif (empty($_listing->filter)) {
             $_listing = sanitize_post($_listing, 'raw');
         }
-        
+
         return new ME_Listing($_listing);
     }
 
@@ -222,7 +224,8 @@ class ME_Listing {
      *
      * @param ME_Listing|object $post Post object.
      */
-    public function __construct($post) {
+    public function __construct($post)
+    {
         foreach (get_object_vars($post) as $key => $value) {
             $this->$key = $value;
         }
@@ -235,7 +238,8 @@ class ME_Listing {
      * @param string $key Property to check if set.
      * @return bool
      */
-    public function __isset($key) {
+    public function __isset($key)
+    {
         if ('ancestors' == $key) {
             return true;
         }
@@ -249,7 +253,8 @@ class ME_Listing {
      * @param string $key Key to get.
      * @return mixed
      */
-    public function __get($key) {
+    public function __get($key)
+    {
         // Rest of the values need filtering.
         if ('ancestors' == $key) {
             $value = get_post_ancestors($this);
@@ -270,7 +275,8 @@ class ME_Listing {
      * @param string $filter Filter.
      * @return self|array|bool|object|WP_Post
      */
-    public function filter($filter) {
+    public function filter($filter)
+    {
         if ($this->filter == $filter) {
             return $this;
         }
@@ -287,42 +293,56 @@ class ME_Listing {
      *
      * @return array Object as array.
      */
-    public function to_array() {
+    public function to_array()
+    {
         $post = get_object_vars($this);
         return $post;
     }
 
-    public function get_id() {
+    public function get_id()
+    {
         return $this->ID;
     }
 
-    public function get_permalink($leavename = false) {
-        return get_the_permalink($this->ID, $leavename);
+    public function get_permalink($leavename = false, $alternate_link = '#')
+    {
+        if ($this->get_author() == get_current_user_id() || $this->is_available()) {
+            return get_the_permalink($this->ID, $leavename);
+        } else {
+            return $alternate_link;
+        }
+
     }
 
-    public function get_author () {
+    public function get_author()
+    {
         return $this->post_author;
     }
 
-    public function get_title() {
+    public function get_title()
+    {
         return get_the_title($this->ID);
     }
 
-    public function get_description() {
+    public function get_description()
+    {
         return $this->post_content;
     }
 
-    public function get_short_description($length = 40) {
+    public function get_short_description($length = 40)
+    {
         $content = get_post_field('post_content', $this->ID, 'display');
         $content = apply_filters('the_content', $content);
-        return me_trim_words( $content, $length);
+        return marketengine_trim_words($content, $length);
     }
 
-    public function get_listing_thumbnail($size = 'post-thumbnail', $attr = '' ) {
-        return get_the_post_thumbnail( $this->ID, $size, $attr );
+    public function get_listing_thumbnail($size = 'post-thumbnail', $attr = '')
+    {
+        return get_the_post_thumbnail($this->ID, $size, $attr);
     }
 
-    public function get_listing_type() {
+    public function get_listing_type()
+    {
         return get_post_meta($this->ID, '_me_listing_type', true);
     }
 
@@ -332,7 +352,8 @@ class ME_Listing {
      * @since 1.0
      * @return int
      */
-    public function get_review_count() {
+    public function get_review_count()
+    {
         return absint(get_post_meta($this->ID, '_me_reviews_count', true));
     }
 
@@ -342,9 +363,10 @@ class ME_Listing {
      * @since 1.0
      * @return int
      */
-    public function get_review_count_details() {
+    public function get_review_count_details()
+    {
         $details = get_post_meta($this->ID, '_me_review_count_details', true);
-        return wp_parse_args( $details, array('1_star' => 0, '2_star' => 0, '3_star' => 0, '4_star' => 0 , '5_star' => 0) );
+        return wp_parse_args($details, array('1_star' => 0, '2_star' => 0, '3_star' => 0, '4_star' => 0, '5_star' => 0));
     }
 
     /**
@@ -353,7 +375,8 @@ class ME_Listing {
      * @since 1.0
      * @return float
      */
-    public function get_review_score() {
+    public function get_review_score()
+    {
         return get_post_meta($this->ID, '_rating_score', true);
     }
 
@@ -363,23 +386,26 @@ class ME_Listing {
      * @since 1.0
      * @return int
      */
-    public function get_order_count() {
+    public function get_order_count()
+    {
         ME_Listing_Handle::update_order_count($this->ID);
         return absint(get_post_meta($this->ID, '_me_order_count', true));
     }
 
-    public function get_inquiry_count() {
+    public function get_inquiry_count()
+    {
         ME_Listing_Handle::update_inquiry_count($this->ID);
         return absint(get_post_meta($this->ID, '_me_inquiry_count', true));
     }
 
-
-    public function get_gallery() {
-        $gallery      = get_post_meta($this->ID, '_me_listing_gallery', true);
+    public function get_gallery()
+    {
+        $gallery = get_post_meta($this->ID, '_me_listing_gallery', true);
         return $gallery;
     }
 
-    public function get_featured_image(){
+    public function get_featured_image()
+    {
         return get_post_meta($this->ID, '_thumbnail_id', true);
     }
 
@@ -389,11 +415,12 @@ class ME_Listing {
      * @since 1.0
      * @return array
      */
-    public function get_galleries() {
+    public function get_galleries()
+    {
         $gallery      = get_post_meta($this->ID, '_me_listing_gallery', true);
         $thumbnail_id = get_post_meta($this->ID, '_thumbnail_id', true);
 
-        if(empty($gallery )) {
+        if (empty($gallery)) {
             $gallery = array();
         }
 
@@ -410,14 +437,16 @@ class ME_Listing {
      * @since 1.0
      * @return bool
      */
-    public function is_available() {
-        $is_available = ('listing' == $this->post_type && $this->post_status == 'publish' );
-        return  apply_filters('marketengine_lisitng_is_available', $is_available, $this->ID);
+    public function is_available()
+    {
+        $is_available = ('listing' == $this->post_type && $this->post_status == 'publish');
+        return apply_filters('marketengine_lisitng_is_available', $is_available, $this->ID);
     }
 
-    public function get_edit_url(){
-        $page           = me_get_page_permalink('user_account');
-        $edit = me_get_endpoint_name('edit-listing');
+    public function get_edit_url()
+    {
+        $page = marketengine_get_page_permalink('user_account');
+        $edit = marketengine_get_endpoint_name('edit-listing');
         return $page . $edit . '/' . $this->id;
     }
 
@@ -428,7 +457,8 @@ class ME_Listing {
      *
      * @return bool
      */
-    public function allow_rating() {
-        return 'contact'!= $this->get_listing_type();
+    public function allow_rating()
+    {
+        return 'contact' != $this->get_listing_type();
     }
 }

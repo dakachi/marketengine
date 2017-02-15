@@ -23,10 +23,10 @@ include_once ('widgets/class-me-widget-listing-search.php');
  *
  * @since 1.0.0
  */
-function me_register_widgets() {
+function marketengine_register_widgets() {
     register_widget('ME_Widget_Listing_Categories');
     register_widget('ME_Widget_Listing_Types');
     register_widget('ME_Widget_Price_Filter');
     register_widget('ME_Widget_Search');
 }
-add_action('widgets_init', 'me_register_widgets');
+add_action('widgets_init', 'marketengine_register_widgets');

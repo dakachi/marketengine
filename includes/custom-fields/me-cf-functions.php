@@ -31,7 +31,7 @@ if (!defined('ABSPATH')) {
  *
  * @return int | WP_Error
  */
-function me_cf_insert_field($args, $wp_error = false)
+function marketengine_cf_insert_field($args, $wp_error = false)
 {
     global $wpdb;
     $defaults = array(
@@ -152,9 +152,9 @@ function me_cf_insert_field($args, $wp_error = false)
  *
  * @return int | WP_Error
  */
-function me_cf_update_field($args, $wp_error = false)
+function marketengine_cf_update_field($args, $wp_error = false)
 {
-    $field = me_cf_get_field($args['field_id'], ARRAY_A);
+    $field = marketengine_cf_get_field($args['field_id'], ARRAY_A);
     if (is_null($field)) {
         if ($wp_error) {
             return new WP_Error('invalid_field', __('Invalid field ID.'));
@@ -182,7 +182,7 @@ function me_cf_update_field($args, $wp_error = false)
     $field = wp_slash($field);
     $args  = array_merge($field, $args);
 
-    return me_cf_insert_field($args, $wp_error);
+    return marketengine_cf_insert_field($args, $wp_error);
 }
 
 /**
@@ -195,7 +195,7 @@ function me_cf_update_field($args, $wp_error = false)
  *
  * @return bool
  */
-function me_cf_delete_field($field_id)
+function marketengine_cf_delete_field($field_id)
 {
     global $wpdb;
 
@@ -216,7 +216,7 @@ function me_cf_delete_field($field_id)
             continue;
         }
 
-        me_cf_update_term_count($term->term_id);
+        marketengine_cf_update_term_count($term->term_id);
     }
     return $field_id;
 }
@@ -233,7 +233,7 @@ function me_cf_delete_field($field_id)
  *
  * @return void
  */
-function me_cf_set_field_category($field_id, $term_id, $order)
+function marketengine_cf_set_field_category($field_id, $term_id, $order)
 {
     global $wpdb;
 
@@ -256,8 +256,8 @@ function me_cf_set_field_category($field_id, $term_id, $order)
         // insert relationship
         $wpdb->insert($wpdb->marketengine_fields_relationship, array('field_id' => $field_id, 'term_taxonomy_id' => $tt_id, 'term_order' => $order));
     }
-    me_cf_update_field_count($field_id);
-    me_cf_update_term_count($term_id);
+    marketengine_cf_update_field_count($field_id);
+    marketengine_cf_update_term_count($term_id);
 }
 
 /**
@@ -272,7 +272,7 @@ function me_cf_set_field_category($field_id, $term_id, $order)
  * @return void
  */
 
-function me_cf_remove_field_category($field_id, $term_id)
+function marketengine_cf_remove_field_category($field_id, $term_id)
 {
     global $wpdb;
 
@@ -287,8 +287,8 @@ function me_cf_remove_field_category($field_id, $term_id)
 
     $wpdb->delete($wpdb->marketengine_fields_relationship, array('field_id' => $field_id, 'term_taxonomy_id' => $tt_id), array('%d', '%d'));
 
-    me_cf_update_field_count($field_id);
-    me_cf_update_term_count($term_id);
+    marketengine_cf_update_field_count($field_id);
+    marketengine_cf_update_term_count($term_id);
 }
 /**
  * Refresh the field's category count
@@ -299,12 +299,12 @@ function me_cf_remove_field_category($field_id, $term_id)
  *
  * @return int Number of category
  */
-function me_cf_update_field_count($field_id)
+function marketengine_cf_update_field_count($field_id)
 {
     global $wpdb;
     $term_count = $wpdb->get_var($wpdb->prepare("SELECT count(term_taxonomy_id) FROM $wpdb->marketengine_fields_relationship WHERE field_id = %d", $field_id));
 
-    me_cf_update_field(array('field_id' => $field_id, 'count' => $term_count));
+    marketengine_cf_update_field(array('field_id' => $field_id, 'count' => $term_count));
     return $term_count;
 }
 
@@ -317,7 +317,7 @@ function me_cf_update_field_count($field_id)
  *
  * @return int Number of field
  */
-function me_cf_update_term_count($term_id)
+function marketengine_cf_update_term_count($term_id)
 {
     global $wpdb;
 
@@ -344,7 +344,7 @@ function me_cf_update_term_count($term_id)
  *
  * @return object Field data
  */
-function me_cf_get_field($field, $type = OBJECT)
+function marketengine_cf_get_field($field, $type = OBJECT)
 {
     global $wpdb;
 
@@ -368,7 +368,7 @@ function me_cf_get_field($field, $type = OBJECT)
  *
  * @return bool true if the field name exists, and vice versa
  */
-function me_cf_is_field_name_exists($field_name)
+function marketengine_cf_is_field_name_exists($field_name)
 {
     global $wpdb;
 
@@ -391,7 +391,7 @@ function me_cf_is_field_name_exists($field_name)
  *
  * @return array of fields match the query, number of post founded, and maximum number of pages
  */
-function me_cf_fields_query($args)
+function marketengine_cf_fields_query($args)
 {
     global $wpdb;
 
@@ -446,7 +446,7 @@ function me_cf_fields_query($args)
  *
  * @return array $result list of fields
  */
-function me_cf_get_fields($category_id = '')
+function marketengine_cf_get_fields($category_id = '')
 {
     global $wpdb;
     $sql = $join = $where = $order =  '';
@@ -475,7 +475,7 @@ function me_cf_get_fields($category_id = '')
  *
  * @return array $result list of categories or html string
  */
-function me_cf_get_field_categories($field_id, $html = false)
+function marketengine_cf_get_field_categories($field_id, $html = false)
 {
     global $wpdb;
 
@@ -508,7 +508,7 @@ function me_cf_get_field_categories($field_id, $html = false)
  *
  * @return mixed The field value
  */
-function me_field($field_name, $post = null, $args = array())
+function marketengine_field($field_name, $post = null, $args = array())
 {
     if (!$post) {
         $post = get_post();
@@ -539,7 +539,7 @@ function me_field($field_name, $post = null, $args = array())
  *
  * @return string $attr
  */
-function me_field_attribute($field)
+function marketengine_field_attribute($field)
 {
     $constraint = explode('|', $field['field_constraint']);
     if (empty($constraint)) {
@@ -571,7 +571,7 @@ function me_field_attribute($field)
  *
  * @return array $attr
  */
-function me_field_attribute_array($field)
+function marketengine_field_attribute_array($field)
 {
     if (!isset($field['field_constraint'])) {
         return;
@@ -610,9 +610,9 @@ function me_field_attribute_array($field)
  *
  * @return string $url
  */
-function me_custom_field_page_url($view = '', $action = '')
+function marketengine_custom_field_page_url($view = '', $action = '')
 {
-    $url = add_query_arg('section', 'custom-field', me_menu_page_url('me-settings', 'marketplace-settings'));
+    $url = add_query_arg('section', 'custom-field', marketengine_menu_page_url('me-settings', 'marketplace-settings'));
 
     $url = $view ? add_query_arg('view', $view, $url) : $url;
     $url = $action ? add_query_arg('action', $action, $url) : $url;

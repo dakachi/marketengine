@@ -1,8 +1,5 @@
 //=== Post listing
 //
-/* $width_post_line_step:		150px;	
-$width_step:				24px;
-$height_line_step:			3px;	 */
 
 .marketengine-post-listing-wrap {
 	background: #FFF;
@@ -20,89 +17,6 @@ $height_line_step:			3px;	 */
 		}
 	}
 }
-/* 
-.marketengine-post-line-step {
-	position: relative;
-	width: $width_post_line_step;
-	height: $width_step;
-	margin: 0 auto;
-	margin-bottom: 30px;
-	.me-post-step {
-		position: absolute;
-		display: inline-block;
-		width: $width_step;
-		height: $width_step;
-		background: #f5f5f5;
-		border: 1px solid $color_border_base;
-		border-radius: 50%;
-		font-size: $font_size_base;
-		color: $color_label_2;
-		text-align: center;
-		line-height: $width_step - 2;
-		z-index: 1;
-		&.me-post-step-1 {
-			top: 0;
-			left: -2px;
-			+ .me-line-step {
-				top: 50%;
-				left: 4px;
-				transform: translateY(-50%);
-			}
-		}
-		&.me-post-step-2 {
-			top: 0;
-			left: 50%;
-			transform: translateX(-50%);
-			+ .me-line-step {
-				top: 50%;
-				right: 4px;
-				transform: translateY(-50%);
-			}
-		}
-		&.me-post-step-3 {
-			top: 0;
-			right: -2px;
-		}
-		&.active {
-			background: $color_skin;
-			border: 1px solid $color_skin;
-			color: #FFF;
-			+ .me-line-step {
-				background: $color_skin;
-			}
-		}
-	}
-	.me-line-step {
-		position: absolute;
-		display: inline-block;
-		width: 50%;
-		height: $height_line_step;
-		background: $color_border_input_text;
-		z-index: 0;
-	}
-}
- */
-//=== Section post step
-//
-/* .marketengine-post-step {
-	// display: none;
-	// overflow: hidden;
-	height: 0;
-	&.active {
-		height: auto;
-		// transition: all 1s linear;
-	}
-}
- */
-/* .marketengine-group-field {
-	.marketengine-tags {
-		margin-top: 14px;
-	}
-	.submit-post {
-		margin-bottom: 58px;
-	}
-} */
-
 
 //=== Gallery Image
 //
@@ -120,9 +34,7 @@ $height_line_step:			3px;	 */
 		}
 	}
 }
-.me-upload-wrapper > div {
-	// overflow: hidden;
-}
+
 ul.marketengine-gallery-img {
 	font-size: 0;
 	margin-top: 4px;
@@ -159,28 +71,19 @@ ul.marketengine-gallery-img {
 					}
 				}
 			}
-			&.me-gallery-add-img {
-				/* border: 1px dashed $color_border_base;
-				.me-add-img {
-					position: relative;
-					display: inline-block;
-					width: 100%;
-					height: 100%;
-					font-size: $font_size_large;
-					line-height: 78px;
-					color: $color_border_input_text;
-					overflow: hidden;
-					cursor: pointer;
-					input[type="file"] {
-						position: absolute;
-						top: 0;
-						left: 0;
-						width: 100%;
-						height: 100%;
-						cursor: pointer;
-						opacity: 0;
-					}
-				} */
+			> i {
+				display: block;
+				margin-top: 10px;
+				font-size: 36px;
+				color: $color_text_2;
+			}
+			> p {
+				margin: 6px 0 0;
+				padding: 0 20px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				color: $color_text_2;
 			}
 		}
 		.me-delete-img {
@@ -233,6 +136,10 @@ ul.marketengine-gallery-img {
 				cursor: pointer;
 			}
 		}
+		.me-gallery-file {
+			display: none;
+			padding-right: 24px;
+		}
 	}
 	li.uploading {
 		margin-top: 14px;
@@ -266,6 +173,47 @@ ul.marketengine-gallery-img {
 	border: 1px solid darken(#f3f3f3, 10%);
 	&:hover {
 		opacity: 0.9;
+	}
+}
+
+.me-gallery-file-wrap {
+	ul.marketengine-gallery-img {
+		li {
+			&.me-item-img {
+				span {
+					&.me-gallery-img {
+						display: none;
+					}
+					&.me-gallery-file {
+						position: relative;
+						display: inline-block;
+					}
+				}
+				.me-delete-img {
+					background: none;
+					border: none;
+					box-shadow: none;
+					top: 2px;
+					right: 0;
+					&:before, &:after {
+						background: $color_text_2;
+						width: 13px;
+						height: 3px;
+					}
+					&:hover {
+						background: none;
+						border: none;
+						box-shadow: none;
+						&:before, &:after {
+							background: $color_text_2;
+						}
+					}
+				}
+			}
+			&.uploading {
+				height: 20px;
+			}
+		}
 	}
 }
 
@@ -319,5 +267,15 @@ ul.marketengine-gallery-img {
 		margin-right: -15px;
 		padding: 25px 15px;
 		margin-top: 0;
+	}
+	.me-gallery-file-wrap {
+		ul.marketengine-gallery-img {
+			li {
+				&.me-item-img {
+					width: 100%;
+					margin-top: 10px;
+				}
+			}
+		}
 	}
 }

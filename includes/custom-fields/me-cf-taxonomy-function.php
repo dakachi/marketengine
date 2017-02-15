@@ -15,10 +15,10 @@ if (!defined('ABSPATH')) {
  *
  * @since 1.0.1
  */
-function me_cf_register_field_taxonomies()
+function marketengine_cf_register_field_taxonomies()
 {
     // get fields by type select, checkbox, multiselect, radio
-    $fields_query = me_cf_fields_query(array('showposts' => -1, 'field_type' => array('single-select', 'multi-select', 'radio', 'checkbox')));
+    $fields_query = marketengine_cf_fields_query(array('showposts' => -1, 'field_type' => array('single-select', 'multi-select', 'radio', 'checkbox')));
     $fields       = $fields_query['fields'];
     if (empty($fields)) {
         return;
@@ -26,10 +26,10 @@ function me_cf_register_field_taxonomies()
 
     foreach ($fields as $field) {
         // register taxonomy
-        me_cf_register_field_taxonomy($field);
+        marketengine_cf_register_field_taxonomy($field);
     }
 }
-add_action('init', 'me_cf_register_field_taxonomies');
+add_action('init', 'marketengine_cf_register_field_taxonomies');
 
 /**
  * Register taxonomy to control a field value
@@ -42,7 +42,7 @@ add_action('init', 'me_cf_register_field_taxonomies');
  *
  * @since 1.0.1
  */
-function me_cf_register_field_taxonomy($field)
+function marketengine_cf_register_field_taxonomy($field)
 {
     $labels = array(
         'name'          => $field['field_title'],
@@ -71,7 +71,7 @@ function me_cf_register_field_taxonomy($field)
  * @since 1.0.1
  * @return array Array of option value
  */
-function me_cf_get_field_options($field_name, $args = array())
+function marketengine_cf_get_field_options($field_name, $args = array())
 {
     $results   = array();
     $defaults = array('hide_empty' => 0, 'meta_key' => '_field_option_order', 'orderby' => 'meta_value_num');
@@ -94,12 +94,12 @@ function me_cf_get_field_options($field_name, $args = array())
 }
 
 /**
- * Hook to filter me_field taxonomy args
+ * Hook to filter marketengine_field taxonomy args
  * @param array $args
  * @return array
  */
-function me_field_taxonomy_args($args) {
+function marketengine_field_taxonomy_args($args) {
     $defaults = array('meta_key' => '_field_option_order', 'orderby' => 'meta_value_num');
     return wp_parse_args( $args, $defaults );
 }
-add_filter( 'marketengine_me_field_taxonomy_args', 'me_field_taxonomy_args' );
+add_filter( 'marketengine_me_field_taxonomy_args', 'marketengine_field_taxonomy_args' );

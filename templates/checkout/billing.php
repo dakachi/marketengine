@@ -16,7 +16,7 @@ $shipping_fields = apply_filters('marketengine_shipping_fields', $address_fields
 	<h3 class="me-title-bill-ship"><?php _e("Billing Details", "enginethemes"); ?></h3>
 	<div class="me-switch-billing">
 
-		<?php me_print_notices(); ?>
+		<?php marketengine_print_notices(); ?>
 		
 		<!-- billing info -->
 		<div class="me-billing-address">

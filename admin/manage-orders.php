@@ -17,14 +17,14 @@ if (!defined('ABSPATH')) {
  * @category Hook Function
  * @since 1.0
  */
-function me_order_row_actions($actions, $post)
+function marketengine_order_row_actions($actions, $post)
 {
     if ($post && 'me_order' == $post->post_type) {
         return array();
     }
     return $actions;
 }
-add_filter('post_row_actions', 'me_order_row_actions', 10, 2);
+add_filter('post_row_actions', 'marketengine_order_row_actions', 10, 2);
 
 /**
  * Hook to change order list table primary column
@@ -35,13 +35,13 @@ add_filter('post_row_actions', 'me_order_row_actions', 10, 2);
  * @category Hook Function
  * @since 1.0
  */
-function me_change_order_primary_column($column, $screen_id) {
+function marketengine_change_order_primary_column($column, $screen_id) {
     if($screen_id == 'edit-me_order') {
         return 'listing';
     }
     return $column;
 }
-add_filter('list_table_primary_column', 'me_change_order_primary_column',10, 2);
+add_filter('list_table_primary_column', 'marketengine_change_order_primary_column',10, 2);
 
 /**
  * Hook to action manage_me_order_posts_columns
@@ -53,7 +53,7 @@ add_filter('list_table_primary_column', 'me_change_order_primary_column',10, 2);
  * @param array $existing_columns WP default post column
  * @since 1.0
  */
-function me_me_order_columns($existing_columns)
+function marketengine_me_order_columns($existing_columns)
 {
     if (empty($existing_columns) && !is_array($existing_columns)) {
         $existing_columns = array();
@@ -72,7 +72,7 @@ function me_me_order_columns($existing_columns)
 
     return array_merge($existing_columns, $columns);
 }
-add_filter('manage_me_order_posts_columns', 'me_me_order_columns');
+add_filter('manage_me_order_posts_columns', 'marketengine_me_order_columns');
 
 /**
  * Hook to manage_me_order_posts_custom_column render order column data
@@ -83,10 +83,10 @@ add_filter('manage_me_order_posts_columns', 'me_me_order_columns');
  * @param string $column
  * @since 1.0
  */
-function me_render_me_order_columns($column)
+function marketengine_render_me_order_columns($column)
 {
     global $post, $wpdb;
-    $order = me_get_order($post);
+    $order = marketengine_get_order($post);
 
     switch ($column) {
         case 'status':
@@ -113,10 +113,10 @@ function me_render_me_order_columns($column)
             break;
         case 'commission':
             $currency         = get_post_meta($post->ID, '_order_currency', true);
-            $commission_items = me_get_order_items($post->ID, 'commission_item');
+            $commission_items = marketengine_get_order_items($post->ID, 'commission_item');
             if (!empty($commission_items)) {
                 $item_id = $commission_items[0]->order_item_id;
-                echo me_price_html(me_get_order_item_meta($item_id, '_amount', true), $currency);
+                echo marketengine_price_html(marketengine_get_order_item_meta($item_id, '_amount', true), $currency);
             }else{
                 echo '0';
             }
@@ -124,11 +124,11 @@ function me_render_me_order_columns($column)
 
         case 'total':
             $currency = get_post_meta($post->ID, '_order_currency', true);
-            echo me_price_html(get_post_meta($post->ID, '_order_total', true), $currency);
+            echo marketengine_price_html(get_post_meta($post->ID, '_order_total', true), $currency);
             break;
     }
 }
-add_action('manage_me_order_posts_custom_column', 'me_render_me_order_columns', 2);
+add_action('manage_me_order_posts_custom_column', 'marketengine_render_me_order_columns', 2);
 
 /**
  * Load metabox details
@@ -136,8 +136,8 @@ add_action('manage_me_order_posts_custom_column', 'me_render_me_order_columns', 
  * @category Hook Function
  * @since 1.0
  */
-function me_order_payment_details() {
-    me_get_template('admin/order-metabox');
+function marketengine_order_payment_details() {
+    marketengine_get_template('admin/order-metabox');
 }
 
 /**
@@ -146,13 +146,13 @@ function me_order_payment_details() {
  * @category Hook Function
  * @since 1.0
  */
-function me_order_meta_box()
+function marketengine_order_meta_box()
 {
-    add_meta_box('order_meta', __('Order Payment Info'), 'me_order_payment_details', 'me_order', 'normal', 'high');
+    add_meta_box('order_meta', __('Order Payment Info'), 'marketengine_order_payment_details', 'me_order', 'normal', 'high');
     remove_meta_box('submitdiv', 'me_order', 'side');
     remove_meta_box('postcustom', 'me_order', 'normal');
 }
-add_action('add_meta_boxes', 'me_order_meta_box');
+add_action('add_meta_boxes', 'marketengine_order_meta_box');
 
 
 /**
@@ -163,8 +163,8 @@ add_action('add_meta_boxes', 'me_order_meta_box');
  * 
  * @since 1.0
  */
-function me_remove_filter_order_mine($views) {
+function marketengine_remove_filter_order_mine($views) {
     unset($views['mine']);
     return $views;
 }
-add_filter( 'views_edit-me_order', 'me_remove_filter_order_mine' );
+add_filter( 'views_edit-me_order', 'marketengine_remove_filter_order_mine' );

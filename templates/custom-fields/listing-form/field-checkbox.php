@@ -16,12 +16,12 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-$options = me_cf_get_field_options($field['field_name']);
+$options = marketengine_cf_get_field_options($field['field_name']);
 if(empty($options)) return;
 ?>
 <div class="marketengine-group-field">
 	<div class="marketengine-checkbox-field">
-	    <?php me_get_template('custom-fields/listing-form/field-label', array('field' => $field));  ?>
+	    <?php marketengine_get_template('custom-fields/listing-form/field-label', array('field' => $field));  ?>
 	    <?php foreach ($options as $option) : ?>
 		    <div class="me-checkbox">
 		    	<label for="<?php echo $field['field_name'] ?>-<?php echo $option['value']; ?>">

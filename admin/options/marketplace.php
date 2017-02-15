@@ -94,8 +94,8 @@ return apply_filters('marketengine_marketplace_options',
                     ),
                 ),
                 'dispute-time-limit' => array(
-                    'label'       => __("Auto complete order", "enginethemes"),
-                    'description' => __("Set up the time (days) that order must be completed. Default is set 3 days.", "enginethemes"),
+                    'label'       => __("Auto close order", "enginethemes"),
+                    'description' => __("Set up the time (days) that order must be closed. Default is set 3 days.", "enginethemes"),
                     'slug'        => 'dispute-time-limit',
                     'type'        => 'number',
                     'class_name'  => 'no-zero positive',
@@ -140,7 +140,7 @@ return apply_filters('marketengine_marketplace_options',
                             'name'        => 'purchasion-available',
                             'icon_note'   => '<i class="icon-me-info-circle"></i>',
                             'note' => __("Please select categories for the listing type. Otherwise, this field won't display in the post listing form.", "enginethemes"),
-                            'data' => me_get_listing_categories()
+                            'data' => marketengine_get_listing_categories()
                         ),
                     ),
                 ),
@@ -173,7 +173,7 @@ return apply_filters('marketengine_marketplace_options',
                             'name'        => 'contact-available',
                             'icon_note'   => '<i class="icon-me-info-circle"></i>',
                             'note' => __("Please select categories for the listing type. Otherwise, this field won't display in the post listing form.", "enginethemes"),
-                            'data' => me_get_listing_categories()
+                            'data' => marketengine_get_listing_categories()
                         ),
                     ),
                 ),

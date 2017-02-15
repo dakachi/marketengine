@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
 
 	<div class="me-authen-wrap me-authen-change">
 
-		<?php me_print_notices(); ?>
+		<?php marketengine_print_notices(); ?>
 		
 		<div class="me-profile-info">
 			<div class="marketengine-group-field">
@@ -50,12 +50,12 @@ if (!defined('ABSPATH')) {
 
 		<?php do_action('marketengine_change_password_form'); ?>
 
-		<?php wp_nonce_field('me_change-password'); ?>
+		<?php wp_nonce_field('marketengine_change-password'); ?>
 
 		<div class="marketengine-text-field edit-profile">
 			<input type="submit" class="marketengine-btn" name="change_password" value="<?php _e("CHANGE", "enginethemes");?>" />
 		</div>
-		<a href="<?php echo me_get_page_permalink('user_account'); ?>" class="back-home-sigin me-backlink"><?php _e("&lt; My profile", "enginethemes");?></a>
+		<a href="<?php echo marketengine_get_page_permalink('user_account'); ?>" class="back-home-sigin me-backlink"><?php _e("&lt; My profile", "enginethemes");?></a>
 	</div>
 
 	<?php do_action('marketengine_change_password_form_end'); ?>

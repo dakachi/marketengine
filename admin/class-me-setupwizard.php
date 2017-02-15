@@ -34,7 +34,7 @@ class ME_Setup_Wizard
     }
 
     public function notices() {
-    	if(!me_option('finish_wizard')) {
+    	if(!marketengine_option('finish_wizard')) {
     		$skip_setup_nonce = wp_create_nonce('skip_setup_wizard');
     	?>
 		<div id="message" class="updated marketengine-message me-setup-notices">
@@ -53,11 +53,11 @@ class ME_Setup_Wizard
     {
         if (!empty($_POST['step']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'marketengine-setup')) {
             
-            $content = sanitize_text_field( $_POST['content'] );
+            $content = $_POST['content'];
             $step = esc_attr( $_POST['step'] );
             switch ($step) {
                 case 'page':
-                    $data = $this->setup_page($content);
+                    $data = $this->setup_page();
                     break;
                 case 'personalize':
                     $data = $this->setup_personalize($content);
@@ -79,15 +79,15 @@ class ME_Setup_Wizard
         }
     }
 
-    public function setup_page($content) {
-    	me_create_functional_pages();
+    public function setup_page() {
+    	marketengine_create_functional_pages();
     }
 
     public function setup_personalize($content) {
     	parse_str($content);
-    	me_update_option('listing-label', $listing_label);
-    	me_update_option('seller-label', $seller_label);
-    	me_update_option('buyer-label', $buyer_label);
+    	marketengine_update_option('listing-label', sanitize_text_field( $listing_label ));
+    	marketengine_update_option('seller-label', sanitize_text_field( $seller_label ));
+    	marketengine_update_option('buyer-label', sanitize_text_field( $buyer_label ));
     }
 
     public function setup_payment($content) {
@@ -97,48 +97,49 @@ class ME_Setup_Wizard
 		if(!empty($cats)) {
     		foreach ($cats as $cat) {
     			if($cat) {
-    				wp_insert_term( $cat, 'listing_category' );
+    				wp_insert_term( sanitize_text_field( $cat ), 'listing_category' );
     			}
     		}
     	}
 
     	
-    	me_update_option('paypal-commission-fee', absint( $commission ));
+    	marketengine_update_option('paypal-commission-fee', absint( $commission ));
     	
 
     	$currency = $currencies[$currency];
-    	me_update_option('payment-currency-code', $currency['code']);
-    	me_update_option('payment-currency-sign', $currency['sign']);
-    	me_update_option('payment-currency-label', $currency['label']);
+    	marketengine_update_option('payment-currency-code', sanitize_text_field( $currency['code'] ));
+    	marketengine_update_option('payment-currency-sign', sanitize_text_field( $currency['sign'] ));
+    	marketengine_update_option('payment-currency-label', sanitize_text_field( $currency['label'] ));
 
     	return $this->get_listing_type_category_option();
     }
 
     public function setup_listing_types($content) {
     	parse_str($content);
-    	me_update_option('purchasion-title', $purchasion_title);
-    	me_update_option('contact-title', $contact_title);
 
-    	me_update_option('purchasion-action', $purchasion_action);
-    	me_update_option('contact-action', $contact_action);
+    	marketengine_update_option('purchasion-title', sanitize_text_field( $purchasion_title ));
+    	marketengine_update_option('contact-title', sanitize_text_field( $contact_title ));
 
-    	me_update_option('purchasion-available', $purchasion_available);
-    	me_update_option('contact-available', $contact_available);
+    	marketengine_update_option('purchasion-action', sanitize_text_field( $purchasion_action ));
+    	marketengine_update_option('contact-action', sanitize_text_field( $contact_action ));
+
+    	marketengine_update_option('purchasion-available', array_map('absint', $purchasion_available));
+    	marketengine_update_option('contact-available', array_map('absint', $contact_available));
     }
 
     private function get_listing_type_category_option() {
     	// setup category for setup listing type
-    	$purchase_available = me_option('purchasion-available', array());
-    	$contact_available = me_option('contact-available', array());
+    	$purchase_available = marketengine_option('purchasion-available', array());
+    	$contact_available = marketengine_option('contact-available', array());
 
     	$purchase_category_option = '';
     	$contact_category_option = '';
     	$listing_category = get_terms( 'listing_category', array('parent' => 0, 'hide_empty' => false) );
     	foreach ($listing_category as $key => $category) {
-    		$purchase_selected = in_array($category->term_id, $purchase_available) ? 'selected="selected"' : '';
+    		$purchase_selected = in_array($category->term_id, (array)$purchase_available) ? 'selected="selected"' : '';
     		$purchase_category_option .= '<option '.$purchase_selected.' value="'.$category->term_id.'">'.$category->name.'</option>';
 
-    		$contact_selected = in_array($category->term_id, $contact_available ) ? 'selected="selected"' : '';
+    		$contact_selected = in_array($category->term_id, (array)$contact_available ) ? 'selected="selected"' : '';
     		$contact_category_option .= '<option '.$contact_selected.' value="'.$category->term_id.'">'.$category->name.'</option>';
     	}
 		return array('contact_option' => $contact_category_option , 'purchase_option' => $purchase_category_option);
@@ -177,7 +178,7 @@ class ME_Setup_Wizard
     {
         
         if(!empty($_GET['skip-setup']) && !empty($_GET['nonce']) && wp_verify_nonce($_GET['nonce'], 'skip_setup_wizard')) {
-        	me_update_option('finish_wizard', 1);
+        	marketengine_update_option('finish_wizard', 1);
         }
 
         if (empty($_GET['page']) || 'marketengine-setup' !== $_GET['page']) {
@@ -212,7 +213,7 @@ class ME_Setup_Wizard
 			<title><?php _e('MarketEngine &rsaquo; Setup Wizard', 'enginethemes');?></title>
 			<?php
 				wp_print_scripts('setup-wizard.js');
-        		wp_enqueue_style('me_font_icon', MARKETENGINE_URL . 'assets/css/marketengine-font-icon.css');
+        		wp_enqueue_style('marketengine_font_icon', MARKETENGINE_URL . 'assets/css/marketengine-font-icon.css');
         		wp_enqueue_style('setup-wizard.css', MARKETENGINE_URL . 'assets/admin/setup-wizard.css');
         	?>
 			<?php do_action('admin_print_styles');?>
@@ -328,7 +329,7 @@ class ME_Setup_Wizard
 					</div>
 					<div class="me-sfield-group">
 						<label for=""><?php _e("2- What is your commission fee?", "enginethemes");?></label>
-						<input id="me-setup-commission" class="me-input-price" name="commission" type="number" min="0" value="<?php echo me_option('paypal-commission-fee', 0); ?>">
+						<input id="me-setup-commission" class="me-input-price" name="commission" type="number" min="0" value="<?php echo marketengine_option('paypal-commission-fee', 0); ?>">
 						<span>%</span>
 					</div>
 					<div class="me-sfield-group">
@@ -360,12 +361,12 @@ class ME_Setup_Wizard
 						<div class="me-sfield-group">
 							<label for=""><?php _e("1- Title", "enginethemes");?></label>
 							<span><?php _e('The labels will be shown as listing type allowing user to filter. "Selling" is set by default', "enginethemes"); ?></span>
-							<input type="text" name="purchasion_title" placeholder="<?php _e("Selling", "enginethemes"); ?>" value="<?php echo me_option('purchasion-title'); ?>">
+							<input type="text" name="purchasion_title" placeholder="<?php _e("Selling", "enginethemes"); ?>" value="<?php echo marketengine_option('purchasion-title'); ?>">
 						</div>
 						<div class="me-sfield-group">
 							<label for=""><?php _e("2- Text Button", "enginethemes");?></label>
 							<span><?php _e("\"BUY NOW\" is set by default. But you can enter the text button to demonstrate the behavior that user can do", "enginethemes"); ?></span>
-							<input type="text" name="purchasion_action" placeholder="<?php _e("BUY NOW", "enginethemes"); ?>" value="<?php echo me_option('purchasion-action'); ?>">
+							<input type="text" name="purchasion_action" placeholder="<?php _e("BUY NOW", "enginethemes"); ?>" value="<?php echo marketengine_option('purchasion-action'); ?>">
 						</div>
 						<div class="me-sfield-group">
 							<label for=""><?php _e("3- Available Categories", "enginethemes");?></label>
@@ -381,12 +382,12 @@ class ME_Setup_Wizard
 						<div class="me-sfield-group">
 							<label for=""><?php _e("1- Title", "enginethemes");?></label>
 							<span><?php _e('The labels will be shown as listing type allowing user to filter. "Offering" is set by default', "enginethemes"); ?></span>
-							<input type="text" name="contact_title" placeholder="<?php _e("Offering", "enginethemes"); ?>" value="<?php echo me_option('contact-title'); ?>">
+							<input type="text" name="contact_title" placeholder="<?php _e("Offering", "enginethemes"); ?>" value="<?php echo marketengine_option('contact-title'); ?>">
 						</div>
 						<div class="me-sfield-group">
 							<label for=""><?php _e("2- Text Button", "enginethemes");?></label>
 							<span><?php _e("\"CONTACT\" is set by default. But you can enter the text button to demonstrate the behavior that user can do", "enginethemes"); ?></span>
-							<input type="text" name="contact_action" placeholder="<?php _e("CONTACT", "enginethemes"); ?>" value="<?php echo me_option('contact-action'); ?>">
+							<input type="text" name="contact_action" placeholder="<?php _e("CONTACT", "enginethemes"); ?>" value="<?php echo marketengine_option('contact-action'); ?>">
 						</div>
 						<div class="me-sfield-group">
 							<label for=""><?php _e("3- Available Categories", "enginethemes");?></label>

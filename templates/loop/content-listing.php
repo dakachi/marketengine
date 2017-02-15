@@ -12,7 +12,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-$listing = me_get_listing();
+$listing = marketengine_get_listing();
 $listing_type = $listing->get_listing_type();
 // TODO: update schema type, price and unit
 ?>
@@ -46,9 +46,9 @@ $listing_type = $listing->get_listing_type();
 
 			<?php
 				if('purchasion' == $listing_type) :
-					me_get_template('loop/purchasion', array('listing' => $listing));
+					marketengine_get_template('loop/purchasion', array('listing' => $listing));
 				else :
-					me_get_template('loop/contact', array('listing' => $listing));
+					marketengine_get_template('loop/contact', array('listing' => $listing));
 				endif;
 			 ?>
 

@@ -6,19 +6,19 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 // buyer: name, paypal, account, status
 // receiver list: name, paypal account, status
 global $post;
-$order = me_get_order($post);
+$order = marketengine_get_order($post);
 $billing_address = $order->get_address( 'billing' );
 
 $note = esc_html( $order->post_excerpt );
 
 $listing_items = $order->get_listing_items();
 $listing_item = array_pop($listing_items);
-$listing_obj = me_get_listing($listing_item['ID']);
+$listing_obj = marketengine_get_listing($listing_item['ID']);
 
-$receiver_items = me_get_order_items($post->ID, 'receiver_item');
+$receiver_items = marketengine_get_order_items($post->ID, 'receiver_item');
 $receiver_item = array_pop($receiver_items);
 
-$commission_items = me_get_order_items($post->ID, 'commission_item');
+$commission_items = marketengine_get_order_items($post->ID, 'commission_item');
 $commission_item = array_pop($commission_items);
 ?>
 <style type="text/css">
@@ -156,7 +156,7 @@ $commission_item = array_pop($commission_items);
 		</p>
 		<p>
 			<label><?php _e("Order status", "enginethemes"); ?></label>
-			<?php echo me_get_order_status_label($order->post_status); ?>
+			<?php echo marketengine_get_order_status_label($order->post_status); ?>
 		</p>
 		<p>
 			<label><?php _e("Buyer:", "enginethemes"); ?></label>
@@ -168,7 +168,7 @@ $commission_item = array_pop($commission_items);
 <div class="me-order-preview">
 	<h2><?php _e( 'Billed to:', 'enginethemes' ); ?></h2>
 	<div class="me-orderbill-info">
-		<p><?php me_print_buyer_information( $billing_address ); ?></p>
+		<p><?php marketengine_print_buyer_information( $billing_address ); ?></p>
 	</div>
 </div>
 
@@ -208,15 +208,15 @@ $commission_item = array_pop($commission_items);
 							<span><?php echo esc_html(get_the_title($listing_obj->ID)); ?></span>
 						</a>
 					</td>
-					<td><?php echo me_price_html( $listing_item['price'] ); ?></td>
+					<td><?php echo marketengine_price_html( $listing_item['price'] ); ?></td>
 					<td><?php echo $unit ?></td>
-					<td class="me-item-price"><?php echo me_price_html($listing_item['price'] * $unit); ?></td>
+					<td class="me-item-price"><?php echo marketengine_price_html($listing_item['price'] * $unit); ?></td>
 				</tr>
 				<tr>
 					<td></td>
 					<td></td>
 					<td><?php _e("Total amount:", "enginethemes"); ?></td>
-					<td class="me-item-price"><?php echo me_price_html($listing_item['price'] * $unit); ?></td>
+					<td class="me-item-price"><?php echo marketengine_price_html($listing_item['price'] * $unit); ?></td>
 				</tr>
 			</tbody>
 		</table>
@@ -242,16 +242,16 @@ $commission_item = array_pop($commission_items);
 			<tbody>
 				<tr>
 					<td><?php echo get_the_author_meta( 'display_name', $receiver->ID ); ?></td>
-					<td><?php echo me_get_order_item_meta($receiver_item->order_item_id, '_receive_email', true); ?></td>
-					<td><?php echo me_price_html(me_get_order_item_meta($receiver_item->order_item_id, '_amount', true)); ?></td>
+					<td><?php echo marketengine_get_order_item_meta($receiver_item->order_item_id, '_receive_email', true); ?></td>
+					<td><?php echo marketengine_price_html(!marketengine_get_order_item_meta($receiver_item->order_item_id, '_amount', true)); ?></td>
 				</tr>
 			  	<?php endif; ?>
 
 			  	<?php if(!empty($commission_item)) : ?>
 			  	<tr>
 				    <td><?php _e("Commision", "enginethemes"); ?></td>
-				    <td><?php echo me_get_order_item_meta($commission_item->order_item_id, '_receive_email', true); ?></td>
-				    <td><?php echo me_price_html(me_get_order_item_meta($commission_item->order_item_id, '_amount', true)); ?></td>
+				    <td><?php echo marketengine_get_order_item_meta($commission_item->order_item_id, '_receive_email', true); ?></td>
+				    <td><?php echo marketengine_price_html(!marketengine_get_order_item_meta($commission_item->order_item_id, '_amount', true)); ?></td>
 			  	</tr>
 			  	<?php endif; ?>
 			</tbody>

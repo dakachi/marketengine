@@ -213,7 +213,7 @@ class ME_Report_CSVExport
         $headings = array(
             'quant' => __("Date", "enginethemes"),
             'count' => __("Total Orders", "enginethemes"),
-            'total' => __("Income", "enginethemes") . '(' . me_option('payment-currency-sign') . ')',
+            'total' => __("Income", "enginethemes") . '(' . marketengine_option('payment-currency-sign') . ')',
         );
 
         return $this->generate_rows($headings, $orders, $quant);
@@ -280,10 +280,10 @@ class ME_Report_CSVExport
  *
  * @since 1.0.0
  */
-function me_export_reports()
+function marketengine_export_reports()
 {
     // Instantiate a singleton of this plugin
     $csvExport = new ME_Report_CSVExport();
 }
-add_action('admin_init', 'me_export_reports');
+add_action('admin_init', 'marketengine_export_reports');
 

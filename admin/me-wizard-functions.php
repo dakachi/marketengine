@@ -7,10 +7,10 @@
  *
  * @since 1.0
  */
-function me_create_functional_pages()
+function marketengine_create_functional_pages()
 {
     global $wpdb;
-    $default_pages = me_get_functional_pages();
+    $default_pages = marketengine_get_functional_pages();
 
     foreach ($default_pages as $key => $page) {
 
@@ -28,7 +28,7 @@ function me_create_functional_pages()
         }
 
         if ($page_id) {
-            me_update_option('me_' . $key . '_page_id', $page_id);
+            marketengine_update_option('marketengine_' . $key . '_page_id', $page_id);
         }
 
         flush_rewrite_rules();
@@ -44,7 +44,7 @@ function me_create_functional_pages()
  * @return array
  * @since 1.0
  */
-function me_get_functional_pages()
+function marketengine_get_functional_pages()
 {
     return array(
         'user_account'  => array(
@@ -101,7 +101,7 @@ function marketengine_add_sample_order($orders, $listing_id)
         $order_data['customer_note'] = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.';
         
         add_filter('marketengine_create_order_status', 'marketengine_sample_filter_order_status');
-        $order = me_insert_order($order_data);
+        $order = marketengine_insert_order($order_data);
         update_post_meta($order, 'is_sample_data', 'sample-data');
         remove_filter('marketengine_create_order_status', 'marketengine_sample_filter_order_status');
 
@@ -111,7 +111,7 @@ function marketengine_add_sample_order($orders, $listing_id)
         $billing['address'] = $billing['country']  = $billing['city'] = $order_data['location'];
 
         $me_order = new ME_Order($order);
-        $listing  = me_get_listing($listing_id);
+        $listing  = marketengine_get_listing($listing_id);
 
         $me_order->set_address($billing);
 
@@ -160,7 +160,7 @@ function marketengine_add_sample_inquiry($inquiries, $listing_id)
     foreach ($inquiries as $key => $inquiry_data) {
         $inquiry_data['post_author'] = marketengine_add_sample_user($inquiry_data);
         $receiver                    = get_post_field('post_author', $listing_id);
-        $inquiry_id                  = me_insert_message(
+        $inquiry_id                  = marketengine_insert_message(
             array(
                 'sender'       => $inquiry_data['post_author'],
                 'post_content' => 'Inquiry listing #' . $listing_id,
@@ -171,7 +171,7 @@ function marketengine_add_sample_inquiry($inquiries, $listing_id)
             )
         );
 
-        me_update_message_meta($inquiry_id, 'is_sample_data', 'sample-data');
+        marketengine_update_message_meta($inquiry_id, 'is_sample_data', 'sample-data');
 
         foreach ($inquiry_data['messages'] as $key => $message) {
             $message_data = array(
@@ -188,8 +188,8 @@ function marketengine_add_sample_inquiry($inquiries, $listing_id)
                 $message_data['receiver'] = $inquiry_data['post_author'];
                 $message_data['sender']   = $receiver;
             }
-            $message_id = me_insert_message($message_data);
-            me_update_message_meta($message_id, 'is_sample_data', 'sample-data');
+            $message_id = marketengine_insert_message($message_data);
+            marketengine_update_message_meta($message_id, 'is_sample_data', 'sample-data');
         }
 
     }
@@ -250,7 +250,7 @@ function marketengine_add_sample_user($user_data)
  * @category Function
  * @since 1.0
  */
-function me_setup_sample_data_post_where($where, &$wp_query)
+function marketengine_setup_sample_data_post_where($where, &$wp_query)
 {
     global $wpdb;
     if ($search_keyword = $wp_query->get('s')) {
@@ -274,7 +274,7 @@ function marketengine_handle_sample_image($image_url)
     $filename = basename($image_url);
     $title    = preg_replace('/\.[^.]+$/', '', basename($filename));
 
-    add_filter('posts_where', 'me_setup_sample_data_post_where', 10, 2);
+    add_filter('posts_where', 'marketengine_setup_sample_data_post_where', 10, 2);
     $query = new WP_Query(array(
         'post_status' => array('inherit', 'publish'),
         'post_type'   => 'attachment',
@@ -319,7 +319,7 @@ function marketengine_add_sample_listing()
 
     $listing = include MARKETENGINE_PATH . '/sample-data/listing/listing-' . $listing_number . '.php';
 
-    add_filter('posts_where', 'me_setup_sample_data_post_where', 10, 2);
+    add_filter('posts_where', 'marketengine_setup_sample_data_post_where', 10, 2);
     $query = new WP_Query(array(
         'post_status' => array('inherit', 'publish'),
         'post_type'   => 'listing',

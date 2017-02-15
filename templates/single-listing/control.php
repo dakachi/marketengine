@@ -22,11 +22,11 @@ $listing_status = get_post_status_object($listing->post_status);
 <div class="me-status-action">
 <?php
 	if($listing_type) :
-		me_get_template('single-listing/status', array('listing' => $listing) );
+		marketengine_get_template('single-listing/status', array('listing' => $listing) );
 		if( $is_owner ) :
-			me_get_template('single-listing/control-action', array('listing_type' => $listing_type , 'listing' => $listing, 'listing_status' => $listing_status) );
+			marketengine_get_template('single-listing/control-action', array('listing_type' => $listing_type , 'listing' => $listing, 'listing_status' => $listing_status) );
 		else :
-			me_get_template('single-listing/'. $listing_type , array('listing' => $listing));
+			marketengine_get_template('single-listing/'. $listing_type , array('listing' => $listing));
 		endif;
 	endif;
 ?>

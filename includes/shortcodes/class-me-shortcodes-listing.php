@@ -10,7 +10,7 @@ class ME_Shortcodes_Listing
     public static function post_listing_form()
     {
         ob_start();
-        me_get_template('post-listing/post-listing');
+        marketengine_get_template('post-listing/post-listing');
         $content = ob_get_clean();
         return $content;
     }
@@ -20,12 +20,12 @@ class ME_Shortcodes_Listing
         $user_id = get_current_user_id();
 
         if (!$user_id) {
-            return ME_Shortcodes_Auth::me_login_form();
+            return ME_Shortcodes_Auth::marketengine_login_form();
         }
 
         ob_start();
         $listing_id = absint(get_query_var('listing-id'));
-        $listing    = me_get_listing($listing_id);
+        $listing    = marketengine_get_listing($listing_id);
         if ($listing) {
             $seller = $listing->get_author() == get_current_user_id();
 
@@ -33,7 +33,7 @@ class ME_Shortcodes_Listing
                 return load_template(get_404_template());
             }
 
-            me_get_template('post-listing/edit-listing', array('listing' => $listing));
+            marketengine_get_template('post-listing/edit-listing', array('listing' => $listing));
             $content = ob_get_clean();
             return $content;
         } else {
@@ -45,7 +45,7 @@ class ME_Shortcodes_Listing
     {
         ob_start();
         query_posts(array('post_type' => 'listing', 'post_status' => 'publish', 'paged' => get_query_var('page')));
-        me_get_template('listing-list');
+        marketengine_get_template('listing-list');
         $content = ob_get_clean();
         wp_reset_query();
         return $content;

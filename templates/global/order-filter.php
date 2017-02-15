@@ -23,7 +23,7 @@ $type = isset($type) ? $type : 'transaction';
 			<div class="me-col-md-2">
 				<div class="me-order-status-filter">
 					<label><?php _e('Status', 'enginethemes'); ?></label>
-					<?php do_action( 'me_status_list', $type ); ?>
+					<?php do_action( 'marketengine_status_list', $type ); ?>
 				</div>
 			</div>
 
@@ -44,7 +44,7 @@ $type = isset($type) ? $type : 'transaction';
 				</div>
 				<div class="me-order-clear-filter">
 					<?php $page = ($type === 'order') ? 'orders' : 'purchases'; ?>
-					<a href="<?php echo me_get_auth_url($page); ?>"><?php _e('Clear Filter', 'enginethemes'); ?></a>
+					<a href="<?php echo marketengine_get_auth_url($page); ?>"><?php _e('Clear Filter', 'enginethemes'); ?></a>
 					<input class="me-order-filter-btn" type="submit" value="<?php _e('FILTER', 'enginethemes'); ?>">
 				</div>
 			</div>

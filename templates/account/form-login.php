@@ -12,18 +12,18 @@ if (!defined('ABSPATH')) {
 }
 do_action('marketengine_before_user_login_form');
 
-$register_link = me_get_endpoint_url('register');
-$notices = me_get_notices();
+$register_link = marketengine_get_endpoint_url('register');
+$notices = marketengine_get_notices();
 ?>
 <?php if( isset($notices['success'])) : ?>
-	<?php me_print_notices();?>
+	<?php marketengine_print_notices();?>
 <?php endif; ?>
 
 <div class="me-authen-wrap me-authen-login">
 	<form id="login-form" action="" method="post">
 		<h3><?php _e("Login", "enginethemes");?></h3>
 
-		<?php me_print_notices();?>
+		<?php marketengine_print_notices();?>
 		<?php do_action('marketengine_user_login_form_start');?>
 
 		<div class="marketengine-group-field">
@@ -45,8 +45,8 @@ $notices = me_get_notices();
 			<input type="submit" class="marketengine-btn" name="login" value="<?php _e("LOGIN", "enginethemes");?>">
 		</div>
 		<div class="marketengine-group-field forgot-sigin">
-			<a href="<?php echo me_get_endpoint_url('forgot-password'); ?>" class="forgot-pass"><?php _e("Forgot password? &nbsp;", "enginethemes");?></a>
-			<span class="me-account-register"><?php _e("Need an account?", "enginethemes");?><a href="<?php echo me_get_auth_url('register'); ?>"><?php _e("Register", "enginethemes");?></a></span>
+			<a href="<?php echo marketengine_get_endpoint_url('forgot-password'); ?>" class="forgot-pass"><?php _e("Forgot password? &nbsp;", "enginethemes");?></a>
+			<span class="me-account-register"><?php _e("Need an account?", "enginethemes");?><a href="<?php echo marketengine_get_auth_url('register'); ?>"><?php _e("Register", "enginethemes");?></a></span>
 		</div>
 		<a href="<?php echo home_url(); ?>" class="back-home-sigin"><?php _e("&lt;  Back to Home", "enginethemes");?></a>
 

@@ -24,11 +24,11 @@ $query = new WP_Query( $args );
 <?php
 	if( $query->have_posts() ) :
 		while( $query->have_posts() ) : $query->the_post();
-			me_get_template('seller-profile/listing-item');
+			marketengine_get_template('seller-profile/listing-item');
 		endwhile;
 ?>
 	<div class="me-paginations">
-		<?php me_paginate_link($query); ?>
+		<?php marketengine_paginate_link($query); ?>
 	</div>
 <?php
 		wp_reset_postdata();

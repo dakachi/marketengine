@@ -1,4 +1,6 @@
 /* global me_globals.ajaxurl, wpAjax*/
+
+
 (function($) {
     $(document).ready(function() {
         $('.me-help-text').tooltip({
@@ -12,7 +14,7 @@
             }
         });
         $('.marketengine-date-field input').datepicker();
-        $('#upload_listing_gallery').jUploader({
+        $('#upload_listing_gallery').MaketEngineUploader({
             browse_button: 'me-btn-upload',
             multi: true,
             name: 'listing_gallery',

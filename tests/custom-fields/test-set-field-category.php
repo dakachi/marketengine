@@ -23,7 +23,7 @@ class Tests_Set_Field_Category extends WP_UnitTestCase
             'count'               => 0,
         );
 
-        $result = me_cf_insert_field($this->field_data, true);
+        $result = marketengine_cf_insert_field($this->field_data, true);
         $this->field_id = $result;
 
         $this->field_data['field_id'] = $result;
@@ -57,7 +57,7 @@ class Tests_Set_Field_Category extends WP_UnitTestCase
         wp_delete_term($this->parent_cat_2, 'listing_category');
         wp_delete_term($this->parent_cat_3, 'listing_category');
 
-        me_cf_remove_field_category($this->field_id, $this->parent_cat);
+        marketengine_cf_remove_field_category($this->field_id, $this->parent_cat);
 
         global $wpdb;
 
@@ -69,8 +69,8 @@ class Tests_Set_Field_Category extends WP_UnitTestCase
 
     public function test_me_set_feild_category()
     {
-        me_cf_set_field_category($this->field_id, $this->parent_cat, 1);
-        $fields = me_cf_get_fields($this->parent_cat);
+        marketengine_cf_set_field_category($this->field_id, $this->parent_cat, 1);
+        $fields = marketengine_cf_get_fields($this->parent_cat);
         $field = array_pop($fields);
 
         $count = get_term_meta( $this->parent_cat, '_me_cf_count', true );
@@ -80,11 +80,11 @@ class Tests_Set_Field_Category extends WP_UnitTestCase
     }
 
     public function test_me_remove_field_category() {
-        me_cf_set_field_category($this->field_id, $this->parent_cat, 1);
+        marketengine_cf_set_field_category($this->field_id, $this->parent_cat, 1);
 
-        me_cf_remove_field_category($this->field_id, $this->parent_cat);
+        marketengine_cf_remove_field_category($this->field_id, $this->parent_cat);
 
-        $fields = me_cf_get_fields($this->parent_cat);
+        $fields = marketengine_cf_get_fields($this->parent_cat);
 
         $this->assertEmpty($fields);
 
