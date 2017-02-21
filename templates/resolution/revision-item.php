@@ -13,7 +13,7 @@ switch ($message->post_status) :
 		$name = get_the_author_meta( 'display_name', $message->sender );
 	?>
 		<p>			
-			<?php printf(__("<b>%s</b> <i>has requested to closed the dispute</i>", "enginethemes"), $name); ?>
+			<?php printf(__("<b>%s</b> <i>has requested to close the dispute</i>", "enginethemes"), $name); ?>
 		</p>
 	<?php
 		break;
