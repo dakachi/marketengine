@@ -8,7 +8,7 @@ $item = array_pop($items);
         <div class="me-row">
             <div class="me-col-md-6">
                 <div class="me-disputed-order-info">
-                    <h3><?php _e("Case infomation", "enginethemes");?></h3>
+                    <h3><?php _e("Case information", "enginethemes");?></h3>
                     <p>
                         <span><?php _e("Case status:", "enginethemes");?></span>
                         <?php echo marketengine_dispute_status_label($case->post_status); ?>
