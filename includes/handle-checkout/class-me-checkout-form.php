@@ -24,15 +24,15 @@ class ME_Checkout_Form {
             
             $current_user_id = get_current_user_id();
             // kiem tra san pham co con duoc ban ko
-            $listing_id = $_POST['add_to_cart'];
-            $listing    = me_get_listing($listing_id);            
+            $listing_id = absint( $_POST['add_to_cart'] );
+            $listing    = marketengine_get_listing($listing_id);            
             // kiem tra san pham co ton tai hay ko
             if(!$listing || !$listing->is_available() || $current_user_id == $listing->post_author) {
                 return false;
             }
-            // neu co the mua thi dieu huong nguoi dung den trang thanh toan
-            me_add_to_cart($listing_id, $_POST['qty']);
-            wp_redirect(me_get_page_permalink('checkout'));
+            // neu co the mua thi dieu huong nguoi dung den trang thanh toa
+            marketengine_add_to_cart($listing_id, absint( $_POST['qty'] ));
+            wp_redirect(marketengine_get_page_permalink('checkout'));
             exit;
         }
     }
@@ -41,9 +41,9 @@ class ME_Checkout_Form {
         if (isset($_POST['checkout']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-checkout')) {
             $order = ME_Checkout_Handle::checkout($_POST);
             if (!$order || is_wp_error($order)) {
-                me_wp_error_to_notices($order);
+                marketengine_wp_error_to_notices($order);
             } else {
-                me_empty_cart();
+                marketengine_empty_cart();
                 // redirect to payment gateway or confirm payment
                 self::process_pay($order);
 
@@ -51,7 +51,7 @@ class ME_Checkout_Form {
         }
         // TODO: update order function
         if (isset($_POST['order_id']) && !empty($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-pay')) {
-            $order = new ME_Order($_POST['order_id']);
+            $order = new ME_Order(absint( $_POST['order_id'] ));
             self::process_pay($order);
         }
     }
@@ -59,7 +59,7 @@ class ME_Checkout_Form {
     public static function process_pay($order) {
         $result = ME_Checkout_Handle::pay($order);
         if (!$result || is_wp_error($result)) {
-            me_wp_error_to_notices($result);
+            marketengine_wp_error_to_notices($result);
             wp_redirect($order->get_order_detail_url());
             exit;
         } else {

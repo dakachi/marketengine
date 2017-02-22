@@ -59,11 +59,11 @@ class Tests_Field_Handle extends WP_UnitTestCase
 
     public function test_text_field_is_has_categories() {
         $this->test_insert_text_field_successfully();
-        $field = me_cf_get_field($this->field_id);
+        $field = marketengine_cf_get_field($this->field_id);
 
         $this->assertEquals(count(array($this->cat1)), $field['count']);
 
-        $field_categories = me_cf_get_field_categories($this->field_id);
+        $field_categories = marketengine_cf_get_field_categories($this->field_id);
         $this->assertEquals(array($this->cat1), $field_categories);
     }
 
@@ -75,7 +75,7 @@ class Tests_Field_Handle extends WP_UnitTestCase
 
     public function test_update_text_field_successfully() {
         $this->test_insert_text_field_successfully();
-        $field = me_cf_get_field($this->field_id);
+        $field = marketengine_cf_get_field($this->field_id);
 
         $new_data = array(
             'field_title'         => 'Text Field Edited',
@@ -90,10 +90,10 @@ class Tests_Field_Handle extends WP_UnitTestCase
         $field_id = ME_Custom_Field_Handle::insert($new_data, true);
         $this->assertInternalType('integer', absint($field_id));
 
-        $categories = me_cf_get_field_categories($field_id);
+        $categories = marketengine_cf_get_field_categories($field_id);
         $this->assertEquals($categories, $new_data['field_for_categories']);
 
-        $field = me_cf_get_field($field_id);
+        $field = marketengine_cf_get_field($field_id);
         unset($new_data['field_for_categories']);
         $this->assertEquals($new_data, $field);
     }
@@ -169,10 +169,10 @@ class Tests_Field_Handle extends WP_UnitTestCase
         $options .= "option-3 : option-3";
 
         $this->test_insert_checkbox_successfully();
-        $field = me_cf_get_field($this->field_id);
-        $field_options = me_cf_get_field_options($field['field_name']);
+        $field = marketengine_cf_get_field($this->field_id);
+        $field_options = marketengine_cf_get_field_options($field['field_name']);
 
-        $this->assertEquals($options, me_field_option_to_string($field_options));
+        $this->assertEquals($options, marketengine_field_option_to_string($field_options));
     }
 
     public function test_insert_checkbox_empty_options() {
@@ -188,7 +188,7 @@ class Tests_Field_Handle extends WP_UnitTestCase
 
     public function test_update_checkbox_options() {
         $this->test_insert_checkbox_successfully();
-        $field = me_cf_get_field($this->field_id);
+        $field = marketengine_cf_get_field($this->field_id);
         $options = "option-3" . PHP_EOL;
         $options .= "option-1 : Option 2";
 
@@ -209,15 +209,15 @@ class Tests_Field_Handle extends WP_UnitTestCase
         $new_options = "option-3 : option-3" . PHP_EOL;
         $new_options .= "option-1 : Option 2";
 
-        $field_options = me_cf_get_field_options($field['field_name']);
-        $field_options = me_field_option_to_string($field_options);
+        $field_options = marketengine_cf_get_field_options($field['field_name']);
+        $field_options = marketengine_field_option_to_string($field_options);
 
         $this->assertEquals($new_options, $field_options);
     }
 
     public function test_update_checkbox_empty_options() {
         $this->test_insert_checkbox_successfully();
-        $field = me_cf_get_field($this->field_id);
+        $field = marketengine_cf_get_field($this->field_id);
         $options = "";
 
         $new_data = array(

@@ -24,17 +24,29 @@ jQuery(document).ready(function($) {
 		magnificInstance = false;
 	});
 
-	$('.me-related-slider').flexslider({
-		slideshow: false,
-		animation: "slide",
-		animationLoop: false,
-		itemWidth: 248,
-		itemMargin: 30,
-		controlNav: false,
-		directionNav: true,
-		prevText: '',
-		nextText: ''
-	});
+	var owl_carousel = $("#me-related-slider");
+    owl_carousel.owlCarousel({
+		items : 2,
+		margin: 26,
+		nav: true,
+		navText: ['<span></span>', '<span></span>'],
+		dots: false,
+		slideBy: 1,
+		responsive:{
+	        0:{
+	            items:1,
+	            nav:true,
+	        },
+	        992:{
+	        	items: 3,
+	        	nav: true
+	        },
+	        1200:{
+	            items:4,
+	            nav:true
+	        }
+	    },
+  	});
 
 	/**
 	 * Hover category show/hide
@@ -177,8 +189,9 @@ jQuery(document).ready(function($) {
 	 * -----------------------------------------------------------------------------------
 	 */
 	$( "#me-pick-date-1" ).datepicker({
+		dateFormat: 'yy-mm-dd',
 		onSelect: function( selectedDate ) {
-			$( "#me-pick-date-2" ).datepicker();
+			$( "#me-pick-date-2" ).datepicker({dateFormat: 'yy-mm-dd'});
 		    $( "#me-pick-date-2" ).datepicker("option", "minDate", selectedDate );
 		    setTimeout(function(){
 	            $( "#me-pick-date-2" ).datepicker('show');
@@ -186,6 +199,9 @@ jQuery(document).ready(function($) {
 		}
 	});
 
+	/* 
+	Move dispute.js
+	
 	$('.me-switch-tab-filter-1, .me-switch-tab-filter-2').on('click', function() {
 		$('.me-resolution').toggleClass('me-rslt-filter');
 	});
@@ -209,39 +225,6 @@ jQuery(document).ready(function($) {
 		$(document.getElementById(get_refund_block_id)).addClass('active');
 		$('.me-solution-item').attr('checked', false);
 	});
-
-
-	/**
-	 * [marketengine_snap_column description]
-	 * @return {[type]} [description]
-	 */
-	/*function marketengine_snap_column() {
-		var me_snap_column = $('.marketengine-snap-column').innerWidth();
-		// console.log(me_snap_column);
-		if(me_snap_column >= 1140) {
-			$('body').removeClass('marketengine-snap-column-3');
-		}
-		if((me_snap_column >= 850) && (me_snap_column < 1140)) {
-			$('body').addClass('marketengine-snap-column-3');
-			$('body').removeClass('marketengine-snap-column-2');
-			$('body').removeClass('marketengine-snap-column-1');
-		}
-		if((me_snap_column >= 556) && (me_snap_column < 850)) {
-			$('body').addClass('marketengine-snap-column-2');
-			$('body').removeClass('marketengine-snap-column-3');
-			$('body').removeClass('marketengine-snap-column-1');
-		}
-		if(me_snap_column < 556) {
-			$('body').addClass('marketengine-snap-column-1');
-			$('body').removeClass('marketengine-snap-column-3');
-			$('body').removeClass('marketengine-snap-column-2');
-		}
-	}*/
-
-	// me_snap_column < 1140px
-	// me_snap_column < 870px
-	// me_snap_column < 580px
-	// marketengine_snap_column();
-	// window.addEventListener("resize", marketengine_snap_column);
+	*/
 });
 

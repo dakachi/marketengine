@@ -4,7 +4,7 @@
  *
  * @since 	1.0.1
  */
-function me_list_custom_field_type() {
+function marketengine_list_custom_field_type() {
 	$field_types = array(
 		array(
 			'label'		=> __("Basic", "enginethemes"),
@@ -39,7 +39,7 @@ function me_list_custom_field_type() {
  * @since   1.0.1
  * @version 1.0.0
  */
-function me_get_field_type_label($field_type) {
+function marketengine_get_field_type_label($field_type) {
     $field_types = array(
         'text'          => 'Text',
         'textarea'      => 'Textarea',
@@ -64,22 +64,22 @@ function me_get_field_type_label($field_type) {
 function marketengine_custom_field_template() {
     if(isset($_REQUEST['view'])) {
         if($_REQUEST['view'] == 'add') {
-            me_get_template('custom-fields/admin-templates/admin-custom-field-form');
+            marketengine_get_template('custom-fields/admin-templates/admin-custom-field-form');
         } elseif($_REQUEST['view'] == 'edit') {
-            $field_obj = me_cf_get_field($_REQUEST['custom-field-id']);
-            $field_obj['field_for_categories'] = me_cf_get_field_categories($_REQUEST['custom-field-id']);
-            me_get_template('custom-fields/admin-templates/admin-custom-field-form', array('field_obj' => $field_obj));
+            $field_obj = marketengine_cf_get_field($_REQUEST['custom-field-id']);
+            $field_obj['field_for_categories'] = marketengine_cf_get_field_categories($_REQUEST['custom-field-id']);
+            marketengine_get_template('custom-fields/admin-templates/admin-custom-field-form', array('field_obj' => $field_obj));
         } elseif($_REQUEST['view'] == 'group-by-category') {
-            me_get_template('custom-fields/admin-templates/admin-custom-field');
+            marketengine_get_template('custom-fields/admin-templates/admin-custom-field');
         }
     } else {
-        me_get_template('custom-fields/admin-templates/admin-custom-field');
+        marketengine_get_template('custom-fields/admin-templates/admin-custom-field');
     }
 }
 
 function marketengine_load_input_by_field_type($args) {
 	$placeholder = isset($args['field_placeholder']) ? $args['field_placeholder'] : '';
-    $attribute = me_field_attribute_array($args);
+    $attribute = marketengine_field_attribute_array($args);
     $attribute = wp_parse_args($attribute, array('min'=>'','max'=>''));
 
 	$field_options = isset($args['field_options']) ? $args['field_options'] : array();
@@ -92,17 +92,17 @@ function marketengine_load_input_by_field_type($args) {
         case 'text':
         case 'textarea':
             ob_start();
-            me_get_template('custom-fields/admin-templates/admin-field-placeholder', array('placeholder' => $placeholder));
+            marketengine_get_template('custom-fields/admin-templates/admin-field-placeholder', array('placeholder' => $placeholder));
             $options = ob_get_clean();
             break;
 
         case 'number':
             ob_start();
-            me_get_template('custom-fields/admin-templates/admin-field-placeholder', array('placeholder' => $placeholder));
+            marketengine_get_template('custom-fields/admin-templates/admin-field-placeholder', array('placeholder' => $placeholder));
 
-            me_get_template('custom-fields/admin-templates/admin-field-minimum-value', array('min' => $attribute['min']));
+            marketengine_get_template('custom-fields/admin-templates/admin-field-minimum-value', array('min' => $attribute['min']));
 
-            me_get_template('custom-fields/admin-templates/admin-field-maximum-value', array('max' => $attribute['max']));
+            marketengine_get_template('custom-fields/admin-templates/admin-field-maximum-value', array('max' => $attribute['max']));
             $options = ob_get_clean();
             break;
         case 'date':
@@ -111,16 +111,16 @@ function marketengine_load_input_by_field_type($args) {
         case 'checkbox':
         case 'radio':
             ob_start();
-            me_get_template('custom-fields/admin-templates/admin-field-option', $args);
+            marketengine_get_template('custom-fields/admin-templates/admin-field-option', $args);
             $options = ob_get_clean();
             break;
 
         case 'single-select':
         case 'multi-select':
             ob_start();
-            me_get_template('custom-fields/admin-templates/admin-field-option-none', array('options_none_text' => $placeholder));
+            marketengine_get_template('custom-fields/admin-templates/admin-field-option-none', array('options_none_text' => $placeholder));
 
-            me_get_template('custom-fields/admin-templates/admin-field-option', $args);
+            marketengine_get_template('custom-fields/admin-templates/admin-field-option', $args);
             $options = ob_get_clean();
             break;
 
@@ -136,14 +136,16 @@ function marketengine_load_inputs_for_view( $field ) {
         case 'text':
         case 'textarea':
             $field_placeholder = isset($field_placeholder) && !empty($field_placeholder) ? $field_placeholder : 'N/A';
+            
             echo "<tr><td><span>".__('Placeholder:', 'enginethemes')."</span></td><td>".$field_placeholder."</td></tr>";
 
             break;
 
         case 'number':
             $field_placeholder = isset($field_placeholder) && !empty($field_placeholder) ? $field_placeholder : 'N/A';
-            $field_attribute = me_field_attribute_array($field);
+            $field_attribute = marketengine_field_attribute_array($field);
             $field_attribute = wp_parse_args($field_attribute, array('min' => 'N/A', 'max' => 'N/A'));
+
 
             echo "<tr><td><span>".__('Placeholder:', 'enginethemes')."</span></td><td>".$field_placeholder."</td></tr>";
             echo "<tr><td><span>".__('Minimum value:', 'enginethemes')."</span></td><td>".$field_attribute['min']."</td></tr>";
@@ -155,16 +157,16 @@ function marketengine_load_inputs_for_view( $field ) {
             break;
 
         case 'checkbox':
-            $field_options = me_cf_get_field_options($field_name);
-            $field_options = me_render_field_option($field_options);
+            $field_options = marketengine_cf_get_field_options($field_name);
+            $field_options = marketengine_render_field_option($field_options);
 
             echo "<tr><td><span>".__('Options:', 'enginethemes')."</span></td><td>".$field_options."</td></tr>";
             break;
 
         case 'single-select':
         case 'multi-select':
-            $field_options = me_cf_get_field_options($field_name);
-            $field_options = me_render_field_option($field_options);
+            $field_options = marketengine_cf_get_field_options($field_name);
+            $field_options = marketengine_render_field_option($field_options);
 
             $field_option_none = isset($field_placeholder) && !empty($field_placeholder) ? $field_placeholder : 'N/A';
             echo "<tr><td><span>".__('Option None Text:', 'enginethemes')."</span></td><td>".$field_option_none."</td></tr>";
@@ -175,7 +177,7 @@ function marketengine_load_inputs_for_view( $field ) {
             break;
     }
 }
-add_action('me_load_inputs_for_view', 'marketengine_load_inputs_for_view');
+add_action('marketengine_load_inputs_for_view', 'marketengine_load_inputs_for_view');
 
 /**
  * Convert array of field option to string for displaying in textarea value format.
@@ -184,7 +186,7 @@ add_action('me_load_inputs_for_view', 'marketengine_load_inputs_for_view');
  *
  * @return string $str
  */
-function me_field_option_to_string($options) {
+function marketengine_field_option_to_string($options) {
     $str = '';
     $count = 0;
     foreach($options as $key => $option) {
@@ -205,7 +207,7 @@ function me_field_option_to_string($options) {
  *
  * @return string $str
  */
-function me_render_field_option($options) {
+function marketengine_render_field_option($options) {
     $str = array();
     foreach($options as $key => $option) {
         $str[] = $option['label'];
@@ -215,7 +217,7 @@ function me_render_field_option($options) {
 
 function marketengine_cf_pagination($args) {
     $big = 999999999;
-    $current_page = empty($_REQUEST['paged']) ? 1 : $_REQUEST['paged'];
+    $current_page = empty($_REQUEST['paged']) ? 1 : absint( $_REQUEST['paged'] );
     echo paginate_links( array(
         'base' => add_query_arg( 'paged', '%#%' ),
         'format' => '',

@@ -7,13 +7,14 @@ var uglify 				= require('gulp-uglify');
 var autoprefixer        = require('gulp-autoprefixer');
 var connect             = require('gulp-connect');
 var browserSync 		= require('browser-sync').create();
-var strip_comments = require('gulp-strip-json-comments');
+var strip_comments      = require('gulp-strip-json-comments');
 
 
 /**
  * Basic gulp
  */
 gulp.task('default', ['serve', 'scripts', 'script-vendor']);
+
 
 gulp.task('serve', ['sass'], function() {
     browserSync.init({
@@ -114,13 +115,14 @@ gulp.task('scripts', function() {
     .pipe(connect.reload());
 
 });
+
 var me_vendor_src               = 'C:/xampp/htdocs/me/wp-content/plugins/zeroengine/assets/js';
 var me_vendor_dest              = 'C:/xampp/htdocs/me/wp-content/plugins/zeroengine/assets/js';
 
 var jquery_ui                   = me_vendor_src + '/jquery-ui.js';
 var muploader                   = me_vendor_src + '/muploader.js/';
 var jquery_magnific_popup       = me_vendor_src + '/jquery.magnific-popup.min.js';
-var jquery_flexslider           = me_vendor_src + '/jquery.flexslider-min.js';
+var jquery_owl_carousel         = me_vendor_src + '/owl.carousel.min.js';
 var jquery_raty                 = me_vendor_src + '/jquery.raty.js';
 
 var me_user_profile             = me_vendor_src + '/user-profile.js';
@@ -138,7 +140,7 @@ gulp.task('script-vendor', function() {
         jquery_ui,
         muploader,
         jquery_magnific_popup,
-        jquery_flexslider,
+        jquery_owl_carousel,
         jquery_raty,
         me_user_profile,
         me_tag_box,
@@ -152,6 +154,7 @@ gulp.task('script-vendor', function() {
         me_listing_review
     ])
     .pipe(uglify())
+    .pipe(strip_comments())
     .pipe(concat("me.vendor.js"))
     .pipe(gulp.dest(me_vendor_dest));
 });

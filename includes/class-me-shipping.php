@@ -34,7 +34,7 @@ class ME_Simple_Shipping extends ME_Shipping {
  *
  * @return ME_Shipping object
  */
-function me_get_shipping_class($name, $order) {
+function marketengine_get_shipping_class($name, $order) {
 	$class_name = 'ME_' . ucfirst($name) . '_Shipping';
 	if(class_exists($class_name)) {
 		return new $class_name($order);

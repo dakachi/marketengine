@@ -178,7 +178,7 @@ class ME_Validator {
             'url' => __('The :attribute format is invalid.', "enginethemes")
         );
 
-        $this->customMessages = apply_filters('me_validator_messages', $messages);
+        $this->customMessages = apply_filters('marketengine_validator_messages', $messages);
     }
 
     /**
@@ -2284,7 +2284,7 @@ class ME_Validator {
  *                 - attribute : rules list
  * @return boolean
  */
-function me_validate($data, $rules, $custom_attributes = array()) {
+function marketengine_validate($data, $rules, $custom_attributes = array()) {
     $validator = new ME_Validator($data, $rules, $custom_attributes);
     if ($validator->passes()) {
         return true;
@@ -2307,7 +2307,7 @@ function me_validate($data, $rules, $custom_attributes = array()) {
  * @return array List of invalid field messsage
  *            - attribute : message
  */
-function me_get_invalid_message($data, $rules, $custom_attributes = array()) {
+function marketengine_get_invalid_message($data, $rules, $custom_attributes = array()) {
     $validator = new ME_Validator($data, $rules, $custom_attributes);
     $validator->invalid();
     return $validator->getMessages();

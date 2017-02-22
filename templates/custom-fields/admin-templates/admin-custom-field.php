@@ -12,15 +12,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$categories = me_get_listing_categories();
+$categories = marketengine_get_listing_categories();
 
 ?>
 
 <div class="me-custom-field">
 	<h2><?php _e('List of Custom Field', 'enginethemes'); ?></h2>
-	<?php me_print_notices(); ?>
+	<?php marketengine_print_notices(); ?>
 
-	<?php me_get_template('custom-fields/admin-templates/category-select', array('categories' => $categories )); ?>
+	<?php marketengine_get_template('custom-fields/admin-templates/category-select', array('categories' => $categories )); ?>
 
 	<a class="me-add-custom-field-btn" href="<?php echo add_query_arg('view', 'add'); ?>"><?php _e('Add New Custom Field', 'enginethemes'); ?></a>
 	<?php if(isset($_REQUEST['view']) && $_REQUEST['view'] == 'group-by-category') : ?>
@@ -29,15 +29,15 @@ $categories = me_get_listing_categories();
 
 	<div class="me-custom-field-list">
 		<ul id="me-cf-list-sortable" class="me-cf-list">
-			<?php me_get_template('custom-fields/admin-templates/table-header'); ?>
+			<?php marketengine_get_template('custom-fields/admin-templates/table-header'); ?>
 
 			<?php
 			if(isset($_REQUEST['view']) && $_REQUEST['view'] == 'group-by-category') {
-				$customfields = me_cf_get_fields($_REQUEST['category-id']);
-				me_get_template('custom-fields/admin-templates/field-list-by-category', array('customfields' => $customfields ));
+				$customfields = marketengine_cf_get_fields($_REQUEST['category-id']);
+				marketengine_get_template('custom-fields/admin-templates/field-list-by-category', array('customfields' => $customfields ));
 			} else {
-				$customfields = me_cf_fields_query($_REQUEST);
-				me_get_template('custom-fields/admin-templates/field-list', array('customfields' => $customfields ));
+				$customfields = marketengine_cf_fields_query($_REQUEST);
+				marketengine_get_template('custom-fields/admin-templates/field-list', array('customfields' => $customfields ));
 			}
 			?>
 		</ul>

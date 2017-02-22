@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) {
  * 
  * @return ME_Listing | null Return ME_Listing object if post->post_type is listing, if not return null
  */
-function me_get_listing($post = null) {
+function marketengine_get_listing($post = null) {
     if (null === $post) {
         global $post;
     }
@@ -40,14 +40,14 @@ function me_get_listing($post = null) {
  * @since 1.0
  * @return array Array of listing type
  */
-function me_get_listing_types() {
-    $purchasion_title = me_option('purchasion-title');
-    $contact_title = me_option('contact-title');
+function marketengine_get_listing_types() {
+    $purchasion_title = marketengine_option('purchasion-title');
+    $contact_title = marketengine_option('contact-title');
     $listing_types = array(
         'purchasion' => $purchasion_title ? $purchasion_title : __("Selling", "enginethemes"),
         'contact'    => $contact_title ? $contact_title : __("Offering", "enginethemes"),
     );
-    return apply_filters('me_get_listing_types', $listing_types);
+    return apply_filters('marketengine_get_listing_types', $listing_types);
 }
 
 /**
@@ -60,8 +60,8 @@ function me_get_listing_types() {
  * @since 1.0
  * @return string
  */
-function me_get_listing_type_label($type) {
-    $types = me_get_listing_types();
+function marketengine_get_listing_type_label($type) {
+    $types = marketengine_get_listing_types();
     return $types[$type];
 }
 
@@ -76,12 +76,12 @@ function me_get_listing_type_label($type) {
  * @since 1.0
  * @return array Array of category id the listing type support
  */
-function me_get_listing_type_categories() {
-    $purchase_cats = me_option('purchasion-available');
-    $contact_cats  = me_option('contact-available');
+function marketengine_get_listing_type_categories() {
+    $purchase_cats = marketengine_option('purchasion-available', array());
+    $contact_cats  = marketengine_option('contact-available', array());
     $categories = array(
-        'contact' => empty($contact_cats) ? array() : $contact_cats,
-        'purchasion' => empty($purchase_cats) ? array() : $purchase_cats
+        'contact' => empty($contact_cats) ? array() : (array)$contact_cats,
+        'purchasion' => empty($purchase_cats) ? array() : (array)$purchase_cats
     );
     $categories['all'] = array_merge($categories['contact'], $categories['purchasion']);
     /**
@@ -101,13 +101,13 @@ function me_get_listing_type_categories() {
  *
  * @return bool
  */
-function me_is_listing_type_available($listing_type, $cat = 0) {
+function marketengine_is_listing_type_available($listing_type, $cat = 0) {
     if(!$cat && !empty($_POST['parent_cat'])) {
-        $cat = $_POST['parent_cat'];
+        $cat = absint( $_POST['parent_cat'] );
     }
     if($cat == '') return true;
 
-    $categories = me_get_listing_type_categories();
+    $categories = marketengine_get_listing_type_categories();
     return in_array($cat, $categories[$listing_type]);
 }
 
@@ -122,7 +122,7 @@ function me_is_listing_type_available($listing_type, $cat = 0) {
  * @since 1.0
  * @return array
  */
-function me_listings_status_list() {
+function marketengine_listings_status_list() {
     $listing_status = array(
         'publish'     => __("Published", "enginethemes"),
         // 'me-pending'  => __("Pending", "enginethemes"),
@@ -142,7 +142,7 @@ function me_listings_status_list() {
  * @since 1.0
  * @return int The rating score
  */
-function me_get_user_rate_listing_score($listing_id, $user_id) {
+function marketengine_get_user_rate_listing_score($listing_id, $user_id) {
     $args = array(
         'post_id'        => $listing_id,
         'type'           => 'review',
@@ -235,7 +235,7 @@ function me_get_user_rate_listing_score($listing_id, $user_id) {
  * @since 1.0
  * @return array ({$term_id} => {$name})
  */
-function me_get_listing_categories($args = array('parent' => 0 , 'hide_empty' => false))
+function marketengine_get_listing_categories($args = array('parent' => 0 , 'hide_empty' => false))
 {
     $result   = array();
     $termlist = get_terms('listing_category', $args );
@@ -247,7 +247,7 @@ function me_get_listing_categories($args = array('parent' => 0 , 'hide_empty' =>
     return $result;
 }
 
-function me_filter_order_count_result( $order_count ) {
+function marketengine_filter_order_count_result( $order_count ) {
     $temp = array();
     foreach( $order_count as $key => $value) {
         $temp[$value->status] = $value->count;

@@ -52,12 +52,17 @@
 	.marketengine-gallery-img {
 		margin-top: 0;
 		li.me-item-img {
-			margin-top: 0;
+			// margin-top: 0;
 			margin-bottom: 8px;
 		}
 	}
 }
-
+.me-escalate-about {
+	margin: 0;
+	font-size: $font_size_medium;
+	color: $color_text;
+	line-height: 1.5em;
+}
 .me-escalate-submit {
 	text-align: center;
 	.me-escalate-submit-btn {
@@ -81,7 +86,10 @@
 	.me-escalate-box {
 		margin-bottom: 20px;
 	}
-	.me-escalate-submit-btn {
-		width: 100%;
+	.me-escalate-submit {
+		.me-escalate-submit-btn {
+			width: 100%;
+		}
 	}
+	
 }

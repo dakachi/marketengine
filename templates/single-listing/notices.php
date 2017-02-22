@@ -1,17 +1,17 @@
-<?php if(!me_is_activated_user()) : ?>
+<?php if(!marketengine_is_activated_user()) : ?>
 
 <div class="me-inactive">
 	
-	<?php if( me_get_notices() ) : ?>
+	<?php if( marketengine_get_notices() ) : ?>
 
-		<?php me_print_notices(); ?>
+		<?php marketengine_print_notices(); ?>
 
 	<?php else: ?>
 		<div class="me-authen-inactive">
 		<p><?php _e("You need to active your account before buy listings.", "enginethemes"); ?></p>
 
 	<?php
-		$profile_link = me_get_page_permalink('user_account');
+		$profile_link = marketengine_get_page_permalink('user_account');
         $activate_email_link = add_query_arg(array( 'resend-confirmation-email' => true, '_wpnonce' => wp_create_nonce('me-resend_confirmation_email') ), $profile_link);
     ?>
 

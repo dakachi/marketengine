@@ -32,16 +32,16 @@ class ME_Custom_Field_Form
     {
         add_filter('marketengine_section', array(__CLASS__, 'marketengine_add_custom_field_section'));
 
-        add_action('admin_init', array(__CLASS__, 'me_create_custom_field'));
-        add_action('admin_init', array(__CLASS__, 'me_update_custom_field'));
-        add_action('admin_init', array(__CLASS__, 'me_delete_custom_field'));
-        add_action('admin_init', array(__CLASS__, 'me_remove_custom_field_from_category'));
+        add_action('admin_init', array(__CLASS__, 'marketengine_create_custom_field'));
+        add_action('admin_init', array(__CLASS__, 'marketengine_update_custom_field'));
+        add_action('admin_init', array(__CLASS__, 'marketengine_delete_custom_field'));
+        add_action('admin_init', array(__CLASS__, 'marketengine_remove_custom_field_from_category'));
 
         add_action('admin_init', array(__CLASS__, 'marketengine_add_actions'));
-        add_action('wp_ajax_me_cf_sort', array(__CLASS__, 'me_cf_sort'));
+        add_action('wp_ajax_me_cf_sort', array(__CLASS__, 'marketengine_cf_sort'));
 
         add_action('wp_ajax_check_field_name', array('ME_Custom_Field_Handle', 'is_field_name_exists'));
-        add_action('me_load_cf_input', array('ME_Custom_Field_Handle', 'load_field_input'));
+        add_action('marketengine_load_cf_input', array('ME_Custom_Field_Handle', 'load_field_input'));
         add_action('wp_ajax_me_cf_load_input_type', array('ME_Custom_Field_Handle', 'load_field_input_ajax'));
 
     }
@@ -91,7 +91,7 @@ class ME_Custom_Field_Form
     {
         wp_dequeue_script('option-view');
         if (is_admin() && isset($_REQUEST['view']) && $_REQUEST['view'] == 'group-by-category') {
-            wp_enqueue_script('cf_sort', ME_PLUGIN_URL . "assets/admin/custom-field-sort.js", array('jquery-ui'));
+            wp_enqueue_script('cf_sort', MARKETENGINE_URL . "assets/admin/custom-field-sort.js", array('jquery-ui'));
         }
     }
 
@@ -101,7 +101,7 @@ class ME_Custom_Field_Form
      * @since   1.0.1
      * @version 1.0.0
      */
-    public static function me_create_custom_field()
+    public static function marketengine_create_custom_field()
     {
         if (is_admin() && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-insert_custom_field')) {
 
@@ -111,11 +111,11 @@ class ME_Custom_Field_Form
             $field_id = ME_Custom_Field_Handle::insert($field_data);
 
             if (is_wp_error($field_id)) {
-                me_wp_error_to_notices($field_id);
+                marketengine_wp_error_to_notices($field_id);
                 return;
             }
 
-            $redirect = apply_filters('me_after_create_custom_field_redirect', $_POST['redirect']);
+            $redirect = apply_filters('marketengine_after_create_custom_field_redirect', $_POST['redirect']);
 
             if ($redirect) {
                 wp_redirect($redirect);
@@ -130,7 +130,7 @@ class ME_Custom_Field_Form
      * @since   1.0.1
      * @version 1.0.0
      */
-    public static function me_update_custom_field()
+    public static function marketengine_update_custom_field()
     {
         if (is_admin() && isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'me-update_custom_field')) {
 
@@ -143,11 +143,11 @@ class ME_Custom_Field_Form
             $field_id          = ME_Custom_Field_Handle::insert($_POST, true);
 
             if (is_wp_error($field_id)) {
-                me_wp_error_to_notices($field_id);
+                marketengine_wp_error_to_notices($field_id);
                 return;
             }
 
-            $redirect = apply_filters('me_after_create_custom_field_redirect', $_POST['redirect']);
+            $redirect = apply_filters('marketengine_after_create_custom_field_redirect', $_POST['redirect']);
 
             if ($redirect) {
                 wp_redirect($redirect);
@@ -162,14 +162,14 @@ class ME_Custom_Field_Form
      * @since   1.0.1
      * @version 1.0.0
      */
-    public static function me_delete_custom_field()
+    public static function marketengine_delete_custom_field()
     {
         if (is_admin() && isset($_REQUEST['_wp_nonce']) && wp_verify_nonce($_REQUEST['_wp_nonce'], 'delete-custom-field') && isset($_REQUEST['custom-field-id'])) {
 
             ME_Custom_Field_Handle::delete(absint( $_REQUEST['custom-field-id'] ));
 
             if (is_wp_error($result)) {
-                me_wp_error_to_notices($result);
+                marketengine_wp_error_to_notices($result);
                 return;
             }
 
@@ -185,7 +185,7 @@ class ME_Custom_Field_Form
      * @since   1.0.1
      * @version 1.0.0
      */
-    public static function me_remove_custom_field_from_category()
+    public static function marketengine_remove_custom_field_from_category()
     {
         if (is_admin() && isset($_REQUEST['_wp_nonce']) && wp_verify_nonce($_REQUEST['_wp_nonce'], 'remove-from-category') && isset($_REQUEST['custom-field-id'])) {
 
@@ -203,13 +203,13 @@ class ME_Custom_Field_Form
      * @since   1.0.1
      * @version 1.0.0
      */
-    public static function me_cf_sort()
+    public static function marketengine_cf_sort()
     {
         if (is_admin()) {
             parse_str($_POST['order'], $fields);
             $fields = $fields['me-cf-item'];
             foreach ($fields as $order => $field_id) {
-                $result = me_cf_set_field_category($field_id, absint($_POST['category_id']), absint($order));
+                $result = marketengine_cf_set_field_category($field_id, absint($_POST['category_id']), absint($order));
                 if (is_wp_error($result)) {
                     wp_send_json(array(
                         'status'  => false,

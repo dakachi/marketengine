@@ -46,11 +46,11 @@ class ME_Report_CSVExport
             }
 
             if (!empty($_GET['from_date'])) {
-                $filename .= '_' . esc_html( $_GET['from_date'] );
+                $filename .= '_' . sanitize_file_name( $_GET['from_date'] );
             }
 
             if (!empty($_GET['to_date'])) {
-                $filename .= '_' . esc_html( $_GET['to_date'] );
+                $filename .= '_' . sanitize_file_name( $_GET['to_date'] );
             }
 
             header("Pragma: public");
@@ -139,7 +139,7 @@ class ME_Report_CSVExport
     public function generate_listings()
     {
 
-        $args              = array_map('esc_attr', $_REQUEST);;
+        $args              = array_map('esc_sql', $_REQUEST);
         $args['showposts'] = 300000;
         $args['paged']     = 1;
         $query             = marketengine_listing_report($args);
@@ -201,7 +201,7 @@ class ME_Report_CSVExport
     public function generate_orders()
     {
 
-        $args              = array_map('esc_attr', $_REQUEST);
+        $args              = array_map('esc_sql', $_REQUEST);
         $args['showposts'] = 300000;
         $args['paged']     = 1;
         $query             = marketengine_orders_report($args);
@@ -213,7 +213,7 @@ class ME_Report_CSVExport
         $headings = array(
             'quant' => __("Date", "enginethemes"),
             'count' => __("Total Orders", "enginethemes"),
-            'total' => __("Income", "enginethemes") . '(' . me_option('payment-currency-sign') . ')',
+            'total' => __("Income", "enginethemes") . '(' . marketengine_option('payment-currency-sign') . ')',
         );
 
         return $this->generate_rows($headings, $orders, $quant);
@@ -227,7 +227,7 @@ class ME_Report_CSVExport
     public function generate_inquiries()
     {
 
-        $args              = array_map('esc_attr', $_REQUEST);
+        $args              = array_map('esc_sql', $_REQUEST);
         $args['showposts'] = 300000;
         $args['paged']     = 1;
         $query             = marketengine_inquiries_report($args);
@@ -253,7 +253,7 @@ class ME_Report_CSVExport
     public function generate_members()
     {
 
-        $args              = array_map('esc_attr', $_REQUEST);
+        $args              = array_map('esc_sql', $_REQUEST);
         $args['showposts'] = 300000;
         $args['paged']     = 1;
         $query             = marketengine_members_report($args);
@@ -280,10 +280,10 @@ class ME_Report_CSVExport
  *
  * @since 1.0.0
  */
-function me_export_reports()
+function marketengine_export_reports()
 {
     // Instantiate a singleton of this plugin
     $csvExport = new ME_Report_CSVExport();
 }
-add_action('admin_init', 'me_export_reports');
+add_action('admin_init', 'marketengine_export_reports');
 

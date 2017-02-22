@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 	<form id="forgot-password-form" action="" method="post">
 		<h3><?php _e("Forgot Password", "enginethemes"); ?></h3>
 
-		<?php me_print_notices(); ?>
+		<?php marketengine_print_notices(); ?>
 		<?php do_action('marketengine_forgot_password_form_start');?>
 
 		<div class="marketengine-group-field">
@@ -33,7 +33,7 @@ if (!defined('ABSPATH')) {
 		<div class="marketengine-group-field submit-forgot">
 			<input type="submit" class="marketengine-btn" name="forgot_pass" value="<?php _e("SEND REQUEST", "enginethemes"); ?>">
 		</div>
-		<a href="<?php echo me_get_page_permalink('user_account'); ?>" class="back-home-sigin"><?php _e("&lt; Back to login", "enginethemes"); ?></a>
+		<a href="<?php echo marketengine_get_page_permalink('user_account'); ?>" class="back-home-sigin"><?php _e("&lt; Back to login", "enginethemes"); ?></a>
 
 		<?php do_action('marketengine_forgot_password_form_start');?>
 	</form>

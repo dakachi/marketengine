@@ -9,5 +9,5 @@
  */
 ?>
 <div class="me-paginations">
-	<?php me_paginate_link (); ?>
+	<?php marketengine_paginate_link (); ?>
 </div>

@@ -18,7 +18,9 @@ $admin_report_tabs = array(
 );
 
 if(empty($_REQUEST['tab']) || !isset($admin_report_tabs[$_REQUEST['tab']])) {
-	$_REQUEST['tab'] = 'listings';
+	$requested_tab = 'listings';
+}else {
+	$requested_tab = $_REQUEST['tab'];
 }
 ?>
 
@@ -26,12 +28,12 @@ if(empty($_REQUEST['tab']) || !isset($admin_report_tabs[$_REQUEST['tab']])) {
 	<ul class="me-nav me-tabs-nav">
 		<?php
 		foreach ($admin_report_tabs as $key => $tab) : ?>
-			<li <?php if($_REQUEST['tab'] == $key ) {echo 'class="active"';} ?>><a href="?page=me-reports&tab=<?php echo $key; ?>"><?php echo $tab; ?></a></li>
+			<li <?php if($requested_tab == $key ) {echo 'class="active"';} ?>><a href="?page=me-reports&tab=<?php echo $key; ?>"><?php echo $tab; ?></a></li>
 		<?php endforeach; ?>
 	</ul>
 	<div class="me-tabs-container">
 	<?php
-		me_get_template('admin/'. sanitize_text_field( $_REQUEST['tab'] ));
+		marketengine_get_template('admin/'. $requested_tab);
 	?>
 	</div>
 </div>

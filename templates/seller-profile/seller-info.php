@@ -14,7 +14,7 @@ $member_sinced = date_i18n( get_option( 'date_format' ), strtotime(get_the_autho
 ?>
 <div class="me-authors me-authors-xs">
 	<span class="me-avatar">
-		<?php echo me_get_avatar( $user_id ); ?>
+		<?php echo marketengine_get_avatar( $user_id ); ?>
 		<b><?php echo $display_name ?></b>
 	</span>
 	<ul class="me-author-info">

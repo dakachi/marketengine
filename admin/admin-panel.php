@@ -69,7 +69,7 @@ function marketengine_option_view() {
 
     echo '<ul class="me-nav me-tabs-nav">';
 
-    if (empty($_REQUEST['tab'])) {
+    if (empty($_REQUEST['tab']) || !array_key_exists($_REQUEST['tab'], $tabs)) {
         $requested_tab = 'marketplace-settings';
     } else {
         $requested_tab = $_REQUEST['tab'];
@@ -103,7 +103,7 @@ function marketengine_option_view() {
  */
 function marketengine_report_view() {
     marketengine_option_header();
-    me_get_template('admin/overview', $_REQUEST);
+    marketengine_get_template('admin/overview', $_REQUEST);
     marketengine_option_footer();
 }
 
@@ -126,7 +126,10 @@ function marketengine_option_menu() {
         null,
         28
     );
+}
+add_action('admin_menu', 'marketengine_option_menu');
 
+function marketengine_reports_menu() {
     add_submenu_page(
         'marketengine',
         __("Reports", "enginethemes"),
@@ -135,7 +138,10 @@ function marketengine_option_menu() {
         'me-reports',
         'marketengine_report_view'
     );
+}
+add_action('admin_menu', 'marketengine_reports_menu', 20);
 
+function marketengine_settings_menu() {
     add_submenu_page(
         'marketengine',
         __("Settings", "enginethemes"),
@@ -144,7 +150,11 @@ function marketengine_option_menu() {
         'me-settings',
         'marketengine_option_view'
     );
+}
+add_action('admin_menu', 'marketengine_settings_menu', 25);
 
+
+function marketengine_setupwizard_menu() {
     add_submenu_page(
         'marketengine',
         __("Setup Wizard", "enginethemes"),
@@ -154,7 +164,7 @@ function marketengine_option_menu() {
         null
     );
 }
-add_action('admin_menu', 'marketengine_option_menu');
+add_action('admin_menu', 'marketengine_setupwizard_menu', 30);
 
 /**
  * Prints styles to admin head.
@@ -204,14 +214,14 @@ function marketengine_add_header_style () {
  */
 function marketengine_load_admin_option_script_css() {
     if (!empty($_REQUEST['page']) && (strpos($_REQUEST['page'], 'me') !== false)) {
-        wp_register_style('scrollbar-css', ME_PLUGIN_URL . 'assets/admin/jquery.mCustomScrollbar.min.css', array(), '1.0');
-        wp_enqueue_style('marketengine-font-icon', ME_PLUGIN_URL . 'assets/css/marketengine-font-icon.css', array(), '1.0');
-        wp_enqueue_style('me-option-css', ME_PLUGIN_URL . 'assets/admin/marketengine-admin.css');
+        wp_register_style('scrollbar-css', MARKETENGINE_URL . 'assets/admin/jquery.mCustomScrollbar.min.css', array(), '1.0');
+        wp_enqueue_style('marketengine-font-icon', MARKETENGINE_URL . 'assets/css/marketengine-font-icon.css', array(), '1.0');
+        wp_enqueue_style('me-option-css', MARKETENGINE_URL . 'assets/admin/marketengine-admin.css');
 
         wp_enqueue_script('backbone');
-        wp_enqueue_script('jquery-scrollbar', ME_PLUGIN_URL . 'assets/admin/jquery.mCustomScrollbar.min.js', array('jquery'), '1.0', true);
-        wp_enqueue_script('marketengine-option', ME_PLUGIN_URL . 'assets/admin/script-admin.js', array('jquery', 'jquery-scrollbar'), '1.0', true);
-        wp_enqueue_script('option-view', ME_PLUGIN_URL . 'assets/admin/option-view.js', array('jquery', 'backbone', 'jquery-scrollbar'), '1.0', true);
+        wp_enqueue_script('jquery-scrollbar', MARKETENGINE_URL . 'assets/admin/jquery.mCustomScrollbar.min.js', array('jquery'), '1.0', true);
+        wp_enqueue_script('marketengine-option', MARKETENGINE_URL . 'assets/admin/script-admin.js', array('jquery', 'jquery-scrollbar'), '1.0', true);
+        wp_enqueue_script('option-view', MARKETENGINE_URL . 'assets/admin/option-view.js', array('jquery', 'backbone', 'jquery-scrollbar'), '1.0', true);
         wp_localize_script(
             'backbone',
             'me_globals',
@@ -236,9 +246,9 @@ add_action('admin_enqueue_scripts', 'marketengine_load_admin_option_script_css')
  * @since 1.0
  */
 function marketengine_option_header() {
-    marketengine_option_notices();
     ?>
-
+<div class="wrap">
+<?php marketengine_option_notices(); ?>
 <div class="marketengine-admin">
     <div class="me-header">
         <span class="pull-left"><?php _e("MARKETENGINE", "enginethemes");?></span>
@@ -258,7 +268,7 @@ function marketengine_option_footer() {
     ?>
     </div>
 </div>
-
+</div>
 <?php
 }
 
@@ -267,17 +277,17 @@ function marketengine_option_footer() {
  * @category Admin
  * @since 1.0
  */
-function me_admin_menu_class() {
+function marketengine_admin_menu_class() {
     global $menu;
     $menu[28][6] .= '-icon-me-logo';
 }
-add_action( 'admin_menu', 'me_admin_menu_class', 10 );
+add_action( 'admin_menu', 'marketengine_admin_menu_class', 10 );
 
-function me_admin_footer_text( $text) {
+function marketengine_admin_footer_text( $text) {
     $text = sprintf( 'Thank you for creating with <a href="%s">EngineThemes</a>.', 'https://www.enginethemes.com/' );
     return $text;
 }
-add_filter( 'admin_footer_text', 'me_admin_footer_text' );
+add_filter( 'admin_footer_text', 'marketengine_admin_footer_text' );
 
 /**
  * Render MarketEngine Admin notices
@@ -286,6 +296,6 @@ add_filter( 'admin_footer_text', 'me_admin_footer_text' );
  */
 function marketengine_option_notices() {
 ?>
-    <?php me_get_template( 'admin/notices' ); ?>
+    <?php marketengine_get_template( 'admin/notices' ); ?>
 <?php
 }

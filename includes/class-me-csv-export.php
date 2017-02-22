@@ -23,11 +23,11 @@ class ME_CSV_Export {
 			}
 
             if (!empty($_GET['from_date'])) {
-                $filename .= '_' . $_GET['from_date'];
+                $filename .= '_' . sanitize_file_name( $_GET['from_date'] );
             }
 
             if (!empty($_GET['to_date'])) {
-                $filename .= '_' . $_GET['to_date'];
+                $filename .= '_' . sanitize_file_name($_GET['to_date']);
             }
 
 			header("Pragma: public");
@@ -66,14 +66,14 @@ class ME_CSV_Export {
 
 	public function generate_orders() {
 
-		$args = $_REQUEST;
+		$args = array_map('esc_sql', $_REQUEST);
 
-		$data = me_order_report_data($args);
+		$data = marketengine_order_report_data($args);
 
 		$headings = array(
 			'order_id' 		=> __("Order ID", "enginethemes"),
 			'status' 		=> __("Status", "enginethemes"),
-			'amount' 		=> __("Amount", "enginethemes") . '(' .me_option('payment-currency-sign') .')',
+			'amount' 		=> __("Amount", "enginethemes") . '(' .marketengine_option('payment-currency-sign') .')',
 			'date_of_order'	=> __("Date Of Order", "enginethemes"),
 			'listing_title'	=> __("Listing", "enginethemes"),
 		);
@@ -82,14 +82,14 @@ class ME_CSV_Export {
 	}
 
 	public function generate_transactions() {
-		$args = $_REQUEST;
+		$args = array_map('esc_sql', $_REQUEST);
 
-		$data = me_transaction_report_data($args);
+		$data = marketengine_transaction_report_data($args);
 
 		$headings = array(
 			'transaction_id'=> __("Transaction ID", "enginethemes"),
 			'status' 		=> __("Status", "enginethemes"),
-			'amount' 		=> __("Amount", "enginethemes") . '(' .me_option('payment-currency-sign') .')',
+			'amount' 		=> __("Amount", "enginethemes") . '(' .marketengine_option('payment-currency-sign') .')',
 			'date_of_order'	=> __("Date Of Order", "enginethemes"),
 			'listing_title'	=> __("Listing", "enginethemes"),
 		);
@@ -114,7 +114,7 @@ class ME_CSV_Export {
 			foreach ($headings as $key => $heading) {
 				$csv_output .= ($key == 'transaction_id' || $key == 'order_id') ? '#' : '';
 				if( $key == 'status') {
-					$status_arr = me_get_order_status_list();
+					$status_arr = marketengine_get_order_status_list();
 					$csv_output .= $status_arr[$item->$key] .",";
 				} elseif ( $key == 'listing_title' ) {
 					$csv_output .= "\"" . $item->$key."\",";
@@ -128,8 +128,8 @@ class ME_CSV_Export {
 	}
 
 }
-add_action( 'init', 'me_export_reports_init' );
-function me_export_reports_init() {
+add_action( 'init', 'marketengine_export_reports_init' );
+function marketengine_export_reports_init() {
 	// Instantiate a singleton of this plugin
 	$csvExport = new ME_CSV_Export();
 }

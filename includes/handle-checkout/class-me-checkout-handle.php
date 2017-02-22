@@ -42,10 +42,10 @@ class ME_Checkout_Handle {
             'country'    => __("billing country", "enginethemes"),
         );
 
-        $is_valid = me_validate($data['billing_info'], $billing_rules, $custom_attributes);
+        $is_valid = marketengine_validate($data['billing_info'], $billing_rules, $custom_attributes);
         if (!$is_valid) {
             $errors = new WP_Error();
-            $invalid_data = me_get_invalid_message($data['billing_info'], $billing_rules, $custom_attributes);
+            $invalid_data = marketengine_get_invalid_message($data['billing_info'], $billing_rules, $custom_attributes);
             foreach ($invalid_data as $key => $message) {
                 $errors->add($key, $message);
             }
@@ -72,7 +72,7 @@ class ME_Checkout_Handle {
             return new WP_Error('permission_denied', __("You do not have permission to process this order.", "enginethemes"));
         }
 
-        $payments       = me_get_available_payment_gateways();
+        $payments       = marketengine_get_available_payment_gateways();
         $payment_method = $order->get_payment_method();
 
         if (!isset($payments[$payment_method])) {
@@ -96,7 +96,7 @@ class ME_Checkout_Handle {
         $current_user_id     = get_current_user_id();
         $data['post_author'] = $current_user_id;
 
-        if (empty($data['payment_method']) || !me_is_available_payment_gateway($data['payment_method'])) {
+        if (empty($data['payment_method']) || !marketengine_is_available_payment_gateway($data['payment_method'])) {
             return new WP_Error("invalid_payment_method", __("The selected payment method is not available now.", "enginethemes"));
         }
 
@@ -106,7 +106,7 @@ class ME_Checkout_Handle {
 
         $items = array();
         foreach ($data['listing_item'] as $key => $value) {
-            $listing = me_get_listing($value['id']);
+            $listing = marketengine_get_listing($value['id']);
             if (!$listing) {
                 return new WP_Error("invalid_listing", __("The selected listing is invalid.", "enginethemes"));
             }
@@ -126,7 +126,7 @@ class ME_Checkout_Handle {
             $items[] = array('id' => $listing, 'qty' => $value['qty']);
         }
 
-        $order = me_insert_order($data);
+        $order = marketengine_insert_order($data);
         if (is_wp_error($order)) {
             return $order;
         }
@@ -162,12 +162,12 @@ class ME_Checkout_Handle {
             return new WP_Error('invalid_listing', __("Invalid listing.", "enginethemes"));
         }
 
-        $inquiry_id = me_get_current_inquiry($listing_id);
+        $inquiry_id = marketengine_get_current_inquiry($listing_id);
         // strip html tag
         $content = strip_tags($content);
         if (!$inquiry_id) {
             // create inquiry
-            $inquiry_id = me_insert_message(
+            $inquiry_id = marketengine_insert_message(
                 array(
                     'post_content' => 'Inquiry listing #' . $listing_id,
                     'post_title'   => 'Inquiry listing #' . $listing_id,
@@ -201,7 +201,7 @@ class ME_Checkout_Handle {
         if ($inquiry_id) {
             // add message to inquiry
             $current_user = get_current_user_id();
-            $inquiry      = me_get_message($inquiry_id);
+            $inquiry      = marketengine_get_message($inquiry_id);
 
             if (!$inquiry) {
                 return new WP_Error('invalid_inquiry', __("Invalid inquiry.", "enginethemes"));
@@ -229,7 +229,7 @@ class ME_Checkout_Handle {
                 'post_parent'  => $inquiry_id ,
             );
 
-            $message_id = me_insert_message($message_data, true);
+            $message_id = marketengine_insert_message($message_data, true);
             return $message_id;
         }else {
             return new WP_Error('invalid_inquiry', __("Invalid inquiry.", "enginethemes"));

@@ -9,7 +9,7 @@ $listing_image = !empty($_POST['listing_image']) ? absint( $_POST['listing_image
 
         <label class="me-field-title" for="upload_company_gallery"><?php _e('Your listing image', 'enginethemes'); ?></label>
         <?php
-        me_get_template('upload-file/upload-form', array(
+        marketengine_get_template('upload-file/upload-form', array(
             'id' => 'upload_listing_image',
             'name' => 'listing_image',
             'source' => $listing_image,

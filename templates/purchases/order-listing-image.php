@@ -14,4 +14,14 @@ if (!defined('ABSPATH')) {
     exit;
 }
 ?>
-<a class="me-orderlisting-thumbs" href="<?php echo $listing_obj && (($listing_obj->get_author() == get_current_user_id()) || $listing_obj->is_available()) ? $listing_obj->get_permalink() : "javascript:void(0)"; ?>"><?php echo $listing_obj && $listing_obj->get_listing_thumbnail() ? $listing_obj->get_listing_thumbnail() : '<i class="icon-me-image"></i>'; ?></a>
+<?php if($listing) : ?>
+<a class="me-orderlisting-thumbs" href="<?php echo $listing->get_permalink(false, 'javascript:void(0)'); ?>">
+	<?php 
+		if( $listing->get_listing_thumbnail() ) :
+			echo $listing->get_listing_thumbnail();
+		else : 
+			echo '<i class="icon-me-image"></i>';
+		endif;
+	?>
+</a>
+<?php endif; ?>

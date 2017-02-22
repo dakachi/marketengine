@@ -29,7 +29,7 @@ $note = esc_html( $transaction->post_excerpt );
 				<div class="me-col-md-12 me-col-sm-12">
 					<div class="me-orderbill-info">
 						<h5><?php echo __( 'Billed to:', 'enginethemes' ); ?></h5>
-						<p><?php me_print_buyer_information( $billing_address ); ?></p>
+						<p><?php marketengine_print_buyer_information( $billing_address ); ?></p>
 					</div>
 				</div>
 			</div>

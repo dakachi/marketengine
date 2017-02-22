@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 <li itemprop="review" itemscope itemtype="http://schema.org/Review" class="me-media">	
 	<div class="">
 		<a href="<?php echo get_author_posts_url($comment->user_id); ?>" class="avatar-comment pull-left">
-			<?php echo me_get_avatar($comment->user_id); ?>
+			<?php echo marketengine_get_avatar($comment->user_id); ?>
 		</a>
 		<div class="me-media-body">
 			<div class="me-media-heading">

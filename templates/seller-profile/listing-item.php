@@ -8,7 +8,7 @@
  * @version     1.0.0
  */
 
-$listing = me_get_listing( get_the_ID() );
+$listing = marketengine_get_listing( get_the_ID() );
 $listing_type = $listing->get_listing_type();
 $review_score = $listing->get_review_score();
 ?>
@@ -31,7 +31,7 @@ $review_score = $listing->get_review_score();
 		<div class="me-rating">
 			<div class="result-rating" data-score="<?php echo $review_score; ?>"></div>
 		</div>
-		<span class="me-price"><?php echo me_price_html( $listing->get_price() ); ?></span>
+		<span class="me-price"><?php echo marketengine_price_html( $listing->get_price() ); ?></span>
 	<?php endif; ?>
 
 	</div>

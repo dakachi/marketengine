@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
  *
  * @author EngineTeam
  */
-function me_insert_message($message_arr, $wp_error = false) {
+function marketengine_insert_message($message_arr, $wp_error = false) {
     global $wpdb;
 
     $user_id = empty($message_arr['sender']) ? get_current_user_id() : $message_arr['sender'];
@@ -54,7 +54,7 @@ function me_insert_message($message_arr, $wp_error = false) {
 
         // Get the post ID and GUID.
         $message_ID     = $message_arr['ID'];
-        $message_before = me_get_message($message_ID);
+        $message_before = marketengine_get_message($message_ID);
         if (is_null($message_before)) {
             if ($wp_error) {
                 return new WP_Error('invalid_post', __('Invalid message ID.'));
@@ -62,8 +62,8 @@ function me_insert_message($message_arr, $wp_error = false) {
             return 0;
         }
 
-        $guid            = me_get_message_field('guid', $message_ID);
-        $previous_status = me_get_message_field('message_status', $message_ID); // get_post_field
+        $guid            = marketengine_get_message_field('guid', $message_ID);
+        $previous_status = marketengine_get_message_field('message_status', $message_ID); // get_post_field
     } else {
         $previous_status = 'new';
     }
@@ -94,7 +94,7 @@ function me_insert_message($message_arr, $wp_error = false) {
      * @param bool  $maybe_empty Whether the post should be considered "empty".
      * @param array $message_arr     Array of post data.
      */
-    if (apply_filters('me_insert_message_empty_content', $maybe_empty, $message_arr)) {
+    if (apply_filters('marketengine_insert_message_empty_content', $maybe_empty, $message_arr)) {
         if ($wp_error) {
             return new WP_Error('empty_content', __('Content are empty.', 'enginethemes'));
         } else {
@@ -208,7 +208,7 @@ function me_insert_message($message_arr, $wp_error = false) {
     //     }
     // }
 
-    $message = me_get_message($message_ID);
+    $message = marketengine_get_message($message_ID);
     if ($update) {
         /**
          * Fires once an existing message has been updated.
@@ -219,7 +219,7 @@ function me_insert_message($message_arr, $wp_error = false) {
          * @param ME_Message $post         Message object.
          */
         do_action('edit_message', $message_ID, $message);
-        $message_after = me_get_message($message_ID);
+        $message_after = marketengine_get_message($message_ID);
 
         /**
          * Fires once an existing message has been updated.
@@ -267,7 +267,7 @@ function me_insert_message($message_arr, $wp_error = false) {
      * @param ME_Message $message    message object.
      * @param bool    $update  Whether this is an existing message being updated or not.
      */
-    do_action('me_insert_message', $message_ID, $message, $update);
+    do_action('marketengine_insert_message', $message_ID, $message, $update);
 
     return $message_ID;
 }
@@ -283,7 +283,7 @@ function me_insert_message($message_arr, $wp_error = false) {
  *
  * @author EngineTeam
  */
-function me_update_message($message_arr = array(), $wp_error = false) {
+function marketengine_update_message($message_arr = array(), $wp_error = false) {
     if (is_object($message_arr)) {
         // Non-escaped post was passed.
         $message_arr = get_object_vars($message_arr);
@@ -291,7 +291,7 @@ function me_update_message($message_arr = array(), $wp_error = false) {
     }
 
     // First, get all of the original fields.
-    $post = me_get_message($message_arr['ID'], ARRAY_A);
+    $post = marketengine_get_message($message_arr['ID'], ARRAY_A);
 
     if (is_null($post)) {
         if ($wp_error) {
@@ -319,16 +319,16 @@ function me_update_message($message_arr = array(), $wp_error = false) {
         $message_arr['post_date_gmt'] = '';
     }
 
-    return me_insert_message($message_arr, $wp_error);
+    return marketengine_insert_message($message_arr, $wp_error);
 }
 
 // TODO: archive message
-function me_archive_message() {
+function marketengine_archive_message() {
 
 }
 
 // TODO: delete message
-function me_delete_message($message_id) {
+function marketengine_delete_message($message_id) {
     global $wpdb;
     $message_table = $wpdb->prefix . 'marketengine_message_item';
     $wpdb->delete( $message_table, array('ID' => $message_id) );
@@ -339,8 +339,8 @@ function me_delete_message($message_id) {
  * @return Array
  * @author EngineThemes
  */
-function me_get_message_status_list() {
-    return apply_filters('me_message_status_list', array(
+function marketengine_get_message_status_list() {
+    return apply_filters('marketengine_message_status_list', array(
         'sent'    => __("Sent", "enginethemes"),
         'read'    => __("Seen", "enginethemes"),
         'archive' => __("Archived", "enginethemes"),
@@ -352,8 +352,8 @@ function me_get_message_status_list() {
  * @return Array
  * @author EngineThemes
  */
-function me_get_message_types() {
-    return apply_filters('me_message_status_list', array(
+function marketengine_get_message_types() {
+    return apply_filters('marketengine_message_status_list', array(
         'inquiry' => __("Inquiry", "enginethemes"),
         'inbox'   => __("Inbox", "enginethemes"),
     ));
@@ -381,18 +381,15 @@ function me_get_message_types() {
  * }
  * @return array List of messages.
  */
-function me_get_messages($args = null) {
+function marketengine_get_messages($args = null) {
     $defaults = array(
         'numberposts' => 10,
         'orderby'     => 'date',
         'order'       => 'DESC',
-        'post_type'   => 'post',
+        'post_type'   => 'message',
     );
 
     $r = wp_parse_args($args, $defaults);
-    if (empty($r['post_status'])) {
-        $r['post_status'] = 'sent';
-    }
 
     if (!empty($r['numberposts']) && empty($r['posts_per_page'])) {
         $r['posts_per_page'] = $r['numberposts'];
@@ -431,7 +428,7 @@ function me_get_messages($args = null) {
  * @return ME_Message|array|null Type corresponding to $output on success or null on failure.
  *                            When $output is OBJECT, a `ME_Message` instance is returned.
  */
-function me_get_message($message = null, $output = OBJECT, $filter = 'raw') {
+function marketengine_get_message($message = null, $output = OBJECT, $filter = 'raw') {
     if (empty($message) && isset($GLOBALS['message'])) {
         $message = $GLOBALS['message'];
     }
@@ -485,8 +482,8 @@ function me_get_message($message = null, $output = OBJECT, $filter = 'raw') {
  *                             or 'display'. Default 'display'.
  * @return string The value of the message field on success, empty string on failure.
  */
-function me_get_message_field($field, $message, $context = 'display') {
-    $message = me_get_message($message);
+function marketengine_get_message_field($field, $message, $context = 'display') {
+    $message = marketengine_get_message($message);
 
     if (!$message) {
         return '';
@@ -509,7 +506,7 @@ function me_get_message_field($field, $message, $context = 'display') {
  *                           Default false.
  * @return mixed Will be an array if $single is false. Will be value of meta data field if $single is true.
  */
-function me_get_message_meta($message_id, $key = '', $single = false) {
+function marketengine_get_message_meta($message_id, $key = '', $single = false) {
     return get_metadata('marketengine_message_item', $message_id, $key, $single);
 }
 
@@ -525,7 +522,7 @@ function me_get_message_meta($message_id, $key = '', $single = false) {
  *                           Default false.
  * @return int|false Meta ID on success, false on failure.
  */
-function me_add_message_meta($message_id, $meta_key, $meta_value, $unique = true) {
+function marketengine_add_message_meta($message_id, $meta_key, $meta_value, $unique = true) {
     return add_metadata('marketengine_message_item', $message_id, $meta_key, $meta_value, $unique);
 }
 
@@ -541,7 +538,7 @@ function me_add_message_meta($message_id, $meta_key, $meta_value, $unique = true
  *                           Default empty.
  * @return int|false Meta ID if the key didn't exist, true on successful update, false on failure.
  */
-function me_update_message_meta($message_id, $meta_key, $meta_value, $prev_value = '') {
+function marketengine_update_message_meta($message_id, $meta_key, $meta_value, $prev_value = '') {
     return update_metadata('marketengine_message_item', $message_id, $meta_key, $meta_value, $prev_value);
 }
 
@@ -556,7 +553,7 @@ function me_update_message_meta($message_id, $meta_key, $meta_value, $prev_value
  *
  * @return bool True on success, false on failure.
  */
-function me_delete_message_meta($message_id, $meta_key, $meta_value = '') {
+function marketengine_delete_message_meta($message_id, $meta_key, $meta_value = '') {
     return delete_metadata('marketengine_message_item', $message_id, $meta_key, $meta_value);
 }
 
@@ -565,7 +562,7 @@ function me_delete_message_meta($message_id, $meta_key, $meta_value = '') {
  * @param int $listing_id
  * @return int $inquiry_id
  */
-function me_get_current_inquiry($listing_id, $sender = '') {
+function marketengine_get_current_inquiry($listing_id, $sender = '') {
     global $wpdb;
     if(!$sender) {
         $sender = get_current_user_id();
@@ -585,10 +582,10 @@ function me_get_current_inquiry($listing_id, $sender = '') {
  * Retrieves current user sent inquiry
  * @return array
  */
-function me_my_inquiries($args = array()) {
+function marketengine_my_inquiries($args = array()) {
     $user_id = get_current_user_id();
     $args = array_merge($args, array('sender' => $user_id));
-    return me_get_inquiries($args);
+    return marketengine_get_inquiries($args);
     // SELECT count(message.post_status) as count_status, post_status, message.post_parent FROM `me_marketengine_message_item` as message WHERE message.post_status = 'sent' GROUP by message.post_status, message.post_parent
 }
 
@@ -596,14 +593,14 @@ function me_my_inquiries($args = array()) {
  * Retrieves current user accepted request
  * @return array
  */
-function me_my_request($args) {
+function marketengine_my_request($args) {
     $user_id = get_current_user_id();
     $args = array_merge($args, array('receiver' => $user_id));
-    return me_get_inquiries($args);
+    return marketengine_get_inquiries($args);
 }
 
 
-function me_get_inquiries($args) {
+function marketengine_get_inquiries($args) {
     global $wpdb;
     $user_id = get_current_user_id();
     $where         = "WHERE message.sender = $user_id  ";
@@ -620,7 +617,7 @@ function me_get_inquiries($args) {
     $group_by      = "GROUP By $wpdb->posts.ID ";
 
     if (!empty($args['s'])) {
-        $search = me_parse_search($args);
+        $search = marketengine_parse_search($args);
         $where .= $search;
 
         $join_users = " JOIN $wpdb->users ON $wpdb->users.ID = message.receiver ";
@@ -666,7 +663,7 @@ function me_get_inquiries($args) {
     return $results;
 }
 
-function me_parse_search($args) {
+function marketengine_parse_search($args) {
     global $wpdb;
 
     $search = '';
@@ -681,7 +678,7 @@ function me_parse_search($args) {
     } else {
         if (preg_match_all('/".*?("|$)|((?<=[\t ",+])|^)[^\t ",+]+/', $args['s'], $matches)) {
             $args['search_terms_count'] = count($matches[0]);
-            $args['search_terms']       = me_parse_search_terms($matches[0]);
+            $args['search_terms']       = marketengine_parse_search_terms($matches[0]);
             // if the search string has only short terms or stopwords, or is 10+ terms long, match it as sentence
             if (empty($args['search_terms']) || count($args['search_terms']) > 9) {
                 $args['search_terms'] = array($args['s']);
@@ -748,11 +745,11 @@ function me_parse_search($args) {
     return $search;
 }
 
-function me_parse_search_terms($terms) {
+function marketengine_parse_search_terms($terms) {
     $strtolower = function_exists('mb_strtolower') ? 'mb_strtolower' : 'strtolower';
     $checked    = array();
 
-    $stopwords = me_get_search_stopwords();
+    $stopwords = marketengine_get_search_stopwords();
 
     foreach ($terms as $term) {
         // keep before/after spaces when term is for exact match
@@ -777,7 +774,7 @@ function me_parse_search_terms($terms) {
     return $checked;
 }
 
-function me_get_search_stopwords() {
+function marketengine_get_search_stopwords() {
     /* translators: This is a comma-separated list of very common words that should be excluded from a search,
      * like a, an, and the. These are usually called "stopwords". You should not simply translate these individual
      * words into your language. Instead, look for and provide commonly accepted stopwords in your language.
@@ -805,13 +802,13 @@ function me_get_search_stopwords() {
     return $stopwords;
 }
 
-function me_inquiry_permalink( $inquiry_id ) {
-    $link = me_get_page_permalink('inquiry');
+function marketengine_inquiry_permalink( $inquiry_id ) {
+    $link = marketengine_get_page_permalink('inquiry');
     $link = add_query_arg(array('inquiry_id' => $inquiry_id), $link);
     return $link;
 }
 
-function me_inquiry_ids_by_listing( $value ) {
+function marketengine_inquiry_ids_by_listing( $value ) {
     global $wpdb;
     $query = "SELECT $wpdb->posts.ID
         FROM $wpdb->marketengine_message_item
@@ -825,7 +822,7 @@ function me_inquiry_ids_by_listing( $value ) {
     return $results;
 }
 
-function me_inquiry_ids_by_user( $user, $role ) {
+function marketengine_inquiry_ids_by_user( $user, $role ) {
     global $wpdb;
     $query = "SELECT $wpdb->marketengine_message_item.post_parent
         FROM $wpdb->marketengine_message_item
@@ -844,9 +841,9 @@ function me_inquiry_ids_by_user( $user, $role ) {
  *  @param: $query
  *  @return: $args - query args
  */
-function me_filter_inquiry_query( $query, $role ) {
+function marketengine_filter_inquiry_query( $query, $role ) {
     $args = array();
-
+    
     if( isset($query['from_date']) || isset($query['to_date']) ){
         $before = $after = '';
         if( isset($query['from_date']) && !empty($query['from_date']) ){
@@ -877,13 +874,14 @@ function me_filter_inquiry_query( $query, $role ) {
     }
 
     if( isset($query['keyword']) && $query['keyword'] != '' ) {
+        $keyword = esc_sql( $query['keyword'] );
         $ids_by_listing = $ids_by_user = array();
 
-        $ids_by_listing = me_inquiry_ids_by_listing( $query['keyword'] );
+        $ids_by_listing = marketengine_inquiry_ids_by_listing( $keyword );
         if( $role == 'sender' ) {
-            $ids_by_user = me_inquiry_ids_by_user( $query['keyword'], 'receiver' );
+            $ids_by_user = marketengine_inquiry_ids_by_user( $keyword, 'receiver' );
         } else {
-            $ids_by_user = me_inquiry_ids_by_user( $query['keyword'], 'sender' );
+            $ids_by_user = marketengine_inquiry_ids_by_user( $keyword, 'sender' );
         }
 
         $post_parent = array_merge($ids_by_listing, $ids_by_user);
@@ -902,4 +900,4 @@ function me_filter_inquiry_query( $query, $role ) {
     }
     return $args;
 }
-add_filter( 'me_filter_inquiry', 'me_filter_inquiry_query', 1, 2 );
+add_filter( 'marketengine_filter_inquiry', 'marketengine_filter_inquiry_query', 1, 2 );

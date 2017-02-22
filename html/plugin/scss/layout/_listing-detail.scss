@@ -410,14 +410,7 @@
 	}
 	.me-comments {
 		background: #FFF;
-		/* border: 1px solid $color_border_base; */
 		padding: 20px 30px;
-		/* -webkit-border-bottom-right-radius: 4px;
-		-webkit-border-bottom-left-radius: 4px;
-		-moz-border-radius-bottomright: 4px;
-		-moz-border-radius-bottomleft: 4px;
-		border-bottom-right-radius: 4px;
-		border-bottom-left-radius: 4px; */
 	}
 	.me-authors {
 		display: none;
@@ -727,93 +720,70 @@ ul.me-comment-list {
 //=== MarketEngine Related
 //
 .marketengine-related-wrap {
-	padding: 6px 0px 0;
+	// padding: 6px 0px 0;
 	margin-top: 26px;
 	border-top: 1px solid $color_border_1; 
 	> h2 {
-		margin: 20px 0 0;
+		margin: 20px 0;
 		font-size: $font_size_large;
 		color:#555555;
 		font-weight: $font_weight_bold;
 		// padding-left: 10px;
 	}
 	.me-item-post .me-item-img img {
-		height: 100%;
-		width: auto;
+		// height: 100%;
+		// width: auto;
 		// min-width: 100%;
 	}
-	.flex-viewport {
+	/* .flex-viewport {
 		padding-left: 30px;
 		padding-right: 30px;
-	}
-}
-
-/* .me-related-slider {
-	.me-related {
-		> li {
-			cursor: pointer;
-			// transition: 0.2 all ease;
-			&:hover {
-
-				.me-item-related {
-					margin-top: -6px;
-					@include box-shadow(0, 4px, 20px, 2px, rgba(#1d1d1d, 0.2));
-					.item-post-content .item-post-price p span {
-						font-weight: $font_weight_bold;
-
-					} 
-				}
-			}
-			
-		}
-	}
-} */
-
-.me-item-related {
-	@include box-shadow(0, 4px, 20px, 2px, rgba(#1d1d1d, 0.1));
-	transition: 0.3s all ease;
-	/* .item-post-img {
-	
-	}
-	.item-post-content {
-		overflow: hidden;
-		position: relative;
-		padding: 20px;
-		h2 {
-			font-size: $font_size_base;
-			color: $color_label_2;
-			margin-top: 0px;
-			margin-bottom: 0;
-			display: -webkit-box;
-			overflow: hidden;
-			white-space: normal;
-			text-overflow: ellipsis;
-			-webkit-box-orient: vertical;
-			-webkit-line-clamp: 2;
-			height: 2.8em;
-			line-height: 1.4em;
-			a {
-				color: #555;
-				&:hover {
-					color: #555;
-				}
-			}
-		}
-	}
-	 */
-	/* .item-post-price {
-		overflow: hidden;
-		margin-top: 22px;
-		p {
-			margin: 14px 0 0;
-			color: #555;
-			span {
-	
-			}
-		}
 	} */
 }
+.me-related-slider {
+	position: relative;
+	padding: 0 30px;
+	.owl-controls {
+		width: 100%;
+		position: absolute;
+		top: 50%;
+		left: 0;
+		transform: translateY(-50%);
+		.owl-prev {
+			span {
+				display: inline-block;
+				width: 0;
+				height: 0;
+				border-style: solid;
+				border-width: 12px 11px 12px 0;
+				border-color: transparent #6f6f6f transparent transparent;
+				&:hover {
+					opacity: 0.7;
+				}
+			}
+		}
+		.owl-next {
+			text-align: right;
+			span {
+				display: inline-block;
+				width: 0;
+				height: 0;
+				border-style: solid;
+				border-width: 12px 0 12px 11px;
+				border-color: transparent transparent transparent #6f6f6f;
+				&:hover {
+					opacity: 0.7;
+				}
+			}
+		}
+	}
+}
 
+/* .me-item-related {
+	@include box-shadow(0, 4px, 20px, 2px, rgba(#1d1d1d, 0.1));
+	transition: 0.3s all ease;
+}
+ */
 @media (max-width: $screen_sm_max) {  // 991px
 	.marketengine-sidebar-detail {
 		.me-authors {

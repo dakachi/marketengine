@@ -1,10 +1,10 @@
 <?php
-	// $customfields = me_cf_get_fields($_REQUEST['category-id']);
+	// $customfields = marketengine_cf_get_fields($_REQUEST['category-id']);
 
 	if(!empty($customfields)) :
 		foreach($customfields as $key => $field) :
 			extract($field);
-			$affected_cats_name = me_cf_get_field_categories($field_id, true);
+			$affected_cats_name = marketengine_cf_get_field_categories($field_id, true);
 ?>
 
 	<li id="me-cf-item_<?php echo $field_id; ?>" class="me-cf-item">
@@ -23,9 +23,9 @@
 			</div>
 		</div>
 		<div class="me-cf-row-content">
-			<p><span><?php _e('Field type:', 'enginethemes'); ?></span><?php echo me_get_field_type_label($field_type); ?></p>
+			<p><span><?php _e('Field type:', 'enginethemes'); ?></span><?php echo marketengine_get_field_type_label($field_type); ?></p>
 
-			<?php do_action('me_load_inputs_for_view', $field); ?>
+			<?php do_action('marketengine_load_inputs_for_view', $field); ?>
 
 			<p><span><?php _e('Required:', 'enginethemes'); ?></span><?php echo $field_constraint ? __('Yes', 'enginethemes') : __('No', 'enginethemes') ; ?></p>
 			<p><span><?php _e('Available in:', 'enginethemes'); ?></span><?php echo $affected_cats_name; ?></p>
@@ -37,5 +37,5 @@
 
 	<?php endforeach; ?>
 <?php else : ?>
-	<?php me_get_template('custom-fields/admin-templates/field-list-no-fields'); ?>
+	<?php marketengine_get_template('custom-fields/admin-templates/field-list-no-fields'); ?>
 <?php endif; ?>

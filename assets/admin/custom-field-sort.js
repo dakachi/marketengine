@@ -6,7 +6,7 @@
 			    var order = $('#me-cf-list-sortable').sortable('serialize');
 			    var data = {
 			    	order: order,
-			    	action: 'me_cf_sort',
+			    	action: 'marketengine_cf_sort',
 			    	category_id: $('#current-category').val(),
 			    }
 
