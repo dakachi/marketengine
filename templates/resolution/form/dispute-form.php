@@ -26,12 +26,12 @@ $dispute_files = !empty($_POST['dispute_file']) ? $_POST['dispute_file'] : array
 		<?php marketengine_get_template('resolution/form/dispute-problem'); ?>
 
 		<div class="me-dispute-description">
-			<h3><?php _e('Please tell more about your problem', 'enginethemes'); ?></h3>
+			<h3><?php _e('Please describe your problem in detail', 'enginethemes'); ?></h3>
 			<textarea name="dispute_content"><?php echo isset($_POST['dispute_content']) ? esc_js($_POST['dispute_content']) : ''; ?></textarea>
 		</div>
 
 		<div class="me-dispute-image">
-			<h3><?php _e('Attachments (images or document)', 'enginethemes'); ?></h3>
+			<h3><?php _e('Attachments (images or documents)', 'enginethemes'); ?></h3>
 			<?php
 
 	        ob_start();

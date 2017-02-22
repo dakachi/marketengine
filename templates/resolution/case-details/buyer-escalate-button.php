@@ -4,7 +4,7 @@
             <?php _e("Escalate", "enginethemes"); ?>
         </a>
         <p>
-            <?php _e("In case you don't agree with the seller or cannot negotiate with him, press Escalate to let the Admin arbitrates.", "enginethemes"); ?>
+            <?php _e("In case you don't agree with the seller or cannot negotiate with him, press Escalate to let admin arbitrate.", "enginethemes"); ?>
         </p>
     </div>
 </div>
