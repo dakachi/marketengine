@@ -4,7 +4,7 @@ Donate link: https://www.enginethemes.com/marketengine/
 Tags: enginethemes, multi vendor marketplace, ecommerce marketplace, multi seller, commission, paypal gateway, listing, niche
 Requires at least: 4.7
 Tested up to: 4.7
-Stable tag: 1.0.1
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 A free WordPress plugin that allows you to build a multi vendor marketplace platform for any niche. 
@@ -19,7 +19,7 @@ Since user experience is the top priority for any niche, we focus more on enhanc
 
 MarketEngine also provides admin with an elegant dashboard where you can control everything on your site such as monitor all members, listings, and orders occurring on the site as well as make any changes from back-end. As a result, you can prevent spam from unreliable accounts on your site.
  
-= Key Features: =
+Key Features:
 
 Admin
 
@@ -73,23 +73,24 @@ This section describes how to install the plugin and get it working.
 
 1. Install and activate the plugin: To install this plugin, you can use one of the following ways: 
 
-	*   From your WordPress Dashboard
+	*	From your WordPress Dashboard
 
-	Visit Plugins → Add New
-	Search for “MarketEngine”
-	Click “Install” and activate MarketEngine from the Plugin menu in WordPress
+		- Visit Plugins → Add New
+		- Search for “MarketEngine”
+		- Click “Install” and activate MarketEngine from the Plugin menu in WordPress
 
 	*   From WordPress.org
 
-	Download MarketEngine
-	Upload the “marketengine” folder to the .../wp-content/plugins/ directory via ftp, sftp, scp, etc.
-	Activate MarketEngine from the Plugin menu in WordPress
+		- Download MarketEngine
+		- Upload the “marketengine” folder to the .../wp-content/plugins/ directory via ftp, sftp, scp, etc.
+		- Activate MarketEngine from the Plugin menu in WordPress
 
 	*   Direct Zip Upload
 
-	Download MarketEngine
-	Upload the ZIP package via Plugins → Add New → Upload in your WP Admin
-	Activate MarketEngine from the Plugin menu in WordPress
+		- Download MarketEngine
+		- Upload the ZIP package via Plugins → Add New → Upload in your WP Admin
+		- Activate MarketEngine from the Plugin menu in WordPress
+	
 
 2. Once MarketEngine plugin is activated, you should go to MarketEngine → Setup Wizard to create some specific pages, some listing categories, commission fee, listing types, etc.
 
@@ -137,3 +138,10 @@ For any questions, feedbacks or suggestions please visit https://www.enginetheme
 * Sort field by category.
 * Add/edit/ remove a field.
 * Validate field constraint: required, is_date, is_numeric.
+
+= 1.1 - Jan 05, 2016 =
+* Resolution Center feature.
+	1. Buyer send dispute to seller
+	2. Buyer resolve and close dispute case
+	3. Seller & Buyer escalate dispute case to admin
+	4. Admin resolve dispute case

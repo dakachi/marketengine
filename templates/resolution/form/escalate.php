@@ -5,10 +5,10 @@
 		<div class="me-escalate-box">
 			<p class="me-escalate-about"><?php _e("You are about to escalate this dispute.", "enginethemes") ?><br/>
 			<?php _e( "Admin will arbitrate based on reports and proofs from both sides.", "enginethemes" ) ?><br/>
-			<?php _e("Emails, images, files...all are accepted as proofs.", "enginethemes"); ?></p>
+			<?php _e("Emails, images, files, etc., all are accepted as proofs.", "enginethemes"); ?></p>
 		</div>
 		<div class="me-escalate-box">
-			<h3><?php _e("Please tell more about your problem", "enginethemes"); ?></h3>
+			<h3><?php _e("Please describe your problem in detail", "enginethemes"); ?></h3>
 			<textarea name="post_content" id="escalate-content" cols="30" rows="10"></textarea>
 		</div>
 		<div class="me-escalate-box">
