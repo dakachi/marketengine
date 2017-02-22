@@ -4,7 +4,7 @@ Donate link: https://www.enginethemes.com/marketengine/
 Tags: enginethemes, multi vendor marketplace, ecommerce marketplace, multi seller, commission, paypal gateway, listing, niche
 Requires at least: 4.7
 Tested up to: 4.7
-Stable tag: 1.0.1
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 A free WordPress plugin that allows you to build a multi vendor marketplace platform for any niche. 
@@ -134,6 +134,13 @@ For any questions, feedbacks or suggestions please visit https://www.enginetheme
 == Changelog ==
 = 1.0.1 - Jan 05, 2016 =
 * Custom Fields feature.
-* Sort field by category.
-* Add/edit/ remove a field.
-* Validate field constraint: required, is_date, is_numeric.
+	1. Sort field by category.
+	2. Add/edit/ remove a field.
+	3. Validate field constraint: required, is_date, is_numeric.
+
+= 1.1 - Jan 05, 2016 =
+* Resolution Center feature.
+	1. Buyer send dispute to seller
+	2. Buyer resolve and close dispute case
+	3. Seller & Buyer escalate dispute case to admin
+	4. Admin resolve dispute case
